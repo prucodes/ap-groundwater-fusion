@@ -137,11 +137,11 @@
     <div class="steps">
       <div class="step s1">
         <span class="tag">Step 1 · Now</span>
-        <h3>Validated Pilot (PoC)</h3>
+        <h3>Working Prototype</h3>
         <div class="lbl">Delivers</div>
-        <ul><li>Real APWRIMS readings + official boundaries fused with NASA/CHIRPS/TerraClimate</li><li>Status map, watchlist, early-warning, water-balance, scenario planner — on real data</li></ul>
-        <div class="lbl">Needs</div>
-        <ul><li>One-time sample export (3–5 districts, with history)</li><li>Official mandal boundary file</li></ul>
+        <ul><li>639 mandals at <b>metre depth</b> — modelled gap-fill + next-month forecast — fusing 12 yrs APWRIMS history with NASA/CHIRPS/TerraClimate</li><li>Status map, estimates, watchlist, early-warning, water-balance, scenario, AWARE advisory — auto-refreshing monthly</li></ul>
+        <div class="lbl">Needs (blockers)</div>
+        <ul><li>Official APWRIMS export (today: authorization-pending session sample)</li><li>Official mandal boundaries + admin IDs (today: public prototype)</li></ul>
       </div>
       <div class="step s2">
         <span class="tag">Step 2 · Next</span>
@@ -216,7 +216,7 @@
     <div class="sectionTitle"><span class="n">3</span> What we need &amp; how we hand off</div>
     <div class="cols">
       <div class="panel">
-        <h4>Requested from the department (sample, 3–5 districts)</h4>
+        <h4>Requested from the department (official export to replace the session sample)</h4>
         <ul class="need">
           <li><span class="k">A</span><span><b>Groundwater readings (CSV/XLSX):</b> station ID, name, lat/long (WGS84), district, mandal, village, date/time, level in <b>mbgl</b>, source type, admin codes, quality flag.</span></li>
           <li><span class="k">↻</span><span><b>History:</b> ideally 3–5 yrs monthly per station (min 24 months) → real trends.</span></li>
@@ -232,16 +232,17 @@
       <div class="panel">
         <h4>Proposed hand-off into AWARE</h4>
         <p style="font-size:11px;color:var(--muted)">Read-only signal per mandal/district — AWARE consumes via API <em>or</em> a scheduled file/DB push.</p>
-<pre><span class="c">GET /api/v1/mandal/{id}/signal</span>
+<pre><span class="c">// district advisory record (current awarePayload schema)</span>
 {
-  <span class="k">"mandal_id"</span>: <span class="s">"anantapur-dharmavaram"</span>,
-  <span class="k">"status"</span>: <span class="s">"Verify"</span>, <span class="k">"confidence"</span>: <span class="n">40</span>,
-  <span class="k">"agreement"</span>: <span class="s">"strong_disagreement"</span>,
-  <span class="k">"water_balance_mm"</span>: <span class="n">42.3</span>,
-  <span class="k">"alert_severity"</span>: <span class="s">"Critical"</span>,
-  <span class="k">"recommended_action"</span>: <span class="s">"Field verify..."</span>,
-  <span class="k">"sources"</span>: <span class="s">"GRACE-DA, CHIRPS, TerraClimate"</span>,
-  <span class="k">"official_result"</span>: <span class="n">false</span>
+  <span class="k">"region_type"</span>: <span class="s">"district"</span>, <span class="k">"region_name"</span>: <span class="s">"Anantapur"</span>,
+  <span class="k">"advisory"</span>: <span class="s">"Conserve"</span>,
+  <span class="k">"gw_percentile"</span>: <span class="n">92</span>,        <span class="c">// NASA GRACE-DA storage</span>
+  <span class="k">"water_balance_mm"</span>: <span class="n">-120</span>, <span class="k">"water_balance_status"</span>: <span class="s">"Deficit"</span>,
+  <span class="k">"verify_required"</span>: <span class="n">true</span>,
+  <span class="k">"trend_outlook"</span>: <span class="s">"deepening"</span>, <span class="k">"trend_m_per_yr"</span>: <span class="n">0.8</span>,
+  <span class="k">"data_basis"</span>: <span class="s">"satellite+sensor"</span>,
+  <span class="k">"as_of"</span>: <span class="s">"2026-05"</span>, <span class="k">"balance_reference_year"</span>: <span class="s">"2025"</span>,
+  <span class="k">"source"</span>: <span class="s">"AP Groundwater Intelligence (prototype)"</span>
 }</pre>
       </div>
     </div>
@@ -252,8 +253,8 @@
       <div class="vcard"><div class="vi">◎</div><h4>Field triage</h4><p>Send teams to the highest-risk mandals first.</p></div>
       <div class="vcard"><div class="vi">≈</div><h4>Irrigation advisories</h4><p>Cropping &amp; canal-release guidance in deficit zones.</p></div>
       <div class="vcard"><div class="vi">!</div><h4>Drought early-warning</h4><p>Earlier onset signals; time recharge works.</p></div>
-      <div class="vcard"><div class="vi">⚖</div><h4>Permit support</h4><p>Flag over-exploited mandals for bore-well regulation.</p></div>
-      <div class="vcard"><div class="vi">✓</div><h4>Sensor QA</h4><p>Catch drifting/failed sensors; fill gaps where no well exists.</p></div>
+      <div class="vcard"><div class="vi">⚖</div><h4>Permit support</h4><p>Flag pumping-pressure mandals (verify-first) for bore-well review.</p></div>
+      <div class="vcard"><div class="vi">✓</div><h4>Sensor QA &amp; gap-fill</h4><p>Catch drifting/failed sensors (Verify flag); fill missing months with the model.</p></div>
       <div class="vcard"><div class="vi">◔</div><h4>Foresight</h4><p>Monsoon what-if: pre-position for a weak season.</p></div>
     </div>
 

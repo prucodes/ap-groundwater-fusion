@@ -62,7 +62,7 @@
     <div class="inner">
       <div class="eyebrow"><span class="dot"></span> AP Groundwater Intelligence · Demo Runsheet</div>
       <h1>Demo Flow — RTGS / APSDMA Review</h1>
-      <p>Walk it in the order of the original ask: GRACE-FO first → the honest reframe → the value chain to irrigation → AWARE. End on action. Skip the Overview screen. ~18 min of demo.</p>
+      <p>Walk it in the order of the original ask: GRACE-FO first → the honest reframe → metres in the Estimates screen → the value chain to irrigation → AWARE. End on action. Skip the Overview screen. ~20 min of demo.</p>
     </div>
   </header>
 
@@ -78,7 +78,7 @@
       <div class="scr">NASA Signals<span class="t">3 min · start here</span></div>
       <div class="say">
         <span class="q">“This is live NASA GRACE-FO data over AP — open-source, re-downloadable, checksummed. The entirely-new-concept-for-AP you described is running.”</span>
-        <span class="do"><b>Show:</b> signal-strength gauges + provenance cards (source URLs, SHA-256, ~25 km).</span>
+        <span class="do"><b>Show:</b> signal-strength gauges + provenance cards (source URLs, SHA-256). Note GRACE is district-scale (coarse) — context, not depth.</span>
       </div>
     </div>
 
@@ -102,15 +102,24 @@
 
     <div class="step">
       <div class="idx">4</div>
-      <div class="scr">Mandal Map<span class="t">2.5 min · he cares re: mandals</span></div>
+      <div class="scr">Mandal Map<span class="t">2 min · he cares re: mandals</span></div>
       <div class="say">
-        <span class="q">“GRACE is district-scale, so we never fake mandal precision from it. Mandals are coloured by fusion status + finer climate layers. Statewide mandal coverage, honestly.”</span>
-        <span class="do"><b>Show:</b> 670-mandal map + the AP spotlight.</span>
+        <span class="q">“GRACE is district-scale, so we never fake mandal precision from it. Mandals are coloured by fusion status. We’re explicit about coverage — 656 of 670 boundaries have a fused record; the rest are shown grey, not faked.”</span>
+        <span class="do"><b>Show:</b> mandal status map + the AP spotlight + the coverage line.</span>
       </div>
     </div>
 
     <div class="step">
       <div class="idx">5</div>
+      <div class="scr">Estimated Levels (metres)<span class="t">3 min · the headline</span></div>
+      <div class="say">
+        <span class="q">“Here’s the part you asked for — depth in <b>metres</b> for 639 mandals, with an honest confidence band. The model learned the satellite↔depth relationship from 12 years of APWRIMS history, so when a sensor goes quiet or a month is missing, it gap-fills and forecasts next month — validated to ±1.3 m on months it never saw. And it flags readings that disagree with the model as <b>Verify</b>, so you catch a bad sensor instead of trusting it.”</span>
+        <span class="do"><b>Show:</b> estimates choropleth + a mandal’s band/forecast; then a Verify-flagged mandal.</span>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="idx">6</div>
       <div class="scr">Scenario Planner<span class="t">3 min · APSDMA hook</span></div>
       <div class="say">
         <span class="q">“El Niño crossed threshold this month; IMD says ~92% of LPA. One click shows which AP districts tip into deficit under the real forecast. As APSDMA Chairman — this is drought early-warning, pre-season.”</span>
@@ -119,7 +128,7 @@
     </div>
 
     <div class="step">
-      <div class="idx">6</div>
+      <div class="idx">7</div>
       <div class="scr">Irrigation &amp; AWARE<span class="t">4 min · end here</span></div>
       <div class="say">
         <span class="q">“The payoff: draw / hold / conserve per district — and the AWARE integration you asked for. The advisory payload is shaped and ready; to go live we need your AWARE endpoint and schema.”</span>
@@ -137,7 +146,7 @@
       <div class="panel">
         <h4>From RTGS / APWRIMS</h4>
         <ul>
-          <li><span class="num">1</span><span><b>APWRIMS sensor export</b> — real depths + station metadata (replaces seed readings)</span></li>
+          <li><span class="num">1</span><span><b>Official APWRIMS export</b> — real depths + station metadata (replaces the authorization-pending session sample)</span></li>
           <li><span class="num">2</span><span><b>AWARE endpoint + schema</b> — to push advisories live</span></li>
           <li><span class="num">3</span><span><b>Official mandal boundaries</b> — sub-district precision</span></li>
           <li><span class="num">4</span><span><b>One pilot district</b> — suggest a Rayalaseema one (Anantapur / YSR): highest stress, best proof</span></li>
@@ -188,7 +197,7 @@
   </div>
 
   <div class="footer">
-    <span><strong>AP Groundwater Intelligence Layer</strong> · Phase 2A prototype · seed APWRIMS-format + real NASA/CHIRPS/TerraClimate</span>
+    <span><strong>AP Groundwater Intelligence Layer</strong> · prototype · real APWRIMS history (session sample) + real NASA/CHIRPS/TerraClimate</span>
     <span>Internal demo aid · not an official document</span>
   </div>
 </div>
