@@ -106,7 +106,10 @@ def test_no_silent_unverified_tls_anywhere():
         if p.suffix != ".py":
             continue
         text = p.read_text(errors="ignore")
-        if "_create_unverified_context()" in text and "ALLOW_INSECURE_TLS" not in text:
+        # Unverified TLS is allowed only when explicitly gated — by the ALLOW_INSECURE_TLS
+        # env opt-in (fetchers) or the --allow-insecure-tls flag (download CLI).
+        gated = "allow_insecure_tls" in text.lower()
+        if "_create_unverified_context()" in text and not gated:
             offenders.append(str(p.relative_to(REPO_ROOT)))
     assert not offenders, f"silent unverified TLS in: {offenders}"
 

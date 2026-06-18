@@ -30,8 +30,7 @@ STATE = "Andhra Pradesh"
 START, END = "2024-01-01", "2026-06-01"
 AGENCY = "CGWB"            # the independent network (NOT 'AP-GWD'/'APWRIMS')
 
-_ctx = ssl.create_default_context()
-_ctx_unverified = _tls_context()
+_ctx = _tls_context()  # verified by default; unverified only via ALLOW_INSECURE_TLS=1
 
 
 def post_json(url, payload, timeout=90):
@@ -40,14 +39,8 @@ def post_json(url, payload, timeout=90):
         "Content-Type": "application/json", "Accept": "application/json, text/plain, */*",
         "User-Agent": "Mozilla/5.0", "Origin": "https://indiawris.gov.in",
     })
-    try:
-        with urllib.request.urlopen(req, timeout=timeout, context=_ctx) as r:
-            return json.loads(r.read())
-    except urllib.error.URLError as e:
-        if "CERTIFICATE_VERIFY_FAILED" not in str(e):
-            raise
-        with urllib.request.urlopen(req, timeout=timeout, context=_ctx_unverified) as r:
-            return json.loads(r.read())
+    with urllib.request.urlopen(req, timeout=timeout, context=_ctx) as r:
+        return json.loads(r.read())
 
 
 def payload(page, size=1000):

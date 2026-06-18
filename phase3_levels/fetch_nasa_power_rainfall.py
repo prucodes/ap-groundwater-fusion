@@ -23,8 +23,7 @@ OUT = os.path.join(HERE, "data", "mandal_rain_history.csv")
 API = "https://power.larc.nasa.gov/api/temporal/monthly/point"
 START, END = "2014", "2025"   # POWER monthly lags ~6 months; 2026 not yet served
 
-_ctx = ssl.create_default_context()
-_ctx_unverified = _tls_context()
+_ctx = _tls_context()  # verified by default; unverified only via ALLOW_INSECURE_TLS=1
 
 
 def centroids():
@@ -49,14 +48,8 @@ def fetch_point(lat, lon, timeout=60):
     url = (f"{API}?parameters=PRECTOTCORR&community=AG"
            f"&latitude={lat}&longitude={lon}&start={START}&end={END}&format=JSON")
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout, context=_ctx) as r:
-            d = json.loads(r.read())
-    except urllib.error.URLError as e:
-        if "CERTIFICATE_VERIFY_FAILED" not in str(e):
-            raise
-        with urllib.request.urlopen(req, timeout=timeout, context=_ctx_unverified) as r:
-            d = json.loads(r.read())
+    with urllib.request.urlopen(req, timeout=timeout, context=_ctx) as r:
+        d = json.loads(r.read())
     # {"properties":{"parameter":{"PRECTOTCORR":{"201406": mm_per_day, ...}}}}
     series = d["properties"]["parameter"]["PRECTOTCORR"]
     rows = []

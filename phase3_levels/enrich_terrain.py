@@ -45,17 +45,9 @@ def centroids():
 def fetch_batch(locs, timeout=30):
     body = json.dumps({"locations": [{"latitude": la, "longitude": lo} for (_, _, la, lo) in locs]}).encode()
     req = urllib.request.Request(API, data=body, headers={"Content-Type": "application/json"})
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as r:
-            return json.loads(r.read())["results"]
-    except urllib.error.URLError as e:
-        # macOS cert-store fallback (same TLS-fallback pattern as the project fetchers)
-        if "CERTIFICATE_VERIFY_FAILED" in str(e):
-            ctx = _tls_context()
-            print("    [tls] verified fetch failed; retrying unverified (public elevation API)")
-            with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
-                return json.loads(r.read())["results"]
-        raise
+    # Verified TLS by default; unverified only via ALLOW_INSECURE_TLS=1 (public elevation API).
+    with urllib.request.urlopen(req, timeout=timeout, context=_tls_context()) as r:
+        return json.loads(r.read())["results"]
 
 
 def main():

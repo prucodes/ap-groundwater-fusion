@@ -6,14 +6,6 @@ groundwater-depth measurements and must not be converted to mbgl.
 """
 
 from __future__ import annotations
-import os as _os, sys as _sys, ssl as _ssl
-def _tls_context():
-    """Verified TLS by default; unverified only with ALLOW_INSECURE_TLS=1 (loud, opt-in)."""
-    if _os.environ.get('ALLOW_INSECURE_TLS') == '1':
-        _sys.stderr.write('WARNING: ALLOW_INSECURE_TLS=1 - using UNVERIFIED TLS.\n')
-        return _ssl._create_unverified_context()
-    return _ssl.create_default_context()
-
 import argparse
 import csv
 import hashlib
@@ -129,7 +121,7 @@ def download_file(url: str, destination: Path, overwrite: bool, allow_insecure_t
 
         print("TLS certificate verification failed; --allow-insecure-tls set, retrying with unverified TLS.")
         try:
-            stream_download(url, tmp_path, context=_tls_context())
+            stream_download(url, tmp_path, context=ssl._create_unverified_context())
         except Exception as retry_error:
             if tmp_path.exists():
                 tmp_path.unlink()
