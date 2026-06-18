@@ -1,0 +1,9 @@
+pandas
+geopandas
+shapely
+pyproj
+rasterio
+xarray
+netCDF4
+pytest
+

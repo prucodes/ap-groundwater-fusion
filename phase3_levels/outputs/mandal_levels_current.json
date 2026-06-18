@@ -1,0 +1,6043 @@
+{
+  "generated_at": "2026-06-16T21:02:40",
+  "source": "/Users/pruthviyannam/Documents/Groundwater Project Phase2A/phase3_levels/data/mandal_features_current.csv",
+  "model_cv": {
+    "rmse_m": 1.719,
+    "mae_m": 1.364,
+    "r2": 0.907
+  },
+  "label": "ESTIMATED groundwater level (mbgl) from satellite + open data, calibrated to wells. Estimate with confidence band \u2014 not a measured reading.",
+  "count": 670,
+  "mandals": [
+    {
+      "mandal_id": "SRIKAKULAM|VEERAGHATTAM",
+      "mandal_name": "Veeraghattam",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.69,
+      "p90_mbgl": 6.32,
+      "band_m": 2.63,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|SEETHAMPETA",
+      "mandal_name": "Seethampeta",
+      "est_mbgl": 5.98,
+      "p10_mbgl": 3.71,
+      "p90_mbgl": 6.32,
+      "band_m": 2.62,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|BHAMINI",
+      "mandal_name": "Bhamini",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.42,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|KOTHURU",
+      "mandal_name": "Kothuru",
+      "est_mbgl": 6.01,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.13,
+      "band_m": 2.45,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|PATHAPATNAM",
+      "mandal_name": "Pathapatnam",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.42,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|MELIAPUTTI",
+      "mandal_name": "Meliaputti",
+      "est_mbgl": 6.01,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.13,
+      "band_m": 2.45,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|PALASA",
+      "mandal_name": "Palasa",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|MANDASA",
+      "mandal_name": "Mandasa",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.42,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|KANCHILI",
+      "mandal_name": "Kanchili",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.35,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|ICHCHAPURAM",
+      "mandal_name": "Ichchapuram",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|KAVITI",
+      "mandal_name": "Kaviti",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.35,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|SOMPETA",
+      "mandal_name": "Sompeta",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|VAJRAPUKOTHURU",
+      "mandal_name": "Vajrapukothuru",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|NANDIGAM",
+      "mandal_name": "Nandigam",
+      "est_mbgl": 5.98,
+      "p10_mbgl": 3.71,
+      "p90_mbgl": 6.32,
+      "band_m": 2.61,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|HIRAMANDALAM",
+      "mandal_name": "Hiramandalam",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.35,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|PALAKONDA",
+      "mandal_name": "Palakonda",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.77,
+      "p90_mbgl": 5.83,
+      "band_m": 2.06,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|VANGARA",
+      "mandal_name": "Vangara",
+      "est_mbgl": 6.01,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.13,
+      "band_m": 2.45,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|REGIDI AMADALAVALASA",
+      "mandal_name": "Regidi Amadalavalasa",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.42,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|LAKSHMINARSUPETA",
+      "mandal_name": "Lakshminarsupeta",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|SARAVAKOTA",
+      "mandal_name": "Saravakota",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|TEKKALI",
+      "mandal_name": "Tekkali",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|SANTHABOMMALI",
+      "mandal_name": "Santhabommali",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|KOTABOMMALI",
+      "mandal_name": "Kotabommali",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|JALUMURU",
+      "mandal_name": "Jalumuru",
+      "est_mbgl": 6.01,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.13,
+      "band_m": 2.45,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|SARUBUJJILI",
+      "mandal_name": "Sarubujjili",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|BURJA",
+      "mandal_name": "Burja",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|SANTHAKAVITI",
+      "mandal_name": "Santhakaviti",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|RAJAM",
+      "mandal_name": "Rajam",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.35,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|GANGUVARISIGADAM",
+      "mandal_name": "Ganguvarisigadam",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.42,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|AMADALAVALASA",
+      "mandal_name": "Amadalavalasa",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|NARASANNAPETA",
+      "mandal_name": "Narasannapeta",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|POLAKI",
+      "mandal_name": "Polaki",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|GARA",
+      "mandal_name": "Gara",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|SRIKAKULAM",
+      "mandal_name": "Srikakulam",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|PONDURU",
+      "mandal_name": "Ponduru",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|LAVERU",
+      "mandal_name": "Laveru",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.68,
+      "p90_mbgl": 6.42,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|RANASTALAM",
+      "mandal_name": "Ranastalam",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.69,
+      "p90_mbgl": 6.32,
+      "band_m": 2.63,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRIKAKULAM|ETCHERLA",
+      "mandal_name": "Etcherla",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.13,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|KOMARADA",
+      "mandal_name": "Komarada",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.79,
+      "p90_mbgl": 5.88,
+      "band_m": 2.09,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|GUMMALAKSHMIPURAM",
+      "mandal_name": "Gummalakshmipuram",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.71,
+      "p90_mbgl": 6.37,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|KURUPAM",
+      "mandal_name": "Kurupam",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.79,
+      "p90_mbgl": 6.1,
+      "band_m": 2.32,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|JIYYAMMAVALASA",
+      "mandal_name": "Jiyyammavalasa",
+      "est_mbgl": 5.98,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.37,
+      "band_m": 2.65,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|GARUGUBILLI",
+      "mandal_name": "Garugubilli",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.71,
+      "p90_mbgl": 6.37,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|PARVATHIPURAM",
+      "mandal_name": "Parvathipuram",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.71,
+      "p90_mbgl": 6.37,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|MAKKUVA",
+      "mandal_name": "Makkuva",
+      "est_mbgl": 5.98,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.37,
+      "band_m": 2.65,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|SEETHANAGARAM",
+      "mandal_name": "Seethanagaram",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.79,
+      "p90_mbgl": 6.1,
+      "band_m": 2.32,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|BALIJIPETA",
+      "mandal_name": "Balijipeta",
+      "est_mbgl": 5.98,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.37,
+      "band_m": 2.65,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|BOBBILI",
+      "mandal_name": "Bobbili",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.71,
+      "p90_mbgl": 6.37,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|SALUR",
+      "mandal_name": "Salur",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.79,
+      "p90_mbgl": 5.88,
+      "band_m": 2.09,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|PACHIPENTA",
+      "mandal_name": "Pachipenta",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.79,
+      "p90_mbgl": 5.88,
+      "band_m": 2.09,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|RAMABHADRAPURAM",
+      "mandal_name": "Ramabhadrapuram",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.79,
+      "p90_mbgl": 5.88,
+      "band_m": 2.09,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|BADANGI",
+      "mandal_name": "Badangi",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.69,
+      "p90_mbgl": 6.4,
+      "band_m": 2.71,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|THERLAM",
+      "mandal_name": "Therlam",
+      "est_mbgl": 5.98,
+      "p10_mbgl": 3.76,
+      "p90_mbgl": 6.37,
+      "band_m": 2.61,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|MERAKAMUDIDAM",
+      "mandal_name": "Merakamudidam",
+      "est_mbgl": 5.98,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.37,
+      "band_m": 2.65,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|DATTIRAJERU",
+      "mandal_name": "Dattirajeru",
+      "est_mbgl": 5.98,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.37,
+      "band_m": 2.65,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|MENTADA",
+      "mandal_name": "Mentada",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.69,
+      "p90_mbgl": 6.47,
+      "band_m": 2.78,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|GAJAPATHINAGARAM",
+      "mandal_name": "Gajapathinagaram",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.71,
+      "p90_mbgl": 6.37,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|GARIVIDI",
+      "mandal_name": "Garividi",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.73,
+      "p90_mbgl": 6.18,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|CHEEPURUPALLE",
+      "mandal_name": "Cheepurupalle",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.73,
+      "p90_mbgl": 6.18,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|GURLA",
+      "mandal_name": "Gurla",
+      "est_mbgl": 5.98,
+      "p10_mbgl": 3.72,
+      "p90_mbgl": 6.37,
+      "band_m": 2.65,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|BONDAPALLE",
+      "mandal_name": "Bondapalle",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.71,
+      "p90_mbgl": 6.37,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|GANTYADA",
+      "mandal_name": "Gantyada",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.73,
+      "p90_mbgl": 6.18,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|SRUNGAVARAPUKOTA",
+      "mandal_name": "Srungavarapukota",
+      "est_mbgl": 5.99,
+      "p10_mbgl": 3.77,
+      "p90_mbgl": 5.89,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|VEPADA",
+      "mandal_name": "Vepada",
+      "est_mbgl": 5.97,
+      "p10_mbgl": 3.71,
+      "p90_mbgl": 6.37,
+      "band_m": 2.67,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|LAKKAVARAPUKOTA",
+      "mandal_name": "Lakkavarapukota",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.73,
+      "p90_mbgl": 6.18,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|KOTHAVALASA",
+      "mandal_name": "Kothavalasa",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.73,
+      "p90_mbgl": 6.18,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|JAMI",
+      "mandal_name": "Jami",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.73,
+      "p90_mbgl": 6.18,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|VIZIANAGARAM",
+      "mandal_name": "Vizianagaram",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.73,
+      "p90_mbgl": 6.18,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|NELLIMARLA",
+      "mandal_name": "Nellimarla",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.73,
+      "p90_mbgl": 6.18,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|PUSAPATIREGA",
+      "mandal_name": "Pusapatirega",
+      "est_mbgl": 6.01,
+      "p10_mbgl": 3.69,
+      "p90_mbgl": 6.18,
+      "band_m": 2.48,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|DENKADA",
+      "mandal_name": "Denkada",
+      "est_mbgl": 6.01,
+      "p10_mbgl": 3.69,
+      "p90_mbgl": 6.18,
+      "band_m": 2.48,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VIZIANAGARAM|BHOGAPURAM",
+      "mandal_name": "Bhogapuram",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.73,
+      "p90_mbgl": 6.18,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|MUNCHINGI PUTTU",
+      "mandal_name": "Munchingi Puttu",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 3.99,
+      "p90_mbgl": 6.31,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|PEDA BAYALU",
+      "mandal_name": "Peda Bayalu",
+      "est_mbgl": 6.68,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 5.83,
+      "band_m": 1.78,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|DUMBRIGUDA",
+      "mandal_name": "Dumbriguda",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 3.97,
+      "p90_mbgl": 6.31,
+      "band_m": 2.34,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|ARAKU VALLEY",
+      "mandal_name": "Araku Valley",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 6.31,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|ANANTHAGIRI",
+      "mandal_name": "Ananthagiri",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 3.99,
+      "p90_mbgl": 6.31,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|HUKUMPETA",
+      "mandal_name": "Hukumpeta",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 6.04,
+      "band_m": 1.99,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|PADERU",
+      "mandal_name": "Paderu",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 3.99,
+      "p90_mbgl": 6.31,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|G.MADUGULA",
+      "mandal_name": "G.Madugula",
+      "est_mbgl": 6.72,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 5.82,
+      "band_m": 1.77,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|CHINTAPALLE",
+      "mandal_name": "Chintapalle",
+      "est_mbgl": 6.72,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 5.82,
+      "band_m": 1.77,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|GUDEM KOTHA VEEDHI",
+      "mandal_name": "Gudem Kotha Veedhi",
+      "est_mbgl": 6.68,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 5.83,
+      "band_m": 1.78,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|KOYYURU",
+      "mandal_name": "Koyyuru",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 3.97,
+      "p90_mbgl": 6.3,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|NATHAVARAM",
+      "mandal_name": "Nathavaram",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|GOLUGONDA",
+      "mandal_name": "Golugonda",
+      "est_mbgl": 6.73,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.4,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|NARSIPATNAM",
+      "mandal_name": "Narsipatnam",
+      "est_mbgl": 6.73,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.4,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|ROLUGUNTA",
+      "mandal_name": "Rolugunta",
+      "est_mbgl": 6.73,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.33,
+      "band_m": 2.38,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|RAVIKAMATHAM",
+      "mandal_name": "Ravikamatham",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 3.97,
+      "p90_mbgl": 6.3,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|MADUGULA",
+      "mandal_name": "Madugula",
+      "est_mbgl": 6.73,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.33,
+      "band_m": 2.38,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|CHEEDIKADA",
+      "mandal_name": "Cheedikada",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|DEVARAPALLE",
+      "mandal_name": "Devarapalle",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|K.KOTAPADU",
+      "mandal_name": "K.Kotapadu",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|SABBAVARAM",
+      "mandal_name": "Sabbavaram",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|PENDURTHI",
+      "mandal_name": "Pendurthi",
+      "est_mbgl": 6.72,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.11,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|ANANDAPURAM",
+      "mandal_name": "Anandapuram",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|PADMANABHAM",
+      "mandal_name": "Padmanabham",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|BHEEMUNIPATNAM",
+      "mandal_name": "Bheemunipatnam",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|VISAKHAPATNAM (RURAL)",
+      "mandal_name": "Visakhapatnam (Rural)",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|VISAKHAPATNAM (URBAN)",
+      "mandal_name": "Visakhapatnam (Urban)",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|PEDAGANTYADA",
+      "mandal_name": "Pedagantyada",
+      "est_mbgl": 6.95,
+      "p10_mbgl": 4.33,
+      "p90_mbgl": 6.41,
+      "band_m": 2.08,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|GAJUWAKA",
+      "mandal_name": "Gajuwaka",
+      "est_mbgl": 6.72,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.39,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|PARAVADA",
+      "mandal_name": "Paravada",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 6.11,
+      "band_m": 2.06,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|ANAKAPALLE",
+      "mandal_name": "Anakapalle",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 3.99,
+      "p90_mbgl": 6.31,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|CHODAVARAM",
+      "mandal_name": "Chodavaram",
+      "est_mbgl": 6.71,
+      "p10_mbgl": 3.99,
+      "p90_mbgl": 6.31,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|BUTCHAYYAPETA",
+      "mandal_name": "Butchayyapeta",
+      "est_mbgl": 6.72,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.11,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|KOTAURATLA",
+      "mandal_name": "Kotauratla",
+      "est_mbgl": 6.72,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.11,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|MAKAVARAPALEM",
+      "mandal_name": "Makavarapalem",
+      "est_mbgl": 6.73,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.4,
+      "band_m": 2.44,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|KASIMKOTA",
+      "mandal_name": "Kasimkota",
+      "est_mbgl": 6.72,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.11,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|MUNAGAPAKA",
+      "mandal_name": "Munagapaka",
+      "est_mbgl": 6.76,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.11,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|ATCHUTAPURAM",
+      "mandal_name": "Atchutapuram",
+      "est_mbgl": 6.87,
+      "p10_mbgl": 4.14,
+      "p90_mbgl": 6.12,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|YELAMANCHILI",
+      "mandal_name": "Yelamanchili",
+      "est_mbgl": 6.9,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.12,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|NAKKAPALLE",
+      "mandal_name": "Nakkapalle",
+      "est_mbgl": 6.98,
+      "p10_mbgl": 4.37,
+      "p90_mbgl": 6.12,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|PAYAKARAOPETA",
+      "mandal_name": "Payakaraopeta",
+      "est_mbgl": 7.05,
+      "p10_mbgl": 4.39,
+      "p90_mbgl": 6.11,
+      "band_m": 1.73,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|S.RAYAVARAM",
+      "mandal_name": "S.Rayavaram",
+      "est_mbgl": 7.09,
+      "p10_mbgl": 4.43,
+      "p90_mbgl": 6.12,
+      "band_m": 1.69,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "VISAKHAPATNAM|RAMBILLI",
+      "mandal_name": "Rambilli",
+      "est_mbgl": 6.98,
+      "p10_mbgl": 4.43,
+      "p90_mbgl": 6.12,
+      "band_m": 1.69,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|NELLIPAKA",
+      "mandal_name": "Nellipaka",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KUNAVARAM",
+      "mandal_name": "Kunavaram",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|CHINTUR",
+      "mandal_name": "Chintur",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|VARARAMACHANDRAPURAM",
+      "mandal_name": "Vararamachandrapuram",
+      "est_mbgl": 6.97,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|MAREDUMILLI",
+      "mandal_name": "Maredumilli",
+      "est_mbgl": 6.91,
+      "p10_mbgl": 4.04,
+      "p90_mbgl": 6.52,
+      "band_m": 2.48,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|DEVIPATNAM",
+      "mandal_name": "Devipatnam",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|Y. RAMAVARAM",
+      "mandal_name": "Y. Ramavaram",
+      "est_mbgl": 6.92,
+      "p10_mbgl": 4.06,
+      "p90_mbgl": 6.53,
+      "band_m": 2.47,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|ADDATEEGALA",
+      "mandal_name": "Addateegala",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.03,
+      "p90_mbgl": 6.61,
+      "band_m": 2.58,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RAJAVOMMANGI",
+      "mandal_name": "Rajavommangi",
+      "est_mbgl": 6.97,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KOTANANDURU",
+      "mandal_name": "Kotananduru",
+      "est_mbgl": 6.97,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|TUNI",
+      "mandal_name": "Tuni",
+      "est_mbgl": 7.1,
+      "p10_mbgl": 4.25,
+      "p90_mbgl": 6.33,
+      "band_m": 2.08,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|ROWTHULAPUDI",
+      "mandal_name": "Rowthulapudi",
+      "est_mbgl": 6.97,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|SANKHAVARAM",
+      "mandal_name": "Sankhavaram",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.12,
+      "p90_mbgl": 6.32,
+      "band_m": 2.2,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|YELESWARAM",
+      "mandal_name": "Yeleswaram",
+      "est_mbgl": 7.1,
+      "p10_mbgl": 4.35,
+      "p90_mbgl": 6.33,
+      "band_m": 1.99,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|GANGAVARAM",
+      "mandal_name": "Gangavaram",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.12,
+      "p90_mbgl": 6.32,
+      "band_m": 2.2,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RAMPACHODAVARAM",
+      "mandal_name": "Rampachodavaram",
+      "est_mbgl": 6.97,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|SEETHANAGARAM",
+      "mandal_name": "Seethanagaram",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.33,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|GOKAVARAM",
+      "mandal_name": "Gokavaram",
+      "est_mbgl": 7.1,
+      "p10_mbgl": 4.35,
+      "p90_mbgl": 6.33,
+      "band_m": 1.99,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|JAGGAMPETA",
+      "mandal_name": "Jaggampeta",
+      "est_mbgl": 7.21,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.33,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KIRLAMPUDI",
+      "mandal_name": "Kirlampudi",
+      "est_mbgl": 7.31,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.34,
+      "band_m": 1.81,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|PRATHIPADU",
+      "mandal_name": "Prathipadu",
+      "est_mbgl": 7.1,
+      "p10_mbgl": 4.12,
+      "p90_mbgl": 6.33,
+      "band_m": 2.21,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|THONDANGI",
+      "mandal_name": "Thondangi",
+      "est_mbgl": 7.28,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.63,
+      "band_m": 2.14,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|GOLLAPROLU",
+      "mandal_name": "Gollaprolu",
+      "est_mbgl": 7.31,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.34,
+      "band_m": 1.81,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|PEDDAPURAM",
+      "mandal_name": "Peddapuram",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|GANDEPALLE",
+      "mandal_name": "Gandepalle",
+      "est_mbgl": 7.31,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.34,
+      "band_m": 1.81,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KORUKONDA",
+      "mandal_name": "Korukonda",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.33,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RAJAHMUNDRY (URBAN)",
+      "mandal_name": "Rajahmundry (Urban)",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RAJAHMUNDRY RURAL",
+      "mandal_name": "Rajahmundry Rural",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RAJANAGARAM",
+      "mandal_name": "Rajanagaram",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RANGAMPETA",
+      "mandal_name": "Rangampeta",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|SAMALKOTA",
+      "mandal_name": "Samalkota",
+      "est_mbgl": 7.33,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.41,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|PITHAPURAM",
+      "mandal_name": "Pithapuram",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KOTHAPALLE",
+      "mandal_name": "Kothapalle",
+      "est_mbgl": 7.33,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.41,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KAKINADA (RURAL)",
+      "mandal_name": "Kakinada (Rural)",
+      "est_mbgl": 7.33,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.41,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KAKINADA (URBAN)",
+      "mandal_name": "Kakinada (Urban)",
+      "est_mbgl": 7.33,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.41,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|PEDAPUDI",
+      "mandal_name": "Pedapudi",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|BICCAVOLU",
+      "mandal_name": "Biccavolu",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|ANAPARTHY",
+      "mandal_name": "Anaparthy",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KADIAM",
+      "mandal_name": "Kadiam",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|ATREYAPURAM",
+      "mandal_name": "Atreyapuram",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|MANDAPETA",
+      "mandal_name": "Mandapeta",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RAYAVARAM",
+      "mandal_name": "Rayavaram",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.33,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KARAPA",
+      "mandal_name": "Karapa",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KAJULURU",
+      "mandal_name": "Kajuluru",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.33,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RAMACHANDRAPURAM",
+      "mandal_name": "Ramachandrapuram",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.33,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|ALAMURU",
+      "mandal_name": "Alamuru",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.33,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RAVULAPALEM",
+      "mandal_name": "Ravulapalem",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.33,
+      "band_m": 1.89,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KOTHAPETA",
+      "mandal_name": "Kothapeta",
+      "est_mbgl": 7.11,
+      "p10_mbgl": 4.27,
+      "p90_mbgl": 6.33,
+      "band_m": 2.06,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KAPILESWARAPURAM",
+      "mandal_name": "Kapileswarapuram",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.33,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|PAMARRU",
+      "mandal_name": "Pamarru",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.33,
+      "band_m": 1.89,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|THALLAREVU",
+      "mandal_name": "Thallarevu",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.53,
+      "p90_mbgl": 6.37,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|I. POLAVARAM",
+      "mandal_name": "I. Polavaram",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.33,
+      "band_m": 1.83,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|MUMMIDIVARAM",
+      "mandal_name": "Mummidivaram",
+      "est_mbgl": 7.1,
+      "p10_mbgl": 4.25,
+      "p90_mbgl": 6.33,
+      "band_m": 2.08,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|AINAVILLI",
+      "mandal_name": "Ainavilli",
+      "est_mbgl": 7.1,
+      "p10_mbgl": 4.25,
+      "p90_mbgl": 6.33,
+      "band_m": 2.08,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|P.GANNAVARAM",
+      "mandal_name": "P.Gannavaram",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|AMBAJIPETA",
+      "mandal_name": "Ambajipeta",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|MAMIDIKUDURU",
+      "mandal_name": "Mamidikuduru",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|RAZOLE",
+      "mandal_name": "Razole",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|MALIKIPURAM",
+      "mandal_name": "Malikipuram",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|SAKHINETIPALLE",
+      "mandal_name": "Sakhinetipalle",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|ALLAVARAM",
+      "mandal_name": "Allavaram",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|AMALAPURAM",
+      "mandal_name": "Amalapuram",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|UPPALAGUPTAM",
+      "mandal_name": "Uppalaguptam",
+      "est_mbgl": 6.96,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.32,
+      "band_m": 2.25,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "EAST GODAVARI|KATRENIKONA",
+      "mandal_name": "Katrenikona",
+      "est_mbgl": 7.1,
+      "p10_mbgl": 4.25,
+      "p90_mbgl": 6.33,
+      "band_m": 2.08,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|VELAIRPADU",
+      "mandal_name": "Velairpadu",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|KUKUNOOR",
+      "mandal_name": "Kukunoor",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|CHINTALAPUDI",
+      "mandal_name": "Chintalapudi",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.11,
+      "p90_mbgl": 6.46,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|LINGAPALEM",
+      "mandal_name": "Lingapalem",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.33,
+      "p90_mbgl": 6.46,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|T.NARASAPURAM",
+      "mandal_name": "T.Narasapuram",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.11,
+      "p90_mbgl": 6.46,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|JEELUGU MILLI",
+      "mandal_name": "Jeelugu Milli",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|BUTTAYAGUDEM",
+      "mandal_name": "Buttayagudem",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|POLAVARAM",
+      "mandal_name": "Polavaram",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|TALLAPUDI",
+      "mandal_name": "Tallapudi",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.34,
+      "p90_mbgl": 6.46,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|GOPALAPURAM",
+      "mandal_name": "Gopalapuram",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.28,
+      "p90_mbgl": 6.46,
+      "band_m": 2.18,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|KOYYALAGUDEM",
+      "mandal_name": "Koyyalagudem",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.11,
+      "p90_mbgl": 6.46,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|JANGAREDDIGUDEM",
+      "mandal_name": "Jangareddigudem",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.11,
+      "p90_mbgl": 6.46,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|KAMAVARAPUKOTA",
+      "mandal_name": "Kamavarapukota",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.34,
+      "p90_mbgl": 6.46,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|DWARAKATIRUMALA",
+      "mandal_name": "Dwarakatirumala",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.33,
+      "p90_mbgl": 6.46,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|NALLAJERLA",
+      "mandal_name": "Nallajerla",
+      "est_mbgl": 7.37,
+      "p10_mbgl": 4.37,
+      "p90_mbgl": 6.47,
+      "band_m": 2.1,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|DEVARAPALLE",
+      "mandal_name": "Devarapalle",
+      "est_mbgl": 7.41,
+      "p10_mbgl": 4.37,
+      "p90_mbgl": 6.52,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|KOVVUR",
+      "mandal_name": "Kovvur",
+      "est_mbgl": 7.41,
+      "p10_mbgl": 4.37,
+      "p90_mbgl": 6.52,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|CHAGALLU",
+      "mandal_name": "Chagallu",
+      "est_mbgl": 7.41,
+      "p10_mbgl": 4.37,
+      "p90_mbgl": 6.52,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|NIDADAVOLE",
+      "mandal_name": "Nidadavole",
+      "est_mbgl": 7.41,
+      "p10_mbgl": 4.37,
+      "p90_mbgl": 6.52,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|TADEPALLIGUDEM",
+      "mandal_name": "Tadepalligudem",
+      "est_mbgl": 7.41,
+      "p10_mbgl": 4.37,
+      "p90_mbgl": 6.52,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|UNGUTURU",
+      "mandal_name": "Unguturu",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.34,
+      "p90_mbgl": 6.46,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|BHIMADOLE",
+      "mandal_name": "Bhimadole",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.28,
+      "p90_mbgl": 6.46,
+      "band_m": 2.18,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|PEDAVEGI",
+      "mandal_name": "Pedavegi",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.46,
+      "band_m": 2.27,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|PEDAPADU",
+      "mandal_name": "Pedapadu",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.08,
+      "p90_mbgl": 6.46,
+      "band_m": 2.37,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|ELURU",
+      "mandal_name": "Eluru",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.11,
+      "p90_mbgl": 6.46,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|DENDULURU",
+      "mandal_name": "Denduluru",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.46,
+      "band_m": 2.27,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|NIDAMARRU",
+      "mandal_name": "Nidamarru",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.28,
+      "p90_mbgl": 6.46,
+      "band_m": 2.18,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|PENTAPADU",
+      "mandal_name": "Pentapadu",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 4.34,
+      "p90_mbgl": 6.46,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|UNDRAJAVARAM",
+      "mandal_name": "Undrajavaram",
+      "est_mbgl": 7.37,
+      "p10_mbgl": 4.37,
+      "p90_mbgl": 6.52,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|PERAVALI",
+      "mandal_name": "Peravali",
+      "est_mbgl": 7.27,
+      "p10_mbgl": 4.34,
+      "p90_mbgl": 6.46,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|TANUKU",
+      "mandal_name": "Tanuku",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.34,
+      "p90_mbgl": 6.46,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|ATTILI",
+      "mandal_name": "Attili",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.46,
+      "band_m": 2.27,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|GANAPAVARAM",
+      "mandal_name": "Ganapavaram",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.28,
+      "p90_mbgl": 6.46,
+      "band_m": 2.18,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|AKIVIDU",
+      "mandal_name": "Akividu",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.08,
+      "p90_mbgl": 6.46,
+      "band_m": 2.37,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|UNDI",
+      "mandal_name": "Undi",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.08,
+      "p90_mbgl": 6.46,
+      "band_m": 2.37,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|PALACODERU",
+      "mandal_name": "Palacoderu",
+      "est_mbgl": 7.03,
+      "p10_mbgl": 3.95,
+      "p90_mbgl": 6.45,
+      "band_m": 2.49,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|PENUMANTRA",
+      "mandal_name": "Penumantra",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.08,
+      "p90_mbgl": 6.46,
+      "band_m": 2.37,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|IRAGAVARAM",
+      "mandal_name": "Iragavaram",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.11,
+      "p90_mbgl": 6.46,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|PENUGONDA",
+      "mandal_name": "Penugonda",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 4.08,
+      "p90_mbgl": 6.46,
+      "band_m": 2.37,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|ACHANTA",
+      "mandal_name": "Achanta",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|PODURU",
+      "mandal_name": "Poduru",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|VEERAVASARAM",
+      "mandal_name": "Veeravasaram",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|BHIMAVARAM",
+      "mandal_name": "Bhimavaram",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|KALLA",
+      "mandal_name": "Kalla",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|MOGALTHUR",
+      "mandal_name": "Mogalthur",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|NARASAPURAM",
+      "mandal_name": "Narasapuram",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|PALACOLE",
+      "mandal_name": "Palacole",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "WEST GODAVARI|YELAMANCHILI",
+      "mandal_name": "Yelamanchili",
+      "est_mbgl": 7.04,
+      "p10_mbgl": 3.9,
+      "p90_mbgl": 6.45,
+      "band_m": 2.54,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|VATSAVAI",
+      "mandal_name": "Vatsavai",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.46,
+      "band_m": 2.39,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|JAGGAYYAPETA",
+      "mandal_name": "Jaggayyapeta",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.17,
+      "p90_mbgl": 6.46,
+      "band_m": 2.29,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|PENUGANCHIPROLU",
+      "mandal_name": "Penuganchiprolu",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.09,
+      "p90_mbgl": 6.46,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|NANDIGAMA",
+      "mandal_name": "Nandigama",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.26,
+      "p90_mbgl": 6.46,
+      "band_m": 2.2,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|VEERULLAPADU",
+      "mandal_name": "Veerullapadu",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.26,
+      "p90_mbgl": 6.46,
+      "band_m": 2.2,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|MYLAVARAM",
+      "mandal_name": "Mylavaram",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.32,
+      "p90_mbgl": 6.46,
+      "band_m": 2.13,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|GAMPALAGUDEM",
+      "mandal_name": "Gampalagudem",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.46,
+      "band_m": 2.39,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|TIRUVURU",
+      "mandal_name": "Tiruvuru",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.46,
+      "band_m": 2.39,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|A.KONDURU",
+      "mandal_name": "A.Konduru",
+      "est_mbgl": 7.26,
+      "p10_mbgl": 4.09,
+      "p90_mbgl": 6.46,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|REDDIGUDEM",
+      "mandal_name": "Reddigudem",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.26,
+      "p90_mbgl": 6.46,
+      "band_m": 2.2,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|VISSANNAPET",
+      "mandal_name": "Vissannapet",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.17,
+      "p90_mbgl": 6.46,
+      "band_m": 2.29,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|CHATRAI",
+      "mandal_name": "Chatrai",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.32,
+      "p90_mbgl": 6.45,
+      "band_m": 2.13,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|MUSUNURU",
+      "mandal_name": "Musunuru",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.26,
+      "p90_mbgl": 6.46,
+      "band_m": 2.2,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|NUZVID",
+      "mandal_name": "Nuzvid",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.17,
+      "p90_mbgl": 6.46,
+      "band_m": 2.29,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|BAPULAPADU",
+      "mandal_name": "Bapulapadu",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.46,
+      "band_m": 2.39,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|AGIRIPALLE",
+      "mandal_name": "Agiripalle",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.17,
+      "p90_mbgl": 6.46,
+      "band_m": 2.29,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|G.KONDURU",
+      "mandal_name": "G.Konduru",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.32,
+      "p90_mbgl": 6.45,
+      "band_m": 2.14,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|KANCHIKACHERLA",
+      "mandal_name": "Kanchikacherla",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.32,
+      "p90_mbgl": 6.45,
+      "band_m": 2.13,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|CHANDARLAPADU",
+      "mandal_name": "Chandarlapadu",
+      "est_mbgl": 7.46,
+      "p10_mbgl": 4.35,
+      "p90_mbgl": 6.46,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|IBRAHIMPATNAM",
+      "mandal_name": "Ibrahimpatnam",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 4.32,
+      "p90_mbgl": 6.45,
+      "band_m": 2.14,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|VIJAYAWADA (URBAN)",
+      "mandal_name": "Vijayawada (Urban)",
+      "est_mbgl": 7.26,
+      "p10_mbgl": 4.09,
+      "p90_mbgl": 6.46,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|VIJAYAWADA (RURAL)",
+      "mandal_name": "Vijayawada (Rural)",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.17,
+      "p90_mbgl": 6.46,
+      "band_m": 2.29,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|GANNAVARAM",
+      "mandal_name": "Gannavaram",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.46,
+      "band_m": 2.39,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|UNGUTURU",
+      "mandal_name": "Unguturu",
+      "est_mbgl": 7.11,
+      "p10_mbgl": 3.93,
+      "p90_mbgl": 6.44,
+      "band_m": 2.51,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|NANDIVADA",
+      "mandal_name": "Nandivada",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|MANDAVALLI",
+      "mandal_name": "Mandavalli",
+      "est_mbgl": 7.11,
+      "p10_mbgl": 3.93,
+      "p90_mbgl": 6.44,
+      "band_m": 2.51,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|KAIKALUR",
+      "mandal_name": "Kaikalur",
+      "est_mbgl": 7.25,
+      "p10_mbgl": 4.07,
+      "p90_mbgl": 6.46,
+      "band_m": 2.39,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|KALIDINDI",
+      "mandal_name": "Kalidindi",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|KRUTHIVENNU",
+      "mandal_name": "Kruthivennu",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|BANTUMILLI",
+      "mandal_name": "Bantumilli",
+      "est_mbgl": 7.11,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|MUDINEPALLE",
+      "mandal_name": "Mudinepalle",
+      "est_mbgl": 7.11,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|GUDIVADA",
+      "mandal_name": "Gudivada",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|PEDAPARUPUDI",
+      "mandal_name": "Pedaparupudi",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|KANKIPADU",
+      "mandal_name": "Kankipadu",
+      "est_mbgl": 7.11,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|PENAMALURU",
+      "mandal_name": "Penamaluru",
+      "est_mbgl": 7.2,
+      "p10_mbgl": 4.04,
+      "p90_mbgl": 6.65,
+      "band_m": 2.61,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|THOTLAVALLURU",
+      "mandal_name": "Thotlavalluru",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|PAMIDIMUKKALA",
+      "mandal_name": "Pamidimukkala",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|VUYYURU",
+      "mandal_name": "Vuyyuru",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|PAMARRU",
+      "mandal_name": "Pamarru",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|GUDLAVALLERU",
+      "mandal_name": "Gudlavalleru",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|PEDANA",
+      "mandal_name": "Pedana",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|GUDURU",
+      "mandal_name": "Guduru",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|MOVVA",
+      "mandal_name": "Movva",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|GHANTASALA",
+      "mandal_name": "Ghantasala",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|MACHILIPATNAM",
+      "mandal_name": "Machilipatnam",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|CHALLAPALLE",
+      "mandal_name": "Challapalle",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|MOPIDEVI",
+      "mandal_name": "Mopidevi",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|AVANIGADDA",
+      "mandal_name": "Avanigadda",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|NAGAYALANKA",
+      "mandal_name": "Nagayalanka",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KRISHNA|KODURU",
+      "mandal_name": "Koduru",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.88,
+      "p90_mbgl": 6.44,
+      "band_m": 2.56,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|MACHERLA",
+      "mandal_name": "Macherla",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.44,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|VELDURTHI",
+      "mandal_name": "Veldurthi",
+      "est_mbgl": 7.27,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.44,
+      "band_m": 2.23,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|DURGI",
+      "mandal_name": "Durgi",
+      "est_mbgl": 7.27,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.44,
+      "band_m": 2.23,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|RENTACHINTALA",
+      "mandal_name": "Rentachintala",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.44,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|GURAZALA",
+      "mandal_name": "Gurazala",
+      "est_mbgl": 7.27,
+      "p10_mbgl": 4.28,
+      "p90_mbgl": 6.44,
+      "band_m": 2.16,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|DACHEPALLE",
+      "mandal_name": "Dachepalle",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.43,
+      "band_m": 2.0,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|KAREMPUDI",
+      "mandal_name": "Karempudi",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.44,
+      "band_m": 2.0,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|PIDUGURALLA",
+      "mandal_name": "Piduguralla",
+      "est_mbgl": 7.39,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.43,
+      "band_m": 1.99,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|MACHAVARAM",
+      "mandal_name": "Machavaram",
+      "est_mbgl": 7.47,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.43,
+      "band_m": 1.99,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|BELLAMKONDA",
+      "mandal_name": "Bellamkonda",
+      "est_mbgl": 7.53,
+      "p10_mbgl": 4.47,
+      "p90_mbgl": 6.5,
+      "band_m": 2.03,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|ATCHAMPET",
+      "mandal_name": "Atchampet",
+      "est_mbgl": 7.53,
+      "p10_mbgl": 4.47,
+      "p90_mbgl": 6.5,
+      "band_m": 2.03,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|KROSURU",
+      "mandal_name": "Krosuru",
+      "est_mbgl": 7.49,
+      "p10_mbgl": 4.47,
+      "p90_mbgl": 6.5,
+      "band_m": 2.03,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|AMARAVATHI",
+      "mandal_name": "Amaravathi",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.43,
+      "band_m": 1.99,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|THULLUR",
+      "mandal_name": "Thullur",
+      "est_mbgl": 7.27,
+      "p10_mbgl": 4.28,
+      "p90_mbgl": 6.44,
+      "band_m": 2.16,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|TADEPALLE",
+      "mandal_name": "Tadepalle",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.44,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|MANGALAGIRI",
+      "mandal_name": "Mangalagiri",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 6.4,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|TADIKONDA",
+      "mandal_name": "Tadikonda",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.44,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|PEDAKURAPADU",
+      "mandal_name": "Pedakurapadu",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.43,
+      "band_m": 2.0,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|SATTENAPALLE",
+      "mandal_name": "Sattenapalle",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 4.37,
+      "p90_mbgl": 6.44,
+      "band_m": 2.07,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|RAJUPALEM",
+      "mandal_name": "Rajupalem",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.43,
+      "band_m": 2.0,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|NEKARIKALLU",
+      "mandal_name": "Nekarikallu",
+      "est_mbgl": 7.27,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.44,
+      "band_m": 2.23,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|BOLLAPALLE",
+      "mandal_name": "Bollapalle",
+      "est_mbgl": 7.27,
+      "p10_mbgl": 4.28,
+      "p90_mbgl": 6.44,
+      "band_m": 2.16,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|VINUKONDA",
+      "mandal_name": "Vinukonda",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 6.4,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|NUZENDLA",
+      "mandal_name": "Nuzendla",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 6.4,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|SAVALYAPURAM H/O KANAMARLAPUDI",
+      "mandal_name": "Savalyapuram H/O Kanamarlapudi",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|IPUR",
+      "mandal_name": "Ipur",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.44,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|ROMPICHERLA",
+      "mandal_name": "Rompicherla",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 6.4,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|NARASARAOPET",
+      "mandal_name": "Narasaraopet",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|MUPPALLA",
+      "mandal_name": "Muppalla",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.44,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|NADENDLA",
+      "mandal_name": "Nadendla",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|CHILAKALURIPET H/O.PURUSHOTH*",
+      "mandal_name": "Chilakaluripet H/O.Purushoth*",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|EDLAPADU",
+      "mandal_name": "Edlapadu",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|PHIRANGIPURAM",
+      "mandal_name": "Phirangipuram",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|MEDIKONDURU",
+      "mandal_name": "Medikonduru",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.05,
+      "p90_mbgl": 6.4,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|GUNTUR",
+      "mandal_name": "Guntur",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|PEDAKAKANI",
+      "mandal_name": "Pedakakani",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|DUGGIRALA",
+      "mandal_name": "Duggirala",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.96,
+      "p90_mbgl": 6.7,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|KOLLIPARA",
+      "mandal_name": "Kollipara",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|TENALI",
+      "mandal_name": "Tenali",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|CHEBROLU",
+      "mandal_name": "Chebrolu",
+      "est_mbgl": 7.12,
+      "p10_mbgl": 3.96,
+      "p90_mbgl": 6.7,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|VATTICHERUKURU",
+      "mandal_name": "Vatticherukuru",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|PRATHIPADU",
+      "mandal_name": "Prathipadu",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|PEDANANDIPADU",
+      "mandal_name": "Pedanandipadu",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|KAKUMANU",
+      "mandal_name": "Kakumanu",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|PONNUR",
+      "mandal_name": "Ponnur",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|TSUNDUR",
+      "mandal_name": "Tsundur",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|AMRUTHALUR",
+      "mandal_name": "Amruthalur",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|VEMURU",
+      "mandal_name": "Vemuru",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|KOLLUR",
+      "mandal_name": "Kollur",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|BHATTIPROLU",
+      "mandal_name": "Bhattiprolu",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|CHERUKUPALLE H/O ARUMBAKA",
+      "mandal_name": "Cherukupalle H/O Arumbaka",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|PITTALAVANIPALEM",
+      "mandal_name": "Pittalavanipalem",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|KARLAPALEM",
+      "mandal_name": "Karlapalem",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|BAPATLA",
+      "mandal_name": "Bapatla",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|NIZAMPATNAM",
+      "mandal_name": "Nizampatnam",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|NAGARAM",
+      "mandal_name": "Nagaram",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "GUNTUR|REPALLE",
+      "mandal_name": "Repalle",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.0,
+      "p90_mbgl": 6.4,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|YERRAGONDAPALEM",
+      "mandal_name": "Yerragondapalem",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|PULLALACHERUVU",
+      "mandal_name": "Pullalacheruvu",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.64,
+      "p90_mbgl": 6.57,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|TRIPURANTHAKAM",
+      "mandal_name": "Tripuranthakam",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|DORNALA",
+      "mandal_name": "Dornala",
+      "est_mbgl": 7.05,
+      "p10_mbgl": 4.55,
+      "p90_mbgl": 6.57,
+      "band_m": 2.02,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|PEDA ARAVEEDU",
+      "mandal_name": "Peda Araveedu",
+      "est_mbgl": 7.24,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|DONAKONDA",
+      "mandal_name": "Donakonda",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|KURICHEDU",
+      "mandal_name": "Kurichedu",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|SANTHAMAGULURU",
+      "mandal_name": "Santhamaguluru",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|BALLIKURAVA",
+      "mandal_name": "Ballikurava",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|MARTUR",
+      "mandal_name": "Martur",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|YEDDANA PUDI",
+      "mandal_name": "Yeddana Pudi",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|PARCHUR",
+      "mandal_name": "Parchur",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|KARAMCHEDU",
+      "mandal_name": "Karamchedu",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|INKOLLU",
+      "mandal_name": "Inkollu",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|JANAKAVARAMPANGULURU",
+      "mandal_name": "Janakavarampanguluru",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|ADDANKI",
+      "mandal_name": "Addanki",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|MUNDLAMURU",
+      "mandal_name": "Mundlamuru",
+      "est_mbgl": 6.92,
+      "p10_mbgl": 4.31,
+      "p90_mbgl": 6.54,
+      "band_m": 2.22,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|DARSI",
+      "mandal_name": "Darsi",
+      "est_mbgl": 7.26,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|MARKAPUR",
+      "mandal_name": "Markapur",
+      "est_mbgl": 7.26,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|ARDHAVEEDU",
+      "mandal_name": "Ardhaveedu",
+      "est_mbgl": 7.05,
+      "p10_mbgl": 4.47,
+      "p90_mbgl": 6.57,
+      "band_m": 2.1,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|CUMBUM",
+      "mandal_name": "Cumbum",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|TARLUPADU",
+      "mandal_name": "Tarlupadu",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|KONAKANAMITLA",
+      "mandal_name": "Konakanamitla",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.65,
+      "band_m": 1.92,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|PODILI",
+      "mandal_name": "Podili",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|THALLUR",
+      "mandal_name": "Thallur",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.64,
+      "p90_mbgl": 6.57,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|KORISAPADU",
+      "mandal_name": "Korisapadu",
+      "est_mbgl": 7.06,
+      "p10_mbgl": 4.45,
+      "p90_mbgl": 6.55,
+      "band_m": 2.1,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|CHIRALA",
+      "mandal_name": "Chirala",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|VETAPALEM",
+      "mandal_name": "Vetapalem",
+      "est_mbgl": 6.93,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.54,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|CHINAGANJAM",
+      "mandal_name": "Chinaganjam",
+      "est_mbgl": 6.92,
+      "p10_mbgl": 4.31,
+      "p90_mbgl": 6.54,
+      "band_m": 2.22,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|NAGULUPPALA PADU",
+      "mandal_name": "Naguluppala Padu",
+      "est_mbgl": 7.05,
+      "p10_mbgl": 4.47,
+      "p90_mbgl": 6.57,
+      "band_m": 2.1,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|MADDIPADU",
+      "mandal_name": "Maddipadu",
+      "est_mbgl": 7.05,
+      "p10_mbgl": 4.55,
+      "p90_mbgl": 6.57,
+      "band_m": 2.02,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|CHIMAKURTHI",
+      "mandal_name": "Chimakurthi",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|MARRIPUDI",
+      "mandal_name": "Marripudi",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.6,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|HANUMANTHUNI PADU",
+      "mandal_name": "Hanumanthuni Padu",
+      "est_mbgl": 7.29,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.65,
+      "band_m": 1.92,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|BESTAWARIPETA",
+      "mandal_name": "Bestawaripeta",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|RACHERLA",
+      "mandal_name": "Racherla",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|GIDDALUR",
+      "mandal_name": "Giddalur",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|KOMAROLU",
+      "mandal_name": "Komarolu",
+      "est_mbgl": 7.24,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|VELIGANDLA",
+      "mandal_name": "Veligandla",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|KANIGIRI",
+      "mandal_name": "Kanigiri",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|KONDAPI",
+      "mandal_name": "Kondapi",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|SANTHANUTHALA PADU",
+      "mandal_name": "Santhanuthala Padu",
+      "est_mbgl": 7.24,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|ONGOLE",
+      "mandal_name": "Ongole",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|KOTHA PATNAM",
+      "mandal_name": "Kotha Patnam",
+      "est_mbgl": 7.24,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|TANGUTUR",
+      "mandal_name": "Tangutur",
+      "est_mbgl": 7.26,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|ZARUGUMILLI",
+      "mandal_name": "Zarugumilli",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|PONNALURU",
+      "mandal_name": "Ponnaluru",
+      "est_mbgl": 7.26,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.58,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|PEDACHERLO PALLE",
+      "mandal_name": "Pedacherlo Palle",
+      "est_mbgl": 7.24,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|CHANDRA SEKHARA PURAM",
+      "mandal_name": "Chandra Sekhara Puram",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|PAMUR",
+      "mandal_name": "Pamur",
+      "est_mbgl": 7.24,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|VOLETIVARIPALEM",
+      "mandal_name": "Voletivaripalem",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|KANDUKUR",
+      "mandal_name": "Kandukur",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|SINGARAYAKONDA",
+      "mandal_name": "Singarayakonda",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.61,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|LINGASAMUDRAM",
+      "mandal_name": "Lingasamudram",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.64,
+      "p90_mbgl": 6.57,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|GUDLURU",
+      "mandal_name": "Gudluru",
+      "est_mbgl": 7.14,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.57,
+      "band_m": 1.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "PRAKASAM|ULAVAPADU",
+      "mandal_name": "Ulavapadu",
+      "est_mbgl": 7.26,
+      "p10_mbgl": 4.73,
+      "p90_mbgl": 6.58,
+      "band_m": 1.84,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|SEETHARAMAPURAM",
+      "mandal_name": "Seetharamapuram",
+      "est_mbgl": 7.39,
+      "p10_mbgl": 6.27,
+      "p90_mbgl": 8.6,
+      "band_m": 2.33,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|UDAYAGIRI",
+      "mandal_name": "Udayagiri",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 6.28,
+      "p90_mbgl": 8.56,
+      "band_m": 2.28,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|VARIKUNTAPADU",
+      "mandal_name": "Varikuntapadu",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 6.2,
+      "p90_mbgl": 8.56,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|KONDAPURAM",
+      "mandal_name": "Kondapuram",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 6.01,
+      "p90_mbgl": 8.52,
+      "band_m": 2.51,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|JALADANKI",
+      "mandal_name": "Jaladanki",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 6.01,
+      "p90_mbgl": 8.52,
+      "band_m": 2.51,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|KAVALI",
+      "mandal_name": "Kavali",
+      "est_mbgl": 7.23,
+      "p10_mbgl": 6.16,
+      "p90_mbgl": 8.52,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|BOGOLE",
+      "mandal_name": "Bogole",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 6.01,
+      "p90_mbgl": 8.52,
+      "band_m": 2.51,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|KALIGIRI",
+      "mandal_name": "Kaligiri",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|VINJAMUR",
+      "mandal_name": "Vinjamur",
+      "est_mbgl": 7.22,
+      "p10_mbgl": 6.16,
+      "p90_mbgl": 8.52,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|DUTTALUR",
+      "mandal_name": "Duttalur",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 6.17,
+      "p90_mbgl": 8.52,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|MARRIPADU",
+      "mandal_name": "Marripadu",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 6.2,
+      "p90_mbgl": 8.56,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|ATMAKUR",
+      "mandal_name": "Atmakur",
+      "est_mbgl": 7.22,
+      "p10_mbgl": 6.16,
+      "p90_mbgl": 8.52,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|ANUMASAMUDRAMPETA",
+      "mandal_name": "Anumasamudrampeta",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|DAGADARTHI",
+      "mandal_name": "Dagadarthi",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|ALLUR",
+      "mandal_name": "Allur",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|VIDAVALUR",
+      "mandal_name": "Vidavalur",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 5.91,
+      "p90_mbgl": 8.52,
+      "band_m": 2.61,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|KODAVALUR",
+      "mandal_name": "Kodavalur",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 5.91,
+      "p90_mbgl": 8.52,
+      "band_m": 2.61,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|BUCHIREDDIPALEM",
+      "mandal_name": "Buchireddipalem",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|SANGAM",
+      "mandal_name": "Sangam",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|CHEJERLA",
+      "mandal_name": "Chejerla",
+      "est_mbgl": 7.24,
+      "p10_mbgl": 6.17,
+      "p90_mbgl": 8.52,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|ANANTHASAGARAM",
+      "mandal_name": "Ananthasagaram",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 6.2,
+      "p90_mbgl": 8.56,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|KALUVOYA",
+      "mandal_name": "Kaluvoya",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 6.2,
+      "p90_mbgl": 8.56,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|RAPUR",
+      "mandal_name": "Rapur",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 6.28,
+      "p90_mbgl": 8.56,
+      "band_m": 2.28,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|PODALAKUR",
+      "mandal_name": "Podalakur",
+      "est_mbgl": 7.24,
+      "p10_mbgl": 6.17,
+      "p90_mbgl": 8.52,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|NELLORE",
+      "mandal_name": "Nellore",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|KOVUR",
+      "mandal_name": "Kovur",
+      "est_mbgl": 7.17,
+      "p10_mbgl": 5.91,
+      "p90_mbgl": 8.52,
+      "band_m": 2.61,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|INDUKURPET",
+      "mandal_name": "Indukurpet",
+      "est_mbgl": 7.02,
+      "p10_mbgl": 5.77,
+      "p90_mbgl": 8.51,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|THOTAPALLIGUDUR",
+      "mandal_name": "Thotapalligudur",
+      "est_mbgl": 7.02,
+      "p10_mbgl": 5.77,
+      "p90_mbgl": 8.51,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|MUTHUKUR",
+      "mandal_name": "Muthukur",
+      "est_mbgl": 7.03,
+      "p10_mbgl": 5.77,
+      "p90_mbgl": 8.51,
+      "band_m": 2.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|VENKATACHALAM",
+      "mandal_name": "Venkatachalam",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|MANUBOLU",
+      "mandal_name": "Manubolu",
+      "est_mbgl": 7.22,
+      "p10_mbgl": 6.16,
+      "p90_mbgl": 8.52,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|GUDUR",
+      "mandal_name": "Gudur",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 6.2,
+      "p90_mbgl": 8.56,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|SYDAPURAM",
+      "mandal_name": "Sydapuram",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 6.28,
+      "p90_mbgl": 8.56,
+      "band_m": 2.28,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|DAKKILI",
+      "mandal_name": "Dakkili",
+      "est_mbgl": 7.37,
+      "p10_mbgl": 6.59,
+      "p90_mbgl": 8.68,
+      "band_m": 2.09,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|VENKATAGIRI",
+      "mandal_name": "Venkatagiri",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 7.17,
+      "p90_mbgl": 8.69,
+      "band_m": 1.52,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|BALAYAPALLE",
+      "mandal_name": "Balayapalle",
+      "est_mbgl": 7.38,
+      "p10_mbgl": 6.26,
+      "p90_mbgl": 8.6,
+      "band_m": 2.34,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|OJILI",
+      "mandal_name": "Ojili",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 6.2,
+      "p90_mbgl": 8.56,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|CHILLAKUR",
+      "mandal_name": "Chillakur",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 6.01,
+      "p90_mbgl": 8.52,
+      "band_m": 2.51,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|KOTA",
+      "mandal_name": "Kota",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|VAKADU",
+      "mandal_name": "Vakadu",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 5.93,
+      "p90_mbgl": 8.52,
+      "band_m": 2.59,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|CHITTAMUR",
+      "mandal_name": "Chittamur",
+      "est_mbgl": 7.15,
+      "p10_mbgl": 6.01,
+      "p90_mbgl": 8.52,
+      "band_m": 2.51,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|NAIDUPET",
+      "mandal_name": "Naidupet",
+      "est_mbgl": 7.34,
+      "p10_mbgl": 6.17,
+      "p90_mbgl": 8.52,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|PELLAKUR",
+      "mandal_name": "Pellakur",
+      "est_mbgl": 7.4,
+      "p10_mbgl": 6.2,
+      "p90_mbgl": 8.56,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|DORAVARISATRAM",
+      "mandal_name": "Doravarisatram",
+      "est_mbgl": 7.23,
+      "p10_mbgl": 6.16,
+      "p90_mbgl": 8.52,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|SULLURPETA",
+      "mandal_name": "Sullurpeta",
+      "est_mbgl": 7.22,
+      "p10_mbgl": 6.1,
+      "p90_mbgl": 8.52,
+      "band_m": 2.42,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "SRI POTTI SRIRAMULU NELLORE|TADA",
+      "mandal_name": "Tada",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 6.17,
+      "p90_mbgl": 8.52,
+      "band_m": 2.35,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|KONDAPURAM",
+      "mandal_name": "Kondapuram",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|MYLAVARAM",
+      "mandal_name": "Mylavaram",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|PEDDAMUDIUM",
+      "mandal_name": "Peddamudium",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|RAJUPALEM",
+      "mandal_name": "Rajupalem",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|DUVVUR",
+      "mandal_name": "Duvvur",
+      "est_mbgl": 7.21,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.59,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|S.MYDUKUR",
+      "mandal_name": "S.Mydukur",
+      "est_mbgl": 7.21,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.59,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|BRAHMAMGARIMATTAM",
+      "mandal_name": "Brahmamgarimattam",
+      "est_mbgl": 7.21,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.59,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|SRI AVADHUTHA KASINAYANA",
+      "mandal_name": "Sri Avadhutha Kasinayana",
+      "est_mbgl": 7.16,
+      "p10_mbgl": 4.68,
+      "p90_mbgl": 6.55,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|KALASAPADU",
+      "mandal_name": "Kalasapadu",
+      "est_mbgl": 7.05,
+      "p10_mbgl": 4.68,
+      "p90_mbgl": 6.55,
+      "band_m": 1.87,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|PORUMAMILLA",
+      "mandal_name": "Porumamilla",
+      "est_mbgl": 7.22,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.6,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|B.KODUR",
+      "mandal_name": "B.Kodur",
+      "est_mbgl": 7.21,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.59,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|BADVEL",
+      "mandal_name": "Badvel",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|GOPAVARAM",
+      "mandal_name": "Gopavaram",
+      "est_mbgl": 7.2,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.59,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|KHAJIPET",
+      "mandal_name": "Khajipet",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|CHAPAD",
+      "mandal_name": "Chapad",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|PRODDATUR",
+      "mandal_name": "Proddatur",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|JAMMALAMADUGU",
+      "mandal_name": "Jammalamadugu",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|MUDDANUR",
+      "mandal_name": "Muddanur",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|SIMHADRIPURAM",
+      "mandal_name": "Simhadripuram",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|LINGALA",
+      "mandal_name": "Lingala",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|PULIVENDLA",
+      "mandal_name": "Pulivendla",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|VEMULA",
+      "mandal_name": "Vemula",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|THONDUR",
+      "mandal_name": "Thondur",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|VEERAPUNAYUNIPALLE",
+      "mandal_name": "Veerapunayunipalle",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|YERRAGUNTLA",
+      "mandal_name": "Yerraguntla",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|KAMALAPURAM",
+      "mandal_name": "Kamalapuram",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|VALLUR",
+      "mandal_name": "Vallur",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|CHENNUR",
+      "mandal_name": "Chennur",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|ATLUR",
+      "mandal_name": "Atlur",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|VONTIMITTA",
+      "mandal_name": "Vontimitta",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|SIDHOUT",
+      "mandal_name": "Sidhout",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|KADAPA",
+      "mandal_name": "Kadapa",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|CHINTHAKOMMADINNE",
+      "mandal_name": "Chinthakommadinne",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|PENDLIMARRI",
+      "mandal_name": "Pendlimarri",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|VEMPALLE",
+      "mandal_name": "Vempalle",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|CHAKRAYAPET",
+      "mandal_name": "Chakrayapet",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|GALIVEEDU",
+      "mandal_name": "Galiveedu",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|CHINNAMANDEM",
+      "mandal_name": "Chinnamandem",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|SAMBEPALLE",
+      "mandal_name": "Sambepalle",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|T SUNDUPALLE",
+      "mandal_name": "T Sundupalle",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|RAYACHOTI",
+      "mandal_name": "Rayachoti",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|LAKKIREDDIPALLE",
+      "mandal_name": "Lakkireddipalle",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|RAMAPURAM",
+      "mandal_name": "Ramapuram",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|VEERABALLE",
+      "mandal_name": "Veeraballe",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|NANDALUR",
+      "mandal_name": "Nandalur",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|PENAGALUR",
+      "mandal_name": "Penagalur",
+      "est_mbgl": 7.2,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.59,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|CHITVEL",
+      "mandal_name": "Chitvel",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.76,
+      "p90_mbgl": 6.64,
+      "band_m": 1.88,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|RAJAMPET",
+      "mandal_name": "Rajampet",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.71,
+      "p90_mbgl": 6.64,
+      "band_m": 1.93,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|PULLAMPETA",
+      "mandal_name": "Pullampeta",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|OBULAVARIPALLE",
+      "mandal_name": "Obulavaripalle",
+      "est_mbgl": 7.18,
+      "p10_mbgl": 4.7,
+      "p90_mbgl": 6.64,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "Y.S.R.|KODUR",
+      "mandal_name": "Kodur",
+      "est_mbgl": 7.19,
+      "p10_mbgl": 4.92,
+      "p90_mbgl": 6.72,
+      "band_m": 1.8,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|MANTRALAYAM",
+      "mandal_name": "Mantralayam",
+      "est_mbgl": 6.19,
+      "p10_mbgl": 3.94,
+      "p90_mbgl": 6.15,
+      "band_m": 2.21,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|KOSIGI",
+      "mandal_name": "Kosigi",
+      "est_mbgl": 6.05,
+      "p10_mbgl": 3.8,
+      "p90_mbgl": 6.12,
+      "band_m": 2.31,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|KOWTHALAM",
+      "mandal_name": "Kowthalam",
+      "est_mbgl": 6.01,
+      "p10_mbgl": 3.76,
+      "p90_mbgl": 6.34,
+      "band_m": 2.58,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|PEDDA KADUBUR",
+      "mandal_name": "Pedda Kadubur",
+      "est_mbgl": 6.19,
+      "p10_mbgl": 3.94,
+      "p90_mbgl": 6.15,
+      "band_m": 2.21,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|YEMMIGANUR",
+      "mandal_name": "Yemmiganur",
+      "est_mbgl": 6.15,
+      "p10_mbgl": 3.91,
+      "p90_mbgl": 6.15,
+      "band_m": 2.23,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|NANDAVARAM",
+      "mandal_name": "Nandavaram",
+      "est_mbgl": 6.19,
+      "p10_mbgl": 3.96,
+      "p90_mbgl": 6.15,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|C.BELAGAL",
+      "mandal_name": "C.Belagal",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.13,
+      "p90_mbgl": 6.15,
+      "band_m": 2.02,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|GUDUR",
+      "mandal_name": "Gudur",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|KALLUR",
+      "mandal_name": "Kallur",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|KURNOOL",
+      "mandal_name": "Kurnool",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.13,
+      "p90_mbgl": 6.15,
+      "band_m": 2.02,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|NANDIKOTKUR",
+      "mandal_name": "Nandikotkur",
+      "est_mbgl": 6.04,
+      "p10_mbgl": 3.8,
+      "p90_mbgl": 6.12,
+      "band_m": 2.31,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|PAGIDYALA",
+      "mandal_name": "Pagidyala",
+      "est_mbgl": 6.05,
+      "p10_mbgl": 3.75,
+      "p90_mbgl": 6.12,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|JUPADU BUNGALOW",
+      "mandal_name": "Jupadu Bungalow",
+      "est_mbgl": 6.05,
+      "p10_mbgl": 3.75,
+      "p90_mbgl": 6.12,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|KOTHAPALLE",
+      "mandal_name": "Kothapalle",
+      "est_mbgl": 6.05,
+      "p10_mbgl": 3.75,
+      "p90_mbgl": 6.12,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|SRISAILAM",
+      "mandal_name": "Srisailam",
+      "est_mbgl": 6.19,
+      "p10_mbgl": 3.94,
+      "p90_mbgl": 6.15,
+      "band_m": 2.21,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|ATMAKUR",
+      "mandal_name": "Atmakur",
+      "est_mbgl": 6.05,
+      "p10_mbgl": 3.75,
+      "p90_mbgl": 6.12,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|PAMULAPADU",
+      "mandal_name": "Pamulapadu",
+      "est_mbgl": 6.05,
+      "p10_mbgl": 3.75,
+      "p90_mbgl": 6.12,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|MIDTHUR",
+      "mandal_name": "Midthur",
+      "est_mbgl": 6.05,
+      "p10_mbgl": 3.8,
+      "p90_mbgl": 6.12,
+      "band_m": 2.31,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|ORVAKAL",
+      "mandal_name": "Orvakal",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.13,
+      "p90_mbgl": 6.15,
+      "band_m": 2.02,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|KODUMUR",
+      "mandal_name": "Kodumur",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.19,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|GONEGANDLA",
+      "mandal_name": "Gonegandla",
+      "est_mbgl": 6.18,
+      "p10_mbgl": 4.03,
+      "p90_mbgl": 6.15,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|ADONI",
+      "mandal_name": "Adoni",
+      "est_mbgl": 6.15,
+      "p10_mbgl": 3.89,
+      "p90_mbgl": 6.44,
+      "band_m": 2.55,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|HOLAGUNDA",
+      "mandal_name": "Holagunda",
+      "est_mbgl": 6.21,
+      "p10_mbgl": 4.1,
+      "p90_mbgl": 6.35,
+      "band_m": 2.24,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|HALAHARVI",
+      "mandal_name": "Halaharvi",
+      "est_mbgl": 6.43,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.2,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|ALUR",
+      "mandal_name": "Alur",
+      "est_mbgl": 6.22,
+      "p10_mbgl": 4.11,
+      "p90_mbgl": 6.35,
+      "band_m": 2.23,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|ASPARI",
+      "mandal_name": "Aspari",
+      "est_mbgl": 6.18,
+      "p10_mbgl": 3.96,
+      "p90_mbgl": 6.15,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|DEVANAKONDA",
+      "mandal_name": "Devanakonda",
+      "est_mbgl": 6.18,
+      "p10_mbgl": 3.96,
+      "p90_mbgl": 6.15,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|KRISHNAGIRI",
+      "mandal_name": "Krishnagiri",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.19,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|VELDURTHI",
+      "mandal_name": "Veldurthi",
+      "est_mbgl": 6.39,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.16,
+      "band_m": 1.94,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|BETHAMCHERLA",
+      "mandal_name": "Bethamcherla",
+      "est_mbgl": 6.43,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.2,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|PANYAM",
+      "mandal_name": "Panyam",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.19,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|GADIVEMULA",
+      "mandal_name": "Gadivemula",
+      "est_mbgl": 6.19,
+      "p10_mbgl": 3.94,
+      "p90_mbgl": 6.15,
+      "band_m": 2.21,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|VELGODE",
+      "mandal_name": "Velgode",
+      "est_mbgl": 6.05,
+      "p10_mbgl": 3.75,
+      "p90_mbgl": 6.12,
+      "band_m": 2.36,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|BANDI ATMAKUR",
+      "mandal_name": "Bandi Atmakur",
+      "est_mbgl": 6.19,
+      "p10_mbgl": 3.94,
+      "p90_mbgl": 6.15,
+      "band_m": 2.21,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|NANDYAL",
+      "mandal_name": "Nandyal",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.13,
+      "p90_mbgl": 6.15,
+      "band_m": 2.02,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|MAHANANDI",
+      "mandal_name": "Mahanandi",
+      "est_mbgl": 6.18,
+      "p10_mbgl": 4.03,
+      "p90_mbgl": 6.15,
+      "band_m": 2.12,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|SIRVEL",
+      "mandal_name": "Sirvel",
+      "est_mbgl": 6.37,
+      "p10_mbgl": 4.19,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|GOSPADU",
+      "mandal_name": "Gospadu",
+      "est_mbgl": 6.37,
+      "p10_mbgl": 4.19,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|BANAGANAPALLE",
+      "mandal_name": "Banaganapalle",
+      "est_mbgl": 6.42,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.19,
+      "band_m": 1.97,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|DHONE",
+      "mandal_name": "Dhone",
+      "est_mbgl": 6.37,
+      "p10_mbgl": 4.19,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|PATTIKONDA",
+      "mandal_name": "Pattikonda",
+      "est_mbgl": 6.14,
+      "p10_mbgl": 3.99,
+      "p90_mbgl": 6.15,
+      "band_m": 2.16,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|CHIPPAGIRI",
+      "mandal_name": "Chippagiri",
+      "est_mbgl": 6.39,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.2,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|MADDIKERA (EAST)",
+      "mandal_name": "Maddikera (East)",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.18,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|TUGGALI",
+      "mandal_name": "Tuggali",
+      "est_mbgl": 6.27,
+      "p10_mbgl": 4.13,
+      "p90_mbgl": 6.15,
+      "band_m": 2.02,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|PEAPALLY",
+      "mandal_name": "Peapally",
+      "est_mbgl": 6.37,
+      "p10_mbgl": 4.19,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|OWK",
+      "mandal_name": "Owk",
+      "est_mbgl": 6.42,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.2,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|KOILKUNTLA",
+      "mandal_name": "Koilkuntla",
+      "est_mbgl": 6.43,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.2,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|RUDRAVARAM",
+      "mandal_name": "Rudravaram",
+      "est_mbgl": 6.29,
+      "p10_mbgl": 4.19,
+      "p90_mbgl": 6.15,
+      "band_m": 1.96,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|ALLAGADDA",
+      "mandal_name": "Allagadda",
+      "est_mbgl": 6.42,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.2,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|DORNIPADU",
+      "mandal_name": "Dornipadu",
+      "est_mbgl": 6.43,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.19,
+      "band_m": 1.97,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|SANJAMALA",
+      "mandal_name": "Sanjamala",
+      "est_mbgl": 6.41,
+      "p10_mbgl": 4.2,
+      "p90_mbgl": 6.24,
+      "band_m": 2.04,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|KOLIMIGUNDLA",
+      "mandal_name": "Kolimigundla",
+      "est_mbgl": 6.4,
+      "p10_mbgl": 4.2,
+      "p90_mbgl": 6.24,
+      "band_m": 2.04,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|UYYALAWADA",
+      "mandal_name": "Uyyalawada",
+      "est_mbgl": 6.41,
+      "p10_mbgl": 4.21,
+      "p90_mbgl": 6.24,
+      "band_m": 2.03,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "KURNOOL|CHAGALAMARRI",
+      "mandal_name": "Chagalamarri",
+      "est_mbgl": 6.42,
+      "p10_mbgl": 4.22,
+      "p90_mbgl": 6.2,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|D.HIREHAL",
+      "mandal_name": "D.Hirehal",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.46,
+      "band_m": 2.01,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|RAYADURG",
+      "mandal_name": "Rayadurg",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.52,
+      "band_m": 2.02,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|KANEKAL",
+      "mandal_name": "Kanekal",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.52,
+      "band_m": 2.08,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|BOMMANAHAL",
+      "mandal_name": "Bommanahal",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.46,
+      "p90_mbgl": 6.43,
+      "band_m": 1.97,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|VIDAPANAKAL",
+      "mandal_name": "Vidapanakal",
+      "est_mbgl": 6.59,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|GUNTAKAL",
+      "mandal_name": "Guntakal",
+      "est_mbgl": 6.55,
+      "p10_mbgl": 4.46,
+      "p90_mbgl": 6.15,
+      "band_m": 1.69,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|GOOTY",
+      "mandal_name": "Gooty",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.19,
+      "band_m": 1.69,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|PEDDAVADUGUR",
+      "mandal_name": "Peddavadugur",
+      "est_mbgl": 6.62,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.19,
+      "band_m": 1.69,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|YADIKI",
+      "mandal_name": "Yadiki",
+      "est_mbgl": 6.6,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.19,
+      "band_m": 1.69,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|TADPATRI",
+      "mandal_name": "Tadpatri",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|PEDDAPAPPUR",
+      "mandal_name": "Peddapappur",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|PAMIDI",
+      "mandal_name": "Pamidi",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.19,
+      "band_m": 1.69,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|VAJRAKARUR",
+      "mandal_name": "Vajrakarur",
+      "est_mbgl": 6.59,
+      "p10_mbgl": 4.46,
+      "p90_mbgl": 6.18,
+      "band_m": 1.73,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|URAVAKONDA",
+      "mandal_name": "Uravakonda",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|BELUGUPPA",
+      "mandal_name": "Beluguppa",
+      "est_mbgl": 6.62,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|GUMMAGATTA",
+      "mandal_name": "Gummagatta",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.52,
+      "band_m": 2.02,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|BRAHMASAMUDRAM",
+      "mandal_name": "Brahmasamudram",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.23,
+      "band_m": 1.73,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|KALYANDURG",
+      "mandal_name": "Kalyandurg",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.23,
+      "band_m": 1.79,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|ATMAKUR",
+      "mandal_name": "Atmakur",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.23,
+      "band_m": 1.79,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|KUDAIR",
+      "mandal_name": "Kudair",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|GARLADINNE",
+      "mandal_name": "Garladinne",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.46,
+      "band_m": 2.01,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|SINGANAMALA",
+      "mandal_name": "Singanamala",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|PUTLUR",
+      "mandal_name": "Putlur",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|YELLANUR",
+      "mandal_name": "Yellanur",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|NARPALA",
+      "mandal_name": "Narpala",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|BUKKARAYA SAMUDRAM",
+      "mandal_name": "Bukkaraya Samudram",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.23,
+      "band_m": 1.79,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|ANANTAPUR",
+      "mandal_name": "Anantapur",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|RAPTADU",
+      "mandal_name": "Raptadu",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|SETTUR",
+      "mandal_name": "Settur",
+      "est_mbgl": 6.62,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|KUNDURPI",
+      "mandal_name": "Kundurpi",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|KAMBADUR",
+      "mandal_name": "Kambadur",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|KANAGANAPALLE",
+      "mandal_name": "Kanaganapalle",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.46,
+      "band_m": 2.01,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|DHARMAVARAM",
+      "mandal_name": "Dharmavaram",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|BATHALAPALLE",
+      "mandal_name": "Bathalapalle",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|TADIMARRI",
+      "mandal_name": "Tadimarri",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|MUDIGUBBA",
+      "mandal_name": "Mudigubba",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|TALUPULA",
+      "mandal_name": "Talupula",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|NAMBULIPULIKUNTA",
+      "mandal_name": "Nambulipulikunta",
+      "est_mbgl": 6.62,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|GANDLAPENTA",
+      "mandal_name": "Gandlapenta",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.23,
+      "band_m": 1.79,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|KADIRI",
+      "mandal_name": "Kadiri",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|NALLAMADA",
+      "mandal_name": "Nallamada",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.46,
+      "p90_mbgl": 6.44,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|BUKKAPATNAM",
+      "mandal_name": "Bukkapatnam",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.23,
+      "band_m": 1.79,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|KOTHACHERUVU",
+      "mandal_name": "Kothacheruvu",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.23,
+      "band_m": 1.79,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|CHENNEKOTHAPALLE",
+      "mandal_name": "Chennekothapalle",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|RAMAGIRI",
+      "mandal_name": "Ramagiri",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|RODDAM",
+      "mandal_name": "Roddam",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.46,
+      "p90_mbgl": 6.44,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|MADAKASIRA",
+      "mandal_name": "Madakasira",
+      "est_mbgl": 6.56,
+      "p10_mbgl": 4.45,
+      "p90_mbgl": 6.46,
+      "band_m": 2.01,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|AMARAPURAM",
+      "mandal_name": "Amarapuram",
+      "est_mbgl": 6.57,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.52,
+      "band_m": 2.08,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|GUDIBANDA",
+      "mandal_name": "Gudibanda",
+      "est_mbgl": 6.56,
+      "p10_mbgl": 4.45,
+      "p90_mbgl": 6.46,
+      "band_m": 2.01,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|ROLLA",
+      "mandal_name": "Rolla",
+      "est_mbgl": 6.57,
+      "p10_mbgl": 4.47,
+      "p90_mbgl": 6.44,
+      "band_m": 1.97,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|AGALI",
+      "mandal_name": "Agali",
+      "est_mbgl": 6.62,
+      "p10_mbgl": 4.54,
+      "p90_mbgl": 6.23,
+      "band_m": 1.69,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|PARIGI",
+      "mandal_name": "Parigi",
+      "est_mbgl": 6.57,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.39,
+      "band_m": 1.91,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|PENUKONDA",
+      "mandal_name": "Penukonda",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.23,
+      "band_m": 1.79,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|PUTTAPARTHI",
+      "mandal_name": "Puttaparthi",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|OBULADEVARACHERUVU",
+      "mandal_name": "Obuladevaracheruvu",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.46,
+      "band_m": 2.01,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|NALLACHERUVU",
+      "mandal_name": "Nallacheruvu",
+      "est_mbgl": 6.62,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|TANAKAL",
+      "mandal_name": "Tanakal",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.23,
+      "band_m": 1.73,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|AMADAGUR",
+      "mandal_name": "Amadagur",
+      "est_mbgl": 6.62,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.75,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|GORANTLA",
+      "mandal_name": "Gorantla",
+      "est_mbgl": 6.57,
+      "p10_mbgl": 4.44,
+      "p90_mbgl": 6.52,
+      "band_m": 2.08,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|SOMANDEPALLE",
+      "mandal_name": "Somandepalle",
+      "est_mbgl": 6.58,
+      "p10_mbgl": 4.46,
+      "p90_mbgl": 6.44,
+      "band_m": 1.98,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|HINDUPUR",
+      "mandal_name": "Hindupur",
+      "est_mbgl": 6.59,
+      "p10_mbgl": 4.46,
+      "p90_mbgl": 6.41,
+      "band_m": 1.95,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|LEPAKSHI",
+      "mandal_name": "Lepakshi",
+      "est_mbgl": 6.62,
+      "p10_mbgl": 4.5,
+      "p90_mbgl": 6.19,
+      "band_m": 1.69,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "ANANTAPUR|CHILAMATHUR",
+      "mandal_name": "Chilamathur",
+      "est_mbgl": 6.61,
+      "p10_mbgl": 4.49,
+      "p90_mbgl": 6.23,
+      "band_m": 1.74,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|MULAKALACHERUVU",
+      "mandal_name": "Mulakalacheruvu",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.72,
+      "p90_mbgl": 8.23,
+      "band_m": 2.51,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|THAMBALLAPALLE",
+      "mandal_name": "Thamballapalle",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.7,
+      "p90_mbgl": 8.31,
+      "band_m": 2.61,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PEDDAMANDYAM",
+      "mandal_name": "Peddamandyam",
+      "est_mbgl": 7.32,
+      "p10_mbgl": 5.38,
+      "p90_mbgl": 8.23,
+      "band_m": 2.85,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|GURRAMKONDA",
+      "mandal_name": "Gurramkonda",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.59,
+      "p90_mbgl": 8.23,
+      "band_m": 2.64,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|KALAKADA",
+      "mandal_name": "Kalakada",
+      "est_mbgl": 7.37,
+      "p10_mbgl": 5.37,
+      "p90_mbgl": 8.23,
+      "band_m": 2.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|KAMBHAMVARIPALLE",
+      "mandal_name": "Kambhamvaripalle",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.37,
+      "p90_mbgl": 8.23,
+      "band_m": 2.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|ROMPICHERLA",
+      "mandal_name": "Rompicherla",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.37,
+      "p90_mbgl": 8.23,
+      "band_m": 2.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|YERRAVARIPALEM",
+      "mandal_name": "Yerravaripalem",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.42,
+      "p90_mbgl": 8.23,
+      "band_m": 2.81,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|TIRUPATI (RURAL)",
+      "mandal_name": "Tirupati (Rural)",
+      "est_mbgl": 7.53,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.55,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|RENIGUNTA",
+      "mandal_name": "Renigunta",
+      "est_mbgl": 7.53,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.55,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|YERPEDU",
+      "mandal_name": "Yerpedu",
+      "est_mbgl": 7.59,
+      "p10_mbgl": 6.31,
+      "p90_mbgl": 8.41,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|SRIKALAHASTI",
+      "mandal_name": "Srikalahasti",
+      "est_mbgl": 7.39,
+      "p10_mbgl": 6.31,
+      "p90_mbgl": 8.34,
+      "band_m": 2.03,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|THOTTAMBEDU",
+      "mandal_name": "Thottambedu",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.37,
+      "p90_mbgl": 8.23,
+      "band_m": 2.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|BUCHINAIDU KANDRIGA",
+      "mandal_name": "Buchinaidu Kandriga",
+      "est_mbgl": 7.38,
+      "p10_mbgl": 5.38,
+      "p90_mbgl": 8.16,
+      "band_m": 2.78,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|VARADAIAHPALEM",
+      "mandal_name": "Varadaiahpalem",
+      "est_mbgl": 7.32,
+      "p10_mbgl": 5.28,
+      "p90_mbgl": 8.09,
+      "band_m": 2.81,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|K.V.B.PURAM",
+      "mandal_name": "K.V.B.Puram",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.37,
+      "p90_mbgl": 8.23,
+      "band_m": 2.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|TIRUPATI (URBAN)",
+      "mandal_name": "Tirupati (Urban)",
+      "est_mbgl": 7.56,
+      "p10_mbgl": 6.27,
+      "p90_mbgl": 8.41,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|CHANDRAGIRI",
+      "mandal_name": "Chandragiri",
+      "est_mbgl": 7.39,
+      "p10_mbgl": 6.31,
+      "p90_mbgl": 8.34,
+      "band_m": 2.03,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|CHINNAGOTTIGALLU",
+      "mandal_name": "Chinnagottigallu",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.7,
+      "p90_mbgl": 8.33,
+      "band_m": 2.64,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PILERU",
+      "mandal_name": "Pileru",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.37,
+      "p90_mbgl": 8.23,
+      "band_m": 2.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|KALIKIRI",
+      "mandal_name": "Kalikiri",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.37,
+      "p90_mbgl": 8.23,
+      "band_m": 2.86,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|VALMIKIPURAM",
+      "mandal_name": "Valmikipuram",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.42,
+      "p90_mbgl": 8.23,
+      "band_m": 2.8,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|KURABALAKOTA",
+      "mandal_name": "Kurabalakota",
+      "est_mbgl": 7.31,
+      "p10_mbgl": 6.07,
+      "p90_mbgl": 8.33,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PEDDA THIPPASAMUDRAM",
+      "mandal_name": "Pedda Thippasamudram",
+      "est_mbgl": 7.3,
+      "p10_mbgl": 5.68,
+      "p90_mbgl": 8.57,
+      "band_m": 2.89,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|B.KOTHAKOTA",
+      "mandal_name": "B.Kothakota",
+      "est_mbgl": 7.27,
+      "p10_mbgl": 6.03,
+      "p90_mbgl": 8.33,
+      "band_m": 2.31,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|MADANAPALLE",
+      "mandal_name": "Madanapalle",
+      "est_mbgl": 7.28,
+      "p10_mbgl": 6.18,
+      "p90_mbgl": 8.62,
+      "band_m": 2.45,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|NIMMANAPALLE",
+      "mandal_name": "Nimmanapalle",
+      "est_mbgl": 7.32,
+      "p10_mbgl": 5.66,
+      "p90_mbgl": 8.33,
+      "band_m": 2.68,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|SODAM",
+      "mandal_name": "Sodam",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.42,
+      "p90_mbgl": 8.23,
+      "band_m": 2.81,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PULICHERLA",
+      "mandal_name": "Pulicherla",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.62,
+      "p90_mbgl": 8.23,
+      "band_m": 2.61,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PAKALA",
+      "mandal_name": "Pakala",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 5.72,
+      "p90_mbgl": 8.23,
+      "band_m": 2.51,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|VEDURUKUPPAM",
+      "mandal_name": "Vedurukuppam",
+      "est_mbgl": 7.61,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.55,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|RAMACHANDRAPURAM",
+      "mandal_name": "Ramachandrapuram",
+      "est_mbgl": 7.6,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.55,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|VADAMALAPETA",
+      "mandal_name": "Vadamalapeta",
+      "est_mbgl": 7.53,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.55,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|NARAYANAVANAM",
+      "mandal_name": "Narayanavanam",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.7,
+      "p90_mbgl": 8.33,
+      "band_m": 2.64,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PICHATUR",
+      "mandal_name": "Pichatur",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 5.42,
+      "p90_mbgl": 8.23,
+      "band_m": 2.81,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|SATYAVEDU",
+      "mandal_name": "Satyavedu",
+      "est_mbgl": 7.38,
+      "p10_mbgl": 5.31,
+      "p90_mbgl": 8.16,
+      "band_m": 2.85,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|NAGALAPURAM",
+      "mandal_name": "Nagalapuram",
+      "est_mbgl": 7.37,
+      "p10_mbgl": 5.38,
+      "p90_mbgl": 8.18,
+      "band_m": 2.8,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|NINDRA",
+      "mandal_name": "Nindra",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 5.7,
+      "p90_mbgl": 8.33,
+      "band_m": 2.64,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|VIJAYAPURAM",
+      "mandal_name": "Vijayapuram",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.8,
+      "p90_mbgl": 8.33,
+      "band_m": 2.53,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|NAGARI",
+      "mandal_name": "Nagari",
+      "est_mbgl": 7.59,
+      "p10_mbgl": 6.31,
+      "p90_mbgl": 8.41,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PUTTUR",
+      "mandal_name": "Puttur",
+      "est_mbgl": 7.59,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.55,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|KARVETINAGAR",
+      "mandal_name": "Karvetinagar",
+      "est_mbgl": 7.58,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.55,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PENUMURU",
+      "mandal_name": "Penumuru",
+      "est_mbgl": 7.31,
+      "p10_mbgl": 6.22,
+      "p90_mbgl": 8.33,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PUTHALAPATTU",
+      "mandal_name": "Puthalapattu",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 5.7,
+      "p90_mbgl": 8.33,
+      "band_m": 2.64,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|IRALA",
+      "mandal_name": "Irala",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.42,
+      "p90_mbgl": 8.23,
+      "band_m": 2.8,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|SOMALA",
+      "mandal_name": "Somala",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.7,
+      "p90_mbgl": 8.33,
+      "band_m": 2.64,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|CHOWDEPALLE",
+      "mandal_name": "Chowdepalle",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.7,
+      "p90_mbgl": 8.33,
+      "band_m": 2.64,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|RAMASAMUDRAM",
+      "mandal_name": "Ramasamudram",
+      "est_mbgl": 7.27,
+      "p10_mbgl": 6.24,
+      "p90_mbgl": 8.66,
+      "band_m": 2.42,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PUNGANUR",
+      "mandal_name": "Punganur",
+      "est_mbgl": 7.31,
+      "p10_mbgl": 6.22,
+      "p90_mbgl": 8.33,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PEDDAPANJANI",
+      "mandal_name": "Peddapanjani",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.8,
+      "p90_mbgl": 8.33,
+      "band_m": 2.53,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|GANGAVARAM",
+      "mandal_name": "Gangavaram",
+      "est_mbgl": 7.36,
+      "p10_mbgl": 5.8,
+      "p90_mbgl": 8.33,
+      "band_m": 2.53,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|THAVANAMPALLE",
+      "mandal_name": "Thavanampalle",
+      "est_mbgl": 7.35,
+      "p10_mbgl": 5.7,
+      "p90_mbgl": 8.33,
+      "band_m": 2.64,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|SRIRANGARAJAPURAM",
+      "mandal_name": "Srirangarajapuram",
+      "est_mbgl": 7.61,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.51,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|GANGADHARA NELLORE",
+      "mandal_name": "Gangadhara Nellore",
+      "est_mbgl": 7.59,
+      "p10_mbgl": 6.31,
+      "p90_mbgl": 8.41,
+      "band_m": 2.11,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|CHITTOOR",
+      "mandal_name": "Chittoor",
+      "est_mbgl": 7.39,
+      "p10_mbgl": 6.31,
+      "p90_mbgl": 8.34,
+      "band_m": 2.03,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PALAMANER",
+      "mandal_name": "Palamaner",
+      "est_mbgl": 7.31,
+      "p10_mbgl": 6.07,
+      "p90_mbgl": 8.33,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|BAIREDDIPALLE",
+      "mandal_name": "Baireddipalle",
+      "est_mbgl": 7.31,
+      "p10_mbgl": 6.08,
+      "p90_mbgl": 8.33,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|VENKATAGIRIKOTA",
+      "mandal_name": "Venkatagirikota",
+      "est_mbgl": 7.28,
+      "p10_mbgl": 6.18,
+      "p90_mbgl": 8.33,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|SANTHIPURAM",
+      "mandal_name": "Santhipuram",
+      "est_mbgl": 7.56,
+      "p10_mbgl": 6.27,
+      "p90_mbgl": 8.41,
+      "band_m": 2.15,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|GUDUPALLE",
+      "mandal_name": "Gudupalle",
+      "est_mbgl": 7.39,
+      "p10_mbgl": 6.31,
+      "p90_mbgl": 8.34,
+      "band_m": 2.03,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|KUPPAM",
+      "mandal_name": "Kuppam",
+      "est_mbgl": 7.28,
+      "p10_mbgl": 6.23,
+      "p90_mbgl": 8.63,
+      "band_m": 2.41,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|RAMAKUPPAM",
+      "mandal_name": "Ramakuppam",
+      "est_mbgl": 7.58,
+      "p10_mbgl": 6.27,
+      "p90_mbgl": 8.76,
+      "band_m": 2.49,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|BANGARUPALEM",
+      "mandal_name": "Bangarupalem",
+      "est_mbgl": 7.31,
+      "p10_mbgl": 6.07,
+      "p90_mbgl": 8.33,
+      "band_m": 2.26,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|YADAMARRI",
+      "mandal_name": "Yadamarri",
+      "est_mbgl": 7.39,
+      "p10_mbgl": 6.31,
+      "p90_mbgl": 8.34,
+      "band_m": 2.03,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|GUDIPALA",
+      "mandal_name": "Gudipala",
+      "est_mbgl": 7.58,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.55,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    },
+    {
+      "mandal_id": "CHITTOOR|PALASAMUDRAM",
+      "mandal_name": "Palasamudram",
+      "est_mbgl": 7.58,
+      "p10_mbgl": 6.36,
+      "p90_mbgl": 8.55,
+      "band_m": 2.19,
+      "basis": "sat-only (estimated)"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+ "generated_at": "2026-06-18T15:03:51",
+ "generator": "phase3_levels/build_real_app_data.py",
+ "source_inputs": [
+  "phase3_levels/outputs/mandal_levels_estimated.json (APWRIMS-trained levels engine)",
+  "phase3_levels/apwrims/apwrims_gw_history.csv (APWRIMS session sample, auth pending)",
+  "app/data/ap_district_geometry.json (NASA GRACE-DA / TerraClimate district signals)",
+  "app/data/ap_mandal_heat.json (CHIRPS rainfall / TerraClimate water balance)"
+ ],
+ "caveat": "Prototype \u2014 modelled estimates, not official APWRIMS results.",
+ "files": [
+  {
+   "file": "ap_district_geometry.json",
+   "bytes": 151723,
+   "sha256": "a4ca325b49677c973a2b6f774efda5747b70f0747370bcafa92b2b1adac54e5a"
+  },
+  {
+   "file": "ap_mandal_heat.json",
+   "bytes": 72094,
+   "sha256": "841785be43823584688d8e33bfbca991a9f223859607704a43682d3f7c05fc80"
+  },
+  {
+   "file": "ap_map_geometry.json",
+   "bytes": 192955,
+   "sha256": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0"
+  },
+  {
+   "file": "dashboard_summary.json",
+   "bytes": 2022,
+   "sha256": "f7387a9dc82c4333558dc208e5514cc66bf40dcb0ac68e41650e9a916d1bc359"
+  },
+  {
+   "file": "mandal_dataset.json",
+   "bytes": 1111516,
+   "sha256": "21f17e57220b8bb12b2f2fac5a0594907cc33f42d668ec8e94723e1cc07887a8"
+  },
+  {
+   "file": "mandal_depth_series.json",
+   "bytes": 1626901,
+   "sha256": "09e6c8257b95fb109298863f016e727be7b3cae9eaf760a1d3a51fac1b95f6e1"
+  },
+  {
+   "file": "mandal_levels_estimated.json",
+   "bytes": 214312,
+   "sha256": "030507067fb877042d1ed1132f20cbd2930ae504f32b7dcc0d2b77a49d46623b"
+  },
+  {
+   "file": "nasa_provenance.json",
+   "bytes": 2021,
+   "sha256": "26c0ad849aa919928a06bbd079c142b51d82163fe4182d75e70a7a4cee7cea37"
+  },
+  {
+   "file": "satellite_station_samples.json",
+   "bytes": 18496,
+   "sha256": "f5509405d471d02ade4305f63ac6fd2497101b891b4c023a4001c5a31532b4d2"
+  },
+  {
+   "file": "source_readiness.json",
+   "bytes": 1181,
+   "sha256": "0940f1d501617acd5ba422b55dedfcc892eba32492390b4ea5d494eba445a9ba"
+  }
+ ]
+}

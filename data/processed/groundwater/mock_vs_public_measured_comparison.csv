@@ -1,0 +1,12 @@
+dataset,status,district_name,mandal_name,station_count,date_range,coordinate_available_count,mbgl_min,mbgl_mean,mbgl_max,notes
+mock,available,Anantapur,Dharmavaram,1,2026-05-11 to 2026-05-11,1,21.3,21.3,21.3,Coverage comparison only; mock and public stations are not assumed equivalent.
+mock,available,Anantapur,Tadipatri,1,2026-05-14 to 2026-05-14,1,18.6,18.6,18.6,Coverage comparison only; mock and public stations are not assumed equivalent.
+mock,available,Chittoor,Madanapalle,1,2026-05-13 to 2026-05-13,1,16.2,16.2,16.2,Coverage comparison only; mock and public stations are not assumed equivalent.
+mock,available,Chittoor,Palamaner,1,2026-04-20 to 2026-04-20,1,14.8,14.8,14.8,Coverage comparison only; mock and public stations are not assumed equivalent.
+mock,available,Guntur,Mangalagiri,1,2026-05-18 to 2026-05-18,1,9.4,9.4,9.4,Coverage comparison only; mock and public stations are not assumed equivalent.
+mock,available,Guntur,Tenali,1,2026-05-15 to 2026-05-15,1,7.8,7.8,7.8,Coverage comparison only; mock and public stations are not assumed equivalent.
+mock,available,Krishna,Avanigadda,1,2026-04-28 to 2026-04-28,1,4.7,4.7,4.7,Coverage comparison only; mock and public stations are not assumed equivalent.
+mock,available,Krishna,Gudivada,1,2026-05-16 to 2026-05-16,1,5.9,5.9,5.9,Coverage comparison only; mock and public stations are not assumed equivalent.
+mock,available,Visakhapatnam,Anakapalle,1,2026-05-17 to 2026-05-17,1,6.5,6.5,6.5,Coverage comparison only; mock and public stations are not assumed equivalent.
+mock,available,Visakhapatnam,Bheemunipatnam,1,2026-05-10 to 2026-05-10,1,8.1,8.1,8.1,Coverage comparison only; mock and public stations are not assumed equivalent.
+measured_public,absent,,,0,,0,,,,/Users/pruthviyannam/Documents/Groundwater Project/data/processed/groundwater/standardized_public_groundwater_readings.csv not available

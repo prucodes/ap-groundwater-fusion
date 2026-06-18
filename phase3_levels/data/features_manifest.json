@@ -1,0 +1,19 @@
+{
+  "built_at": "2026-06-16T21:13:12",
+  "n_mandals": 670,
+  "rainfall_period": "2026.04",
+  "real": [
+    "centroids",
+    "rainfall",
+    "water_balance",
+    "grace_pctl",
+    "et",
+    "dem_terrain"
+  ],
+  "proxy": [
+    "aquifer_type",
+    "specific_yield",
+    "grace_anom_cm",
+    "rain_3m"
+  ]
+}

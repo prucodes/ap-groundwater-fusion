@@ -1,0 +1,35 @@
+{
+  "ran_at": "2026-06-16T21:02:40",
+  "steps": [
+    {
+      "step": "fetch GRACE-DA",
+      "ok": true,
+      "rc": 0,
+      "secs": 0.1
+    },
+    {
+      "step": "fetch CHIRPS rain",
+      "ok": true,
+      "rc": 0,
+      "secs": 2.2
+    },
+    {
+      "step": "refresh TerraClimate",
+      "ok": true,
+      "rc": 0,
+      "secs": 5.5
+    },
+    {
+      "step": "build mandal features",
+      "ok": true,
+      "rc": 0,
+      "secs": 0.3
+    },
+    {
+      "step": "predict levels",
+      "ok": true,
+      "rc": 0,
+      "secs": 1.1
+    }
+  ]
+}

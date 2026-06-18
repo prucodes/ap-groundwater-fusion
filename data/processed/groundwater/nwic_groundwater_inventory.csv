@@ -1,0 +1,2 @@
+file_path,status,row_count,column_names,likely_station_fields,likely_date_fields,likely_depth_fields,likely_latitude_fields,likely_longitude_fields,likely_district_fields,likely_mandal_fields,date_range_if_parseable,missing_coordinate_count,notes
+,no_public_file_available,0,,,,,,,,,,,No stable NWIC public measured groundwater file is available locally. Run fetch or manually place a downloaded file in the raw NWIC folder.

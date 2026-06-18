@@ -1,0 +1,153 @@
+{
+  "downloaded_files": [
+    {
+      "local_path": "data/raw/nasa/grace_da/current/gws_perc_025deg_GL.tif",
+      "source_url": "https://nasagrace.unl.edu/globaldata/current/gws_perc_025deg_GL.tif",
+      "fetch_date": "2026-06-12",
+      "file_size_bytes": "909660",
+      "sha256": "d0d8c0d0c288268fc5e2e531fa226173a68bd266adbd34effd1af513a5038c6f",
+      "tls_verified": "false",
+      "tls_fallback_reason": "existing file reused",
+      "data_label": "satellite-model",
+      "official_flag": "false",
+      "notes": "NASA/NDMC GRACE-DA percentile GeoTIFF; supporting satellite/model signal only, not groundwater depth; existing file reused; no network TLS verification performed in this run."
+    },
+    {
+      "local_path": "data/raw/nasa/grace_da/current/rtzsm_perc_025deg_GL.tif",
+      "source_url": "https://nasagrace.unl.edu/globaldata/current/rtzsm_perc_025deg_GL.tif",
+      "fetch_date": "2026-06-12",
+      "file_size_bytes": "1005430",
+      "sha256": "e3b85addbcc68ce21d18f76977f819c57ae6cde90cf880baede263424e4025e0",
+      "tls_verified": "false",
+      "tls_fallback_reason": "existing file reused",
+      "data_label": "satellite-model",
+      "official_flag": "false",
+      "notes": "NASA/NDMC GRACE-DA percentile GeoTIFF; supporting satellite/model signal only, not groundwater depth; existing file reused; no network TLS verification performed in this run."
+    },
+    {
+      "local_path": "data/raw/nasa/grace_da/current/sfsm_perc_025deg_GL.tif",
+      "source_url": "https://nasagrace.unl.edu/globaldata/current/sfsm_perc_025deg_GL.tif",
+      "fetch_date": "2026-06-12",
+      "file_size_bytes": "1016380",
+      "sha256": "43673cc879f1afbc165457d125b42d0d9835f637d195a208655d3141b1960db2",
+      "tls_verified": "false",
+      "tls_fallback_reason": "existing file reused",
+      "data_label": "satellite-model",
+      "official_flag": "false",
+      "notes": "NASA/NDMC GRACE-DA percentile GeoTIFF; supporting satellite/model signal only, not groundwater depth; existing file reused; no network TLS verification performed in this run."
+    }
+  ],
+  "rasters": [
+    {
+      "raster_name": "gws_perc_025deg_GL.tif",
+      "local_path": "data/raw/nasa/grace_da/current/gws_perc_025deg_GL.tif",
+      "crs": "EPSG:4326",
+      "bounds": "-180.0,-60.0,180.0,90.0",
+      "width": "1440",
+      "height": "600",
+      "resolution": "0.25,0.25",
+      "nodata": "-999.0",
+      "dtype": "float32",
+      "min_value": "0.2198",
+      "max_value": "100.0",
+      "notes": "satellite-model percentile raster; not groundwater depth; percentile range generally within 0-100"
+    },
+    {
+      "raster_name": "rtzsm_perc_025deg_GL.tif",
+      "local_path": "data/raw/nasa/grace_da/current/rtzsm_perc_025deg_GL.tif",
+      "crs": "EPSG:4326",
+      "bounds": "-180.0,-60.0,180.0,90.0",
+      "width": "1440",
+      "height": "600",
+      "resolution": "0.25,0.25",
+      "nodata": "-999.0",
+      "dtype": "float32",
+      "min_value": "0.2198",
+      "max_value": "100.0",
+      "notes": "satellite-model percentile raster; not groundwater depth; percentile range generally within 0-100"
+    },
+    {
+      "raster_name": "sfsm_perc_025deg_GL.tif",
+      "local_path": "data/raw/nasa/grace_da/current/sfsm_perc_025deg_GL.tif",
+      "crs": "EPSG:4326",
+      "bounds": "-180.0,-60.0,180.0,90.0",
+      "width": "1440",
+      "height": "600",
+      "resolution": "0.25,0.25",
+      "nodata": "-999.0",
+      "dtype": "float32",
+      "min_value": "0.2198",
+      "max_value": "100.0",
+      "notes": "satellite-model percentile raster; not groundwater depth; percentile range generally within 0-100"
+    }
+  ],
+  "station_points_sampled": 10,
+  "total_null_or_nodata_samples": 0,
+  "percentile_stats": {
+    "groundwater_percentile": {
+      "count": 10,
+      "null_count": 0,
+      "min": 91.59,
+      "mean": 98.01,
+      "max": 100.0
+    },
+    "rootzone_percentile": {
+      "count": 10,
+      "null_count": 0,
+      "min": 72.25,
+      "mean": 90.68,
+      "max": 98.09
+    },
+    "surface_percentile": {
+      "count": 10,
+      "null_count": 0,
+      "min": 63.26,
+      "mean": 85.91,
+      "max": 100.0
+    }
+  },
+  "top_5_highest_groundwater_percentile": [
+    {
+      "station": "APM-GNT-002 - Mangalagiri Telemetry Point (Guntur/Mangalagiri)",
+      "groundwater_percentile": 100.0
+    },
+    {
+      "station": "APM-KRI-001 - Gudivada Manual Well (Krishna/Gudivada)",
+      "groundwater_percentile": 100.0
+    },
+    {
+      "station": "APM-KRI-002 - Avanigadda Piezometer (Krishna/Avanigadda)",
+      "groundwater_percentile": 100.0
+    },
+    {
+      "station": "APM-ANT-001 - Tadipatri Sensor Point (Anantapur/Tadipatri)",
+      "groundwater_percentile": 100.0
+    },
+    {
+      "station": "APM-VSK-002 - Bheemunipatnam Observation Well (Visakhapatnam/Bheemunipatnam)",
+      "groundwater_percentile": 100.0
+    }
+  ],
+  "top_5_lowest_groundwater_percentile": [
+    {
+      "station": "APM-CTR-001 - Madanapalle Piezometer (Chittoor/Madanapalle)",
+      "groundwater_percentile": 91.59
+    },
+    {
+      "station": "APM-CTR-002 - Palamaner Manual Well (Chittoor/Palamaner)",
+      "groundwater_percentile": 93.85
+    },
+    {
+      "station": "APM-VSK-001 - Anakapalle Telemetry Point (Visakhapatnam/Anakapalle)",
+      "groundwater_percentile": 96.92
+    },
+    {
+      "station": "APM-ANT-002 - Dharmavaram Observation Well (Anantapur/Dharmavaram)",
+      "groundwater_percentile": 98.82
+    },
+    {
+      "station": "APM-GNT-001 - Tenali Observation Well (Guntur/Tenali)",
+      "groundwater_percentile": 98.9
+    }
+  ]
+}

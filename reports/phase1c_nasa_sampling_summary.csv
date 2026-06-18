@@ -1,0 +1,4 @@
+metric,count,null_count,min,mean,max
+groundwater_percentile,10,0,91.59,98.01,100.0
+rootzone_percentile,10,0,72.25,90.68,98.09
+surface_percentile,10,0,63.26,85.91,100.0

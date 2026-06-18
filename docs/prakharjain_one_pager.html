@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GRACE-FO Groundwater Intelligence for AP — Response Note</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--navy:#071d35;--deep:#123b66;--teal:#1f8a8a;--cyan:#12b5cb;--green:#5e9b6b;--amber:#d79b2e;--rust:#c65a46;--ink:#0d2138;--soft:#33455c;--muted:#667085;--line:#e4e9f0;--field:#f3f6fa;--card:#fff;--bg:#eef3f8;--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--disp:"Space Grotesk",var(--sans)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);font-size:12px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .sheet{max-width:1000px;margin:18px auto;background:var(--card);border-radius:18px;overflow:hidden;box-shadow:0 18px 50px rgba(7,29,53,.16)}
+  h1,h2,h3,h4{font-family:var(--disp);letter-spacing:-.01em}
+  .hero{position:relative;color:#fff;padding:24px 30px;overflow:hidden;background:linear-gradient(110deg,#06182a,#0a2747 55%,#123b66)}
+  .hero .stars{position:absolute;inset:0;opacity:.55;background-image:radial-gradient(1px 1px at 16% 32%,rgba(207,230,255,.6),transparent),radial-gradient(1px 1px at 34% 70%,rgba(159,198,239,.5),transparent),radial-gradient(1.3px 1.3px at 52% 24%,rgba(207,230,255,.5),transparent),radial-gradient(1px 1px at 74% 58%,rgba(188,217,245,.4),transparent)}
+  .hero .inner{position:relative}
+  .eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7fb0d4;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+  .hero h1{font-size:21px;font-weight:600}
+  .hero p{margin-top:8px;font-size:12px;color:#bcd4ea;max-width:720px}
+  .body{padding:20px 30px 8px}
+  .quote{background:rgba(18,181,203,.07);border:1px solid rgba(18,181,203,.22);border-left:3px solid var(--cyan);border-radius:10px;padding:13px 16px;font-size:12.5px;color:var(--soft);line-height:1.6;margin-bottom:6px;font-style:italic}
+  .quote b{color:var(--ink);font-style:normal}
+  .attrib{font-size:10px;color:var(--muted);text-align:right;margin-bottom:16px}
+  .sectionTitle{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;margin:18px 0 10px}
+  .sectionTitle .n{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(145deg,var(--cyan),var(--teal));color:#fff;font-size:11px;font-weight:700;font-family:var(--disp)}
+  table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+  th{text-align:left;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;background:var(--field);border-bottom:1px solid var(--line)}
+  td{padding:9px 10px;border-bottom:1px solid #eef2f7;color:var(--soft);vertical-align:top}
+  td b{color:var(--ink)}
+  .badge{font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .b-done{color:#0f6e56;background:rgba(29,158,117,.14)}
+  .b-arch{color:#8a5a0e;background:rgba(215,155,46,.16)}
+  .b-note{color:#185fa5;background:rgba(55,138,221,.14)}
+  .reframe{background:linear-gradient(120deg,rgba(215,155,46,.12),rgba(198,90,70,.06));border:1px solid rgba(215,155,46,.4);border-radius:13px;padding:14px 16px;margin:14px 0}
+  .reframe h4{font-size:13px;color:#8a5a0e;margin-bottom:6px}
+  .reframe p{font-size:11.5px;color:var(--soft);line-height:1.6}
+  .reframe i{color:var(--ink);font-weight:600;font-style:normal}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;margin-top:4px}
+  .panel{border:1px solid var(--line);border-radius:13px;padding:13px 15px}
+  .panel h4{font-size:12.5px;margin-bottom:9px}
+  .panel ul{list-style:none;display:flex;flex-direction:column;gap:7px;font-size:11.5px;color:var(--soft)}
+  .panel li{display:flex;gap:8px}
+  .panel li b{color:var(--ink)}
+  .chk{flex:none;width:16px;height:16px;border-radius:5px;background:var(--field);color:var(--teal);display:grid;place-items:center;font-size:9px;font-weight:700;margin-top:1px}
+  .num{flex:none;width:16px;height:16px;border-radius:5px;background:rgba(18,181,203,.12);color:var(--teal);display:grid;place-items:center;font-size:9px;font-weight:700;margin-top:1px}
+  .pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .pill{font-size:10px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--field);color:var(--soft);border:1px solid var(--line)}
+  .caveat{font-size:10.5px;color:var(--muted);background:rgba(18,181,203,.06);border:1px solid rgba(18,181,203,.2);border-radius:10px;padding:10px 13px;margin-top:16px;display:flex;gap:8px}
+  .footer{margin-top:14px;border-top:1px solid var(--line);padding:13px 30px;background:var(--field);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:10px;color:var(--muted)}
+  .footer strong{color:var(--soft)}
+  @media print{body{background:#fff}.sheet{box-shadow:none;margin:0;border-radius:0;max-width:none}.panel,table,.reframe{break-inside:avoid}@page{margin:10mm}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="hero">
+    <div class="stars"></div>
+    <div class="inner">
+      <div class="eyebrow"><span class="dot"></span> Andhra Pradesh · Groundwater Intelligence Layer</div>
+      <h1>GRACE-FO Groundwater Intelligence for AP — Response to your problem statement</h1>
+      <p>A working prototype built directly against your brief: open-source satellite groundwater assessment for AP, fused with sensors, packaged for AWARE and irrigation planning. This note maps the ask to what’s delivered, states one honest scientific point, and lists what RTGS provides to go live.</p>
+    </div>
+  </header>
+
+  <div class="body">
+    <div class="quote">
+      “Groundwater assessment using satellite <b>GRACE-FO</b> primarily — entirely new concept for AP. Will then <b>integrate the results with AWARE</b>. We currently get through sensors; we need to get the <b>groundwater levels using satellite</b> images available in open source. This helps a lot in <b>irrigation planning</b>.”
+    </div>
+    <div class="attrib">— problem statement, RTGS / APSDMA</div>
+
+    <div class="sectionTitle"><span class="n">1</span> Your ask → what’s delivered</div>
+    <table>
+      <thead><tr><th style="width:42%">Your ask</th><th style="width:16%">Status</th><th>What exists today</th></tr></thead>
+      <tbody>
+        <tr><td><b>GRACE-FO groundwater assessment for AP</b></td><td><span class="badge b-done">Delivered</span></td><td>Live NASA GRACE-DA signals sampled over AP — open-source, re-downloadable, SHA-256 checksummed.</td></tr>
+        <tr><td><b>Open-source satellite data</b></td><td><span class="badge b-done">Delivered</span></td><td>GRACE-FO + CHIRPS rainfall + TerraClimate ET — all free / open.</td></tr>
+        <tr><td><b>Integrate results with AWARE</b></td><td><span class="badge b-arch">Architected</span></td><td>Advisory payload shaped + field-mapping defined; export ready. Needs RTGS endpoint &amp; schema to go live.</td></tr>
+        <tr><td><b>Groundwater “levels” from satellite</b></td><td><span class="badge b-note">Reframed</span></td><td>Satellite gives storage <b>stress/trend</b>, not absolute depth — so we <b>fuse</b> satellite + sensors (see below). The correct, defensible version of this ask.</td></tr>
+        <tr><td><b>Helps irrigation planning</b></td><td><span class="badge b-done">Delivered</span></td><td>Draw / hold / conserve advisory per district, water-balance, and an El Niño drought scenario.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="reframe">
+      <h4>The one scientific point — and why it makes the system stronger</h4>
+      <p>No satellite — GRACE-FO included — measures absolute groundwater <i>level</i> (metres below ground). It measures whether the aquifer holds more or less water than its own history: a <i>stress &amp; trend</i> percentile. Absolute levels still require sensors. So rather than replace your sensors, the system <i>fuses</i> them: <b>satellite covers all of AP continuously and shows where &amp; which-way</b>; <b>sensors anchor exact depth where you have them</b>. This is more defensible than satellite-only — and it tells you where to place your next sensors. The product is built around exactly this truth (it labels percentiles, never fake depths).</p>
+    </div>
+
+    <div class="sectionTitle"><span class="n">2</span> What the prototype does</div>
+    <div class="cols">
+      <div class="panel">
+        <h4>Intelligence</h4>
+        <ul>
+          <li><span class="chk">✓</span><span><b>NASA GRACE-FO signals</b> with full provenance (the new-for-AP layer)</span></li>
+          <li><span class="chk">✓</span><span><b>Climate &amp; water balance</b> — rainfall vs ET per district</span></li>
+          <li><span class="chk">✓</span><span><b>Statewide mandal coverage</b> — GRACE kept at district scale, mandals via fusion + finer layers</span></li>
+          <li><span class="chk">✓</span><span><b>El Niño 2026 drought scenario</b> — pre-season early-warning</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h4>Action</h4>
+        <ul>
+          <li><span class="chk">✓</span><span><b>Irrigation advisory</b> — draw / hold / conserve per district</span></li>
+          <li><span class="chk">✓</span><span><b>Confidence basis</b> — sat-only vs sat+sensor, so gaps are honest</span></li>
+          <li><span class="chk">✓</span><span><b>AWARE bridge</b> — field mapping + ready-to-push payload</span></li>
+          <li><span class="chk">✓</span><span><b>Exports</b> — CSV / JSON / print for every output</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sectionTitle"><span class="n">3</span> To move from prototype → live, RTGS provides</div>
+    <div class="cols">
+      <div class="panel">
+        <h4>Inputs</h4>
+        <ul>
+          <li><span class="num">1</span><span><b>APWRIMS sensor export</b> — real depths + station metadata</span></li>
+          <li><span class="num">2</span><span><b>AWARE endpoint &amp; schema</b> — to stream advisories live</span></li>
+          <li><span class="num">3</span><span><b>Official mandal boundaries</b> — sub-district precision</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h4>Pilot</h4>
+        <ul>
+          <li><span class="num">4</span><span><b>One pilot district</b> — a Rayalaseema district (Anantapur / YSR) recommended: highest stress, fastest proof.</span></li>
+          <li><span class="chk">✓</span><span>Result: live GRACE-FO + fusion, advisories into AWARE, and a sensor-deployment map — validated on one district before scaling statewide.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pillrow">
+      <span class="pill">Open-source satellite</span>
+      <span class="pill">Sensor-fusion, not sensor-replacement</span>
+      <span class="pill">AWARE-ready</span>
+      <span class="pill">Mandal coverage</span>
+      <span class="pill">Drought / El Niño early-warning</span>
+    </div>
+
+    <div class="caveat">
+      <span>ℹ</span>
+      <span>This is a <b>decision-support prototype</b> using seed APWRIMS-format readings and real open satellite/model signals (NASA GRACE-FO, CHIRPS, TerraClimate). Outputs are labelled prototype, not official. Satellite values are percentiles / millimetres — never groundwater depth. Official APWRIMS export and official mandal boundaries are required for government-grade results.</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span><strong>AP Groundwater Intelligence Layer</strong> · Phase 2A · prepared for RTGS / APSDMA</span>
+    <span>Prototype · not an official groundwater assessment</span>
+  </div>
+</div>
+</body>
+</html>

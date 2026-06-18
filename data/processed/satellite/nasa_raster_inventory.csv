@@ -1,0 +1,4 @@
+raster_name,local_path,crs,bounds,width,height,resolution,nodata,dtype,min_value,max_value,notes
+gws_perc_025deg_GL.tif,data/raw/nasa/grace_da/current/gws_perc_025deg_GL.tif,EPSG:4326,"-180.0,-60.0,180.0,90.0",1440,600,"0.25,0.25",-999.0,float32,0.2198,100.0,satellite-model percentile raster; not groundwater depth; percentile range generally within 0-100
+rtzsm_perc_025deg_GL.tif,data/raw/nasa/grace_da/current/rtzsm_perc_025deg_GL.tif,EPSG:4326,"-180.0,-60.0,180.0,90.0",1440,600,"0.25,0.25",-999.0,float32,0.2198,100.0,satellite-model percentile raster; not groundwater depth; percentile range generally within 0-100
+sfsm_perc_025deg_GL.tif,data/raw/nasa/grace_da/current/sfsm_perc_025deg_GL.tif,EPSG:4326,"-180.0,-60.0,180.0,90.0",1440,600,"0.25,0.25",-999.0,float32,0.2198,100.0,satellite-model percentile raster; not groundwater depth; percentile range generally within 0-100

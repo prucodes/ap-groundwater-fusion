@@ -1,0 +1,499 @@
+import Link from "next/link";
+import type { MandalFusionSeed } from "../lib/types";
+import depthSeriesJson from "../data/mandal_depth_series.json";
+import {
+  agreementMeta,
+  dashboardSummary,
+  formatNumber,
+  formatPeriod,
+  mandals,
+  sampleForMandal,
+  statusMeta,
+  titleCase,
+  wetnessLabel,
+} from "../lib/data";
+import { WaterBalanceCard } from "./WaterBalanceCard";
+import { AgreementTag, ConfidenceBadge, StatusBadge } from "./Badges";
+import { PercentileRing, Sparkline } from "./charts";
+import { FusionExplanationCard } from "./FusionExplanationCard";
+import { TimeScrubber } from "./TimeScrubber";
+import { LiveMap } from "./LiveMap";
+import { ActionOutputPreview } from "./ActionOutputPreview";
+import {
+  IconActivity,
+  IconArrowRight,
+  IconCalendar,
+  IconCheck,
+  IconCloudRain,
+  IconChevronLeft,
+  IconDroplet,
+  IconFlask,
+  IconLeaf,
+  IconMap,
+  IconPin,
+  IconSatellite,
+  IconShield,
+  IconTarget,
+  IconWaves,
+} from "./icons";
+
+const DEPTH_SERIES = depthSeriesJson as unknown as Record<string, [string, number][]>;
+const MAX_DEPTH = 25;
+const MONTHS = ["Dec '25", "Jan '26", "Feb '26", "Mar '26", "Apr '26", "May '26", "Jun '26"];
+
+/* Deterministic illustrative jitter from the mandal id so charts are stable across renders. */
+function seeded(id: string) {
+  let h = 0;
+  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 1000;
+  return (k: number) => {
+    h = (h * 1103515245 + 12345) % 2147483648;
+    return ((h / 2147483648) - 0.5) * k;
+  };
+}
+
+function illustrativeSeries(base: number, id: string, amp: number) {
+  const rnd = seeded(id);
+  return MONTHS.map((_, i) =>
+    Math.max(0, Math.round((base + rnd(amp) + Math.sin(i / 1.7) * (amp / 3)) * 10) / 10),
+  );
+}
+
+function actionItems(m: MandalFusionSeed) {
+  if (m.sensor_satellite_agreement === "over_extraction") {
+    return [
+      "Investigate as a pumping-pressure hotspot (verify) — water table falling despite a healthy water balance",
+      "Review borewell density and pumping / cropping intensity",
+      "Consider draft restrictions or recharge structures",
+      "Confirm with official APWRIMS data before any operational action",
+    ];
+  }
+  return [
+    "Collect additional recent station readings before interpretation",
+    "Corroborate the APWRIMS reading with neighbouring stations",
+    "Reassess after official APWRIMS export and boundaries arrive",
+    "Do not treat as official until APWRIMS/APSAC/RTGS boundaries supplied",
+  ];
+}
+
+export function MandalSelectorStrip({ activeId }: { activeId: string }) {
+  return (
+    <div className="tableWrap" style={{ display: "flex", gap: 8, paddingBottom: 4 }}>
+      {mandals.map((m) => {
+        const meta = statusMeta(m.status_bucket);
+        const active = m.id === activeId;
+        return (
+          <Link
+            key={m.id}
+            href={`/mandals/${m.id}`}
+            className="badge"
+            style={{
+              whiteSpace: "nowrap",
+              padding: "7px 12px",
+              border: active ? `1px solid ${meta.color}` : "1px solid var(--line)",
+              background: active ? meta.color : "var(--card)",
+              color: active ? "#fff" : "var(--ink-soft)",
+            }}
+          >
+            <span
+              className="dot"
+              style={{ background: active ? "#fff" : meta.color, width: 7, height: 7 }}
+            />
+            {titleCase(m.mandal_name)}
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
+  const meta = statusMeta(mandal.status_bucket);
+  const sample = sampleForMandal(mandal);
+  const depthPct = Math.min(100, ((mandal.median_groundwater_mbgl ?? 0) / MAX_DEPTH) * 100);
+
+  const gwSeries = illustrativeSeries(mandal.groundwater_percentile ?? 90, mandal.id + "gw", 6);
+  const rootSeries = illustrativeSeries(mandal.rootzone_percentile ?? 80, mandal.id + "rz", 8);
+  const surfSeries = illustrativeSeries(mandal.surface_percentile ?? 70, mandal.id + "sf", 10);
+  const realDepth = DEPTH_SERIES[mandal.id] ?? [];
+  const hasRealDepth = realDepth.length >= 6;
+  const depthSeries = hasRealDepth
+    ? realDepth.map(([, v]) => v)
+    : illustrativeSeries(mandal.median_groundwater_mbgl ?? 10, mandal.id + "d", 3);
+  const depthSpan = hasRealDepth ? `${realDepth[0][0]} – ${realDepth[realDepth.length - 1][0]}` : "";
+
+  const awarePayload = mandal.aware_apwrims_action_preview;
+
+  return (
+    <div className="contentGrid" style={{ gap: 16 }}>
+      {/* breadcrumb + selector */}
+      <div className="crumb">
+        <Link href="/">Overview</Link>
+        <IconChevronLeft style={{ transform: "rotate(180deg)" }} />
+        <Link href="/mandals">Mandal Insights</Link>
+        <IconChevronLeft style={{ transform: "rotate(180deg)" }} />
+        <span style={{ color: "var(--ink)" }}>{titleCase(mandal.mandal_name)}</span>
+      </div>
+
+      <MandalSelectorStrip activeId={mandal.id} />
+
+      {/* header */}
+      <section className="card">
+        <div className="detailHead">
+          <div className="detailTitle">
+            <span className="detailPin">
+              <IconPin />
+            </span>
+            <div>
+              <h2>{titleCase(mandal.mandal_name)} Mandal</h2>
+              <div className="sub">
+                {titleCase(mandal.district_name)} District · Mandal ID {mandal.id} ·{" "}
+                {mandal.sensor_count} sensor / station
+              </div>
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+            <StatusBadge bucket={mandal.status_bucket} />
+            <ConfidenceBadge label={mandal.confidence_label} />
+            <Link className="linkAction" href="/map">
+              <IconMap /> Back to map
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* metric row */}
+      <div className="metricRow stagger">
+        <div className="metricCard">
+          <div className="metricCardLabel">Measured Groundwater (Median)</div>
+          <div className="depthGauge">
+            <span className="depthGaugeTrack">
+              <span className="depthGaugeFill" style={{ height: `${depthPct}%` }} />
+            </span>
+            <span className="depthGaugeNum">
+              {formatNumber(mandal.median_groundwater_mbgl)}
+              <small> mbgl</small>
+            </span>
+          </div>
+          <div className="metricSub">Latest {mandal.latest_sensor_date || "—"}</div>
+        </div>
+
+        <div className="metricCard">
+          <div className="metricCardLabel">Sensor / Station</div>
+          <PercentileRing value={100} color="var(--teal)">
+            <span className="v">{mandal.sensor_count}</span>
+          </PercentileRing>
+          <div className="metricSub">APWRIMS (AP-GWD)</div>
+        </div>
+
+        <div className="metricCard">
+          <div className="metricCardLabel">NASA GW Percentile</div>
+          <PercentileRing value={mandal.groundwater_percentile} color="var(--sig-gw)">
+            <span className="v">{formatNumber(mandal.groundwater_percentile)}</span>
+          </PercentileRing>
+          <div className="metricSub wet">{wetnessLabel(mandal.groundwater_percentile)}</div>
+        </div>
+
+        <div className="metricCard">
+          <div className="metricCardLabel">Root-Zone Moisture</div>
+          <PercentileRing value={mandal.rootzone_percentile} color="var(--sig-root)">
+            <span className="v">{formatNumber(mandal.rootzone_percentile)}</span>
+          </PercentileRing>
+          <div className="metricSub wet" style={{ color: "var(--sig-root)" }}>
+            {wetnessLabel(mandal.rootzone_percentile)}
+          </div>
+        </div>
+
+        <div className="metricCard">
+          <div className="metricCardLabel">Surface Moisture</div>
+          <PercentileRing value={mandal.surface_percentile} color="var(--sig-surface)">
+            <span className="v">{formatNumber(mandal.surface_percentile)}</span>
+          </PercentileRing>
+          <div className="metricSub wet" style={{ color: "var(--sig-surface)" }}>
+            {wetnessLabel(mandal.surface_percentile)}
+          </div>
+        </div>
+
+        <div className="metricCard">
+          <div className="metricCardLabel">Overall Agreement</div>
+          <div style={{ margin: "10px 0", display: "grid", placeItems: "center" }}>
+            <span
+              style={{
+                width: 48,
+                height: 48,
+                borderRadius: 14,
+                display: "grid",
+                placeItems: "center",
+                background: agreementMeta(mandal.sensor_satellite_agreement).className === "strong"
+                  ? "var(--st-verify-bg)"
+                  : "var(--st-watch-bg)",
+                color: meta.color,
+              }}
+            >
+              <IconTarget />
+            </span>
+          </div>
+          <div style={{ marginTop: 2 }}>
+            <AgreementTag value={mandal.sensor_satellite_agreement} />
+          </div>
+        </div>
+
+        <div className="metricCard">
+          <div className="metricCardLabel">Confidence</div>
+          <PercentileRing value={Math.round((mandal.confidence_score ?? 0) * 100)} color="var(--amber)">
+            <span className="v" style={{ fontSize: 15 }}>
+              {Math.round((mandal.confidence_score ?? 0) * 100)}
+            </span>
+          </PercentileRing>
+          <div className="metricSub">{mandal.confidence_label}</div>
+        </div>
+
+        {mandal.rainfall_mm !== null && mandal.rainfall_mm !== undefined && (
+          <div className="metricCard">
+            <div className="metricCardLabel">Rainfall (recharge)</div>
+            <div className="depthGauge">
+              <span className="depthGaugeTrack" style={{ background: "linear-gradient(180deg,#d7e8f5,#9cc1de)" }}>
+                <span
+                  className="depthGaugeFill"
+                  style={{ height: `${Math.min(100, mandal.rainfall_mm)}%`, background: "linear-gradient(180deg,#6aa6e6,#3a6fb0)" }}
+                />
+              </span>
+              <span className="depthGaugeNum">
+                {formatNumber(mandal.rainfall_mm)}
+                <small> mm</small>
+              </span>
+            </div>
+            <div className="metricSub">CHIRPS · {formatPeriod(dashboardSummary.summary.rainfall_period) || "monthly"}</div>
+          </div>
+        )}
+      </div>
+
+      {/* main + rail */}
+      <div className="watchlistLayout">
+        <div className="contentGrid">
+          <div className="contentGrid" style={{ gridTemplateColumns: "300px 1fr" }}>
+            <section className="card">
+              <div className="cardHead">
+                <div className="cardTitle">
+                  <span className="titleIcon">
+                    <IconPin />
+                  </span>
+                  Location &amp; Context
+                </div>
+              </div>
+              <LiveMap mode="single" mandalId={mandal.id} height={220} />
+              <div className="mapHint">
+                <IconMap style={{ width: 13, height: 13 }} /> Live basemap © OSM © CARTO · public prototype boundary
+              </div>
+            </section>
+
+            <section className="card">
+              <div className="cardHead">
+                <div className="cardTitle">
+                  <span className="titleIcon">
+                    <IconActivity />
+                  </span>
+                  Sensor vs Satellite Signals
+                </div>
+                <span className="cardSub">Drag the timeline ↓</span>
+              </div>
+              <TimeScrubber
+                months={MONTHS}
+                series={[
+                  { name: "NASA GW Percentile", color: "#12b5cb", points: gwSeries },
+                  { name: "Root-Zone Percentile", color: "#5e9b6b", points: rootSeries },
+                  { name: "Surface Percentile", color: "#3f86d6", points: surfSeries },
+                ]}
+              />
+            </section>
+          </div>
+
+          <section className="card">
+            <div className="cardHead">
+              <div className="cardTitle">
+                <span className="titleIcon">
+                  <IconTarget />
+                </span>
+                Fusion Explanation
+              </div>
+            </div>
+            <FusionExplanationCard mandal={mandal} />
+          </section>
+
+          {mandal.water_balance_mm !== null && mandal.water_balance_mm !== undefined && (
+            <section className="card">
+              <div className="cardHead">
+                <div className="cardTitle">
+                  <span className="titleIcon">
+                    <IconCloudRain />
+                  </span>
+                  Aquifer Water Balance
+                  <span className="cardSub" style={{ marginLeft: 6 }}>
+                    recharge vs demand
+                  </span>
+                </div>
+                <span className="cardSub">TerraClimate {dashboardSummary.summary.balance_year}</span>
+              </div>
+              <WaterBalanceCard mandal={mandal} year={dashboardSummary.summary.balance_year} />
+            </section>
+          )}
+
+          <div className="contentGrid" style={{ gridTemplateColumns: "1fr 1fr" }}>
+            <section className="card">
+              <div className="cardHead">
+                <div className="cardTitle">
+                  <span className="titleIcon">
+                    <IconDroplet />
+                  </span>
+                  {hasRealDepth ? "Measured History · APWRIMS" : "Historical (Illustrative)"}
+                </div>
+                {hasRealDepth ? <span className="cardSub">{depthSpan}</span> : null}
+              </div>
+              <Sparkline
+                area
+                series={[{ name: "Depth mbgl", color: "#c65a46", points: depthSeries }]}
+                height={130}
+              />
+              <div className="sideCaveat" style={{ marginTop: 8 }}>
+                {hasRealDepth
+                  ? `Real APWRIMS monthly readings (m below ground). Modelled estimate ${formatNumber(mandal.estimate_mbgl)} m with a ${formatNumber(mandal.estimate_band_p10)}–${formatNumber(mandal.estimate_band_p90)} m band — see Estimated Levels.`
+                  : "Illustrative shape for prototype demonstration only — not measured history."}
+              </div>
+            </section>
+
+            <section className="card">
+              <div className="cardHead">
+                <div className="cardTitle">
+                  <span className="titleIcon">
+                    <IconShield />
+                  </span>
+                  Data Quality &amp; Freshness
+                </div>
+              </div>
+              <div className="kvRow">
+                <span className="k">Sensor count</span>
+                <span className="v">{mandal.sensor_count}</span>
+              </div>
+              <div className="kvRow">
+                <span className="k">Latest reading</span>
+                <span className="v">{mandal.latest_sensor_date || "—"}</span>
+              </div>
+              <div className="kvRow">
+                <span className="k">Satellite sample</span>
+                <span className="v">{sample?.satellite_sample_date_or_fetch_date || "—"}</span>
+              </div>
+              <div className="kvRow">
+                <span className="k">Measured label</span>
+                <span className="v">APWRIMS (AP-GWD)</span>
+              </div>
+              <div className="kvRow">
+                <span className="k">Boundary</span>
+                <span className="v">public_prototype</span>
+              </div>
+              <div className="sideCaveat" style={{ marginTop: 8 }}>
+                {mandal.data_quality_notes}
+              </div>
+            </section>
+          </div>
+        </div>
+
+        {/* right rail */}
+        <div className="contentGrid">
+          <section className="card">
+            <div className="cardHead">
+              <div className="cardTitle">
+                <span className="titleIcon">
+                  <IconLeaf />
+                </span>
+                Data Sources
+              </div>
+            </div>
+            <div className="readinessList">
+              <div className="readinessItem">
+                <span className="readyIcon manual">
+                  <IconFlask />
+                </span>
+                <div className="readyBody">
+                  <div className="readyLabel">Measured Input · APWRIMS</div>
+                  <div className="readyMeta">APWRIMS mandal reading (2014-2026)</div>
+                </div>
+              </div>
+              <div className="readinessItem">
+                <span className="readyIcon available">
+                  <IconSatellite />
+                </span>
+                <div className="readyBody">
+                  <div className="readyLabel">NASA Satellite-Model (GRACE-DA)</div>
+                  <div className="readyMeta">Real percentiles 0–100 · {sample?.satellite_sample_date_or_fetch_date || "—"}</div>
+                </div>
+              </div>
+              {mandal.rainfall_mm !== null && mandal.rainfall_mm !== undefined && (
+                <div className="readinessItem">
+                  <span className="readyIcon available">
+                    <IconCloudRain />
+                  </span>
+                  <div className="readyBody">
+                    <div className="readyLabel">CHIRPS Rainfall (recharge)</div>
+                    <div className="readyMeta">Real monthly mm · open satellite-gauge blend</div>
+                  </div>
+                </div>
+              )}
+              <div className="readinessItem">
+                <span className="readyIcon pending">
+                  <IconMap />
+                </span>
+                <div className="readyBody">
+                  <div className="readyLabel">Boundary Source</div>
+                  <div className="readyMeta">public_prototype · official APWRIMS boundary pending</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="card">
+            <div className="cardHead">
+              <div className="cardTitle">
+                <span className="titleIcon">
+                  <IconCheck />
+                </span>
+                Recommended Action
+              </div>
+            </div>
+            <div className="actionList">
+              {actionItems(mandal).map((a) => (
+                <div className="actionItem" key={a}>
+                  <span className="check">
+                    <IconCheck />
+                  </span>
+                  {a}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="card">
+            <div className="cardHead">
+              <div className="cardTitle">
+                <span className="titleIcon">
+                  <IconCalendar />
+                </span>
+                Action Output
+              </div>
+            </div>
+            <ActionOutputPreview payload={awarePayload} />
+          </section>
+        </div>
+      </div>
+
+      <div className="footNote">
+        <strong>Prototype Insight</strong>
+        <span className="dotsep" />
+        APWRIMS reading + real NASA satellite-model percentile
+        <span className="dotsep" />
+        Not official until APWRIMS export &amp; official boundaries
+        <Link className="linkAction" href="/watchlist" style={{ marginLeft: "auto" }}>
+          Go to watchlist <IconArrowRight />
+        </Link>
+      </div>
+    </div>
+  );
+}

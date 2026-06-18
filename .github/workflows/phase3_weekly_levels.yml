@@ -1,0 +1,45 @@
+name: Phase 3 — weekly groundwater levels
+
+# Hands-off: pulls latest GRACE-DA + CHIRPS + TerraClimate every Monday,
+# rebuilds features, and re-predicts mandal levels. No manual feeding.
+on:
+  schedule:
+    - cron: "0 2 * * 1"        # 02:00 UTC every Monday
+  workflow_dispatch: {}         # allow manual trigger from the Actions tab
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: pip install -r requirements.txt scikit-learn joblib pandas numpy rasterio xarray netCDF4
+      # If GLDAS / GRACE mascons need NASA Earthdata auth, add a ~/.netrc step here
+      # using EARTHDATA_USER / EARTHDATA_PASS secrets before the run.
+      - name: Run weekly pipeline
+        run: python phase3_levels/fetch_weekly.py
+      - name: Commit refreshed outputs
+        run: |
+          git config user.name "phase3-bot"
+          git config user.email "bot@local"
+          # app/data holds the JSON the Next.js app imports — must be committed too,
+          # otherwise the weekly refresh never reaches the deployed UI.
+          git add phase3_levels/outputs phase3_levels/data app/data || true
+          git commit -m "chore(phase3): weekly levels refresh" || echo "no changes"
+          git push || echo "push skipped"
+
+      - name: Trigger redeploy
+        # Host-agnostic deploy hook (Vercel/Netlify/Render all support these).
+        # Add the URL as repo secret DEPLOY_HOOK_URL; step is a no-op if unset.
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}
+        run: |
+          if [ -n "$DEPLOY_HOOK_URL" ]; then
+            echo "Triggering redeploy…"
+            curl -fsS -X POST "$DEPLOY_HOOK_URL" && echo "deploy triggered"
+          else
+            echo "DEPLOY_HOOK_URL not set — skipping (commit alone will deploy if host auto-builds on push)."
+          fi

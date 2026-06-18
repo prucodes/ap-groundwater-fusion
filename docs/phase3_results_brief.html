@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Groundwater Levels in Metres — Phase 3 Results & Validation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{--navy:#071d35;--deep:#123b66;--teal:#1f8a8a;--cyan:#12b5cb;--green:#5e9b6b;--amber:#d79b2e;--rust:#c65a46;--ink:#0d2138;--soft:#33455c;--muted:#667085;--line:#e4e9f0;--field:#f3f6fa;--card:#fff;--bg:#eef3f8;--sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;--disp:"Space Grotesk",var(--sans)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);font-size:12px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .sheet{max-width:1000px;margin:18px auto;background:var(--card);border-radius:18px;overflow:hidden;box-shadow:0 18px 50px rgba(7,29,53,.16)}
+  h1,h2,h3,h4{font-family:var(--disp);letter-spacing:-.01em}
+  .hero{position:relative;color:#fff;padding:24px 30px;overflow:hidden;background:linear-gradient(110deg,#06182a,#0a2747 55%,#123b66)}
+  .hero .stars{position:absolute;inset:0;opacity:.55;background-image:radial-gradient(1px 1px at 16% 32%,rgba(207,230,255,.6),transparent),radial-gradient(1px 1px at 34% 70%,rgba(159,198,239,.5),transparent),radial-gradient(1.3px 1.3px at 52% 24%,rgba(207,230,255,.5),transparent),radial-gradient(1px 1px at 74% 58%,rgba(188,217,245,.4),transparent)}
+  .hero .inner{position:relative}
+  .eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7fb0d4;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+  .hero h1{font-size:21px;font-weight:600}
+  .hero p{margin-top:8px;font-size:12px;color:#bcd4ea;max-width:760px}
+  .kpis{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .kpi{flex:1 1 0;min-width:130px;background:rgba(255,255,255,.06);border:1px solid rgba(159,198,239,.25);border-radius:11px;padding:11px 13px}
+  .kpi .v{font-family:var(--disp);font-size:19px;font-weight:600;color:#fff}
+  .kpi .v small{font-size:11px;color:#9fc6ef;font-weight:500}
+  .kpi .l{font-size:9.5px;color:#9fc6ef;margin-top:2px;line-height:1.35}
+  .body{padding:20px 30px 8px}
+  .quote{background:rgba(18,181,203,.07);border:1px solid rgba(18,181,203,.22);border-left:3px solid var(--cyan);border-radius:10px;padding:13px 16px;font-size:12.5px;color:var(--soft);line-height:1.6;margin-bottom:6px;font-style:italic}
+  .quote b{color:var(--ink);font-style:normal}
+  .attrib{font-size:10px;color:var(--muted);text-align:right;margin-bottom:16px}
+  .sectionTitle{display:flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;margin:18px 0 10px}
+  .sectionTitle .n{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(145deg,var(--cyan),var(--teal));color:#fff;font-size:11px;font-weight:700;font-family:var(--disp)}
+  table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+  th{text-align:left;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:8px 10px;background:var(--field);border-bottom:1px solid var(--line)}
+  td{padding:9px 10px;border-bottom:1px solid #eef2f7;color:var(--soft);vertical-align:top}
+  td b{color:var(--ink)}
+  .badge{font-size:9.5px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .b-done{color:#0f6e56;background:rgba(29,158,117,.14)}
+  .b-strong{color:#185fa5;background:rgba(55,138,221,.14)}
+  .b-honest{color:#8a5a0e;background:rgba(215,155,46,.16)}
+  .reframe{background:linear-gradient(120deg,rgba(215,155,46,.12),rgba(198,90,70,.06));border:1px solid rgba(215,155,46,.4);border-radius:13px;padding:14px 16px;margin:14px 0}
+  .reframe h4{font-size:13px;color:#8a5a0e;margin-bottom:6px}
+  .reframe p{font-size:11.5px;color:var(--soft);line-height:1.6}
+  .reframe i{color:var(--ink);font-weight:600;font-style:normal}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start;margin-top:4px}
+  .panel{border:1px solid var(--line);border-radius:13px;padding:13px 15px}
+  .panel h4{font-size:12.5px;margin-bottom:9px}
+  .panel ul{list-style:none;display:flex;flex-direction:column;gap:7px;font-size:11.5px;color:var(--soft)}
+  .panel li{display:flex;gap:8px}
+  .panel li b{color:var(--ink)}
+  .chk{flex:none;width:16px;height:16px;border-radius:5px;background:var(--field);color:var(--teal);display:grid;place-items:center;font-size:9px;font-weight:700;margin-top:1px}
+  .num{flex:none;width:16px;height:16px;border-radius:5px;background:rgba(18,181,203,.12);color:var(--teal);display:grid;place-items:center;font-size:9px;font-weight:700;margin-top:1px}
+  .pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .pill{font-size:10px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--field);color:var(--soft);border:1px solid var(--line)}
+  .caveat{font-size:10.5px;color:var(--muted);background:rgba(18,181,203,.06);border:1px solid rgba(18,181,203,.2);border-radius:10px;padding:10px 13px;margin-top:16px;display:flex;gap:8px}
+  .good{color:#0f6e56;font-weight:600}
+  .footer{margin-top:14px;border-top:1px solid var(--line);padding:13px 30px;background:var(--field);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:10px;color:var(--muted)}
+  .footer strong{color:var(--soft)}
+  @media print{body{background:#fff}.sheet{box-shadow:none;margin:0;border-radius:0;max-width:none}.panel,table,.reframe,.kpis{break-inside:avoid}@page{margin:10mm}}
+</style>
+</head>
+<body>
+<div class="sheet">
+  <header class="hero">
+    <div class="stars"></div>
+    <div class="inner">
+      <div class="eyebrow"><span class="dot"></span> Andhra Pradesh · Groundwater Intelligence Layer · Phase 3</div>
+      <h1>Groundwater levels in metres — from satellite + open data, validated</h1>
+      <p>Your refined ask: derive mandal groundwater <b>levels in metres</b> by calibrating NASA satellite &amp; open data, using the few existing sensors only for calibration — without a sensor in every mandal. This is what we built, how accurate it is, and the one honest limit that shapes how the numbers should be read.</p>
+      <div class="kpis">
+        <div class="kpi"><div class="v">±1.3<small> m</small></div><div class="l">typical error, next/missing month (validated on unseen data)</div></div>
+        <div class="kpi"><div class="v">0.90<small> R²</small></div><div class="l">variance explained on never-seen months</div></div>
+        <div class="kpi"><div class="v">688</div><div class="l">mandals · 88k depth readings · 2014–2026</div></div>
+        <div class="kpi"><div class="v">4</div><div class="l">independent validation checks</div></div>
+      </div>
+    </div>
+  </header>
+
+  <div class="body">
+    <div class="quote">
+      “We can’t put sensors at every mandal. Can we <b>calibrate NASA / open-source data</b> and get the groundwater <b>levels in metres</b> — using the few sensors we have only to calibrate?”
+    </div>
+    <div class="attrib">— refined problem statement, RTGS / APSDMA</div>
+
+    <div class="sectionTitle"><span class="n">1</span> What we built</div>
+    <table>
+      <thead><tr><th style="width:30%">Component</th><th style="width:15%">Status</th><th>Detail</th></tr></thead>
+      <tbody>
+        <tr><td><b>Ground-truth labels</b></td><td><span class="badge b-done">Live</span></td><td><b>88,753</b> real APWRIMS mandal depth readings (m below ground), all 688 mandals, monthly, 2014–2026.</td></tr>
+        <tr><td><b>Satellite / open driver</b></td><td><span class="badge b-done">Live</span></td><td>NASA POWER rainfall per mandal (96k rows) — the recharge signal — auto-refreshing weekly, no manual feeding.</td></tr>
+        <tr><td><b>Levels engine (β)</b></td><td><span class="badge b-done">Built</span></td><td>Gradient-boosted model fusing sensor history + satellite rainfall → estimate in metres, with a <b>confidence band on every value</b>.</td></tr>
+        <tr><td><b>Forecasting</b></td><td><span class="badge b-done">Built</span></td><td>Season-ahead (3–6 month) forecast — the irrigation-planning window.</td></tr>
+        <tr><td><b>Dashboard</b></td><td><span class="badge b-done">Live</span></td><td>“Estimated Levels (β)” screen — all 688 mandals on the current 26/28-district map, labelled <i>modelled, not official</i>.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="sectionTitle"><span class="n">2</span> How accurate is it — validated four ways</div>
+    <table>
+      <thead><tr><th style="width:30%">Validation</th><th style="width:18%">Result</th><th>What it proves</th></tr></thead>
+      <tbody>
+        <tr><td><b>Temporal back-test</b><br><span style="font-size:10px;color:var(--muted)">train ≤2023, predict 2024–26</span></td><td><b>MAE 1.31 m</b> · R² 0.90 <span class="badge b-strong">+45% vs naive</span></td><td>Predicts months the model has never seen, far better than “repeat last year”.</td></tr>
+        <tr><td><b>Spatial snapshot</b><br><span style="font-size:10px;color:var(--muted)">vs independent 1-Jun-2026 district data</span></td><td><b>MAE 0.82 m</b> · r 0.98</td><td>Matches a separate official snapshot across all 28 districts.</td></tr>
+        <tr><td><b>Trend (year-on-year)</b></td><td><b>r 0.93</b> · 82% direction</td><td>Gets the rise/fall direction and magnitude right.</td></tr>
+        <tr><td><b>CGWB — independent network</b><br><span style="font-size:10px;color:var(--muted)">1,018 CGWB wells vs APWRIMS</span></td><td><b>~3–6 m spread</b> · r 0.40 <span class="badge b-honest">honest limit</span></td><td>The two government networks themselves disagree this much — see the box below.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="reframe">
+      <h4>The one honest point — and why it makes the system more trustworthy, not less</h4>
+      <p>When we cross-checked against <i>CGWB’s own independent well network</i> (1,018 AP stations), the two official networks agree only to <i>~3–6 metres</i>, with CGWB reading ~4 m shallower. This is <b>not a model error</b> — CGWB’s shallow dug wells and APWRIMS’s deeper piezometers <i>measure different aquifer zones</i>, and groundwater varies several metres even between wells a few km apart. The lesson: <i>“groundwater level in metres” is never one exact number</i> — it depends on the well and the aquifer. That is exactly why the engine ships a <b>confidence band on every estimate</b> and labels everything <b>“calibrated to APWRIMS.”</b> We measured the irreducible uncertainty rather than hiding it.</p>
+    </div>
+
+    <div class="sectionTitle"><span class="n">3</span> What it does — and the forecasting sweet spot</div>
+    <div class="cols">
+      <div class="panel">
+        <h4>Capabilities today</h4>
+        <ul>
+          <li><span class="chk">✓</span><span><b>Estimate metres</b> at any mandal with some history, to ~±1.3 m, with a band.</span></li>
+          <li><span class="chk">✓</span><span><b>Gap-fill</b> missing months where sensors lapse.</span></li>
+          <li><span class="chk">✓</span><span><b>Forecast a season ahead</b> (3–6 mo) to ~±2–2.5 m — beats naive by ~20%.</span></li>
+          <li><span class="chk">✓</span><span><b>Auto-refresh</b> weekly from NASA — no manual data feeding.</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h4>Honest limits</h4>
+        <ul>
+          <li><span class="num">!</span><span>A mandal with <b>no history at all</b> ≈ ±5 m (worse in hard-rock Rayalaseema).</span></li>
+          <li><span class="num">!</span><span><b>12-month</b> forecasts don’t beat “same month last year” — we don’t oversell long range.</span></li>
+          <li><span class="num">!</span><span>Calibrated to <b>APWRIMS</b>; absolute truth is network-dependent (see box).</span></li>
+          <li><span class="num">!</span><span>Labelled <b>β / not official</b> throughout.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sectionTitle"><span class="n">4</span> To take it to production</div>
+    <div class="cols">
+      <div class="panel">
+        <h4>What RTGS provides</h4>
+        <ul>
+          <li><span class="num">1</span><span>A <b>formal data-sharing arrangement</b> for APWRIMS (the prototype used a browser session for a one-time research pull).</span></li>
+          <li><span class="num">2</span><span>The <b>AWARE endpoint &amp; schema</b> to push advisories live.</span></li>
+          <li><span class="num">3</span><span>Optional: <b>CGWB aquifer / specific-yield map</b> to sharpen hard-rock estimates.</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h4>What it unlocks</h4>
+        <ul>
+          <li><span class="chk">→</span><span><b>Statewide metres</b> without a sensor in every mandal.</span></li>
+          <li><span class="chk">→</span><span><b>Season-ahead</b> guidance for kharif irrigation planning.</span></li>
+          <li><span class="chk">→</span><span><b>Sensor-siting</b>: the model shows where uncertainty is highest — place the next sensors there.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="caveat"><span>⚠</span><span><b>Prototype / research output.</b> All estimates are modelled and labelled <b>β — not official APWRIMS data</b>. Accuracy figures are from held-out validation on real data; the CGWB cross-check reflects genuine cross-network differences, not model error. Built by an independent researcher for RTGS / APSDMA review.</span></div>
+  </div>
+
+  <div class="footer">
+    <div><strong>Data:</strong> APWRIMS (AP-GWD) · NASA POWER · CGWB via India Data Portal · NASA GRACE-DA · CHIRPS · TerraClimate — all open / research access.</div>
+    <div><strong>Validation:</strong> temporal MAE 1.31 m · spatial MAE 0.82 m (r 0.98) · trend r 0.93 · CGWB cross-network ~3–6 m.</div>
+  </div>
+</div>
+</body>
+</html>

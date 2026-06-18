@@ -1,0 +1,12 @@
+station_id,station_name,district_name,mandal_name,village_name,latitude,longitude,reading_date,groundwater_level_mbgl,source_type,source_system,quality_flag,data_label
+APM-GNT-001,Tenali Observation Well,Guntur,Tenali,Angalakuduru,16.2431,80.6408,2026-05-15,7.8,piezometer,APWRIMS-like mock,ok,mock
+APM-GNT-002,Mangalagiri Telemetry Point,Guntur,Mangalagiri,Nowluru,16.4306,80.5685,2026-05-18,9.4,telemetry,APWRIMS-like mock,ok,mock
+APM-KRI-001,Gudivada Manual Well,Krishna,Gudivada,Valivarthipadu,16.4389,80.9952,2026-05-16,5.9,manual,APWRIMS-like mock,ok,mock
+APM-KRI-002,Avanigadda Piezometer,Krishna,Avanigadda,Modumudi,16.0217,80.9189,2026-04-28,4.7,piezometer,APWRIMS-like mock,review,mock
+APM-ANT-001,Tadipatri Sensor Point,Anantapur,Tadipatri,Yellanur Road,14.9091,78.0092,2026-05-14,18.6,sensor,APWRIMS-like mock,ok,mock
+APM-ANT-002,Dharmavaram Observation Well,Anantapur,Dharmavaram,Gotlur,14.4149,77.7214,2026-05-11,21.3,manual,APWRIMS-like mock,ok,mock
+APM-CTR-001,Madanapalle Piezometer,Chittoor,Madanapalle,Basavanna Konda,13.5503,78.5029,2026-05-13,16.2,piezometer,APWRIMS-like mock,ok,mock
+APM-CTR-002,Palamaner Manual Well,Chittoor,Palamaner,Kothapalli,13.2017,78.7476,2026-04-20,14.8,manual,APWRIMS-like mock,review,mock
+APM-VSK-001,Anakapalle Telemetry Point,Visakhapatnam,Anakapalle,Sankaram,17.6868,83.0036,2026-05-17,6.5,telemetry,APWRIMS-like mock,ok,mock
+APM-VSK-002,Bheemunipatnam Observation Well,Visakhapatnam,Bheemunipatnam,Tagarapuvalasa,17.9298,83.4301,2026-05-10,8.1,piezometer,APWRIMS-like mock,ok,mock
+

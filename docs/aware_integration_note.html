@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AP Groundwater Intelligence Layer — PoC → Production → AWARE Integration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --navy:#071d35; --deep:#123b66; --teal:#1f8a8a; --cyan:#12b5cb; --green:#5e9b6b;
+    --amber:#d79b2e; --rust:#c65a46; --ink:#0d2138; --soft:#33455c; --muted:#667085;
+    --line:#e4e9f0; --field:#f3f6fa; --card:#fff; --bg:#eef3f8;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --disp:"Space Grotesk",var(--sans);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);font-size:12px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .sheet{max-width:1000px;margin:18px auto;background:var(--card);border-radius:18px;overflow:hidden;box-shadow:0 18px 50px rgba(7,29,53,.16)}
+  h1,h2,h3,h4{font-family:var(--disp);letter-spacing:-.01em}
+
+  /* Header */
+  .hero{position:relative;color:#fff;padding:26px 30px;overflow:hidden;
+    background:linear-gradient(110deg,#06182a 0%,#0a2747 55%,#123b66 100%)}
+  .hero .stars{position:absolute;inset:0;opacity:.6;background-image:
+    radial-gradient(1px 1px at 14% 30%,rgba(207,230,255,.6),transparent),
+    radial-gradient(1px 1px at 30% 70%,rgba(159,198,239,.5),transparent),
+    radial-gradient(1.3px 1.3px at 48% 24%,rgba(207,230,255,.5),transparent),
+    radial-gradient(1px 1px at 70% 60%,rgba(188,217,245,.4),transparent)}
+  .hero .inner{position:relative;display:flex;justify-content:space-between;align-items:center;gap:24px}
+  .eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7fb0d4;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+  .hero h1{font-size:23px;font-weight:600;line-height:1.12}
+  .hero p{margin-top:8px;font-size:12.5px;color:#bcd4ea;max-width:620px}
+  .hero svg{flex:none;filter:drop-shadow(0 6px 18px rgba(18,181,203,.35))}
+
+  .body{padding:24px 30px 10px}
+  .sectionTitle{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:var(--ink);margin:22px 0 12px}
+  .sectionTitle .n{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:linear-gradient(145deg,var(--cyan),var(--teal));color:#fff;font-size:11px;font-weight:700;font-family:var(--disp)}
+  .sectionTitle:first-child{margin-top:0}
+
+  /* Three-step path */
+  .steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .step{border:1px solid var(--line);border-radius:14px;padding:15px 16px;position:relative;background:var(--card)}
+  .step::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;background:var(--accent)}
+  .step.s1{--accent:var(--teal)} .step.s2{--accent:var(--cyan)} .step.s3{--accent:var(--amber)}
+  .step .tag{font-size:9.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+  .step h3{font-size:14px;margin:5px 0 8px}
+  .step .lbl{font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:8px 0 3px}
+  .step ul{list-style:none;font-size:11px;color:var(--soft);display:flex;flex-direction:column;gap:3px}
+  .step li{display:flex;gap:6px}
+  .step li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:5px;flex:none}
+
+  /* Architecture diagram */
+  .arch{border:1px solid var(--line);border-radius:14px;padding:6px;background:linear-gradient(180deg,#f7fafd,#eef4f9)}
+  .arch svg{width:100%;height:auto;display:block}
+
+  /* two-col */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .panel{border:1px solid var(--line);border-radius:14px;padding:15px 16px;background:var(--card)}
+  .panel h4{font-size:12.5px;margin-bottom:9px;color:var(--ink)}
+  .need{list-style:none;font-size:11px;color:var(--soft);display:flex;flex-direction:column;gap:5px}
+  .need li{display:flex;gap:7px}
+  .need b{color:var(--ink)}
+  .need .k{flex:none;width:16px;height:16px;border-radius:5px;background:var(--field);color:var(--teal);display:grid;place-items:center;font-size:9px;font-weight:700;margin-top:1px}
+
+  pre{background:#0a1d33;border:1px solid #143a5f;border-radius:11px;color:#cfe2f5;font-family:"JetBrains Mono",ui-monospace,Menlo,monospace;font-size:10px;line-height:1.55;padding:12px 13px;overflow:auto;margin-top:8px}
+  pre .k{color:#7fd4e8} pre .s{color:#a8e6a0} pre .n{color:#f2c773} pre .c{color:#6f86a0}
+  .pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .pill{font-size:10px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--field);color:var(--soft);border:1px solid var(--line)}
+
+  /* Value */
+  .value{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .vcard{border:1px solid var(--line);border-radius:12px;padding:12px 13px;background:var(--card)}
+  .vcard .vi{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;background:var(--field);color:var(--teal);margin-bottom:7px}
+  .vcard h4{font-size:11.5px;margin-bottom:2px}
+  .vcard p{font-size:10.5px;color:var(--muted);line-height:1.45}
+
+  .footer{margin-top:18px;border-top:1px solid var(--line);padding:14px 30px;background:var(--field);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:10px;color:var(--muted)}
+  .footer strong{color:var(--soft)}
+  .caveat{font-size:10px;color:var(--muted);background:rgba(18,181,203,.07);border:1px solid rgba(18,181,203,.22);border-radius:10px;padding:9px 12px;margin-top:14px;display:flex;gap:8px}
+  .caveat svg{flex:none;color:var(--teal)}
+
+  @media print{
+    body{background:#fff}
+    .sheet{box-shadow:none;margin:0;border-radius:0;max-width:none}
+    .step,.panel,.vcard,.arch{break-inside:avoid}
+    @page{margin:10mm}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="stars"></div>
+    <div class="inner">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Andhra Pradesh · Satellite + Sensor Fusion</div>
+        <h1>Groundwater Intelligence Layer</h1>
+        <p>From proof-of-concept to a live decision-support layer inside AWARE — fusing APWRIMS ground readings with open NASA / satellite signals. A concept &amp; integration note.</p>
+      </div>
+      <!-- mini orbit/globe -->
+      <svg width="132" height="120" viewBox="0 0 132 120" aria-hidden="true">
+        <defs>
+          <radialGradient id="oc" cx="40%" cy="32%" r="75%">
+            <stop offset="0%" stop-color="#2ec3e6" stop-opacity=".5"/>
+            <stop offset="60%" stop-color="#0e5e94" stop-opacity=".2"/>
+            <stop offset="100%" stop-color="#04203d" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="66" cy="74" r="40" fill="url(#oc)"/>
+        <g stroke="#8fe6f7" fill="none">
+          <circle cx="66" cy="74" r="38" stroke-width="1.1" opacity=".8"/>
+          <ellipse cx="66" cy="74" rx="13" ry="38" stroke-width=".7" opacity=".4"/>
+          <ellipse cx="66" cy="74" rx="27" ry="38" stroke-width=".7" opacity=".3"/>
+          <line x1="66" y1="36" x2="66" y2="112" stroke-width=".7" opacity=".4"/>
+          <line x1="28" y1="74" x2="104" y2="74" stroke-width=".7" opacity=".4"/>
+          <ellipse cx="66" cy="74" rx="38" ry="12" stroke-width=".7" opacity=".3"/>
+        </g>
+        <ellipse cx="66" cy="46" rx="60" ry="17" fill="none" stroke="rgba(143,220,239,.5)" stroke-width=".8" stroke-dasharray="3 5"/>
+        <g transform="translate(110 44)">
+          <rect x="-7" y="-3" width="6" height="6" rx="1" fill="#2c5d92" stroke="#8fc3ea" stroke-width=".5"/>
+          <rect x="5" y="-3" width="6" height="6" rx="1" fill="#2c5d92" stroke="#8fc3ea" stroke-width=".5"/>
+          <rect x="-1.5" y="-3.5" width="5" height="7" rx="1.4" fill="#eaf7fd" stroke="#12b5cb" stroke-width=".7"/>
+        </g>
+      </svg>
+    </div>
+  </header>
+
+  <div class="body">
+
+    <!-- STEP PATH -->
+    <div class="sectionTitle"><span class="n">1</span> The path: Pilot → Production → AWARE</div>
+    <div class="steps">
+      <div class="step s1">
+        <span class="tag">Step 1 · Now</span>
+        <h3>Validated Pilot (PoC)</h3>
+        <div class="lbl">Delivers</div>
+        <ul><li>Real APWRIMS readings + official boundaries fused with NASA/CHIRPS/TerraClimate</li><li>Status map, watchlist, early-warning, water-balance, scenario planner — on real data</li></ul>
+        <div class="lbl">Needs</div>
+        <ul><li>One-time sample export (3–5 districts, with history)</li><li>Official mandal boundary file</li></ul>
+      </div>
+      <div class="step s2">
+        <span class="tag">Step 2 · Next</span>
+        <h3>Production Service</h3>
+        <div class="lbl">Delivers</div>
+        <ul><li>Auto-refreshing signals; database-backed; hosted &amp; monitored</li><li>Login / roles, audit trail, scheduled satellite refresh</li></ul>
+        <div class="lbl">Needs</div>
+        <ul><li>Recurring data feed (API / SFTP / DB)</li><li>Data-sharing sign-off &amp; hosting</li></ul>
+      </div>
+      <div class="step s3">
+        <span class="tag">Step 3 · Integrate</span>
+        <h3>AWARE Integration</h3>
+        <div class="lbl">Delivers</div>
+        <ul><li>Our confidence / alert / balance signals inside the AWARE groundwater module</li><li>Early-warning routed to district officers</li></ul>
+        <div class="lbl">Needs</div>
+        <ul><li>Integration contract with RTGS / Vassar Labs (API schema or file format)</li></ul>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <div class="sectionTitle"><span class="n">2</span> How the data flows</div>
+    <div class="arch">
+      <svg viewBox="0 0 960 200" aria-label="Architecture flow">
+        <defs>
+          <linearGradient id="eng" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#123b66"/><stop offset="1" stop-color="#0a2747"/></linearGradient>
+          <marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0L6 3L0 6Z" fill="#9fb4c8"/></marker>
+        </defs>
+        <!-- Inputs -->
+        <g font-family="Inter,sans-serif">
+          <text x="86" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#667085">INPUTS</text>
+          <g>
+            <rect x="14" y="30" width="144" height="30" rx="7" fill="#eef4f9" stroke="#cfe0ee"/>
+            <text x="86" y="49" text-anchor="middle" font-size="10.5" fill="#0d2138">Open NASA GRACE-FO</text>
+          </g>
+          <g>
+            <rect x="14" y="66" width="144" height="30" rx="7" fill="#eef4f9" stroke="#cfe0ee"/>
+            <text x="86" y="85" text-anchor="middle" font-size="10.5" fill="#0d2138">CHIRPS · TerraClimate</text>
+          </g>
+          <g>
+            <rect x="14" y="102" width="144" height="30" rx="7" fill="#e7f1ea" stroke="#bfdcc9"/>
+            <text x="86" y="121" text-anchor="middle" font-size="10.5" fill="#0d2138">APWRIMS readings</text>
+          </g>
+          <g>
+            <rect x="14" y="138" width="144" height="30" rx="7" fill="#e7f1ea" stroke="#bfdcc9"/>
+            <text x="86" y="157" text-anchor="middle" font-size="10.5" fill="#0d2138">Official boundaries</text>
+          </g>
+        </g>
+        <!-- Engine -->
+        <line x1="160" y1="99" x2="298" y2="99" stroke="#9fb4c8" stroke-width="1.4" marker-end="url(#ar)"/>
+        <rect x="300" y="58" width="190" height="84" rx="13" fill="url(#eng)"/>
+        <text x="395" y="92" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="Space Grotesk,sans-serif">Fusion &amp; Confidence</text>
+        <text x="395" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="#fff" font-family="Space Grotesk,sans-serif">Engine</text>
+        <text x="395" y="128" text-anchor="middle" font-size="9.5" fill="#9fd0e6">agreement · confidence · alerts</text>
+        <!-- Outputs -->
+        <line x1="490" y1="99" x2="628" y2="99" stroke="#9fb4c8" stroke-width="1.4" marker-end="url(#ar)"/>
+        <text x="700" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#667085">OUTPUTS</text>
+        <g font-family="Inter,sans-serif">
+          <rect x="630" y="40" width="150" height="28" rx="7" fill="#e9f6f8" stroke="#bfe6ec"/><text x="705" y="58" text-anchor="middle" font-size="10" fill="#0d2138">Status &amp; heat maps</text>
+          <rect x="630" y="72" width="150" height="28" rx="7" fill="#e9f6f8" stroke="#bfe6ec"/><text x="705" y="90" text-anchor="middle" font-size="10" fill="#0d2138">Early-warning alerts</text>
+          <rect x="630" y="104" width="150" height="28" rx="7" fill="#e9f6f8" stroke="#bfe6ec"/><text x="705" y="122" text-anchor="middle" font-size="10" fill="#0d2138">Water balance · scenario</text>
+          <rect x="630" y="136" width="150" height="28" rx="7" fill="#fbf2df" stroke="#ecd9a8"/><text x="705" y="154" text-anchor="middle" font-size="10" fill="#0d2138">AWARE action JSON</text>
+        </g>
+        <!-- AWARE -->
+        <line x1="780" y1="150" x2="852" y2="150" stroke="#9fb4c8" stroke-width="1.4" marker-end="url(#ar)"/>
+        <rect x="854" y="120" width="92" height="60" rx="11" fill="#0a2747"/>
+        <text x="900" y="146" text-anchor="middle" font-size="12" font-weight="700" fill="#fff" font-family="Space Grotesk,sans-serif">AWARE</text>
+        <text x="900" y="162" text-anchor="middle" font-size="8.5" fill="#9fd0e6">API / push</text>
+      </svg>
+    </div>
+
+    <!-- DATA + API -->
+    <div class="sectionTitle"><span class="n">3</span> What we need &amp; how we hand off</div>
+    <div class="cols">
+      <div class="panel">
+        <h4>Requested from the department (sample, 3–5 districts)</h4>
+        <ul class="need">
+          <li><span class="k">A</span><span><b>Groundwater readings (CSV/XLSX):</b> station ID, name, lat/long (WGS84), district, mandal, village, date/time, level in <b>mbgl</b>, source type, admin codes, quality flag.</span></li>
+          <li><span class="k">↻</span><span><b>History:</b> ideally 3–5 yrs monthly per station (min 24 months) → real trends.</span></li>
+          <li><span class="k">B</span><span><b>Official mandal boundary</b> GeoJSON/shapefile (WGS84) with district/mandal names + codes.</span></li>
+          <li><span class="k">©</span><span><b>Usage terms</b> for display in a non-official prototype.</span></li>
+        </ul>
+        <div class="pillrow">
+          <span class="pill">One-time export now</span>
+          <span class="pill">API / feed later</span>
+          <span class="pill">WGS84 · ISO dates</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h4>Proposed hand-off into AWARE</h4>
+        <p style="font-size:11px;color:var(--muted)">Read-only signal per mandal/district — AWARE consumes via API <em>or</em> a scheduled file/DB push.</p>
+<pre><span class="c">GET /api/v1/mandal/{id}/signal</span>
+{
+  <span class="k">"mandal_id"</span>: <span class="s">"anantapur-dharmavaram"</span>,
+  <span class="k">"status"</span>: <span class="s">"Verify"</span>, <span class="k">"confidence"</span>: <span class="n">40</span>,
+  <span class="k">"agreement"</span>: <span class="s">"strong_disagreement"</span>,
+  <span class="k">"water_balance_mm"</span>: <span class="n">42.3</span>,
+  <span class="k">"alert_severity"</span>: <span class="s">"Critical"</span>,
+  <span class="k">"recommended_action"</span>: <span class="s">"Field verify..."</span>,
+  <span class="k">"sources"</span>: <span class="s">"GRACE-DA, CHIRPS, TerraClimate"</span>,
+  <span class="k">"official_result"</span>: <span class="n">false</span>
+}</pre>
+      </div>
+    </div>
+
+    <!-- VALUE -->
+    <div class="sectionTitle"><span class="n">4</span> Value to state irrigation</div>
+    <div class="value">
+      <div class="vcard"><div class="vi">◎</div><h4>Field triage</h4><p>Send teams to the highest-risk mandals first.</p></div>
+      <div class="vcard"><div class="vi">≈</div><h4>Irrigation advisories</h4><p>Cropping &amp; canal-release guidance in deficit zones.</p></div>
+      <div class="vcard"><div class="vi">!</div><h4>Drought early-warning</h4><p>Earlier onset signals; time recharge works.</p></div>
+      <div class="vcard"><div class="vi">⚖</div><h4>Permit support</h4><p>Flag over-exploited mandals for bore-well regulation.</p></div>
+      <div class="vcard"><div class="vi">✓</div><h4>Sensor QA</h4><p>Catch drifting/failed sensors; fill gaps where no well exists.</p></div>
+      <div class="vcard"><div class="vi">◔</div><h4>Foresight</h4><p>Monsoon what-if: pre-position for a weak season.</p></div>
+    </div>
+
+    <div class="caveat">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+      <span>Prototype / decision-support — outputs are satellite-model context and screening signals, <b>not</b> official groundwater determinations. Official APWRIMS data &amp; boundaries are required for government-grade results. Satellite values are percentiles / mm, never groundwater depth.</span>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span><strong>AP Groundwater Intelligence Layer</strong> · Concept &amp; Integration Note · Prototype</span>
+    <span>Sources: NASA GRACE-FO/GRACE-DA · CHIRPS (UCSB) · TerraClimate · APWRIMS (pending)</span>
+  </div>
+
+</div>
+</body>
+</html>
