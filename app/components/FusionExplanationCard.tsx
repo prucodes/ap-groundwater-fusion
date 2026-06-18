@@ -13,7 +13,7 @@ export function FusionExplanationCard({ mandal }: { mandal: MandalFusionSeed }) 
     sig === "over_extraction"
       ? `Pumping-pressure hypothesis (verify): the water table is falling even though the climatic water balance is ${recharge.toLowerCase()}. That pattern is consistent with extraction outpacing recharge — a candidate for demand management, to be confirmed with field data.`
       : sig === "drought_decline"
-      ? `Climate-stress hypothesis (verify): the water table is falling alongside a rainfall deficit (${recharge}). Consistent with drought-driven decline; recovery is plausible with better monsoon recharge.`
+      ? `Climate-stress hypothesis (verify): the water table is falling alongside a rainfall deficit (${recharge}). Consistent with a climate-driven decline; recovery is plausible with better monsoon recharge.`
       : `Stable / recovering: the water table is holding or rising, consistent with a ${recharge.toLowerCase()} water balance.`;
 
   return (

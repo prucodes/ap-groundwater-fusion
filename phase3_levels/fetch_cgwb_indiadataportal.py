@@ -9,13 +9,20 @@ Output: phase3_levels/cgwb/cgwb_gw_levels.csv
         (state,district,station,lat,lon,date,level_mbgl,agency)
 """
 import csv, json, os, ssl, urllib.parse, urllib.request
+import os as _os, sys as _sys, ssl as _ssl
+def _tls_context():
+    """Verified TLS by default; unverified only with ALLOW_INSECURE_TLS=1 (loud, opt-in)."""
+    if _os.environ.get('ALLOW_INSECURE_TLS') == '1':
+        _sys.stderr.write('WARNING: ALLOW_INSECURE_TLS=1 - using UNVERIFIED TLS.\n')
+        return _ssl._create_unverified_context()
+    return _ssl.create_default_context()
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "cgwb"); os.makedirs(OUT, exist_ok=True)
 RID = "580a8f6e-3d86-4ca7-ac7d-cd5df12b443c"
 BASE = "https://ckandev.indiadataportal.com/api/3/action/datastore_search"
 STATE = "Andhra Pradesh"
-_ctx = ssl._create_unverified_context()
+_ctx = _tls_context()
 
 
 def get(params):

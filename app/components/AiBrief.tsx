@@ -56,7 +56,7 @@ export function AiBrief({ district: controlledDistrict, onDistrictChange }: { di
         </select>
         <input
           className="aiInput"
-          placeholder="Ask anything — e.g. ‘most stressed mandals’, ‘over-extraction hotspots’, a mandal's level…"
+          placeholder="Ask anything — e.g. ‘most stressed mandals’, ‘pumping-pressure hotspots’, a mandal's level…"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter") run(question); }}

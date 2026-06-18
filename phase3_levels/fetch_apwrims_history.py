@@ -4,8 +4,10 @@ Walks the location hierarchy (state -> districts -> mandals) and calls the
 /api/v2/gwlevels/chart endpoint per mandal for 2014-06 .. 2026-05, writing one
 row per (mandal, month): district, mandal, uuids, date, level_mbgl.
 
-Auth is the browser session cookie (paste the current one below). The cookie is
-short-lived; if calls start returning 0 rows / 401, refresh it from DevTools.
+Auth is a browser session cookie, supplied ONLY via the APWRIMS_COOKIE env var
+(never hard-coded). The cookie is short-lived; if calls return 0 rows / 401,
+refresh it from DevTools and re-export APWRIMS_COOKIE. Use only where access is
+permitted — this is an authorization-pending research sample, not official data.
 """
 import json, os, ssl, sys, time, urllib.request, csv, datetime
 

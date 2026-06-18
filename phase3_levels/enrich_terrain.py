@@ -8,6 +8,13 @@ need a DEM raster zonal-stat (a heavier fetch); until then they stay a regional
 proxy here. Swap the source for SRTM/Copernicus zonal stats for production.
 """
 import csv, json, os, ssl, sys, time, urllib.request
+import os as _os, sys as _sys, ssl as _ssl
+def _tls_context():
+    """Verified TLS by default; unverified only with ALLOW_INSECURE_TLS=1 (loud, opt-in)."""
+    if _os.environ.get('ALLOW_INSECURE_TLS') == '1':
+        _sys.stderr.write('WARNING: ALLOW_INSECURE_TLS=1 - using UNVERIFIED TLS.\n')
+        return _ssl._create_unverified_context()
+    return _ssl.create_default_context()
 
 HERE = os.path.dirname(__file__)
 APP = os.path.join(HERE, "..", "app", "data")
@@ -44,7 +51,7 @@ def fetch_batch(locs, timeout=30):
     except urllib.error.URLError as e:
         # macOS cert-store fallback (same TLS-fallback pattern as the project fetchers)
         if "CERTIFICATE_VERIFY_FAILED" in str(e):
-            ctx = ssl._create_unverified_context()
+            ctx = _tls_context()
             print("    [tls] verified fetch failed; retrying unverified (public elevation API)")
             with urllib.request.urlopen(req, timeout=timeout, context=ctx) as r:
                 return json.loads(r.read())["results"]

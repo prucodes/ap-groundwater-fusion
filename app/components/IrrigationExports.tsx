@@ -1,7 +1,7 @@
 "use client";
 
 import { awarePayload, districtAdvisories } from "../lib/irrigation";
-import { downloadCsv } from "../lib/csv";
+import { csvBanner, downloadCsv } from "../lib/csv";
 import { IconDownload, IconPrinter } from "./icons";
 
 function downloadText(filename: string, text: string, type: string) {
@@ -26,7 +26,7 @@ function advisoryCsv() {
   const body = rows.map((r) =>
     [r.district, r.action, r.gw ?? "", r.balance ?? "", r.balanceStatus, r.verifyFirst].map(esc).join(","),
   );
-  return [head.join(","), ...body].join("\n");
+  return [csvBanner(["District irrigation advisory — rule-based, verify-first; advisory field = Draw/Hold/Conserve."]), head.join(","), ...body].join("\n");
 }
 
 export function IrrigationExports() {

@@ -6,6 +6,17 @@ function escape(value: string | number | boolean | null | undefined): string {
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
+/** Shared provenance banner prepended to every CSV export (audit requirement). */
+export function csvBanner(extra: string[] = []): string {
+  return [
+    `# AP Groundwater Fusion — PROTOTYPE export (generated ${new Date().toISOString().slice(0, 10)})`,
+    `# Modelled estimates with confidence bands — NOT official APWRIMS results. Boundaries are public-prototype.`,
+    `# APWRIMS readings are a browser-session research sample (authorization pending). NASA values are GRACE-DA district storage percentile (0-100), not depth.`,
+    `# Pumping/drought signals are verify-first hypotheses, not attributions.`,
+    ...extra.map((l) => `# ${l}`),
+  ].join("\n");
+}
+
 export function mandalsToCsv(rows: MandalFusionSeed[]): string {
   const header = [
     "district",
@@ -77,13 +88,11 @@ export function mandalsToCsv(rows: MandalFusionSeed[]): string {
       .map(escape)
       .join(","),
   );
-  const banner = [
-    `# AP Groundwater Fusion — PROTOTYPE export (generated ${new Date().toISOString().slice(0, 10)})`,
-    `# Modelled estimates with confidence bands — NOT official APWRIMS results. Boundaries are public-prototype.`,
-    `# nasa_grace_groundwater_percentile = NASA GRACE-DA district storage percentile (0-100), not depth.`,
-    `# measured_wetness_percentile = mandal vs its own APWRIMS history. model_estimate_mbgl = modelled depth (metres below ground).`,
-    `# data_basis: measured = sensor reading available; modelled = model estimate. Verify pumping/drought attributions in the field.`,
-  ].join("\n");
+  const banner = csvBanner([
+    "nasa_grace_groundwater_percentile = GRACE-DA district storage percentile (0-100), not depth.",
+    "measured_wetness_percentile = mandal vs its own APWRIMS history. model_estimate_mbgl = modelled depth (mbgl).",
+    "data_basis: measured = sensor reading available; modelled = model estimate.",
+  ]);
   return [banner, header.join(","), ...lines].join("\n");
 }
 

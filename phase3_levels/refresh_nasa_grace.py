@@ -8,6 +8,13 @@ re-samples them at the AP station points, and rewrites:
 Only these two files (read solely by the /nasa page) are touched — safe blast radius.
 """
 import csv, hashlib, json, os, ssl, datetime, urllib.request, tempfile
+import os as _os, sys as _sys, ssl as _ssl
+def _tls_context():
+    """Verified TLS by default; unverified only with ALLOW_INSECURE_TLS=1 (loud, opt-in)."""
+    if _os.environ.get('ALLOW_INSECURE_TLS') == '1':
+        _sys.stderr.write('WARNING: ALLOW_INSECURE_TLS=1 - using UNVERIFIED TLS.\n')
+        return _ssl._create_unverified_context()
+    return _ssl.create_default_context()
 import rasterio
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -18,7 +25,7 @@ RASTERS = {
     "rtzsm_perc_025deg_GL.tif": "rootzone_percentile",
     "sfsm_perc_025deg_GL.tif": "surface_percentile",
 }
-_ctx = ssl._create_unverified_context()
+_ctx = _tls_context()
 
 
 def download(name, dest):

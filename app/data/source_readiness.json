@@ -24,12 +24,6 @@
   "official_flag": false
  },
  {
-  "label": "APWRIMS readings (session sample \u00b7 authorization pending)",
-  "status": "available",
-  "data_label": "measured_session_pending",
-  "official_flag": false
- },
- {
   "label": "Official APWRIMS export",
   "status": "pending",
   "data_label": "official_apwrims",

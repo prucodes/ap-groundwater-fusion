@@ -67,7 +67,7 @@
     <div class="inner">
       <div class="eyebrow"><span class="dot"></span> Andhra Pradesh · Groundwater Intelligence Layer · Phase 3</div>
       <h1>Groundwater levels in metres — from satellite + open data, validated</h1>
-      <p>Your refined ask: derive mandal groundwater <b>levels in metres</b> by calibrating NASA satellite &amp; open data, using the few existing sensors only for calibration — without a sensor in every mandal. This is what we built, how accurate it is, and the one honest limit that shapes how the numbers should be read.</p>
+      <p>Your refined ask: derive mandal groundwater <b>levels in metres</b> by calibrating NASA satellite &amp; open data to the existing sensors. What we deployed today covers the <b>639 mandals with APWRIMS sensor history</b> — the model gap-fills missing months and forecasts the next month (so a sensor going quiet doesn't leave a blank). Spatial estimation of mandals with no sensor at all is validated in backtests but is a research extension, not part of today's dashboard. Below: what we built, how accurate it is, and the one honest limit that shapes how the numbers should be read.</p>
       <div class="kpis">
         <div class="kpi"><div class="v">±1.3<small> m</small></div><div class="l">typical error, next/missing month (validated on unseen data)</div></div>
         <div class="kpi"><div class="v">0.90<small> R²</small></div><div class="l">variance explained on never-seen months</div></div>
@@ -146,7 +146,7 @@
       <div class="panel">
         <h4>What it unlocks</h4>
         <ul>
-          <li><span class="chk">→</span><span><b>Statewide metres</b> without a sensor in every mandal.</span></li>
+          <li><span class="chk">→</span><span><b>Metres for 639 mandals</b> with sensor history — gap-filled &amp; forecast, no fresh reading required each month.</span></li>
           <li><span class="chk">→</span><span><b>Season-ahead</b> guidance for kharif irrigation planning.</span></li>
           <li><span class="chk">→</span><span><b>Sensor-siting</b>: the model shows where uncertainty is highest — place the next sensors there.</span></li>
         </ul>

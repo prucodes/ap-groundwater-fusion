@@ -42,7 +42,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalFusionSeed }) {
           <span className="k">Source</span>
           <span className="v">APWRIMS (AP-GWD)</span>
         </div>
-        <div className="sideCaveat">Real APWRIMS readings; level estimates are modelled (β), not official results.</div>
+        <div className="sideCaveat">APWRIMS readings (session sample · authorization pending); level estimates are modelled (β), not official results.</div>
       </div>
 
       <div className="sideSection">
@@ -161,7 +161,7 @@ function agreementReason(m: MandalFusionSeed) {
     return `${a}: water table falling despite a healthy water balance — consistent with extraction outpacing recharge. Verify in the field before demand-management action.`;
   }
   if (m.sensor_satellite_agreement === "drought_decline") {
-    return `${a}: water table falling alongside a rainfall deficit — likely climate-driven; recovery plausible with better monsoon recharge.`;
+    return `${a}: water table falling alongside a rainfall deficit — climate-stress hypothesis (verify); recovery plausible with better monsoon recharge.`;
   }
   return `${a}: water table holding or recovering. Modelled estimate (β), confirm with official APWRIMS data.`;
 }

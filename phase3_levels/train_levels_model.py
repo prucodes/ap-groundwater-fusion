@@ -120,7 +120,9 @@ def main():
 
     print(f"\n  Mode: {mode}   wells: {len(y)}   features: {len(ALL_FEATURES)}")
     print(f"  Spatial CV (held-out locations):  RMSE = {rmse:.2f} m   MAE = {mae:.2f} m   R² = {r2:.2f}")
-    print("  ^ this is the metres-accuracy at a mandal with NO sensor.\n")
+    print("  ^ spatial-CV backtest at held-out locations (research measure of how\n"
+          "    sensorless estimation would perform — the deployed dashboard uses\n"
+          "    temporal gap-fill/forecast on mandals that HAVE sensor history).\n")
 
     # Fit final median + quantile band on all data
     median = build_estimator(quantile=0.5); median.fit(X, y)

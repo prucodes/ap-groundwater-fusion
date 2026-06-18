@@ -28,9 +28,10 @@ Verify ≈ 40 (disagreement).
 **Water-balance status** (annual rainfall − actual ET, mm/yr): Surplus ≥ 250 ·
 Balanced ≥ 50 · Deficit < 50.
 
-**Decline signal** (why a level is falling): Over-extraction (falling despite
-adequate recharge) · Drought-driven (falling with rainfall deficit) · Stable /
-recovering.
+**Decline signal** (a hypothesis for *why* a level is falling — to verify in the
+field, not an attribution): Pumping-pressure / verify (falling despite a healthy
+water balance) · Climate-stress / verify (falling with a rainfall deficit) ·
+Stable / recovering.
 
 > Thresholds are prototype/illustrative, not official APWRIMS/CGWB cutoffs. Update
 > here and in the two scripts together if they change.

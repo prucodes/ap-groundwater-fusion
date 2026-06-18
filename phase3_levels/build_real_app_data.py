@@ -105,8 +105,9 @@ def main():
             display_mbgl, display_basis = est_mbgl, "modelled"
 
         # Recharge-vs-decline signal (the meaningful fusion insight, not a scary mismatch):
-        # is the water table falling DESPITE adequate recharge (-> over-extraction), or
-        # falling WITH a rainfall deficit (-> drought-driven), or stable/recovering?
+        # is the water table falling DESPITE a healthy water balance (-> pumping-pressure
+        # hypothesis), falling WITH a rainfall deficit (-> climate-stress hypothesis),
+        # or stable/recovering? These are hypotheses to verify, not attributions.
         declining = trend > 0.3                      # water table deepening, m/yr
         recharge_ok = wbal_status == "Surplus"       # real per-mandal recharge (TerraClimate)
         if declining and recharge_ok:

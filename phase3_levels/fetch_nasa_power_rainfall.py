@@ -9,6 +9,13 @@ NOT groundwater depth: used only as the recharge/supply driver for the level mod
 Output: phase3_levels/data/mandal_rain_history.csv  (mandal, date, rain_mm)
 """
 import csv, json, os, ssl, sys, time, urllib.request
+import os as _os, sys as _sys, ssl as _ssl
+def _tls_context():
+    """Verified TLS by default; unverified only with ALLOW_INSECURE_TLS=1 (loud, opt-in)."""
+    if _os.environ.get('ALLOW_INSECURE_TLS') == '1':
+        _sys.stderr.write('WARNING: ALLOW_INSECURE_TLS=1 - using UNVERIFIED TLS.\n')
+        return _ssl._create_unverified_context()
+    return _ssl.create_default_context()
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.join(HERE, "..", "app", "data")
@@ -17,7 +24,7 @@ API = "https://power.larc.nasa.gov/api/temporal/monthly/point"
 START, END = "2014", "2025"   # POWER monthly lags ~6 months; 2026 not yet served
 
 _ctx = ssl.create_default_context()
-_ctx_unverified = ssl._create_unverified_context()
+_ctx_unverified = _tls_context()
 
 
 def centroids():

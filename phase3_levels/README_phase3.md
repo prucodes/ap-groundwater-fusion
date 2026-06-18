@@ -1,12 +1,15 @@
 # Phase 3 — Satellite → metres (calibrated groundwater levels)
 
-**Goal (Prakhar's refined ask):** estimate groundwater **levels in metres (mbgl)** for
-every mandal from **open satellite + climate data**, calibrated to the **sparse**
-sensors AP already has — *without* deploying a sensor in every mandal.
+**Goal (Prakhar's refined ask):** estimate groundwater **levels in metres (mbgl)**
+from **open satellite + climate data**, calibrated to the sensors AP already has.
 
-This is a **modeled estimate with a confidence band**, not a measurement. Direct
-depth-from-satellite is impossible; this learns the satellite→depth relationship
-from existing wells and extends it everywhere.
+This is a **modeled estimate with a confidence band**, not a measurement.
+
+> **Deployed scope (important):** the live dashboard estimates cover the **639
+> mandals that have APWRIMS sensor history** — the model gap-fills missing months
+> and produces a short-range forecast (temporal hold-out, ±1.3 m). Spatial
+> estimation of mandals with **no** sensor history is a **research backtest**
+> below (spatial cross-validation), **not** what the dashboard currently shows.
 
 ---
 
@@ -19,9 +22,9 @@ from existing wells and extends it everywhere.
    Specific yield comes from **CGWB** (their own official GEC method). Fed to the
    model as `phys_level_change_m` (first-principles feature).
 3. **Change → absolute mbgl.** Anchor to a baseline from existing wells.
-4. **Downscale to mandal (ML).** Train `features → mbgl` against well observations,
-   then predict every mandal. Spatial cross-validation reports the honest error
-   **at locations with no sensor**.
+4. **Downscale to mandal (ML).** Train `features → mbgl` against well observations.
+   Spatial cross-validation reports the backtest error **at held-out locations**
+   (a research measure of how spatial estimation *would* perform — not deployed).
 
 Confidence band = quantile models (p10 / median / p90).
 

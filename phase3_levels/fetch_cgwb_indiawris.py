@@ -13,6 +13,13 @@ Network tab -> copy the exact request URL + JSON body into API_URL / payload().
 Output: phase3_levels/cgwb/cgwb_gw_levels.csv (state,district,station,lat,lon,date,level_mbgl,agency)
 """
 import csv, json, os, ssl, sys, time, urllib.request
+import os as _os, sys as _sys, ssl as _ssl
+def _tls_context():
+    """Verified TLS by default; unverified only with ALLOW_INSECURE_TLS=1 (loud, opt-in)."""
+    if _os.environ.get('ALLOW_INSECURE_TLS') == '1':
+        _sys.stderr.write('WARNING: ALLOW_INSECURE_TLS=1 - using UNVERIFIED TLS.\n')
+        return _ssl._create_unverified_context()
+    return _ssl.create_default_context()
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "cgwb"); os.makedirs(OUT, exist_ok=True)
@@ -24,7 +31,7 @@ START, END = "2024-01-01", "2026-06-01"
 AGENCY = "CGWB"            # the independent network (NOT 'AP-GWD'/'APWRIMS')
 
 _ctx = ssl.create_default_context()
-_ctx_unverified = ssl._create_unverified_context()
+_ctx_unverified = _tls_context()
 
 
 def post_json(url, payload, timeout=90):

@@ -1,7 +1,7 @@
 "use client";
 
 import { mandals, satelliteSamples, titleCase } from "../lib/data";
-import { downloadCsv, mandalsToCsv } from "../lib/csv";
+import { csvBanner, downloadCsv, mandalsToCsv } from "../lib/csv";
 import { awarePayload, districtAdvisories } from "../lib/irrigation";
 import { IconDownload, IconDroplet, IconLeaf, IconSatellite, IconDatabase } from "./icons";
 
@@ -26,7 +26,7 @@ function advisoryCsv() {
   const rows = districtAdvisories();
   const head = ["district", "advisory", "gw_percentile", "water_balance_mm", "water_balance_status", "verify_first"];
   const body = rows.map((r) => [r.district, r.action, r.gw ?? "", r.balance ?? "", r.balanceStatus, r.verifyFirst].map(esc).join(","));
-  return [head.join(","), ...body].join("\n");
+  return [csvBanner(["District irrigation advisory — rule-based, verify-first."]), head.join(","), ...body].join("\n");
 }
 
 function nasaSamplesCsv() {
@@ -36,7 +36,7 @@ function nasaSamplesCsv() {
       .map(esc)
       .join(","),
   );
-  return [head.join(","), ...body].join("\n");
+  return [csvBanner(["NASA GRACE-DA / soil-moisture percentiles sampled at station points (0-100), not depth."]), head.join(","), ...body].join("\n");
 }
 
 const ITEMS = [

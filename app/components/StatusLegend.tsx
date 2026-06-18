@@ -30,7 +30,7 @@ const STATUSES: { bucket: string; def: string; criteria: string }[] = [
 
 const SIGNALS: { color: string; label: string; def: string }[] = [
   { color: "#c65a46", label: "Pumping-pressure (verify)", def: "Falling despite a healthy water balance — hypothesis, confirm in field" },
-  { color: "#d79b2e", label: "Climate-stress (verify)", def: "Falling alongside a rainfall deficit — likely climate-driven" },
+  { color: "#d79b2e", label: "Climate-stress (verify)", def: "Falling alongside a rainfall deficit — climate-stress hypothesis, confirm in field" },
   { color: "#5e9b6b", label: "Stable / recovering", def: "Water table holding or rising" },
 ];
 

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-06-18T15:03:51",
+ "generated_at": "2026-06-18T15:24:03",
  "generator": "phase3_levels/build_real_app_data.py",
  "source_inputs": [
   "phase3_levels/outputs/mandal_levels_estimated.json (APWRIMS-trained levels engine)",
@@ -56,8 +56,8 @@
   },
   {
    "file": "source_readiness.json",
-   "bytes": 1181,
-   "sha256": "0940f1d501617acd5ba422b55dedfcc892eba32492390b4ea5d494eba445a9ba"
+   "bytes": 1003,
+   "sha256": "d973fd120e287c65d4fc6e9eddd8b02e61e7481bdd4b787a24684aa8e9beb334"
   }
  ]
 }

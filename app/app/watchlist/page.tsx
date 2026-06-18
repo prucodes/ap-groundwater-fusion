@@ -23,7 +23,7 @@ function reasonFor(m: MandalFusionSeed) {
     return "Falling despite a healthy water balance — pumping-pressure hypothesis (verify)";
   }
   if (m.sensor_satellite_agreement === "drought_decline") {
-    return "Falling with a rainfall deficit — drought-driven";
+    return "Falling with a rainfall deficit — climate-stress hypothesis (verify)";
   }
   if (m.confidence_label.toLowerCase().includes("low")) {
     return "Sparse history — collect more readings";
@@ -55,7 +55,7 @@ const summaryCards = [
   },
   {
     key: "moderate",
-    label: "Drought-driven",
+    label: "Climate-stress (verify)",
     meta: "falling with deficit",
     icon: <IconTarget />,
     bg: "var(--st-watch-bg)",
@@ -119,8 +119,9 @@ export default function WatchlistPage() {
         title="Stress & Action Watchlist"
         subtitle={
           <>
-            Mandals ranked by groundwater <strong>stress</strong> — deep or declining water tables, separating{" "}
-            <strong>over-extraction</strong> (falling despite recharge) from <strong>drought-driven</strong> decline.
+            Mandals ranked by groundwater <strong>stress</strong> — deep or declining water tables, separating a{" "}
+            <strong>pumping-pressure hypothesis</strong> (falling despite a healthy water balance) from a{" "}
+            <strong>climate-stress hypothesis</strong> (falling with a rainfall deficit) — both to verify.
           </>
         }
         showChips={false}
@@ -156,8 +157,8 @@ export default function WatchlistPage() {
             <label>Signal</label>
             <select value={agreement} onChange={(e) => setAgreement(e.target.value)}>
               <option value="all">All Signals</option>
-              <option value="over_extraction">Over-extraction</option>
-              <option value="drought_decline">Drought-driven decline</option>
+              <option value="over_extraction">Pumping-pressure (verify)</option>
+              <option value="drought_decline">Climate-stress (verify)</option>
               <option value="stable_or_recovering">Stable / recovering</option>
             </select>
           </div>

@@ -8,6 +8,13 @@ centroid, and rewrites:
   app/data/satellite_station_samples.json (28 district-centroid sample rows for the raw-extraction table)
 """
 import hashlib, json, os, ssl, datetime, urllib.request, tempfile
+import os as _os, sys as _sys, ssl as _ssl
+def _tls_context():
+    """Verified TLS by default; unverified only with ALLOW_INSECURE_TLS=1 (loud, opt-in)."""
+    if _os.environ.get('ALLOW_INSECURE_TLS') == '1':
+        _sys.stderr.write('WARNING: ALLOW_INSECURE_TLS=1 - using UNVERIFIED TLS.\n')
+        return _ssl._create_unverified_context()
+    return _ssl.create_default_context()
 import rasterio
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -21,7 +28,7 @@ RASTERS = {
 SAMPLE_KEY = {"gw_percentile": "groundwater_percentile",
               "rootzone_percentile": "rootzone_percentile",
               "surface_percentile": "surface_percentile"}
-_ctx = ssl._create_unverified_context()
+_ctx = _tls_context()
 
 
 def download(name, dest):
