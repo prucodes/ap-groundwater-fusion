@@ -28,6 +28,7 @@ import {
   IconChevronLeft,
   IconDroplet,
   IconFlask,
+  IconInfo,
   IconLeaf,
   IconMap,
   IconPin,
@@ -304,6 +305,10 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
                   { name: "Surface Percentile", color: "#3f86d6", points: surfSeries },
                 ]}
               />
+              <div className="mapHint" style={{ marginTop: 8 }}>
+                <IconInfo style={{ width: 13, height: 13 }} /> The latest percentile values are real (NASA
+                GRACE-DA / soil-moisture); the month-to-month shape is illustrative, not a measured time series.
+              </div>
             </section>
           </div>
 
