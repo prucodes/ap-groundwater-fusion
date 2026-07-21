@@ -1,12 +1,12 @@
 import Link from "next/link";
-import type { MandalFusionSeed } from "../lib/types";
-import depthSeriesJson from "../data/mandal_depth_series.json";
+import type { MandalGroundwaterView } from "../lib/types";
 import {
   agreementMeta,
   dashboardSummary,
   formatNumber,
   formatPeriod,
   mandals,
+  observationSeries,
   sampleForMandal,
   statusMeta,
   titleCase,
@@ -38,7 +38,6 @@ import {
   IconWaves,
 } from "./icons";
 
-const DEPTH_SERIES = depthSeriesJson as unknown as Record<string, [string, number][]>;
 const MAX_DEPTH = 25;
 const MONTHS = ["Dec '25", "Jan '26", "Feb '26", "Mar '26", "Apr '26", "May '26", "Jun '26"];
 
@@ -59,18 +58,18 @@ function illustrativeSeries(base: number, id: string, amp: number) {
   );
 }
 
-function actionItems(m: MandalFusionSeed) {
-  if (m.sensor_satellite_agreement === "over_extraction") {
+function actionItems(m: MandalGroundwaterView) {
+  if (m.sensor_satellite_agreement === "declining_despite_positive_climate_balance") {
     return [
-      "Investigate as a pumping-pressure hotspot (verify) — water table falling despite a healthy water balance",
-      "Review borewell density and pumping / cropping intensity",
-      "Consider draft restrictions or recharge structures",
-      "Confirm with official APWRIMS data before any operational action",
+      "Review the measured history and climate-context mismatch",
+      "Field-verify the current groundwater level",
+      "Review extraction and cropping context without assuming causation",
+      "Confirm with official APWRIMS data before operational use",
     ];
   }
   return [
-    "Collect additional recent station readings before interpretation",
-    "Corroborate the APWRIMS reading with neighbouring stations",
+    "Collect an additional field observation before interpretation",
+    "Review the APWRIMS-format observation history",
     "Reassess after official APWRIMS export and boundaries arrive",
     "Do not treat as official until APWRIMS/APSAC/RTGS boundaries supplied",
   ];
@@ -107,7 +106,7 @@ export function MandalSelectorStrip({ activeId }: { activeId: string }) {
   );
 }
 
-export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
+export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
   const meta = statusMeta(mandal.status_bucket);
   const sample = sampleForMandal(mandal);
   const depthPct = Math.min(100, ((mandal.median_groundwater_mbgl ?? 0) / MAX_DEPTH) * 100);
@@ -115,11 +114,13 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
   const gwSeries = illustrativeSeries(mandal.groundwater_percentile ?? 90, mandal.id + "gw", 6);
   const rootSeries = illustrativeSeries(mandal.rootzone_percentile ?? 80, mandal.id + "rz", 8);
   const surfSeries = illustrativeSeries(mandal.surface_percentile ?? 70, mandal.id + "sf", 10);
-  const realDepth = DEPTH_SERIES[mandal.id] ?? [];
+  const realDepth = (observationSeries[mandal.id]?.observations ?? []).map(
+    ({ period, value }) => [period, value] as [string, number],
+  );
   const hasRealDepth = realDepth.length >= 6;
   const depthSeries = hasRealDepth
     ? realDepth.map(([, v]) => v)
-    : illustrativeSeries(mandal.median_groundwater_mbgl ?? 10, mandal.id + "d", 3);
+    : [];
   const depthSpan = hasRealDepth ? `${realDepth[0][0]} – ${realDepth[realDepth.length - 1][0]}` : "";
 
   const awarePayload = mandal.aware_apwrims_action_preview;
@@ -148,7 +149,7 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
               <h2>{titleCase(mandal.mandal_name)} Mandal</h2>
               <div className="sub">
                 {titleCase(mandal.district_name)} District · Mandal ID {mandal.id} ·{" "}
-                {mandal.sensor_count} sensor / station
+                {mandal.observation_month_count} observation months
               </div>
             </div>
           </div>
@@ -175,13 +176,13 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
               <small> mbgl</small>
             </span>
           </div>
-          <div className="metricSub">Latest {mandal.latest_sensor_date || "—"}</div>
+          <div className="metricSub">Observation period {mandal.latest_observation_period || "—"}</div>
         </div>
 
         <div className="metricCard">
-          <div className="metricCardLabel">Sensor / Station</div>
+          <div className="metricCardLabel">Observation Months</div>
           <PercentileRing value={100} color="var(--teal)">
-            <span className="v">{mandal.sensor_count}</span>
+            <span className="v">{mandal.observation_month_count}</span>
           </PercentileRing>
           <div className="metricSub">APWRIMS (AP-GWD)</div>
         </div>
@@ -239,10 +240,10 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
         </div>
 
         <div className="metricCard">
-          <div className="metricCardLabel">Confidence</div>
-          <PercentileRing value={Math.round((mandal.confidence_score ?? 0) * 100)} color="var(--amber)">
+          <div className="metricCardLabel">Data Completeness</div>
+          <PercentileRing value={mandal.coverage_status === "modelled" ? 100 : mandal.coverage_status === "measured_only" ? 60 : 0} color="var(--amber)">
             <span className="v" style={{ fontSize: 15 }}>
-              {Math.round((mandal.confidence_score ?? 0) * 100)}
+              {mandal.coverage_status === "modelled" ? "V2" : "—"}
             </span>
           </PercentileRing>
           <div className="metricSub">{mandal.confidence_label}</div>
@@ -250,7 +251,7 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
 
         {mandal.rainfall_mm !== null && mandal.rainfall_mm !== undefined && (
           <div className="metricCard">
-            <div className="metricCardLabel">Rainfall (recharge)</div>
+            <div className="metricCardLabel">Rainfall Context</div>
             <div className="depthGauge">
               <span className="depthGaugeTrack" style={{ background: "linear-gradient(180deg,#d7e8f5,#9cc1de)" }}>
                 <span
@@ -333,7 +334,7 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
                   </span>
                   Aquifer Water Balance
                   <span className="cardSub" style={{ marginLeft: 6 }}>
-                    recharge vs demand
+                    rainfall minus actual ET
                   </span>
                 </div>
                 <span className="cardSub">TerraClimate {dashboardSummary.summary.balance_year}</span>
@@ -349,7 +350,7 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
                   <span className="titleIcon">
                     <IconDroplet />
                   </span>
-                  {hasRealDepth ? "Measured History · APWRIMS" : "Historical (Illustrative)"}
+                  {hasRealDepth ? "Measured History · APWRIMS-format" : "Measured History Unavailable"}
                 </div>
                 {hasRealDepth ? <span className="cardSub">{depthSpan}</span> : null}
               </div>
@@ -360,8 +361,8 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
               />
               <div className="sideCaveat" style={{ marginTop: 8 }}>
                 {hasRealDepth
-                  ? `Real APWRIMS monthly readings (m below ground). Modelled estimate ${formatNumber(mandal.estimate_mbgl)} m with a ${formatNumber(mandal.estimate_band_p10)}–${formatNumber(mandal.estimate_band_p90)} m band — see Estimated Levels.`
-                  : "Illustrative shape for prototype demonstration only — not measured history."}
+                  ? `APWRIMS-format monthly observations (m below ground). The separate nowcast is ${formatNumber(mandal.estimate_mbgl)} m with model P10–P90 ${formatNumber(mandal.estimate_band_p10)}–${formatNumber(mandal.estimate_band_p90)} m.`
+                  : "No measured history is available. No history has been substituted or synthesized."}
               </div>
             </section>
 
@@ -375,12 +376,12 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
                 </div>
               </div>
               <div className="kvRow">
-                <span className="k">Sensor count</span>
-                <span className="v">{mandal.sensor_count}</span>
+                <span className="k">Observation records</span>
+                <span className="v">{mandal.observation_record_count}</span>
               </div>
               <div className="kvRow">
-                <span className="k">Latest reading</span>
-                <span className="v">{mandal.latest_sensor_date || "—"}</span>
+                <span className="k">Latest observation period</span>
+                <span className="v">{mandal.latest_observation_period || "—"}</span>
               </div>
               <div className="kvRow">
                 <span className="k">Satellite sample</span>
@@ -437,8 +438,8 @@ export function MandalDetail({ mandal }: { mandal: MandalFusionSeed }) {
                     <IconCloudRain />
                   </span>
                   <div className="readyBody">
-                    <div className="readyLabel">CHIRPS Rainfall (recharge)</div>
-                    <div className="readyMeta">Real monthly mm · open satellite-gauge blend</div>
+                    <div className="readyLabel">CHIRPS Rainfall Context</div>
+                    <div className="readyMeta">Monthly areal average · not direct measured recharge</div>
                   </div>
                 </div>
               )}

@@ -15,6 +15,13 @@ node_modules/
 phase3_levels/models/*.joblib
 phase3_levels/**/*.log
 
+# Raw bulk source downloads — regenerable via the fetch_*/submit_* scripts.
+# Multi-GB InSAR products, IMD NetCDF rainfall, CGWB groundwater archive: never version.
+phase3_levels/insar/products/
+phase3_levels/insar/unz/
+phase3_levels/imd/
+phase3_levels/cgwb_sy/
+
 # Local bulky source downloads should be documented in data/source_manifest.csv.
 # Regenerable rasters (re-fetch via the fetch_* scripts) — don't version binaries.
 data/raw/chirps/*

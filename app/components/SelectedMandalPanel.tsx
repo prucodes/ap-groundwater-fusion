@@ -1,11 +1,11 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import type { MandalFusionSeed } from "../lib/types";
+import type { MandalGroundwaterView } from "../lib/types";
 import { agreementMeta, balanceMeta, formatNumber, sampleForMandal, statusMeta, titleCase } from "../lib/data";
 import { AgreementTag } from "./Badges";
 import { IconArrowRight, IconDroplet, IconFlask, IconSatellite, IconTarget } from "./icons";
 
-export function SelectedMandalPanel({ mandal }: { mandal: MandalFusionSeed }) {
+export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView }) {
   const meta = statusMeta(mandal.status_bucket);
   const sample = sampleForMandal(mandal);
 
@@ -31,12 +31,12 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalFusionSeed }) {
           <span className="v">{formatNumber(mandal.median_groundwater_mbgl)} mbgl</span>
         </div>
         <div className="kvRow">
-          <span className="k">Sensor / station count</span>
-          <span className="v">{mandal.sensor_count}</span>
+          <span className="k">Observation records</span>
+          <span className="v">{mandal.observation_record_count}</span>
         </div>
         <div className="kvRow">
-          <span className="k">Latest reading</span>
-          <span className="v">{mandal.latest_sensor_date || "—"}</span>
+          <span className="k">Observation period</span>
+          <span className="v">{mandal.latest_observation_period || "—"}</span>
         </div>
         <div className="kvRow">
           <span className="k">Source</span>
@@ -47,38 +47,30 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalFusionSeed }) {
 
       <div className="sideSection">
         <div className="sideSectionTitle">
-          <IconTarget /> Level &amp; Next-Month Forecast
+          <IconTarget /> Measured &amp; Modelled Values
         </div>
         {mandal.display_basis === "measured" && (mandal.display_mbgl ?? null) !== null && (
           <div className="kvRow">
-            <span className="k">Latest measured (sensor)</span>
-            <span className="v">{formatNumber(mandal.display_mbgl)} mbgl · {mandal.latest_sensor_date}</span>
+            <span className="k">Latest measured mandal aggregate</span>
+            <span className="v">{formatNumber(mandal.display_mbgl)} mbgl · {mandal.latest_observation_period}</span>
           </div>
         )}
         <div className="kvRow">
-          <span className="k">Model nowcast (this month)</span>
+          <span className="k">Modelled nowcast</span>
           <span className="v">
             {formatNumber(mandal.estimate_mbgl)} m
             {(mandal.estimate_band_p10 ?? null) !== null && (
-              <span className="muted"> · band {formatNumber(mandal.estimate_band_p10)}–{formatNumber(mandal.estimate_band_p90)}</span>
+              <span className="muted"> · model P10–P90 {formatNumber(mandal.estimate_band_p10)}–{formatNumber(mandal.estimate_band_p90)}</span>
             )}
           </span>
         </div>
-        {(mandal.forecast_next_month_mbgl ?? null) !== null && (
-          <div className="kvRow">
-            <span className="k">Next month (projected)</span>
-            <span className="v" style={{ color: (mandal.trend_m_per_yr ?? 0) > 0 ? "var(--rust)" : "var(--green)" }}>
-              {formatNumber(mandal.forecast_next_month_mbgl)} m {(mandal.trend_m_per_yr ?? 0) > 0 ? "↓ deepening" : "↑ recovering"}
-            </span>
-          </div>
-        )}
         {(mandal.obs_model_gap_m ?? 0) >= 8 ? (
           <div className="sideCaveat" style={{ color: "var(--rust)", fontWeight: 600 }}>
-            ⚠ Sensor reading diverges {formatNumber(mandal.obs_model_gap_m)} m from the model — flagged for field verification.
+            ⚠ The latest measured aggregate differs by {formatNumber(mandal.obs_model_gap_m)} m from the nowcast — review before use.
           </div>
         ) : (
           <div className="sideCaveat">
-            Forecast is a linear projection from the model trend (±{formatNumber(mandal.estimate_band_p90 != null && mandal.estimate_band_p10 != null ? Math.round(((mandal.estimate_band_p90 - mandal.estimate_band_p10) / 2) * 10) / 10 : null)} m band). Backtest MAE ≈ 1.3 m.
+            No forecast horizon is released. The displayed range is a model P10–P90 quantile range, not a guaranteed confidence interval.
           </div>
         )}
       </div>
@@ -110,7 +102,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalFusionSeed }) {
           <span className="v">{sample?.satellite_sample_date_or_fetch_date || "—"}</span>
         </div>
         <div className="sideCaveat">
-          Percentiles (0–100), not groundwater depth. Sources: NASA/NDMC GRACE-DA + CHIRPS rainfall.
+          GRACE-DA is regional model-assimilated wetness context, not a direct mandal groundwater-depth measurement.
         </div>
       </div>
 
@@ -119,14 +111,14 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalFusionSeed }) {
           <IconTarget /> Fusion &amp; Agreement
         </div>
         <div className="kvRow">
-          <span className="k">Recharge vs decline</span>
+          <span className="k">Climate context vs measured trend</span>
           <span className="v">
             <AgreementTag value={mandal.sensor_satellite_agreement} />
           </span>
         </div>
         <div className="kvRow">
-          <span className="k">Confidence score</span>
-          <span className="v">{Math.round((mandal.confidence_score ?? 0) * 100)} / 100</span>
+          <span className="k">Data completeness class</span>
+          <span className="v">{mandal.confidence_label}</span>
         </div>
         {mandal.water_balance_mm !== null && mandal.water_balance_mm !== undefined && (
           <div className="kvRow">
@@ -142,7 +134,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalFusionSeed }) {
 
       <div className="sideSection">
         <div className="sideSectionTitle">
-          <IconDroplet /> Recommended Action
+          <IconDroplet /> Monitoring Note
         </div>
         <p style={{ margin: 0, fontSize: 12.5, color: "var(--ink-soft)", lineHeight: 1.5 }}>
           {mandal.recommended_action}
@@ -155,13 +147,13 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalFusionSeed }) {
   );
 }
 
-function agreementReason(m: MandalFusionSeed) {
+function agreementReason(m: MandalGroundwaterView) {
   const a = agreementMeta(m.sensor_satellite_agreement).label;
-  if (m.sensor_satellite_agreement === "over_extraction") {
-    return `${a}: water table falling despite a healthy water balance — consistent with extraction outpacing recharge. Verify in the field before demand-management action.`;
+  if (m.sensor_satellite_agreement === "declining_despite_positive_climate_balance") {
+    return `${a}. This is a context mismatch to investigate, not a causal attribution.`;
   }
-  if (m.sensor_satellite_agreement === "drought_decline") {
-    return `${a}: water table falling alongside a rainfall deficit — climate-stress hypothesis (verify); recovery plausible with better monsoon recharge.`;
+  if (m.sensor_satellite_agreement === "declining_without_positive_climate_balance") {
+    return `${a}. Climate balance is contextual and does not directly measure recharge.`;
   }
-  return `${a}: water table holding or recovering. Modelled estimate (β), confirm with official APWRIMS data.`;
+  return `${a}. Modelled nowcasts remain a prototype and should be checked against official field observations.`;
 }

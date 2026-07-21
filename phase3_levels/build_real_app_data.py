@@ -1,11 +1,8 @@
-"""Replace the 10-mandal SEED with the REAL all-mandal dataset across the app.
+"""Compatibility entry point for the Phase 0 V2 application publisher.
 
-Generates app/data/mandal_dataset.json (one record per estimated mandal, conforming
-to the existing MandalFusionSeed schema so the old screens work unchanged) using only
-REAL data: APWRIMS depth history + the validated levels engine + CHIRPS/TerraClimate
-context. Also refreshes dashboard_summary.json aggregates with honest source labels.
-
-Every record stays labelled modelled / not-official (official_result=false).
+The historical V1 publisher is retained below for reproducibility only. Calling
+this script publishes the V2 contract through build_phase0_foundation.py and does
+not rewrite the inactive V1 JSON files.
 """
 import csv, json, os, re, datetime, statistics as st
 from collections import defaultdict
@@ -42,7 +39,7 @@ def slug(d, m):
     return re.sub(r"[^a-z0-9]+", "-", f"{d} {m}".lower()).strip("-")
 
 
-def main():
+def build_legacy_v1():
     est = json.load(open(os.path.join(HERE, "outputs", "mandal_levels_estimated.json")))["mandals"]
     dgeo = {d["d"].upper(): d for d in json.load(open(os.path.join(APP, "ap_district_geometry.json")))["districts"]}
     heat = json.load(open(os.path.join(APP, "ap_mandal_heat.json")))["values"]
@@ -373,6 +370,11 @@ def write_manifest():
     }
     json.dump(manifest, open(os.path.join(APP, "dataset_manifest.json"), "w"), indent=1)
     print(f"  wrote dataset_manifest.json ({len(entries)} files hashed)")
+
+
+def main():
+    from build_phase0_foundation import main as build_phase0
+    build_phase0()
 
 
 if __name__ == "__main__":

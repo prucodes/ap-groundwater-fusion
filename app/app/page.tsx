@@ -23,7 +23,7 @@ import {
   IconShield,
   IconWaves,
 } from "../components/icons";
-import { dashboardSummary, districts, formatNumber, mandalHeat, mandals, selectedMandal, verifyMandals } from "../lib/data";
+import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat, mandals, selectedMandal, verifyMandals } from "../lib/data";
 import type { MandalHeatLayerKey } from "../lib/types";
 
 export default function OverviewPage() {
@@ -32,7 +32,7 @@ export default function OverviewPage() {
   const [mapView, setMapView] = useState<"status" | MandalHeatLayerKey>("status");
   const current = selectedMandal(selectedId);
   const verifyCount = verifyMandals().length;
-  const verifyPct = Math.round((verifyCount / mandals.length) * 100);
+  const verifyPct = Math.round((verifyCount / datasetManifest.counts.modelledRecordCount) * 100);
 
   return (
     <div className="pageWrap">
@@ -41,8 +41,8 @@ export default function OverviewPage() {
       <div className="kpiRow stagger">
         <KpiCard
           icon={<IconLayers />}
-          label="Mandals Analyzed"
-          value={<CountUp value={s.mandals_analyzed} />}
+          label="Modelled Mandals"
+          value={<CountUp value={datasetManifest.counts.modelledRecordCount} />}
           foot={`Across ${districts.length} districts`}
           accent="var(--teal)"
         />
@@ -50,15 +50,15 @@ export default function OverviewPage() {
           icon={<IconActivity />}
           label="Priority · Stress"
           value={<CountUp value={verifyCount} />}
-          foot={`${verifyPct}% deep / declining — act first`}
+          foot={`${verifyPct}% monitoring stress · review first`}
           footAccent
           accent="var(--rust)"
         />
         <KpiCard
           icon={<IconDroplet />}
-          label="Wetness vs Normal"
+          label="Regional GRACE-DA Wetness"
           value={<CountUp value={s.avg_groundwater_percentile ?? 0} decimals={0} />}
-          foot="current level vs own 12-yr history (0–100)"
+          foot="district/regional model-assimilated context (0–100)"
           accent="var(--cyan)"
         />
         {s.avg_water_balance_mm !== null && s.avg_water_balance_mm !== undefined && (
@@ -73,9 +73,9 @@ export default function OverviewPage() {
         )}
         <KpiCard
           icon={<IconShield />}
-          label="Overall Data Confidence"
-          value={<span style={{ fontSize: 22 }}>{s.overall_data_confidence}</span>}
-          foot="APWRIMS + satellite-model"
+          label="Coverage Foundation"
+          value={<span style={{ fontSize: 22 }}>{datasetManifest.counts.boundaryFeatureCount} boundaries</span>}
+          foot={`${datasetManifest.counts.measuredOnlyCount} measured-only · ${datasetManifest.counts.boundaryOnlyCount} boundary-only`}
           accent="var(--amber)"
         />
       </div>

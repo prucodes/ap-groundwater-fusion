@@ -1,22 +1,24 @@
 import { HeaderHero } from "../../components/HeaderHero";
 import { MethodologyFlow } from "../../components/MethodologyFlow";
+import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { IconAlert, IconDroplet, IconFlow, IconInfo, IconSatellite } from "../../components/icons";
+import { modelCard } from "../../lib/data";
 
 const labels = [
   { code: "APWRIMS (AP-GWD)", text: "Real APWRIMS mandal readings (2014-2026). Modelled estimates — not official results." },
   { code: "measured_public", text: "Public measured groundwater (e.g. NWIC). Labeled public, never official_apwrims." },
   { code: "official_apwrims", text: "Official APWRIMS / AP government export. Pending — required for official results." },
   { code: "satellite-model", text: "NASA/NDMC GRACE-DA percentiles (0–100). Real signal, not groundwater depth." },
-  { code: "satellite-gauge-rainfall", text: "CHIRPS monthly rainfall (mm). Real open recharge/supply signal; not groundwater depth." },
-  { code: "model-water-balance", text: "TerraClimate annual ET vs rainfall (mm). Open modeled recharge-vs-demand context; not groundwater depth." },
-  { code: "derived", text: "Fusion-engine outputs: agreement, confidence, status, recommended action." },
+  { code: "satellite-gauge-rainfall", text: "CHIRPS monthly rainfall (mm). Climate context; not groundwater depth or direct measured recharge." },
+  { code: "model-water-balance", text: "TerraClimate rainfall minus actual ET (mm). A climatic water-balance indicator, not measured recharge." },
+  { code: "derived", text: "Nowcast, model P10–P90 range, qualitative completeness class and neutral monitoring status." },
   { code: "public_prototype", text: "Public prototype boundaries. official_flag = false until official polygons arrive." },
 ];
 
 const signals = [
   {
-    name: "Piezometer / sensor reading (APWRIMS)",
-    can: "The actual water-table depth (mbgl) at a point — the only true groundwater level.",
+    name: "APWRIMS-format observation",
+    can: "Recorded water-table depth aggregated to the mandal display period.",
     cant: "Sparse coverage; one well does not represent a whole mandal.",
     tone: "var(--teal)",
   },
@@ -28,14 +30,14 @@ const signals = [
   },
   {
     name: "CHIRPS rainfall (satellite-gauge)",
-    can: "The recharge / supply driver — helps explain whether change is climate- or human-driven.",
-    cant: "Does not see groundwater at all; it is an input, not a level.",
+    can: "Shows rainfall timing and anomalies that can support hydrologic interpretation.",
+    cant: "Does not see groundwater or measured recharge and cannot establish a cause.",
     tone: "var(--sig-surface)",
   },
   {
     name: "TerraClimate ET & water balance (model)",
-    can: "The demand side — where evapotranspiration approaches rainfall, the shortfall implies groundwater use (overdraft pressure).",
-    cant: "Does not measure groundwater; modeled ~4 km climate context.",
+    can: "Provides modeled climate and actual-ET context.",
+    cant: "Does not measure groundwater, recharge or pumping; modeled ~4 km climate context.",
     tone: "var(--green)",
   },
 ];
@@ -45,6 +47,9 @@ const caveats = [
   "Level estimates are modelled (calibrated to APWRIMS) and must not be treated as official APWRIMS results.",
   "Boundaries are public prototype polygons; official APWRIMS/APSAC/RTGS boundaries are required for government-grade results.",
   "Outputs are prototype review signals, not official mandal-level groundwater determinations.",
+  modelCard.disclosures.spatial,
+  modelCard.disclosures.crossNetwork,
+  modelCard.disclosures.climateBalance,
 ];
 
 export default function MethodologyPage() {
@@ -60,6 +65,7 @@ export default function MethodologyPage() {
         }
         showChips={false}
       />
+      <DataProvenanceDates />
 
       <section className="card shellPanel">
         <div className="cardHead">

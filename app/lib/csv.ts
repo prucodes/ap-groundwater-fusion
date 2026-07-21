@@ -1,4 +1,4 @@
-import type { MandalFusionSeed } from "./types";
+import type { MandalGroundwaterView } from "./types";
 import { titleCase } from "./data";
 
 function escape(value: string | number | boolean | null | undefined): string {
@@ -10,29 +10,32 @@ function escape(value: string | number | boolean | null | undefined): string {
 export function csvBanner(extra: string[] = []): string {
   return [
     `# AP Groundwater Fusion — PROTOTYPE export (generated ${new Date().toISOString().slice(0, 10)})`,
-    `# Modelled estimates with confidence bands — NOT official APWRIMS results. Boundaries are public-prototype.`,
+    `# Measured aggregates and modelled nowcasts are separate. Quantile ranges are not guaranteed confidence intervals.`,
     `# APWRIMS readings are a browser-session research sample (authorization pending). NASA values are GRACE-DA district storage percentile (0-100), not depth.`,
-    `# Pumping/drought signals are verify-first hypotheses, not attributions.`,
+    `# Monitoring categories are verify-first indicators, not pumping or climate attributions.`,
     ...extra.map((l) => `# ${l}`),
   ].join("\n");
 }
 
-export function mandalsToCsv(rows: MandalFusionSeed[]): string {
+export function mandalsToCsv(rows: MandalGroundwaterView[]): string {
   const header = [
     "district",
     "mandal",
     "mandal_id",
-    "latest_sensor_date",
-    "sensor_count",
+    "coverage_status",
+    "latest_observation_period",
+    "observation_record_count",
+    "observation_month_count",
+    "physical_station_count",
     "latest_measured_mbgl",
     "median_groundwater_mbgl",
     "data_basis",
     "model_estimate_mbgl",
-    "estimate_band_p10",
-    "estimate_band_p90",
-    "forecast_next_month_mbgl",
+    "model_quantile_p10",
+    "model_quantile_p90",
+    "forecast_release_status",
     "yoy_trend_m_per_yr",
-    "sensor_vs_model_gap_m",
+    "observation_vs_nowcast_gap_m",
     "nasa_grace_groundwater_percentile",
     "measured_wetness_percentile",
     "rootzone_percentile",
@@ -41,9 +44,8 @@ export function mandalsToCsv(rows: MandalFusionSeed[]): string {
     "annual_et_mm_terraclimate",
     "water_balance_mm",
     "water_balance_status",
-    "sensor_satellite_agreement",
-    "confidence_score",
-    "confidence_label",
+    "context_agreement",
+    "data_completeness_class",
     "status_bucket",
     "recommended_action",
     "measured_input_label",
@@ -56,15 +58,18 @@ export function mandalsToCsv(rows: MandalFusionSeed[]): string {
       titleCase(m.district_name),
       titleCase(m.mandal_name),
       m.id,
-      m.latest_sensor_date,
-      m.sensor_count,
+      m.coverage_status,
+      m.latest_observation_period,
+      m.observation_record_count,
+      m.observation_month_count,
+      m.physical_station_count,
       m.display_mbgl,
       m.median_groundwater_mbgl,
       m.display_basis,
       m.estimate_mbgl,
       m.estimate_band_p10,
       m.estimate_band_p90,
-      m.forecast_next_month_mbgl,
+      "not_released",
       m.trend_m_per_yr,
       m.obs_model_gap_m,
       m.groundwater_percentile,
@@ -76,7 +81,6 @@ export function mandalsToCsv(rows: MandalFusionSeed[]): string {
       m.water_balance_mm,
       m.water_balance_status,
       m.sensor_satellite_agreement,
-      m.confidence_score,
       m.confidence_label,
       m.status_bucket,
       m.recommended_action,
@@ -91,7 +95,9 @@ export function mandalsToCsv(rows: MandalFusionSeed[]): string {
   const banner = csvBanner([
     "nasa_grace_groundwater_percentile = GRACE-DA district storage percentile (0-100), not depth.",
     "measured_wetness_percentile = mandal vs its own APWRIMS history. model_estimate_mbgl = modelled depth (mbgl).",
-    "data_basis: measured = sensor reading available; modelled = model estimate.",
+    "data_basis: measured = recorded mandal aggregate; modelled = temporal nowcast.",
+    "physical_station_count is blank because station identifiers are not verifiable in the source schema.",
+    "No forecast horizon is released.",
   ]);
   return [banner, header.join(","), ...lines].join("\n");
 }

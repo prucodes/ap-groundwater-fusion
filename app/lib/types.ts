@@ -1,18 +1,156 @@
-export type StatusBucket = "Verify" | "Stress" | "Watch" | "Low Confidence" | "Normal";
+export type StatusBucket = "Verify" | "Stress" | "Watch" | "Low Confidence" | "Normal" | "Insufficient Data";
 
-export type MandalFusionSeed = {
+export type GroundwaterCoverageStatus =
+  | "modelled"
+  | "measured_only"
+  | "boundary_only"
+  | "no_data"
+  | "excluded";
+
+export type GroundwaterAgreement =
+  | "declining_despite_positive_climate_balance"
+  | "declining_without_positive_climate_balance"
+  | "stable_or_recovering"
+  | "unknown";
+
+export type MandalGroundwaterRecordV2 = {
+  contractVersion: "2.0.0";
+  identity: {
+    mandalId: string;
+    mandalName: string;
+    districtId: string;
+    districtName: string;
+    boundaryId: string;
+    boundarySource: string;
+    boundaryStatus: "prototype" | "official";
+    identifierStatus: "temporary" | "official";
+    coverageStatus: GroundwaterCoverageStatus;
+    coverageReason: string | null;
+    joinedSourceSeriesIds: string[];
+    joinMethod: "district_and_mandal" | "district_and_reconciled_mandal" | "boundary_only";
+  };
+  observation: {
+    latestMeasuredValue: number;
+    unit: "m_bgl";
+    observationPeriod: string;
+    aggregationMethod: string;
+    observationRecordCount: number;
+    uniqueObservationMonthCount: number;
+    physicalStationCount: number | null;
+    sourceStatus: "session_sample" | "authorized_source" | "unknown";
+    authorizationStatus: "pending" | "authorized" | "unknown";
+    validityPeriod: { start: string; end: string };
+    fetchDate: string | null;
+  } | null;
+  nowcast: {
+    value: number;
+    unit: "m_bgl";
+    targetPeriod: string;
+    modelVersion: string;
+    lower: number;
+    upper: number;
+    intervalType: "model_quantile_p10_p90";
+    eligibleEvaluationCohort: string;
+    qualityStatus: "eligible" | "limited" | "not_evaluated";
+  } | null;
+  forecast: {
+    issueDate: string;
+    targetDate: string;
+    horizonMonths: number;
+    value: number;
+    unit: "m_bgl";
+    lower: number | null;
+    upper: number | null;
+    modelVersion: string;
+    evaluationMetric: Record<string, unknown>;
+    baselineMetric: Record<string, unknown>;
+    beatsBaselines: boolean;
+    releaseStatus: "released" | "experimental" | "research_only" | "not_released";
+  } | null;
+  signals: {
+    graceDa: {
+      groundwaterPercentile: number | null;
+      rootZonePercentile: number | null;
+      surfacePercentile: number | null;
+      validPeriod: string | null;
+      fetchDate: string | null;
+      spatialLevel: "district_regional_model_assimilated_context";
+    };
+    rainfall: {
+      amountMm: number | null;
+      anomalyPct: number | null;
+      validPeriod: string | null;
+      source: string;
+    };
+    evapotranspiration: {
+      amountMm: number | null;
+      anomalyPct: number | null;
+      validPeriod: string | null;
+      source: string;
+    };
+    climateBalance: {
+      amountMm: number | null;
+      validPeriod: string | null;
+      label: "rainfall_minus_actual_et";
+      category: "positive" | "neutral" | "negative" | "unknown";
+    };
+    extractionCategory: string | null;
+  };
+  quality: {
+    observationHistoryMonths: number;
+    missingFeatures: string[];
+    intervalWidthM: number | null;
+    terrainCohort: string | null;
+    evaluationCohort: string;
+    dataCompleteness: "complete" | "partial" | "groundwater_missing";
+    confidenceClass: "high" | "moderate" | "limited" | "not_assessed";
+    confidenceMethod: string;
+  };
+  assessment: {
+    monitoringStatus: "stable" | "watch" | "stress" | "verify" | "insufficient_data";
+    measuredTrendMPerYear: number | null;
+    contextAgreement: GroundwaterAgreement;
+  };
+  provenance: {
+    sourceNames: string[];
+    sourceFilesOrUris: string[];
+    authorizationStatus: string;
+    generatedAt: string;
+    inputHashes: Record<string, string>;
+    modelVersion: string | null;
+    dataContractVersion: "2.0.0";
+    geometryVersion: string;
+    builderScriptVersion: string;
+  };
+};
+
+export type GroundwaterRecordCollectionV2 = {
+  contractVersion: "2.0.0";
+  generatedAt: string;
+  records: MandalGroundwaterRecordV2[];
+  joinDiagnostics: Record<string, unknown>;
+};
+
+/**
+ * Explicit presentation adapter derived only from MandalGroundwaterRecordV2.
+ * It keeps existing screens stable while removing ambiguous V1 field names from
+ * the active JSON contract.
+ */
+export type MandalGroundwaterView = {
   id: string;
   rank: number;
   mandal_name: string;
   district_name: string;
-  sensor_count: number;
-  latest_sensor_date: string;
+  coverage_status: GroundwaterCoverageStatus;
+  observation_record_count: number;
+  observation_month_count: number;
+  physical_station_count: number | null;
+  latest_observation_period: string;
   median_groundwater_mbgl: number | null;
   avg_groundwater_mbgl: number | null;
   estimate_mbgl?: number | null;
   estimate_band_p10?: number | null;
   estimate_band_p90?: number | null;
-  forecast_next_month_mbgl?: number | null;
   obs_model_gap_m?: number | null;
   display_mbgl?: number | null;
   display_basis?: "measured" | "modelled";
@@ -25,8 +163,7 @@ export type MandalFusionSeed = {
   annual_et_mm: number | null;
   water_balance_mm: number | null;
   water_balance_status: string;
-  sensor_satellite_agreement: string;
-  confidence_score: number | null;
+  sensor_satellite_agreement: GroundwaterAgreement;
   confidence_label: string;
   status: string;
   status_bucket: StatusBucket;

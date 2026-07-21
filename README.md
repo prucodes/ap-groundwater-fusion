@@ -1,19 +1,60 @@
 # Mandal-Level Groundwater Fusion Layer for Andhra Pradesh
 
-This repository is a data-first proof of concept for combining APWRIMS-like groundwater station readings with NASA GRACE-FO/GRACE-DA groundwater and soil-moisture percentile signals. The output is a mandal-level assessment with confidence, mismatch flags, and AWARE/APWRIMS-ready action language.
+This repository is a data-first proof of concept for combining APWRIMS-format
+groundwater observations with regional NASA/NDMC GRACE-DA and climate context.
+The active Phase 0 output separates measured observations, modelled nowcasts,
+unreleased forecasts, external signals, data completeness and neutral monitoring
+flags.
 
-APWRIMS/piezometer readings are treated as the ground-truth layer. NASA GRACE-FO/GRACE-DA is a supporting satellite/model signal and must not be interpreted as exact groundwater depth. Public GitHub boundary and name datasets are prototype-only until replaced by official APWRIMS/APSAC/RTGS boundaries.
+APWRIMS-format observations are the measured historical source. Their current
+browser-session sample has authorization pending and is not described as an
+official export. NASA/NDMC GRACE-DA is supporting regional model-assimilated
+context and must not be interpreted as a direct mandal-level groundwater-depth
+measurement. Public boundary/name datasets are prototype-only until replaced by
+verified official boundaries and identifiers.
 
 The `app/` directory contains the static prototype UI. It reads generated JSON from `app/data/` and does not add a backend, database, or official-result claims.
 
-### Active data pipeline (Phase 3)
+### Active data pipeline (Phase 0 / contract V2)
 
-The dashboard's mandal dataset is produced by `phase3_levels/build_real_app_data.py`, which combines:
+The dashboard's V2 records are produced by
+`phase3_levels/build_real_app_data.py`, which delegates to the fail-closed Phase
+0 publisher and combines:
+
 - the **APWRIMS depth history** (`phase3_levels/apwrims/apwrims_gw_history.csv`) — a **browser-session research sample (authorization pending)**, not an official APWRIMS export;
-- the **levels engine** (`phase3_levels/outputs/mandal_levels_estimated.json`), trained on that history; and
+- the **holdout-safe nowcast output** (`phase3_levels/outputs/mandal_nowcasts_v2.json`), whose latest target rows are excluded from fitting;
 - **NASA GRACE-DA / CHIRPS / TerraClimate** district signals.
 
-Field semantics: `groundwater_percentile` is the **NASA GRACE-DA district storage percentile** (0–100, not depth); `measured_wetness_percentile` is the mandal vs its **own** history; `estimate_mbgl` is the **modelled depth in metres** (gap-fill/forecast for mandals with sensor history — not spatial estimation of sensorless mandals). Every record is `official_result=false`. `app/data/dataset_manifest.json` records a hash of each generated file. The legacy V0 path below (`scripts/`) is retained for reference but is not what the live dashboard reads.
+Active application artifacts are
+`app/data/mandal_groundwater_records_v2.json`,
+`app/data/mandal_observation_series_v2.json`,
+`app/data/model_card.json`, and `app/data/dataset_manifest.json`. The manifest
+contains canonical counts, validity periods, hashes and active/legacy lifecycle
+status.
+
+The temporal holdout metric evaluates lag-eligible nowcasting/gap filling; it is
+not sensorless spatial accuracy. Whole-mandal estimation is evaluated
+separately. Model intervals are P10–P90 quantile ranges, not guaranteed
+confidence intervals. No forecast horizon is currently released, and rainfall
+minus actual ET is climate context rather than direct measured recharge.
+
+Run the active path in this order:
+
+```bash
+python3 phase3_levels/build_levels_engine.py
+python3 phase3_levels/evaluate_phase0.py
+python3 phase3_levels/build_real_app_data.py
+python3 phase3_levels/validate_phase0.py
+python3 -m pytest -q
+cd app
+npm run typecheck
+npm run build
+```
+
+The V1 files documented in `phase3_levels/LEGACY_OUTPUTS.md` are preserved but
+inactive and cannot be imported by application TypeScript. The remaining V0 and
+Phase 1/2 sections below document historical pipeline work; they are not the
+active Phase 0 application contract.
 
 ## V0 Pipeline Command Order
 
@@ -152,7 +193,7 @@ UI safeguards (in `tests/test_dashboard_seed_data.py`) scan the UI source so cop
 
 ## Phase 2B Multi-Source Satellite Fusion (rainfall)
 
-Beyond NASA GRACE-DA, the fusion layer now pulls **real CHIRPS monthly rainfall** (UCSB Climate Hazards Group — open, no login) as a recharge/supply context signal:
+Beyond NASA GRACE-DA, the historical fusion layer pulls **real CHIRPS monthly rainfall** (UCSB Climate Hazards Group — open, no login) as a climate/supply context signal:
 
 ```bash
 python3 scripts/fetch_chirps_rainfall.py          # downloads latest available month (GeoTIFF), graceful on network failure
@@ -162,7 +203,10 @@ python3 scripts/export_dashboard_seed_data.py     # adds rainfall to app JSON + 
 python3 -m pytest
 ```
 
-Rainfall is labeled `satellite-gauge-rainfall` (millimetres), surfaced in the satellite signal summary, mandal detail, side panel and map tooltip. It is **recharge context only — not groundwater depth** and carries no official claim. If the raster is absent the UI simply omits the rainfall signal (graceful).
+Rainfall is labeled `satellite-gauge-rainfall` (millimetres). It is climate
+context—not direct recharge and not groundwater depth—and carries no official
+claim. If the raster is absent the active V2 record retains an explicit missing
+state.
 
 ## Phase 2C Water Balance (evapotranspiration + overdraft)
 
@@ -175,7 +219,12 @@ python3 scripts/export_dashboard_seed_data.py
 python3 -m pytest
 ```
 
-Per mandal we compute `water_balance_mm = annual_rainfall − annual_ET` and a prototype status (`Surplus` / `Balanced` / `Deficit`). A negative/near-zero balance means demand is met by stored/groundwater — **overdraft pressure**. Surfaced as an "Aquifer Water Balance" card on the mandal detail, plus the side panel and map tooltip, and explained on the Methodology page ("what each signal can and can't tell you"). Labeled `model-water-balance` (mm) — **modeled recharge-vs-demand context, not groundwater depth**. Needs internet for the OPeNDAP read; graceful if unreachable.
+Per mandal the historical pipeline computes
+`water_balance_mm = annual_rainfall − annual_ET`. This is a climatic
+water-balance indicator only. It does not measure recharge, pumping, aquifer
+storage change or safe yield and cannot independently determine an operational
+groundwater action. Needs internet for the OPeNDAP read; the active publisher
+retains a stale/failed refresh state rather than inventing a replacement.
 
 ## Phase 2D Statewide District Heat-Map
 

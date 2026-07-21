@@ -13,7 +13,7 @@ Models compared, all under the SAME spatial GroupKFold:
   C. IDW neighbours   -> inverse-distance weighted mean of training mandals, per month
   D. fusion ML        -> static features + the IDW-neighbour estimate as a feature
 """
-import json, math, os, re, sys, difflib
+import argparse, datetime, json, math, os, re, difflib
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
@@ -89,6 +89,11 @@ def idw_predict(train, test, k=8, power=2.0):
         g = tr_by_month.get(r["date"])
         if g is None or len(g) == 0:
             continue
+        # Exclude the target identity even when train and test are the same frame.
+        # This prevents the fusion training feature from copying its own target.
+        g = g[g["mandal"].str.strip().str.upper() != str(r["mandal"]).strip().upper()]
+        if len(g) == 0:
+            continue
         d = haversine_km(r["lat"], r["lon"], g["lat"].values, g["lon"].values)
         order = np.argsort(d)[:k]
         dd = d[order]; vv = g["level_mbgl"].values[order]
@@ -105,7 +110,7 @@ def metrics(y, p):
     return (math.sqrt(mean_squared_error(y, p)), mean_absolute_error(y, p), r2_score(y, p))
 
 
-def main():
+def evaluate():
     df = pd.read_csv(os.path.join(HERE, "apwrims", "apwrims_gw_history.csv"))
     df = df[(df.level_mbgl > 0) & (df.level_mbgl < 60)].copy()
     cents = mandal_centroids()
@@ -119,8 +124,6 @@ def main():
     df["month_sin"] = np.sin(2*np.pi*(mo-1)/12); df["month_cos"] = np.cos(2*np.pi*(mo-1)/12)
     df["year"] = df.date.str.slice(0, 4).astype(int)
     df = df.dropna(subset=["lat", "lon"]).reset_index(drop=True)
-    print(f"  rows: {len(df):,}  mandals: {df.mandal.nunique()}")
-
     y = df.level_mbgl.values
     groups = df.mandal.values
     gkf = GroupKFold(n_splits=5)
@@ -146,25 +149,28 @@ def main():
         mf = est(NUM + ["idw"]); mf.fit(trd2[NUM+["idw"]+CAT], y[tr]); p_fus[te] = mf.predict(ted2[NUM+["idw"]+CAT])
 
     naive = np.full_like(y, y.mean())
-    print("\n  Spatial CV (whole mandals held out) — metres-accuracy at a NO-SENSOR mandal:")
+    methods = {}
     for name, p in [("A naive (predict average)", naive), ("B static ML", p_static),
                     ("C IDW neighbours", p_idw), ("D fusion (static + IDW)", p_fus)]:
         r, ma, r2 = metrics(y, p)
-        print(f"    {name:28s}  RMSE {r:5.2f} m   MAE {ma:5.2f} m   R² {r2:5.2f}")
+        methods[name] = {"rmseM": round(float(r), 4), "maeM": round(float(ma), 4), "r2": round(float(r2), 4)}
 
-    # per-terrain breakdown for the best model (fusion)
-    print("\n  Fusion model by aquifer terrain (worst case — whole mandal blind):")
+    terrain = {}
     for aqt in ["alluvial", "coastal", "hard_rock"]:
         mask = df.aquifer_type.values == aqt
         if mask.sum() == 0: continue
-        r, ma, r2 = metrics(y[mask], p_fus[mask])
-        print(f"    {aqt:12s} (n={mask.sum():6d})  RMSE {r:5.2f} m   MAE {ma:5.2f} m   R² {r2:5.2f}")
+        r, ma, r2 = metrics(y[mask], p_idw[mask])
+        terrain[aqt] = {
+            "sampleCount": int(mask.sum()),
+            "rmseM": round(float(r), 4),
+            "maeM": round(float(ma), 4),
+            "r2": round(float(r2), 4),
+        }
 
     # ---- REALISTIC scenario: GAP-FILL (mandal has history, fill missing months) ----
     # Random cell hold-out. Features add the mandal's own baseline (mean of its TRAIN
     # rows) — this is the common operational case (a mandal with sparse/late readings).
     from sklearn.model_selection import KFold
-    print("\n  GAP-FILL scenario (mandal has some history; predict a missing month):")
     p_gap = np.zeros(len(y))
     kf = KFold(n_splits=5, shuffle=True, random_state=0)
     NUM2 = NUM + ["mandal_base"]
@@ -176,12 +182,43 @@ def main():
         ted["mandal_base"] = ted["mandal"].map(base).fillna(gmean)
         m = est(NUM2); m.fit(trd[NUM2+CAT], y[tr]); p_gap[te] = m.predict(ted[NUM2+CAT])
     r, ma, r2 = metrics(y, p_gap)
-    print(f"    overall                      RMSE {r:5.2f} m   MAE {ma:5.2f} m   R² {r2:5.2f}")
-    for aqt in ["alluvial", "coastal", "hard_rock"]:
-        mask = df.aquifer_type.values == aqt
-        if mask.sum() == 0: continue
-        r, ma, r2 = metrics(y[mask], p_gap[mask])
-        print(f"    {aqt:12s} (n={mask.sum():6d})  RMSE {r:5.2f} m   MAE {ma:5.2f} m   R² {r2:5.2f}")
+    return {
+        "task": "whole_mandal_spatial_estimation",
+        "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+        "validation": "5-fold GroupKFold with whole mandals held out",
+        "rowCount": int(len(df)),
+        "mandalCount": int(df.mandal.nunique()),
+        "reportedMethod": "inverse_distance_weighted_same_month_neighbours",
+        "reportedMetric": methods["C IDW neighbours"],
+        "methods": methods,
+        "terrainCohortsForReportedMethod": terrain,
+        "selfNeighbourExcluded": True,
+        "gapFillDiagnostic": {
+            "task": "random_cell_gap_fill_with_mandal_history",
+            "rmseM": round(float(r), 4),
+            "maeM": round(float(ma), 4),
+            "r2": round(float(r2), 4),
+        },
+    }
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--json-out")
+    args = parser.parse_args()
+    result = evaluate()
+    print(f"  rows: {result['rowCount']:,}  mandals: {result['mandalCount']}")
+    print("\n  Spatial CV (whole mandals held out) — metres-accuracy at a no-history mandal:")
+    for name, metric in result["methods"].items():
+        print(
+            f"    {name:28s}  RMSE {metric['rmseM']:5.2f} m   "
+            f"MAE {metric['maeM']:5.2f} m   R² {metric['r2']:5.2f}"
+        )
+    print("\n  Reported spatial estimator: IDW neighbours (target identity excluded).")
+    if args.json_out:
+        with open(args.json_out, "w") as handle:
+            json.dump(result, handle, indent=2)
+            handle.write("\n")
 
 
 if __name__ == "__main__":

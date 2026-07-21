@@ -8,7 +8,7 @@ import { IconActivity, IconArrowRight, IconInfo, IconSatellite } from "./icons";
 const QUICK = [
   "Summarize the situation and recommend an irrigation action.",
   "Which signal is most concerning here and why?",
-  "Is this district safe to draw groundwater this season?",
+  "Which groundwater records need field verification?",
 ];
 
 export function AiBrief({ district: controlledDistrict, onDistrictChange }: { district?: string; onDistrictChange?: (d: string) => void } = {}) {

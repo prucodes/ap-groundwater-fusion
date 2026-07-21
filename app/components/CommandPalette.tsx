@@ -19,6 +19,8 @@ const PAGES: Item[] = [
   { label: "Estimated Levels β", sub: "Modelled depth in metres + confidence bands", href: "/estimates", kind: "page" },
   { label: "NASA Signals", sub: "Raw GRACE-DA truth + provenance", href: "/nasa", kind: "page" },
   { label: "Climate & Balance", sub: "Rainfall vs ET — the water budget", href: "/climate", kind: "page" },
+  { label: "Living Water Table", sub: "Experimental 3D view of V2 groundwater-depth records", href: "/living-water-table", kind: "page" },
+  { label: "Crystal Water Table", sub: "Cinematic liquid-map 3D — time-lapse, stress mode", href: "/crystal", kind: "page" },
   { label: "Mandal Insights", sub: "Per-mandal deep dive", href: "/mandals", kind: "page" },
   { label: "Verify / Watchlist", sub: "Where satellite & sensor disagree", href: "/watchlist", kind: "page" },
   { label: "Early Warning", sub: "Severity-ranked fusion alerts", href: "/alerts", kind: "page" },

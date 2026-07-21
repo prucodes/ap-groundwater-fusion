@@ -5,7 +5,7 @@ import { IconCloudRain, IconDroplet, IconLeaf, IconWaves } from "./icons";
 const cells = [
   {
     key: "avg_groundwater_percentile" as const,
-    name: "Groundwater Percentile",
+    name: "Regional GRACE-DA Wetness",
     cls: "gw",
     icon: <IconDroplet />,
     range: "min 91.59 — max 100.0",
@@ -57,7 +57,7 @@ export function SatelliteSignalCards() {
           <span className="signalIcon rain">
             <IconCloudRain />
           </span>
-          <div className="signalName">Rainfall (recharge)</div>
+          <div className="signalName">Rainfall Context</div>
           <div className="signalValue">
             {formatNumber(rain)}
             <span style={{ fontSize: 13, color: "var(--muted)", fontWeight: 500 }}> mm</span>
@@ -68,7 +68,7 @@ export function SatelliteSignalCards() {
           <div style={{ marginBottom: 6, fontSize: 10.5, fontWeight: 600, color: "var(--sig-surface)" }}>
             CHIRPS · {formatPeriod(s.rainfall_period) || "recent"}
           </div>
-          <div className="signalRange">monthly avg · supply signal</div>
+          <div className="signalRange">monthly areal average · not measured recharge</div>
         </div>
       )}
     </div>

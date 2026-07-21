@@ -44,7 +44,7 @@ export default function DistrictsPage() {
 
         <section className="card">
           <div className="cardHead">
-            <div className="cardTitle"><span className="titleIcon"><IconDroplet /></span>District Levels — as on May 2026 (β)</div>
+            <div className="cardTitle"><span className="titleIcon"><IconDroplet /></span>District Levels — as on Jun 2026 (β)</div>
             <span className="cardSub">m below ground</span>
           </div>
           <div className="tableWrap" style={{ maxHeight: 420, overflowY: "auto" }}>

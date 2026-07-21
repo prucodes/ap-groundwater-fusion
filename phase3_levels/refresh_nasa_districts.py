@@ -7,7 +7,7 @@ centroid, and rewrites:
   app/data/nasa_provenance.json          (fetch_date + per-raster stats over 28 districts + count)
   app/data/satellite_station_samples.json (28 district-centroid sample rows for the raw-extraction table)
 """
-import hashlib, json, os, ssl, datetime, urllib.request, tempfile
+import hashlib, json, os, ssl, datetime, urllib.request, tempfile, subprocess
 import os as _os, sys as _sys, ssl as _ssl
 def _tls_context():
     """Verified TLS by default; unverified only with ALLOW_INSECURE_TLS=1 (loud, opt-in)."""
@@ -123,7 +123,16 @@ def main():
     json.dump(dgeo, open(os.path.join(APP, "ap_district_geometry.json"), "w"))
     json.dump(prov, open(os.path.join(APP, "nasa_provenance.json"), "w"), indent=2)
     json.dump(samples, open(os.path.join(APP, "satellite_station_samples.json"), "w"), indent=2)
-    print(f"  refreshed {len(districts)} district samples -> fetch_date {today}")
+
+    # Only the canonical V2 publisher may rebuild the manifest. This avoids a
+    # source-specific refresher publishing partial hashes or stale counts.
+    publisher = os.path.join(HERE, "build_real_app_data.py")
+    subprocess.run([_sys.executable, publisher], cwd=os.path.join(HERE, ".."), check=True)
+
+    print(
+        f"  refreshed {len(districts)} district samples -> fetch_date {today}; "
+        "canonical V2 publisher rebuilt the manifest"
+    )
 
 
 if __name__ == "__main__":

@@ -75,8 +75,8 @@ export default function SnapshotPage() {
                   <th>District</th>
                   <th>Mandal</th>
                   <th>Median mbgl</th>
-                  <th>Est. β (m)</th>
-                  <th title="Model projection for next month (m below ground)">Next-Mo</th>
+                  <th>Modelled nowcast (m)</th>
+                  <th>Coverage</th>
                   <th title="Year-on-year change: + deeper/worse (red), − recovering (green)">YoY</th>
                   <th>NASA GW %ile</th>
                   <th>Root-Zone</th>
@@ -94,7 +94,7 @@ export default function SnapshotPage() {
                     <td className="cellStrong">{titleCase(m.mandal_name)}</td>
                     <td>{formatNumber(m.median_groundwater_mbgl)}</td>
                     <td>{formatNumber(m.estimate_mbgl)}</td>
-                    <td>{formatNumber(m.forecast_next_month_mbgl)}</td>
+                    <td>{m.coverage_status.replaceAll("_", " ")}</td>
                     <td style={{ color: (m.trend_m_per_yr ?? 0) > 0 ? "var(--rust)" : (m.trend_m_per_yr ?? 0) < 0 ? "var(--green)" : "var(--muted)", fontWeight: 600, fontSize: 11.5 }}>
                       {m.trend_m_per_yr == null ? "—" : `${m.trend_m_per_yr > 0 ? "+" : ""}${formatNumber(m.trend_m_per_yr)}`}
                     </td>

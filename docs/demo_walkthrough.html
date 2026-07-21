@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AP Groundwater Intelligence — Demo Walkthrough</title>
+<style>
+  :root{
+    --navy:#071d35; --deep:#0a2747; --teal:#1f8a8a; --cyan:#12b5cb; --green:#5e9b6b;
+    --amber:#d79b2e; --rust:#c65a46; --ink:#0d2138; --soft:#c9d8e8; --muted:#7f97ad;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    --disp:"Space Grotesk",var(--sans);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:var(--sans);background:radial-gradient(120% 120% at 50% 0%,#0a2747,#04101f 70%);color:#fff;overflow:hidden}
+  .stage{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center}
+
+  /* slides */
+  .slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .6s ease;pointer-events:none}
+  .slide.active{opacity:1;pointer-events:auto}
+  .shot{max-width:74vw;max-height:84vh;border-radius:12px;border:1px solid rgba(143,220,239,.25);box-shadow:0 30px 80px rgba(0,0,0,.55);object-fit:contain}
+
+  /* caption card */
+  .cap{position:absolute;right:3.2vw;bottom:8vh;width:340px;background:rgba(7,21,37,.82);backdrop-filter:blur(10px);
+       border:1px solid rgba(143,220,239,.3);border-radius:16px;padding:18px 20px;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+  .cap .step{font-family:var(--disp);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .cap .step b{font-weight:700;color:#fff}
+  .cap h2{font-family:var(--disp);font-size:19px;font-weight:600;line-height:1.15;margin-bottom:8px}
+  .cap p{font-size:13px;line-height:1.5;color:var(--soft)}
+  .cap .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+  .cap .chip{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;background:rgba(18,181,203,.14);border:1px solid rgba(18,181,203,.35);color:#bdeaf2}
+
+  /* title + end cards */
+  .card{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;opacity:0;transition:opacity .6s ease;pointer-events:none;padding:0 8vw}
+  .card.active{opacity:1}
+  .card .eyebrow{font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:#7fb0d4;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+  .card .dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+  .card h1{font-family:var(--disp);font-size:46px;font-weight:600;line-height:1.08;margin-bottom:14px}
+  .card p{font-size:16px;color:var(--soft);max-width:680px;line-height:1.55}
+  .card .meta{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .card .m{font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;background:rgba(18,181,203,.12);border:1px solid rgba(18,181,203,.3);color:#bdeaf2}
+  .card .note{margin-top:26px;font-size:11.5px;color:var(--muted)}
+
+  /* data slide */
+  .dataCard .wrap{width:min(1020px,88vw)}
+  .dataCard .hd{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+  .dataCard h2{font-family:var(--disp);font-size:27px;font-weight:600}
+  .dataCard .sub{font-size:13px;color:var(--muted)}
+  table.data{width:100%;border-collapse:collapse;font-size:13.5px;background:rgba(7,21,37,.55);border:1px solid rgba(143,220,239,.22);border-radius:12px;overflow:hidden}
+  table.data thead th{background:rgba(18,181,203,.13);color:#cfe9ee;text-align:left;padding:9px 13px;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+  table.data thead th.num{text-align:right}
+  table.data td{padding:8px 13px;border-top:1px solid rgba(143,220,239,.09);color:var(--soft)}
+  table.data td.m{color:#fff;font-weight:600}
+  table.data td.d{color:var(--muted);font-size:12px}
+  table.data td.num{text-align:right;font-variant-numeric:tabular-nums}
+  table.data td.est{color:#bdeaf2;font-weight:600}
+  table.data td.yoy.up{color:#e58a72} table.data td.yoy.dn{color:#7fd6a0}
+  .st{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:6px;white-space:nowrap}
+  .st.verify{background:rgba(198,90,70,.22);color:#ef9077}
+  .st.stress{background:rgba(224,123,57,.2);color:#eaa46b}
+  .st.watch{background:rgba(215,155,46,.2);color:#e6c074}
+  .st.normal{background:rgba(94,155,107,.2);color:#8fd0a0}
+  .dataCard .fn{margin-top:12px;font-size:11.5px;color:var(--muted);line-height:1.5}
+
+  /* progress + controls */
+  .bar{position:absolute;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--teal));width:0;transition:width .15s linear;z-index:10}
+  .ctrl{position:absolute;left:3.2vw;bottom:8vh;display:flex;align-items:center;gap:14px;z-index:10}
+  .ctrl button{width:42px;height:42px;border-radius:50%;border:1px solid rgba(143,220,239,.35);background:rgba(7,21,37,.7);color:#fff;cursor:pointer;display:grid;place-items:center;transition:.15s}
+  .ctrl button:hover{background:rgba(18,181,203,.25);border-color:var(--cyan)}
+  .ctrl svg{width:18px;height:18px;fill:#fff}
+  .counter{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+  .hint{position:absolute;left:50%;bottom:2.6vh;transform:translateX(-50%);font-size:11px;color:var(--muted);z-index:10}
+  kbd{font-family:var(--sans);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:1px 5px;font-size:10px}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="bar" id="bar"></div>
+
+  <!-- TITLE -->
+  <div class="card active" data-card>
+    <div class="eyebrow"><span class="dot"></span> Andhra Pradesh · Satellite + Sensor Fusion</div>
+    <h1>AP Groundwater Intelligence</h1>
+    <p>A walkthrough of the working prototype — real APWRIMS sensor data fused with NASA satellite signals to estimate groundwater depth in metres, forecast it, and flag bad readings, across 639 mandals.</p>
+    <div class="meta"><span class="m">639 mandals</span><span class="m">APWRIMS + NASA GRACE-DA</span><span class="m">±1.3 m model accuracy</span><span class="m">auto-refresh monthly</span></div>
+    <div class="note">Prototype · modelled estimates, not official APWRIMS results · synthetic/public data shown</div>
+  </div>
+
+  <!-- SLIDES injected by JS -->
+
+  <!-- DATA SLIDE -->
+  <div class="card dataCard" data-dataslide>
+    <div class="wrap">
+      <div class="hd"><h2>Real mandal readings — sensor vs. model</h2><span class="sub">a sample of the 639 · the sensor is the truth, the model tracks it and forecasts</span></div>
+      <table class="data">
+        <thead><tr>
+          <th>Mandal</th><th>District</th><th class="num">Latest sensor</th><th class="num">Model est</th>
+          <th class="num">Next-mo</th><th class="num">YoY</th><th class="num">NASA %ile</th><th>Status</th>
+        </tr></thead>
+        <tbody>
+          <tr><td class="m">Dwaraka Tirumala</td><td class="d">Eluru</td><td class="num">54.44</td><td class="num est">55.06</td><td class="num">55.12</td><td class="num yoy up">+0.69</td><td class="num">98.5</td><td><span class="st stress">Stress</span></td></tr>
+          <tr><td class="m">Orvakal</td><td class="d">Kurnool</td><td class="num">15.06</td><td class="num est">15.41</td><td class="num">15.61</td><td class="num yoy up">+2.4</td><td class="num">100</td><td><span class="st stress">Stress</span></td></tr>
+          <tr><td class="m">Somala</td><td class="d">Annamayya</td><td class="num">7.39</td><td class="num est">8.08</td><td class="num">8.15</td><td class="num yoy up">+0.8</td><td class="num">97.7</td><td><span class="st watch">Watch</span></td></tr>
+          <tr><td class="m">U. Kothapalle</td><td class="d">Kakinada</td><td class="num">2.9</td><td class="num est">3.0</td><td class="num">3.02</td><td class="num yoy up">+0.22</td><td class="num">98.7</td><td><span class="st normal">Normal</span></td></tr>
+          <tr><td class="m">Maddipadu</td><td class="d">Prakasam</td><td class="num">1.35</td><td class="num est">1.19</td><td class="num">1.19</td><td class="num yoy up">+0.01</td><td class="num">96.8</td><td><span class="st normal">Normal</span></td></tr>
+        </tbody>
+      </table>
+      <div class="fn"><b style="color:#bdeaf2">Latest sensor</b> = most recent APWRIMS reading · <b style="color:#bdeaf2">Model est</b> = model nowcast · they track within ~1 m from 54 m deep down to 1 m shallow — the model confirms the sensor, it doesn't replace it. <b style="color:#bdeaf2">Next-mo</b> = forecast (sensors can't give you this). YoY = year-on-year change (+ deeper); NASA = GRACE-DA storage percentile. All depths in metres below ground.</div>
+    </div>
+  </div>
+
+  <!-- END -->
+  <div class="card" data-card>
+    <div class="eyebrow"><span class="dot"></span> Prototype · ready for review</div>
+    <h1>Sensors tell the past.<br>This tells the metres — and the next month.</h1>
+    <p>Satellite + sensor fusion that fills the gaps sensors leave (in space and time), forecasts next month, and catches readings that look wrong — with an AWARE-ready advisory and an honest confidence band on every number.</p>
+    <div class="meta"><span class="m">632 modelled + 7 measured-only</span><span class="m">Verify flags bad sensors</span><span class="m">AWARE advisory payload</span><span class="m">official APWRIMS export pending</span></div>
+    <div class="note">Not an official groundwater assessment · for RTGS / APSDMA review</div>
+  </div>
+
+  <div class="ctrl">
+    <button id="prev" title="Previous (←)"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6v12z"/></svg></button>
+    <button id="play" title="Play / pause (space)"><svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    <button id="next" title="Next (→)"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6V6z"/></svg></button>
+    <span class="counter" id="counter">1 / 10</span>
+  </div>
+  <div class="hint">Auto-plays · <kbd>←</kbd> <kbd>→</kbd> to step · <kbd>space</kbd> to pause · screen-record this window for a video file</div>
+</div>
+
+<script>
+const SLIDES = [
+  { img:"demo_frames/02_nasa.png", n:"Open data", t:"NASA satellite signals",
+    p:"Live NASA GRACE-DA storage + soil-moisture, with full provenance (source URLs, SHA-256, fetch dates). The new-for-AP layer — district-scale stress &amp; trend, never absolute depth.",
+    chips:["GRACE-DA","CHIRPS rainfall","checksummed provenance","district-scale"] },
+  { img:"demo_frames/03_map.png", n:"Coverage", t:"Mandal status map",
+    p:"Every mandal coloured by fusion status (Stress / Watch / Verify / Normal). Honest about coverage — 656 of 670 boundaries have a fused record; the rest stay grey, not faked.",
+    chips:["639 mandals","Stress / Watch / Verify","explicit coverage"] },
+  { img:"demo_frames/04_estimates.png", n:"The headline", t:"Estimated levels — in metres",
+    p:"Depth in metres for 632 modelled mandals, each with a confidence band. The model learned the satellite↔depth relationship from 12 years of APWRIMS history — validated to ±1.3 m on months it never saw.",
+    chips:["632 modelled","±1.3 m · R² 0.90","gap-fill + next-month forecast"] },
+  { img:"demo_frames/05_mandal_detail.png", n:"Per mandal", t:"Measured vs model vs forecast",
+    p:"Each mandal shows the latest measured reading, the model nowcast, and the next-month forecast — plus a Verify flag when the sensor and model disagree, so a drifting sensor gets caught instead of trusted.",
+    chips:["measured vs model","next-month forecast","Verify = bad-sensor QA"] },
+  { img:"demo_frames/06_climate.png", n:"Why it moves", t:"Climate &amp; water balance",
+    p:"The water budget behind the levels: rainfall in vs evapotranspiration out, per district, from open CHIRPS + TerraClimate — the recharge-vs-demand context.",
+    chips:["CHIRPS rainfall","TerraClimate ET","surplus / deficit"] },
+  { img:"demo_frames/07_scenario.png", n:"Foresight", t:"Drought scenario planner",
+    p:"A monsoon what-if: one slider shows which districts tip into deficit under a weak season — pre-season drought early-warning. Illustrative sensitivity, clearly labelled, not a forecast.",
+    chips:["monsoon anomaly","districts tipping to deficit","APSDMA early-warning"] },
+  { img:"demo_frames/08_irrigation.png", n:"The payoff", t:"Irrigation &amp; AWARE advisory",
+    p:"Draw / hold / conserve per district, now with a next-season outlook from the YoY trend — shaped as an AWARE-ready advisory payload, with a basis tag showing sat-only vs sat+sensor.",
+    chips:["Draw / Hold / Conserve","trend outlook","AWARE payload"] },
+  { img:"demo_frames/01_overview.png", n:"At a glance", t:"Executive overview",
+    p:"The state-level rollup — mandals analysed, status distribution, and the fused signals in one view, with every output exportable and clearly labelled prototype, not official.",
+    chips:["639 analysed","status distribution","CSV / print export"] },
+];
+
+const stage = document.getElementById('stage');
+const cards = [...document.querySelectorAll('[data-card]')]; // [title, end]
+const titleCard = cards[0], endCard = cards[1];
+
+// build slide nodes between title and end
+const slideNodes = SLIDES.map((s,i)=>{
+  const el = document.createElement('div'); el.className='slide';
+  el.innerHTML = `<img class="shot" src="${s.img}" alt="${s.t}">
+    <div class="cap"><div class="step"><b>${String(i+2).padStart(2,'0')}</b> · ${s.n}</div>
+    <h2>${s.t}</h2><p>${s.p}</p><div class="chips">${s.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div></div>`;
+  endCard.parentNode.insertBefore(el, endCard);
+  return el;
+});
+
+const dataSlide = document.querySelector('[data-dataslide]');
+const steps = [titleCard, ...slideNodes, endCard];
+steps.splice(4, 0, dataSlide); // after Estimates: title + nasa + map + estimates
+const DUR = steps.map(s => s===titleCard?5000 : s===endCard?7000 : s===dataSlide?10000 : 7000);
+let idx = 0, playing = true, t0 = performance.now(), raf;
+const bar = document.getElementById('bar');
+const counter = document.getElementById('counter');
+const playIcon = document.getElementById('playIcon');
+
+function show(i){
+  steps.forEach((s,k)=>s.classList.toggle('active',k===i));
+  idx = i; t0 = performance.now();
+  counter.textContent = `${i+1} / ${steps.length}`;
+}
+function tick(now){
+  if(playing){
+    const p = Math.min(1,(now-t0)/DUR[idx]);
+    bar.style.width = (p*100)+'%';
+    if(p>=1) show((idx+1)%steps.length);
+  }
+  raf = requestAnimationFrame(tick);
+}
+function setPlay(v){ playing=v; t0=performance.now();
+  playIcon.innerHTML = v ? '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>' : '<path d="M8 5v14l11-7z"/>'; }
+
+document.getElementById('next').onclick = ()=>show((idx+1)%steps.length);
+document.getElementById('prev').onclick = ()=>show((idx-1+steps.length)%steps.length);
+document.getElementById('play').onclick = ()=>setPlay(!playing);
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight') show((idx+1)%steps.length);
+  else if(e.key==='ArrowLeft') show((idx-1+steps.length)%steps.length);
+  else if(e.code==='Space'){ e.preventDefault(); setPlay(!playing); }
+});
+const shotMatch = location.search.match(/shot=(\d+)/);
+if(shotMatch){
+  document.querySelector('.ctrl').style.display='none';
+  document.querySelector('.hint').style.display='none';
+  document.getElementById('bar').style.display='none';
+  playing=false;
+  show(Math.min(steps.length-1, parseInt(shotMatch[1],10)));
+} else {
+  show(0); raf = requestAnimationFrame(tick);
+}
+window.__steps = steps.length;
+</script>
+</body>
+</html>

@@ -3,9 +3,10 @@ import { HeaderHero } from "../../../components/HeaderHero";
 import { MandalDetail } from "../../../components/MandalDetail";
 import { mandals } from "../../../lib/data";
 
-export function generateStaticParams() {
-  return mandals.map((m) => ({ id: m.id }));
-}
+// Rendered on-demand (SSR). Pre-generating all ~640 mandal pages at build time
+// pulls the 7 MB observation-series JSON into every render and overwhelms the
+// build pod; on-demand rendering keeps the build fast and pages load per request.
+export const dynamic = "force-dynamic";
 
 export default async function MandalDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

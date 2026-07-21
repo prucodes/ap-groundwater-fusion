@@ -27,11 +27,15 @@ export function ThemeToggle({ collapsed = false }: { collapsed?: boolean }) {
       className="utilBtn"
       type="button"
       onClick={toggle}
-      title={theme === "dark" ? "Switch to light" : "Switch to dark"}
-      aria-label="Toggle theme"
+      title={theme === "dark" ? "Switch to light appearance" : "Switch to dark appearance"}
+      aria-label={theme === "dark" ? "Switch to light appearance" : "Switch to dark appearance"}
     >
       {theme === "dark" ? <IconSun /> : <IconMoon />}
-      {!collapsed && <span className="utilLabel">{theme === "dark" ? "Light" : "Dark"}</span>}
+      {!collapsed && (
+        <span className="utilLabel">
+          {theme === "dark" ? "Switch to light" : "Switch to dark"}
+        </span>
+      )}
     </button>
   );
 }

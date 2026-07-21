@@ -246,6 +246,20 @@ h4 {
   color: #7fa8cf;
 }
 
+.navBadge {
+  margin-left: auto;
+  padding: 2px 5px;
+  border: 1px solid rgba(65, 214, 226, 0.34);
+  border-radius: 999px;
+  color: #62dbe6;
+  background: rgba(24, 165, 184, 0.1);
+  font: 600 8px/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.shellCollapsed .navBadge { display: none; }
+
 /* Sidebar utility bar (search / alerts / theme) */
 .sidebarUtils {
   display: flex;

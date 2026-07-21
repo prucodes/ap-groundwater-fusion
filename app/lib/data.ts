@@ -1,17 +1,21 @@
 import dashboardSummaryJson from "../data/dashboard_summary.json";
-import mandalFusionSeedJson from "../data/mandal_dataset.json";
+import groundwaterRecordsJson from "../data/mandal_groundwater_records_v2.json";
+import observationSeriesJson from "../data/mandal_observation_series_v2.json";
+import modelCardJson from "../data/model_card.json";
+import datasetManifestJson from "../data/dataset_manifest.json";
 import readinessJson from "../data/source_readiness.json";
 import satelliteSamplesJson from "../data/satellite_station_samples.json";
 import mapGeometryJson from "../data/ap_map_geometry.json";
 import districtGeometryJson from "../data/ap_district_geometry.json";
 import mandalHeatJson from "../data/ap_mandal_heat.json";
 import nasaProvenanceJson from "../data/nasa_provenance.json";
-import levelsEstimatesJson from "../data/mandal_levels_estimated.json";
 import type {
   DashboardSummary,
   DistrictGeometry,
   DistrictLayerKey,
-  MandalFusionSeed,
+  GroundwaterRecordCollectionV2,
+  MandalGroundwaterRecordV2,
+  MandalGroundwaterView,
   MandalHeat,
   MandalHeatLayerKey,
   MapGeometry,
@@ -20,8 +24,203 @@ import type {
   StatusBucket,
 } from "./types";
 
-export const dashboardSummary = dashboardSummaryJson as DashboardSummary;
-export const mandals = mandalFusionSeedJson as MandalFusionSeed[];
+export type DatasetManifestV2 = {
+  manifestVersion: "2.0.0";
+  dataContractVersion: "2.0.0";
+  generatedAt: string;
+  counts: {
+    boundaryFeatureCount: number;
+    rawSourceSeriesCount: number;
+    observationRowCount: number;
+    historySeriesCount: number;
+    modelledRecordCount: number;
+    measuredOnlyCount: number;
+    boundaryOnlyCount: number;
+    noDataCount: number;
+    districtCount: number;
+    rainfallContextCoverage: number;
+    climateBalanceCoverage: number;
+    graceDistrictContextCoverage: number;
+    extractionCategoryCoverage: number;
+  };
+  periods: {
+    latestObservationPeriod: string | null;
+    modelTargetPeriodRange: { start: string | null; end: string | null; latestTargetCount: number };
+    graceValidPeriod: string | null;
+    graceFetchDate: string | null;
+    rainfallValidPeriod: string | null;
+    etValidPeriod: string | null;
+    modelBuildTimestamp: string;
+    uiGenerationTimestamp: string;
+  };
+  artifacts: {
+    active: Array<Record<string, unknown>>;
+    legacy: Array<Record<string, unknown>>;
+  };
+};
+
+export type ModelCard = {
+  modelName: string;
+  modelVersion: string;
+  buildTimestamp: string;
+  evaluations: {
+    temporalNowcast: {
+      evaluationPeriod: { start: string; end: string };
+      sampleCount: number;
+      eligibleCohort: string;
+      model: { maeM: number; rmseM: number; r2: number };
+      baseline: { name: string; maeM: number };
+      terrainCohorts: Record<string, { sampleCount: number; maeM: number; empiricalCoveragePct: number }>;
+    };
+    spatialEstimation: {
+      validation: string;
+      mandalCount: number;
+      reportedMetric: { maeM: number; rmseM: number; r2: number };
+    };
+    directForecast: {
+      releasedHorizons: number[];
+      horizons: Array<{
+        horizonMonths: number;
+        sampleCount: number;
+        model: { maeM: number };
+        baselines: { noChange: { maeM: number }; seasonal: { maeM: number } };
+        releaseStatus: string;
+      }>;
+    };
+    crossNetworkComparison: {
+      sampleCount: number;
+      maeM: number;
+      rmseM: number;
+      correlation: number;
+      limitations: string[];
+    };
+    intervalEvaluation: {
+      intervalType: string;
+      nominalCoveragePct: number;
+      empiricalCoveragePct: number;
+      meanWidthM: number;
+      sampleCount: number;
+    };
+  };
+  forecastRelease: { releasedHorizons: number[]; status: string; reason: string };
+  disclosures: Record<string, string>;
+};
+
+type ObservationSeriesBundle = {
+  contractVersion: "2.0.0";
+  series: Record<
+    string,
+    {
+      mandalId: string;
+      unit: "m_bgl";
+      aggregationMethod: string;
+      observations: Array<{ period: string; value: number }>;
+    }
+  >;
+};
+
+export const groundwaterRecordCollection = groundwaterRecordsJson as GroundwaterRecordCollectionV2;
+export const groundwaterRecords = groundwaterRecordCollection.records;
+export const observationSeries = (observationSeriesJson as ObservationSeriesBundle).series;
+export const modelCard = modelCardJson as ModelCard;
+export const datasetManifest = datasetManifestJson as DatasetManifestV2;
+
+function viewStatus(record: MandalGroundwaterRecordV2): {
+  bucket: StatusBucket;
+  status: string;
+  action: string;
+} {
+  if (record.assessment.monitoringStatus === "insufficient_data") {
+    return { bucket: "Insufficient Data", status: "Insufficient data", action: "Review source coverage or collect a field observation." };
+  }
+  if (record.assessment.monitoringStatus === "verify") {
+    return { bucket: "Verify", status: "Field verification needed", action: "Review the observation history and field-verify before use." };
+  }
+  if (record.assessment.monitoringStatus === "stress") {
+    return { bucket: "Stress", status: "Groundwater stress indicator", action: "Review the measured history and field-verify conditions." };
+  }
+  if (record.assessment.monitoringStatus === "watch") {
+    return { bucket: "Watch", status: "Monitoring watch", action: "Continue monitoring and review the next measured observation." };
+  }
+  return { bucket: "Normal", status: "Stable monitoring indicator", action: "Continue routine monitoring." };
+}
+
+export const mandals: MandalGroundwaterView[] = groundwaterRecords.map((record, index) => {
+  const series = observationSeries[record.identity.mandalId]?.observations ?? [];
+  const values = series.map((row) => row.value);
+  const median = values.length
+    ? [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)]
+    : null;
+  const average = values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
+  const measured = record.observation?.latestMeasuredValue ?? null;
+  const nowcast = record.nowcast?.value ?? null;
+  const intervalWidth =
+    record.nowcast ? record.nowcast.upper - record.nowcast.lower : null;
+  const status = viewStatus(record);
+  const balanceCategory = record.signals.climateBalance.category;
+  return {
+    id: record.identity.mandalId,
+    rank: index + 1,
+    mandal_name: record.identity.mandalName,
+    district_name: record.identity.districtName,
+    coverage_status: record.identity.coverageStatus,
+    observation_record_count: record.observation?.observationRecordCount ?? 0,
+    observation_month_count: record.observation?.uniqueObservationMonthCount ?? 0,
+    physical_station_count: record.observation?.physicalStationCount ?? null,
+    latest_observation_period: record.observation?.observationPeriod ?? "",
+    median_groundwater_mbgl: median === null ? null : Math.round(median * 100) / 100,
+    avg_groundwater_mbgl: average === null ? null : Math.round(average * 100) / 100,
+    estimate_mbgl: nowcast,
+    estimate_band_p10: record.nowcast?.lower ?? null,
+    estimate_band_p90: record.nowcast?.upper ?? null,
+    obs_model_gap_m:
+      measured !== null && nowcast !== null ? Math.round(Math.abs(measured - nowcast) * 100) / 100 : null,
+    display_mbgl: measured,
+    display_basis: measured !== null ? "measured" : "modelled",
+    trend_m_per_yr: record.assessment.measuredTrendMPerYear,
+    groundwater_percentile: record.signals.graceDa.groundwaterPercentile,
+    measured_wetness_percentile: null,
+    rootzone_percentile: record.signals.graceDa.rootZonePercentile,
+    surface_percentile: record.signals.graceDa.surfacePercentile,
+    rainfall_mm: record.signals.rainfall.amountMm,
+    annual_et_mm: record.signals.evapotranspiration.amountMm,
+    water_balance_mm: record.signals.climateBalance.amountMm,
+    water_balance_status:
+      balanceCategory === "positive" ? "Surplus" : balanceCategory === "negative" ? "Deficit" : balanceCategory === "neutral" ? "Balanced" : "",
+    sensor_satellite_agreement: record.assessment.contextAgreement,
+    confidence_label: titleCase(record.quality.confidenceClass),
+    status: status.status,
+    status_bucket: status.bucket,
+    recommended_action: status.action,
+    data_quality_notes: `${record.quality.observationHistoryMonths} observation months; ${record.identity.coverageStatus.replaceAll("_", " ")}.`,
+    boundary_source: record.identity.boundarySource,
+    boundary_official_flag: record.identity.boundaryStatus === "official",
+    measured_input_label: "Latest measured mandal aggregate",
+    measured_input_source: "APWRIMS-format history",
+    satellite_input_label: "Regional GRACE-DA model-assimilated context",
+    rainfall_input_label: "CHIRPS rainfall context",
+    water_balance_input_label: "Rainfall minus actual ET climate indicator",
+    official_result: false,
+    aware_apwrims_action_preview: {
+      district_name: record.identity.districtName,
+      mandal_name: record.identity.mandalName,
+      status: status.status,
+      confidence_label: titleCase(record.quality.confidenceClass),
+      recommended_action: status.action,
+      source_caveat: "Unreleased preview; field verification and official schema required.",
+    },
+  };
+});
+
+export const dashboardSummary = {
+  ...(dashboardSummaryJson as DashboardSummary),
+  summary: {
+    ...(dashboardSummaryJson as DashboardSummary).summary,
+    mandals_analyzed: datasetManifest.counts.modelledRecordCount,
+    sample_fetch_date: datasetManifest.periods.graceFetchDate ?? "",
+    prototype_notice: modelCard.disclosures.officialUse,
+  },
+} as DashboardSummary;
 export const readinessItems = readinessJson as ReadinessItem[];
 export const satelliteSamples = satelliteSamplesJson as SatelliteSample[];
 export const mapGeometry = mapGeometryJson as MapGeometry;
@@ -113,7 +312,39 @@ export type LevelsEstimateBundle = {
   };
   mandals: MandalLevelEstimate[];
 };
-export const levelsEstimates = levelsEstimatesJson as LevelsEstimateBundle;
+const temporalEvaluation = modelCard.evaluations.temporalNowcast;
+export const levelsEstimates: LevelsEstimateBundle = {
+  generated: modelCard.buildTimestamp,
+  label: "Modelled temporal nowcasts; not official APWRIMS results",
+  n_mandals: datasetManifest.counts.modelledRecordCount,
+  backtest: {
+    forecast_rmse_m: temporalEvaluation.model.rmseM,
+    forecast_mae_m: temporalEvaluation.model.maeM,
+    forecast_r2: temporalEvaluation.model.r2,
+    vs_persistence_pct: Math.round(
+      (1 - temporalEvaluation.model.maeM / temporalEvaluation.baseline.maeM) * 100,
+    ),
+    by_terrain_mae_m: Object.fromEntries(
+      Object.entries(temporalEvaluation.terrainCohorts).map(([key, value]) => [key, value.maeM]),
+    ),
+  },
+  mandals: groundwaterRecords
+    .filter((record) => record.nowcast !== null)
+    .map((record) => ({
+      mandal: record.identity.mandalName,
+      district: record.identity.districtName,
+      mkey: record.identity.mandalId,
+      lat: 0,
+      lon: 0,
+      aquifer: record.quality.terrainCohort ?? "unknown",
+      as_of: record.nowcast!.targetPeriod,
+      observed_mbgl: record.observation!.latestMeasuredValue,
+      estimate_mbgl: record.nowcast!.value,
+      band_p10: record.nowcast!.lower,
+      band_p90: record.nowcast!.upper,
+      trend_m_per_yr: record.assessment.measuredTrendMPerYear,
+    })),
+};
 
 /** Sequential depth color: shallow (good, teal) → deep (stressed, amber/red). */
 export function depthColor(mbgl: number | null): string {
@@ -159,7 +390,7 @@ export function titleCase(value: string) {
 
 /* ---------------- Status helpers ---------------- */
 
-export const STATUS_ORDER: StatusBucket[] = ["Normal", "Watch", "Stress", "Verify", "Low Confidence"];
+export const STATUS_ORDER: StatusBucket[] = ["Normal", "Watch", "Stress", "Verify", "Low Confidence", "Insufficient Data"];
 
 export const STATUS_META: Record<string, { className: string; color: string; label: string }> = {
   Normal: { className: "normal", color: "#5e9b6b", label: "Normal" },
@@ -175,17 +406,14 @@ export function statusMeta(bucket?: string | null) {
 }
 
 export const AGREEMENT_META: Record<string, { className: string; label: string }> = {
-  over_extraction: { className: "strong", label: "Pumping-pressure (verify)" },
-  drought_decline: { className: "partial", label: "Climate-stress (verify)" },
+  declining_despite_positive_climate_balance: { className: "strong", label: "Decline despite positive climate balance" },
+  declining_without_positive_climate_balance: { className: "partial", label: "Decline without positive climate balance" },
   stable_or_recovering: { className: "agree", label: "Stable / recovering" },
-  // legacy keys (kept for back-compat if any cached data is read)
-  strong_disagreement: { className: "strong", label: "Pumping-pressure (verify)" },
-  partial_or_neutral: { className: "partial", label: "Climate-stress (verify)" },
-  agree_normal_or_wet: { className: "agree", label: "Stable / recovering" },
+  unknown: { className: "unknown", label: "Context agreement unknown" },
 };
 
 export function agreementMeta(value: string) {
-  return AGREEMENT_META[value] ?? { className: "partial", label: titleCase(value || "unknown") };
+  return AGREEMENT_META[value] ?? AGREEMENT_META.unknown;
 }
 
 export function confidenceClass(label: string) {
@@ -233,15 +461,9 @@ export function formatPeriod(period: string | null | undefined): string {
   return String(period);
 }
 
-/** Freshness stamp — the most recent sensor month across all mandals ("2026-05"). */
-export const dataAsOf = (() => {
-  let max = "";
-  for (const m of mandals) {
-    const d = m.latest_sensor_date;
-    if (d && d > max) max = d;
-  }
-  return max;
-})();
+/** Latest measured-observation period; other sources retain their own dates. */
+export const latestObservationPeriod =
+  datasetManifest.periods.latestObservationPeriod ?? "";
 
 /** Water-balance status from a net mm/yr value — mirrors the pipeline thresholds. */
 export function balanceStatusFor(mm: number | null | undefined): "Surplus" | "Balanced" | "Deficit" | "" {
@@ -277,14 +499,14 @@ export function watchlistMandals() {
   // Everything that is not a clean "Normal" agreement is reviewable in the watchlist.
   return mandals
     .filter((m) => m.status_bucket !== "Normal")
-    .sort((a, b) => (a.confidence_score ?? 0) - (b.confidence_score ?? 0));
+    .sort((a, b) => a.observation_month_count - b.observation_month_count);
 }
 
 export function selectedMandal(id?: string) {
   return mandals.find((mandal) => mandal.id === id) ?? mandals[0];
 }
 
-export function sampleForMandal(mandal: MandalFusionSeed) {
+export function sampleForMandal(mandal: MandalGroundwaterView) {
   return satelliteSamples.find(
     (sample) =>
       sample.mandal_name.toLowerCase() === mandal.mandal_name.toLowerCase() &&
@@ -308,7 +530,7 @@ export type DistrictRollup = {
   avg_water_balance_mm: number | null;
   deficit_count: number;
   worst_bucket: string;
-  mandals: MandalFusionSeed[];
+  mandals: MandalGroundwaterView[];
 };
 
 function meanOf(nums: (number | null | undefined)[], digits = 2): number | null {
@@ -434,8 +656,8 @@ function simRatio(a: string, b: string): number {
 }
 
 // Prebuilt indices (first wins): normalized name and space-squashed name.
-const _mandalByNorm: Record<string, MandalFusionSeed> = {};
-const _mandalBySquash: Record<string, MandalFusionSeed> = {};
+const _mandalByNorm: Record<string, MandalGroundwaterView> = {};
+const _mandalBySquash: Record<string, MandalGroundwaterView> = {};
 const _squashKeys: string[] = [];
 for (const m of mandals) {
   const k = normName(m.mandal_name);
@@ -448,7 +670,7 @@ for (const m of mandals) {
 }
 
 // Memoize geometry->record matches; mandalByMapKey runs per-polygon per-render.
-const _mapKeyCache = new Map<string, MandalFusionSeed | undefined>();
+const _mapKeyCache = new Map<string, MandalGroundwaterView | undefined>();
 
 /** Join a map-geometry mandal (UPPERCASE d/m) to its dataset record, tolerant of
  *  spelling differences: exact (district+mandal) → normalized name → space-squashed
@@ -467,7 +689,7 @@ export function mandalByMapKey(district: string, mandal: string) {
 
   if (!rec) {
     const target = squashName(mandal);
-    let best: MandalFusionSeed | undefined;
+    let best: MandalGroundwaterView | undefined;
     let bestScore = 0;
     for (const key of _squashKeys) {
       if (Math.abs(key.length - target.length) > 2) continue;

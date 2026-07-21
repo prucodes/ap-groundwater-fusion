@@ -1,3 +1,7 @@
+// Rendered on-demand: this page builds district maps from the large geometry
+// datasets; on-demand SSR keeps it out of the build-time static generation pass.
+export const dynamic = "force-dynamic";
+
 import { HeaderHero } from "../../components/HeaderHero";
 import { DistrictMap } from "../../components/DistrictMap";
 import {
@@ -22,7 +26,7 @@ import {
 
 export default function IrrigationPage() {
   const advisories = districtAdvisories();
-  const counts: Record<IrrigationAction, number> = { Draw: 0, Hold: 0, Conserve: 0 };
+  const counts: Record<IrrigationAction, number> = { Monitor: 0, Review: 0, "Field verify": 0 };
   advisories.forEach((a) => { counts[a.action]++; });
   const verifyCount = advisories.filter((a) => a.verifyFirst).length;
   const payload = awarePayload().slice(0, 3);
@@ -31,11 +35,11 @@ export default function IrrigationPage() {
   return (
     <div className="pageWrap">
       <HeaderHero
-        title="Irrigation Advisory & AWARE Bridge"
+        title="Groundwater Monitoring & AWARE Preview"
         subtitle={
           <>
-            The end goal: turn the fused signals into a clear <strong>draw / hold / conserve</strong> call per district —
-            and the bridge that pushes those calls into <strong>AWARE</strong> for state irrigation planning.
+            Prototype district monitoring categories and an unreleased <strong>AWARE</strong> payload preview. No category
+            authorizes pumping, restrictions or field orders.
           </>
         }
         showChips={false}
@@ -47,13 +51,13 @@ export default function IrrigationPage() {
         <span className="srcLabel">Derived from</span>
         <span className="srcChip"><span className="srcDot" style={{ background: "#12b5cb" }} /> NASA GRACE-DA · storage %ile</span>
         <span className="srcChip"><span className="srcDot" style={{ background: "#5e9b6b" }} /> TerraClimate · water balance</span>
-        <span className="srcChip"><span className="srcDot" style={{ background: "#d79b2e" }} /> APWRIMS · sensors</span>
+        <span className="srcChip"><span className="srcDot" style={{ background: "#d79b2e" }} /> APWRIMS-format observations</span>
         <span className="srcChip muted">Rule-based triage · prototype</span>
       </div>
 
       {/* Action summary */}
       <div className="actionSummary">
-        {(["Draw", "Hold", "Conserve"] as IrrigationAction[]).map((k) => (
+        {(["Monitor", "Review", "Field verify"] as IrrigationAction[]).map((k) => (
           <div key={k} className="actionCard" style={{ ["--ac" as string]: ACTION_META[k].color }}>
             <div className="actionCardTop">
               <span className="actionDot" />
@@ -65,15 +69,15 @@ export default function IrrigationPage() {
         ))}
       </div>
 
-      {/* Advisory map — WHERE to draw vs conserve */}
+      {/* Monitoring map */}
       <section className="card mapCard">
         <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconMap /></span>Where to act — district advisory map</div>
-          <span className="cardSub">draw / hold / conserve by district</span>
+          <div className="cardTitle"><span className="titleIcon"><IconMap /></span>District monitoring map</div>
+          <span className="cardSub">monitor / review / field verify</span>
         </div>
         <DistrictMap layer="water_balance_mm" height={430} colorOverride={advisoryColors} />
         <div className="mixLegend" style={{ marginTop: 12 }}>
-          {(["Draw", "Hold", "Conserve"] as IrrigationAction[]).map((k) => (
+          {(["Monitor", "Review", "Field verify"] as IrrigationAction[]).map((k) => (
             <span key={k} className="mixKey">
               <span className="mixDot" style={{ background: ACTION_META[k].color }} />
               {ACTION_META[k].label} · <b>{counts[k]}</b>
@@ -83,8 +87,8 @@ export default function IrrigationPage() {
         <div className="fusionNote" style={{ marginTop: 12 }}>
           <IconInfo />
           <span>
-            Rayalaseema (south-west) carries the conserve calls; the coastal deltas can draw. Pair this with the El Niño
-            preset in <strong>Scenario Planner</strong> to see how a weak monsoon shifts the map toward conserve.
+            Categories reflect available groundwater depth and measured trend. Climate and GRACE-DA signals remain
+            contextual and do not determine an operational groundwater action.
           </span>
         </div>
       </section>
@@ -92,7 +96,7 @@ export default function IrrigationPage() {
       {/* Advisory table */}
       <section className="card">
         <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconLeaf /></span>District irrigation advisory</div>
+          <div className="cardTitle"><span className="titleIcon"><IconLeaf /></span>District monitoring categories</div>
           <span className="cardSub">{verifyCount > 0 ? `${verifyCount} flagged for field-verify first` : "ranked: conserve → draw"}</span>
         </div>
         <div className="tableWrap">
@@ -116,7 +120,7 @@ export default function IrrigationPage() {
                     </td>
                     <td>
                       <span className={`basisTag ${a.hasSensor ? "full" : "satonly"}`}>
-                        {a.hasSensor ? "sat + sensor" : "sat-only"}
+                        {a.hasSensor ? "groundwater history + context" : "context only"}
                       </span>
                     </td>
                     <td className="cellPct">{a.gw ?? "—"}</td>
@@ -133,11 +137,10 @@ export default function IrrigationPage() {
         <div className="fusionNote" style={{ marginTop: 14 }}>
           <IconInfo />
           <span>
-            Rule-based advisory from water balance + GRACE storage stress. <strong>Draw</strong> where recharge is healthy,
-            <strong> conserve</strong> where the budget is in deficit. <strong>Basis</strong> shows whether a ground sensor
-            backs the call: <em>sat-only</em> districts still get an advisory from satellite + climate data, but at lower
-            confidence — prioritise them for field verification. A planning aid over prototype data — confirm against
-            official APWRIMS data before field orders.
+            Prototype monitoring classification based on available groundwater depth and measured trend. GRACE-DA and
+            climate balance are supporting context only and cannot generate a pumping recommendation. Context-only areas
+            are marked for field verification. This unreleased preview requires the official AWARE schema and official
+            APWRIMS/field verification before operational use.
           </span>
         </div>
       </section>
@@ -146,17 +149,17 @@ export default function IrrigationPage() {
       <section className="card">
         <div className="cardHead">
           <div className="cardTitle"><span className="titleIcon"><IconDatabase /></span>AWARE Bridge</div>
-          <span className="awareStatus pending"><span className="awareStatusDot" /> Export ready · awaiting RTGS endpoint</span>
+          <span className="awareStatus pending"><span className="awareStatusDot" /> Unreleased preview · official schema required</span>
         </div>
 
         <div className="awareSteps">
           <div className="awareStep done"><IconCheck /> Signals fused</div>
           <IconArrowRight />
-          <div className="awareStep done"><IconCheck /> Advisory generated</div>
+          <div className="awareStep done"><IconCheck /> Monitoring category generated</div>
           <IconArrowRight />
-          <div className="awareStep done"><IconCheck /> Payload shaped</div>
+          <div className="awareStep pending"><IconShield /> Draft payload only</div>
           <IconArrowRight />
-          <div className="awareStep pending"><IconShield /> Push to AWARE</div>
+          <div className="awareStep pending"><IconShield /> Not released to AWARE</div>
         </div>
 
         <div className="awareGrid">

@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
-import { mandals, districtRollups, titleCase } from "../../../lib/data";
-import type { MandalFusionSeed } from "../../../lib/types";
+import { datasetManifest, mandals, districtRollups, modelCard, titleCase } from "../../../lib/data";
+import type { MandalGroundwaterView } from "../../../lib/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -14,18 +14,25 @@ function statewideContext(): string {
   const byBucket: Record<string, number> = {};
   for (const m of mandals) byBucket[m.status_bucket] = (byBucket[m.status_bucket] ?? 0) + 1;
   const stress = mandals.filter((m) => m.status_bucket === "Stress").sort((a, b) => (b.estimate_mbgl ?? 0) - (a.estimate_mbgl ?? 0));
-  const over = mandals.filter((m) => m.sensor_satellite_agreement === "over_extraction").sort((a, b) => (b.trend_m_per_yr ?? 0) - (a.trend_m_per_yr ?? 0));
-  const drought = mandals.filter((m) => m.sensor_satellite_agreement === "drought_decline").length;
+  const over = mandals.filter((m) => m.sensor_satellite_agreement === "declining_despite_positive_climate_balance").sort((a, b) => (b.trend_m_per_yr ?? 0) - (a.trend_m_per_yr ?? 0));
+  const drought = mandals.filter((m) => m.sensor_satellite_agreement === "declining_without_positive_climate_balance").length;
   const deepestD = [...rollups].sort((a, b) => (b.avg_estimate_mbgl ?? 0) - (a.avg_estimate_mbgl ?? 0)).slice(0, 5);
+  const temporal = modelCard.evaluations.temporalNowcast;
+  const spatial = modelCard.evaluations.spatialEstimation;
+  const cross = modelCard.evaluations.crossNetworkComparison;
   return [
-    `STATEWIDE — Andhra Pradesh groundwater (modelled estimate β, calibrated to APWRIMS, as of May 2026):`,
-    `Mandals with estimates: ${mandals.length} across ${rollups.length} districts.`,
+    `STATEWIDE — Andhra Pradesh groundwater prototype:`,
+    `Modelled nowcasts: ${datasetManifest.counts.modelledRecordCount}; measured-only: ${datasetManifest.counts.measuredOnlyCount}; boundary-only: ${datasetManifest.counts.boundaryOnlyCount}; districts: ${datasetManifest.counts.districtCount}.`,
+    `Latest observation period: ${datasetManifest.periods.latestObservationPeriod ?? "not supplied"}. Model target period: ${datasetManifest.periods.modelTargetPeriodRange.end ?? "not supplied"}.`,
     `Status counts: ${Object.entries(byBucket).map(([k, v]) => `${k} ${v}`).join(", ")}.`,
-    `Pumping-pressure hypotheses to verify (falling despite a healthy water balance): ${over.length}. Climate-stress (drought-consistent) declines: ${drought}.`,
+    `Declines despite positive climate balance (context mismatch to verify): ${over.length}. Declines without positive climate balance: ${drought}. Climate balance is not direct measured recharge.`,
     `Deepest districts (avg level, m below ground): ${deepestD.map((d) => `${titleCase(d.district_name)} ${f(d.avg_estimate_mbgl)}`).join("; ")}.`,
     `Most-stressed mandals (level m, YoY m/yr +=deepening): ${stress.slice(0, 8).map((m) => `${titleCase(m.mandal_name)}/${titleCase(m.district_name)} ${f(m.estimate_mbgl)}m ${f(m.trend_m_per_yr)}`).join("; ")}.`,
-    `Pumping-pressure hypotheses (verify): ${over.slice(0, 6).map((m) => `${titleCase(m.mandal_name)}/${titleCase(m.district_name)} ${f(m.estimate_mbgl)}m falling ${f(m.trend_m_per_yr)}/yr`).join("; ")}.`,
-    `Validation: forecast MAE ~1.3 m (R² 0.90); independent CGWB/June-2026 district snapshot MAE 0.82 m (r 0.98). Absolute truth has ~3-6 m irreducible cross-network uncertainty.`,
+    `Context mismatches (verify): ${over.slice(0, 6).map((m) => `${titleCase(m.mandal_name)}/${titleCase(m.district_name)} ${f(m.estimate_mbgl)}m deepening ${f(m.trend_m_per_yr)}/yr`).join("; ")}.`,
+    `Rolling temporal holdout (${temporal.eligibleCohort}, ${temporal.evaluationPeriod.start}–${temporal.evaluationPeriod.end}, n=${temporal.sampleCount}): MAE ${f(temporal.model.maeM)} m, R² ${f(temporal.model.r2)}.`,
+    `Whole-mandal spatial holdout (${spatial.validation}, ${spatial.mandalCount} mandals): MAE ${f(spatial.reportedMetric.maeM)} m.`,
+    `Same-month CGWB/APWRIMS cross-network comparison (n=${cross.sampleCount}): MAE ${f(cross.maeM)} m, correlation ${f(cross.correlation)}. This is network comparability, not model accuracy.`,
+    `Forecast release: ${modelCard.forecastRelease.status}; released horizons: none.`,
   ].join("\n");
 }
 
@@ -41,7 +48,7 @@ function districtContext(name: string): string | null {
 }
 
 /* ---- deterministic answerer (used when no API key, or as graceful fallback) ---- */
-function findMandal(q: string): MandalFusionSeed | undefined {
+function findMandal(q: string): MandalGroundwaterView | undefined {
   const ql = q.toLowerCase();
   return mandals.find((m) => ql.includes(m.mandal_name.toLowerCase()) && m.mandal_name.length > 3);
 }
@@ -50,11 +57,11 @@ function deterministicAnswer(question: string, district: string): string {
   if (q) {
     const m = findMandal(q);
     if (m) {
-      return `${titleCase(m.mandal_name)} (${titleCase(m.district_name)}): estimated groundwater level ${f(m.estimate_mbgl)} m below ground (band ${f(m.estimate_band_p10)}–${f(m.estimate_band_p90)} m), year-on-year ${(m.trend_m_per_yr ?? 0) > 0 ? "deepening" : "recovering"} ${f(Math.abs(m.trend_m_per_yr ?? 0))} m/yr. Status: ${m.status}. Based on ${m.sensor_count} months of APWRIMS readings. Modelled estimate (β), not an official result.`;
+      return `${titleCase(m.mandal_name)} (${titleCase(m.district_name)}): latest measured mandal aggregate ${f(m.display_mbgl)} m below ground for ${m.latest_observation_period || "an unspecified period"}; modelled nowcast ${f(m.estimate_mbgl)} m with model P10–P90 ${f(m.estimate_band_p10)}–${f(m.estimate_band_p90)} m. Year-on-year measured trend ${(m.trend_m_per_yr ?? 0) > 0 ? "deepening" : "recovering"} ${f(Math.abs(m.trend_m_per_yr ?? 0))} m/yr. Coverage: ${m.coverage_status}; ${m.observation_month_count} observation months. No forecast horizon is released. Prototype, not an official result.`;
     }
     if (/(over.?extract|pumping|despite)/.test(q)) {
-      const over = mandals.filter((x) => x.sensor_satellite_agreement === "over_extraction").sort((a, b) => (b.trend_m_per_yr ?? 0) - (a.trend_m_per_yr ?? 0)).slice(0, 6);
-      return `Top pumping-pressure hypotheses to verify (water table falling despite a healthy water balance — consistent with, but not proof of, extraction outpacing recharge):\n` + over.map((m) => `• ${titleCase(m.mandal_name)} (${titleCase(m.district_name)}) — ${f(m.estimate_mbgl)} m, falling ${f(m.trend_m_per_yr)} m/yr`).join("\n");
+      const over = mandals.filter((x) => x.sensor_satellite_agreement === "declining_despite_positive_climate_balance").sort((a, b) => (b.trend_m_per_yr ?? 0) - (a.trend_m_per_yr ?? 0)).slice(0, 6);
+      return `Largest declines despite a positive climatic water balance (context mismatches to field-verify; no causal attribution):\n` + over.map((m) => `• ${titleCase(m.mandal_name)} (${titleCase(m.district_name)}) — nowcast ${f(m.estimate_mbgl)} m, measured trend ${f(m.trend_m_per_yr)} m/yr deepening`).join("\n");
     }
     if (/(stress|worst|deep|critical|priority)/.test(q)) {
       const s = mandals.filter((x) => x.status_bucket === "Stress").sort((a, b) => (b.estimate_mbgl ?? 0) - (a.estimate_mbgl ?? 0)).slice(0, 6);
@@ -69,12 +76,17 @@ function deterministicAnswer(question: string, district: string): string {
 }
 
 const SYSTEM = `You are a groundwater intelligence analyst for Andhra Pradesh irrigation/governance officials.
-You are given an auditable CONTEXT of pre-computed values from a model that estimates mandal groundwater LEVEL in metres below ground (mbgl) by fusing the APWRIMS sensor network with NASA satellite rainfall.
+You are given an auditable CONTEXT of measured APWRIMS-format mandal aggregates, modelled temporal nowcasts, and separate regional/climate signals.
 Rules:
 - Use ONLY numbers present in the CONTEXT. Never invent or extrapolate a figure not given.
-- Estimates are modelled (β), calibrated to APWRIMS, NOT official APWRIMS results. Say so if asked for certainty.
-- "Pumping-pressure (verify)" = water table falling despite a healthy climatic water balance — a hypothesis consistent with extraction outpacing recharge, to be field-verified, not a proven cause. "Climate-stress" = falling alongside a rainfall deficit. Always frame these as hypotheses, not attributions.
-- Be concise, concrete and action-oriented for irrigation planning. Plain text, no markdown headers, max ~2 short paragraphs or a short list.`;
+- Keep measured values, modelled nowcasts, unreleased forecasts and regional signals distinct.
+- Temporal-nowcast error applies only to the stated lag-eligible holdout cohort. Never generalize it to sensorless mandals.
+- GRACE-DA is regional model-assimilated context, not direct mandal groundwater depth.
+- Rainfall minus actual ET is climate context, not direct measured recharge.
+- Context agreement categories are patterns to investigate, never causal attributions.
+- No forecast horizon is released. Do not invent a future value.
+- Do not recommend permits, pumping restrictions or field orders. Suggest monitoring, history review or field verification.
+- Be concise and plain-language. Plain text, no markdown headers, max ~2 short paragraphs or a short list.`;
 
 // Lightweight in-memory rate limiter — guards the (paid) LLM call from cost abuse.
 const RL = new Map<string, { n: number; t: number }>();
@@ -121,7 +133,7 @@ export async function POST(req: NextRequest) {
     const client = new Anthropic();
     const userContent = question
       ? `CONTEXT:\n${context}\n\nQUESTION: ${question}`
-      : `CONTEXT:\n${context}\n\nWrite a short situation brief${district ? ` for ${titleCase(district)}` : " for Andhra Pradesh"} and one irrigation-planning recommendation.`;
+      : `CONTEXT:\n${context}\n\nWrite a short monitoring brief${district ? ` for ${titleCase(district)}` : " for Andhra Pradesh"} and identify any field-verification need.`;
     const response = await client.messages.create({
       model: "claude-opus-4-8",
       max_tokens: 1024,

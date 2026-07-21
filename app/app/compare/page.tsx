@@ -9,9 +9,9 @@ import { WetnessTag } from "../../components/Signals";
 import { LiveMap } from "../../components/LiveMap";
 import { IconArrowRight, IconColumns } from "../../components/icons";
 import { balanceMeta, formatNumber, mandals, titleCase, wetnessLabel } from "../../lib/data";
-import type { MandalFusionSeed } from "../../lib/types";
+import type { MandalGroundwaterView } from "../../lib/types";
 
-function BalanceCell({ m }: { m: MandalFusionSeed }) {
+function BalanceCell({ m }: { m: MandalGroundwaterView }) {
   if (m.water_balance_mm === null || m.water_balance_mm === undefined) return <>—</>;
   const meta = balanceMeta(m.water_balance_status);
   return (
@@ -54,7 +54,7 @@ function Row({ label, a, b, highlight }: { label: string; a: React.ReactNode; b:
   );
 }
 
-function MandalColHead({ m }: { m: MandalFusionSeed }) {
+function MandalColHead({ m }: { m: MandalGroundwaterView }) {
   return (
     <div className="compareHead">
       <h3>{titleCase(m.mandal_name)}</h3>
@@ -76,7 +76,7 @@ export default function ComparePage() {
   const a = mandals.find((m) => m.id === aId) ?? mandals[0];
   const b = mandals.find((m) => m.id === bId) ?? mandals[1];
 
-  const rings = (m: MandalFusionSeed, key: "groundwater_percentile" | "rootzone_percentile" | "surface_percentile", color: string) => (
+  const rings = (m: MandalGroundwaterView, key: "groundwater_percentile" | "rootzone_percentile" | "surface_percentile", color: string) => (
     <PercentileRing value={m[key]} color={color} size={64}>
       <span className="v" style={{ fontSize: 15 }}>{formatNumber(m[key])}</span>
     </PercentileRing>
@@ -105,7 +105,7 @@ export default function ComparePage() {
 
         <div className="compareTable">
           <Row label="Median groundwater (APWRIMS)" a={<><b>{formatNumber(a.median_groundwater_mbgl)}</b> mbgl</>} b={<><b>{formatNumber(b.median_groundwater_mbgl)}</b> mbgl</>} highlight />
-          <Row label="Sensor / station count" a={a.sensor_count} b={b.sensor_count} />
+          <Row label="Observation months" a={a.observation_month_count} b={b.observation_month_count} />
           <Row label="NASA groundwater pctl" a={rings(a, "groundwater_percentile", "#12b5cb")} b={rings(b, "groundwater_percentile", "#12b5cb")} highlight />
           <Row label="Root-zone moisture pctl" a={rings(a, "rootzone_percentile", "#5e9b6b")} b={rings(b, "rootzone_percentile", "#5e9b6b")} />
           <Row label="Surface moisture pctl" a={rings(a, "surface_percentile", "#3f86d6")} b={rings(b, "surface_percentile", "#3f86d6")} />
@@ -123,7 +123,7 @@ export default function ComparePage() {
           />
           <Row label="Sensor–satellite agreement" a={<AgreementTag value={a.sensor_satellite_agreement} />} b={<AgreementTag value={b.sensor_satellite_agreement} />} highlight />
           <Row label="Confidence" a={<ConfidenceBadge label={a.confidence_label} />} b={<ConfidenceBadge label={b.confidence_label} />} />
-          <Row label="Latest reading" a={a.latest_sensor_date || "—"} b={b.latest_sensor_date || "—"} />
+          <Row label="Observation period" a={a.latest_observation_period || "—"} b={b.latest_observation_period || "—"} />
           <Row
             label="Recommended action"
             a={<span style={{ fontSize: 12, color: "var(--muted)" }}>{a.recommended_action.split(".")[0]}.</span>}

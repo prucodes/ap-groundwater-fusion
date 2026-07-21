@@ -11,7 +11,7 @@ Temporal hold-out (train < 2024, predict 2024->2026). Each horizon is compared t
   * seasonal    : predict the same calendar month a year earlier
 so we only claim credit for what the model adds over the obvious baselines.
 """
-import json, math, os, re, difflib
+import argparse, datetime, json, math, os, re, difflib
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
@@ -102,11 +102,9 @@ def est():
         max_iter=600, learning_rate=0.05, max_depth=8, l2_regularization=1.0, random_state=0))])
 
 
-def main():
+def evaluate():
     df = base_frame()
-    print(f"  base rows {len(df):,}  mandals {df.mkey.nunique()}\n")
-    print(f"  {'horizon':>8} | {'model MAE':>9} {'RMSE':>6} {'R2':>5} | {'no-change':>9} {'seasonal':>9}")
-    print("  " + "-"*60)
+    rows = []
     for h in [1, 3, 6, 12]:
         d = make_horizon(df, h)
         cutoff = pd.Timestamp("2024-01-01")
@@ -119,8 +117,58 @@ def main():
         rm, ma, r2 = metrics(yt, pf)
         nc = metrics(yt, d[te].cur.values)       # no-change
         se = metrics(yt, d[te].seasonal_base.values)  # seasonal
-        print(f"  {h:>6}mo | {ma:>9.2f} {rm:>6.2f} {r2:>5.2f} | {nc[1]:>9.2f} {se[1]:>9.2f}")
+        threshold = 0.95
+        beats = ma <= nc[1] * threshold and ma <= se[1] * threshold
+        rows.append({
+            "horizonMonths": h,
+            "task": "direct_forecast",
+            "trainingOriginPeriod": {"start": str(d[tr].date.min()), "end": str(d[tr].date.max())},
+            "evaluationOriginPeriod": {"start": str(d[te].date.min()), "end": str(d[te].date.max())},
+            "sampleCount": int(te.sum()),
+            "model": {"maeM": round(float(ma), 4), "rmseM": round(float(rm), 4), "r2": round(float(r2), 4)},
+            "baselines": {
+                "noChange": {"maeM": round(float(nc[1]), 4)},
+                "seasonal": {"maeM": round(float(se[1]), 4)},
+            },
+            "beatsBothBaselinesByFivePct": bool(beats),
+            "rollingOriginValidated": False,
+            "releaseStatus": "research_only",
+        })
+    return {
+        "task": "direct_multi_horizon_forecast",
+        "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
+        "featureTiming": "features available at forecast origin; no future rainfall",
+        "releaseGate": {
+            "requiredImprovementPct": 5,
+            "requiresRollingOriginValidation": True,
+            "requiresNoTargetLeakage": True,
+            "requiresReconciledTerrainCohorts": True,
+        },
+        "releasedHorizons": [],
+        "horizons": rows,
+    }
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--json-out")
+    args = parser.parse_args()
+    result = evaluate()
+    print(f"  {'horizon':>8} | {'model MAE':>9} {'RMSE':>6} {'R2':>5} | {'no-change':>9} {'seasonal':>9}")
+    print("  " + "-"*60)
+    for row in result["horizons"]:
+        model = row["model"]; base = row["baselines"]
+        print(
+            f"  {row['horizonMonths']:>6}mo | {model['maeM']:>9.2f} {model['rmseM']:>6.2f} "
+            f"{model['r2']:>5.2f} | {base['noChange']['maeM']:>9.2f} "
+            f"{base['seasonal']['maeM']:>9.2f}"
+        )
     print("\n  (model MAE in metres; lower is better. 'no-change'/'seasonal' are the naive baselines.)")
+    print("  Release: research only; rolling-origin release gate has not been completed.")
+    if args.json_out:
+        with open(args.json_out, "w") as handle:
+            json.dump(result, handle, indent=2)
+            handle.write("\n")
 
 
 if __name__ == "__main__":

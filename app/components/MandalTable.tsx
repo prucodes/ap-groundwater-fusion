@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { MandalFusionSeed } from "../lib/types";
+import type { MandalGroundwaterView } from "../lib/types";
 import { formatNumber, titleCase } from "../lib/data";
 import { AgreementTag, ConfidenceBadge } from "./Badges";
 
 const MAX_DEPTH = 25; // mbgl scale ceiling for the depth gauge
 
-function trendLabel(m: MandalFusionSeed) {
+function trendLabel(m: MandalGroundwaterView) {
   const t = m.trend_m_per_yr ?? 0;
   if (t > 0.1) return { txt: `↓ ${t.toFixed(1)} m/yr`, color: "var(--rust)" };
   if (t < -0.1) return { txt: `↑ ${Math.abs(t).toFixed(1)} m/yr`, color: "var(--green)" };
@@ -20,7 +20,7 @@ export function MandalTable({
   selectedId,
   onSelect,
 }: {
-  rows: MandalFusionSeed[];
+  rows: MandalGroundwaterView[];
   limit?: number;
   selectedId?: string;
   onSelect?: (id: string) => void;
@@ -28,7 +28,7 @@ export function MandalTable({
   const router = useRouter();
   const data = limit ? rows.slice(0, limit) : rows;
 
-  function activate(m: MandalFusionSeed) {
+  function activate(m: MandalGroundwaterView) {
     if (onSelect) onSelect(m.id);
     else router.push(`/mandals/${m.id}`);
   }

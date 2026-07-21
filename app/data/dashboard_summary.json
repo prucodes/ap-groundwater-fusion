@@ -2,29 +2,29 @@
  "summary": {
   "prototype_notice": "Prototype using real APWRIMS mandal groundwater readings (2014-2026) calibrated with NASA satellite signals. Estimates are modelled with confidence bands and are not official APWRIMS results.",
   "mandals_analyzed": 639,
-  "mandals_needing_verification": 2,
-  "avg_groundwater_percentile": 97.52,
-  "avg_rootzone_percentile": 87.96,
-  "avg_surface_percentile": 88.56,
+  "mandals_needing_verification": 0,
+  "avg_groundwater_percentile": 97.55,
+  "avg_rootzone_percentile": 88.03,
+  "avg_surface_percentile": 88.59,
   "avg_rainfall_mm": 5.03,
   "rainfall_period": "2026.04",
   "avg_water_balance_mm": 273.8,
   "balance_year": "2025",
   "deficit_mandals": 116,
   "overall_data_confidence": "Validated prototype (\u03b2)",
-  "sample_fetch_date": "2026-06-18",
+  "sample_fetch_date": "2026-07-15",
   "status_distribution": {
-   "Normal": 238,
-   "Watch": 243,
-   "Stress": 124,
-   "Verify": 2,
+   "Normal": 222,
+   "Watch": 242,
+   "Stress": 143,
+   "Verify": 0,
    "Low Confidence": 32
   },
   "confidence_distribution": {
-   "Verify": 2,
-   "Low": 23,
-   "Medium": 150,
-   "High": 464
+   "Verify": 0,
+   "Low": 25,
+   "Medium": 146,
+   "High": 468
   },
   "source_labels": {
    "measured_input_label": "APWRIMS (AP-GWD) mandal series 2014-2026",

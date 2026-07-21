@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Living Water Table · Andhra Pradesh — Crystal 3D</title>
+<style>
+  :root{
+    --ink:#eaf6ff; --ink-2:#9db8cc; --ink-3:#5f7890;
+    --line:rgba(159,234,255,.14);
+    --panel:rgba(3,15,26,.62);
+    --cyan:#7fe4ff; --safe:#2fd6ae; --semi:#f5c84c; --crit:#ff7f3f; --over:#ff3860; --nodata:#55677c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    background:#010a14; color:var(--ink); overflow:hidden;
+    font:400 14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  canvas#gl{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:grab}
+  canvas#gl.dragging{cursor:grabbing}
+  canvas#gl.picking{cursor:pointer}
+
+  .hud{position:fixed;z-index:5;pointer-events:none}
+  .hud > *{pointer-events:auto}
+
+  /* ---------- title block ---------- */
+  #titleBlock{top:34px;left:38px;max-width:520px}
+  .eyebrow{
+    font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);
+    opacity:.85;margin-bottom:10px;display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--cyan),transparent)}
+  #titleBlock h1{
+    font-size:clamp(26px,3.4vw,40px);font-weight:250;letter-spacing:-.015em;line-height:1.06;
+    text-shadow:0 0 34px rgba(127,228,255,.28);
+  }
+  #titleBlock h1 b{font-weight:550}
+  .sub{margin-top:10px;color:var(--ink-2);font-size:13px;letter-spacing:.01em}
+  .caveat{margin-top:6px;color:var(--ink-3);font-size:11px}
+  .caveat a{color:var(--ink-3)}
+
+  /* ---------- glass panel base ---------- */
+  .glass{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    backdrop-filter:blur(16px) saturate(1.15);-webkit-backdrop-filter:blur(16px) saturate(1.15);
+    box-shadow:0 18px 50px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.045);
+  }
+
+  /* ---------- right rail: mode + year ---------- */
+  #rail{top:34px;right:38px;display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+  .seg{display:flex;padding:4px;gap:4px}
+  .seg button{
+    appearance:none;border:0;background:transparent;color:var(--ink-2);border-radius:9px;
+    font:inherit;font-size:12px;letter-spacing:.02em;padding:7px 14px;cursor:pointer;
+    transition:background .25s,color .25s;
+  }
+  .seg button[aria-pressed="true"]{background:rgba(127,228,255,.13);color:var(--ink)}
+  .seg button:hover{color:var(--ink)}
+  #yearCard{padding:16px 20px 15px;text-align:right;min-width:196px}
+  #yearBig{font-size:54px;font-weight:200;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;
+    text-shadow:0 0 26px rgba(127,228,255,.22)}
+  #yearTag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);height:14px;margin-top:2px}
+  #statLine{margin-top:10px;padding-top:10px;border-top:1px solid var(--line);font-size:12px;color:var(--ink-2)}
+  #statLine strong{color:var(--ink);font-weight:550;font-variant-numeric:tabular-nums}
+
+  /* ---------- legend ---------- */
+  #legend{left:38px;bottom:96px;padding:14px 16px;max-width:250px}
+  .lgTitle{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-2);margin-bottom:10px}
+  #lgRamp{height:8px;border-radius:4px;background:linear-gradient(90deg,#eafcff,#7ae6f2,#38b6ea,#1f86e8,#2b52c4,#6b5a48)}
+  .lgRow{display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink-3);margin-top:5px}
+  .lgNote{font-size:11px;color:var(--ink-3);margin-top:9px;line-height:1.5}
+  .lgNote em{color:var(--ink-2);font-style:normal}
+  .cats{display:none;flex-direction:column;gap:7px}
+  .cat{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--ink-2)}
+  .dot{width:9px;height:9px;border-radius:3px;flex:none;box-shadow:0 0 10px currentColor}
+  #legend[data-mode="stress"] #lgRamp,#legend[data-mode="stress"] .lgRow{display:none}
+  #legend[data-mode="stress"] .cats{display:flex}
+
+  /* ---------- timeline ---------- */
+  #timeline{left:50%;bottom:30px;transform:translateX(-50%);display:flex;align-items:center;gap:14px;
+    padding:12px 18px 14px;width:min(620px,72vw)}
+  #play{
+    width:34px;height:34px;flex:none;border-radius:50%;border:1px solid var(--line);cursor:pointer;
+    background:rgba(127,228,255,.1);color:var(--ink);display:grid;place-items:center;transition:background .2s;
+  }
+  #play:hover{background:rgba(127,228,255,.2)}
+  #play svg{width:12px;height:12px;fill:currentColor}
+  .track{flex:1;position:relative;height:34px}
+  .ticks{position:absolute;inset:auto 0 2px 0;display:flex;justify-content:space-between}
+  .ticks span{font-size:9.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;transform:translateX(-2px)}
+  .ticks span.fc{color:#c9a94e}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;position:absolute;top:2px;height:18px;background:transparent;cursor:pointer;
+  }
+  input[type=range]::-webkit-slider-runnable-track{height:3px;border-radius:2px;
+    background:linear-gradient(90deg,var(--cyan) var(--fill,0%),rgba(159,234,255,.16) var(--fill,0%))}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;
+    background:#dff6ff;margin-top:-6px;box-shadow:0 0 12px rgba(127,228,255,.8);border:0}
+  input[type=range]::-moz-range-track{height:3px;border-radius:2px;background:rgba(159,234,255,.16)}
+  input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:#dff6ff;border:0}
+
+  /* ---------- hints ---------- */
+  #hints{right:38px;bottom:34px;display:flex;gap:8px;transition:opacity 1.2s}
+  .chip{font-size:10.5px;letter-spacing:.06em;color:var(--ink-3);border:1px solid var(--line);
+    padding:5px 11px;border-radius:999px;background:rgba(3,15,26,.4)}
+
+  /* ---------- tooltip ---------- */
+  #tip{position:fixed;z-index:9;min-width:212px;max-width:260px;padding:13px 15px;display:none;pointer-events:none}
+  #tip.pinned{pointer-events:auto}
+  #tip.compact{min-width:150px;max-width:190px}
+  #tip.compact #tipSpark,#tip.compact #tipYears,#tip.compact #tipDelta{display:none}
+  #tipName{font-size:15px;font-weight:550;letter-spacing:-.01em}
+  #tipDist{font-size:11px;color:var(--ink-2);margin-top:2px}
+  #tipCat{display:inline-block;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;padding:2px 8px;
+    border-radius:999px;margin-top:8px;border:1px solid currentColor}
+  #tipVal{margin-top:9px;font-size:13px;color:var(--ink)}
+  #tipVal b{font-size:17px;font-weight:550;font-variant-numeric:tabular-nums}
+  #tipDelta{font-size:11px;margin-top:2px;color:var(--ink-2)}
+  #tipDelta .up{color:var(--over)} #tipDelta .down{color:var(--safe)}
+  #tipSpark{margin-top:10px}
+  #tipYears{font-size:9.5px;color:var(--ink-3);margin-top:3px;display:flex;justify-content:space-between}
+
+  /* ---------- fallback ---------- */
+  #fallback{position:fixed;inset:0;display:none;place-items:center;z-index:20;background:#010a14}
+  #fallback .glass{padding:34px 40px;max-width:430px;text-align:center}
+  #fallback a{color:var(--cyan)}
+
+  #dLabels span{position:fixed;left:0;top:0;z-index:4;pointer-events:none;white-space:nowrap;
+    font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#e8f8ff;opacity:.9;
+    text-shadow:0 1px 8px rgba(0,8,18,.95),0 0 18px rgba(60,140,180,.5)}
+  #vig{position:fixed;inset:0;pointer-events:none;z-index:2;
+    background:radial-gradient(120% 90% at 50% 42%,transparent 55%,rgba(0,3,7,.55) 100%)}
+
+  #kpis{left:38px;top:172px;display:flex;gap:10px}
+  .kpi{padding:10px 14px 9px;min-width:118px}
+  .kpi span{display:block;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+  .kpi strong{display:block;font-size:17px;font-weight:550;margin-top:3px;font-variant-numeric:tabular-nums}
+  .kpi small{display:block;font-size:10px;color:var(--ink-3);margin-top:2px}
+  .kpi small.good{color:var(--safe)} .kpi small.bad{color:var(--over)}
+  #dLabels span{position:fixed;left:0;top:0;z-index:4;pointer-events:none;white-space:nowrap;
+    font-size:10px;letter-spacing:.03em;color:#eaf8ff;text-transform:none;
+    background:rgba(2,10,18,.68);padding:3px 9px;border-radius:999px;
+    border:1px solid rgba(159,234,255,.14);box-shadow:0 2px 10px rgba(0,0,0,.4)}
+  #camStack{left:38px;top:44%;display:flex;flex-direction:column;gap:8px}
+  #camStack button,#compass{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);
+    background:rgba(3,15,26,.55);color:var(--ink-2);display:grid;place-items:center;cursor:pointer;
+    font-size:15px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  #camStack button:hover{color:var(--ink);background:rgba(127,228,255,.14)}
+  #compass{position:fixed;left:38px;top:calc(44% - 50px);cursor:default;z-index:5}
+  #cN{font-size:10px;letter-spacing:.05em;color:var(--cyan);font-weight:600}
+  #mCard{right:38px;top:344px;width:266px;max-height:calc(100vh - 470px);overflow-y:auto;padding:16px 18px;display:none}
+  #mcClose{position:absolute;top:10px;right:13px;color:var(--ink-3);cursor:pointer;font-size:15px}
+  #mcClose:hover{color:var(--ink)}
+  #mcName{font-size:16px;font-weight:600;letter-spacing:-.01em;padding-right:16px}
+  #mcDist{font-size:11px;color:var(--ink-2);margin-top:2px}
+  #mcCat{display:inline-block;font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+    padding:2px 8px;border-radius:999px;margin-top:8px;border:1px solid currentColor}
+  .mcVal{margin-top:11px;font-size:12px;color:var(--ink-2)}
+  .mcVal b{font-size:26px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+  #mcDelta{display:block;font-size:11px;margin-top:2px}
+  #mcDelta .up{color:var(--over)} #mcDelta .down{color:var(--safe)}
+  .mcBandBar{position:relative;height:5px;border-radius:3px;margin-top:12px;
+    background:linear-gradient(90deg,rgba(127,228,255,.10),rgba(127,228,255,.42),rgba(127,228,255,.10))}
+  .mcBandBar i{position:absolute;left:50%;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(-50%,-50%);background:#eaffff;box-shadow:0 0 8px rgba(127,228,255,.9)}
+  .mcBandRow{display:flex;justify-content:space-between;font-size:9.5px;color:var(--ink-3);margin-top:5px}
+  .mcRow{display:flex;gap:18px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+  .mcRow span{display:block;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .mcRow strong{display:block;font-size:13px;font-weight:550;margin-top:3px}
+  #mcSpark{margin-top:11px}
+  .mcFoot{font-size:9.5px;color:var(--ink-3);margin-top:8px}
+  #mcBadge{position:absolute;top:15px;right:36px;font-size:8px;letter-spacing:.14em;color:var(--cyan);
+    border:1px solid rgba(127,228,255,.3);padding:2px 7px;border-radius:999px}
+  .mcChips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .mcChips span{font-size:9px;letter-spacing:.06em;color:var(--ink-3);border:1px solid var(--line);
+    padding:2px 8px;border-radius:999px}
+
+  /* ---------- bottom analytics ---------- */
+  #snapPanel{left:50%;transform:translateX(-50%);bottom:88px;width:min(520px,44vw);padding:9px 14px 7px;display:none;background:rgba(2,10,18,.55)}
+  .snapHead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
+  .snapHead span:first-child{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  .snapLegend{font-size:9.5px;color:var(--ink-3);display:flex;gap:11px;align-items:center}
+  .snapLegend i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:4px;vertical-align:middle}
+  .mcGauge{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);text-align:center}
+  .gaugeTitle{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+  #gaugeLabel{font-size:10px;color:var(--ink-3);margin-top:2px;line-height:1.35}
+  #gaugeLabel b{color:var(--ink);font-size:12px}
+
+  @media (max-width:900px){
+    #titleBlock{left:22px;top:22px;max-width:75vw}
+    #rail{right:22px;top:22px}
+    #legend{left:22px;bottom:120px}
+    #hints{display:none}
+    #timeline{width:calc(100vw - 44px);bottom:22px}
+  }
+</style>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="vig"></div>
+
+<div class="hud" id="titleBlock">
+  <div class="eyebrow">AI Living Labs · Groundwater Intelligence</div>
+  <h1>The <b>Living Water Table</b></h1>
+  <div class="sub">Andhra Pradesh · 632 mandals · modelled depth to water, 2014 – 2027</div>
+  <div class="caveat">Prototype — modelled estimates, not official measurements · <a href="/" target="_top">dashboard</a> · <a href="/legacy/living-water-table-classic-3d.html" target="_top">classic view</a></div>
+</div>
+
+<div class="hud" id="kpis">
+  <div class="glass kpi"><span>State avg depth</span><strong id="kAvg">&mdash;</strong><small id="kAvgD"></small></div>
+  <div class="glass kpi"><span>Beyond safe</span><strong id="kStress">&mdash;</strong><small>CGWB 2024</small></div>
+  <div class="glass kpi"><span>Deep &gt;30 m</span><strong id="kDeep">&mdash;</strong><small id="kDeepP"></small></div>
+  <div class="glass kpi"><span>Coverage</span><strong id="kCov">&mdash;</strong><small id="kCovD"></small></div>
+</div>
+<div class="hud" id="camStack">
+  <button id="czi" aria-label="Zoom in">+</button>
+  <button id="czo" aria-label="Zoom out">&minus;</button>
+  <button id="czr" aria-label="Reset view">&#10227;</button>
+</div>
+<div id="compass" aria-hidden="true"><span id="cN">N</span></div>
+<div class="hud glass" id="mCard">
+  <div id="mcClose" role="button" aria-label="Close">&times;</div>
+  <span id="mcBadge">MODELLED</span>
+  <div id="mcName"></div><div id="mcDist"></div><span id="mcCat"></span>
+  <div class="mcVal"><b id="mcV"></b> m below ground &middot; <span id="mcYr"></span><span id="mcDelta"></span></div>
+  <div class="mcBandBar"><i></i></div>
+  <div class="mcBandRow"><span id="mcLo"></span><span>model p10&ndash;p90</span><span id="mcHi"></span></div>
+  <div class="mcRow">
+    <div><span>vs own 2014&ndash;27</span><strong id="mcPct"></strong></div>
+    <div><span>Trend &middot; 14 yr</span><strong id="mcTrend"></strong></div>
+  </div>
+  <div id="mcSpark"></div>
+  <div class="mcGauge">
+    <div class="gaugeTitle">Vs state &middot; <span id="gaugeYr"></span></div>
+    <div id="gaugeSvg"></div>
+    <div id="gaugeLabel"></div>
+  </div>
+  <div class="mcChips"><span>Model v2 nowcast</span><span>CGWB 2024</span></div>
+  <div class="mcFoot">Scrub the timeline &mdash; this card follows the year.</div>
+</div>
+<div class="hud glass" id="snapPanel">
+  <div class="snapHead"><span>Mandal snapshot &middot; depth to water (m bgl)</span>
+    <span class="snapLegend"><span><i style="background:#7fe4ff"></i>this mandal</span><span><i style="background:#9db8cc"></i>district avg</span><span><i style="background:#5f7890"></i>state avg</span></span></div>
+  <div id="snapChart"></div>
+</div>
+<div class="hud" id="rail">
+  <div class="glass seg" role="group" aria-label="Colour mode">
+    <button id="mLevel" aria-pressed="true">Water depth</button>
+    <button id="mStress" aria-pressed="false">Extraction stress</button>
+  </div>
+  <div class="glass seg" role="group" aria-label="Geography">
+    <button id="gMandal" aria-pressed="true">Mandal</button>
+    <button id="gDistrict" aria-pressed="false">District</button>
+  </div>
+  <div class="glass" id="yearCard">
+    <div id="yearBig">2025</div>
+    <div id="yearTag"></div>
+    <div id="statLine"></div>
+  </div>
+</div>
+
+<div class="hud glass" id="legend" data-mode="level">
+  <div class="lgTitle" id="lgTitle">Depth to water</div>
+  <div id="lgRamp"></div>
+  <div class="lgRow"><span>shallow</span><span>deep (m bgl)</span></div>
+  <div class="cats">
+    <div class="cat"><span class="dot" style="color:var(--safe);background:var(--safe)"></span>Safe</div>
+    <div class="cat"><span class="dot" style="color:var(--semi);background:var(--semi)"></span>Semi-critical</div>
+    <div class="cat"><span class="dot" style="color:var(--crit);background:var(--crit)"></span>Critical</div>
+    <div class="cat"><span class="dot" style="color:var(--over);background:var(--over)"></span>Over-exploited</div>
+    <div class="cat"><span class="dot" style="color:var(--nodata);background:var(--nodata)"></span>No assessment</div>
+  </div>
+  <div class="lgNote" id="lgNote"><em>Taller&nbsp;=&nbsp;fuller</em> &mdash; the water table sits nearer the surface. Colour follows modelled depth.</div>
+</div>
+
+<div class="hud glass" id="timeline">
+  <button id="play" aria-label="Play time-lapse"><svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z"/></svg></button>
+  <div class="track">
+    <input type="range" id="yearSlider" min="0" max="13" step="1" value="11" aria-label="Year">
+    <div class="ticks" id="ticks"></div>
+  </div>
+</div>
+
+<div id="dLabels" aria-hidden="true"></div>
+<div class="hud" id="hints">
+  <span class="chip">Drag to rotate</span><span class="chip">Scroll to zoom</span><span class="chip">Hover / click a mandal</span>
+</div>
+
+<div class="glass" id="tip">
+  <div id="tipName"></div><div id="tipDist"></div><span id="tipCat"></span>
+  <div id="tipVal"></div><div id="tipDelta"></div>
+  <div id="tipSpark"></div><div id="tipYears"><span>2014</span><span>dashed = forecast</span><span>2027</span></div>
+</div>
+
+<div id="fallback"><div class="glass">
+  <h2 style="font-weight:300;margin-bottom:10px">3D unavailable</h2>
+  <p style="color:var(--ink-2);font-size:13px">This device could not start WebGL. The
+  <a href="/legacy/living-water-table-classic-3d.html">classic 3D page</a> or the main dashboard
+  carry the same data.</p>
+</div></div>
+
+<script>/*__THREE__*/</script>
+<script>
+"use strict";
+window.__lastErr=null;
+addEventListener("error",e=>{window.__lastErr=(e.message||"?")+" @L"+e.lineno;});
+addEventListener("unhandledrejection",e=>{window.__lastErr="promise: "+e.reason;});
+const GW = /*__DATA__*/;
+
+/* ============================== setup ============================== */
+const QP = new URLSearchParams(location.search);
+const STATIC = QP.has("static");
+const NOBLOOM = QP.has("nobloom");
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches || STATIC;
+const canvas = document.getElementById("gl");
+let renderer;
+try{
+  renderer = new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:"high-performance"});
+}catch(e){ document.getElementById("fallback").style.display="grid"; throw e; }
+const DPR = Math.min(devicePixelRatio||1, 2);
+renderer.setPixelRatio(DPR);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x010a14);
+scene.fog = new THREE.FogExp2(0x010a14, 0.020);
+
+const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
+
+/* lights — cool key, warm-less rim, teal accent */
+scene.add(new THREE.HemisphereLight(0x8fd8ff, 0x081524, 0.6));
+const key = new THREE.DirectionalLight(0xdff6ff, 1.62); key.position.set(6,10,4); scene.add(key);
+const rim = new THREE.DirectionalLight(0x3f7fd0, 0.85); rim.position.set(-7,4,-6); scene.add(rim);
+const acc = new THREE.DirectionalLight(0x22e0c8, 0.4);  acc.position.set(0,3,-8);  scene.add(acc);
+
+/* ============================== projection ============================== */
+const [minLon,minLat,maxLon,maxLat] = GW.bbox;
+const cLon=(minLon+maxLon)/2, cLat=(minLat+maxLat)/2;
+const kLon=Math.cos(cLat*Math.PI/180);
+const spanW=(maxLon-minLon)*kLon, spanH=(maxLat-minLat);
+const S = 8.8/Math.max(spanW,spanH);
+const PX = lon => (lon-cLon)*kLon*S;
+const PZ = lat => -(lat-cLat)*S;
+const landRx = spanW*S/2, landRz = spanH*S/2;
+
+/* ============================== data prep ============================== */
+const YEARS=GW.years, NY=YEARS.length, FC0=NY-GW.nForecast;
+const M=GW.mandals, NM=M.length;
+let maxLvl=0; for(const m of M) for(const v of m.lvl) if(v>maxLvl) maxLvl=v;
+const meanByYear = YEARS.map((_,y)=>{let s=0;for(const m of M)s+=m.lvl[y];return s/NM;});
+
+const BASE_H=0.10;
+/* level mode: taller = fuller (water table near the surface). stress mode: taller = harder extracted. */
+const hLevel=v=>0.17;   /* flat map: colour carries depth, like the reference */
+const hStress=st=>st==null?BASE_H*1.35:BASE_H+Math.pow(Math.min(st,160)/160,0.85)*0.85;
+
+/* depth ramp (validated hue arc, cyan→indigo, light→dark) */
+const RAMP=["#eafcff","#7ae6f2","#38b6ea","#1f86e8","#2152c8","#1d3070"].map(c=>new THREE.Color(c));
+const WARM_DRY=new THREE.Color("#9a6f42");
+function depthColor(v,out){
+  const t=Math.pow(Math.min(v,maxLvl)/maxLvl,0.46)*(RAMP.length-1);
+  const i=Math.min(RAMP.length-2,Math.floor(t));
+  out.copy(RAMP[i]).lerp(RAMP[i+1],t-i);
+  /* deepest water tables dry toward warm sand, like parched ground */
+  const w=Math.max(0,v/maxLvl-0.45)/0.55;
+  if(w>0) out.lerp(WARM_DRY,Math.min(1,w)*0.70);
+  return out;
+}
+const CAT_COL={safe:new THREE.Color("#26c9a0"),semi_critical:new THREE.Color("#f5c84c"),
+  critical:new THREE.Color("#ff7f3f"),over_exploited:new THREE.Color("#ff3860")};
+const NODATA=new THREE.Color("#3d4c5e");
+const CAT_LBL={safe:"Safe",semi_critical:"Semi-critical",critical:"Critical",over_exploited:"Over-exploited"};
+
+/* ============================== crystal geometry ============================== */
+/* one merged mesh; per-vertex records let us retarget heights + colors cheaply */
+const vBaseX=[],vBaseZ=[],vTop=[],vFeat=[],vShade=[],faceFeat=[];
+/* centroids + spatial grid first, so we can tell coast edges from interior edges */
+const _cell=0.5, _grid=new Map();
+for(let f0=0;f0<NM;f0++){const m0=M[f0];let cx=0,cz=0;
+  for(const p of m0.poly){cx+=PX(p[0]);cz+=PZ(p[1]);}
+  m0._cx=cx/m0.poly.length; m0._cz=cz/m0.poly.length;
+  const k=Math.floor(m0._cx/_cell)+"_"+Math.floor(m0._cz/_cell);
+  if(!_grid.has(k))_grid.set(k,[]);
+  _grid.get(k).push(f0);
+}
+function isCoastEdge(self,mx,mz){
+  const dxs=mx-M[self]._cx, dzs=mz-M[self]._cz;
+  const d2s=dxs*dxs+dzs*dzs;
+  const cx=Math.floor(mx/_cell), cz=Math.floor(mz/_cell);
+  for(let gx=cx-1;gx<=cx+1;gx++)for(let gz=cz-1;gz<=cz+1;gz++){
+    const arr=_grid.get(gx+"_"+gz); if(!arr)continue;
+    for(const f2 of arr){ if(f2===self)continue;
+      const dx=mx-M[f2]._cx,dz=mz-M[f2]._cz;
+      if(dx*dx+dz*dz<d2s*0.92) return false;  /* someone across the edge is closer: interior */
+    }
+  }
+  return true;
+}
+const edgePos=[],edgeFeat=[];        // boundary hairlines
+const coastPos=[],coastFeat=[];      // bright glowing coastline
+const rand=(seed=>()=> (seed=(seed*16807)%2147483647)/2147483647)(1234567);
+
+for(let f=0; f<NM; f++){
+  const m=M[f];
+  const pts=m.poly.slice();
+  const a=pts[0],b=pts[pts.length-1];
+  if(a[0]===b[0]&&a[1]===b[1]) pts.pop();
+  const ctr=pts.map(p=>new THREE.Vector2(PX(p[0]),PZ(p[1])));
+  let tris; try{ tris=THREE.ShapeUtils.triangulateShape(ctr,[]); }catch(e){ continue; }
+  const glint=1.0+rand()*0.06;                    // per-crystal facet variety
+  /* polygons were simplified independently: expand slightly so neighbours
+     overlap and the hairline cracks between mandals seal shut */
+  for(const p of ctr){ p.x=m._cx+(p.x-m._cx)*1.025; p.y=m._cz+(p.y-m._cz)*1.025; }
+
+  for(const [i,j,k] of tris){
+    for(const idx of [i,j,k]){
+      vBaseX.push(ctr[idx].x); vBaseZ.push(ctr[idx].y);
+      vTop.push(1); vFeat.push(f); vShade.push(glint);
+    }
+    faceFeat.push(f);
+  }
+  for(let i=0;i<ctr.length;i++){
+    const p=ctr[i], q=ctr[(i+1)%ctr.length];
+    const mx=(p.x+q.x)/2, mz=(p.y+q.y)/2;
+    let ox=mx-m._cx, oz=mz-m._cz; const ol=Math.hypot(ox,oz)||1;
+    if(isCoastEdge(f, mx+ox/ol*0.18, mz+oz/ol*0.18)){
+      coastPos.push(p.x,0,p.y,q.x,0,q.y); coastFeat.push(f,f);
+      const quad=[[p,0],[q,0],[q,1],[p,0],[q,1],[p,1]];
+      for(const [pt,top] of quad){
+        vBaseX.push(pt.x); vBaseZ.push(pt.y);
+        vTop.push(top); vFeat.push(f); vShade.push(glint*(top?0.72:0.34));
+      }
+      faceFeat.push(f,f);
+    }
+    edgePos.push(p.x,0,p.y,q.x,0,q.y); edgeFeat.push(f,f);
+  }
+}
+const NV=vBaseX.length;
+/* every vertex blends nearby mandal values -> continuous liquid surface, no per-mandal steps */
+function buildBlend(xs,zs,feats){
+  const off=new Int32Array(xs.length+1), idx=[], wts=[];
+  for(let i=0;i<xs.length;i++){
+    const x=xs[i],z=zs[i],cx=Math.floor(x/_cell),cz=Math.floor(z/_cell);
+    const start=idx.length; let found=false;
+    for(let gx=cx-1;gx<=cx+1;gx++)for(let gz=cz-1;gz<=cz+1;gz++){
+      const arr=_grid.get(gx+"_"+gz); if(!arr)continue;
+      for(const f1 of arr){
+        const m=M[f1],dx=x-m._cx,dz=z-m._cz,d2=dx*dx+dz*dz;
+        if(d2>0.30)continue;
+        idx.push(f1); wts.push(1/(d2+0.045)); if(f1===feats[i])found=true;
+      }
+    }
+    if(!found){idx.push(feats[i]); wts.push(20);}
+    let sum=0; for(let j=start;j<idx.length;j++)sum+=wts[j];
+    for(let j=start;j<idx.length;j++)wts[j]/=sum;
+    off[i+1]=idx.length;
+  }
+  return {off,idx:Int32Array.from(idx),w:Float32Array.from(wts)};
+}
+const BL=buildBlend(vBaseX,vBaseZ,vFeat);
+const _eXs=[],_eZs=[];
+for(let i=0;i<edgeFeat.length;i++){_eXs.push(edgePos[i*3]);_eZs.push(edgePos[i*3+2]);}
+const EBL=buildBlend(_eXs,_eZs,edgeFeat);
+const _cXs=[],_cZs=[];
+for(let i=0;i<coastFeat.length;i++){_cXs.push(coastPos[i*3]);_cZs.push(coastPos[i*3+2]);}
+const CBL=buildBlend(_cXs,_cZs,coastFeat);
+const positions=new Float32Array(NV*3), colors=new Float32Array(NV*3);
+for(let i=0;i<NV;i++){positions[i*3]=vBaseX[i]; positions[i*3+2]=vBaseZ[i];}
+
+const geo=new THREE.BufferGeometry();
+geo.setAttribute("position",new THREE.BufferAttribute(positions,3).setUsage(THREE.DynamicDrawUsage));
+geo.setAttribute("color",new THREE.BufferAttribute(colors,3).setUsage(THREE.DynamicDrawUsage));
+geo.setAttribute("aTop",new THREE.BufferAttribute(new Float32Array(vTop),1));
+/* liquid glass: fresnel rim, internal caustic shimmer, roaming glints, breathing surface */
+const crystalMat=new THREE.ShaderMaterial({
+  transparent:true, vertexColors:true, side:THREE.DoubleSide,
+  extensions:{derivatives:true},
+  uniforms:{uTime:{value:0}},
+  vertexShader:`
+    attribute float aTop;
+    uniform float uTime;
+    varying vec3 vW; varying vec3 vC; varying float vT;
+    void main(){
+      vC=color; vT=aTop;
+      vec3 p=position;
+
+      vec4 w=modelMatrix*vec4(p,1.0); vW=w.xyz;
+      gl_Position=projectionMatrix*viewMatrix*w;
+    }`,
+  fragmentShader:`
+    uniform float uTime;
+    varying vec3 vW; varying vec3 vC; varying float vT;
+    float h21(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+    float vn(vec2 p){vec2 i=floor(p),fr=fract(p);fr=fr*fr*(3.0-2.0*fr);
+      return mix(mix(h21(i),h21(i+vec2(1,0)),fr.x),mix(h21(i+vec2(0,1)),h21(i+vec2(1,1)),fr.x),fr.y);}
+    float wsurf(vec2 q){
+      return vn(q*1.5+vec2(uTime*0.22,uTime*0.09))*0.55
+            +vn(q*3.4+vec2(-uTime*0.16,uTime*0.30))*0.30
+            +vn(q*7.5+vec2(uTime*0.42,-uTime*0.25))*0.15;
+    }
+    void main(){
+      vec3 N=normalize(cross(dFdx(vW),dFdy(vW)));
+      vec3 V=normalize(cameraPosition-vW);
+      if(dot(N,V)<0.0)N=-N;
+      vec3 L=normalize(vec3(0.5,0.8,0.35));
+      float dif=max(dot(N,L),0.0);
+      vec3 col=vec3(0.0);
+      if(vT>0.5){
+        /* the top face IS water: multi-octave animated ripple normal */
+        vec2 q=vW.xz;
+        float amp=0.55*(0.65+0.6*dot(vC,vec3(0.33)));   /* livelier where fuller */
+        float e=0.05;
+        float hC=wsurf(q);
+        float tex=smoothstep(0.35,0.75,hC);
+        float cw=vn(q*2.6+vec2(uTime*0.10,-uTime*0.06))+vn(q*4.8+vec2(-uTime*0.08,uTime*0.12));
+        float caust=pow(0.5+0.5*sin(cw*6.0-uTime*0.9),6.0);
+        vec3 wn=vec3(0.0,1.0,0.0);
+        wn.x+=(sin(q.x*3.1+q.y*1.2+uTime*1.4)*0.50+sin(q.x*7.3-q.y*2.1-uTime*2.3)*0.30
+              +sin(q.x*14.0+q.y*11.0+uTime*3.4)*0.18)*amp;
+        wn.z+=(cos(q.x*1.4-q.y*3.7-uTime*1.1)*0.50+sin(q.x*2.2+q.y*8.1+uTime*1.9)*0.30
+              +cos(q.x*12.0-q.y*13.0+uTime*2.8)*0.18)*amp;
+        vec3 N2=normalize(vec3((wsurf(q-vec2(e,0.0))-wsurf(q+vec2(e,0.0)))*amp,e*2.0,
+                               (wsurf(q-vec2(0.0,e))-wsurf(q+vec2(0.0,e)))*amp)+wn*0.25);
+        /* water body colour from the data tint: deep in troughs, luminous on slopes */
+        vec3 deepC=vC*0.70;
+        vec3 shalC=vC*1.20+vec3(0.02,0.05,0.07);
+        float f2=pow(1.0-max(dot(N2,V),0.0),3.0);
+        col=mix(deepC,shalC,clamp(f2*0.65+tex*0.48,0.0,1.0));
+        col+=vec3(0.55,0.95,1.0)*caust*0.40;
+        col=mix(vec3(dot(col,vec3(0.299,0.587,0.114))),col,1.24);
+        /* broad glossy sheen, like light on a still pool */
+        col+=vec3(0.12,0.28,0.36)*pow(max(dot(reflect(-L,N2),V),0.0),6.0)*0.20;
+        /* sun glitter breaking on the ripples */
+        col+=vec3(0.9,1.0,1.0)*pow(max(dot(reflect(-L,N2),V),0.0),120.0)*0.5;
+        /* soft sky sheen */
+        col+=vec3(0.10,0.25,0.32)*pow(max(dot(reflect(vec3(0.3,-0.8,0.5),N2),V),0.0),8.0)*0.15;
+        /* micro-foam on the steepest ripples */
+        
+      } else {
+        /* dark wet terrace wall, water sheeting down it */
+        col=vec3(0.050,0.140,0.200)+vC*0.20*(0.4+0.6*dif);
+        col*=1.0+smoothstep(0.0,0.30,vW.y)*1.35;
+        float wf =sin(vW.y*26.0-uTime*2.6+sin(vW.x*7.0+vW.z*5.0)*3.0);
+        float wf2=sin(vW.y*47.0-uTime*4.1+(vW.x-vW.z)*11.0);
+        col+=vec3(0.20,0.55,0.65)*(smoothstep(0.75,1.0,wf)*0.5+smoothstep(0.80,1.0,wf2)*0.3)*0.12;
+      }
+      /* rim light */
+      float fr=pow(1.0-max(dot(N,V),0.0),2.6);
+      col+=vec3(0.35,0.9,1.0)*fr*(vT>0.5?0.38:0.45);
+      /* satellite scan sweep */
+      float sp=fract(uTime/13.0), sx=mix(-7.0,7.0,sp);
+      float band=smoothstep(0.5,0.0,abs(vW.x-sx))*smoothstep(0.0,0.06,sp)*smoothstep(1.0,0.94,sp);
+      col+=vec3(0.5,0.95,1.0)*band*0.30;
+      /* slow luminance drift, like cloud light */
+      col*=1.0+sin(vW.x*0.5+uTime*0.06)*sin(vW.z*0.4-uTime*0.05)*0.06;
+      float fd=smoothstep(13.0,30.0,length(cameraPosition-vW));
+      col=mix(col,vec3(0.004,0.039,0.078),fd);
+      gl_FragColor=vec4(col,vT>0.5?1.0:0.96);
+    }`,
+});
+const crystals=new THREE.Mesh(geo,crystalMat); scene.add(crystals);
+/* dark twin just beneath: seams and cracks reveal dim land instead of void */
+const underMat=new THREE.ShaderMaterial({vertexColors:true, side:THREE.DoubleSide,
+  vertexShader:`varying vec3 vC;void main(){vC=color;gl_Position=projectionMatrix*viewMatrix*modelMatrix*vec4(position,1.0);}`,
+  fragmentShader:`varying vec3 vC;void main(){gl_FragColor=vec4(vC*0.38,1.0);}`});
+const under=new THREE.Mesh(geo,underMat); under.position.y=-0.016; scene.add(under);
+
+const eGeo=new THREE.BufferGeometry();
+const ePosArr=new Float32Array(edgePos);
+eGeo.setAttribute("position",new THREE.BufferAttribute(ePosArr,3).setUsage(THREE.DynamicDrawUsage));
+const eMat=new THREE.LineBasicMaterial({color:0xf2fdff,transparent:true,opacity:0.5,depthWrite:false});
+eMat.opacity=0.34;
+const edges=new THREE.LineSegments(eGeo,eMat); scene.add(edges);
+const cGeo=new THREE.BufferGeometry();
+const cPosArr=new Float32Array(coastPos);
+cGeo.setAttribute("position",new THREE.BufferAttribute(cPosArr,3).setUsage(THREE.DynamicDrawUsage));
+const cMat=new THREE.LineBasicMaterial({color:0xeaffff,transparent:true,opacity:0.95,
+  blending:THREE.AdditiveBlending,depthWrite:false});
+scene.add(new THREE.LineSegments(cGeo,cMat));
+
+/* ============================== districts ============================== */
+const DISTS={};
+for(let f=0;f<NM;f++){const m=M[f]; if(m._cx===undefined)continue;
+  const d=DISTS[m.d]??={cx:0,cz:0,n:0,lvlSum:new Array(NY).fill(0),stageSum:0,stageN:0};
+  d.cx+=m._cx; d.cz+=m._cz; d.n++;
+  for(let y=0;y<NY;y++)d.lvlSum[y]+=m.lvl[y];
+  if(m.stage!=null){d.stageSum+=m.stage;d.stageN++;}
+}
+const dLabelHost=document.getElementById("dLabels");
+Object.entries(DISTS).forEach(([name,d])=>{
+  d.cx/=d.n; d.cz/=d.n;
+  d.lvlMean=d.lvlSum.map(v=>v/d.n);
+  d.stageMean=d.stageN?d.stageSum/d.stageN:null;
+  d.cat=d.stageMean==null?null:d.stageMean>100?"over_exploited":d.stageMean>90?"critical":d.stageMean>70?"semi_critical":"safe";
+  const el=document.createElement("span");
+  el.textContent=name; el.style.display="none";
+  dLabelHost.appendChild(el); d.el=el;
+});
+const _pv=new THREE.Vector3();
+const dOrder=Object.values(DISTS).sort((a,b)=>b.n-a.n);
+let lastDcl=-1e9;
+function updateDistrictLabels(){
+  if(gran!=="district"){ for(const d of dOrder) d.el.style.display="none"; return; }
+  for(const d of dOrder){
+    const h=mode==="level"?hLevel(d.lvlMean[year]):hStress(d.stageMean);
+    _pv.set(d.cx,h+0.05,d.cz).project(camera);
+    d.off=_pv.z>1||Math.abs(_pv.x)>1.03||Math.abs(_pv.y)>1.03;
+    d.sx=(_pv.x*0.5+0.5)*innerWidth; d.sy=(-_pv.y*0.5+0.5)*innerHeight;
+  }
+  if(nowMs-lastDcl>250){                     /* visibility settles at 4 Hz: no flicker */
+    lastDcl=nowMs; const placed=[];
+    for(const d of dOrder){
+      d.vis=false;
+      if(d.off) continue;
+      let ok=true;
+      for(const p of placed){ if(Math.abs(p[0]-d.sx)<76&&Math.abs(p[1]-d.sy)<24){ok=false;break;} }
+      if(ok){placed.push([d.sx,d.sy]); d.vis=true;}
+    }
+  }
+  for(const d of dOrder){
+    if(!d.vis||d.off){d.el.style.display="none";continue;}
+    d.el.style.display="block";
+    d.el.style.transform=`translate(-50%,-50%) translate(${d.sx.toFixed(1)}px,${d.sy.toFixed(1)}px)`;
+  }
+}
+
+/* ============================== state & retarget ============================== */
+let year=11, mode="level", hovered=-1, pinned=-1;
+let gran=(new URLSearchParams(location.search)).get("gran")==="district"?"district":"mandal";
+const curH=new Float32Array(NM), fromH=new Float32Array(NM), toH=new Float32Array(NM);
+const curC=new Float32Array(NM*3), fromC=new Float32Array(NM*3), toC=new Float32Array(NM*3);
+const tmpC=new THREE.Color();
+
+function targetsFor(y,md){
+  for(let f=0;f<NM;f++){
+    const m=M[f];
+    const D=gran==="district"?DISTS[m.d]:null;
+    const lv=D?D.lvlMean[y]:m.lvl[y];
+    const st=D?D.stageMean:m.stage;
+    const ct=D?D.cat:m.cat;
+    toH[f]=md==="level"?hLevel(lv):hStress(st);
+    let c;
+    if(md==="level") c=depthColor(lv,tmpC);
+    else c=(ct&&CAT_COL[ct])?CAT_COL[ct]:NODATA;
+    toC[f*3]=c.r; toC[f*3+1]=c.g; toC[f*3+2]=c.b;
+  }
+}
+let tw0=0, twDur=0, nowMs=0;
+function beginTween(dur){
+  fromH.set(curH); fromC.set(curC);
+  tw0=nowMs; twDur=REDUCED?0:dur;
+}
+const easeIO=t=>t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+
+function applyFrame(){
+  const t=twDur? Math.min(1,(nowMs-tw0)/twDur):1;
+  const e=easeIO(t);
+  for(let f=0;f<NM;f++){
+    curH[f]=fromH[f]+(toH[f]-fromH[f])*e;
+    curC[f*3]  =fromC[f*3]  +(toC[f*3]  -fromC[f*3])*e;
+    curC[f*3+1]=fromC[f*3+1]+(toC[f*3+1]-fromC[f*3+1])*e;
+    curC[f*3+2]=fromC[f*3+2]+(toC[f*3+2]-fromC[f*3+2])*e;
+  }
+  const hl=hovered>=0?hovered:pinned;
+  for(let i=0;i<NV;i++){
+    let h=0,r=0,g=0,b=0;
+    for(let j=BL.off[i];j<BL.off[i+1];j++){
+      const f=BL.idx[j],w=BL.w[j];
+      h+=w*curH[f]; r+=w*curC[f*3]; g+=w*curC[f*3+1]; b+=w*curC[f*3+2];
+    }
+    positions[i*3+1]=vTop[i]?h+(vFeat[i]&15)*0.00015:0;
+    let s=vShade[i];
+    if(vFeat[i]===hl) s*=1.45;
+    colors[i*3]=r*s; colors[i*3+1]=g*s; colors[i*3+2]=b*s;
+  }
+  geo.attributes.position.needsUpdate=true;
+  geo.attributes.color.needsUpdate=true;
+  for(let i=0;i<edgeFeat.length;i++){
+    let h=0; for(let j=EBL.off[i];j<EBL.off[i+1];j++)h+=EBL.w[j]*curH[EBL.idx[j]];
+    ePosArr[i*3+1]=h+0.02;
+  }
+  eGeo.attributes.position.needsUpdate=true;
+  for(let i=0;i<coastFeat.length;i++){
+    let h=0; for(let j=CBL.off[i];j<CBL.off[i+1];j++)h+=CBL.w[j]*curH[CBL.idx[j]];
+    cPosArr[i*3+1]=h+0.015;
+  }
+  cGeo.attributes.position.needsUpdate=true;
+  return t<1;
+}
+targetsFor(year,mode); curH.set(toH); curC.set(toC); beginTween(0); applyFrame();
+
+/* ============================== ocean ============================== */
+const waterUni={
+  uTime:{value:0},
+  uGlow:{value:new THREE.Vector2(landRx*1.22,landRz*1.22)},
+};
+const water=new THREE.Mesh(
+  new THREE.PlaneGeometry(90,90,240,240),
+  new THREE.ShaderMaterial({
+    uniforms:waterUni,
+    vertexShader:`
+      uniform float uTime; uniform vec2 uGlow;
+      varying vec3 vW; varying float vCrest; varying vec3 vN; varying float vSlope;
+      float wv(vec2 q,vec2 d,float len,float sp,float amp,inout vec2 grad){
+        float k=6.28318/len, ph=dot(q,normalize(d))*k+uTime*sp;
+        grad+=normalize(d)*k*amp*cos(ph);
+        return amp*sin(ph);
+      }
+      void main(){
+        vec2 q=vec2(position.x,-position.y);   /* local -> world xz (plane is x-rotated) */
+        float dEll=length(q/uGlow);
+        float damp=mix(0.55,1.0,smoothstep(0.85,1.6,dEll)); /* gentle lagoon near shore */
+        damp*=1.0-0.40*smoothstep(7.0,16.0,length(q));            /* still far field */
+        vec2 grad=vec2(0.0);
+        float h=0.0;
+        h+=wv(q,vec2(0.8,0.4),6.5,0.70,0.085,grad);
+        h+=wv(q,vec2(-0.5,0.9),4.2,0.95,0.050,grad);
+        h+=wv(q,vec2(0.2,-1.0),1.9,1.35,0.012,grad);
+        h+=wv(q,vec2(1.0,0.15),1.1,1.9,0.006,grad);
+        h*=damp; grad*=damp;
+        vCrest=h*12.0+0.5;
+        vSlope=length(grad);
+        vN=normalize(vec3(-grad.x,1.0,-grad.y));
+        vec3 p=position; p.z+=h;
+        vec4 w=modelMatrix*vec4(p,1.0); vW=w.xyz;
+        gl_Position=projectionMatrix*viewMatrix*w;
+      }`,
+    fragmentShader:`
+      uniform float uTime; uniform vec2 uGlow;
+      varying vec3 vW; varying float vCrest; varying vec3 vN; varying float vSlope;
+      float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+      float vn(vec2 p){vec2 i=floor(p),fr=fract(p);fr=fr*fr*(3.0-2.0*fr);
+        return mix(mix(hash(i),hash(i+vec2(1,0)),fr.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),fr.x),fr.y);}
+      float osurf(vec2 q){
+        return vn(q*1.6+vec2(uTime*0.18,uTime*0.07))*0.45
+              +vn(q*3.8+vec2(-uTime*0.12,uTime*0.22))*0.30
+              +vn(q*8.5+vec2(uTime*0.30,-uTime*0.18))*0.17
+              +vn(q*18.0+vec2(uTime*0.45,uTime*0.33))*0.08;
+      }
+      void main(){
+        vec2 q=vW.xz;
+        vec3 N=normalize(vN);
+        vec3 V=normalize(cameraPosition-vW);
+        vec3 L=normalize(vec3(0.55,0.75,0.35));
+        /* fine ripple detail layered onto the rolling swell — the realism layer */
+        float e=0.10, dfade=1.0-smoothstep(4.0,18.0,length(q));
+        float rAmp=1.4*max(dfade,0.25);
+        vec3 Nd=normalize(vec3((osurf(q-vec2(e,0.0))-osurf(q+vec2(e,0.0)))*rAmp,e*2.0,
+                               (osurf(q-vec2(0.0,e))-osurf(q+vec2(0.0,e)))*rAmp));
+        N=normalize(N+Nd*0.5);
+        float fres=pow(1.0-max(dot(N,V),0.0),3.0);
+        vec3 col=mix(vec3(0.012,0.065,0.110),vec3(0.034,0.150,0.220),fres);
+        /* broad slow swell of light */
+        float sw=sin(dot(q,normalize(vec2(0.8,0.45)))*0.55-uTime*0.22)*0.5+0.5;
+        col*=0.88+0.26*sw;
+        /* soft moon-sheen glinting across the ripples */
+        col+=vec3(0.30,0.65,0.80)*pow(max(dot(reflect(-L,N),V),0.0),42.0)*0.16;
+        col+=vec3(0.55,0.85,1.0)*pow(max(dot(reflect(-L,N),V),0.0),240.0)*0.10*dfade;
+        /* the stage is lit: water gently brightens toward the landmass, no ring */
+        col*=1.0+0.58*(1.0-smoothstep(0.0,9.0,length(q)));
+        /* settle far field, keep the swell readable */
+        float d=smoothstep(8.0,22.0,length(q));
+        col=mix(col,vec3(0.007,0.045,0.082),d*0.65);
+        gl_FragColor=vec4(col,1.0);
+      }`,
+  })
+);
+water.rotation.x=-Math.PI/2; water.position.y=-0.02; scene.add(water);
+
+/* ============================== particles ============================== */
+const PN=REDUCED?0:120;
+let pGeo=null;
+if(PN){
+  pGeo=new THREE.BufferGeometry();
+  const pp=new Float32Array(PN*3), ps=new Float32Array(PN);
+  for(let i=0;i<PN;i++){
+    pp[i*3]=(Math.random()*2-1)*9; pp[i*3+1]=Math.random()*4+0.3; pp[i*3+2]=(Math.random()*2-1)*9;
+    ps[i]=Math.random();
+  }
+  pGeo.setAttribute("position",new THREE.BufferAttribute(pp,3));
+  pGeo.setAttribute("seed",new THREE.BufferAttribute(ps,1));
+  const pMat=new THREE.ShaderMaterial({
+    transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
+    uniforms:{uTime:{value:0}},
+    vertexShader:`
+      attribute float seed; uniform float uTime; varying float vA;
+      void main(){
+        vec3 p=position;
+        p.y=mod(p.y+uTime*(0.06+seed*0.05),4.4);
+        p.x+=sin(uTime*0.25+seed*40.0)*0.25;
+        vA=smoothstep(0.0,0.5,p.y)*smoothstep(4.4,3.2,p.y)*(0.25+seed*0.5);
+        vec4 mv=modelViewMatrix*vec4(p,1.0);
+        gl_PointSize=(1.1+seed*1.5)*(120.0/-mv.z);
+        gl_Position=projectionMatrix*mv;
+      }`,
+    fragmentShader:`
+      varying float vA;
+      void main(){
+        float r=length(gl_PointCoord-0.5);
+        float a=smoothstep(0.5,0.05,r)*vA;
+        gl_FragColor=vec4(0.5,0.85,1.0,a*0.26);
+      }`,
+  });
+  scene.add(new THREE.Points(pGeo,pMat));
+}
+
+/* ============================== bloom pipeline ============================== */
+const quadScene=new THREE.Scene();
+const quadCam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+const quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),null); quadScene.add(quad);
+const mk=(w,h)=>new THREE.WebGLRenderTarget(w,h,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat});
+let rtScene,rtA,rtB;
+const brightMat=new THREE.ShaderMaterial({
+  uniforms:{tex:{value:null},thr:{value:0.62}},
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+  fragmentShader:`uniform sampler2D tex;uniform float thr;varying vec2 vUv;
+    void main(){vec3 c=texture2D(tex,vUv).rgb;
+      float l=dot(c,vec3(0.2126,0.7152,0.0722));
+      gl_FragColor=vec4(c*smoothstep(thr,thr+0.35,l),1.0);}`,
+});
+const blurMat=new THREE.ShaderMaterial({
+  uniforms:{tex:{value:null},dir:{value:new THREE.Vector2(1,0)},res:{value:new THREE.Vector2(1,1)}},
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+  fragmentShader:`uniform sampler2D tex;uniform vec2 dir,res;varying vec2 vUv;
+    void main(){vec2 o=dir/res;vec3 s=texture2D(tex,vUv).rgb*0.227;
+      s+=(texture2D(tex,vUv+o*1.38).rgb+texture2D(tex,vUv-o*1.38).rgb)*0.316;
+      s+=(texture2D(tex,vUv+o*3.23).rgb+texture2D(tex,vUv-o*3.23).rgb)*0.070;
+      gl_FragColor=vec4(s,1.0);}`,
+});
+const compMat=new THREE.ShaderMaterial({
+  uniforms:{tex:{value:null},bloom:{value:null},uStr:{value:0.92},uTime:{value:0}},
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+  fragmentShader:`uniform sampler2D tex,bloom;uniform float uStr,uTime;varying vec2 vUv;
+    float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+    void main(){
+      vec3 c=texture2D(tex,vUv).rgb+texture2D(bloom,vUv).rgb*uStr;
+      c=vec3(1.0)-exp(-c*1.52);                       /* filmic-ish */
+      float v=smoothstep(1.25,0.35,length(vUv-vec2(0.5,0.46)));
+      c*=mix(0.72,1.0,v);
+      c+=(hash(vUv*vec2(1920.,1080.)+uTime)-0.5)*0.010; /* grain */
+      gl_FragColor=vec4(c,1.0);
+    }`,
+});
+function sizeTargets(w,h){
+  if(rtScene){rtScene.dispose();rtA.dispose();rtB.dispose();}
+  rtScene=mk(w*DPR,h*DPR); rtA=mk(w*DPR/2,h*DPR/2); rtB=mk(w*DPR/2,h*DPR/2);
+  blurMat.uniforms.res.value.set(w*DPR/2,h*DPR/2);
+}
+
+/* ============================== camera controls ============================== */
+const target=new THREE.Vector3(0,0.32,-0.35);
+let theta=REDUCED?0.32:-0.9, phi=0.96, radius=26;
+if(QP.has("top")){theta=0;phi=0.06;radius=14;}
+if(REDUCED){radius=fitRadius(12.9);}
+let thetaV=0, autoRot=!REDUCED, interacted=false;
+let introT0=-1; const INTRO=REDUCED?0:2600;
+function easeOut(t){return 1-Math.pow(1-t,3);}
+function fitRadius(base){
+  const a=Math.max(innerWidth/Math.max(innerHeight,1),0.6);
+  return Math.min(22,base*Math.sqrt(Math.max(1,1.72/a)));
+}
+function updateCamera(){
+  if(introT0<0)introT0=nowMs;
+  const it=INTRO?Math.min(1,(nowMs-introT0)/INTRO):1;
+  if(it<1){
+    const e=easeOut(it);
+    radius=26+(fitRadius(12.9)-26)*e;
+    theta=-0.9+(0.32+0.9)*e;
+    phi=1.22+(0.96-1.22)*e;
+  }else if(autoRot){ theta+=0.00055; }
+  theta+=thetaV; thetaV*=0.92;
+  phi=Math.max(0.42,Math.min(1.32,phi));
+  camera.position.set(
+    target.x+radius*Math.sin(phi)*Math.sin(theta),
+    target.y+radius*Math.cos(phi),
+    target.z+radius*Math.sin(phi)*Math.cos(theta));
+  camera.lookAt(target);
+}
+let dragging=false,lastX=0,lastY=0,downX=0,downY=0,clickCandidate=-1;
+canvas.addEventListener("pointerdown",e=>{
+  dragging=true; interacted=true; autoRot=false; clickCandidate=hovered;
+  lastX=downX=e.clientX; lastY=downY=e.clientY;
+  canvas.classList.add("dragging"); canvas.setPointerCapture(e.pointerId);
+});
+addEventListener("pointermove",e=>{
+  mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1;
+  mousePX=e.clientX; mousePY=e.clientY;
+  if(!dragging) return;
+  theta-=(e.clientX-lastX)*0.0052;
+  phi  -=(e.clientY-lastY)*0.0042;
+  lastX=e.clientX; lastY=e.clientY;
+});
+addEventListener("pointerup",e=>{
+  canvas.classList.remove("dragging");
+  if(dragging && Math.hypot(e.clientX-downX,e.clientY-downY)<5) handleClick(clickCandidate);
+  dragging=false;
+});
+canvas.addEventListener("wheel",e=>{
+  e.preventDefault(); interacted=true; autoRot=false;
+  radius=Math.max(7.5,Math.min(24,radius*(1+e.deltaY*0.0011)));
+},{passive:false});
+
+/* ============================== picking & tooltip ============================== */
+const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(-2,-2);
+let mousePX=0,mousePY=0;
+const tip=document.getElementById("tip");
+const fmt1=v=>v.toFixed(1);
+function sparkSVG(m){
+  const w=200,h=30,p=2;
+  const lo=Math.min(...m.lvl), hi=Math.max(...m.lvl), rg=(hi-lo)||1;
+  const xy=i=>[p+i*(w-2*p)/(NY-1), h-p-((m.lvl[i]-lo)/rg)*(h-2*p)];
+  let dObs="",dFc="";
+  for(let i=0;i<NY;i++){
+    const [x,y]=xy(i); const c=`${x.toFixed(1)},${y.toFixed(1)}`;
+    if(i<=FC0){ dObs+=(i?" L":"M")+c; }
+    if(i>=FC0){ dFc+=(i===FC0?"M":" L")+c; }
+  }
+  const [cx,cy]=xy(year);
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
+    <path d="${dObs}" fill="none" stroke="#7fe4ff" stroke-width="1.6" opacity=".9"/>
+    <path d="${dFc}" fill="none" stroke="#c9a94e" stroke-width="1.4" stroke-dasharray="3 3"/>
+    <circle cx="${cx}" cy="${cy}" r="2.6" fill="#fff"/></svg>`;
+}
+function showTip(f,px,py){
+  const m=M[f];
+  tip.classList.toggle("compact",pinned>=0);
+  document.getElementById("tipName").textContent=m.n;
+  document.getElementById("tipDist").textContent=m.d+" district";
+  const cEl=document.getElementById("tipCat");
+  if(m.cat){ cEl.style.display="inline-block";
+    cEl.textContent=CAT_LBL[m.cat]+(m.stage!=null?` · ${Math.round(m.stage)}%`:"");
+    cEl.style.color={safe:"var(--safe)",semi_critical:"var(--semi)",critical:"var(--crit)",over_exploited:"var(--over)"}[m.cat];
+  } else { cEl.style.display="none"; }
+  const v=m.lvl[year];
+  document.getElementById("tipVal").innerHTML=`<b>${fmt1(v)}</b> m below ground · ${YEARS[year]}${year>=FC0?" (forecast)":""}`;
+  const dEl=document.getElementById("tipDelta");
+  if(year>0){ const d=v-m.lvl[year-1];
+    dEl.innerHTML=Math.abs(d)<0.05?"steady vs "+YEARS[year-1]
+      :(d>0?`<span class="up">▲ ${fmt1(d)} m deeper</span>`:`<span class="down">▼ ${fmt1(-d)} m shallower</span>`)+" vs "+YEARS[year-1];
+  } else dEl.textContent="";
+  document.getElementById("tipSpark").innerHTML=sparkSVG(m);
+  tip.style.display="block";
+  const r=tip.getBoundingClientRect();
+  tip.style.left=Math.min(innerWidth-r.width-14,px+18)+"px";
+  tip.style.top =Math.max(12,Math.min(innerHeight-r.height-14,py-10))+"px";
+}
+function pick(){
+  if(dragging){ tip.style.display="none"; return; }
+  ray.setFromCamera(mouse,camera);
+  const hit=ray.intersectObject(crystals,false)[0];
+  const f=hit?faceFeat[hit.faceIndex]:-1;
+  canvas.classList.toggle("picking",f>=0);
+  if(f!==hovered){ hovered=f; }
+  if(f>=0) showTip(f,mousePX,mousePY);
+  else tip.style.display="none";
+}
+const mCard=document.getElementById("mCard");
+const snapPanel=document.getElementById("snapPanel");
+function snapshotSVG(m){
+  const W=520,H=80,pl=24,pr=8,pt=5,pb=13;
+  const dist=DISTS[m.d];
+  const hi=Math.max(...m.lvl,...(dist?dist.lvlMean:[0]),...meanByYear)*1.12||1;
+  const X=i=>pl+i*(W-pl-pr)/(NY-1), Y=v=>pt+(v/hi)*(H-pt-pb);   /* deeper sits lower, like the reference */
+  const line=(arr,c,w,dash)=>{
+    let d=""; for(let i=0;i<NY;i++)d+=(i?" L":"M")+X(i).toFixed(1)+","+Y(arr[i]).toFixed(1);
+    return `<path d="${d}" fill="none" stroke="${c}" stroke-width="${w}"${dash?` stroke-dasharray="${dash}"`:""} opacity=".9"/>`;
+  };
+  let g="";
+  for(const tv of [0,Math.round(hi/2),Math.round(hi)]){
+    g+=`<line x1="${pl}" y1="${Y(tv)}" x2="${W-pr}" y2="${Y(tv)}" stroke="rgba(159,234,255,.08)"/>`
+      +`<text x="${pl-5}" y="${Y(tv)+3}" text-anchor="end" font-size="8" fill="#5f7890">${tv}</text>`;
+  }
+  g+=`<rect x="${X(FC0)}" y="${pt}" width="${W-pr-X(FC0)}" height="${H-pt-pb}" fill="rgba(201,169,78,.06)"/>`;
+  g+=`<line x1="${X(year)}" y1="${pt}" x2="${X(year)}" y2="${H-pb}" stroke="rgba(223,246,255,.35)"/>`;
+  if(dist) g+=line(dist.lvlMean,"#9db8cc",1.3,"4 3");
+  g+=line(meanByYear,"#5f7890",1.3,"2 3");
+  g+=line(m.lvl,"#7fe4ff",2,"");
+  g+=`<circle cx="${X(year)}" cy="${Y(m.lvl[year])}" r="3" fill="#fff"/>`;
+  for(const yr of [0,4,8,11,13]) g+=`<text x="${X(yr)}" y="${H-3}" text-anchor="middle" font-size="8" fill="#5f7890">'${YEARS[yr].slice(2)}</text>`;
+  return `<svg width="100%" viewBox="0 0 ${W} ${H}">${g}</svg>`;
+}
+function gaugeSVG(pctShallow){
+  const a=Math.PI*(1-pctShallow/100);      /* 100% shallow -> far left */
+  const cx=64,cy=58,r=46;
+  const nx=cx+Math.cos(Math.PI-a)*-r*0.82, ny=cy-Math.sin(a)*r*0.82;
+  const arc=(f0,f1,c)=>{
+    const A0=Math.PI*(1-f0), A1=Math.PI*(1-f1);
+    const x0=cx+r*Math.cos(A0), y0=cy-r*Math.sin(A0), x1=cx+r*Math.cos(A1), y1=cy-r*Math.sin(A1);
+    return `<path d="M${x0.toFixed(1)},${y0.toFixed(1)} A${r},${r} 0 0 1 ${x1.toFixed(1)},${y1.toFixed(1)}" fill="none" stroke="${c}" stroke-width="7" stroke-linecap="round"/>`;
+  };
+  return `<svg width="128" height="66" viewBox="0 0 128 66">
+    ${arc(0.02,0.36,"#2fd6ae")}${arc(0.40,0.62,"#f5c84c")}${arc(0.66,0.98,"#ff5f6e")}
+    <line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="#eaf6ff" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="${cx}" cy="${cy}" r="3.4" fill="#eaf6ff"/>
+    <text x="8" y="64" font-size="8" fill="#5f7890">Shallower</text>
+    <text x="120" y="64" text-anchor="end" font-size="8" fill="#5f7890">Deeper</text>
+  </svg>`;
+}
+function updateSnapshot(fi){
+  const m=M[fi], v=m.lvl[year];
+  document.getElementById("snapChart").innerHTML=snapshotSVG(m);
+  let deeper=0; for(const o of M) if(o.lvl[year]>=v) deeper++;
+  const pct=Math.round(100*deeper/NM);
+  document.getElementById("gaugeYr").textContent=YEARS[year];
+  document.getElementById("gaugeSvg").innerHTML=gaugeSVG(pct);
+  document.getElementById("gaugeLabel").innerHTML=`<b>P${pct}</b> &middot; shallower than ${pct}% of mandals`;
+  snapPanel.style.display="block";
+}
+function updateMandalCard(fi){
+  const m=M[fi], v=m.lvl[year];
+  document.getElementById("mcName").textContent=m.n;
+  document.getElementById("mcDist").textContent=m.d+" district";
+  const cEl=document.getElementById("mcCat");
+  if(m.cat){cEl.style.display="inline-block";
+    cEl.textContent=CAT_LBL[m.cat]+(m.stage!=null?` \u00B7 ${Math.round(m.stage)}%`:"");
+    cEl.style.color={safe:"var(--safe)",semi_critical:"var(--semi)",critical:"var(--crit)",over_exploited:"var(--over)"}[m.cat];
+  } else cEl.style.display="none";
+  document.getElementById("mcV").textContent=fmt1(v);
+  document.getElementById("mcYr").textContent=YEARS[year]+(year>=FC0?" (forecast)":"");
+  const dEl=document.getElementById("mcDelta");
+  if(year>0){const d=v-m.lvl[year-1];
+    dEl.innerHTML=Math.abs(d)<0.05?"steady vs "+YEARS[year-1]
+      :(d>0?`<span class="up">\u25B2 ${fmt1(d)} m deeper</span>`:`<span class="down">\u25BC ${fmt1(-d)} m shallower</span>`)+" vs "+YEARS[year-1];
+  } else dEl.textContent="";
+  const half=(m.band||0)/2, lo=Math.max(0,v-half), hi=v+half;
+  document.getElementById("mcLo").textContent=fmt1(lo)+" m";
+  document.getElementById("mcHi").textContent=fmt1(hi)+" m";
+  const deeperYears=m.lvl.filter(x=>x>=v).length;
+  document.getElementById("mcPct").textContent="shallower than "+Math.round(100*(deeperYears-0.5)/NY)+"% of yrs";
+  const tEl=document.getElementById("mcTrend");
+  const t=m.trend||0;
+  tEl.textContent=t<-0.02?"Improving":t>0.02?"Deepening":"Stable";
+  tEl.style.color=t<-0.02?"var(--safe)":t>0.02?"var(--over)":"var(--ink)";
+  document.getElementById("mcSpark").innerHTML=sparkSVG(m);
+  mCard.style.display="block";
+  updateSnapshot(fi);
+}
+function hideCard(){mCard.style.display="none";snapPanel.style.display="none";}
+document.getElementById("mcClose").onclick=()=>{pinned=-1;hideCard();};
+function handleClick(idx){
+  if(idx>=0){
+    if(pinned===idx){pinned=-1;hideCard();}
+    else{pinned=idx;updateMandalCard(idx);}
+  } else if(pinned>=0){pinned=-1;hideCard();}
+}
+
+/* ============================== HUD wiring ============================== */
+const yearBig=document.getElementById("yearBig"),yearTag=document.getElementById("yearTag"),
+      statLine=document.getElementById("statLine"),slider=document.getElementById("yearSlider"),
+      legend=document.getElementById("legend"),lgTitle=document.getElementById("lgTitle"),
+      lgNote=document.getElementById("lgNote");
+const ticks=document.getElementById("ticks");
+YEARS.forEach((y,i)=>{
+  const s=document.createElement("span");
+  s.textContent="’"+y.slice(2); if(i>=FC0)s.className="fc"; ticks.appendChild(s);
+});
+const nStress=M.filter(m=>m.cat&&m.cat!=="safe").length;
+function refreshHUD(){
+  yearBig.textContent=YEARS[year];
+  yearTag.textContent=year>=FC0?"Forecast":"";
+  yearTag.style.color=year>=FC0?"#c9a94e":"var(--cyan)";
+  if(mode==="level")
+    statLine.innerHTML=`state mean <strong>${fmt1(meanByYear[year])} m</strong> below ground`;
+  else
+    statLine.innerHTML=`<strong>${nStress}</strong> mandals beyond safe · CGWB 2024`;
+  slider.value=year;
+  slider.style.setProperty("--fill",(year/(NY-1)*100)+"%");
+  document.getElementById("kAvg").textContent=fmt1(meanByYear[year])+" m";
+  const ka=document.getElementById("kAvgD");
+  if(year>0){const d=meanByYear[year]-meanByYear[year-1];
+    ka.textContent=(d>0?"\u25B2 ":"\u25BC ")+fmt1(Math.abs(d))+" m vs "+YEARS[year-1];
+    ka.className=d>0?"bad":"good";
+  } else ka.textContent="";
+  document.getElementById("kStress").textContent=nStress;
+  let deep=0; for(const m of M) if(m.lvl[year]>30) deep++;
+  document.getElementById("kDeep").textContent=deep;
+  document.getElementById("kDeepP").textContent=Math.round(deep/NM*100)+"% of mandals";
+  document.getElementById("kCov").textContent=NM;
+  document.getElementById("kCovD").textContent=Object.keys(DISTS).length+" districts";
+}
+function setYear(y,dur=650){
+  year=Math.max(0,Math.min(NY-1,y));
+  targetsFor(year,mode); beginTween(dur); refreshHUD();
+  if(pinned>=0) updateMandalCard(pinned);
+}
+slider.addEventListener("input",()=>{stopPlay();setYear(+slider.value,420);});
+function setMode(md){
+  mode=md;
+  document.getElementById("mLevel").setAttribute("aria-pressed",md==="level");
+  document.getElementById("mStress").setAttribute("aria-pressed",md==="stress");
+  legend.dataset.mode=md;
+  lgTitle.textContent=md==="level"?"Depth to water":"Stage of extraction · CGWB 2024";
+  lgNote.innerHTML=md==="level"
+    ?"<em>Taller&nbsp;=&nbsp;fuller</em> &mdash; the water table sits nearer the surface. Colour follows modelled depth."
+    :"<em>Taller</em> = extraction outpacing recharge. Colour = official CGWB category.";
+  targetsFor(year,mode); beginTween(520); refreshHUD();
+}
+document.getElementById("mLevel").onclick=()=>setMode("level");
+document.getElementById("mStress").onclick=()=>setMode("stress");
+function setGran(g){
+  gran=g;
+  document.getElementById("gMandal").setAttribute("aria-pressed",g==="mandal");
+  document.getElementById("gDistrict").setAttribute("aria-pressed",g==="district");
+  targetsFor(year,mode); beginTween(560); refreshHUD();
+}
+document.getElementById("gMandal").onclick=()=>setGran("mandal");
+document.getElementById("gDistrict").onclick=()=>setGran("district");
+if(gran==="district"){setGran("district");}
+
+/* play */
+const playBtn=document.getElementById("play");
+const ICON_PLAY='<svg viewBox="0 0 12 12"><path d="M2 1l9 5-9 5z"/></svg>';
+const ICON_PAUSE='<svg viewBox="0 0 12 12"><path d="M2 1h3v10H2zM7 1h3v10H7z"/></svg>';
+let playing=false, playT=0;
+function stopPlay(){playing=false;playBtn.innerHTML=ICON_PLAY;}
+playBtn.onclick=()=>{
+  if(playing){stopPlay();return;}
+  playing=true; playBtn.innerHTML=ICON_PAUSE; playT=nowMs;
+  if(year===NY-1) setYear(0,300);
+};
+
+document.getElementById("czi").onclick=()=>issueCameraCommand("zoom_in");
+document.getElementById("czo").onclick=()=>issueCameraCommand("zoom_out");
+document.getElementById("czr").onclick=()=>issueCameraCommand("reset");
+const cN=document.getElementById("cN");
+
+const AUTOPIN=QP.get("pin");
+if(AUTOPIN!==null && M[+AUTOPIN]){pinned=+AUTOPIN;updateMandalCard(pinned);}
+
+/* hints fade */
+setTimeout(()=>{const h=document.getElementById("hints"); if(h)h.style.opacity=0;},7000);
+refreshHUD();
+
+/* ============================== resize & loop ============================== */
+function resize(){
+  const w=innerWidth,h=innerHeight;
+  renderer.setSize(w,h,false);
+  camera.aspect=w/h; camera.updateProjectionMatrix();
+  sizeTargets(w,h);
+}
+addEventListener("resize",resize); resize();
+
+let last=0;
+function loop(t){
+  requestAnimationFrame(loop);
+  nowMs=t;
+  const time=t*0.001;
+  waterUni.uTime.value=REDUCED?0:time;
+  crystalMat.uniforms.uTime.value=REDUCED?0:time;
+  if(pGeo) pGeo.parent; // noop guard
+  scene.traverse(o=>{ if(o.isPoints) o.material.uniforms.uTime.value=time; });
+  compMat.uniforms.uTime.value=time%10;
+
+  if(playing && t-playT>1050){
+    playT=t;
+    if(year>=NY-1) stopPlay(); else setYear(year+1,720);
+  }
+  /* stressed crystals breathe gently in stress mode */
+  applyFrame();
+  if(mode==="stress"&&!REDUCED){
+    const pulse=1+Math.sin(time*2.2)*0.18;
+    for(let i=0;i<NV;i++){
+      const m=M[vFeat[i]];
+      if(m&&(m.cat==="over_exploited"||m.cat==="critical")){
+        colors[i*3]*=pulse; colors[i*3+1]*=pulse*0.94; colors[i*3+2]*=pulse*0.94;
+      }
+    }
+    geo.attributes.color.needsUpdate=true;
+  }
+  eMat.opacity=(gran==="district"?0.14:0.45)+Math.sin(time*0.7)*0.03;
+
+  updateCamera();
+  updateDistrictLabels();
+  cN.style.transform=`rotate(${-theta}rad)`;
+  pick();
+  if(window.__DEBUG_HUD){
+    let el=document.getElementById("dbgHud");
+    if(!el){el=document.createElement("div");el.id="dbgHud";
+      el.style.cssText="position:fixed;left:8px;bottom:8px;z-index:99;font:11px monospace;color:#8f8;background:rgba(0,0,0,.6);padding:6px 8px;border-radius:6px;white-space:pre";
+      document.body.appendChild(el);}
+    el.textContent=`cam ${camera.position.toArray().map(v=>v.toFixed(1))}\nθφr ${theta.toFixed(2)} ${phi.toFixed(2)} ${radius.toFixed(1)}\nvp ${innerWidth}x${innerHeight} cv ${canvas.width}x${canvas.height}\naspect ${camera.aspect.toFixed(3)}`;
+  }
+
+  /* bloom composite */
+  if(NOBLOOM){ renderer.setRenderTarget(null); renderer.render(scene,camera); return; }
+  renderer.setRenderTarget(rtScene); renderer.render(scene,camera);
+  quad.material=brightMat; brightMat.uniforms.tex.value=rtScene.texture;
+  renderer.setRenderTarget(rtA); renderer.render(quadScene,quadCam);
+  for(let i=0;i<2;i++){
+    quad.material=blurMat;
+    blurMat.uniforms.tex.value=rtA.texture; blurMat.uniforms.dir.value.set(1+i,0);
+    renderer.setRenderTarget(rtB); renderer.render(quadScene,quadCam);
+    blurMat.uniforms.tex.value=rtB.texture; blurMat.uniforms.dir.value.set(0,1+i);
+    renderer.setRenderTarget(rtA); renderer.render(quadScene,quadCam);
+  }
+  quad.material=compMat;
+  compMat.uniforms.tex.value=rtScene.texture; compMat.uniforms.bloom.value=rtA.texture;
+  renderer.setRenderTarget(null); renderer.render(quadScene,quadCam);
+}
+requestAnimationFrame(loop);
+window.__probe=(nx,ny)=>{ /* nx,ny in 0..1 screen space */
+  const rc=new THREE.Raycaster();
+  rc.setFromCamera(new THREE.Vector2(nx*2-1,-(ny*2-1)),camera);
+  const hits=rc.intersectObjects(scene.children,true);
+  return hits.slice(0,3).map(h=>({t:h.object.type,d:+h.distance.toFixed(1),
+    p:h.point.toArray().map(v=>+v.toFixed(1))}));
+};
+window.__dbg = {
+  stats:()=>{let tops=0,cs=0,ys=0,n=Math.min(NV,99999);
+    for(let i=0;i<n;i++){if(vTop[i])tops++;cs+=colors[i*3]+colors[i*3+1]+colors[i*3+2];ys+=positions[i*3+1];}
+    return {NV,tops,meanC:+(cs/n/3).toFixed(3),meanY:+(ys/n).toFixed(3),
+      curC0:[...curC.slice(0,3)].map(v=>+v.toFixed(2)),aTop:geo.getAttribute("aTop")?geo.getAttribute("aTop").array[0]:"MISSING"};},
+  cam:()=>camera.position.toArray().map(v=>+v.toFixed(2)),
+  sph:()=>{const s=geo.boundingSphere; return s?[...s.center.toArray().map(v=>+v.toFixed(2)),+s.radius.toFixed(2)]:null;},
+  angles:()=>[+theta.toFixed(3),+phi.toFixed(3),+radius.toFixed(2)],
+  ext:()=>{let mn=[9e9,9e9,9e9],mx=[-9e9,-9e9,-9e9];
+    for(let i=0;i<NV;i++)for(let a=0;a<3;a++){const v=positions[i*3+a];if(v<mn[a])mn[a]=v;if(v>mx[a])mx[a]=v;}
+    return {mn:mn.map(v=>+v.toFixed(2)),mx:mx.map(v=>+v.toFixed(2))};},
+  nan:()=>{let n=0;for(let i=0;i<NV*3;i++)if(!isFinite(positions[i]))n++;return n;},
+};
+</script>
+</body>
+</html>

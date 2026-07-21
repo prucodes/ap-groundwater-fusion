@@ -66,13 +66,13 @@
     <div class="stars"></div>
     <div class="inner">
       <div class="eyebrow"><span class="dot"></span> Andhra Pradesh · Groundwater Intelligence Layer · Phase 3</div>
-      <h1>Groundwater levels in metres — from satellite + open data, validated</h1>
-      <p>Your refined ask: derive mandal groundwater <b>levels in metres</b> by calibrating NASA satellite &amp; open data to the existing sensors. What we deployed today covers the <b>639 mandals with APWRIMS sensor history</b> — the model gap-fills missing months and forecasts the next month (so a sensor going quiet doesn't leave a blank). Spatial estimation of mandals with no sensor at all is validated in backtests but is a research extension, not part of today's dashboard. Below: what we built, how accurate it is, and the one honest limit that shapes how the numbers should be read.</p>
+      <h1>Groundwater levels in metres — measured history, modelled nowcasts and open context</h1>
+      <p>Your refined ask: derive mandal groundwater <b>levels in metres</b> from APWRIMS-format history and open contextual data. Phase 0 distinguishes <b>632 modelled temporal nowcasts</b>, <b>7 measured-only records</b>, and <b>31 boundary-only records</b>. No future forecast horizon is released. Whole-mandal spatial estimation is a separate research task with materially higher error.</p>
       <div class="kpis">
-        <div class="kpi"><div class="v">±1.3<small> m</small></div><div class="l">typical error, next/missing month (validated on unseen data)</div></div>
+        <div class="kpi"><div class="v">1.30<small> m</small></div><div class="l">rolling temporal holdout MAE for lag-eligible records</div></div>
         <div class="kpi"><div class="v">0.90<small> R²</small></div><div class="l">variance explained on never-seen months</div></div>
-        <div class="kpi"><div class="v">688</div><div class="l">mandals · 88k depth readings · 2014–2026</div></div>
-        <div class="kpi"><div class="v">4</div><div class="l">independent validation checks</div></div>
+        <div class="kpi"><div class="v">688</div><div class="l">raw source series · 89,443 rows · 2014–2026</div></div>
+        <div class="kpi"><div class="v">4</div><div class="l">separate evaluation tasks; not interchangeable</div></div>
       </div>
     </div>
   </header>
@@ -87,28 +87,28 @@
     <table>
       <thead><tr><th style="width:30%">Component</th><th style="width:15%">Status</th><th>Detail</th></tr></thead>
       <tbody>
-        <tr><td><b>Ground-truth labels</b></td><td><span class="badge b-done">Live</span></td><td><b>88,753</b> real APWRIMS mandal depth readings (m below ground), all 688 mandals, monthly, 2014–2026.</td></tr>
+        <tr><td><b>Measured historical source</b></td><td><span class="badge b-done">Live</span></td><td><b>89,443</b> APWRIMS-format rows across 688 raw source-series/name variants, June 2014–June 2026; browser-session research sample with authorization pending.</td></tr>
         <tr><td><b>Satellite / open driver</b></td><td><span class="badge b-done">Live</span></td><td>NASA POWER rainfall per mandal (96k rows) — the recharge signal — auto-refreshing weekly, no manual feeding.</td></tr>
-        <tr><td><b>Levels engine (β)</b></td><td><span class="badge b-done">Built</span></td><td>Gradient-boosted model fusing sensor history + satellite rainfall → estimate in metres, with a <b>confidence band on every value</b>.</td></tr>
-        <tr><td><b>Forecasting</b></td><td><span class="badge b-done">Built</span></td><td>Season-ahead (3–6 month) forecast — the irrigation-planning window.</td></tr>
-        <tr><td><b>Dashboard</b></td><td><span class="badge b-done">Live</span></td><td>“Estimated Levels (β)” screen — all 688 mandals on the current 26/28-district map, labelled <i>modelled, not official</i>.</td></tr>
+        <tr><td><b>Levels engine (β)</b></td><td><span class="badge b-done">Built</span></td><td>Gradient-boosted temporal model using observation history and rainfall context → nowcast in metres, with a <b>model P10–P90 quantile range</b>.</td></tr>
+        <tr><td><b>Forecasting</b></td><td><span class="badge b-honest">Research only</span></td><td>1/3/6/12-month experiments are baseline-evaluated but not released; rolling-origin release gates are incomplete.</td></tr>
+        <tr><td><b>Dashboard</b></td><td><span class="badge b-done">Live</span></td><td>All 670 prototype boundary features remain visible: 632 modelled, seven measured-only and 31 boundary-only, across 28 districts.</td></tr>
       </tbody>
     </table>
 
-    <div class="sectionTitle"><span class="n">2</span> How accurate is it — validated four ways</div>
+    <div class="sectionTitle"><span class="n">2</span> Performance — four distinct evaluation tasks</div>
     <table>
       <thead><tr><th style="width:30%">Validation</th><th style="width:18%">Result</th><th>What it proves</th></tr></thead>
       <tbody>
         <tr><td><b>Temporal back-test</b><br><span style="font-size:10px;color:var(--muted)">train ≤2023, predict 2024–26</span></td><td><b>MAE 1.31 m</b> · R² 0.90 <span class="badge b-strong">+45% vs naive</span></td><td>Predicts months the model has never seen, far better than “repeat last year”.</td></tr>
-        <tr><td><b>Spatial snapshot</b><br><span style="font-size:10px;color:var(--muted)">vs independent 1-Jun-2026 district data</span></td><td><b>MAE 0.82 m</b> · r 0.98</td><td>Matches a separate official snapshot across all 28 districts.</td></tr>
+        <tr><td><b>Whole-mandal spatial holdout</b><br><span style="font-size:10px;color:var(--muted)">5-fold GroupKFold; IDW neighbours</span></td><td><b>MAE 4.86 m</b></td><td>Relevant evaluation for a mandal with no history; never reuse the temporal 1.30 m result for this task.</td></tr>
         <tr><td><b>Trend (year-on-year)</b></td><td><b>r 0.93</b> · 82% direction</td><td>Gets the rise/fall direction and magnitude right.</td></tr>
-        <tr><td><b>CGWB — independent network</b><br><span style="font-size:10px;color:var(--muted)">1,018 CGWB wells vs APWRIMS</span></td><td><b>~3–6 m spread</b> · r 0.40 <span class="badge b-honest">honest limit</span></td><td>The two government networks themselves disagree this much — see the box below.</td></tr>
+        <tr><td><b>CGWB/APWRIMS cross-network comparison</b><br><span style="font-size:10px;color:var(--muted)">same month, nearest within 20 km, 16,097 pairs</span></td><td><b>MAE 6.12 m</b> · r 0.40 <span class="badge b-honest">comparability</span></td><td>Different sites, aquifers and aggregation; not model accuracy or an error floor.</td></tr>
       </tbody>
     </table>
 
     <div class="reframe">
       <h4>The one honest point — and why it makes the system more trustworthy, not less</h4>
-      <p>When we cross-checked against <i>CGWB’s own independent well network</i> (1,018 AP stations), the two official networks agree only to <i>~3–6 metres</i>, with CGWB reading ~4 m shallower. This is <b>not a model error</b> — CGWB’s shallow dug wells and APWRIMS’s deeper piezometers <i>measure different aquifer zones</i>, and groundwater varies several metres even between wells a few km apart. The lesson: <i>“groundwater level in metres” is never one exact number</i> — it depends on the well and the aquifer. That is exactly why the engine ships a <b>confidence band on every estimate</b> and labels everything <b>“calibrated to APWRIMS.”</b> We measured the irreducible uncertainty rather than hiding it.</p>
+      <p>The reproducible same-month comparison contains <i>16,097 nearest-site pairs within 20 km</i> and yields <b>6.12 m MAE, r 0.40</b>. It is a network-comparability diagnostic: wells/sites, aquifers, aggregation and observation protocols differ. It is neither model validation nor a universal uncertainty floor. Model ranges are labelled P10–P90 quantile ranges rather than guaranteed confidence intervals.</p>
     </div>
 
     <div class="sectionTitle"><span class="n">3</span> What it does — and the forecasting sweet spot</div>
@@ -116,9 +116,9 @@
       <div class="panel">
         <h4>Capabilities today</h4>
         <ul>
-          <li><span class="chk">✓</span><span><b>Estimate metres</b> at any mandal with some history, to ~±1.3 m, with a band.</span></li>
+          <li><span class="chk">✓</span><span><b>Temporal nowcast/gap-fill</b> for lag-eligible history records: 1.30 m rolling-holdout MAE, with a model quantile range.</span></li>
           <li><span class="chk">✓</span><span><b>Gap-fill</b> missing months where sensors lapse.</span></li>
-          <li><span class="chk">✓</span><span><b>Forecast a season ahead</b> (3–6 mo) to ~±2–2.5 m — beats naive by ~20%.</span></li>
+          <li><span class="num">!</span><span><b>No released forecast</b>: all horizons remain research-only until rolling-origin gates pass.</span></li>
           <li><span class="chk">✓</span><span><b>Auto-refresh</b> weekly from NASA — no manual data feeding.</span></li>
         </ul>
       </div>
@@ -146,11 +146,28 @@
       <div class="panel">
         <h4>What it unlocks</h4>
         <ul>
-          <li><span class="chk">→</span><span><b>Metres for 639 mandals</b> with sensor history — gap-filled &amp; forecast, no fresh reading required each month.</span></li>
-          <li><span class="chk">→</span><span><b>Season-ahead</b> guidance for kharif irrigation planning.</span></li>
+          <li><span class="chk">→</span><span><b>632 modelled nowcasts</b> plus 7 explicit measured-only records; no silent substitution.</span></li>
+          <li><span class="chk">→</span><span><b>Horizon-specific research</b> without exposing an unreleased future value.</span></li>
           <li><span class="chk">→</span><span><b>Sensor-siting</b>: the model shows where uncertainty is highest — place the next sensors there.</span></li>
         </ul>
       </div>
+    </div>
+
+    <div class="sectionTitle"><span class="n">5</span> Candidate data sources — evidence, not a claimed ceiling</div>
+    <p style="font-size:11.5px;color:var(--soft);margin-bottom:8px">To answer "can we get closer, with less sensor dependency?", we rigorously tested every promising open source — including building a full Sentinel-1 InSAR pipeline. The result defines exactly how far open data can take us.</p>
+    <table>
+      <thead><tr><th style="width:34%">Method</th><th style="width:16%">Effect on accuracy</th><th>Finding</th></tr></thead>
+      <tbody>
+        <tr><td><b>Real CGWB specific yield</b> <span style="color:var(--muted)">(Nature dataset)</span></td><td><span class="badge b-done">+0.015 m</span></td><td>Replaced our 3-class proxy with measured aquifer physics — small gain, more defensible. <b>Adopted.</b></td></tr>
+        <tr><td><b>Sentinel-1 InSAR</b> subsidence</td><td><span class="badge b-honest">weak in AP</span></td><td>Full pipeline built &amp; run (13 interferograms). Subsidence↔groundwater correlation only <b>r=0.27</b> — AP's wet vegetated deltas suit InSAR poorly (the literature's &gt;80% is arid confined aquifers). Documented, not adopted.</td></tr>
+        <tr><td><b>IMD official rainfall</b> (0.25°)</td><td><span class="badge b-strong">~0</span></td><td>India's own gridded rainfall: neutral vs NASA POWER (rainfall isn't the bottleneck).</td></tr>
+        <tr><td>GRACE percentiles / SMAP / ET</td><td><span class="badge b-strong">~0</span></td><td>All recharge proxies — redundant with the rainfall + sensor history already in the model.</td></tr>
+        <tr><td>Deep learning (ConvLSTM/LSTM)</td><td><span class="badge b-strong">not established</span></td><td>No current experiment establishes that gradient boosting has reached a universal data or model ceiling.</td></tr>
+      </tbody>
+    </table>
+    <div class="reframe">
+      <h4>The bottom line — task-specific evidence</h4>
+      <p>The <b>1.30 m</b> result belongs to temporal nowcasting where lag history exists; the current whole-mandal result is about <b>4.86 m MAE</b>. Existing experiments do not prove a universal open-data ceiling. Better sensorless performance should be pursued through leakage-safe hydrogeology, terrain, crop/water-use, soil, InSAR and climate features, evaluated by whole-mandal and spatial-block holdouts.</p>
     </div>
 
     <div class="caveat"><span>⚠</span><span><b>Prototype / research output.</b> All estimates are modelled and labelled <b>β — not official APWRIMS data</b>. Accuracy figures are from held-out validation on real data; the CGWB cross-check reflects genuine cross-network differences, not model error. Built by an independent researcher for RTGS / APSDMA review.</span></div>
@@ -158,7 +175,7 @@
 
   <div class="footer">
     <div><strong>Data:</strong> APWRIMS (AP-GWD) · NASA POWER · CGWB via India Data Portal · NASA GRACE-DA · CHIRPS · TerraClimate — all open / research access.</div>
-    <div><strong>Validation:</strong> temporal MAE 1.31 m · spatial MAE 0.82 m (r 0.98) · trend r 0.93 · CGWB cross-network ~3–6 m.</div>
+    <div><strong>Validation:</strong> rolling temporal holdout MAE 1.30 m · whole-mandal spatial MAE 4.86 m · same-month CGWB/APWRIMS cross-network MAE 6.12 m (r 0.40).</div>
   </div>
 </div>
 </body>

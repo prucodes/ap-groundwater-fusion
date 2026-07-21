@@ -1,20 +1,22 @@
-import type { MandalFusionSeed } from "../lib/types";
+import type { MandalGroundwaterView } from "../lib/types";
 import { formatNumber, statusMeta } from "../lib/data";
 import { IconArrowRight, IconInfo } from "./icons";
 
-export function FusionExplanationCard({ mandal }: { mandal: MandalFusionSeed }) {
+export function FusionExplanationCard({ mandal }: { mandal: MandalGroundwaterView }) {
   const meta = statusMeta(mandal.status_bucket);
   const sig = mandal.sensor_satellite_agreement;
   const est = formatNumber(mandal.estimate_mbgl);
-  const band = formatNumber(((mandal.estimate_band_p90 ?? 0) - (mandal.estimate_band_p10 ?? 0)) / 2);
-  const recharge = mandal.water_balance_status || "—";
+  const interval = `${formatNumber(mandal.estimate_band_p10)}–${formatNumber(mandal.estimate_band_p90)}`;
+  const climateBalance = mandal.water_balance_status || "—";
 
   const note =
-    sig === "over_extraction"
-      ? `Pumping-pressure hypothesis (verify): the water table is falling even though the climatic water balance is ${recharge.toLowerCase()}. That pattern is consistent with extraction outpacing recharge — a candidate for demand management, to be confirmed with field data.`
-      : sig === "drought_decline"
-      ? `Climate-stress hypothesis (verify): the water table is falling alongside a rainfall deficit (${recharge}). Consistent with a climate-driven decline; recovery is plausible with better monsoon recharge.`
-      : `Stable / recovering: the water table is holding or rising, consistent with a ${recharge.toLowerCase()} water balance.`;
+    sig === "declining_despite_positive_climate_balance"
+      ? `The measured trend is declining while the climatic water balance is ${climateBalance.toLowerCase()}. This is a context mismatch to investigate, not evidence of a specific cause.`
+      : sig === "declining_without_positive_climate_balance"
+      ? `The measured trend is declining without a positive climatic water balance (${climateBalance}). Climate balance remains context and is not direct recharge.`
+      : sig === "unknown"
+      ? "Context agreement is unknown because one or more required fields are missing."
+      : `The measured trend is stable or recovering. The ${climateBalance.toLowerCase()} climate balance is supporting context only.`;
 
   return (
     <div>
@@ -22,27 +24,27 @@ export function FusionExplanationCard({ mandal }: { mandal: MandalFusionSeed }) 
         <div className="fusionNode">
           <div className="nodeLabel">Measured · APWRIMS</div>
           <div className="nodeVal">{formatNumber(mandal.median_groundwater_mbgl)} mbgl</div>
-          <div className="metricSub">sensor history</div>
+          <div className="metricSub">{mandal.observation_month_count} observation months</div>
         </div>
         <span className="fusionArrow">
           <IconArrowRight />
         </span>
         <div className="fusionNode">
-          <div className="nodeLabel">Satellite recharge</div>
+          <div className="nodeLabel">Rainfall / ET context</div>
           <div className="nodeVal" style={{ color: "var(--sig-gw)" }}>
             {formatNumber(mandal.rainfall_mm)} mm
           </div>
-          <div className="metricSub">balance: {recharge}</div>
+          <div className="metricSub">climate balance: {climateBalance}</div>
         </div>
         <span className="fusionArrow">
           <IconArrowRight />
         </span>
         <div className="fusionNode verdict">
-          <div className="nodeLabel">Fused estimate β</div>
+          <div className="nodeLabel">Modelled nowcast</div>
           <div className="nodeVal" style={{ color: meta.color }}>
             {est} m
           </div>
-          <div className="metricSub">±{band} m · {meta.label}</div>
+          <div className="metricSub">model P10–P90 {interval} m · {meta.label}</div>
         </div>
       </div>
       <div className="fusionNote">

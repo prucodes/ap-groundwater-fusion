@@ -36,6 +36,8 @@ const primaryNav = [
   { href: "/estimates", label: "Estimated Levels β", Icon: IconDroplet, desc: "Modelled mandal depth in metres (sensors + satellite rainfall), with confidence bands." },
   { href: "/nasa", label: "NASA Signals", Icon: IconSatellite, desc: "The raw, unfused GRACE-DA satellite truth with full source provenance." },
   { href: "/climate", label: "Climate & Balance", Icon: IconWaves, desc: "Rainfall in vs ET out — the water budget behind groundwater, with provenance." },
+  { href: "/living-water-table", label: "Living Water Table", Icon: IconDroplet, desc: "Experimental 3D V2 groundwater-depth view with explicit measured-only and no-data states.", badge: "3D" },
+  { href: "/crystal", label: "Crystal Water Table", Icon: IconWaves, desc: "Cinematic liquid-map 3D view — time-lapse 2014–2027, extraction-stress mode, district labels.", badge: "NEW" },
   { href: "/alerts", label: "Early Warning", Icon: IconAlert, desc: "Severity-ranked alerts (Critical/High/Watch) from the fusion engine." },
   { href: "/districts", label: "Districts", Icon: IconGrid, desc: "District roll-ups with an auto + AI situation brief per district." },
   { href: "/scenario", label: "Scenario Planner", Icon: IconCloudRain, desc: "Monsoon what-if: dial rainfall up/down and watch who tips into deficit." },
@@ -113,7 +115,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
 
         <nav className="sidebarNav" aria-label="Primary">
-          {primaryNav.map(({ href, label, Icon, desc }) => {
+          {primaryNav.map(({ href, label, Icon, desc, badge }) => {
             const active = href === "/" ? pathname === href : pathname.startsWith(href);
             return (
               <Link className={`navItem ${active ? "active" : ""}`} href={href} key={href} title={`${label} — ${desc}`}>
@@ -121,6 +123,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <Icon />
                 </span>
                 <span className="navLabel">{label}</span>
+                {badge ? <span className="navBadge">{badge}</span> : null}
               </Link>
             );
           })}

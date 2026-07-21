@@ -1,9 +1,10 @@
-import { dashboardSummary, prototypeNotice } from "../lib/data";
+import { prototypeNotice } from "../lib/data";
+import { DataProvenanceDates } from "./DataProvenanceDates";
 import { IconInfo } from "./icons";
 
 const STATUS_CHIPS = [
   { label: "NASA Signal", value: "Active", dot: "live" },
-  { label: "APWRIMS Sensors", value: "Prototype", dot: "proto" },
+  { label: "APWRIMS-format Observations", value: "Prototype", dot: "proto" },
   { label: "Boundary", value: "Public", dot: "muted" },
   { label: "APWRIMS", value: "Pending", dot: "pending" },
 ];
@@ -19,7 +20,6 @@ export function HeaderHero({
   showChips?: boolean;
   showBanner?: boolean;
 }) {
-  const fetchDate = dashboardSummary.summary.sample_fetch_date;
   return (
     <>
       <header className="hero fadeUp">
@@ -44,7 +44,7 @@ export function HeaderHero({
                     </span>
                   </span>
                 ))}
-                <span className="statStamp">{fetchDate}</span>
+                <span className="statStamp"><DataProvenanceDates compact /></span>
               </div>
             )}
           </div>

@@ -81,10 +81,10 @@ export function generateDistrictBrief(districtName: string): DistrictBrief | nul
   ];
 
   const action = deficit
-    ? "Regulate new bore-well permits, promote less water-intensive cropping, and prioritise recharge structures; confirm with official APWRIMS data before action."
+    ? "Review measured groundwater histories and field-verify priority mandals; treat the climate deficit as context, not a pumping directive."
     : verifyCount > 0
-      ? "Dispatch field verification to flagged mandals and reconcile against official APWRIMS data; monitor recharge through the monsoon."
-      : "Routine monitoring; revisit after the next monsoon and confirm with official APWRIMS data.";
+      ? "Field-verify flagged mandals and reconcile against official APWRIMS data."
+      : "Continue routine monitoring and confirm with official APWRIMS data.";
 
   const plain = `${name} situation brief\n${headline}\n\n${paragraph}\n\nRecommended: ${action}\n\n(Prototype — TerraClimate ${districtGeometry.balance_year} balance + NASA GRACE-DA + CHIRPS. Not official.)`;
 

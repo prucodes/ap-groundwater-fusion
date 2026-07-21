@@ -18,10 +18,13 @@ import {
 } from "../../components/icons";
 import {
   depthColor,
+  datasetManifest,
   levelsEstimates,
+  mandalByMapKey,
   mapGeometry,
   mandalToPath,
   MAP_VIEW,
+  modelCard,
   titleCase,
   type MandalLevelEstimate,
 } from "../../lib/data";
@@ -86,37 +89,37 @@ export default function EstimatesPage() {
         subtitle={
           <>
             Mandal groundwater depth <strong>in metres</strong>, modelled by fusing each mandal&apos;s APWRIMS sensor
-            history with NASA satellite signals — so depth can be estimated <strong>for months a sensor missed</strong>{" "}
-            (gap-fill &amp; short-range forecast). Every value carries an honest confidence band.{" "}
-            <strong>Modelled estimate for mandals with sensor history — not official APWRIMS data.</strong>
+            history with climate and terrain features for <strong>current-period temporal nowcasts</strong>.{" "}
+            Measured values remain separate, and no forecast horizon is released.{" "}
+            <strong>Modelled nowcasts for lag-eligible mandals — not official APWRIMS data.</strong>
           </>
         }
         showChips={false}
       />
 
       <div className="provRibbon">
-        <span className="provRibbonItem"><IconActivity /> APWRIMS sensor history · {bundle.n_mandals} mandals · 2014–2026</span>
+        <span className="provRibbonItem"><IconActivity /> APWRIMS-format history · {bundle.n_mandals} modelled mandals · through {datasetManifest.periods.latestObservationPeriod}</span>
         <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconSatellite /> NASA POWER rainfall · recharge driver</span>
+        <span className="provRibbonItem"><IconSatellite /> CHIRPS / TerraClimate · climate context</span>
         <span className="provRibbonDot" />
         <span className="provRibbonItem"><IconTarget /> gradient-boosted + quantile bands</span>
         <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconShield /> BETA · validated, not official</span>
+        <span className="provRibbonItem"><IconShield /> Prototype · cohort-specific evaluation</span>
       </div>
 
       <div className="kpiRow stagger">
         <KpiCard
           icon={<IconDroplet />}
-          label="Mandals Estimated"
+          label="Modelled Mandals"
           value={<CountUp value={bundle.n_mandals} />}
           foot="metres below ground, as of latest month"
           accent="var(--teal)"
         />
         <KpiCard
           icon={<IconTarget />}
-          label="Validation Accuracy"
-          value={<>±{bundle.backtest.forecast_mae_m}<span className="unit">m</span></>}
-          foot={`MAE on never-seen months · R² ${bundle.backtest.forecast_r2}`}
+          label="Temporal Holdout MAE"
+          value={<>{bundle.backtest.forecast_mae_m}<span className="unit">m</span></>}
+          foot={`${modelCard.evaluations.temporalNowcast.sampleCount.toLocaleString("en-IN")} eligible mandal-months · R² ${bundle.backtest.forecast_r2}`}
           accent="var(--green)"
         />
         <KpiCard
@@ -146,7 +149,8 @@ export default function EstimatesPage() {
           <div className="estMapWrap">
             <svg viewBox={`0 0 ${MAP_VIEW.width} ${MAP_VIEW.height}`} className="estMapSvg" role="img" aria-label="Estimated groundwater depth by mandal">
               {mapGeometry.mandals.map((m, i) => {
-                const est = byKey.get(norm(m.m));
+                const view = mandalByMapKey(m.d, m.m);
+                const est = view ? byKey.get(view.id) : undefined;
                 const fill = est ? depthColor(est.estimate_mbgl) : "var(--field)";
                 const active = hover && est && hover.mkey === est.mkey;
                 return (
@@ -173,9 +177,9 @@ export default function EstimatesPage() {
               <div className="estHoverCard">
                 <div className="estHoverTitle">{titleCase(hover.mandal)}</div>
                 <div className="estHoverSub">{titleCase(hover.district)} · {AQ_LABEL[hover.aquifer] ?? hover.aquifer}</div>
-                <div className="estHoverRow"><span>Estimate</span><strong>{hover.estimate_mbgl} m</strong></div>
-                <div className="estHoverRow"><span>Confidence band</span><span>{hover.band_p10}–{hover.band_p90} m</span></div>
-                <div className="estHoverRow"><span>Observed ({hover.as_of})</span><span>{hover.observed_mbgl} m</span></div>
+                <div className="estHoverRow"><span>Modelled nowcast</span><strong>{hover.estimate_mbgl} m</strong></div>
+                <div className="estHoverRow"><span>Model P10–P90</span><span>{hover.band_p10}–{hover.band_p90} m</span></div>
+                <div className="estHoverRow"><span>Latest measured aggregate ({hover.as_of})</span><span>{hover.observed_mbgl} m</span></div>
                 {hover.trend_m_per_yr !== null ? (
                   <div className="estHoverRow">
                     <span>YoY change</span>
@@ -199,12 +203,12 @@ export default function EstimatesPage() {
           <div className="estMethodBody">
             <p className="estMethodLead">
               We trained on <strong>{bundle.n_mandals} mandals × 12 years</strong> of real APWRIMS depth, then tested by
-              hiding entire time periods the model had never seen.
+              holding out the 2024–2026 evaluation period for lag-eligible mandal-months.
             </p>
             <div className="estMetricGrid">
-              <div className="estMetric"><span className="estMetricVal">±{bundle.backtest.forecast_mae_m} m</span><span className="estMetricLbl">typical error (MAE)</span></div>
+              <div className="estMetric"><span className="estMetricVal">{bundle.backtest.forecast_mae_m} m</span><span className="estMetricLbl">rolling temporal holdout MAE</span></div>
               <div className="estMetric"><span className="estMetricVal">{bundle.backtest.forecast_r2}</span><span className="estMetricLbl">R² explained</span></div>
-              <div className="estMetric"><span className="estMetricVal">+{bundle.backtest.vs_persistence_pct}%</span><span className="estMetricLbl">better than naive</span></div>
+              <div className="estMetric"><span className="estMetricVal">{modelCard.evaluations.spatialEstimation.reportedMetric.maeM} m</span><span className="estMetricLbl">whole-mandal spatial MAE</span></div>
             </div>
             <div className="estTerrain">
               <div className="estTerrainHead">Accuracy by terrain (MAE)</div>
@@ -212,22 +216,23 @@ export default function EstimatesPage() {
                 <div key={k} className="estTerrainRow">
                   <span>{AQ_LABEL[k] ?? k}</span>
                   <span className="estTerrainBar"><span style={{ width: `${Math.min(100, (v / 2) * 100)}%` }} /></span>
-                  <strong>±{v} m</strong>
+                  <strong>{v} m</strong>
                 </div>
               ))}
             </div>
-            <div className="estTerrainHead" style={{ marginTop: 16, marginBottom: 8 }}>Cross-checked against independent data</div>
+            <div className="estTerrainHead" style={{ marginTop: 16, marginBottom: 8 }}>Separate evaluation tasks</div>
             <ul className="estCaveats" style={{ borderTop: "none", paddingTop: 0 }}>
-              <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Unseen months (2024–26): <strong>±1.31 m</strong>, R² 0.90 — 45% better than naive.</span></li>
-              <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Independent June-2026 district snapshot: <strong>±0.82 m, r 0.98</strong>.</span></li>
-              <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Year-on-year trend direction: <strong>r 0.93</strong>.</span></li>
-              <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>CGWB independent network: official networks differ <strong>3–6 m</strong> by nature (different aquifer zones) — which is <em>why every estimate ships a confidence band</em>.</span></li>
+              <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Rolling temporal holdout ({modelCard.evaluations.temporalNowcast.evaluationPeriod.start}–{modelCard.evaluations.temporalNowcast.evaluationPeriod.end}, n={modelCard.evaluations.temporalNowcast.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.temporalNowcast.model.maeM} m MAE</strong>, R² {modelCard.evaluations.temporalNowcast.model.r2}.</span></li>
+              <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Whole-mandal spatial holdout ({modelCard.evaluations.spatialEstimation.mandalCount} mandals): <strong>{modelCard.evaluations.spatialEstimation.reportedMetric.maeM} m MAE</strong>. This is the relevant no-history estimate task.</span></li>
+              <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Same-month CGWB/APWRIMS cross-network comparison (n={modelCard.evaluations.crossNetworkComparison.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.crossNetworkComparison.maeM} m MAE, r {modelCard.evaluations.crossNetworkComparison.correlation}</strong>; a network comparability diagnostic, not model accuracy.</span></li>
+              <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Model P10–P90 empirical coverage: <strong>{modelCard.evaluations.intervalEvaluation.empiricalCoveragePct}%</strong> over {modelCard.evaluations.intervalEvaluation.sampleCount.toLocaleString("en-IN")} eligible holdout rows.</span></li>
             </ul>
             <ul className="estCaveats">
               <li><IconInfo /> A <strong>modelled estimate</strong> with uncertainty — not a replacement for an official reading.</li>
               <li><IconInfo /> Best where a mandal has some history (nowcast/gap-fill). Hard-rock Rayalaseema is the weakest.</li>
-              <li><IconInfo /> Validation is a <strong>temporal hold-out</strong> (unseen months on mandals with history) — not spatial estimation of sensorless mandals. The confidence band is model-derived, not yet calibrated for empirical p10–p90 coverage.</li>
-              <li><IconInfo /> Source sensor series carries occasional noise; extreme YoY swings are winsorised.</li>
+              <li><IconInfo /> Temporal nowcast performance does not describe whole-mandal or no-history estimation.</li>
+              <li><IconInfo /> The displayed interval is a <strong>model P10–P90 quantile range</strong>, not a guaranteed 80% confidence interval.</li>
+              <li><IconInfo /> No future horizon is released; direct forecast experiments remain research-only.</li>
             </ul>
           </div>
         </aside>
@@ -254,8 +259,8 @@ export default function EstimatesPage() {
             <thead>
               <tr>
                 <th>Mandal</th><th>District</th><th>Terrain</th>
-                <th className="num">Estimate</th><th className="num">Band (p10–p90)</th>
-                <th className="num">Observed</th>
+                <th className="num">Modelled nowcast</th><th className="num">Model P10–P90</th>
+                <th className="num">Latest measured</th>
                 <th
                   className="num"
                   title="Year-on-year change in metres below ground. Positive (+, red) = water table deeper / worse; negative (−, green) = shallower / recovering."
@@ -265,8 +270,8 @@ export default function EstimatesPage() {
               </tr>
             </thead>
             <tbody>
-              {rows.slice(0, 120).map((m) => (
-                <tr key={m.mkey}>
+              {rows.slice(0, 120).map((m, i) => (
+                <tr key={`${m.mkey}-${i}`}>
                   <td><span className="estDot" style={{ background: depthColor(m.estimate_mbgl) }} />{titleCase(m.mandal)}</td>
                   <td className="muted">{titleCase(m.district)}</td>
                   <td className="muted">{AQ_LABEL[m.aquifer] ?? m.aquifer}</td>

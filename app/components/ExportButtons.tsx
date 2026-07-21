@@ -1,6 +1,6 @@
 "use client";
 
-import type { MandalFusionSeed } from "../lib/types";
+import type { MandalGroundwaterView } from "../lib/types";
 import { downloadCsv, mandalsToCsv } from "../lib/csv";
 import { IconDownload, IconPrinter } from "./icons";
 
@@ -9,7 +9,7 @@ export function ExportCsvButton({
   filename = "ap_groundwater_fusion_prototype.csv",
   label = "Export CSV",
 }: {
-  rows: MandalFusionSeed[];
+  rows: MandalGroundwaterView[];
   filename?: string;
   label?: string;
 }) {

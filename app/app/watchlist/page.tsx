@@ -14,16 +14,16 @@ import {
   IconTarget,
 } from "../../components/icons";
 import { balanceMeta, districts, formatNumber, mandals, titleCase, watchlistMandals } from "../../lib/data";
-import type { MandalFusionSeed } from "../../lib/types";
+import type { MandalGroundwaterView } from "../../lib/types";
 
 const MAX_DEPTH = 25;
 
-function reasonFor(m: MandalFusionSeed) {
-  if (m.sensor_satellite_agreement === "over_extraction") {
-    return "Falling despite a healthy water balance — pumping-pressure hypothesis (verify)";
+function reasonFor(m: MandalGroundwaterView) {
+  if (m.sensor_satellite_agreement === "declining_despite_positive_climate_balance") {
+    return "Measured decline despite a positive climatic water balance — context mismatch to verify";
   }
-  if (m.sensor_satellite_agreement === "drought_decline") {
-    return "Falling with a rainfall deficit — climate-stress hypothesis (verify)";
+  if (m.sensor_satellite_agreement === "declining_without_positive_climate_balance") {
+    return "Measured decline without a positive climatic water balance — review history";
   }
   if (m.confidence_label.toLowerCase().includes("low")) {
     return "Sparse history — collect more readings";
@@ -40,29 +40,29 @@ const summaryCards = [
     bg: "var(--st-low-bg)",
     color: "#5f5494",
     accent: false,
-    count: (rows: MandalFusionSeed[]) => rows.length,
+    count: (rows: MandalGroundwaterView[]) => rows.length,
   },
   {
     key: "strong",
-    label: "Pumping-pressure (verify)",
-    meta: "falling despite healthy balance",
+    label: "Context mismatch",
+    meta: "decline despite positive balance",
     icon: <IconAlert />,
     bg: "var(--st-verify-bg)",
     color: "#b0432f",
     accent: true,
-    count: (rows: MandalFusionSeed[]) =>
-      rows.filter((r) => r.sensor_satellite_agreement === "over_extraction").length,
+    count: (rows: MandalGroundwaterView[]) =>
+      rows.filter((r) => r.sensor_satellite_agreement === "declining_despite_positive_climate_balance").length,
   },
   {
     key: "moderate",
-    label: "Climate-stress (verify)",
-    meta: "falling with deficit",
+    label: "Decline + climate context",
+    meta: "without positive balance",
     icon: <IconTarget />,
     bg: "var(--st-watch-bg)",
     color: "#a9741a",
     accent: false,
-    count: (rows: MandalFusionSeed[]) =>
-      rows.filter((r) => r.sensor_satellite_agreement === "drought_decline").length,
+    count: (rows: MandalGroundwaterView[]) =>
+      rows.filter((r) => r.sensor_satellite_agreement === "declining_without_positive_climate_balance").length,
   },
   {
     key: "low",
@@ -72,7 +72,7 @@ const summaryCards = [
     bg: "var(--st-low-bg)",
     color: "#5f5494",
     accent: false,
-    count: (rows: MandalFusionSeed[]) =>
+    count: (rows: MandalGroundwaterView[]) =>
       rows.filter((r) => r.confidence_label.toLowerCase().includes("low")).length,
   },
   {
@@ -83,7 +83,7 @@ const summaryCards = [
     bg: "var(--st-insufficient-bg)",
     color: "#5d6b7e",
     accent: false,
-    count: (rows: MandalFusionSeed[]) => rows.filter((r) => r.status_bucket === ("Insufficient Data" as never)).length,
+    count: (rows: MandalGroundwaterView[]) => rows.filter((r) => r.status_bucket === "Insufficient Data").length,
   },
 ];
 
@@ -116,12 +116,11 @@ export default function WatchlistPage() {
   return (
     <div className="pageWrap">
       <HeaderHero
-        title="Stress & Action Watchlist"
+        title="Groundwater Monitoring Watchlist"
         subtitle={
           <>
-            Mandals ranked by groundwater <strong>stress</strong> — deep or declining water tables, separating a{" "}
-            <strong>pumping-pressure hypothesis</strong> (falling despite a healthy water balance) from a{" "}
-            <strong>climate-stress hypothesis</strong> (falling with a rainfall deficit) — both to verify.
+            Mandals ranked for review using measured depth/trend and explicit data coverage. Climate-balance categories
+            are contextual patterns to investigate, not causal attribution or pumping instructions.
           </>
         }
         showChips={false}
@@ -157,8 +156,8 @@ export default function WatchlistPage() {
             <label>Signal</label>
             <select value={agreement} onChange={(e) => setAgreement(e.target.value)}>
               <option value="all">All Signals</option>
-              <option value="over_extraction">Pumping-pressure (verify)</option>
-              <option value="drought_decline">Climate-stress (verify)</option>
+              <option value="declining_despite_positive_climate_balance">Decline despite positive balance</option>
+              <option value="declining_without_positive_climate_balance">Decline without positive balance</option>
               <option value="stable_or_recovering">Stable / recovering</option>
             </select>
           </div>

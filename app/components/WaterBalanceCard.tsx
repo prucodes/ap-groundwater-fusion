@@ -1,10 +1,10 @@
-import type { MandalFusionSeed } from "../lib/types";
+import type { MandalGroundwaterView } from "../lib/types";
 import { balanceMeta, formatNumber } from "../lib/data";
 import { IconCloudRain, IconLeaf } from "./icons";
 
 /* Annual water balance: rainfall (supply) vs actual ET (demand) → net.
    Negative/near-zero net = demand met by stored/groundwater (overdraft pressure). */
-export function WaterBalanceCard({ mandal, year }: { mandal: MandalFusionSeed; year?: string }) {
+export function WaterBalanceCard({ mandal, year }: { mandal: MandalGroundwaterView; year?: string }) {
   const et = mandal.annual_et_mm;
   const net = mandal.water_balance_mm;
   if (et === null || et === undefined || net === null || net === undefined) return null;

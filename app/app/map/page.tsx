@@ -10,7 +10,7 @@ import { StatusLegend } from "../../components/StatusLegend";
 import { SelectedMandalPanel } from "../../components/SelectedMandalPanel";
 import { IconGlobe, IconGrid, IconInfo, IconMap } from "../../components/icons";
 import {
-  dataAsOf,
+  latestObservationPeriod,
   districtGeometry,
   formatNumber,
   formatPeriod,
@@ -82,7 +82,11 @@ export default function MapPage() {
                   <IconMap />
                 </span>
                 {level === "mandal" ? "Andhra Pradesh — Mandal Fusion Status" : "Andhra Pradesh — District Heat-Map"}
-                {dataAsOf ? <span className="dataAsOf">Data as of {formatPeriod(dataAsOf)}</span> : null}
+                {latestObservationPeriod ? (
+                  <span className="dataAsOf">
+                    Latest observation period {formatPeriod(latestObservationPeriod)}
+                  </span>
+                ) : null}
               </div>
               <div className="segmented">
                 <button
