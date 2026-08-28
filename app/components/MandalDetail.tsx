@@ -5,13 +5,13 @@ import {
   dashboardSummary,
   formatNumber,
   formatPeriod,
-  mandals,
   observationSeries,
   sampleForMandal,
   statusMeta,
   titleCase,
   wetnessLabel,
 } from "../lib/data";
+import { MandalSelectorStrip } from "./MandalSelectorStrip";
 import { WaterBalanceCard } from "./WaterBalanceCard";
 import { AgreementTag, ConfidenceBadge, StatusBadge } from "./Badges";
 import { PercentileRing, Sparkline } from "./charts";
@@ -73,37 +73,6 @@ function actionItems(m: MandalGroundwaterView) {
     "Reassess after official APWRIMS export and boundaries arrive",
     "Do not treat as official until APWRIMS/APSAC/RTGS boundaries supplied",
   ];
-}
-
-export function MandalSelectorStrip({ activeId }: { activeId: string }) {
-  return (
-    <div className="tableWrap" style={{ display: "flex", gap: 8, paddingBottom: 4 }}>
-      {mandals.map((m) => {
-        const meta = statusMeta(m.status_bucket);
-        const active = m.id === activeId;
-        return (
-          <Link
-            key={m.id}
-            href={`/mandals/${m.id}`}
-            className="badge"
-            style={{
-              whiteSpace: "nowrap",
-              padding: "7px 12px",
-              border: active ? `1px solid ${meta.color}` : "1px solid var(--line)",
-              background: active ? meta.color : "var(--card)",
-              color: active ? "#fff" : "var(--ink-soft)",
-            }}
-          >
-            <span
-              className="dot"
-              style={{ background: active ? "#fff" : meta.color, width: 7, height: 7 }}
-            />
-            {titleCase(m.mandal_name)}
-          </Link>
-        );
-      })}
-    </div>
-  );
 }
 
 export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {

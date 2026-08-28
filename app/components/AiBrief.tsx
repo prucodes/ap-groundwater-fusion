@@ -27,6 +27,19 @@ export function AiBrief({ district: controlledDistrict, onDistrictChange }: { di
     setText("");
     setNote("");
     setSource("");
+    // The briefing route runs server-side (it holds the model API key), so it
+    // cannot exist on static hosting. Say so plainly rather than firing a fetch
+    // that 404s and surfacing a misleading "could not reach" error.
+    if (process.env.NEXT_PUBLIC_STATIC_EXPORT === "1") {
+      setText(
+        "The AI briefing runs server-side and is not available in this static demo. " +
+          "Every figure it would cite is already on this page and in the model card — " +
+          "run the app with a server (npm run build && npm start) to enable it.",
+      );
+      setNote("Static demo — server-backed feature disabled.");
+      setLoading(false);
+      return;
+    }
     try {
       const res = await fetch("/api/ai-brief", {
         method: "POST",

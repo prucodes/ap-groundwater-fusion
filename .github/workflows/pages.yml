@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+# Builds the static export and publishes it to Pages. The built site is never
+# committed — it is uploaded straight to Pages as an artifact, so the repository
+# keeps only source.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+# Allow one concurrent deployment; let an in-progress run finish so a live
+# deploy is never left half-published.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+      - name: Type-check
+        working-directory: app
+        run: npm run typecheck
+      - name: Build static export
+        working-directory: app
+        # basePath must match the repository name so assets resolve under
+        # https://<user>.github.io/<repo>/. Override PAGES_BASE_PATH (to "")
+        # if this ever moves to a custom domain or a user/org site.
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: npm run build:static
+      - name: Disable Jekyll processing
+        # Without this, Pages' Jekyll step ignores files/dirs beginning with "_",
+        # which would drop Next's _next/ asset directory and break every page.
+        run: touch app/out/.nojekyll
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
