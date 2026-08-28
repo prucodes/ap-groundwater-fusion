@@ -13,7 +13,9 @@ export default function CrystalWaterTablePage() {
   return (
     <div style={{ height: "100vh", margin: "0 -24px 0 0" }}>
       <iframe
-        src="/water-crystal-3d.html"
+        // Next rewrites next/image and <Link> for basePath, but not a raw
+        // iframe src, so prefix it explicitly or this 404s on GitHub Pages.
+        src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/water-crystal-3d.html`}
         title="Crystal Water Table — cinematic 3D view"
         allow="fullscreen"
         style={{ border: 0, width: "100%", height: "100%", display: "block" }}

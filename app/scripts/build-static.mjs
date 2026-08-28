@@ -27,6 +27,15 @@ const DYNAMIC_PAGES = [
   "app/living-water-table/page.tsx",
   "app/mandals/[id]/page.tsx",
 ];
+
+// Next applies basePath to next/image and <Link>, but NOT to url() inside CSS.
+// Root-absolute asset urls therefore 404 when the site is served from a
+// subpath, which silently drops the header/sidebar satellite artwork.
+const CSS_WITH_ABSOLUTE_URLS = "app/globals.css";
+const BASE_PATH =
+  process.env.PAGES_BASE_PATH !== undefined
+    ? process.env.PAGES_BASE_PATH
+    : "/ap-groundwater-fusion";
 const API_DIR = join(APP_DIR, "app/api");
 // Must live OUTSIDE the app router directory, or Next still treats it as a route.
 const API_STASH = join(APP_DIR, ".api-static-build-stash");
@@ -65,6 +74,17 @@ try {
         'export const dynamic = "force-static";',
       ),
     );
+  }
+
+  if (BASE_PATH) {
+    const cssFile = join(APP_DIR, CSS_WITH_ABSOLUTE_URLS);
+    const css = readFileSync(cssFile, "utf8");
+    const rewritten = css.replaceAll('url("/', `url("${BASE_PATH}/`);
+    if (rewritten === css && css.includes('url("/')) {
+      throw new Error(`Failed to rewrite absolute url() paths in ${CSS_WITH_ABSOLUTE_URLS}.`);
+    }
+    originals.set(cssFile, css);
+    writeFileSync(cssFile, rewritten);
   }
 
   if (existsSync(API_DIR)) {

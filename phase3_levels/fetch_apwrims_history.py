@@ -4,10 +4,13 @@ Walks the location hierarchy (state -> districts -> mandals) and calls the
 /api/v2/gwlevels/chart endpoint per mandal for 2014-06 .. 2026-05, writing one
 row per (mandal, month): district, mandal, uuids, date, level_mbgl.
 
-Auth is a browser session cookie, supplied ONLY via the APWRIMS_COOKIE env var
-(never hard-coded). The cookie is short-lived; if calls return 0 rows / 401,
-refresh it from DevTools and re-export APWRIMS_COOKIE. Use only where access is
-permitted — this is an authorization-pending research sample, not official data.
+No authentication is required: these endpoints back the public MIS dashboard and
+answer requests carrying no Cookie header (verified 2026-08-28). APWRIMS_COOKIE is
+optional and only needed if the portal later starts gating them.
+
+Use only where access is permitted — technically open is not the same as
+authorised to bulk-harvest. This is an authorization-pending research sample, not
+official data, and the run is rate-limited on purpose.
 """
 import json, os, ssl, sys, time, urllib.request, csv, datetime
 
@@ -17,15 +20,17 @@ os.makedirs(OUT, exist_ok=True)
 
 AP_STATE_UUID = "6f86292b-dd9a-4987-bb8f-c3940263b349"
 BASE = "https://apwrims.ap.gov.in"
-# Credentials must come from the environment — never hard-code a session cookie.
-# This is an authenticated browser-session endpoint; use only with permitted access.
+# Verified 2026-08-28: these endpoints serve the public MIS dashboard and require
+# NO authentication — a request carrying no Cookie header at all returns the full
+# series. The cookie a browser sends here is analytics only (_ga / _clck), not a
+# session token, so there is nothing session-shaped to keep fresh.
+#
+# APWRIMS_COOKIE therefore stays OPTIONAL: set it only if the portal later starts
+# gating these endpoints. It is still read from the environment and never
+# hard-coded. Access being technically open is not the same as being authorised to
+# bulk-harvest: this remains an authorisation-pending research sample, not official
+# data, and the polite crawl delay below is deliberate.
 COOKIE = os.environ.get("APWRIMS_COOKIE")
-if not COOKIE:
-    sys.exit(
-        "APWRIMS_COOKIE not set. Export a valid, authorized session cookie before running:\n"
-        "  export APWRIMS_COOKIE='JSESSIONID=...; ...'\n"
-        "Do not commit credentials. Use only where APWRIMS access is permitted."
-    )
 # End date defaults to the current month so a refreshed cookie actually pulls
 # newly published months; pin it with APWRIMS_END (YYYYMM) to reproduce a run.
 SDATE = os.environ.get("APWRIMS_START", "201406")
@@ -54,13 +59,16 @@ _ctx = _tls_context()
 
 def post(path, payload, timeout=60):
     body = json.dumps(payload).encode()
-    req = urllib.request.Request(BASE + path, data=body, headers={
+    headers = {
         "Content-Type": "application/json",
         "Accept": "application/json, text/plain, */*",
         "Origin": BASE,
-        "Cookie": COOKIE,
+        "Referer": BASE + "/mis/groundwater/levels",
         "User-Agent": "Mozilla/5.0",
-    })
+    }
+    if COOKIE:
+        headers["Cookie"] = COOKIE
+    req = urllib.request.Request(BASE + path, data=body, headers=headers)
     with urllib.request.urlopen(req, timeout=timeout, context=_ctx) as r:
         return json.loads(r.read())
 
