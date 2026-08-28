@@ -50,6 +50,7 @@ jobs:
             phase3_levels/outputs/phase0_evaluations.json \
             phase3_levels/outputs/weekly_run_log.json \
             phase3_levels/data \
+            phase3_levels/apwrims/apwrims_gw_history.csv \
             app/data/mandal_groundwater_records_v2.json \
             app/data/mandal_observation_series_v2.json \
             app/data/model_card.json \

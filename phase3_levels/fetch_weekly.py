@@ -25,11 +25,14 @@ SCRIPTS = os.path.join(ROOT, "scripts")
 PY = sys.executable
 
 
-def step(name, args, cwd=ROOT, required=False):
+DEFAULT_STEP_TIMEOUT = 1800
+
+
+def step(name, args, cwd=ROOT, required=False, timeout=DEFAULT_STEP_TIMEOUT):
     started = datetime.datetime.now()
     print(f"\n→ {name}")
     try:
-        r = subprocess.run(args, cwd=cwd, capture_output=True, text=True, timeout=1800)
+        r = subprocess.run(args, cwd=cwd, capture_output=True, text=True, timeout=timeout)
         ok = r.returncode == 0
         tail = (r.stdout or r.stderr).strip().splitlines()[-3:]
         for ln in tail:
@@ -54,6 +57,14 @@ STEPS = [
     ("fetch GRACE-DA",       [PY, os.path.join(SCRIPTS, "download_nasa_grace_da.py"), "--overwrite"], False),
     ("fetch CHIRPS rain",    [PY, os.path.join(SCRIPTS, "fetch_chirps_rainfall.py")], False),
     ("refresh TerraClimate", [PY, os.path.join(SCRIPTS, "fetch_terraclimate_balance.py")], False),
+    # The APWRIMS sensor history — the model's training labels. These endpoints
+    # need no authentication (verified 2026-08-28), so this runs unattended like
+    # the satellite sources. It walks ~670 mandals with a deliberate crawl delay,
+    # so it needs well over the default timeout. Optional by design: on any
+    # failure it refuses to publish a degraded pull and the previous history is
+    # reused, exactly like a failed raster fetch.
+    ("fetch APWRIMS sensor history",
+     [PY, os.path.join(HERE, "fetch_apwrims_history.py")], False, 5400),
     # The fetch steps above only land rasters on disk. These two resample them
     # into the per-district / per-mandal context the publisher actually reads —
     # without them the new rasters are downloaded and then ignored.
@@ -70,8 +81,11 @@ def main():
     print(f"=== Phase 3 weekly run · {datetime.datetime.now().isoformat(timespec='seconds')} ===")
     log = []
     failed_required = False
-    for name, args, required in STEPS:
-        result = step(name, args, required=required)
+    for entry in STEPS:
+        # Entries are (name, args, required) with an optional 4th timeout override.
+        name, args, required = entry[0], entry[1], entry[2]
+        timeout = entry[3] if len(entry) > 3 else DEFAULT_STEP_TIMEOUT
+        result = step(name, args, required=required, timeout=timeout)
         result["required"] = required
         log.append(result)
         if required and not result["ok"]:

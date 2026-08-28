@@ -113,6 +113,35 @@ def series_rows(resp):
     return rows
 
 
+MIN_RETAINED_FRACTION = 0.9
+
+
+def existing_row_count(path):
+    """Data rows in an existing CSV (header excluded); 0 if absent."""
+    if not os.path.exists(path):
+        return 0
+    with open(path, newline="") as handle:
+        return max(0, sum(1 for _ in handle) - 1)
+
+
+def publish_refusal(new_rows, previous_rows, is_subset):
+    """Why this pull must not replace the stored history, or None to publish.
+
+    Guards the unattended weekly run against silently degrading a good history
+    when the portal returns empties or the district walk dies part-way. A
+    district-filtered run is a deliberate subset, so it is exempt.
+    """
+    if is_subset or not previous_rows:
+        return None
+    floor = int(previous_rows * MIN_RETAINED_FRACTION)
+    if new_rows < floor:
+        return (
+            f"Refusing to publish: pulled {new_rows} rows but the stored history "
+            f"has {previous_rows} (floor {floor})."
+        )
+    return None
+
+
 def main():
     only = sys.argv[1] if len(sys.argv) > 1 else None  # optional: district-name filter
     districts = children("STATE", "DISTRICT", [])
@@ -122,8 +151,12 @@ def main():
     print(f"AP districts: {len(ap)}")
 
     out_path = os.path.join(OUT, "apwrims_gw_history.csv")
+    # Write to a temp file and only swap it in on success. Streaming straight
+    # into out_path means any mid-run failure (network drop, CI timeout) leaves
+    # a truncated history behind — which matters now that this runs unattended.
+    tmp_path = out_path + ".tmp"
     n_rows = 0
-    with open(out_path, "w", newline="") as f:
+    with open(tmp_path, "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["district", "district_uuid", "mandal", "mandal_uuid", "date", "level_mbgl"])
         for i, (duuid, dname) in enumerate(sorted(ap.items(), key=lambda x: x[1]), 1):
@@ -144,7 +177,16 @@ def main():
                 except Exception as e:
                     print(f"     [warn] {mname}: {e}")
             f.flush()
-    print(f"\nWrote {n_rows} rows -> {out_path}")
+
+    previous_rows = existing_row_count(out_path)
+    refusal = publish_refusal(n_rows, previous_rows, is_subset=bool(only))
+    if refusal:
+        os.remove(tmp_path)
+        sys.exit(f"{refusal} The existing history at {out_path} is untouched.")
+
+    os.replace(tmp_path, out_path)
+    delta = n_rows - previous_rows
+    print(f"\nWrote {n_rows} rows ({delta:+d} vs previous) -> {out_path}")
 
 
 if __name__ == "__main__":
