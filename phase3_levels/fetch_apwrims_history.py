@@ -26,10 +26,30 @@ if not COOKIE:
         "  export APWRIMS_COOKIE='JSESSIONID=...; ...'\n"
         "Do not commit credentials. Use only where APWRIMS access is permitted."
     )
-SDATE, EDATE = "201406", "202605"
+# End date defaults to the current month so a refreshed cookie actually pulls
+# newly published months; pin it with APWRIMS_END (YYYYMM) to reproduce a run.
+SDATE = os.environ.get("APWRIMS_START", "201406")
+EDATE = os.environ.get("APWRIMS_END", datetime.date.today().strftime("%Y%m"))
 
-# Verified TLS only — no unverified fallback. A cert failure should stop the run.
-_ctx = ssl.create_default_context()
+
+def _tls_context():
+    """Verified TLS only — no unverified fallback; a cert failure stops the run.
+
+    Framework Python builds often ship with no CA file wired up
+    (ssl.get_default_verify_paths().cafile is None), which fails verification
+    against otherwise-valid hosts. Fall back to certifi's bundle: still fully
+    verified, just a trust store that actually exists.
+    """
+    if not ssl.get_default_verify_paths().cafile:
+        try:
+            import certifi
+            return ssl.create_default_context(cafile=certifi.where())
+        except ImportError:
+            pass
+    return ssl.create_default_context()
+
+
+_ctx = _tls_context()
 
 
 def post(path, payload, timeout=60):
