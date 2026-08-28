@@ -114,6 +114,46 @@ def series_rows(resp):
 
 
 MIN_RETAINED_FRACTION = 0.9
+# Mandals to probe when checking whether a full crawl is warranted. Sampled
+# across districts and reduced by max(), so one late-reporting mandal cannot
+# make the run conclude there is nothing new.
+PROBE_MANDALS = 5
+
+
+def stored_month_counts(path):
+    """{'YYYY-MM': mandal rows} from the stored history; empty if absent."""
+    counts = {}
+    if not os.path.exists(path):
+        return counts
+    with open(path, newline="") as handle:
+        for row in csv.DictReader(handle):
+            period = (row.get("date") or "").strip()
+            if period:
+                counts[period] = counts.get(period, 0) + 1
+    return counts
+
+
+def crawl_reason(stored_counts, portal_latest):
+    """Why a full crawl is needed, or None when the stored history is current.
+
+    The portal publishes monthly but a month keeps filling in after it first
+    appears (mandals report late), so "we already have that month" is not
+    sufficient — the month must also be as complete as the best month we hold.
+    """
+    if not stored_counts:
+        return "no stored history"
+    if not portal_latest:
+        return "could not determine the portal's latest month"
+    if portal_latest not in stored_counts:
+        return f"portal has {portal_latest}, which is missing locally"
+    reference = max(stored_counts.values())
+    held = stored_counts[portal_latest]
+    if held < reference:
+        return (
+            f"{portal_latest} is incomplete locally "
+            f"({held} mandals vs {reference} in the fullest month)"
+        )
+    return None
 
 
 def existing_row_count(path):
@@ -142,6 +182,29 @@ def publish_refusal(new_rows, previous_rows, is_subset):
     return None
 
 
+def probe_latest_period(ap_districts):
+    """Newest month the portal is serving, from a small sample of mandals.
+
+    A few chart calls instead of ~670, so the weekly job can decide whether the
+    full crawl is worth making. Sampled across districts and reduced by max(),
+    because any single mandal may simply be a late reporter.
+    """
+    latest = None
+    for duuid in list(ap_districts)[:PROBE_MANDALS]:
+        try:
+            mandals = children("DISTRICT", "MANDAL", [duuid])
+            if not mandals:
+                continue
+            muuid = next(iter(mandals))
+            periods = [ym for ym, _ in series_rows(chart(AP_STATE_UUID, duuid, muuid, "MANDAL", "MANDAL"))]
+            if periods:
+                candidate = max(periods)
+                latest = candidate if latest is None else max(latest, candidate)
+        except Exception as e:  # a probe failure must not block the real crawl
+            print(f"  [warn] probe {duuid}: {e}")
+    return latest
+
+
 def main():
     only = sys.argv[1] if len(sys.argv) > 1 else None  # optional: district-name filter
     districts = children("STATE", "DISTRICT", [])
@@ -151,6 +214,23 @@ def main():
     print(f"AP districts: {len(ap)}")
 
     out_path = os.path.join(OUT, "apwrims_gw_history.csv")
+
+    # The portal publishes monthly but the weekly job runs ~4x a month, so most
+    # runs have nothing to fetch. Probe a few mandals first and skip the ~670
+    # crawl when the stored history is already current — far politer to a
+    # government server. A district filter or APWRIMS_FORCE=1 always crawls.
+    if not only and os.environ.get("APWRIMS_FORCE") != "1":
+        stored = stored_month_counts(out_path)
+        portal_latest = probe_latest_period(ap)
+        reason = crawl_reason(stored, portal_latest)
+        if reason is None:
+            print(
+                f"Up to date: portal's latest month ({portal_latest}) is stored in full "
+                f"({stored[portal_latest]} mandals). Skipping the full crawl; "
+                f"set APWRIMS_FORCE=1 to override."
+            )
+            return
+        print(f"Crawling: {reason}.")
     # Write to a temp file and only swap it in on success. Streaming straight
     # into out_path means any mid-run failure (network drop, CI timeout) leaves
     # a truncated history behind — which matters now that this runs unattended.
