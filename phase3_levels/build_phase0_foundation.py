@@ -19,6 +19,31 @@ OUT = os.path.join(HERE, "outputs")
 CONTRACT_VERSION = "2.0.0"
 BUILDER_VERSION = "phase0-publisher-2.0.0"
 GEOMETRY_VERSION = "public-prototype-2026-07"
+REPO_ROOT = os.path.abspath(os.path.join(HERE, ".."))
+CHIRPS_DOWNLOAD_MANIFEST = os.path.join(
+    REPO_ROOT, "data/raw/chirps/current/download_manifest.csv"
+)
+
+
+def source_fetch_date(manifest_path, column="fetch_date"):
+    """Read a source's real fetch date from its download manifest, or None."""
+    try:
+        with open(manifest_path, encoding="utf-8", newline="") as handle:
+            for row in csv.DictReader(handle):
+                value = (row.get(column) or "").strip()
+                if value:
+                    return value
+    except (OSError, csv.Error):
+        pass
+    return None
+
+
+def refresh_state(fetch_date, run_date):
+    """Report what actually happened rather than a hard-coded assumption."""
+    if not fetch_date:
+        return {"status": "retained_local_input", "fetchDate": None}
+    status = "refreshed" if fetch_date == run_date else "retained_local_input"
+    return {"status": status, "fetchDate": fetch_date}
 
 
 def norm(value):
@@ -658,6 +683,7 @@ def build_model_card(context, generated_at):
 
 
 def build_manifest(context, generated_at, active_paths):
+    run_date = str(generated_at)[:10]
     records = context["records"]
     coverage = defaultdict(int)
     for record in records:
@@ -757,12 +783,17 @@ def build_manifest(context, generated_at, active_paths):
         },
         "joinDiagnostics": context["diagnostics"],
         "refreshStatus": {
+            # APWRIMS needs an authorised session cookie (APWRIMS_COOKIE) that the
+            # unattended pipeline never has, so it is always a retained local input.
             "apwrims": {"status": "retained_local_input", "fetchDate": None},
-            "graceDa": {
-                "status": "refreshed",
-                "fetchDate": context["graceProvenance"].get("fetch_date"),
-            },
-            "rainfall": {"status": "retained_local_input", "fetchDate": None},
+            "graceDa": refresh_state(
+                context["graceProvenance"].get("fetch_date"), run_date
+            ),
+            "rainfall": refresh_state(
+                source_fetch_date(CHIRPS_DOWNLOAD_MANIFEST), run_date
+            ),
+            # TerraClimate publishes annually and emits no download manifest;
+            # etValidPeriod above carries its real vintage.
             "evapotranspiration": {"status": "retained_local_input", "fetchDate": None},
         },
         "inputHashes": context["inputHashes"],

@@ -1,35 +1,68 @@
 {
-  "ran_at": "2026-06-16T21:02:40",
+  "ran_at": "2026-08-28T15:48:47",
   "steps": [
     {
       "step": "fetch GRACE-DA",
       "ok": true,
       "rc": 0,
-      "secs": 0.1
+      "secs": 1.8,
+      "required": false
     },
     {
       "step": "fetch CHIRPS rain",
       "ok": true,
       "rc": 0,
-      "secs": 2.2
+      "secs": 1.6,
+      "required": false
     },
     {
       "step": "refresh TerraClimate",
       "ok": true,
       "rc": 0,
-      "secs": 5.5
+      "secs": 5.8,
+      "required": false
     },
     {
-      "step": "build mandal features",
+      "step": "resample GRACE at districts",
       "ok": true,
       "rc": 0,
-      "secs": 0.3
+      "secs": 2.5,
+      "required": false
     },
     {
-      "step": "predict levels",
+      "step": "rebuild mandal rainfall/balance heat",
       "ok": true,
       "rc": 0,
-      "secs": 1.1
+      "secs": 2.6,
+      "required": false
+    },
+    {
+      "step": "build holdout-safe nowcasts",
+      "ok": true,
+      "rc": 0,
+      "secs": 28.8,
+      "required": true
+    },
+    {
+      "step": "evaluate model tasks",
+      "ok": true,
+      "rc": 0,
+      "secs": 183.5,
+      "required": true
+    },
+    {
+      "step": "publish V2 app data",
+      "ok": true,
+      "rc": 0,
+      "secs": 1.1,
+      "required": true
+    },
+    {
+      "step": "validate V2 contract",
+      "ok": true,
+      "rc": 0,
+      "secs": 0.6,
+      "required": true
     }
   ]
 }

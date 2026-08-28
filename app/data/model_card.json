@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "modelName": "AP Mandal Groundwater Temporal Nowcast",
   "modelVersion": "phase0-nowcast-2.0.0",
-  "buildTimestamp": "2026-07-20T06:19:30+00:00",
+  "buildTimestamp": "2026-08-28T19:45:30+00:00",
   "trainingPeriod": {
     "start": "2014-12",
     "end": "2026-06"
@@ -70,7 +70,7 @@
     },
     "spatialEstimation": {
       "task": "whole_mandal_spatial_estimation",
-      "generatedAt": "2026-07-20T06:23:31+00:00",
+      "generatedAt": "2026-08-28T19:48:27+00:00",
       "validation": "5-fold GroupKFold with whole mandals held out",
       "rowCount": 84519,
       "mandalCount": 651,
@@ -132,7 +132,7 @@
     },
     "directForecast": {
       "task": "direct_multi_horizon_forecast",
-      "generatedAt": "2026-07-20T06:23:53+00:00",
+      "generatedAt": "2026-08-28T19:48:45+00:00",
       "featureTiming": "features available at forecast origin; no future rainfall",
       "releaseGate": {
         "requiredImprovementPct": 5,
@@ -262,7 +262,7 @@
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",
-      "generatedAt": "2026-07-20T06:23:53+00:00",
+      "generatedAt": "2026-08-28T19:48:45+00:00",
       "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
       "overlapPeriod": {
         "start": "2014-06",
@@ -336,13 +336,13 @@
   },
   "inputHashes": {
     "apwrimsHistory": "0145edbfe9c04a2d8e95f56f834b314026f680559b41c8ff94df19770a50c096",
-    "nowcasts": "2c6e92531fd8afb116f3a08c63128bab7ca1dfd22583f06b7af8a3d4c56225e9",
+    "nowcasts": "861b4ae5a2d470bea648d11b9b36da2dd6eb70c21edc1615aa53354d2e6dd0a9",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
-    "districtSignals": "a4ca325b49677c973a2b6f774efda5747b70f0747370bcafa92b2b1adac54e5a",
-    "climateContext": "841785be43823584688d8e33bfbca991a9f223859607704a43682d3f7c05fc80",
-    "graceProvenance": "afed161428b22c2445de23bd1bbf0c9988f4fcaa87a33e186950ca097d8c4e68",
+    "districtSignals": "b7068641e68fd03e6a39812fce0e7fa907ba84eecfabddcf536420f88340ae8d",
+    "climateContext": "2d8582a653cbdeb273be9103ad87b58e2b7559935f9e7a5de9545334eb35b485",
+    "graceProvenance": "4ec439b8501c238d7564f5ab10aa1780379a1405b1e0f7db38cae143db39a0be",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "00be85d5581dd3ce9d8907646c8b2ddb3f1110b7f76d6a95b0e6e0ef7fe101d4"
+    "evaluations": "a2799e421cdc5eb8612c7b641e5c2ccb3d727930ba4755df39c2520b3252107e"
   },
-  "generatedAt": "2026-07-20T06:25:49+00:00"
+  "generatedAt": "2026-08-28T19:50:51+00:00"
 }

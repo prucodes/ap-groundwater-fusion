@@ -48,16 +48,22 @@ def _repo_text_files():
 # ---- 1. NASA-field provenance: groundwater_percentile == its district GRACE value ----
 
 def test_nasa_field_equals_district_grace_exactly():
-    ds = _load("mandal_dataset.json")
+    # Asserted against the ACTIVE V2 contract. The legacy V1 mandal_dataset.json is
+    # deliberately frozen (build_real_app_data.py does not rewrite it), so checking
+    # it here would fail on every GRACE refresh purely because V1 is stale.
+    records = _load("mandal_groundwater_records_v2.json")
+    if isinstance(records, dict):
+        records = records.get("records", records)
     districts = {d["d"].upper(): d.get("gw_percentile")
                  for d in _load("ap_district_geometry.json")["districts"]}
     checked = mism = 0
-    for r in ds:
-        g = districts.get(r["district_name"].upper())
-        if g is None or r.get("groundwater_percentile") is None:
+    for r in records:
+        g = districts.get(r["identity"]["districtName"].upper())
+        v = r.get("signals", {}).get("graceDa", {}).get("groundwaterPercentile")
+        if g is None or v is None:
             continue
         checked += 1
-        if abs(r["groundwater_percentile"] - g) > 1e-6:
+        if abs(v - g) > 1e-6:
             mism += 1
     assert checked > 500, f"too few records checked ({checked})"
     assert mism == 0, f"{mism} records' NASA field != their district GRACE value"

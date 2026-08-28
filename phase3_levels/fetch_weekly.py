@@ -48,9 +48,17 @@ def step(name, args, cwd=ROOT, required=False):
 
 # Fetchers that exist in the project are used; others are no-ops until wired.
 STEPS = [
-    ("fetch GRACE-DA",       [PY, os.path.join(SCRIPTS, "download_nasa_grace_da.py")], False),
+    # GRACE-DA publishes to a rolling "current/" URL: same filenames, new content
+    # each week. Without --overwrite the downloader reuses the stale local copy
+    # forever and the weekly refresh silently never updates.
+    ("fetch GRACE-DA",       [PY, os.path.join(SCRIPTS, "download_nasa_grace_da.py"), "--overwrite"], False),
     ("fetch CHIRPS rain",    [PY, os.path.join(SCRIPTS, "fetch_chirps_rainfall.py")], False),
     ("refresh TerraClimate", [PY, os.path.join(SCRIPTS, "fetch_terraclimate_balance.py")], False),
+    # The fetch steps above only land rasters on disk. These two resample them
+    # into the per-district / per-mandal context the publisher actually reads —
+    # without them the new rasters are downloaded and then ignored.
+    ("resample GRACE at districts", [PY, os.path.join(HERE, "refresh_nasa_districts.py")], False),
+    ("rebuild mandal rainfall/balance heat", [PY, os.path.join(SCRIPTS, "build_mandal_heat.py")], False),
     ("build holdout-safe nowcasts", [PY, os.path.join(HERE, "build_levels_engine.py")], True),
     ("evaluate model tasks", [PY, os.path.join(HERE, "evaluate_phase0.py")], True),
     ("publish V2 app data",  [PY, os.path.join(HERE, "build_real_app_data.py")], True),

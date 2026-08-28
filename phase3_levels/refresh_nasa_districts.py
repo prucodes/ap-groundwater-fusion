@@ -14,6 +14,14 @@ def _tls_context():
     if _os.environ.get('ALLOW_INSECURE_TLS') == '1':
         _sys.stderr.write('WARNING: ALLOW_INSECURE_TLS=1 - using UNVERIFIED TLS.\n')
         return _ssl._create_unverified_context()
+    # Framework Python builds often have no CA file wired up, which fails
+    # verification against valid hosts. Use certifi's bundle: still verified.
+    if not _ssl.get_default_verify_paths().cafile:
+        try:
+            import certifi
+            return _ssl.create_default_context(cafile=certifi.where())
+        except ImportError:
+            pass
     return _ssl.create_default_context()
 import rasterio
 

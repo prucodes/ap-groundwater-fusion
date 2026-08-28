@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-07-20T06:20:05+00:00",
+  "generatedAt": "2026-08-28T19:45:43+00:00",
   "modelVersion": "phase0-nowcast-2.0.0",
   "temporalNowcast": {
     "task": "rolling_temporal_holdout_nowcast",
@@ -57,7 +57,7 @@
   },
   "spatialEstimation": {
     "task": "whole_mandal_spatial_estimation",
-    "generatedAt": "2026-07-20T06:23:31+00:00",
+    "generatedAt": "2026-08-28T19:48:27+00:00",
     "validation": "5-fold GroupKFold with whole mandals held out",
     "rowCount": 84519,
     "mandalCount": 651,
@@ -119,7 +119,7 @@
   },
   "directForecast": {
     "task": "direct_multi_horizon_forecast",
-    "generatedAt": "2026-07-20T06:23:53+00:00",
+    "generatedAt": "2026-08-28T19:48:45+00:00",
     "featureTiming": "features available at forecast origin; no future rainfall",
     "releaseGate": {
       "requiredImprovementPct": 5,
@@ -249,7 +249,7 @@
   },
   "crossNetworkComparison": {
     "task": "cross_network_comparison",
-    "generatedAt": "2026-07-20T06:23:53+00:00",
+    "generatedAt": "2026-08-28T19:48:45+00:00",
     "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
     "overlapPeriod": {
       "start": "2014-06",

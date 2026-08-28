@@ -81,8 +81,24 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def verified_tls_context() -> ssl.SSLContext | None:
+    # Framework Python builds often ship with no CA file wired up
+    # (ssl.get_default_verify_paths().cafile is None), which fails verification
+    # against otherwise-valid hosts. Fall back to certifi's bundle: still fully
+    # verified TLS, just a trust store that actually exists.
+    if ssl.get_default_verify_paths().cafile:
+        return None
+    try:
+        import certifi
+    except ImportError:
+        return None
+    return ssl.create_default_context(cafile=certifi.where())
+
+
 def stream_download(url: str, destination: Path, context: ssl.SSLContext | None = None) -> None:
     request = Request(url, headers={"User-Agent": "groundwater-fusion-layer/0.1"})
+    if context is None:
+        context = verified_tls_context()
     with urlopen(request, context=context, timeout=60) as response, destination.open("wb") as handle:
         shutil.copyfileobj(response, handle)
 
@@ -154,10 +170,17 @@ def build_manifest_row(
     except ValueError:
         local_path_text = str(local_path)
 
+    # A reused file was not fetched today; stamping today's date would
+    # misreport provenance. Fall back to the file's own mtime.
+    if "existing file reused" in download_note:
+        fetch_date = date.fromtimestamp(local_path.stat().st_mtime)
+    else:
+        fetch_date = date.today()
+
     return {
         "local_path": local_path_text,
         "source_url": source_url,
-        "fetch_date": str(date.today()),
+        "fetch_date": str(fetch_date),
         "file_size_bytes": str(local_path.stat().st_size),
         "sha256": sha256_file(local_path),
         "tls_verified": str(tls_verified).lower(),
