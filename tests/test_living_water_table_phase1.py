@@ -112,12 +112,30 @@ def test_depth_scale_is_fixed_explained_and_null_safe():
     assert 'return coverageStatus' in encoding
 
 
-def test_geometry_height_is_uniform_and_not_depth_driven():
+def test_height_is_uniform_by_default_and_relief_is_bounded_and_opt_in():
+    """Height must not imply precision the model doesn't have.
+
+    Originally that meant height was never depth-driven at all. Relief view
+    (an opt-in depth extrusion) has since been added deliberately, so the
+    invariant is now: flat/uniform is what you get unless you ask for relief,
+    relief is bounded, and a record with no groundwater value never receives a
+    depth-derived height.
+    """
     geometry_module = (COMPONENTS / "geometry.ts").read_text()
+    page = (COMPONENTS / "LivingWaterTablePage.tsx").read_text()
+
     assert "const SURFACE_HEIGHT = 0.09" in geometry_module
-    assert ".nowcast" not in geometry_module
-    assert "latestMeasuredValue" not in geometry_module
-    assert "SURFACE_HEIGHT" in geometry_module
+    # Uniform height unless relief is explicitly requested.
+    assert "if (!relief) return SURFACE_HEIGHT;" in geometry_module
+    # No groundwater value => uniform height, never an invented one.
+    assert (
+        "if (depth === null || !Number.isFinite(depth)) return SURFACE_HEIGHT;"
+        in geometry_module
+    )
+    # Relief is clamped to the legend's reference depth, so no runaway columns.
+    assert "Math.min(Math.max(depth, 0), DEPTH_REF_M) / DEPTH_REF_M" in geometry_module
+    # Flat is the default; relief is opt-in via an explicit query parameter.
+    assert 'const relief = searchParams.get("surface") === "relief";' in page
 
 
 def test_route_is_client_isolated_and_has_no_legacy_imports():
@@ -147,7 +165,11 @@ def test_phase1_ui_contains_fallback_quality_accessibility_and_disclosures():
     assert "webglcontextlost" in (COMPONENTS / "LivingWaterTableScene.tsx").read_text()
     assert "Keyboard mandal selection" in page
     assert "GRACE-DA is regional model-assimilated context" in page
-    assert "shallow uniform presentation height" in page
+    # The view must say what column height does and does not mean. The wording
+    # changed when opt-in relief replaced uniform-only height; the disclosure
+    # requirement did not.
+    assert "flat view uses a uniform height" in page
+    assert "Height never encodes groundwater volume or subsurface geology." in page
     assert "Accessible 2D fallback" in fallback
     assert "Measured-only record" in selected
     assert "No measured groundwater value" in selected

@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 
 
@@ -144,6 +145,18 @@ def test_ui_copy_contains_prototype_notice_and_no_banned_claims():
         assert phrase not in lowered, f"banned UI phrase present: {phrase!r}"
 
 
+def _strip_comments(source: str) -> str:
+    """Drop // line, /* block */ and {/* JSX */} comments.
+
+    Crude but sufficient here: the point is that commented-out or merely
+    described text must not satisfy a "does this page show the caveat" check.
+    """
+    source = re.sub(r"\{\s*/\*.*?\*/\s*\}", " ", source, flags=re.S)
+    source = re.sub(r"/\*.*?\*/", " ", source, flags=re.S)
+    source = re.sub(r"(?m)^\s*//.*$", " ", source)
+    return source
+
+
 def test_every_page_surfaces_the_prototype_caveat():
     """No page may hide the caveat: each page either renders HeaderHero (which carries the
     prototype banner) or otherwise surfaces the prototype notice itself."""
@@ -153,7 +166,10 @@ def test_every_page_surfaces_the_prototype_caveat():
     pages = [p for p in pages_dir.rglob("page.tsx") if not any(part in SKIP_DIRS for part in p.parts)]
     assert pages, "expected at least one page"
     for page in pages:
-        content = page.read_text(encoding="utf-8")
+        # Strip comments first: a page that merely *mentions* HeaderHero or the
+        # caveat in a comment ships nothing to the reader, and a naive substring
+        # check would pass it. Only rendered source counts.
+        content = _strip_comments(page.read_text(encoding="utf-8"))
         surfaces_caveat = (
             "HeaderHero" in content
             or "prototypeNotice" in content

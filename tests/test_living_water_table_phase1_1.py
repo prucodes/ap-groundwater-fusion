@@ -110,7 +110,10 @@ def test_camera_reset_is_bounds_derived_and_selection_lift_is_constant():
     assert "command.type === \"reset\"" in scene
     assert "geometry.translate(0, 0.035, 0)" in scene
     assert "const SURFACE_HEIGHT = 0.09" in geometry
-    assert ".nowcast" not in geometry
+    # Selection lift stays constant: relief may scale a column by depth, but the
+    # lift applied on selection must not vary with the value. (The broader
+    # height invariant lives in test_living_water_table_phase1.py.)
+    assert "if (!relief) return SURFACE_HEIGHT;" in geometry
 
 
 def test_phase1_1_does_not_add_cinematic_dependencies_or_forecasts():
