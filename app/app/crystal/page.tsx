@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 // frame keeps the app shell around it without coupling the two runtimes.
 export default function CrystalWaterTablePage() {
   return (
-    <div style={{ height: "100vh", margin: "0 -24px 0 0", position: "relative" }}>
+    <div className="crystalFrameWrap">
       {/* Full-bleed frame with no app chrome, so without this it would be the
           one view rendering modelled depths with no provenance on screen. */}
       <p

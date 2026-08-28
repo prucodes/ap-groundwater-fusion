@@ -16,6 +16,18 @@ function base(props: IconProps) {
   };
 }
 
+export const IconMenu = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M3 6h18M3 12h18M3 18h18" />
+  </svg>
+);
+
+export const IconX = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M18 6 6 18M6 6l12 12" />
+  </svg>
+);
+
 export const IconGlobe = (p: IconProps) => (
   <svg {...base(p)}>
     <circle cx="12" cy="12" r="9" />

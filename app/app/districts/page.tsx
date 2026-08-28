@@ -157,7 +157,7 @@ export default function DistrictsPage() {
             />
           </div>
 
-          <div className="kpiRow" style={{ gridTemplateColumns: "repeat(4, 1fr)", marginBottom: 16 }}>
+          <div className="kpiRow kpiRow4" style={{ marginBottom: 16 }}>
             <div className="kpiCard" style={{ ["--accent" as string]: "var(--teal)" }}>
               <div className="kpiTop"><span className="kpiIcon"><IconLayers /></span><span className="kpiLabel">Mandals</span></div>
               <div className="kpiValue">{current.mandal_count}</div>

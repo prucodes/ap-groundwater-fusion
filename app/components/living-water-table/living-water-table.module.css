@@ -337,3 +337,13 @@
     transition-duration: .001ms !important;
   }
 }
+
+/* Phones: the control row is a single flex line whose select has a 132px
+   minimum, so four controls run past the screen and drag the page sideways.
+   Let the row wrap and the select share the width instead. */
+@media (max-width: 560px) {
+  .headerControls { flex-wrap: wrap; gap: 8px; }
+  .headerControls select { min-width: 0; width: 100%; }
+  .headerControls > * { flex: 1 1 auto; min-width: 0; }
+  .summaryStrip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

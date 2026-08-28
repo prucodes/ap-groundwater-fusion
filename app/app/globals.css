@@ -3741,7 +3741,6 @@ pre.jsonBody {
 }
 
 @media (max-width: 880px) {
-  .shell { grid-template-columns: var(--sidebar-w-collapsed) 1fr; }
   .kpiRow { grid-template-columns: repeat(2, 1fr); }
   .overviewGrid { grid-template-columns: 1fr; }
   .signalGrid { grid-template-columns: 1fr; }
@@ -3853,3 +3852,219 @@ pre.jsonBody {
 .statusLegend .slCriteria { font-size: 10.5px; color: var(--muted); opacity: 0.75; font-variant-numeric: tabular-nums; }
 .statusLegend .slNote { grid-column: 1 / -1; font-size: 11px; color: var(--muted); border-top: 1px solid var(--hairline); padding-top: 10px; }
 @media (max-width: 860px) { .statusLegend { grid-template-columns: 1fr; } .statusLegend .slItem { grid-template-columns: 12px 100px 1fr; } }
+
+/* ===================== Mobile shell: sidebar becomes a drawer =====================
+   Above the breakpoint the sidebar is a grid column. Below it there isn't room
+   for one — previously the column was merely narrowed to 76px while its contents
+   still laid out for 264px, so labels overlapped and the content was crushed into
+   what was left. Below the breakpoint it becomes an off-canvas drawer instead and
+   the shell is a single column. */
+.mobileBar { display: none; }
+.navScrim { display: none; }
+.sidebarCloseBtn { display: none; }
+
+@media (max-width: 880px) {
+  .shell,
+  .shell.shellCollapsed { grid-template-columns: 1fr; }
+
+  .mobileBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 45;
+    padding: 10px 14px;
+    min-height: 56px;
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+  }
+  .mobileNavBtn {
+    display: grid;
+    place-items: center;
+    /* 44px: comfortable touch target rather than a cursor-sized one. */
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--field);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .mobileNavBtn svg { width: 20px; height: 20px; }
+  .mobileBrand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .mobileBrand strong { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mobileBrandMark {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    flex: none;
+    border-radius: 8px;
+    background: linear-gradient(140deg, var(--teal), var(--deep));
+  }
+
+  /* The drawer itself. Off-canvas by default; slid in when .navOpen is set. */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100dvh;
+    width: min(84vw, 300px);
+    z-index: 60;
+    transform: translateX(-100%);
+    transition: transform 0.28s var(--ease);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-shadow: 0 0 40px rgba(4, 14, 28, 0.45);
+  }
+  .shell.navOpen .sidebar { transform: translateX(0); }
+
+  /* Contents must lay out at full drawer width even when the desktop
+     "collapsed" preference is stored, or the labels clip again. */
+  .shell.shellCollapsed .sidebar { width: min(84vw, 300px); }
+  .shell.shellCollapsed .utilLabel,
+  .shell.shellCollapsed .utilKbd,
+  .shell.shellCollapsed .navBadge,
+  .shell.shellCollapsed .navGroupLabel span { display: revert; }
+  .shell.shellCollapsed .navGroupLabel::after { content: none; }
+  .shell.shellCollapsed .utilBtn { justify-content: flex-start; padding: 9px 12px; }
+
+  /* The desktop collapse control is meaningless for a drawer. */
+  .sidebarCollapseBtn { display: none; }
+
+  .sidebarCloseBtn {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    z-index: 2;
+    border-radius: 10px;
+    border: 1px solid rgba(123, 168, 214, 0.28);
+    background: rgba(8, 24, 44, 0.72);
+    color: #dbe7f4;
+    cursor: pointer;
+  }
+  .sidebarCloseBtn svg { width: 18px; height: 18px; }
+
+  .navScrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: rgba(4, 14, 28, 0.55);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s var(--ease);
+  }
+  .shell.navOpen .navScrim { opacity: 1; pointer-events: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .navScrim { transition: none; }
+}
+
+/* ===================== Mobile: stop layouts blowing past the viewport =====================
+   Grid and flex children default to min-width:auto, so one wide child (a table,
+   a long token, a fixed-width chart) forces its track wider than the screen and
+   the whole page scrolls sideways. Letting those children shrink is the fix;
+   the wide content itself then scrolls inside its own container. */
+@media (max-width: 880px) {
+  .pageWrap > *,
+  .contentGrid > *,
+  .card > * { min-width: 0; }
+
+  .contentGrid { grid-template-columns: minmax(0, 1fr); }
+
+  /* Media must never dictate layout width. Leaflet's overlay SVG is excluded:
+     it is absolutely positioned inside a clipped pane and needs its own size. */
+  .pageWrap img,
+  .pageWrap canvas { max-width: 100%; height: auto; }
+  .card > svg,
+  .card svg:not(.leaflet-zoom-animated) { max-width: 100%; }
+
+  /* Long identifiers and URLs shouldn't push the column wider. */
+  .card, .pageWrap p, .pageWrap td, .pageWrap li { overflow-wrap: anywhere; }
+}
+
+/* Phones proper: single column everywhere, tighter gutters. */
+@media (max-width: 560px) {
+  .pageWrap { padding: 12px; }
+  .kpiRow,
+  .metricRow,
+  .summaryRow,
+  .overviewGrid,
+  .overviewLower,
+  .signalGrid,
+  .contentGrid,
+  .estLayout,
+  .watchlistLayout,
+  .mapWorkspace,
+  .mapLower,
+  .awareGrid,
+  .provGrid,
+  .sigGaugeRow,
+  .dlGrid,
+  .actionSummary { grid-template-columns: minmax(0, 1fr); }
+
+  .presetRow { grid-template-columns: minmax(0, 1fr); }
+
+  /* Header hero: the display type is sized for a desktop column. */
+  .heroTitle, .pageWrap h1 { font-size: clamp(24px, 7vw, 34px); }
+
+  /* Row of chips/filters becomes scrollable rather than wrapping into a wall. */
+  .exportRow, .chipRow { flex-wrap: wrap; }
+}
+
+/* Segmented controls are inline-flex and sized by their labels, so on a phone
+   the group runs past the screen and drags the whole page sideways. Let the
+   group scroll on its own axis instead. */
+@media (max-width: 560px) {
+  .segmented {
+    display: flex;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .segmented::-webkit-scrollbar { display: none; }
+  .segBtn { flex: 0 0 auto; }
+}
+
+/* Detail-page splits. These were inline grid-template-columns, which no media
+   query could override, so on a phone the 300px sidebar left ~42px for the main
+   column and its contents spilled out of the page. */
+.detailSplit { grid-template-columns: 300px minmax(0, 1fr); }
+.detailPair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.kpiRow4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+@media (max-width: 1080px) {
+  .detailSplit { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 880px) {
+  .kpiRow4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .detailPair,
+  .kpiRow4 { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The cinematic frame bleeds into the app's right gutter on desktop; on a phone
+   that negative margin pushes it past the viewport. */
+.crystalFrameWrap { position: relative; height: 100vh; margin: 0 -24px 0 0; }
+@media (max-width: 880px) {
+  .crystalFrameWrap { margin: 0; height: calc(100dvh - 56px); }
+}

@@ -241,7 +241,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
       {/* main + rail */}
       <div className="watchlistLayout">
         <div className="contentGrid">
-          <div className="contentGrid" style={{ gridTemplateColumns: "300px 1fr" }}>
+          <div className="contentGrid detailSplit">
             <section className="card">
               <div className="cardHead">
                 <div className="cardTitle">
@@ -312,7 +312,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
             </section>
           )}
 
-          <div className="contentGrid" style={{ gridTemplateColumns: "1fr 1fr" }}>
+          <div className="contentGrid detailPair">
             <section className="card">
               <div className="cardHead">
                 <div className="cardTitle">

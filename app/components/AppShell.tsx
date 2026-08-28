@@ -18,10 +18,12 @@ import {
   IconColumns,
   IconGrid,
   IconMap,
+  IconMenu,
   IconSatellite,
   IconSearch,
   IconSettings,
   IconWaves,
+  IconX,
 } from "./icons";
 import { OrbitGlobe3D } from "./OrbitGlobe3D";
 import { ThemeToggle } from "./ThemeToggle";
@@ -69,6 +71,7 @@ function nowStamp() {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const [stamp, setStamp] = useState("Jun 12, 2026, 08:24 PM");
 
   useEffect(() => {
@@ -76,6 +79,26 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     if (stored) setCollapsed(stored === "collapsed");
     setStamp(nowStamp());
   }, []);
+
+  // On phones the sidebar is an off-canvas drawer. Navigating should dismiss it,
+  // or the new page loads hidden behind the still-open menu.
+  useEffect(() => setNavOpen(false), [pathname]);
+
+  // While the drawer is open it owns the screen: Escape closes it, and the page
+  // behind must not scroll under the overlay.
+  useEffect(() => {
+    if (!navOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setNavOpen(false);
+    };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [navOpen]);
 
   function toggleSidebar() {
     setCollapsed((current) => {
@@ -86,8 +109,45 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className={`shell ${collapsed ? "shellCollapsed" : ""}`}>
-      <aside className="sidebar">
+    <div className={`shell ${collapsed ? "shellCollapsed" : ""} ${navOpen ? "navOpen" : ""}`}>
+      {/* Phone-only bar. The sidebar becomes a drawer below the breakpoint, so
+          without this there would be no way to reach navigation. */}
+      <header className="mobileBar">
+        <button
+          type="button"
+          className="mobileNavBtn"
+          onClick={() => setNavOpen(true)}
+          aria-label="Open navigation menu"
+          aria-expanded={navOpen}
+          aria-controls="app-sidebar"
+        >
+          <IconMenu />
+        </button>
+        <Link href="/" className="mobileBrand">
+          <span className="mobileBrandMark">
+            <IconDroplet style={{ color: "#fff", width: 16, height: 16 }} />
+          </span>
+          <strong>AP Groundwater</strong>
+        </Link>
+      </header>
+
+      {/* Dismiss layer. aria-hidden because Escape and the close button already
+          give an accessible way out. */}
+      <div
+        className="navScrim"
+        onClick={() => setNavOpen(false)}
+        aria-hidden="true"
+      />
+
+      <aside className="sidebar" id="app-sidebar">
+        <button
+          type="button"
+          className="sidebarCloseBtn"
+          onClick={() => setNavOpen(false)}
+          aria-label="Close navigation menu"
+        >
+          <IconX />
+        </button>
         <div className="sidebarBrand">
           <div className="brandMark">
             <IconDroplet style={{ color: "#fff" }} />
