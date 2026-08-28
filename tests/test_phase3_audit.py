@@ -105,6 +105,31 @@ def test_credentialed_fetcher_has_no_unverified_tls():
     assert 'os.environ.get("APWRIMS_COOKIE")' in src
 
 
+def test_certifi_fallback_is_declared_and_importable():
+    """The TLS fallback must not rot silently.
+
+    Fetchers that hit a Python build with no CA file configured fall back to
+    certifi's bundle rather than disabling verification — but they import it
+    inside try/except ImportError, so a missing dependency degrades quietly
+    instead of failing loudly. Pin that down here.
+    """
+    requirements = (REPO_ROOT / "requirements.txt").read_text()
+    assert re.search(r"(?m)^certifi\b", requirements), (
+        "certifi must be declared in requirements.txt — the fetchers' TLS "
+        "fallback depends on it"
+    )
+    import certifi  # noqa: F401  (import is the assertion)
+
+    users = [
+        REPO_ROOT / "scripts" / "download_nasa_grace_da.py",
+        REPO_ROOT / "phase3_levels" / "fetch_apwrims_history.py",
+        REPO_ROOT / "phase3_levels" / "refresh_nasa_districts.py",
+    ]
+    for path in users:
+        text = path.read_text()
+        assert "certifi" in text, f"{path.name} lost its verified-TLS fallback"
+
+
 def test_no_silent_unverified_tls_anywhere():
     """Any unverified-TLS use must be env-gated (ALLOW_INSECURE_TLS), never unconditional."""
     offenders = []

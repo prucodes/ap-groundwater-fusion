@@ -1,3 +1,8 @@
+# Trust store for the fetchers. Some Python builds ship with no CA file wired
+# up (ssl.get_default_verify_paths().cafile is None), which fails verification
+# against valid hosts; the fetchers fall back to certifi's bundle rather than
+# disabling verification. Declared so that fallback is always available.
+certifi
 pandas
 geopandas
 shapely
