@@ -7,7 +7,8 @@
     "build": "next build",
     "typecheck": "tsc --noEmit --incremental false",
     "start": "next start",
-    "build:static": "node scripts/build-static.mjs"
+    "build:static": "node scripts/build-static.mjs",
+    "test:layout": "playwright test"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.2",
@@ -21,6 +22,7 @@
     "three": "^0.184.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@types/leaflet": "^1.9.21",
     "@types/node": "20.17.6",
     "@types/react": "^19.2.17",

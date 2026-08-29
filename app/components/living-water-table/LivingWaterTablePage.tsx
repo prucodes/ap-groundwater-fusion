@@ -225,7 +225,21 @@ export function LivingWaterTablePage() {
     : "auto";
   const { resolved: resolvedQuality, reducedMotion, autoReason } =
     useDeviceQuality(qualityChoice);
+  // Header, controls and the summary strip fill a phone screen before the scene
+  // starts, so this hands the viewport over to the map. Deliberately local state
+  // rather than a query param: it is a viewing mode, not a shareable view.
+  const [focused, setFocused] = useState(false);
   const [webGLAvailable, setWebGLAvailable] = useState<boolean | null>(null);
+
+  // Escape is the conventional way out of a maximised view.
+  useEffect(() => {
+    if (!focused) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setFocused(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [focused]);
   const [sceneFailure, setSceneFailure] = useState<string | null>(null);
   const [hover, setHover] = useState<HoverState>(null);
   const [cameraCommand, setCameraCommand] = useState<CameraCommand>({
@@ -341,7 +355,17 @@ export function LivingWaterTablePage() {
   };
 
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${focused ? styles.pageFocused : ""}`}>
+      {/* Focus mode hides the header, so the way out has to live outside it. */}
+      {focused && (
+        <button
+          type="button"
+          className={styles.focusExit}
+          onClick={() => setFocused(false)}
+        >
+          Show panels
+        </button>
+      )}
       <header className={styles.header}>
         <div>
           <div className={styles.breadcrumb}>
@@ -395,6 +419,15 @@ export function LivingWaterTablePage() {
             onClick={() => updateQuery({ view: view2D ? null : "2d" })}
           >
             {view2D ? "Enable 3D" : "Use 2D fallback"}
+          </button>
+          {/* On a phone the header, controls and summary strip fill the screen
+              before the scene begins. This hands the viewport to the map. */}
+          <button
+            type="button"
+            aria-pressed={focused}
+            onClick={() => setFocused((v) => !v)}
+          >
+            {focused ? "Show panels" : "Maximise map"}
           </button>
         </div>
       </header>

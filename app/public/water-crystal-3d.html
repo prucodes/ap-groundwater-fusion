@@ -12,13 +12,13 @@
     --cyan:#7fe4ff; --safe:#2fd6ae; --semi:#f5c84c; --crit:#ff7f3f; --over:#ff3860; --nodata:#55677c;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%}
+  html,body{height:100%;overscroll-behavior:none}
   body{
     background:#010a14; color:var(--ink); overflow:hidden;
     font:400 14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
     -webkit-font-smoothing:antialiased;
   }
-  canvas#gl{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:grab}
+  canvas#gl{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
   canvas#gl.dragging{cursor:grabbing}
   canvas#gl.picking{cursor:pointer}
 
@@ -195,6 +195,62 @@
     #hints{display:none}
     #timeline{width:calc(100vw - 44px);bottom:22px}
   }
+
+  /* Phones: the HUD is a set of absolutely-positioned desktop panels, so at
+     375px the title, both toggles and the year card land on top of each other.
+     Reflow them into a vertical stack: title, controls, scene, legend, timeline. */
+  @media (max-width:560px){
+    #titleBlock{left:12px;right:12px;top:10px;max-width:none}
+    #titleBlock h1{font-size:19px;line-height:1.15}
+    #titleBlock p{font-size:10.5px;line-height:1.35}
+
+    /* Below the title rather than opposite it, laid out as a row that wraps. */
+    #rail{left:12px;right:12px;top:74px;flex-direction:row;flex-wrap:wrap;
+          align-items:flex-start;justify-content:flex-start;gap:8px}
+    .seg button{font-size:11px;padding:6px 10px}
+    #yearCard{min-width:0;flex:1 1 100%;text-align:left;padding:9px 12px 10px;
+              display:flex;align-items:baseline;gap:10px}
+    /* 54px dominates a 375px screen; the year is a label, not the subject. */
+    #yearBig{font-size:26px}
+    #statLine{margin:0;padding:0;border-top:0;font-size:11px}
+    #yearTag{height:auto}
+
+    /* Zoom controls to the right edge, clear of the legend on the left. */
+    #camStack{left:auto;right:12px;top:auto;bottom:150px;gap:6px}
+    #compass{display:none}
+
+    #legend{left:12px;right:12px;bottom:86px;max-width:none;padding:10px 12px}
+    #legend .lgNote{font-size:10.5px}
+
+    #timeline{left:12px;right:12px;transform:none;width:auto;bottom:12px;
+              gap:10px;padding:9px 12px 11px}
+  }
+
+  /* Maximise: hide every HUD panel so the scene owns the screen. The button is
+     deliberately not a .hud element, so it stays reachable to toggle back. */
+  #focusBtn{
+    position:fixed;right:12px;top:12px;z-index:8;width:38px;height:38px;
+    display:grid;place-items:center;border:0;border-radius:11px;
+    color:var(--ink-2);font-size:15px;cursor:pointer;line-height:1;
+  }
+  #focusBtn:hover{color:var(--ink)}
+  body.sceneFocus .hud{display:none!important}
+  body.sceneFocus #focusBtn{color:var(--cyan)}
+
+  @media (max-width:560px){
+    /* The frame already carries the provenance line, so this duplicate can go
+       and the title stops pushing the controls down the screen. */
+    #titleBlock .caveat{display:none}
+    #titleBlock .sub{font-size:10.5px}
+    #rail{top:118px}
+    /* Three KPI cards are ~500px wide; scroll them instead of overflowing. */
+    #kpis{left:12px;right:12px;top:258px;display:flex;gap:8px;
+          overflow-x:auto;scrollbar-width:none;pointer-events:auto}
+    #kpis::-webkit-scrollbar{display:none}
+    #kpis .kpi{flex:0 0 auto;padding:8px 11px}
+    /* Directly above the zoom stack (bottom:150px, 120px tall), clear of the legend. */
+    #focusBtn{top:auto;bottom:278px;right:12px}
+  }
 </style>
 </head>
 <body>
@@ -208,6 +264,7 @@
   <div class="caveat">Prototype — modelled estimates, not official measurements · <a href="/" target="_top">dashboard</a> · <a href="/legacy/living-water-table-classic-3d.html" target="_top">classic view</a></div>
 </div>
 
+<button id="focusBtn" class="glass" type="button" aria-pressed="false" title="Maximise the scene" aria-label="Maximise the scene"><span id="focusIcon">⤡</span></button>
 <div class="hud" id="kpis">
   <div class="glass kpi"><span>State avg depth</span><strong id="kAvg">&mdash;</strong><small id="kAvgD"></small></div>
   <div class="glass kpi"><span>Beyond safe</span><strong id="kStress">&mdash;</strong><small>CGWB 2024</small></div>
@@ -1225,6 +1282,24 @@ window.__dbg = {
     return {mn:mn.map(v=>+v.toFixed(2)),mx:mx.map(v=>+v.toFixed(2))};},
   nan:()=>{let n=0;for(let i=0;i<NV*3;i++)if(!isFinite(positions[i]))n++;return n;},
 };
+</script>
+
+<script>
+(function(){
+  var b=document.getElementById('focusBtn');
+  if(!b) return;
+  b.addEventListener('click',function(){
+    var on=document.body.classList.toggle('sceneFocus');
+    b.setAttribute('aria-pressed',String(on));
+    b.setAttribute('title',on?'Show the panels':'Maximise the scene');
+    b.setAttribute('aria-label',on?'Show the panels':'Maximise the scene');
+    document.getElementById('focusIcon').textContent=on?'\u2922':'\u2921';
+  });
+  // Escape is the conventional way out of a maximised view.
+  window.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&document.body.classList.contains('sceneFocus')) b.click();
+  });
+})();
 </script>
 </body>
 </html>

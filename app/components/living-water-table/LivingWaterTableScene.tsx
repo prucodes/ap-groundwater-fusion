@@ -56,8 +56,12 @@ export function defaultCameraFraming(
 ) {
   const projector = createProjector(bbox);
   const verticalFov = THREE.MathUtils.degToRad(CAMERA_FOV);
+  // The floor keeps a degenerate viewport from pushing the camera to infinity,
+  // but it must sit below a portrait phone's aspect (375/729 ~ 0.51). At 0.8 the
+  // scene was framed as if the screen were wider than it is, so the state was
+  // cropped off both edges on a phone.
   const horizontalFov =
-    2 * Math.atan(Math.tan(verticalFov / 2) * Math.max(aspect, 0.8));
+    2 * Math.atan(Math.tan(verticalFov / 2) * Math.max(aspect, 0.35));
   const boundsPadding = 1.15;
   const distance = Math.max(
     (projector.height * boundsPadding) / (2 * Math.tan(verticalFov / 2)),

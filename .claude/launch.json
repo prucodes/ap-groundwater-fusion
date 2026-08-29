@@ -4,21 +4,8 @@
     {
       "name": "groundwater-app",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run",
-        "dev"
-      ],
+      "runtimeArgs": ["run", "dev"],
       "cwd": "app",
-      "port": 3000,
-      "autoPort": true
-    },
-    {
-      "name": "sasa-lab",
-      "runtimeExecutable": "/bin/sh",
-      "runtimeArgs": [
-        "-c",
-        "export PATH=/usr/local/bin:$PATH; cd /Users/pruthviyannam/Documents/SASA-AI-Data-Validation; exec npm run dev"
-      ],
       "port": 3000,
       "autoPort": true
     }

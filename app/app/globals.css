@@ -1161,7 +1161,11 @@ select:focus-visible {
 
 .overviewLower {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  /* minmax(0, 1fr), not 1fr: a bare 1fr is minmax(auto, 1fr), and auto refuses
+     to shrink below the column's min-content. The card here holds a wide table,
+     so at ~1280px the track blew out to 1093px inside a 964px container and the
+     whole page scrolled sideways. */
+  grid-template-columns: minmax(0, 1fr) 340px;
   gap: 16px;
   align-items: start;
 }
@@ -3998,7 +4002,7 @@ pre.jsonBody {
   .card svg:not(.leaflet-zoom-animated) { max-width: 100%; }
 
   /* Long identifiers and URLs shouldn't push the column wider. */
-  .card, .pageWrap p, .pageWrap td, .pageWrap li { overflow-wrap: anywhere; }
+  .card, .pageWrap p, .pageWrap li { overflow-wrap: break-word; }
 }
 
 /* Phones proper: single column everywhere, tighter gutters. */
@@ -4064,7 +4068,43 @@ pre.jsonBody {
 
 /* The cinematic frame bleeds into the app's right gutter on desktop; on a phone
    that negative margin pushes it past the viewport. */
-.crystalFrameWrap { position: relative; height: 100vh; margin: 0 -24px 0 0; }
+.crystalFrameWrap {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0 -24px 0 0;
+}
+.crystalFrame { border: 0; width: 100%; flex: 1 1 auto; min-height: 0; display: block; }
+.crystalNotice {
+  flex: none;
+  margin: 0;
+  padding: 8px 12px;
+  background: rgba(7, 29, 53, 0.92);
+  color: #eaf1f8;
+  font: 500 12px/1.45 var(--font-sans, system-ui, sans-serif);
+}
 @media (max-width: 880px) {
+  /* The negative gutter would push the frame past a phone viewport, and the
+     shell's top bar already takes 56px of the screen. */
   .crystalFrameWrap { margin: 0; height: calc(100dvh - 56px); }
+}
+
+/* Tables keep a readable width on phones and scroll inside .tableWrap, instead
+   of being squeezed to fit and wrapping cell text one character per line. */
+@media (max-width: 880px) {
+  .tableWrap { -webkit-overflow-scrolling: touch; }
+  table.dataTable { min-width: 620px; }
+  table.dataTable th,
+  table.dataTable td { white-space: nowrap; }
+  /* The narrative column is the one that genuinely needs to wrap. */
+  table.dataTable td.wrapCell,
+  table.dataTable th.wrapCell { white-space: normal; min-width: 240px; }
+}
+
+/* Estimates toolbar: the sort buttons sit in a non-wrapping inline-flex row and
+   the search box has a fixed 170px input, so together they ran past a phone. */
+@media (max-width: 560px) {
+  .estSortRow { flex-wrap: wrap; }
+  .estSearch { flex: 1 1 100%; }
+  .estSearch input { width: 100%; min-width: 0; }
 }
