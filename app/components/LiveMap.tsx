@@ -38,8 +38,12 @@ type SeedProps = {
   centroid?: number[];
 };
 
-const CARTO_LIGHT = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-const CARTO_DARK = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+// CARTO began stamping "API KEY REQUIRED" into its keyless basemap tiles, so the
+// watermark appeared over every map without any change on our side. OpenStreetMap's
+// standard tiles need no key. There is no dark variant, so dark mode is a CSS
+// filter over the same tiles (see .leaflet-tile-pane in globals.css).
+const BASEMAP_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+const BASEMAP_ATTRIBUTION = "&copy; OpenStreetMap contributors";
 
 const tooltipOpts = { sticky: true, className: "liveTip", direction: "top" as const, opacity: 1, offset: [0, -6] as [number, number] };
 
@@ -216,13 +220,11 @@ export function LiveMap({
         doubleClickZoom: mode === "status",
         boxZoom: mode === "status",
         keyboard: false,
-        zoomSnap: 0.25,
-      });
+        zoomSnap: 0.25, maxBoundsViscosity: 1 });
       mapRef.current = map;
 
-      tile = L.tileLayer(dark ? CARTO_DARK : CARTO_LIGHT, {
-        attribution: "&copy; OpenStreetMap &copy; CARTO",
-        subdomains: "abcd",
+      tile = L.tileLayer(BASEMAP_URL, {
+        attribution: BASEMAP_ATTRIBUTION,
         maxZoom: 19,
       }).addTo(map);
 
@@ -323,6 +325,11 @@ export function LiveMap({
           if (bounds.isValid()) {
             map!.fitBounds(bounds, { padding: mode === "single" ? [24, 24] : [12, 12] });
             if (mode === "single") map!.setZoom(map!.getZoom() - 0.25);
+            // Keep the view on the mapped area rather than letting the user pan
+            // off to another state entirely. A single mandal is tiny, so it gets
+            // more surrounding context than the statewide view does.
+            map!.setMaxBounds(bounds.pad(mode === "single" ? 2 : 0.12));
+            map!.setMinZoom(map!.getZoom() - 0.5);
           }
         } catch {
           map!.setView([15.9, 79.7], 6);
@@ -336,10 +343,10 @@ export function LiveMap({
       resizeObs = new ResizeObserver(() => map?.invalidateSize());
       resizeObs.observe(containerRef.current);
 
-      // React to theme toggle by swapping the basemap and reskinning the mask.
+      // React to theme toggle by reskinning the mask. The basemap itself is
+      // darkened by a CSS filter rather than a second tile URL.
       observer = new MutationObserver(() => {
         const d = isDark();
-        tile?.setUrl(d ? CARTO_DARK : CARTO_LIGHT);
         (mask as unknown as { setStyle?: (s: PathOptions) => void })?.setStyle?.({
           color: d ? "rgba(120,210,225,0.55)" : "rgba(15,72,110,0.55)",
           fillColor: d ? "#050d18" : "#aeb9c6",

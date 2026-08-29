@@ -7,8 +7,12 @@ import type { GeoJSON, Map as LeafletMap, PathOptions, TileLayer } from "leaflet
 import { districtGeometry, districtLayerColor, formatNumber, formatPeriod, titleCase } from "../lib/data";
 import type { DistrictFeature, DistrictLayerKey } from "../lib/types";
 
-const CARTO_LIGHT = "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png";
-const CARTO_DARK = "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
+// CARTO began stamping "API KEY REQUIRED" into its keyless basemap tiles, so the
+// watermark appeared over every map without any change on our side. OpenStreetMap's
+// standard tiles need no key. There is no dark variant, so dark mode is a CSS
+// filter over the same tiles (see .leaflet-tile-pane in globals.css).
+const BASEMAP_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+const BASEMAP_ATTRIBUTION = "&copy; OpenStreetMap contributors";
 
 function isDark() {
   return typeof document !== "undefined" && document.documentElement.dataset.theme === "dark";
@@ -57,7 +61,6 @@ export function DistrictMap({
     let cancelled = false;
     let map: LeafletMap | null = null;
     let tile: TileLayer | null = null;
-    let observer: MutationObserver | null = null;
 
     (async () => {
       const L = (await import("leaflet")).default;
@@ -71,11 +74,10 @@ export function DistrictMap({
       const fc = { type: "FeatureCollection" as const, features };
 
       const dark = isDark();
-      map = L.map(containerRef.current, { zoomControl: true, scrollWheelZoom: false, zoomSnap: 0.25 });
+      map = L.map(containerRef.current, { zoomControl: true, scrollWheelZoom: false, zoomSnap: 0.25, maxBoundsViscosity: 1 });
       mapRef.current = map;
-      tile = L.tileLayer(dark ? CARTO_DARK : CARTO_LIGHT, {
-        attribution: "&copy; OpenStreetMap &copy; CARTO",
-        subdomains: "abcd",
+      tile = L.tileLayer(BASEMAP_URL, {
+        attribution: BASEMAP_ATTRIBUTION,
         maxZoom: 19,
       }).addTo(map);
 
@@ -108,7 +110,13 @@ export function DistrictMap({
 
       const fit = () => {
         try {
-          map!.fitBounds(geo.getBounds(), { padding: [14, 14] });
+          const bounds = geo.getBounds();
+          map!.fitBounds(bounds, { padding: [14, 14] });
+          // Keep the view on Andhra Pradesh. pad() is a fraction of the span,
+          // so this is a little slack for centring edge districts — 0.6 was
+          // enough to pan almost entirely off the state.
+          map!.setMaxBounds(bounds.pad(0.12));
+          map!.setMinZoom(map!.getZoom() - 0.5);
         } catch {
           map!.setView([15.9, 79.7], 6);
         }
@@ -117,13 +125,12 @@ export function DistrictMap({
       setTimeout(() => { map?.invalidateSize(); fit(); }, 60);
       setTimeout(() => map?.invalidateSize(), 300);
 
-      observer = new MutationObserver(() => tile?.setUrl(isDark() ? CARTO_DARK : CARTO_LIGHT));
-      observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      // Dark mode is a CSS filter over the tile pane now, so there is no theme
+      // observer here any more — the tile URL never changes.
     })();
 
     return () => {
       cancelled = true;
-      observer?.disconnect();
       geoRef.current = null;
       if (map) map.remove();
       mapRef.current = null;

@@ -4108,3 +4108,13 @@ pre.jsonBody {
   .estSearch { flex: 1 1 100%; }
   .estSearch input { width: 100%; min-width: 0; }
 }
+
+/* The previous basemap was a muted "light" style; OSM's standard tiles are much
+   more saturated and compete with the choropleth, so desaturate them. Applied to
+   the tile pane only, so the layers the app draws keep their real colours. */
+.leaflet-tile-pane { filter: saturate(0.4) brightness(1.05) contrast(0.96); }
+
+/* OSM publishes no dark basemap, so dark mode inverts the same tiles. */
+:root[data-theme="dark"] .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) saturate(0.6);
+}

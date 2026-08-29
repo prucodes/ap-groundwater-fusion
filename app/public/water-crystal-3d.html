@@ -964,6 +964,42 @@ canvas.addEventListener("wheel",e=>{
   radius=Math.max(7.5,Math.min(24,radius*(1+e.deltaY*0.0011)));
 },{passive:false});
 
+/* Touch pinch-to-zoom. Zoom was bound to `wheel` only, which never fires on a
+   touch screen, so on a phone the scene could be rotated but never zoomed. Track
+   the active pointers; with two down, drive `radius` from the change in their
+   separation and suspend rotation so the gesture does not also spin the camera. */
+const touches=new Map();
+let pinchDist=0;
+canvas.addEventListener("pointerdown",e=>{
+  if(e.pointerType!=="touch") return;
+  touches.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(touches.size===2){
+    const [a,b]=[...touches.values()];
+    pinchDist=Math.hypot(a.x-b.x,a.y-b.y);
+    dragging=false;                 // two fingers means zoom, not rotate
+    canvas.classList.remove("dragging");
+  }
+});
+canvas.addEventListener("pointermove",e=>{
+  if(e.pointerType!=="touch"||!touches.has(e.pointerId)) return;
+  touches.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(touches.size!==2) return;
+  const [a,b]=[...touches.values()];
+  const d=Math.hypot(a.x-b.x,a.y-b.y);
+  if(pinchDist>0&&d>0){
+    interacted=true; autoRot=false;
+    radius=Math.max(7.5,Math.min(24,radius*(pinchDist/d)));
+  }
+  pinchDist=d;
+});
+function endTouch(e){
+  if(e.pointerType!=="touch") return;
+  touches.delete(e.pointerId);
+  if(touches.size<2) pinchDist=0;
+}
+canvas.addEventListener("pointerup",endTouch);
+canvas.addEventListener("pointercancel",endTouch);
+
 /* ============================== picking & tooltip ============================== */
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(-2,-2);
 let mousePX=0,mousePY=0;
