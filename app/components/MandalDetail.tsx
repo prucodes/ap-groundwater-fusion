@@ -21,11 +21,9 @@ import { WaterBalanceCard } from "./WaterBalanceCard";
 import { AgreementTag, ConfidenceBadge, StatusBadge } from "./Badges";
 import { PercentileRing, Sparkline } from "./charts";
 import { FusionExplanationCard } from "./FusionExplanationCard";
-import { TimeScrubber } from "./TimeScrubber";
 import { LiveMap } from "./LiveMap";
 import { ActionOutputPreview } from "./ActionOutputPreview";
 import {
-  IconActivity,
   IconArrowRight,
   IconCalendar,
   IconCheck,
@@ -33,7 +31,6 @@ import {
   IconChevronLeft,
   IconDroplet,
   IconFlask,
-  IconInfo,
   IconLeaf,
   IconMap,
   IconPin,
@@ -44,24 +41,8 @@ import {
 } from "./icons";
 
 const MAX_DEPTH = 25;
-const MONTHS = ["Dec '25", "Jan '26", "Feb '26", "Mar '26", "Apr '26", "May '26", "Jun '26"];
 
-/* Deterministic illustrative jitter from the mandal id so charts are stable across renders. */
-function seeded(id: string) {
-  let h = 0;
-  for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) % 1000;
-  return (k: number) => {
-    h = (h * 1103515245 + 12345) % 2147483648;
-    return ((h / 2147483648) - 0.5) * k;
-  };
-}
 
-function illustrativeSeries(base: number, id: string, amp: number) {
-  const rnd = seeded(id);
-  return MONTHS.map((_, i) =>
-    Math.max(0, Math.round((base + rnd(amp) + Math.sin(i / 1.7) * (amp / 3)) * 10) / 10),
-  );
-}
 
 function actionItems(m: MandalGroundwaterView) {
   if (m.sensor_satellite_agreement === "declining_despite_positive_climate_balance") {
@@ -85,9 +66,6 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
   const sample = sampleForMandal(mandal);
   const depthPct = Math.min(100, ((mandal.median_groundwater_mbgl ?? 0) / MAX_DEPTH) * 100);
 
-  const gwSeries = illustrativeSeries(mandal.groundwater_percentile ?? 90, mandal.id + "gw", 6);
-  const rootSeries = illustrativeSeries(mandal.rootzone_percentile ?? 80, mandal.id + "rz", 8);
-  const surfSeries = illustrativeSeries(mandal.surface_percentile ?? 70, mandal.id + "sf", 10);
   const realDepth = (observationSeries[mandal.id]?.observations ?? []).map(
     ({ period, value }) => [period, value] as [string, number],
   );
@@ -268,29 +246,6 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
               </div>
             </section>
 
-            <section className="card">
-              <div className="cardHead">
-                <div className="cardTitle">
-                  <span className="titleIcon">
-                    <IconActivity />
-                  </span>
-                  Sensor vs Satellite Signals
-                </div>
-                <span className="cardSub">Drag the timeline ↓</span>
-              </div>
-              <TimeScrubber
-                months={MONTHS}
-                series={[
-                  { name: "NASA GW Percentile", color: "#12b5cb", points: gwSeries },
-                  { name: "Root-Zone Percentile", color: "#5e9b6b", points: rootSeries },
-                  { name: "Surface Percentile", color: "#3f86d6", points: surfSeries },
-                ]}
-              />
-              <div className="mapHint" style={{ marginTop: 8 }}>
-                <IconInfo style={{ width: 13, height: 13 }} /> The latest percentile values are real (NASA
-                GRACE-DA / soil-moisture); the month-to-month shape is illustrative, not a measured time series.
-              </div>
-            </section>
           </div>
 
           <section className="card">

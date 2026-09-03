@@ -20,9 +20,13 @@ type Props = {
   /** Modelled nowcast for the target period, drawn beyond the measured record. */
   nowcast?: { value: number; lower: number | null; upper: number | null; period: string } | null;
   height?: number;
+  /** Narrow-panel variant: the trace and its context, without the legend and
+   *  oversized readout that would crowd a side panel. */
+  compact?: boolean;
 };
 
-const PAD = { top: 18, right: 16, bottom: 26, left: 44 };
+const PAD_FULL = { top: 18, right: 16, bottom: 26, left: 44 };
+const PAD_COMPACT = { top: 12, right: 8, bottom: 14, left: 30 };
 const VIEW_W = 900;
 
 function niceCeil(value: number) {
@@ -31,9 +35,11 @@ function niceCeil(value: number) {
   return Math.ceil(value / 5) * 5;
 }
 
-export function Hydrograph({ series, nowcast = null, height = 260 }: Props) {
+export function Hydrograph({ series, nowcast = null, height = 260, compact = false }: Props) {
   const gid = useId().replace(/:/g, "");
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+
+  const PAD = compact ? PAD_COMPACT : PAD_FULL;
 
   const model = useMemo(() => {
     if (series.length < 2) return null;
@@ -90,7 +96,7 @@ export function Hydrograph({ series, nowcast = null, height = 260 }: Props) {
       : null;
 
     return { points, trace, water, bands, ticks, depthTicks, maxDepth, plotH, plotW, nc, x, y };
-  }, [series, nowcast, height]);
+  }, [series, nowcast, height, PAD]);
 
   if (!model) {
     return <p className="muted" style={{ fontSize: 13 }}>Not enough measured history to draw a hydrograph.</p>;
@@ -113,7 +119,7 @@ export function Hydrograph({ series, nowcast = null, height = 260 }: Props) {
 
   return (
     <div className="hydrograph">
-      <div className="hgReadout">
+      <div className={`hgReadout ${compact ? "hgReadoutCompact" : ""}`}>
         <div className="hgReadMain">
           <span className="hgReadValue">{active.value.toFixed(2)}</span>
           <span className="hgReadUnit">m below ground</span>
@@ -176,7 +182,7 @@ export function Hydrograph({ series, nowcast = null, height = 260 }: Props) {
           </g>
         ) : null}
 
-        {ticks.map((t) => (
+        {(compact ? [ticks[0], ticks[ticks.length - 1]].filter(Boolean) : ticks).map((t) => (
           <text key={t.period} x={t.x} y={height - 8} textAnchor="middle" fontSize="11" fill="var(--muted-2)">
             {t.period.slice(0, 4)}
           </text>
@@ -192,12 +198,14 @@ export function Hydrograph({ series, nowcast = null, height = 260 }: Props) {
         )}
       </svg>
 
+      {compact ? null : (
       <div className="hgKey">
         <span className="hgKeyItem"><i className="hgSwatch hgSwatchLine" /> Measured (APWRIMS)</span>
         {nc ? <span className="hgKeyItem"><i className="hgSwatch hgSwatchModel" /> Modelled nowcast · p10–p90</span> : null}
         <span className="hgKeyItem"><i className="hgSwatch hgSwatchMonsoon" /> Monsoon (Jun–Sep)</span>
         <span className="hgKeyItem hgKeyNote">Depth increases downward — a higher fill is a shallower water table.</span>
       </div>
+      )}
     </div>
   );
 }

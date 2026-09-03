@@ -105,6 +105,9 @@ export function StatusDonut({
   );
 }
 
+/* Above this many readings, per-point dots stop helping and start crowding. */
+const DENSE_SERIES_POINTS = 12;
+
 export function Sparkline({
   series,
   width = 460,
@@ -172,17 +175,25 @@ export function Sparkline({
           <g key={s.name}>
             {area && <path d={fill} fill={`url(#${sid}-${idx})`} stroke="none" />}
             <path d={line} fill="none" stroke={s.color} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" />
-            {s.points.map((v, i) => (
-              <circle
-                key={i}
-                cx={x(i)}
-                cy={y(v)}
-                r={markerIndex === i ? 4.2 : 2.8}
-                fill={markerIndex === i ? s.color : "#fff"}
-                stroke={s.color}
-                strokeWidth={1.8}
-              />
-            ))}
+            {/* A dot per reading turns into noise once a series is long, and it
+                buries the value that actually matters — the latest one. Short
+                series keep every point; long ones emphasise the endpoint. */}
+            {s.points.map((v, i) => {
+              const isLast = i === s.points.length - 1;
+              const isMarked = markerIndex === i;
+              if (s.points.length > DENSE_SERIES_POINTS && !isLast && !isMarked) return null;
+              return (
+                <circle
+                  key={i}
+                  cx={x(i)}
+                  cy={y(v)}
+                  r={isMarked ? 4.2 : isLast ? 3.6 : 2.8}
+                  fill={isMarked || isLast ? s.color : "#fff"}
+                  stroke={s.color}
+                  strokeWidth={1.8}
+                />
+              );
+            })}
           </g>
         );
       })}

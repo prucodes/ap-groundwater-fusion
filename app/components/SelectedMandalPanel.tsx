@@ -1,12 +1,15 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import type { MandalGroundwaterView } from "../lib/types";
-import { agreementMeta, balanceMeta, formatNumber, sampleForMandal, statusMeta, titleCase } from "../lib/data";
+import { agreementMeta, balanceMeta, depthSeriesFor, formatNumber, sampleForMandal, statusMeta, titleCase } from "../lib/data";
 import { AgreementTag } from "./Badges";
-import { IconArrowRight, IconDroplet, IconFlask, IconSatellite, IconTarget } from "./icons";
+import { IconActivity, IconArrowRight, IconDroplet, IconFlask, IconSatellite, IconTarget } from "./icons";
+import { Hydrograph } from "./Hydrograph";
+import { ExtractionBadge } from "./ExtractionBadge";
 
 export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView }) {
   const meta = statusMeta(mandal.status_bucket);
+  const history = depthSeriesFor(mandal);
   const sample = sampleForMandal(mandal);
 
   return (
@@ -19,8 +22,32 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
             {meta.label}
           </span>
           <span className="badge">{mandal.confidence_label} Confidence</span>
+          <ExtractionBadge category={mandal.extraction_category} size="sm" />
         </div>
       </div>
+
+      {history.length >= 2 ? (
+        <div className="sideSection">
+          <div className="sideSectionTitle">
+            <IconActivity /> Measured History · {history.length} months
+          </div>
+          <Hydrograph
+            series={history}
+            height={120}
+            compact
+            nowcast={
+              mandal.estimate_mbgl !== null && mandal.estimate_mbgl !== undefined
+                ? {
+                    value: mandal.estimate_mbgl,
+                    lower: mandal.estimate_band_p10 ?? null,
+                    upper: mandal.estimate_band_p90 ?? null,
+                    period: mandal.latest_observation_period,
+                  }
+                : null
+            }
+          />
+        </div>
+      ) : null}
 
       <div className="sideSection">
         <div className="sideSectionTitle">

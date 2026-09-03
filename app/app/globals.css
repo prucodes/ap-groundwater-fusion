@@ -4605,3 +4605,41 @@ pre.jsonBody {
 @media (max-width: 560px) {
   .dtgGrid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px; }
 }
+
+/* Compact hydrograph: the side panel is ~300px, so the readout loses its
+   display size and the legend is dropped entirely. */
+.hgReadoutCompact { padding-bottom: 5px; }
+.hgReadoutCompact .hgReadValue { font-size: 17px; }
+.hgReadoutCompact .hgReadUnit { font-size: 11px; }
+.hgReadoutCompact .hgReadPeriod { font-size: 11px; }
+.sidePanel .hgSvg { cursor: default; }
+
+/* A single-column grid must never grow past its container. Without an explicit
+   track, the implicit one is sized to max-content, so one wide child (a long
+   source label, a table) pushes the column — and the card inside it — past the
+   viewport. This was previously only corrected below 880px, which left the
+   desktop rail overflowing. Modifiers that declare their own columns
+   (.detailSplit, .detailPair, .kpiRow4) are more specific and still win. */
+.contentGrid { grid-template-columns: minmax(0, 1fr); }
+.contentGrid > * { min-width: 0; }
+
+/* Grid items default to min-width:auto, which resolves to min-content — so one
+   wide child (a long label, a table, a chart) can push its track wider than the
+   container and take the page with it. Letting the layout grids' children shrink
+   fixes the whole class at once; the wide content then scrolls inside its own
+   container as intended. */
+.watchlistLayout > *,
+.overviewGrid > *,
+.overviewLower > *,
+.mapWorkspace > *,
+.mapLower > *,
+.estLayout > *,
+.signalGrid > *,
+.metricRow > *,
+.kpiRow > *,
+.summaryRow > *,
+.awareGrid > *,
+.provGrid > *,
+.dlGrid > *,
+.sigGaugeRow > *,
+.actionSummary > * { min-width: 0; }
