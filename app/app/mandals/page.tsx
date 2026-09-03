@@ -15,6 +15,7 @@ export default function MandalInsightsPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
       <MandalDetail mandal={first} />
     </div>

@@ -78,6 +78,7 @@ export default function NasaSignalsPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       {/* Trust ribbon — provenance at a glance */}

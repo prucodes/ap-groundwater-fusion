@@ -43,6 +43,7 @@ export default function IrrigationPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       <IrrigationExports />

@@ -124,6 +124,7 @@ export default function WatchlistPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       <div className="summaryRow stagger">

@@ -21,7 +21,6 @@ import {
   IconMenu,
   IconSatellite,
   IconSearch,
-  IconSettings,
   IconWaves,
   IconX,
 } from "./icons";
@@ -33,29 +32,29 @@ import { PageTransition } from "./PageTransition";
 
 // Primary workflow — the day-to-day screens. `desc` is the one-line explainer.
 const primaryNav = [
-  { href: "/", label: "Overview", Icon: IconLayers, desc: "At-a-glance state of AP groundwater — KPIs, status map and watch-list." },
+  { href: "/", label: "Overview", Icon: IconLayers, desc: "Executive cockpit: status map, priority mandals, source readiness and selected-area evidence." },
   { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
-  { href: "/estimates", label: "Estimated Levels β", Icon: IconDroplet, desc: "Modelled mandal depth in metres (sensors + satellite rainfall), with confidence bands." },
-  { href: "/nasa", label: "NASA Signals", Icon: IconSatellite, desc: "The raw, unfused GRACE-DA satellite truth with full source provenance." },
-  { href: "/climate", label: "Climate & Balance", Icon: IconWaves, desc: "Rainfall in vs ET out — the water budget behind groundwater, with provenance." },
-  { href: "/living-water-table", label: "Living Water Table", Icon: IconDroplet, desc: "Experimental 3D V2 groundwater-depth view with explicit measured-only and no-data states.", badge: "3D" },
-  { href: "/crystal", label: "Crystal Water Table", Icon: IconWaves, desc: "Cinematic liquid-map 3D view — time-lapse 2014–2027, extraction-stress mode, district labels.", badge: "NEW" },
-  { href: "/alerts", label: "Early Warning", Icon: IconAlert, desc: "Severity-ranked alerts (Critical/High/Watch) from the fusion engine." },
+  { href: "/mandals", label: "Mandal Insights", Icon: IconCompass, desc: "Per-mandal deep dive: readings, satellite context, trend and agreement." },
+  { href: "/watchlist", label: "Verify / Watchlist", Icon: IconActivity, desc: "Mandals where evidence needs field review or source verification." },
+  { href: "/alerts", label: "Early Warning", Icon: IconAlert, desc: "Severity-ranked alerts from the fusion engine." },
   { href: "/districts", label: "Districts", Icon: IconGrid, desc: "District roll-ups with an auto + AI situation brief per district." },
-  { href: "/scenario", label: "Scenario Planner", Icon: IconCloudRain, desc: "Monsoon what-if: dial rainfall up/down and watch who tips into deficit." },
-  { href: "/irrigation", label: "Irrigation & AWARE", Icon: IconLeaf, desc: "Draw/hold/conserve advisory per district + the AWARE export bridge." },
 ];
 
-// Secondary — detail, exports, and reference. Grouped under "More".
+// Secondary — evidence, exports, and lab-style views. Kept reachable without
+// making every prototype capability compete with the operational workflow.
 const moreNav = [
-  { href: "/mandals", label: "Mandal Insights", Icon: IconCompass, desc: "Per-mandal deep dive: signals, APWRIMS reading, trend and agreement." },
-  { href: "/watchlist", label: "Verify / Watchlist", Icon: IconActivity, desc: "Mandals where satellite and sensor disagree — the review queue." },
-  { href: "/compare", label: "Compare", Icon: IconColumns, desc: "Side-by-side comparison of any two mandals or districts." },
-  { href: "/snapshot", label: "Executive Snapshot", Icon: IconFile, desc: "One-page printable summary for officials." },
+  { href: "/estimates", label: "Modelled Levels β", Icon: IconDroplet, desc: "Calculated mandal groundwater depth in metres with model bands." },
+  { href: "/nasa", label: "NASA Signals", Icon: IconSatellite, desc: "Raw, unfused GRACE-DA satellite-model context with provenance." },
+  { href: "/climate", label: "Climate & Balance", Icon: IconWaves, desc: "Rainfall in vs ET out — the water budget behind groundwater." },
   { href: "/readiness", label: "Data Readiness", Icon: IconDatabase, desc: "Which sources are live or pending — and their quality." },
-  { href: "/reports", label: "Reports", Icon: IconFile, desc: "Generated and exportable reports (CSV / print)." },
-  { href: "/methodology", label: "Methodology", Icon: IconFlow, desc: "How fusion works and what each signal means — the honesty layer." },
-  { href: "/settings", label: "Settings", Icon: IconSettings, desc: "Theme and display preferences." },
+  { href: "/methodology", label: "Methodology", Icon: IconFlow, desc: "How fusion works and what each signal means." },
+  { href: "/reports", label: "Reports", Icon: IconFile, desc: "Generated and exportable reports." },
+  { href: "/snapshot", label: "Executive Snapshot", Icon: IconFile, desc: "One-page printable summary for officials." },
+  { href: "/compare", label: "Compare", Icon: IconColumns, desc: "Side-by-side comparison of any two mandals or districts." },
+  { href: "/scenario", label: "Scenario Lab", Icon: IconCloudRain, desc: "Monsoon what-if: dial rainfall up/down and watch who tips into deficit." },
+  { href: "/irrigation", label: "AWARE Preview", Icon: IconLeaf, desc: "Draw/hold/conserve advisory preview + the AWARE export bridge." },
+  { href: "/living-water-table", label: "Living Water Table", Icon: IconDroplet, desc: "Experimental 3D groundwater-depth view.", badge: "3D" },
+  { href: "/crystal", label: "Crystal 3D Lab", Icon: IconWaves, desc: "Cinematic liquid-map view for demos.", badge: "LAB" },
 ];
 
 function nowStamp() {
@@ -175,7 +174,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
 
         <nav className="sidebarNav" aria-label="Primary">
-          {primaryNav.map(({ href, label, Icon, desc, badge }) => {
+          {primaryNav.map(({ href, label, Icon, desc }) => {
             const active = href === "/" ? pathname === href : pathname.startsWith(href);
             return (
               <Link className={`navItem ${active ? "active" : ""}`} href={href} key={href} title={`${label} — ${desc}`}>
@@ -183,14 +182,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <Icon />
                 </span>
                 <span className="navLabel">{label}</span>
-                {badge ? <span className="navBadge">{badge}</span> : null}
               </Link>
             );
           })}
 
-          <div className="navGroupLabel"><span>More</span></div>
+          <div className="navGroupLabel"><span>Evidence &amp; Labs</span></div>
 
-          {moreNav.map(({ href, label, Icon, desc }) => {
+          {moreNav.map(({ href, label, Icon, desc, badge }) => {
             const active = pathname.startsWith(href);
             return (
               <Link className={`navItem ${active ? "active" : ""}`} href={href} key={href} title={`${label} — ${desc}`}>
@@ -198,6 +196,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <Icon />
                 </span>
                 <span className="navLabel">{label}</span>
+                {badge ? <span className="navBadge">{badge}</span> : null}
               </Link>
             );
           })}

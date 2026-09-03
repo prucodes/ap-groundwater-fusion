@@ -44,6 +44,7 @@ export default function ClimatePage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       <div className="provRibbon">

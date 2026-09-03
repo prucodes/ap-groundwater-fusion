@@ -23,7 +23,7 @@ export default async function MandalDetailPage({ params }: { params: Promise<{ i
 
   return (
     <div className="pageWrap">
-      <HeaderHero title="Mandal Insights" showChips={false} />
+      <HeaderHero title="Mandal Insights" showChips={false} variant="compact" />
       <MandalDetail mandal={mandal} />
     </div>
   );

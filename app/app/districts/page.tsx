@@ -31,6 +31,7 @@ export default function DistrictsPage() {
           <>All 28 districts, estimated groundwater <strong>level in metres</strong> (modelled β, calibrated to APWRIMS) with year-on-year change and stress. Select a district to drill down.</>
         }
         showChips={false}
+        variant="compact"
       />
 
       <div className="overviewGrid">

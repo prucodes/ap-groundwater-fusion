@@ -72,6 +72,7 @@ export default function MapPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       <div className="mapWorkspace">

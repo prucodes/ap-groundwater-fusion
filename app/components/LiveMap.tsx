@@ -32,6 +32,10 @@ type SeedProps = {
   surface: number | null;
   rain: number | null;
   median: number | null;
+  estimate: number | null;
+  estimateLow: number | null;
+  estimateHigh: number | null;
+  gap: number | null;
   balance: number | null;
   balanceStatus: string;
   agreement: string;
@@ -45,7 +49,7 @@ type SeedProps = {
 const BASEMAP_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 const BASEMAP_ATTRIBUTION = "&copy; OpenStreetMap contributors";
 
-const tooltipOpts = { sticky: true, className: "liveTip", direction: "top" as const, opacity: 1, offset: [0, -6] as [number, number] };
+const tooltipOpts = { sticky: true, className: "liveTip", direction: "auto" as const, opacity: 1, offset: [8, 0] as [number, number] };
 
 function isDark() {
   return typeof document !== "undefined" && document.documentElement.dataset.theme === "dark";
@@ -74,11 +78,23 @@ function tooltipHtml(p: SeedProps) {
     `<span class="tipHead"><b>${titleCase(p.m)}</b>` +
     `<span class="tipPill" style="color:${meta.color};background:${meta.color}22">${meta.label}</span></span>` +
     `<span class="tipDist">${titleCase(p.d)} District</span>` +
-    `<span class="tipMetric"><i>NASA Groundwater</i>${bar(p.gw, "#12b5cb")}</span>` +
-    `<span class="tipMetric"><i>Root-Zone</i>${bar(p.root, "#5e9b6b")}</span>` +
-    `<span class="tipMetric"><i>Surface</i>${bar(p.surface, "#3f86d6")}</span>` +
+    `<span class="tipExplain">Different evidence layers — not duplicate readings. Depth is in m below ground; satellite values are 0–100 wetness percentiles.</span>` +
+    `<span class="tipSection">Satellite / climate context</span>` +
+    `<span class="tipMetric"><i>GRACE GW %ile</i>${bar(p.gw, "#12b5cb")}</span>` +
+    `<span class="tipMetric"><i>Root-zone %ile</i>${bar(p.root, "#5e9b6b")}</span>` +
+    `<span class="tipMetric"><i>Surface %ile</i>${bar(p.surface, "#3f86d6")}</span>` +
     (p.rain !== null ? `<span class="tipRow"><i>Rainfall (CHIRPS)</i><b>${p.rain} mm</b></span>` : "") +
-    `<span class="tipRow"><i>Median (APWRIMS)</i><b>${p.median ?? "—"} mbgl</b></span>` +
+    `<span class="tipSection">Groundwater depth</span>` +
+    `<span class="tipRow"><i>Observed median history</i><b>${p.median ?? "—"} mbgl</b></span>` +
+    (p.estimate !== null
+      ? `<span class="tipRow tipPrimary"><i>Calculated level β</i><b>${p.estimate} mbgl</b></span>`
+      : "") +
+    (p.estimateLow !== null && p.estimateHigh !== null
+      ? `<span class="tipRow"><i>Model band P10–P90</i><b>${p.estimateLow}–${p.estimateHigh} mbgl</b></span>`
+      : "") +
+    (p.gap !== null && p.gap >= 2
+      ? `<span class="tipRow"><i>Measured–model gap</i><b style="color:#c65a46">${p.gap} m</b></span>`
+      : "") +
     (p.balance !== null
       ? `<span class="tipRow"><i>Water balance</i><b style="color:${balColor(p.balanceStatus)}">${p.balanceStatus} (${p.balance > 0 ? "+" : ""}${p.balance} mm)</b></span>`
       : "") +
@@ -198,6 +214,10 @@ export function LiveMap({
               surface: rec?.surface_percentile ?? null,
               rain: rec?.rainfall_mm ?? null,
               median: rec?.median_groundwater_mbgl ?? null,
+              estimate: rec?.estimate_mbgl ?? null,
+              estimateLow: rec?.estimate_band_p10 ?? null,
+              estimateHigh: rec?.estimate_band_p90 ?? null,
+              gap: rec?.obs_model_gap_m ?? null,
               balance: rec?.water_balance_mm ?? null,
               balanceStatus: rec?.water_balance_status ?? "",
               agreement: rec?.sensor_satellite_agreement ?? "",

@@ -88,6 +88,7 @@ export default function ComparePage() {
         title="Compare Mandals"
         subtitle={<>Side-by-side fusion comparison of any two mandals — APWRIMS readings vs NASA satellite-model signals.</>}
         showChips={false}
+        variant="compact"
       />
 
       <section className="card">

@@ -961,6 +961,30 @@ h4 {
 
 .heroSub strong { color: #eaf4ff; font-weight: 600; }
 
+.heroCompact {
+  min-height: 138px;
+}
+
+.heroCompact .heroInner {
+  padding: 22px 30px;
+}
+
+.heroCompact .heroLeft {
+  max-width: 940px;
+}
+
+.heroCompact h1 {
+  font-size: clamp(26px, 2.4vw, 36px);
+}
+
+.heroCompact .heroSub {
+  max-width: 840px;
+}
+
+.heroCompact .heroStatus {
+  margin-top: 12px;
+}
+
 .heroChips {
   display: flex;
   flex-wrap: wrap;
@@ -1166,6 +1190,242 @@ select:focus-visible {
      so at ~1280px the track blew out to 1093px inside a 964px container and the
      whole page scrolled sideways. */
   grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 16px;
+  align-items: start;
+}
+
+.sourceMiniBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  border: 1px solid rgba(18, 181, 203, 0.24);
+  border-radius: 14px;
+  background:
+    linear-gradient(90deg, rgba(18, 181, 203, 0.08), rgba(215, 155, 46, 0.05)),
+    var(--card);
+  box-shadow: var(--shadow-card);
+  color: var(--ink-soft);
+  font-size: 12px;
+}
+
+.sourceMiniBar strong {
+  color: var(--ink);
+}
+
+.sourceMiniMeta {
+  flex: none;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  white-space: nowrap;
+}
+
+.modelValueRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.modelValueRow .kpiCard {
+  border-radius: 15px;
+  padding: 12px 13px 11px;
+}
+
+.modelValueRow .kpiTop {
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.modelValueRow .kpiIcon {
+  width: 27px;
+  height: 27px;
+  border-radius: 8px;
+}
+
+.modelValueRow .kpiIcon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.modelValueRow .kpiLabel {
+  font-size: 10px;
+}
+
+.modelValueRow .kpiValue {
+  font-size: 25px;
+}
+
+.modelValueRow .kpiFoot {
+  margin-top: 6px;
+  font-size: 10px;
+}
+
+.modelValidationStrip {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.7fr) repeat(3, minmax(120px, 0.55fr)) auto;
+  gap: 12px;
+  align-items: stretch;
+  padding: 12px;
+  border: 1px solid rgba(18, 181, 203, 0.22);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(18, 181, 203, 0.09), rgba(94, 155, 107, 0.07) 42%, rgba(215, 155, 46, 0.06)),
+    var(--card);
+  box-shadow: var(--shadow-card);
+}
+
+.modelValidationIntro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  min-width: 0;
+  padding: 2px 4px;
+}
+
+.validationEyebrow {
+  color: var(--teal);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.modelValidationIntro strong {
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.modelValidationIntro span:last-child {
+  color: var(--ink-soft);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.validationMetric {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+:root[data-theme="dark"] .validationMetric {
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.validationMetric span {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.validationMetric strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.05;
+}
+
+.validationMetric em {
+  color: var(--muted);
+  font-size: 10px;
+  font-style: normal;
+}
+
+.validationLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 126px;
+  padding: 0 14px;
+  border-radius: 13px;
+  background: var(--teal);
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 12px 24px rgba(18, 181, 203, 0.2);
+}
+
+.validationLink svg {
+  width: 13px;
+  height: 13px;
+}
+
+.overviewCockpit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 390px);
+  gap: 16px;
+  align-items: start;
+}
+
+.overviewMapLead {
+  min-width: 0;
+}
+
+.overviewKpiRail {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.overviewKpiRail .kpiCard {
+  padding: 12px 12px 11px;
+  border-radius: 14px;
+}
+
+.overviewKpiRail .kpiTop {
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.overviewKpiRail .kpiIcon {
+  width: 27px;
+  height: 27px;
+  border-radius: 8px;
+}
+
+.overviewKpiRail .kpiIcon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.overviewKpiRail .kpiLabel {
+  font-size: 10px;
+}
+
+.overviewKpiRail .kpiValue {
+  font-size: 24px;
+}
+
+.overviewKpiRail .kpiFoot {
+  margin-top: 6px;
+  font-size: 10px;
+}
+
+.overviewSideStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: sticky;
+  top: 16px;
+}
+
+.overviewSupportGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.75fr);
   gap: 16px;
   align-items: start;
 }
@@ -2284,7 +2544,7 @@ select:focus-visible {
 
 /* Tooltip — rich mandal card */
 .leaflet-tooltip.liveTip {
-  width: 232px;
+  width: 284px;
   white-space: normal;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
@@ -2302,8 +2562,28 @@ select:focus-visible {
 .liveTip .tipHead { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .liveTip .tipHead b { font-size: 14px; font-weight: 600; }
 .liveTip .tipPill { font-size: 9.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
-.liveTip .tipDist { display: block; color: var(--muted); font-size: 11px; margin: 2px 0 9px; }
-.liveTip .tipMetric { display: grid; grid-template-columns: 70px 1fr 30px; align-items: center; gap: 7px; padding: 2.5px 0; }
+.liveTip .tipDist { display: block; color: var(--muted); font-size: 11px; margin: 2px 0 7px; }
+.liveTip .tipExplain {
+  display: block;
+  margin: 0 0 9px;
+  padding: 8px 9px;
+  border: 1px solid rgba(18, 181, 203, 0.18);
+  border-radius: 10px;
+  background: rgba(18, 181, 203, 0.07);
+  color: var(--ink-soft);
+  font-size: 10.5px;
+}
+.liveTip .tipSection {
+  display: block;
+  margin: 8px 0 4px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.liveTip .tipMetric { display: grid; grid-template-columns: 92px 1fr 34px; align-items: center; gap: 7px; padding: 2.5px 0; }
 .liveTip .tipMetric i { color: var(--muted); font-style: normal; font-size: 10.5px; }
 .liveTip .tipBar { height: 6px; border-radius: 4px; background: var(--field); overflow: hidden; }
 .liveTip .tipBarFill { display: block; height: 100%; border-radius: 4px; }
@@ -2311,6 +2591,14 @@ select:focus-visible {
 .liveTip .tipRow { display: flex; justify-content: space-between; gap: 16px; padding: 2px 0; }
 .liveTip .tipRow i { color: var(--muted); font-style: normal; }
 .liveTip .tipRow b { font-weight: 600; }
+.liveTip .tipPrimary {
+  margin: 3px -4px;
+  padding: 5px 4px;
+  border-radius: 8px;
+  background: rgba(18, 181, 203, 0.08);
+}
+.liveTip .tipPrimary i,
+.liveTip .tipPrimary b { color: var(--teal); }
 .liveTip .tipFoot { display: block; margin-top: 9px; padding-top: 8px; border-top: 1px solid var(--hairline); color: var(--teal); font-weight: 600; font-size: 11px; }
 
 .leaflet-control-attribution {
@@ -3732,6 +4020,10 @@ pre.jsonBody {
 
 @media (max-width: 1320px) {
   .kpiRow { grid-template-columns: repeat(3, 1fr); }
+  .modelValueRow { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .modelValidationStrip { grid-template-columns: minmax(0, 1fr) repeat(3, minmax(110px, 0.45fr)); }
+  .validationLink { grid-column: 1 / -1; min-height: 38px; }
+  .overviewKpiRail { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .overviewGrid { grid-template-columns: 1fr 1fr; }
   .overviewGrid > .mapCard { grid-column: 1 / -1; }
   .metricRow { grid-template-columns: repeat(4, 1fr); }
@@ -3739,6 +4031,9 @@ pre.jsonBody {
 }
 
 @media (max-width: 1080px) {
+  .overviewCockpit,
+  .overviewSupportGrid { grid-template-columns: 1fr; }
+  .overviewSideStack { position: static; }
   .overviewLower { grid-template-columns: 1fr; }
   .watchlistLayout { grid-template-columns: 1fr; }
   .sidePanel { position: static; }
@@ -3746,6 +4041,12 @@ pre.jsonBody {
 
 @media (max-width: 880px) {
   .kpiRow { grid-template-columns: repeat(2, 1fr); }
+  .modelValueRow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .modelValidationStrip { grid-template-columns: 1fr; }
+  .validationLink { min-height: 42px; }
+  .overviewKpiRail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sourceMiniBar { align-items: flex-start; flex-direction: column; }
+  .sourceMiniMeta { white-space: normal; }
   .overviewGrid { grid-template-columns: 1fr; }
   .signalGrid { grid-template-columns: 1fr; }
   .metricRow { grid-template-columns: repeat(2, 1fr); }
@@ -4009,9 +4310,13 @@ pre.jsonBody {
 @media (max-width: 560px) {
   .pageWrap { padding: 12px; }
   .kpiRow,
+  .modelValueRow,
   .metricRow,
   .summaryRow,
   .overviewGrid,
+  .overviewCockpit,
+  .overviewKpiRail,
+  .overviewSupportGrid,
   .overviewLower,
   .signalGrid,
   .contentGrid,

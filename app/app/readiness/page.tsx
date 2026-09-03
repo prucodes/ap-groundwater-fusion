@@ -57,6 +57,7 @@ export default function ReadinessPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       {(() => {

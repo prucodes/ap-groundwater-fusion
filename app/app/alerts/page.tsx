@@ -30,6 +30,7 @@ export default function AlertsPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       <div className="summaryRow stagger">

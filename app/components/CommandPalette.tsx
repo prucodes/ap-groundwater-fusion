@@ -3,7 +3,23 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { mandals, statusMeta, titleCase } from "../lib/data";
-import { IconActivity, IconCompass, IconDatabase, IconDroplet, IconFile, IconFlow, IconGrid, IconLayers, IconMap, IconSatellite, IconSearch, IconColumns } from "./icons";
+import {
+  IconActivity,
+  IconCloudRain,
+  IconColumns,
+  IconCompass,
+  IconDatabase,
+  IconDroplet,
+  IconFile,
+  IconFlow,
+  IconGrid,
+  IconLayers,
+  IconLeaf,
+  IconMap,
+  IconSatellite,
+  IconSearch,
+  IconWaves,
+} from "./icons";
 
 type Item = {
   label: string;
@@ -14,36 +30,40 @@ type Item = {
 };
 
 const PAGES: Item[] = [
-  { label: "Overview", sub: "At-a-glance state of AP groundwater", href: "/", kind: "page" },
+  { label: "Overview", sub: "Executive cockpit: map, triage, evidence", href: "/", kind: "page" },
   { label: "Mandal Map", sub: "Status, rainfall & balance map layers", href: "/map", kind: "page" },
-  { label: "Estimated Levels β", sub: "Modelled depth in metres + confidence bands", href: "/estimates", kind: "page" },
-  { label: "NASA Signals", sub: "Raw GRACE-DA truth + provenance", href: "/nasa", kind: "page" },
-  { label: "Climate & Balance", sub: "Rainfall vs ET — the water budget", href: "/climate", kind: "page" },
-  { label: "Living Water Table", sub: "Experimental 3D view of V2 groundwater-depth records", href: "/living-water-table", kind: "page" },
-  { label: "Crystal Water Table", sub: "Cinematic liquid-map 3D — time-lapse, stress mode", href: "/crystal", kind: "page" },
   { label: "Mandal Insights", sub: "Per-mandal deep dive", href: "/mandals", kind: "page" },
-  { label: "Verify / Watchlist", sub: "Where satellite & sensor disagree", href: "/watchlist", kind: "page" },
+  { label: "Verify / Watchlist", sub: "Priority verification queue", href: "/watchlist", kind: "page" },
   { label: "Early Warning", sub: "Severity-ranked fusion alerts", href: "/alerts", kind: "page" },
   { label: "Districts", sub: "Roll-ups + AI situation brief", href: "/districts", kind: "page" },
-  { label: "Scenario Planner", sub: "Monsoon what-if + drought sim", href: "/scenario", kind: "page" },
-  { label: "Irrigation & AWARE", sub: "Draw/hold/conserve + AWARE bridge", href: "/irrigation", kind: "page" },
-  { label: "Compare", sub: "Side-by-side of two areas", href: "/compare", kind: "page" },
-  { label: "Executive Snapshot", sub: "One-page printable summary", href: "/snapshot", kind: "page" },
+  { label: "Modelled Groundwater Levels β", sub: "Calculated mandal depth in metres + model bands", href: "/estimates", kind: "page" },
+  { label: "NASA Signals", sub: "Raw GRACE-DA context + provenance", href: "/nasa", kind: "page" },
+  { label: "Climate & Balance", sub: "Rainfall vs ET — the water budget", href: "/climate", kind: "page" },
   { label: "Data Readiness", sub: "Which sources are live vs pending", href: "/readiness", kind: "page" },
+  { label: "Methodology", sub: "How fusion works and what not to claim", href: "/methodology", kind: "page" },
   { label: "Reports", sub: "Generated & exportable reports", href: "/reports", kind: "page" },
-  { label: "Methodology", sub: "How fusion works (honesty layer)", href: "/methodology", kind: "page" },
+  { label: "Executive Snapshot", sub: "One-page printable summary", href: "/snapshot", kind: "page" },
+  { label: "Compare", sub: "Side-by-side of two areas", href: "/compare", kind: "page" },
+  { label: "Scenario Lab", sub: "Monsoon what-if + drought sim", href: "/scenario", kind: "page" },
+  { label: "AWARE Preview", sub: "Draw/hold/conserve + AWARE bridge", href: "/irrigation", kind: "page" },
+  { label: "Living Water Table", sub: "Experimental 3D groundwater-depth view", href: "/living-water-table", kind: "page" },
+  { label: "Crystal 3D Lab", sub: "Cinematic liquid-map demo view", href: "/crystal", kind: "page" },
 ];
 
 const PAGE_ICON: Record<string, React.ReactNode> = {
   "/": <IconLayers />,
   "/map": <IconMap />,
+  "/estimates": <IconDroplet />,
   "/nasa": <IconSatellite />,
-  "/climate": <IconDroplet />,
+  "/climate": <IconWaves />,
+  "/living-water-table": <IconDroplet />,
+  "/crystal": <IconWaves />,
   "/mandals": <IconCompass />,
   "/watchlist": <IconActivity />,
   "/alerts": <IconActivity />,
   "/districts": <IconGrid />,
-  "/scenario": <IconCompass />,
+  "/scenario": <IconCloudRain />,
+  "/irrigation": <IconLeaf />,
   "/compare": <IconColumns />,
   "/snapshot": <IconFile />,
   "/readiness": <IconDatabase />,

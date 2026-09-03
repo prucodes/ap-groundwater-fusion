@@ -91,6 +91,7 @@ export default function ScenarioPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       <section className="card">

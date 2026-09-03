@@ -64,6 +64,7 @@ export default function MethodologyPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
       <DataProvenanceDates />
 

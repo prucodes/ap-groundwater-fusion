@@ -14,15 +14,17 @@ export function HeaderHero({
   subtitle,
   showChips = true,
   showBanner = true,
+  variant = "standard",
 }: {
   title?: string;
   subtitle?: React.ReactNode;
   showChips?: boolean;
   showBanner?: boolean;
+  variant?: "standard" | "compact";
 }) {
   return (
     <>
-      <header className="hero fadeUp">
+      <header className={`hero ${variant === "compact" ? "heroCompact" : ""} fadeUp`}>
         <div className="heroScan" aria-hidden="true" />
         <div className="heroInner">
           <div className="heroLeft">

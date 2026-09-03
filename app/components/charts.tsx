@@ -1,10 +1,6 @@
 /* Dependency-free SVG chart primitives: percentile ring, status donut, sparkline. */
 
-let uid = 0;
-function nextId(prefix: string) {
-  uid += 1;
-  return `${prefix}-${uid}`;
-}
+import { useId } from "react";
 
 export function PercentileRing({
   value,
@@ -25,7 +21,8 @@ export function PercentileRing({
   const c = 2 * Math.PI * r;
   const pct = Math.max(0, Math.min(100, value ?? 0));
   const dash = (pct / 100) * c;
-  const gid = nextId("ring");
+  const reactId = useId();
+  const gid = `ring-${reactId.replace(/:/g, "")}`;
   return (
     <div className="ringFig" style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
@@ -130,6 +127,8 @@ export function Sparkline({
   const span = max - min || 1;
   const x = (i: number) => pad + (i / (n - 1 || 1)) * (width - pad * 2);
   const y = (v: number) => pad + (1 - (v - min) / span) * (height - pad * 2);
+  const reactId = useId();
+  const sid = `spark-${reactId.replace(/:/g, "")}`;
 
   return (
     <svg width="100%" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Sensor vs satellite trend">
@@ -147,7 +146,7 @@ export function Sparkline({
       )}
       <defs>
         {series.map((s, i) => (
-          <linearGradient key={i} id={`spark-${uid}-${i}`} x1="0" y1="0" x2="0" y2="1">
+          <linearGradient key={i} id={`${sid}-${i}`} x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stopColor={s.color} stopOpacity="0.28" />
             <stop offset="100%" stopColor={s.color} stopOpacity="0" />
           </linearGradient>
@@ -171,7 +170,7 @@ export function Sparkline({
         const fill = `${line} L${x(s.points.length - 1).toFixed(1)} ${(height - pad).toFixed(1)} L${x(0).toFixed(1)} ${(height - pad).toFixed(1)} Z`;
         return (
           <g key={s.name}>
-            {area && <path d={fill} fill={`url(#spark-${uid}-${idx})`} stroke="none" />}
+            {area && <path d={fill} fill={`url(#${sid}-${idx})`} stroke="none" />}
             <path d={line} fill="none" stroke={s.color} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round" />
             {s.points.map((v, i) => (
               <circle

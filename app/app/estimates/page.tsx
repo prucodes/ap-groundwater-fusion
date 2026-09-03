@@ -85,16 +85,17 @@ export default function EstimatesPage() {
   return (
     <div className="pageWrap">
       <HeaderHero
-        title="Estimated Levels (β)"
+        title="Modelled Groundwater Levels (β)"
         subtitle={
           <>
-            Mandal groundwater depth <strong>in metres</strong>, modelled by fusing each mandal&apos;s APWRIMS sensor
+            Calculated mandal groundwater depth <strong>in metres below ground</strong>, modelled by fusing each mandal&apos;s APWRIMS sensor
             history with climate and terrain features for <strong>current-period temporal nowcasts</strong>.{" "}
             Measured values remain separate, and no forecast horizon is released.{" "}
             <strong>Modelled nowcasts for lag-eligible mandals — not official APWRIMS data.</strong>
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       <div className="provRibbon">

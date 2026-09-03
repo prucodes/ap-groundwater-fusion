@@ -45,6 +45,7 @@ export default function ReportsPage() {
           </>
         }
         showChips={false}
+        variant="compact"
       />
 
       <section className="card">

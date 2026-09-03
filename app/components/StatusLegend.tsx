@@ -68,7 +68,7 @@ export function StatusLegend() {
         </div>
       </div>
       <div className="slNote">
-        Grey mandals have no estimate yet (insufficient / unmatched APWRIMS history). Levels are modelled (β) — see Estimated Levels.
+        Grey mandals have no estimate yet (insufficient / unmatched APWRIMS history). Levels are modelled (β) — see Modelled Levels.
       </div>
     </div>
   );

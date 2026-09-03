@@ -49,6 +49,10 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         <div className="sideSectionTitle">
           <IconTarget /> Measured &amp; Modelled Values
         </div>
+        <div className="sideCaveat">
+          These are not competing sensor readings. APWRIMS is observed depth history; the β value is this app&apos;s calculated
+          mandal groundwater level for the current target period.
+        </div>
         {mandal.display_basis === "measured" && (mandal.display_mbgl ?? null) !== null && (
           <div className="kvRow">
             <span className="k">Latest measured mandal aggregate</span>
@@ -56,11 +60,11 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
           </div>
         )}
         <div className="kvRow">
-          <span className="k">Modelled nowcast</span>
+          <span className="k">Calculated level β</span>
           <span className="v">
-            {formatNumber(mandal.estimate_mbgl)} m
+            {formatNumber(mandal.estimate_mbgl)} mbgl
             {(mandal.estimate_band_p10 ?? null) !== null && (
-              <span className="muted"> · model P10–P90 {formatNumber(mandal.estimate_band_p10)}–{formatNumber(mandal.estimate_band_p90)}</span>
+              <span className="muted"> · model P10–P90 {formatNumber(mandal.estimate_band_p10)}–{formatNumber(mandal.estimate_band_p90)} mbgl</span>
             )}
           </span>
         </div>
