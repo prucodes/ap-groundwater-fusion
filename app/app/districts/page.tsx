@@ -7,9 +7,10 @@ import { StatusBadge } from "../../components/Badges";
 import { PercentileBar } from "../../components/Signals";
 import { ExportCsvButton } from "../../components/ExportButtons";
 import { IconActivity, IconCheck, IconDroplet, IconGrid, IconLayers, IconMap } from "../../components/icons";
-import { balanceMeta, districtRollups, formatNumber, mandals, statusMeta, titleCase } from "../../lib/data";
+import { balanceMeta, districtRollups, districtSeries, formatNumber, mandals, statusMeta, titleCase } from "../../lib/data";
 import { AiBrief } from "../../components/AiBrief";
 import { DistrictMap } from "../../components/DistrictMap";
+import { DistrictTrendGrid } from "../../components/DistrictTrendGrid";
 
 export default function DistrictsPage() {
   const router = useRouter();
@@ -22,6 +23,7 @@ export default function DistrictsPage() {
   for (const r of rollups) stressColors[r.district_name] = statusMeta(r.worst_bucket).color;
   // govt-style levels table: deepest / most-stressed first
   const levelRows = [...rollups].sort((a, b) => (b.avg_estimate_mbgl ?? 0) - (a.avg_estimate_mbgl ?? 0));
+  const trendSeries = districtSeries();
 
   return (
     <div className="pageWrap">
@@ -74,6 +76,17 @@ export default function DistrictsPage() {
           </div>
         </section>
       </div>
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconActivity /></span>
+            Eleven-Year Decline by District
+          </div>
+          <span className="cardSub">measured history · steepest deepening first</span>
+        </div>
+        <DistrictTrendGrid series={trendSeries} selected={selected} onSelect={setSelected} />
+      </section>
 
       <section className="card">
         <div className="cardHead">

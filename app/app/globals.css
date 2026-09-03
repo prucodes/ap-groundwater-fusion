@@ -4542,3 +4542,66 @@ pre.jsonBody {
   .mcRow { grid-template-columns: 36px minmax(0, 1fr) 64px; gap: 7px; }
   .hgReadValue { font-size: 22px; }
 }
+
+/* ===================== District small multiples =====================
+   Twenty-eight tiles on one shared depth scale. The tiles are buttons because
+   selecting one drives the drill-down below, so they must look pressable. */
+.dtg { display: flex; flex-direction: column; gap: 12px; }
+
+.dtgGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 8px;
+}
+
+.dtgTile {
+  display: flex; flex-direction: column; gap: 5px;
+  padding: 9px 10px 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--card);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition: border-color .16s var(--ease), transform .16s var(--ease), box-shadow .16s var(--ease);
+}
+.dtgTile:hover { border-color: var(--line-strong); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(13, 33, 56, .07); }
+.dtgTile:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.dtgActive { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan) inset; }
+
+.dtgName {
+  font-size: 11.5px; font-weight: 600; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dtgSpark { width: 100%; height: 46px; display: block; }
+
+.dtgFoot { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
+.dtgTrend {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 10.5px; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.dtgTrend.down { color: var(--st-verify); }
+.dtgTrend.up { color: var(--cyan); }
+.dtgLatest {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12px; font-weight: 600; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.dtgLatest small { font-size: 9.5px; font-weight: 500; color: var(--muted); }
+
+.dtgKey { display: flex; flex-wrap: wrap; gap: 5px 14px; align-items: center; }
+.dtgKeyItem { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+.dtgKeyNote { color: var(--muted-2); font-style: italic; }
+.dtgSwatch { width: 14px; height: 3px; border-radius: 2px; flex: none; }
+.dtgSwatchDown { background: var(--st-verify); }
+.dtgSwatchUp { background: var(--cyan); }
+.dtgSwatchMed { background: repeating-linear-gradient(90deg, var(--line-strong) 0 3px, transparent 3px 6px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .dtgTile { transition: none; }
+  .dtgTile:hover { transform: none; }
+}
+@media (max-width: 560px) {
+  .dtgGrid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 6px; }
+}

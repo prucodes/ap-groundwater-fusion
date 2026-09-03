@@ -785,3 +785,77 @@ export const EXTRACTION_CATEGORY_META: Record<
   critical: { label: "Critical", color: "#d97b2b", note: "Extraction between 90% and 100%." },
   over_exploited: { label: "Over-exploited", color: "#c1462f", note: "Extraction exceeds annual recharge." },
 };
+
+/* ===================== District depth history & decline =====================
+   Small multiples only work on a shared scale, so these series are built to be
+   compared with one another: one median depth per district per month, from the
+   same measured observations the per-mandal hydrograph draws. */
+
+export type DistrictSeries = {
+  district_name: string;
+  points: DepthPoint[];
+  /** Metres per year from an ordinary least-squares fit. Positive = deepening. */
+  trendMPerYear: number | null;
+  latest: number | null;
+};
+
+function median(values: number[]): number {
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
+/* Least-squares slope in metres per year. Reported only with enough span to
+   mean anything — a slope fitted through a handful of months is noise. */
+const MIN_MONTHS_FOR_TREND = 36;
+
+export function depthTrendMPerYear(points: DepthPoint[]): number | null {
+  if (points.length < MIN_MONTHS_FOR_TREND) return null;
+  const t = points.map((p) => Number(p.period.slice(0, 4)) + (Number(p.period.slice(5, 7)) - 1) / 12);
+  const y = points.map((p) => p.value);
+  const n = t.length;
+  const meanT = t.reduce((a, b) => a + b, 0) / n;
+  const meanY = y.reduce((a, b) => a + b, 0) / n;
+  let num = 0;
+  let den = 0;
+  for (let i = 0; i < n; i++) {
+    num += (t[i] - meanT) * (y[i] - meanY);
+    den += (t[i] - meanT) ** 2;
+  }
+  if (den === 0) return null;
+  return Math.round((num / den) * 1000) / 1000;
+}
+
+let _districtSeriesCache: DistrictSeries[] | null = null;
+
+/** One series per district, sorted steepest-deepening first. */
+export function districtSeries(): DistrictSeries[] {
+  if (_districtSeriesCache) return _districtSeriesCache;
+
+  const result = districts.map((district) => {
+    const byPeriod = new Map<string, number[]>();
+    for (const m of mandals) {
+      if (m.district_name !== district) continue;
+      for (const p of depthSeriesFor(m)) {
+        const bucket = byPeriod.get(p.period);
+        if (bucket) bucket.push(p.value);
+        else byPeriod.set(p.period, [p.value]);
+      }
+    }
+    const points = [...byPeriod.entries()]
+      .map(([period, values]) => ({ period, value: Math.round(median(values) * 100) / 100 }))
+      .sort((a, b) => a.period.localeCompare(b.period));
+
+    return {
+      district_name: district,
+      points,
+      trendMPerYear: depthTrendMPerYear(points),
+      latest: points.length ? points[points.length - 1].value : null,
+    };
+  });
+
+  // Steepest deepening first: the districts that need attention lead the grid.
+  result.sort((a, b) => (b.trendMPerYear ?? -Infinity) - (a.trendMPerYear ?? -Infinity));
+  _districtSeriesCache = result;
+  return result;
+}
