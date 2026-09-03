@@ -4423,3 +4423,122 @@ pre.jsonBody {
 :root[data-theme="dark"] .leaflet-tile-pane {
   filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) saturate(0.6);
 }
+
+/* ===================== Hydrograph =====================
+   The depth trace is the one chart on the site drawn from the full measured
+   record, so it gets real chart furniture: a live readout, a ground line, and
+   monsoon bands behind the water body. */
+.hydrograph { display: flex; flex-direction: column; gap: 10px; }
+
+.hgReadout {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+  padding-bottom: 8px; border-bottom: 1px solid var(--hairline);
+}
+.hgReadMain { display: flex; align-items: baseline; gap: 7px; min-width: 0; }
+.hgReadValue {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 26px; font-weight: 600; line-height: 1; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.hgReadUnit { font-size: 12.5px; color: var(--muted); }
+.hgReadMeta { display: flex; align-items: center; gap: 8px; }
+.hgReadPeriod {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.hgMonsoonTag {
+  font-size: 10px; letter-spacing: .09em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 3px;
+  color: var(--sig-gw); background: color-mix(in srgb, var(--sig-gw) 12%, transparent);
+}
+
+.hgSvg { width: 100%; height: auto; display: block; cursor: crosshair; }
+
+.hgKey { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; }
+.hgKeyItem { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+.hgKeyNote { color: var(--muted-2); font-style: italic; }
+.hgSwatch { width: 15px; height: 3px; border-radius: 2px; flex: none; }
+.hgSwatchLine { background: var(--cyan); }
+.hgSwatchModel { background: var(--amber); height: 7px; border-radius: 4px; opacity: .55; }
+.hgSwatchMonsoon { background: var(--sig-gw); opacity: .22; height: 11px; border-radius: 2px; }
+
+/* ===================== Monsoon cycle =====================
+   One dumbbell per year: the span between the pre-monsoon low and the
+   post-monsoon level is the recharge, so a short bar reads as a weak monsoon
+   before any number is read. */
+.monsoonCycle { display: flex; flex-direction: column; gap: 14px; }
+
+.mcSummary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.mcStat {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 12px; border-radius: 10px;
+  background: var(--field); border: 1px solid var(--hairline);
+}
+.mcStatLabel { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-2); }
+.mcStatValue {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 21px; font-weight: 600; line-height: 1.15; color: var(--st-normal);
+  font-variant-numeric: tabular-nums;
+}
+.mcStatValue small { font-size: 12px; font-weight: 500; color: var(--muted); }
+.mcStatNote { font-size: 11px; color: var(--muted); }
+
+.mcRows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.mcRow { display: grid; grid-template-columns: 42px minmax(0, 1fr) 74px; gap: 10px; align-items: center; }
+.mcYear {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.mcTrack {
+  position: relative; height: 16px; border-radius: 8px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--cyan) 9%, transparent), transparent);
+}
+.mcSpan { position: absolute; top: 6px; height: 4px; border-radius: 3px; opacity: .85; }
+.mcDot {
+  position: absolute; top: 3px; width: 10px; height: 10px; margin-left: -5px;
+  border-radius: 50%; border: 2px solid var(--card);
+}
+.mcDotPre { background: var(--st-verify); }
+.mcDotPost { background: var(--cyan); }
+.mcDelta {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11.5px; text-align: right; font-variant-numeric: tabular-nums;
+}
+.mcDelta.up { color: var(--st-normal); }
+.mcDelta.down { color: var(--st-verify); }
+
+.mcKey { display: flex; flex-wrap: wrap; gap: 5px 14px; }
+.mcKeyItem { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--muted); }
+.mcKeyNote { color: var(--muted-2); font-style: italic; }
+.mcSwatch { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.mcSwatchPre { background: var(--st-verify); }
+.mcSwatchPost { background: var(--cyan); }
+
+/* ===================== CGWB assessment badge =====================
+   Deliberately unlike the app's own status pills: this label is an official
+   2024 assessment, not something this prototype computed. */
+.cgwbBadge {
+  --cgwb: var(--muted-2);
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 3px 10px 3px 8px; border-radius: 4px;
+  border: 1px solid color-mix(in srgb, var(--cgwb) 38%, transparent);
+  background: color-mix(in srgb, var(--cgwb) 8%, transparent);
+  white-space: nowrap;
+}
+.cgwbSource {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); padding-right: 7px;
+  border-right: 1px solid color-mix(in srgb, var(--cgwb) 30%, transparent);
+}
+.cgwbLabel { font-size: 12px; font-weight: 600; color: var(--cgwb); }
+.cgwbBadgeNone .cgwbLabel { font-weight: 500; color: var(--muted); }
+.cgwbSm { padding: 2px 8px 2px 7px; }
+.cgwbSm .cgwbLabel { font-size: 11px; }
+
+@media (max-width: 560px) {
+  .mcSummary { grid-template-columns: minmax(0, 1fr); }
+  .mcRow { grid-template-columns: 36px minmax(0, 1fr) 64px; gap: 7px; }
+  .hgReadValue { font-size: 22px; }
+}

@@ -193,6 +193,9 @@ export const mandals: MandalGroundwaterView[] = groundwaterRecords.map((record, 
     status_bucket: status.bucket,
     recommended_action: status.action,
     data_quality_notes: `${record.quality.observationHistoryMonths} observation months; ${record.identity.coverageStatus.replaceAll("_", " ")}.`,
+    extraction_category: (record.signals as { extractionCategory?: string }).extractionCategory as
+      | MandalGroundwaterView["extraction_category"]
+      | undefined ?? null,
     boundary_source: record.identity.boundarySource,
     boundary_official_flag: record.identity.boundaryStatus === "official",
     measured_input_label: "Latest measured mandal aggregate",
@@ -705,3 +708,80 @@ export function mandalByMapKey(district: string, mandal: string) {
   _mapKeyCache.set(cacheKey, rec);
   return rec;
 }
+
+/* ===================== Long depth history & the monsoon cycle =====================
+   The full measured record: 632 mandals, a median of 141 monthly readings each.
+   Until now only a ~140px sparkline of it reached the screen. */
+
+export type DepthPoint = { period: string; value: number };
+
+/* The full measured record, straight from the active observation series — which
+   is keyed by mandal id and current to the latest refresh. (An older
+   slug-keyed mandal_depth_series.json also exists; it is legacy, two months
+   behind, and guarded against by the integrity tests.) */
+export function depthSeriesFor(view: { id: string }): DepthPoint[] {
+  const observations = observationSeries[view.id]?.observations ?? [];
+  return observations
+    .filter((o) => o.value !== null && o.value !== undefined)
+    .map((o) => ({ period: o.period, value: Number(o.value) }));
+}
+
+/* The south-west monsoon runs June–September. In Indian groundwater practice the
+   pre-monsoon low against the post-monsoon recovery IS the assessment: it is how
+   CGWB reports, and it separates seasonal drawdown from genuine depletion. */
+export const MONSOON_START_MONTH = 6;
+export const MONSOON_END_MONTH = 9;
+
+export function isMonsoonMonth(period: string): boolean {
+  const month = Number(period.slice(5, 7));
+  return month >= MONSOON_START_MONTH && month <= MONSOON_END_MONTH;
+}
+
+export type SeasonalYear = {
+  year: number;
+  /* Pre-monsoon: the May reading — the annual low point before recharge. */
+  preMonsoon: number | null;
+  /* Post-monsoon: the November reading — the level after the monsoon has soaked in. */
+  postMonsoon: number | null;
+  /* Metres of recovery. Depth is measured downward, so a shallower post-monsoon
+     level (a smaller number) is a positive recharge figure. */
+  rechargeM: number | null;
+};
+
+const PRE_MONSOON_MONTH = "05";
+const POST_MONSOON_MONTH = "11";
+
+export function seasonalCycle(series: DepthPoint[]): SeasonalYear[] {
+  const byPeriod = new Map(series.map((p) => [p.period, p.value]));
+  const years = [...new Set(series.map((p) => Number(p.period.slice(0, 4))))].sort();
+  return years.map((year) => {
+    const pre = byPeriod.get(`${year}-${PRE_MONSOON_MONTH}`) ?? null;
+    const post = byPeriod.get(`${year}-${POST_MONSOON_MONTH}`) ?? null;
+    return {
+      year,
+      preMonsoon: pre,
+      postMonsoon: post,
+      rechargeM: pre !== null && post !== null ? Math.round((pre - post) * 100) / 100 : null,
+    };
+  });
+}
+
+/* Median recharge across the years that have both readings — a mandal's typical
+   monsoon response, which is what makes a single weak year legible as unusual. */
+export function medianRecharge(cycle: SeasonalYear[]): number | null {
+  const values = cycle.map((y) => y.rechargeM).filter((v): v is number => v !== null).sort((a, b) => a - b);
+  if (!values.length) return null;
+  const mid = Math.floor(values.length / 2);
+  const median = values.length % 2 ? values[mid] : (values[mid - 1] + values[mid]) / 2;
+  return Math.round(median * 100) / 100;
+}
+
+export const EXTRACTION_CATEGORY_META: Record<
+  NonNullable<MandalGroundwaterView["extraction_category"]>,
+  { label: string; color: string; note: string }
+> = {
+  safe: { label: "Safe", color: "#2f7d5d", note: "Extraction below 70% of the annually replenishable resource." },
+  semi_critical: { label: "Semi-critical", color: "#c9a227", note: "Extraction between 70% and 90%." },
+  critical: { label: "Critical", color: "#d97b2b", note: "Extraction between 90% and 100%." },
+  over_exploited: { label: "Over-exploited", color: "#c1462f", note: "Extraction exceeds annual recharge." },
+};

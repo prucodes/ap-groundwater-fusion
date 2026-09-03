@@ -189,6 +189,19 @@ def test_idw_excludes_training_self_neighbour():
     assert np.isclose(predicted[0], 20.0)
 
 
+def _code_only(source: str) -> str:
+    """Strip comments so prose can neither trip nor satisfy these checks.
+
+    The bans below are about what the UI actually imports and renders. A comment
+    explaining *why* a legacy artifact is not used is documentation, not a
+    reference — and a plain substring search cannot tell the two apart. Import
+    statements are code, so a real import still trips the check.
+    """
+    source = re.sub(r"\{/\*.*?\*/\}", " ", source, flags=re.S)
+    source = re.sub(r"/\*.*?\*/", " ", source, flags=re.S)
+    source = re.sub(r"(?<![:\w])//[^\n]*", " ", source)
+    return source
+
 def test_active_ui_has_no_legacy_imports_or_unsupported_claims():
     forbidden_artifacts = {
         "mandal_dataset.json",
@@ -203,7 +216,8 @@ def test_active_ui_has_no_legacy_imports_or_unsupported_claims():
         "sensor_count",
         "confidence_score",
     }
-    for path, text in application_sources():
+    for path, raw in application_sources():
+        text = _code_only(raw)
         lower = text.lower()
         for artifact in forbidden_artifacts:
             assert artifact not in text, f"{path} imports/references inactive {artifact}"

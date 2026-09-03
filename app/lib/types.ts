@@ -136,6 +136,8 @@ export type GroundwaterRecordCollectionV2 = {
  * It keeps existing screens stable while removing ambiguous V1 field names from
  * the active JSON contract.
  */
+export type ExtractionCategory = "safe" | "semi_critical" | "critical" | "over_exploited";
+
 export type MandalGroundwaterView = {
   id: string;
   rank: number;
@@ -169,6 +171,10 @@ export type MandalGroundwaterView = {
   status_bucket: StatusBucket;
   recommended_action: string;
   data_quality_notes: string;
+  // CGWB Dynamic Ground Water Resources Assessment 2024 — the official
+  // four-way categorisation AP officials work in. Null where the 2024
+  // assessment has no entry for the mandal.
+  extraction_category: ExtractionCategory | null;
   boundary_source: string;
   boundary_official_flag: boolean;
   measured_input_label: string;

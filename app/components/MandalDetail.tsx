@@ -2,6 +2,8 @@ import Link from "next/link";
 import type { MandalGroundwaterView } from "../lib/types";
 import {
   agreementMeta,
+  depthSeriesFor,
+  seasonalCycle,
   dashboardSummary,
   formatNumber,
   formatPeriod,
@@ -12,6 +14,9 @@ import {
   wetnessLabel,
 } from "../lib/data";
 import { MandalSelectorStrip } from "./MandalSelectorStrip";
+import { Hydrograph } from "./Hydrograph";
+import { MonsoonCycle } from "./MonsoonCycle";
+import { ExtractionBadge } from "./ExtractionBadge";
 import { WaterBalanceCard } from "./WaterBalanceCard";
 import { AgreementTag, ConfidenceBadge, StatusBadge } from "./Badges";
 import { PercentileRing, Sparkline } from "./charts";
@@ -92,6 +97,11 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
     : [];
   const depthSpan = hasRealDepth ? `${realDepth[0][0]} – ${realDepth[realDepth.length - 1][0]}` : "";
 
+  // The complete measured record — ~11 years of monthly readings for most
+  // mandals — rather than the short preview the sparkline used.
+  const fullSeries = depthSeriesFor(mandal);
+  const cycle = seasonalCycle(fullSeries);
+
   const awarePayload = mandal.aware_apwrims_action_preview;
 
   return (
@@ -125,6 +135,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
           <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
             <StatusBadge bucket={mandal.status_bucket} />
             <ConfidenceBadge label={mandal.confidence_label} />
+            <ExtractionBadge category={mandal.extraction_category} />
             <Link className="linkAction" href="/map">
               <IconMap /> Back to map
             </Link>
@@ -312,7 +323,6 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
             </section>
           )}
 
-          <div className="contentGrid detailPair">
             <section className="card">
               <div className="cardHead">
                 <div className="cardTitle">
@@ -323,18 +333,48 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
                 </div>
                 {hasRealDepth ? <span className="cardSub">{depthSpan}</span> : null}
               </div>
-              <Sparkline
-                area
-                series={[{ name: "Depth mbgl", color: "#c65a46", points: depthSeries }]}
-                height={130}
-              />
+              {fullSeries.length >= 2 ? (
+                <Hydrograph
+                  series={fullSeries}
+                  nowcast={
+                    mandal.estimate_mbgl !== null && mandal.estimate_mbgl !== undefined
+                      ? {
+                          value: mandal.estimate_mbgl,
+                          lower: mandal.estimate_band_p10 ?? null,
+                          upper: mandal.estimate_band_p90 ?? null,
+                          period: mandal.latest_observation_period,
+                        }
+                      : null
+                  }
+                />
+              ) : (
+                <Sparkline
+                  area
+                  series={[{ name: "Depth mbgl", color: "#c65a46", points: depthSeries }]}
+                  height={130}
+                />
+              )}
               <div className="sideCaveat" style={{ marginTop: 8 }}>
                 {hasRealDepth
-                  ? `APWRIMS-format monthly observations (m below ground). The separate nowcast is ${formatNumber(mandal.estimate_mbgl)} m with model P10–P90 ${formatNumber(mandal.estimate_band_p10)}–${formatNumber(mandal.estimate_band_p90)} m.`
+                  ? `APWRIMS-format monthly observations (m below ground). The dashed extension is the modelled nowcast — ${formatNumber(mandal.estimate_mbgl)} m, P10–P90 ${formatNumber(mandal.estimate_band_p10)}–${formatNumber(mandal.estimate_band_p90)} m — not a measurement.`
                   : "No measured history is available. No history has been substituted or synthesized."}
               </div>
             </section>
-
+            <section className="card">
+              <div className="cardHead">
+                <div className="cardTitle">
+                  <span className="cardIcon"><IconCloudRain /></span>
+                  Monsoon Cycle · Recharge by Year
+                </div>
+                <span className="cardSub">pre-monsoon May vs post-monsoon November</span>
+              </div>
+              <MonsoonCycle cycle={cycle} />
+              <div className="sideCaveat" style={{ marginTop: 10 }}>
+                Derived from the measured APWRIMS-format history, not modelled. Years without both a
+                May and a November reading are omitted rather than interpolated.
+              </div>
+            </section>
+          <div className="contentGrid detailPair">
             <section className="card">
               <div className="cardHead">
                 <div className="cardTitle">
