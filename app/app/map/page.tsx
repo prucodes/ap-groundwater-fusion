@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
 import { MandalStatusMap } from "../../components/MandalStatusMap";
 import { DistrictMap, districtLayerMeta } from "../../components/DistrictMap";
@@ -50,6 +50,23 @@ export default function MapPage() {
   const [selectedId, setSelectedId] = useState(mandals[0]?.id);
   const current = selectedMandal(selectedId);
   const meta = districtLayerMeta(layer);
+
+  // Where the selected-mandal panel sits. Above the breakpoint it is a rail
+  // beside the map and a selection is visible immediately; below it, the rail
+  // stacks under everything in the main column, so a tap on the map looked like
+  // it did nothing at all. Bring the panel to the user instead.
+  const panelRef = useRef<HTMLDivElement>(null);
+  const firstRender = useRef(true);
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(max-width: 1080px)").matches) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    panelRef.current?.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+  }, [selectedId]);
 
   // Priority list — most-stressed first, capped (rendering all ~640 was slow).
   // Explicit boundary coverage — how many of the prototype polygons resolve to data.
@@ -193,7 +210,9 @@ export default function MapPage() {
       </section>
 
       <aside className="mapRail">
-        <SelectedMandalPanel mandal={current} />
+        <div ref={panelRef} style={{ scrollMarginTop: 68 }}>
+          <SelectedMandalPanel mandal={current} />
+        </div>
       </aside>
       </div>
 
