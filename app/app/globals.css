@@ -4706,3 +4706,12 @@ pre.jsonBody {
     align-self: start;
   }
 }
+
+/* The support row pairs a single watchlist card against a two-card stack, so the
+   left column stopped ~550px short. Its content is a scrollable table, so
+   stretching it spends the space on more visible mandals instead of white. */
+@media (min-width: 1081px) {
+  .overviewSupportGrid { align-items: stretch; }
+  .overviewSupportGrid > .card { display: flex; flex-direction: column; }
+  .overviewSupportGrid > .card > .tableWrap { flex: 1 1 auto; min-height: 0; }
+}

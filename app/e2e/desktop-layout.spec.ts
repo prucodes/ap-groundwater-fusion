@@ -76,3 +76,70 @@ test.describe("no desktop route scrolls sideways", () => {
     expect(await horizontalOverflow(page)).toBeLessThanOrEqual(OVERFLOW_TOLERANCE_PX);
   });
 });
+
+/* A short column beside a tall one just stops, leaving white. The overview once
+   left ~730px beside its map and the mandal detail ~960px beside its rail, and
+   neither was caught by the overflow checks above — those measure sideways
+   scroll, and a vertical void does not scroll anything. */
+const MAX_COLUMN_IMBALANCE_PX = 400;
+
+type Void = { grid: string; heights: number[]; imbalance: number };
+
+async function columnVoids(page: Page): Promise<Void[]> {
+  return page.evaluate((limit) => {
+    const found: { grid: string; heights: number[]; imbalance: number }[] = [];
+    document.querySelectorAll<HTMLElement>(".pageWrap div").forEach((grid) => {
+      const cs = getComputedStyle(grid);
+      if (cs.display !== "grid") return;
+
+      const tracks = cs.gridTemplateColumns.split(" ").filter(Boolean).length;
+      if (tracks < 2) return;
+
+      const kids = [...grid.children].filter(
+        (k) => k.getBoundingClientRect().height > 40,
+      ) as HTMLElement[];
+      // Only a single row of columns can show a void. When items wrap onto
+      // further rows the height difference is between rows, not beside them.
+      if (kids.length !== tracks) return;
+
+      // A sticky short column follows the reader down the page, so the space
+      // beside it is deliberate rather than abandoned.
+      const sticky = kids.some((k) => {
+        if (getComputedStyle(k).position === "sticky") return true;
+        const inner = k.firstElementChild;
+        return !!inner && getComputedStyle(inner).position === "sticky";
+      });
+      if (sticky) return;
+
+      const heights = kids.map((k) => Math.round(k.getBoundingClientRect().height));
+      const imbalance = Math.max(...heights) - Math.min(...heights);
+      if (imbalance > limit) {
+        found.push({
+          grid: (grid.className || grid.tagName).toString().slice(0, 40),
+          heights,
+          imbalance,
+        });
+      }
+    });
+    return found;
+  }, MAX_COLUMN_IMBALANCE_PX);
+}
+
+test.describe("no column is left as dead space", () => {
+  for (const route of DESKTOP_ROUTES) {
+    test(`${route} has balanced columns`, async ({ page }) => {
+      await page.goto(route);
+      await settle(page);
+      expect(await columnVoids(page)).toEqual([]);
+    });
+  }
+
+  test("a mandal detail page has balanced columns", async ({ page }) => {
+    await page.goto("/mandals");
+    await settle(page);
+    const href = await page.locator('a[href*="/mandals/"]').first().getAttribute("href");
+    await page.goto(href!);
+    await settle(page);
+    expect(await columnVoids(page)).toEqual([]);
+  });
+});
