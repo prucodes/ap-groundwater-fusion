@@ -251,6 +251,13 @@
     /* Directly above the zoom stack (bottom:150px, 120px tall), clear of the legend. */
     #focusBtn{top:auto;bottom:278px;right:12px}
   }
+
+  /* Timeline has nothing to drive in stress mode: one annual assessment, not a
+     series. Dimmed and inert rather than removed, so the layout holds still. */
+  #timeline.frozen { opacity: .42; }
+  #timeline.frozen #play,
+  #timeline.frozen #slider { pointer-events: none; cursor: default; }
+  #timeline.frozen .ticks { color: var(--ink-3); }
 </style>
 </head>
 <body>
@@ -1155,10 +1162,15 @@ YEARS.forEach((y,i)=>{
   s.textContent="’"+y.slice(2); if(i>=FC0)s.className="fc"; ticks.appendChild(s);
 });
 const nStress=M.filter(m=>m.cat&&m.cat!=="safe").length;
+const CGWB_ASSESSMENT_YEAR="2024";
 function refreshHUD(){
-  yearBig.textContent=YEARS[year];
-  yearTag.textContent=year>=FC0?"Forecast":"";
-  yearTag.style.color=year>=FC0?"#c9a94e":"var(--cyan)";
+  /* Extraction stress is a single annual assessment, not a per-year series, so
+     the card names the assessment rather than whatever year the slider last
+     held — showing "2025" over frozen 2024 geometry was simply wrong. */
+  const frozen=mode==="stress";
+  yearBig.textContent=frozen?CGWB_ASSESSMENT_YEAR:YEARS[year];
+  yearTag.textContent=frozen?"CGWB assessment":(year>=FC0?"Forecast":"");
+  yearTag.style.color=frozen?"var(--ink-3)":(year>=FC0?"#c9a94e":"var(--cyan)");
   if(mode==="level")
     statLine.innerHTML=`state mean <strong>${fmt1(meanByYear[year])} m</strong> below ground`;
   else
@@ -1186,6 +1198,16 @@ function setYear(y,dur=650){
 slider.addEventListener("input",()=>{stopPlay();setYear(+slider.value,420);});
 function setMode(md){
   mode=md;
+  /* The scene stops responding to the year in stress mode, so the timeline is
+     disabled rather than hidden: hiding it shifts the layout between modes and
+     leaves people looking for a control that vanished. */
+  if(md==="stress" && typeof stopPlay==="function") stopPlay();
+  const tl=document.getElementById("timeline");
+  tl.classList.toggle("frozen",md==="stress");
+  tl.setAttribute("aria-disabled",String(md==="stress"));
+  slider.disabled=(md==="stress");
+  const pb=document.getElementById("play");
+  if(pb) pb.disabled=(md==="stress");
   document.getElementById("mLevel").setAttribute("aria-pressed",md==="level");
   document.getElementById("mStress").setAttribute("aria-pressed",md==="stress");
   legend.dataset.mode=md;
