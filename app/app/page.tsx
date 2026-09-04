@@ -143,6 +143,7 @@ export default function OverviewPage() {
       </div>
 
       <div className="overviewCockpit">
+        <div className="overviewMapColumn">
         <section className="card mapCard overviewMapLead">
           <div className="cardHead">
             <div className="cardTitle">
@@ -249,8 +250,6 @@ export default function OverviewPage() {
           </div>
         </section>
 
-        <aside className="overviewSideStack">
-          <SelectedMandalPanel mandal={current} />
           <section className="card">
             <div className="cardHead">
               <div className="cardTitle">
@@ -265,6 +264,10 @@ export default function OverviewPage() {
             </div>
             <StatusSummaryCard />
           </section>
+        </div>
+
+        <aside className="overviewSideStack">
+          <SelectedMandalPanel mandal={current} />
         </aside>
       </div>
 

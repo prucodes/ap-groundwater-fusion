@@ -4670,3 +4670,39 @@ pre.jsonBody {
 .rawTable[open] > summary::before { transform: rotate(90deg); }
 .rawTable > summary:hover { color: var(--ink); }
 .rawTable > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; border-radius: 4px; }
+
+/* The cockpit's rail (selected mandal + its history) runs far taller than the
+   map card, and align-items:start left ~730px of white beside it. The left
+   column now stacks the map with the status summary and grows the map to take
+   up the rest, so the space becomes map rather than nothing. */
+.overviewMapColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.overviewMapColumn .overviewMapLead { display: flex; flex-direction: column; }
+/* The map sits inside .liveMapWrap, so that is the child that has to grow —
+   targeting .liveMap directly did nothing. Growing it means a rail taller than
+   the map turns into a larger map instead of white space. */
+.overviewMapColumn .overviewMapLead .liveMapWrap {
+  flex: 1 1 auto;
+  min-height: 500px;
+  /* Enough to use the space without turning the overview into one huge map. */
+  max-height: 760px;
+}
+.overviewMapColumn .overviewMapLead .liveMapWrap .liveMap { height: 100%; }
+@media (min-width: 1081px) {
+  .overviewCockpit { align-items: stretch; }
+}
+
+/* The detail page's rail is much shorter than its main column, so it left ~960px
+   of empty right-hand space. Sticking it turns that into a panel that stays with
+   you as you read the long column, rather than a gap. */
+@media (min-width: 1081px) {
+  .watchlistLayout > .detailRail {
+    position: sticky;
+    top: 16px;
+    align-self: start;
+  }
+}

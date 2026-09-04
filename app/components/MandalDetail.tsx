@@ -367,7 +367,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
         </div>
 
         {/* right rail */}
-        <div className="contentGrid">
+        <div className="contentGrid detailRail">
           <section className="card">
             <div className="cardHead">
               <div className="cardTitle">
