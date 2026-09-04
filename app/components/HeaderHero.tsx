@@ -15,12 +15,16 @@ export function HeaderHero({
   showChips = true,
   showBanner = true,
   variant = "standard",
+  actions,
 }: {
   title?: string;
   subtitle?: React.ReactNode;
   showChips?: boolean;
   showBanner?: boolean;
   variant?: "standard" | "compact";
+  /** Optional right-hand slot. The hero's artwork occupies that side, so it is
+   *  the one place to surface a destination without adding another card. */
+  actions?: React.ReactNode;
 }) {
   return (
     <>
@@ -50,6 +54,7 @@ export function HeaderHero({
               </div>
             )}
           </div>
+          {actions ? <div className="heroActions">{actions}</div> : null}
         </div>
       </header>
 

@@ -4715,3 +4715,73 @@ pre.jsonBody {
   .overviewSupportGrid > .card { display: flex; flex-direction: column; }
   .overviewSupportGrid > .card > .tableWrap { flex: 1 1 auto; min-height: 0; }
 }
+
+/* ===================== Hero actions =====================
+   The 3D views are the most striking thing the project has and they sat at the
+   bottom of the sidebar. The hero's artwork side was empty, so they go there —
+   a destination surfaced without adding another card to the page. */
+.heroActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 0 0 auto;
+  max-width: 280px;
+}
+.heroAction {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 11px 15px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #eaf4ff;
+  border: 1px solid rgba(148, 205, 235, 0.28);
+  background: rgba(6, 22, 43, 0.5);
+  backdrop-filter: blur(6px);
+  transition: border-color .18s var(--ease), background .18s var(--ease), transform .18s var(--ease);
+}
+.heroAction:hover {
+  border-color: rgba(120, 226, 245, 0.6);
+  background: rgba(9, 34, 62, 0.66);
+  transform: translateY(-1px);
+}
+.heroAction:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.heroActionLead {
+  border-color: rgba(120, 226, 245, 0.45);
+  background: linear-gradient(135deg, rgba(18, 181, 203, 0.24), rgba(9, 34, 62, 0.55));
+}
+.heroActionLabel { font-size: 13.5px; font-weight: 600; letter-spacing: .01em; }
+.heroActionSub { font-size: 11px; color: rgba(206, 229, 245, 0.72); }
+
+/* Tightened so the map — the thing worth looking at — clears the fold on a
+   laptop rather than only on a large display. */
+.heroCompact { min-height: 118px; }
+.heroCompact .heroInner { padding: 16px 26px; }
+.heroCompact .heroSub { margin-top: 4px; }
+
+@media (max-width: 900px) {
+  .heroActions { flex-direction: row; max-width: none; width: 100%; }
+  /* The subtitle is hidden here, so drop the padding that was sized for it. */
+  .heroAction { flex: 1 1 0; padding: 9px 12px; align-items: flex-start; justify-content: center; min-height: 44px; }
+  .heroActionSub { display: none; }
+  .heroActionLabel { font-size: 12.5px; }
+}
+
+/* heroLeft's 940px max-width left no room beside it, so the actions wrapped onto
+   a second line and the hero grew instead of shrinking. Let the text column
+   shrink and give the actions a fixed track so they sit alongside. */
+.heroCompact .heroLeft { max-width: 720px; flex: 1 1 340px; min-width: 0; }
+.heroCompact .heroActions { flex: 0 0 250px; }
+@media (max-width: 900px) {
+  .heroCompact .heroActions { flex: 1 1 100%; }
+}
+
+/* Demo framing: the map and the 3D entries are what land, so the two stat rows
+   above them give back some height. Nothing is removed — the numbers stay, they
+   simply stop pushing the map off a laptop screen. */
+@media (min-width: 1081px) {
+  .pageWrap { gap: 14px; }
+  .sourceMiniBar { padding: 8px 14px; }
+  .modelValueRow .kpiCard { padding: 10px 13px 9px; }
+  .modelValidationStrip { padding-top: 10px; padding-bottom: 10px; }
+}

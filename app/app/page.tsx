@@ -67,6 +67,18 @@ export default function OverviewPage() {
         showBanner={false}
         showChips={false}
         variant="compact"
+        actions={
+          <>
+            <Link className="heroAction heroActionLead" href="/crystal">
+              <span className="heroActionLabel">Crystal Water Table</span>
+              <span className="heroActionSub">Cinematic 3D · 632 mandals, 2014&ndash;2027</span>
+            </Link>
+            <Link className="heroAction" href="/living-water-table">
+              <span className="heroActionLabel">Living Water Table</span>
+              <span className="heroActionSub">Analytical 3D surface</span>
+            </Link>
+          </>
+        }
       />
 
       <div className="sourceMiniBar">
