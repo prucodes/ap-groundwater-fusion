@@ -7,7 +7,7 @@ import { StatusBadge } from "../../components/Badges";
 import { PercentileBar } from "../../components/Signals";
 import { ExportCsvButton } from "../../components/ExportButtons";
 import { IconActivity, IconCheck, IconDroplet, IconGrid, IconLayers, IconMap } from "../../components/icons";
-import { balanceMeta, districtRollups, districtSeries, formatNumber, mandals, statusMeta, titleCase } from "../../lib/data";
+import { balanceMeta, districtRollups, districtSeries, formatNumber, formatPeriod, latestObservationPeriod, mandals, statusMeta, titleCase } from "../../lib/data";
 import { AiBrief } from "../../components/AiBrief";
 import { DistrictMap } from "../../components/DistrictMap";
 import { DistrictTrendGrid } from "../../components/DistrictTrendGrid";
@@ -47,7 +47,7 @@ export default function DistrictsPage() {
 
         <section className="card">
           <div className="cardHead">
-            <div className="cardTitle"><span className="titleIcon"><IconDroplet /></span>District Levels — as on Jun 2026 (β)</div>
+            <div className="cardTitle"><span className="titleIcon"><IconDroplet /></span>District Levels — as on {formatPeriod(latestObservationPeriod)} (β)</div>
             <span className="cardSub">m below ground</span>
           </div>
           <div className="tableWrap" style={{ maxHeight: 420, overflowY: "auto" }}>
@@ -99,6 +99,12 @@ export default function DistrictsPage() {
         <AiBrief district={selected} onDistrictChange={setSelected} />
       </section>
 
+      {/* The decline grid above already lists all 28 districts and drives the
+          same selection, so this wall of cards was a second full enumeration —
+          ~6,400px of a 6,500px page. Collapsed rather than removed: it carries
+          mandal and in-stress counts the compact tiles do not. */}
+      <details className="rawTable districtCards">
+        <summary>Show all 28 district cards — mandal counts, stress counts and average level</summary>
       <div className="reportGrid">
         {rollups.map((r) => {
           const meta = statusMeta(r.worst_bucket);
@@ -155,6 +161,7 @@ export default function DistrictsPage() {
           );
         })}
       </div>
+      </details>
 
       {current && (
         <section className="card">

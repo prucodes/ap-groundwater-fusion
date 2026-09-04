@@ -4399,11 +4399,19 @@ pre.jsonBody {
 @media (max-width: 880px) {
   .tableWrap { -webkit-overflow-scrolling: touch; }
   table.dataTable { min-width: 620px; }
+  /* Headers and the leading label column stay on one line so columns line up.
+     Blanket nowrap was worse than the crushed columns it replaced: a narrative
+     cell grew to ~820px and the table to ~1,660px, so reading one sentence meant
+     scrolling the table most of a screen sideways. Long cells wrap instead, and
+     the table's min-width keeps columns wide enough that words break at spaces
+     rather than mid-word. */
   table.dataTable th,
-  table.dataTable td { white-space: nowrap; }
-  /* The narrative column is the one that genuinely needs to wrap. */
-  table.dataTable td.wrapCell,
-  table.dataTable th.wrapCell { white-space: normal; min-width: 240px; }
+  table.dataTable td:first-child { white-space: nowrap; }
+  table.dataTable td {
+    white-space: normal;
+    overflow-wrap: break-word;
+    max-width: 260px;
+  }
 }
 
 /* Estimates toolbar: the sort buttons sit in a non-wrapping inline-flex row and
@@ -4643,3 +4651,22 @@ pre.jsonBody {
 .dlGrid > *,
 .sigGaugeRow > *,
 .actionSummary > * { min-width: 0; }
+
+/* Disclosure for a supporting table that repeats numbers shown above it — the
+   provenance stays reachable without occupying most of the page. */
+.rawTable > summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 0 2px;
+  font-size: 13px;
+  color: var(--muted);
+  user-select: none;
+}
+.rawTable > summary::-webkit-details-marker { display: none; }
+.rawTable > summary::before { content: "▸"; font-size: 10px; transition: transform .15s var(--ease); }
+.rawTable[open] > summary::before { transform: rotate(90deg); }
+.rawTable > summary:hover { color: var(--ink); }
+.rawTable > summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; border-radius: 4px; }

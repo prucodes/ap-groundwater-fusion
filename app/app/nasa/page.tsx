@@ -211,6 +211,11 @@ export default function NasaSignalsPage() {
           <div className="cardTitle"><span className="titleIcon"><IconPin /></span>District-centroid samples (raw extraction)</div>
           <span className="cardSub">GRACE-DA raster sampled at each of the 28 district centroids</span>
         </div>
+        {/* The percentiles here repeat the table above; what is unique is the
+            raster sample point and its coordinates. Collapsed so the provenance
+            stays available without spending ~1,700px repeating numbers. */}
+        <details className="rawTable">
+          <summary>Show the raw extraction — coordinates and sample points for all 28 districts</summary>
         <div className="tableWrap">
           <table className="dataTable">
             <thead>
@@ -233,6 +238,7 @@ export default function NasaSignalsPage() {
             </tbody>
           </table>
         </div>
+        </details>
       </section>
     </div>
   );
