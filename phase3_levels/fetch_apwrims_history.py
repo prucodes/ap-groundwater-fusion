@@ -57,8 +57,9 @@ def _tls_context():
 _ctx = _tls_context()
 
 
-# Attempts per request. The portal occasionally drops a large response part-way
-# (seen 2026-09-18: 81 KB of a 5 MB body), which used to abort the whole step.
+# Attempts per request, so one dropped connection no longer aborts the whole
+# pull. (A response the portal truncates every time is not transient; the fix
+# for that is asking for less, as main() does for the district list.)
 ATTEMPTS = 4
 
 
@@ -233,10 +234,16 @@ def probe_latest_period(ap_districts):
 
 def main():
     only = sys.argv[1] if len(sys.argv) > 1 else None  # optional: district-name filter
-    districts = children("STATE", "DISTRICT", [])
-    # keep AP only (drop the other state's entries) by re-deriving from the AP key
-    raw = post("/api/locations/allChildrenForParentChildType", {"pType": "STATE", "cType": "DISTRICT", "loc": []})
+    # Ask for Andhra Pradesh's districts only. The all-states form of this call
+    # returns ~5 MB, and on 2026-09-18 the portal cut it off part-way (65-81 KB)
+    # on every attempt, from GitHub's runner and locally alike, so the whole pull
+    # failed. The AP-only form is 2.5 KB and returns the same 28 districts,
+    # checked against the district UUIDs in the stored history.
+    raw = post("/api/locations/allChildrenForParentChildType",
+               {"pType": "STATE", "cType": "DISTRICT", "loc": [AP_STATE_UUID]})
     ap = {x["locationUUID"]: x["locationName"] for x in raw.get(AP_STATE_UUID, [])}
+    if not ap:
+        sys.exit("APWRIMS returned no Andhra Pradesh districts; the stored history is untouched.")
     print(f"AP districts: {len(ap)}")
 
     out_path = os.path.join(OUT, "apwrims_gw_history.csv")
