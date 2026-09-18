@@ -4785,3 +4785,12 @@ pre.jsonBody {
   .modelValueRow .kpiCard { padding: 10px 13px 9px; }
   .modelValidationStrip { padding-top: 10px; padding-bottom: 10px; }
 }
+
+/* Sidebar data status: amber, and no pulse, once the weekly refresh is overdue. */
+.statusFeed + .statusFeed { margin-top: 5px; }
+.statusLive.statusOverdue { color: #f3dcae; }
+.statusOverdue .liveDot {
+  background: #e0a43a;
+  box-shadow: none;
+  animation: none;
+}

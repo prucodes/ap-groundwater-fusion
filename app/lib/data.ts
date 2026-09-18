@@ -215,6 +215,18 @@ export const mandals: MandalGroundwaterView[] = groundwaterRecords.map((record, 
   };
 });
 
+/* dashboard_summary.json is a July snapshot that the weekly pipeline never
+   rewrites, so every figure shown from it is derived here from the files the
+   pipeline does refresh. GRACE-DA comes from the provenance stats: the mean over
+   district centroids sampled on this fetch. (The district file keeps an older
+   value where a centroid returned nodata, so its mean mixes fetch dates.) */
+const liveRasters = (nasaProvenanceJson as { rasters: Array<{ raster_name: string; mean: number | null; count: number }> }).rasters;
+function rasterMean(prefix: string): number | null {
+  return liveRasters.find((r) => r.raster_name.startsWith(prefix))?.mean ?? null;
+}
+const liveHeat = mandalHeatJson as MandalHeat;
+const liveHeatValues = Object.values(liveHeat.values);
+
 export const dashboardSummary = {
   ...(dashboardSummaryJson as DashboardSummary),
   summary: {
@@ -222,8 +234,19 @@ export const dashboardSummary = {
     mandals_analyzed: datasetManifest.counts.modelledRecordCount,
     sample_fetch_date: datasetManifest.periods.graceFetchDate ?? "",
     prototype_notice: modelCard.disclosures.officialUse,
+    avg_groundwater_percentile: rasterMean("gws_"),
+    avg_rootzone_percentile: rasterMean("rtzsm_"),
+    avg_surface_percentile: rasterMean("sfsm_"),
+    avg_rainfall_mm: meanOf(liveHeatValues.map((v) => v.rainfall_mm)),
+    rainfall_period: liveHeat.rainfall_period,
+    avg_water_balance_mm: meanOf(liveHeatValues.map((v) => v.water_balance_mm)),
+    balance_year: liveHeat.balance_year,
+    deficit_mandals: liveHeatValues.filter((v) => v.water_balance_status === "Deficit").length,
   },
 } as DashboardSummary;
+
+/** District centroids GRACE-DA groundwater was sampled at on this fetch. */
+export const graceDistrictCount = liveRasters.find((r) => r.raster_name.startsWith("gws_"))?.count ?? 0;
 export const readinessItems = readinessJson as ReadinessItem[];
 export const satelliteSamples = satelliteSamplesJson as SatelliteSample[];
 export const mapGeometry = mapGeometryJson as MapGeometry;

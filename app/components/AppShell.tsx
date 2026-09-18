@@ -28,6 +28,7 @@ import { OrbitGlobe3D } from "./OrbitGlobe3D";
 import { ThemeToggle } from "./ThemeToggle";
 import { AlertsBell } from "./AlertsBell";
 import { CommandPalette } from "./CommandPalette";
+import { datasetManifest, formatPeriod } from "../lib/data";
 import { PageTransition } from "./PageTransition";
 
 // Primary workflow — the day-to-day screens. `desc` is the one-line explainer.
@@ -57,26 +58,29 @@ const moreNav = [
   { href: "/crystal", label: "Crystal 3D Lab", Icon: IconWaves, desc: "Cinematic liquid-map view for demos.", badge: "LAB" },
 ];
 
-function nowStamp() {
-  return new Date().toLocaleString("en-IN", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/** "2026-09-18T16:44:22+00:00" -> "18 Sep 2026". Deterministic, so server and client render alike. */
+function formatDay(iso: string | null | undefined) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? "");
+  return match ? `${Number(match[3])} ${MONTHS[Number(match[2]) - 1]} ${match[1]}` : "—";
 }
+
+// The weekly refresh runs every Monday; past this the published data is stale.
+const REFRESH_OVERDUE_MS = 9 * 24 * 60 * 60 * 1000;
+const { periods } = datasetManifest;
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
-  const [stamp, setStamp] = useState("Jun 12, 2026, 08:24 PM");
+  const [overdue, setOverdue] = useState(false);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("ap-groundwater-sidebar");
     if (stored) setCollapsed(stored === "collapsed");
-    setStamp(nowStamp());
+    // Checked against the viewer's clock after mount: the static page cannot know
+    // how long ago it was built, and a missed refresh should be visible, not silent.
+    setOverdue(Date.now() - Date.parse(periods.uiGenerationTimestamp) > REFRESH_OVERDUE_MS);
   }, []);
 
   // On phones the sidebar is an off-canvas drawer. Navigating should dismiss it,
@@ -205,17 +209,19 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <div className="sidebarSpacer" />
 
         <div className="sidebarStatus">
-          <h4>System Status</h4>
-          <div className="statusLive">
+          <h4>Data status</h4>
+          <div className={`statusLive ${overdue ? "statusOverdue" : ""}`}>
             <span className="liveDot" />
-            All Systems Operational
-          </div>
-          <div className="statusMeta">
-            Last Updated
-            <strong>{stamp}</strong>
+            {overdue ? "Refresh overdue" : "Refreshed"} · {formatDay(periods.uiGenerationTimestamp)}
           </div>
           <div className="statusFeed">
-            <span className="feedDot" /> NASA GRACE-DA · linked
+            <span className="feedDot" /> Sensor readings · {formatPeriod(periods.latestObservationPeriod)}
+          </div>
+          <div className="statusFeed">
+            <span className="feedDot" /> NASA GRACE-DA · {formatDay(periods.graceFetchDate)}
+          </div>
+          <div className="statusFeed">
+            <span className="feedDot" /> Rainfall · {formatPeriod(periods.rainfallValidPeriod)}
           </div>
           <OrbitGlobe3D />
         </div>

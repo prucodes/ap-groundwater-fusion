@@ -9,25 +9,44 @@ import {
   dashboardSummary,
   districts,
   formatNumber,
+  graceDistrictCount,
   mandals,
   prototypeNotice,
   titleCase,
   verifyMandals,
+  wetnessLabel,
 } from "../../lib/data";
 
 export default function SnapshotPage() {
   const s = dashboardSummary.summary;
   const verify = verifyMandals().length;
+  // Same-month change: the latest reading against the same month a year earlier.
+  const yoy = mandals
+    .map((m) => m.trend_m_per_yr)
+    .filter((v): v is number => v !== null && v !== undefined)
+    .sort((a, b) => a - b);
+  const yoyDeeper = yoy.filter((v) => v > 0).length;
+  const yoyMedian = yoy.length
+    ? yoy.length % 2
+      ? yoy[(yoy.length - 1) / 2]
+      : (yoy[yoy.length / 2 - 1] + yoy[yoy.length / 2]) / 2
+    : null;
   const insights = [
-    `${mandals.filter((m) => m.status_bucket === "Normal").length} mandals show sensor–satellite agreement (healthy / monitored).`,
-    `${verify} mandals flagged for verification — deep APWRIMS readings vs high NASA wetness.`,
-    `Average NASA groundwater percentile is ${formatNumber(s.avg_groundwater_percentile)} across ${s.mandals_analyzed} mandals — broadly wet.`,
+    `${mandals.filter((m) => m.status_bucket === "Normal").length} mandals are stable — shallower than 10 m, and no more than 0.3 m deeper than a year earlier.`,
+    `${verify} mandals show stress — 20 m or more below ground, or over 1.2 m deeper than a year earlier.`,
+    s.avg_groundwater_percentile === null
+      ? `No NASA GRACE-DA groundwater reading was available on the latest fetch.`
+      : `NASA GRACE-DA groundwater averages percentile ${Math.round(s.avg_groundwater_percentile)} across ${graceDistrictCount} districts — ${wetnessLabel(s.avg_groundwater_percentile).toLowerCase()} for this time of year.`,
     ...(s.avg_water_balance_mm !== null && s.avg_water_balance_mm !== undefined
       ? [
-          `${s.deficit_mandals} mandals run an annual water deficit (TerraClimate ${s.balance_year}) — demand met by stored/groundwater (overdraft pressure).`,
+          `${s.deficit_mandals} mandals run an annual water deficit (TerraClimate ${s.balance_year}) — evapotranspiration exceeds rainfall over the year.`,
         ]
       : []),
-    `Coastal mandals trend shallower with a water surplus; Rayalaseema mandals trend deeper and into deficit.`,
+    ...(yoyMedian !== null
+      ? [
+          `${yoyDeeper} of ${yoy.length} mandals (${Math.round((100 * yoyDeeper) / yoy.length)}%) read deeper than the same month a year earlier — median change ${yoyMedian > 0 ? "+" : ""}${formatNumber(yoyMedian)} m.`,
+        ]
+      : []),
   ];
 
   return (
@@ -59,7 +78,7 @@ export default function SnapshotPage() {
         {/* KPI strip */}
         <div className="snapKpis">
           <div className="snapKpi"><span className="snapKpiLbl">Mandals</span><span className="snapKpiNum">{s.mandals_analyzed}</span><span className="snapKpiFoot">across {districts.length} districts</span></div>
-          <div className="snapKpi"><span className="snapKpiLbl">To Verify</span><span className="snapKpiNum" style={{ color: "var(--st-verify)" }}>{verify}</span><span className="snapKpiFoot">mismatch flagged</span></div>
+          <div className="snapKpi"><span className="snapKpiLbl">In Stress</span><span className="snapKpiNum" style={{ color: "var(--st-verify)" }}>{verify}</span><span className="snapKpiFoot">20 m+ deep or 1.2 m+ deeper YoY</span></div>
           <div className="snapKpi"><span className="snapKpiIcon"><IconDroplet /></span><span className="snapKpiLbl">Avg GW %ile</span><span className="snapKpiNum">{formatNumber(s.avg_groundwater_percentile)}</span></div>
           <div className="snapKpi"><span className="snapKpiIcon"><IconLeaf /></span><span className="snapKpiLbl">Avg Root-Zone</span><span className="snapKpiNum">{formatNumber(s.avg_rootzone_percentile)}</span></div>
           <div className="snapKpi"><span className="snapKpiIcon"><IconWaves /></span><span className="snapKpiLbl">Avg Surface</span><span className="snapKpiNum">{formatNumber(s.avg_surface_percentile)}</span></div>

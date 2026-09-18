@@ -23,7 +23,7 @@ import {
   IconShield,
   IconWaves,
 } from "../components/icons";
-import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat, mandals, modelCard, selectedMandal, titleCase, verifyMandals } from "../lib/data";
+import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat, mandals, modelCard, selectedMandal, titleCase, verifyMandals, wetnessLabel } from "../lib/data";
 import type { MandalHeatLayerKey } from "../lib/types";
 
 export default function OverviewPage() {
@@ -71,7 +71,7 @@ export default function OverviewPage() {
           <>
             <Link className="heroAction heroActionLead" href="/crystal">
               <span className="heroActionLabel">Crystal Water Table</span>
-              <span className="heroActionSub">Cinematic 3D · 632 mandals, 2014&ndash;2027</span>
+              <span className="heroActionSub">Cinematic 3D · measured pre-monsoon depth</span>
             </Link>
             <Link className="heroAction" href="/living-water-table">
               <span className="heroActionLabel">Living Water Table</span>
@@ -232,7 +232,7 @@ export default function OverviewPage() {
               icon={<IconDroplet />}
               label="Regional GRACE-DA Wetness"
               value={<CountUp value={s.avg_groundwater_percentile ?? 0} decimals={0} />}
-              foot="district/regional model-assimilated context"
+              foot={`${wetnessLabel(s.avg_groundwater_percentile)} for this time of year · district scale`}
               accent="var(--cyan)"
             />
             <KpiCard

@@ -18,6 +18,7 @@ import {
   nasaProvenance,
   satelliteSamples,
   titleCase,
+  wetnessLabel,
   wetnessTier,
 } from "../../lib/data";
 import type { NasaRaster } from "../../lib/data";
@@ -65,6 +66,16 @@ export default function NasaSignalsPage() {
   );
   const sampleDate = nasaProvenance.fetch_date || satelliteSamples[0]?.satellite_sample_date_or_fetch_date || "—";
   const gwRange = districtGeometry.layers.gw_percentile;
+  // Describe what the rasters read on this fetch; the signal swings with the season.
+  const means = nasaProvenance.rasters.map((r) => r.mean).filter((m): m is number => m !== null);
+  const signalRead =
+    means.length && means.every((m) => m >= 70)
+      ? "All three signals read high this period — wetter than most years on record for this date."
+      : means.length && means.every((m) => m < 30)
+        ? "All three signals read low this period — drier than most years on record for this date."
+        : `Signals are mixed this period: ${nasaProvenance.rasters
+            .map((r) => `${r.label.toLowerCase()} ${wetnessLabel(r.mean).toLowerCase()}`)
+            .join(", ")}.`;
 
   return (
     <div className="pageWrap">
@@ -108,8 +119,7 @@ export default function NasaSignalsPage() {
         <div className="fusionNote" style={{ marginTop: 16 }}>
           <IconInfo />
           <span>
-            All three signals read high this period — the aquifer-storage and soil-moisture columns are wetter than
-            most years on record for this date. A <strong>percentile</strong> compares today against this location&apos;s
+            {signalRead} A <strong>percentile</strong> compares today against this location&apos;s
             own 1948–2014 history; it is a measure of <strong>stress and trend</strong>, never an absolute water depth.
           </span>
         </div>

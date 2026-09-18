@@ -16,7 +16,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
     <div className="sidePanel sidePanelSelect" key={mandal.id} style={{ "--accent": meta.color } as CSSProperties}>
       <div className="sidePanelHead">
         <h3>{titleCase(mandal.mandal_name)}</h3>
-        <div className="sub">{titleCase(mandal.district_name)} District · Mandal ID {mandal.id}</div>
+        <div className="sub">{titleCase(mandal.district_name)} District</div>
         <div className="sidePanelChips">
           <span className="badge" style={{ background: meta.color, color: "#fff" }}>
             {meta.label}

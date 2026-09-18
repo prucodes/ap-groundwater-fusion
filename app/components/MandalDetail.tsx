@@ -105,7 +105,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
             <div>
               <h2>{titleCase(mandal.mandal_name)} Mandal</h2>
               <div className="sub">
-                {titleCase(mandal.district_name)} District · Mandal ID {mandal.id} ·{" "}
+                {titleCase(mandal.district_name)} District ·{" "}
                 {mandal.observation_month_count} observation months
               </div>
             </div>
