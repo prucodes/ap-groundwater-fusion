@@ -65,7 +65,8 @@ jobs:
             app/data/ap_district_geometry.json \
             app/data/ap_mandal_heat.json \
             app/data/nasa_provenance.json \
-            app/data/satellite_station_samples.json
+            app/data/satellite_station_samples.json \
+            app/public/water-crystal-3d.html
           git commit -m "chore(phase3): weekly levels refresh" || echo "no changes"
           git push
 

@@ -73,6 +73,10 @@ STEPS = [
     ("build holdout-safe nowcasts", [PY, os.path.join(HERE, "build_levels_engine.py")], True),
     ("evaluate model tasks", [PY, os.path.join(HERE, "evaluate_phase0.py")], True),
     ("publish V2 app data",  [PY, os.path.join(HERE, "build_real_app_data.py")], True),
+    # The Crystal 3D view embeds its own dataset, rebuilt here from the measured
+    # series just published. Optional: a failure keeps last week's view, and the
+    # test suite blocks publication if a new pre-monsoon year went missing.
+    ("rebuild Crystal view data", [PY, os.path.join(HERE, "build_crystal_data.py")], False),
     ("validate V2 contract", [PY, os.path.join(HERE, "validate_phase0.py")], True),
 ]
 
