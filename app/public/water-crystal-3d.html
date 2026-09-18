@@ -1139,7 +1139,10 @@ function updateMandalCard(fi){
   const tEl=document.getElementById("mcTrend");
   const t=m.trend||0;
   // OLS slope of the measured May readings, metres per year; positive is deeper.
-  tEl.textContent=Math.abs(t)<0.05?"Stable":(t>0?"Deepening":"Rising")+" · "+Math.abs(t).toFixed(2)+" m/yr";
+  // Direction in the label, rate in the value: keeps the phone card to one line.
+  const tLbl=document.getElementById("mcTrendLbl");
+  if(Math.abs(t)<0.05){ tLbl.textContent="Trend \u00B7 "+NY+" yr"; tEl.textContent="Stable"; }
+  else { tLbl.textContent="Trend \u00B7 "+(t>0?"deepening":"rising"); tEl.textContent=Math.abs(t).toFixed(2)+" m/yr"; }
   tEl.style.color=Math.abs(t)<0.05?"var(--ink)":t>0?"var(--over)":"var(--safe)";
   document.getElementById("mcSpark").innerHTML=sparkSVG(m);
   mCard.style.display="block";
