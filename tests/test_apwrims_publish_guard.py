@@ -103,3 +103,79 @@ def test_cookie_is_optional_so_the_job_can_run_unattended():
     assert "sys.exit(" not in source.split("COOKIE = os.environ.get")[1][:400], (
         "fetch_apwrims_history must not hard-exit when APWRIMS_COOKIE is unset"
     )
+
+
+# ---- Transient-failure retry: robust to a dropped transfer, never to a TLS fault ----
+
+import http.client
+import io
+import ssl
+import urllib.error
+
+import pytest
+
+
+class _Response(io.BytesIO):
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        return False
+
+
+def _fake_urlopen(outcomes, calls):
+    """urlopen stand-in that raises or returns each outcome in turn."""
+    def urlopen(request, timeout=None, context=None):
+        calls.append(request.full_url)
+        outcome = outcomes.pop(0)
+        if isinstance(outcome, BaseException):
+            raise outcome
+        return _Response(outcome)
+    return urlopen
+
+
+def test_retries_a_dropped_transfer_then_succeeds(monkeypatch):
+    # The 2026-09-18 CI failure: the portal cut a 5 MB body off at 81 KB.
+    calls = []
+    outcomes = [http.client.IncompleteRead(b"x" * 10, 5_019_824), b'{"ok": true}']
+    monkeypatch.setattr(apwrims.urllib.request, "urlopen", _fake_urlopen(outcomes, calls))
+    monkeypatch.setattr(apwrims.time, "sleep", lambda _s: None)
+    assert apwrims.post("/api/x", {}) == {"ok": True}
+    assert len(calls) == 2
+
+
+def test_gives_up_after_the_last_attempt(monkeypatch):
+    calls = []
+    outcomes = [ConnectionResetError("reset")] * apwrims.ATTEMPTS
+    monkeypatch.setattr(apwrims.urllib.request, "urlopen", _fake_urlopen(outcomes, calls))
+    monkeypatch.setattr(apwrims.time, "sleep", lambda _s: None)
+    with pytest.raises(ConnectionResetError):
+        apwrims.post("/api/x", {})
+    assert len(calls) == apwrims.ATTEMPTS
+
+
+@pytest.mark.parametrize(
+    "error",
+    [
+        urllib.error.URLError(ssl.SSLCertVerificationError("certificate verify failed")),
+        ssl.SSLError("bad record mac"),
+        urllib.error.HTTPError("https://apwrims.ap.gov.in/api/x", 403, "Forbidden", {}, None),
+    ],
+    ids=["cert-verify-failure", "tls-error", "http-403"],
+)
+def test_never_retries_tls_failures_or_refusals(monkeypatch, error):
+    # Verified TLS only: a certificate problem stops the run on the first try.
+    # A 4xx means the portal is gating access, which must surface, not be hammered.
+    calls = []
+    monkeypatch.setattr(apwrims.urllib.request, "urlopen", _fake_urlopen([error], calls))
+    monkeypatch.setattr(apwrims.time, "sleep", lambda _s: None)
+    with pytest.raises(type(error)):
+        apwrims.post("/api/x", {})
+    assert len(calls) == 1
+
+
+def test_retries_server_errors():
+    assert apwrims.is_transient(
+        urllib.error.HTTPError("https://apwrims.ap.gov.in/api/x", 503, "Unavailable", {}, None)
+    )
+    assert apwrims.is_transient(TimeoutError("read timed out"))

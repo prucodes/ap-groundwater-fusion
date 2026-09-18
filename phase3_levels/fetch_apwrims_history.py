@@ -12,7 +12,7 @@ Use only where access is permitted — technically open is not the same as
 authorised to bulk-harvest. This is an authorization-pending research sample, not
 official data, and the run is rate-limited on purpose.
 """
-import json, os, ssl, sys, time, urllib.request, csv, datetime
+import json, os, ssl, sys, time, urllib.request, urllib.error, http.client, csv, datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "apwrims")
@@ -57,6 +57,26 @@ def _tls_context():
 _ctx = _tls_context()
 
 
+# Attempts per request. The portal occasionally drops a large response part-way
+# (seen 2026-09-18: 81 KB of a 5 MB body), which used to abort the whole step.
+ATTEMPTS = 4
+
+
+def is_transient(error):
+    """Worth retrying: a dropped or timed-out transfer, or a server-side 5xx.
+
+    Never a TLS failure (verified TLS is the rule; a cert problem must stop the
+    run) and never a 4xx (if the portal starts gating, that must surface).
+    """
+    if isinstance(error, urllib.error.HTTPError):
+        return error.code >= 500
+    if isinstance(error, urllib.error.URLError):
+        return not isinstance(error.reason, ssl.SSLError)
+    if isinstance(error, ssl.SSLError):
+        return False
+    return isinstance(error, (http.client.IncompleteRead, ConnectionError, TimeoutError))
+
+
 def post(path, payload, timeout=60):
     body = json.dumps(payload).encode()
     headers = {
@@ -68,9 +88,15 @@ def post(path, payload, timeout=60):
     }
     if COOKIE:
         headers["Cookie"] = COOKIE
-    req = urllib.request.Request(BASE + path, data=body, headers=headers)
-    with urllib.request.urlopen(req, timeout=timeout, context=_ctx) as r:
-        return json.loads(r.read())
+    for attempt in range(1, ATTEMPTS + 1):
+        req = urllib.request.Request(BASE + path, data=body, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=timeout, context=_ctx) as r:
+                return json.loads(r.read())
+        except Exception as error:
+            if attempt == ATTEMPTS or not is_transient(error):
+                raise
+            time.sleep(2 ** attempt)
 
 
 def children(parent_type, child_type, loc):
