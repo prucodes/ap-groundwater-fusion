@@ -1,7 +1,7 @@
 {
   "manifestVersion": "2.0.0",
   "dataContractVersion": "2.0.0",
-  "generatedAt": "2026-09-18T18:32:34+00:00",
+  "generatedAt": "2026-09-18T18:55:54+00:00",
   "generator": "phase3_levels/build_phase0_foundation.py",
   "generatorVersion": "phase0-publisher-2.0.0",
   "officialAdministrativeUnitCount": null,
@@ -34,8 +34,8 @@
     "graceFetchDate": "2026-09-18",
     "rainfallValidPeriod": "2026.08",
     "etValidPeriod": "2025",
-    "modelBuildTimestamp": "2026-09-18T18:25:22+00:00",
-    "uiGenerationTimestamp": "2026-09-18T18:32:34+00:00"
+    "modelBuildTimestamp": "2026-09-18T18:50:14+00:00",
+    "uiGenerationTimestamp": "2026-09-18T18:55:54+00:00"
   },
   "joinDiagnostics": {
     "joinIdentity": "normalized district plus normalized mandal",
@@ -68,29 +68,29 @@
   },
   "inputHashes": {
     "apwrimsHistory": "b5d60daf9305e1e0aca519b1c7f5c9f06a3fa59263f2084efd940075bbe9fdbb",
-    "nowcasts": "dbd8b14cbd7485e1e240fbeccd3acbd359001bfa05d2970dd7fbac769244ed93",
+    "nowcasts": "13cbf1b9b49f83c1035ba95615ad6373d2aef9e039123b9ac0e1a14ae83606fc",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
     "districtSignals": "182d4ba44f3dfe16f3dc24731c2eeb3f60b44235ff2a4c5e591690de2e368882",
     "climateContext": "e044f794682ac6b50aaf808bcc32daa26f8b0d77f92a7c1778dd9968bdcfaf8e",
     "graceProvenance": "3148e0b000e679e270929e13a5b4c8cbcccbce6625625cc5c3f6dee36b54dafa",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "d1425590d8ef843fdbd601fb48e8344c262a46d1348f98532aec08da5b93f70c"
+    "evaluations": "c4cb6c865a6ec284bc5651b5b20d87cc7d1118a5285b266790d9f19153a4f51a"
   },
   "files": [
     {
       "file": "mandal_groundwater_records_v2.json",
       "bytes": 3650428,
-      "sha256": "55638a8cfc3324c158ef69578446886ef475d142a91c9ae7848c80571ee5ee54"
+      "sha256": "f80a19b96a867606344481ca6d6727d10e231acf7dbaaabb53b89bdf85a4b0be"
     },
     {
       "file": "mandal_observation_series_v2.json",
       "bytes": 6677709,
-      "sha256": "d77d9b92ff4a08eb784dac2f8df8263773f4f9874dea2ed069c3f4abfa549747"
+      "sha256": "d615c8623684406366ca8df8925a893ed0e3f55e66afc7037be78f83090e38f2"
     },
     {
       "file": "model_card.json",
-      "bytes": 11706,
-      "sha256": "f7fb316ace73a8d940e9c58fb4f7f847283e1cd7b88ce14d1b517bb13a481803"
+      "bytes": 11712,
+      "sha256": "655aca4082d0a704cebcc50d58c07c23e2b3a70b1a00eef2db6a298a32afbc97"
     },
     {
       "file": "ap_map_geometry.json",
@@ -135,21 +135,21 @@
         "status": "active",
         "schemaVersion": "2.0.0",
         "bytes": 3650428,
-        "sha256": "55638a8cfc3324c158ef69578446886ef475d142a91c9ae7848c80571ee5ee54"
+        "sha256": "f80a19b96a867606344481ca6d6727d10e231acf7dbaaabb53b89bdf85a4b0be"
       },
       {
         "file": "app/data/mandal_observation_series_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
         "bytes": 6677709,
-        "sha256": "d77d9b92ff4a08eb784dac2f8df8263773f4f9874dea2ed069c3f4abfa549747"
+        "sha256": "d615c8623684406366ca8df8925a893ed0e3f55e66afc7037be78f83090e38f2"
       },
       {
         "file": "app/data/model_card.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 11706,
-        "sha256": "f7fb316ace73a8d940e9c58fb4f7f847283e1cd7b88ce14d1b517bb13a481803"
+        "bytes": 11712,
+        "sha256": "655aca4082d0a704cebcc50d58c07c23e2b3a70b1a00eef2db6a298a32afbc97"
       },
       {
         "file": "app/data/ap_map_geometry.json",
@@ -205,14 +205,14 @@
         "status": "active",
         "schemaVersion": "2.0.0",
         "bytes": 216078,
-        "sha256": "dbd8b14cbd7485e1e240fbeccd3acbd359001bfa05d2970dd7fbac769244ed93"
+        "sha256": "13cbf1b9b49f83c1035ba95615ad6373d2aef9e039123b9ac0e1a14ae83606fc"
       },
       {
         "file": "phase3_levels/outputs/phase0_evaluations.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 7070,
-        "sha256": "d1425590d8ef843fdbd601fb48e8344c262a46d1348f98532aec08da5b93f70c"
+        "bytes": 7076,
+        "sha256": "c4cb6c865a6ec284bc5651b5b20d87cc7d1118a5285b266790d9f19153a4f51a"
       }
     ],
     "legacy": [
