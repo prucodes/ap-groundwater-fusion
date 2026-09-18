@@ -1,74 +1,81 @@
 {
-  "ran_at": "2026-09-18T18:06:40",
+  "ran_at": "2026-09-18T18:32:39",
   "steps": [
     {
       "step": "fetch GRACE-DA",
       "ok": true,
       "rc": 0,
-      "secs": 1.6,
+      "secs": 2.1,
       "required": false
     },
     {
       "step": "fetch CHIRPS rain",
       "ok": true,
       "rc": 0,
-      "secs": 1.8,
+      "secs": 2.1,
       "required": false
     },
     {
       "step": "refresh TerraClimate",
       "ok": true,
       "rc": 0,
-      "secs": 5.6,
+      "secs": 6.5,
       "required": false
     },
     {
       "step": "fetch APWRIMS sensor history",
       "ok": false,
       "rc": 1,
-      "secs": 1.4,
+      "secs": 20.0,
       "required": false
     },
     {
       "step": "resample GRACE at districts",
       "ok": true,
       "rc": 0,
-      "secs": 2.8,
+      "secs": 4.5,
       "required": false
     },
     {
       "step": "rebuild mandal rainfall/balance heat",
       "ok": true,
       "rc": 0,
-      "secs": 5.0,
+      "secs": 7.8,
       "required": false
     },
     {
       "step": "build holdout-safe nowcasts",
       "ok": true,
       "rc": 0,
-      "secs": 16.2,
+      "secs": 22.6,
       "required": true
     },
     {
       "step": "evaluate model tasks",
       "ok": true,
       "rc": 0,
-      "secs": 226.6,
+      "secs": 423.8,
       "required": true
     },
     {
       "step": "publish V2 app data",
       "ok": true,
       "rc": 0,
-      "secs": 1.8,
+      "secs": 2.8,
       "required": true
+    },
+    {
+      "step": "rebuild Crystal view data",
+      "ok": true,
+      "rc": 0,
+      "secs": 0.2,
+      "required": false
     },
     {
       "step": "validate V2 contract",
       "ok": true,
       "rc": 0,
-      "secs": 1.0,
+      "secs": 1.8,
       "required": true
     }
   ]
