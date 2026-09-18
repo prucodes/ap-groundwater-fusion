@@ -118,7 +118,9 @@ def main():
             path = os.path.join(base, filename)
             text = open(path).read()
             for legacy in LEGACY_NAMES:
-                require(legacy not in text, f"active UI imports/references legacy {legacy}: {path}", errors)
+                # Inspect quoted references, not prose in source comments.
+                code = re.sub(r"/\*[\s\S]*?\*/|(?m:^\s*//.*$)", "", text)
+                require(not re.search(r"[\"'][^\"'\n]*" + re.escape(legacy) + r"[\"']", code), f"active UI imports/references legacy {legacy}: {path}", errors)
 
     generated = records_bundle.get("generatedAt")
     try:

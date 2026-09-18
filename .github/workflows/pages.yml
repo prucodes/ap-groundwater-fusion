@@ -24,6 +24,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate the V2 data contract
+        # The weekly refresh runs this same check before it publishes. Running it
+        # on every push means a change that would block the Monday refresh fails
+        # here, at push time, instead of silently freezing the live data.
+        run: python3 phase3_levels/validate_phase0.py
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
