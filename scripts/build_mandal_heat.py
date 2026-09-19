@@ -24,24 +24,33 @@ PPT_TIF = REPO_ROOT / "data/raw/terraclimate/current/ppt_annual_ap.tif"
 CHIRPS_MANIFEST = REPO_ROOT / "data/raw/chirps/current/download_manifest.csv"
 ET_SAMPLES = REPO_ROOT / "data/processed/satellite/et_balance_samples_at_station_points.csv"
 DEFAULT_OUTPUT = REPO_ROOT / "app/data/ap_mandal_heat.json"
+MAP_GEOMETRY = REPO_ROOT / "app/data/ap_map_geometry.json"
 
 
 def zonal_mean(dataset, geom) -> float | None:
+    """Mean of the raster's valid pixels inside the polygon.
+
+    Masked, not filled. CHIRPS declares no nodata value, so a filled mask padded
+    each mandal's bounding box with zeros that were then averaged in, diluting
+    rainfall three- to six-fold (Aug 2026: 33 mm shown against 211 mm over AP's
+    land pixels). A mandal too small to hold a pixel centre falls back to the
+    pixels it touches.
+    """
     import numpy as np
     from rasterio.mask import mask
 
-    try:
-        out, _ = mask(dataset, [geom], crop=True, filled=True, nodata=dataset.nodata)
-    except Exception:
-        return None
-    arr = out[0].astype("float64")
-    valid = arr[np.isfinite(arr)]
-    if dataset.nodata is not None:
-        valid = valid[valid != dataset.nodata]
-    valid = valid[valid > -9000]
-    if valid.size == 0:
-        return None
-    return round(float(valid.mean()), 1)
+    for all_touched in (False, True):
+        try:
+            out, _ = mask(dataset, [geom], crop=True, filled=False, all_touched=all_touched)
+        except Exception:
+            return None
+        values = np.asarray(out[0].compressed(), dtype="float64")
+        values = values[np.isfinite(values) & (values > -9000)]  # CHIRPS ocean: undeclared -9999
+        if dataset.nodata is not None and np.isfinite(dataset.nodata):
+            values = values[values != dataset.nodata]
+        if values.size:
+            return round(float(values.mean()), 1)
+    return None
 
 
 def balance_status(balance: float | None) -> str:
@@ -52,6 +61,27 @@ def balance_status(balance: float | None) -> str:
     if balance >= 50:
         return "Balanced"
     return "Deficit"
+
+
+def current_names(gdf) -> list[tuple[str, str]]:
+    """(district, mandal) for each feature, as the app's map names them.
+
+    The prototype boundaries still carry the pre-2022 thirteen-district names,
+    while the app looks mandals up by today's districts, so keyed by the old
+    names only 241 of 670 mandals found their rainfall and balance. The map
+    geometry holds the same 670 polygons in the same order with current names;
+    the mandal name at each position is checked before its district is taken.
+    """
+    mandals = json.loads(MAP_GEOMETRY.read_text())["mandals"]
+    if len(mandals) != len(gdf):
+        raise SystemExit(f"Boundary count differs: {len(gdf)} prototype features, {len(mandals)} on the map.")
+    names = []
+    for i, (m, (_, row)) in enumerate(zip(mandals, gdf.iterrows())):
+        own = str(row.get("mandal_name", "")).strip().upper()
+        if own != m["m"].strip().upper():
+            raise SystemExit(f"Boundary order differs at feature {i}: {own!r} vs map {m['m']!r}.")
+        names.append((m["d"].strip().upper(), m["m"].strip().upper()))
+    return names
 
 
 def read_field(path: Path, field: str) -> str:
@@ -86,17 +116,16 @@ def main() -> int:
     elif str(gdf.crs).upper() not in {"EPSG:4326", "OGC:CRS84"}:
         gdf = gdf.to_crs("EPSG:4326")
 
+    names = current_names(gdf)
     values: dict[str, dict[str, object]] = {}
     rain_vals: list[float] = []
     bal_vals: list[float] = []
 
     with rasterio.open(CHIRPS_TIF) as rain_ds, rasterio.open(AET_TIF) as aet_ds, rasterio.open(PPT_TIF) as ppt_ds:
-        for _, row in gdf.iterrows():
+        for (_, row), (d, m) in zip(gdf.iterrows(), names):
             geom = row.geometry
             if geom is None:
                 continue
-            d = str(row.get("district_name", "")).strip().upper()
-            m = str(row.get("mandal_name", "")).strip().upper()
             rain = zonal_mean(rain_ds, geom)
             aet = zonal_mean(aet_ds, geom)
             ppt = zonal_mean(ppt_ds, geom)

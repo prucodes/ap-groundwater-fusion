@@ -250,7 +250,33 @@ export const graceDistrictCount = liveRasters.find((r) => r.raster_name.startsWi
 export const readinessItems = readinessJson as ReadinessItem[];
 export const satelliteSamples = satelliteSamplesJson as SatelliteSample[];
 export const mapGeometry = mapGeometryJson as MapGeometry;
-export const districtGeometry = districtGeometryJson as DistrictGeometry;
+/* District rainfall in ap_district_geometry.json is an April 2026 snapshot: the
+   pipeline rewrites only that file's GRACE fields. It is derived here from the
+   weekly per-mandal CHIRPS means instead, with their period. */
+const baseDistrictGeometry = districtGeometryJson as DistrictGeometry;
+const rainByDistrict = new Map<string, number[]>();
+for (const [key, value] of Object.entries(liveHeat.values)) {
+  if (value.rainfall_mm === null) continue;
+  const district = key.split("|")[0];
+  rainByDistrict.set(district, [...(rainByDistrict.get(district) ?? []), value.rainfall_mm]);
+}
+const liveDistrictRain = baseDistrictGeometry.districts.map((d) =>
+  meanOf(rainByDistrict.get(d.d.toUpperCase()) ?? [], 1),
+);
+const presentRain = liveDistrictRain.filter((v): v is number => v !== null);
+export const districtGeometry: DistrictGeometry = {
+  ...baseDistrictGeometry,
+  rainfall_period: liveHeat.rainfall_period,
+  layers: {
+    ...baseDistrictGeometry.layers,
+    rainfall_mm: {
+      ...baseDistrictGeometry.layers.rainfall_mm,
+      min: presentRain.length ? Math.min(...presentRain) : 0,
+      max: presentRain.length ? Math.max(...presentRain) : 1,
+    },
+  },
+  districts: baseDistrictGeometry.districts.map((d, i) => ({ ...d, rainfall_mm: liveDistrictRain[i] })),
+};
 
 export type NasaRaster = {
   raster_name: string;
