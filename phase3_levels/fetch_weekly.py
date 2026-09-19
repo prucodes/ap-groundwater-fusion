@@ -70,6 +70,12 @@ STEPS = [
     # without them the new rasters are downloaded and then ignored.
     ("resample GRACE at districts", [PY, os.path.join(HERE, "refresh_nasa_districts.py")], False),
     ("rebuild mandal rainfall/balance heat", [PY, os.path.join(SCRIPTS, "build_mandal_heat.py")], False),
+    # The model's own rainfall input (rain_1m / rain_3m / rain_12m), from NASA
+    # POWER. Until 2026-09-19 this was loaded once and stopped at 2025-12, so every
+    # 2026 month reached the model with no rainfall. Incremental: most weeks it
+    # finds the last complete month already stored and fetches nothing.
+    ("fetch NASA POWER rainfall (model input)",
+     [PY, os.path.join(HERE, "fetch_nasa_power_rainfall.py")], False, 2700),
     ("build holdout-safe nowcasts", [PY, os.path.join(HERE, "build_levels_engine.py")], True),
     ("evaluate model tasks", [PY, os.path.join(HERE, "evaluate_phase0.py")], True),
     ("publish V2 app data",  [PY, os.path.join(HERE, "build_real_app_data.py")], True),

@@ -1,6 +1,7 @@
 name: Phase 3 — weekly groundwater levels
 
-# Hands-off: pulls latest GRACE-DA + CHIRPS + TerraClimate every Monday,
+# Hands-off: pulls APWRIMS sensor readings, NASA GRACE-DA, CHIRPS, TerraClimate
+# and NASA POWER rainfall every Monday,
 # rebuilds features, and re-predicts mandal levels. No manual feeding.
 on:
   schedule:
