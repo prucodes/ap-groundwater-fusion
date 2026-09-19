@@ -437,7 +437,10 @@ def build_records(generated_at):
         declining = trend is not None and trend > 0.3
         if declining and balance_category == "positive":
             agreement = "declining_despite_positive_climate_balance"
-        elif declining and balance_category in {"negative", "neutral"}:
+        elif declining:
+            # Negative, neutral, or unknown balance. An unknown balance once fell
+            # through to "stable_or_recovering", labelling 341 deepening mandals
+            # as recovering when their balance lookup missed.
             agreement = "declining_without_positive_climate_balance"
         elif trend is not None:
             agreement = "stable_or_recovering"
