@@ -1,7 +1,7 @@
 {
   "manifestVersion": "2.0.0",
   "dataContractVersion": "2.0.0",
-  "generatedAt": "2026-09-19T11:35:10+00:00",
+  "generatedAt": "2026-09-19T11:54:27+00:00",
   "generator": "phase3_levels/build_phase0_foundation.py",
   "generatorVersion": "phase0-publisher-2.0.0",
   "officialAdministrativeUnitCount": null,
@@ -31,11 +31,11 @@
       "latestTargetCount": 621
     },
     "graceValidPeriod": null,
-    "graceFetchDate": "2026-09-18",
+    "graceFetchDate": "2026-09-19",
     "rainfallValidPeriod": "2026.08",
     "etValidPeriod": "2025",
-    "modelBuildTimestamp": "2026-09-19T11:26:13+00:00",
-    "uiGenerationTimestamp": "2026-09-19T11:35:10+00:00"
+    "modelBuildTimestamp": "2026-09-19T11:51:13+00:00",
+    "uiGenerationTimestamp": "2026-09-19T11:54:27+00:00"
   },
   "joinDiagnostics": {
     "joinIdentity": "normalized district plus normalized mandal",
@@ -54,12 +54,12 @@
       "fetchDate": null
     },
     "graceDa": {
-      "status": "retained_local_input",
-      "fetchDate": "2026-09-18"
+      "status": "refreshed",
+      "fetchDate": "2026-09-19"
     },
     "rainfall": {
-      "status": "retained_local_input",
-      "fetchDate": "2026-09-18"
+      "status": "refreshed",
+      "fetchDate": "2026-09-19"
     },
     "evapotranspiration": {
       "status": "retained_local_input",
@@ -68,29 +68,29 @@
   },
   "inputHashes": {
     "apwrimsHistory": "b5d60daf9305e1e0aca519b1c7f5c9f06a3fa59263f2084efd940075bbe9fdbb",
-    "nowcasts": "09d76428b99341845d507238b1e86d424c777f25cd99d787a9a83b6dcb3683de",
+    "nowcasts": "8c64891ed6d9b438504fa2c4fd877723f5e6de5506a0c73ae6ffc96bb8a67d20",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
     "districtSignals": "182d4ba44f3dfe16f3dc24731c2eeb3f60b44235ff2a4c5e591690de2e368882",
     "climateContext": "9e082f287c165332f625bc1a7dee84c594ef39878571eb1aa5654e6945953ad4",
-    "graceProvenance": "3148e0b000e679e270929e13a5b4c8cbcccbce6625625cc5c3f6dee36b54dafa",
+    "graceProvenance": "abe6e7b2b1433f63c77dbd4d89e77f2062349341c0105d2b9567db6b92447b9c",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "3ceac02d4bbbd51c86fd1e26a059f425400fd343f29f6f8903331d4bfeebe03e"
+    "evaluations": "1adb05a7ec03c4e7f67e1accb7204ce61e1f75bed51cfe1c4a58cdd7a9ec8843"
   },
   "files": [
     {
       "file": "mandal_groundwater_records_v2.json",
-      "bytes": 4040474,
-      "sha256": "c53f1ea7b46df8e51338e0c81cf503b810b6ca437f147e7a1932af601c1ab0db"
+      "bytes": 3627779,
+      "sha256": "c88c89b2795aef1e508ec01d9dc8097e1bdf3a358a9c29019ec616ad66a66f96"
     },
     {
       "file": "mandal_observation_series_v2.json",
       "bytes": 6677709,
-      "sha256": "c5f118c634f56ac3815948f7affddde38fd369e7642bf7cdcaa2e184ac16e3ac"
+      "sha256": "640e0e34a64c2be3d899fce6ab8f1453acfd685d764498f4197e2d00faf0eab5"
     },
     {
       "file": "model_card.json",
-      "bytes": 11710,
-      "sha256": "c4e4d2847df09cb0d5a02b2aa6caa24084b7008ba58c98d125f6f0c482d4bc15"
+      "bytes": 11715,
+      "sha256": "1129fa487d903340e4675fd4ee3ed7df061c738bcc3d4ab228e64887fc7debe0"
     },
     {
       "file": "ap_map_geometry.json",
@@ -110,7 +110,7 @@
     {
       "file": "nasa_provenance.json",
       "bytes": 2017,
-      "sha256": "3148e0b000e679e270929e13a5b4c8cbcccbce6625625cc5c3f6dee36b54dafa"
+      "sha256": "abe6e7b2b1433f63c77dbd4d89e77f2062349341c0105d2b9567db6b92447b9c"
     },
     {
       "file": "dashboard_summary.json",
@@ -125,7 +125,7 @@
     {
       "file": "satellite_station_samples.json",
       "bytes": 18453,
-      "sha256": "29a999dbf558b34b142c8b352e5e36b887a96b88fc142b9a4edd07d3a88d7d0d"
+      "sha256": "3361eae9d46bce0edf53c8aaf52b14141e1df7c270a34e8ca21cdb08fbcde56e"
     }
   ],
   "artifacts": {
@@ -134,22 +134,22 @@
         "file": "app/data/mandal_groundwater_records_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 4040474,
-        "sha256": "c53f1ea7b46df8e51338e0c81cf503b810b6ca437f147e7a1932af601c1ab0db"
+        "bytes": 3627779,
+        "sha256": "c88c89b2795aef1e508ec01d9dc8097e1bdf3a358a9c29019ec616ad66a66f96"
       },
       {
         "file": "app/data/mandal_observation_series_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
         "bytes": 6677709,
-        "sha256": "c5f118c634f56ac3815948f7affddde38fd369e7642bf7cdcaa2e184ac16e3ac"
+        "sha256": "640e0e34a64c2be3d899fce6ab8f1453acfd685d764498f4197e2d00faf0eab5"
       },
       {
         "file": "app/data/model_card.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 11710,
-        "sha256": "c4e4d2847df09cb0d5a02b2aa6caa24084b7008ba58c98d125f6f0c482d4bc15"
+        "bytes": 11715,
+        "sha256": "1129fa487d903340e4675fd4ee3ed7df061c738bcc3d4ab228e64887fc7debe0"
       },
       {
         "file": "app/data/ap_map_geometry.json",
@@ -177,7 +177,7 @@
         "status": "active",
         "schemaVersion": "1.0.0",
         "bytes": 2017,
-        "sha256": "3148e0b000e679e270929e13a5b4c8cbcccbce6625625cc5c3f6dee36b54dafa"
+        "sha256": "abe6e7b2b1433f63c77dbd4d89e77f2062349341c0105d2b9567db6b92447b9c"
       },
       {
         "file": "app/data/dashboard_summary.json",
@@ -198,21 +198,21 @@
         "status": "active",
         "schemaVersion": "1.0.0",
         "bytes": 18453,
-        "sha256": "29a999dbf558b34b142c8b352e5e36b887a96b88fc142b9a4edd07d3a88d7d0d"
+        "sha256": "3361eae9d46bce0edf53c8aaf52b14141e1df7c270a34e8ca21cdb08fbcde56e"
       },
       {
         "file": "phase3_levels/outputs/mandal_nowcasts_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 216054,
-        "sha256": "09d76428b99341845d507238b1e86d424c777f25cd99d787a9a83b6dcb3683de"
+        "bytes": 216066,
+        "sha256": "8c64891ed6d9b438504fa2c4fd877723f5e6de5506a0c73ae6ffc96bb8a67d20"
       },
       {
         "file": "phase3_levels/outputs/phase0_evaluations.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 7074,
-        "sha256": "3ceac02d4bbbd51c86fd1e26a059f425400fd343f29f6f8903331d4bfeebe03e"
+        "bytes": 7079,
+        "sha256": "1adb05a7ec03c4e7f67e1accb7204ce61e1f75bed51cfe1c4a58cdd7a9ec8843"
       }
     ],
     "legacy": [

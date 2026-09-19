@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.0.0",
-  "generatedAt": "2026-09-19T11:26:13+00:00",
+  "generatedAt": "2026-09-19T11:51:13+00:00",
   "label": "Modelled temporal nowcast; not an official APWRIMS result",
   "modelVersion": "phase0-nowcast-2.0.0",
   "trainingPeriod": {
@@ -48,9 +48,9 @@
       },
       "sampleCount": 20737,
       "model": {
-        "maeM": 1.2866,
-        "rmseM": 2.4926,
-        "r2": 0.908
+        "maeM": 1.2855,
+        "rmseM": 2.4757,
+        "r2": 0.9092
       },
       "baseline": {
         "name": "same_month_previous_year",
@@ -59,25 +59,25 @@
       "terrainCohorts": {
         "alluvial": {
           "sampleCount": 5871,
-          "maeM": 1.2141,
-          "empiricalCoveragePct": 79.51
+          "maeM": 1.2049,
+          "empiricalCoveragePct": 79.42
         },
         "coastal": {
           "sampleCount": 7261,
-          "maeM": 1.0033,
-          "empiricalCoveragePct": 81.42
+          "maeM": 0.9994,
+          "empiricalCoveragePct": 80.73
         },
         "hard_rock": {
           "sampleCount": 7605,
-          "maeM": 1.613,
-          "empiricalCoveragePct": 77.46
+          "maeM": 1.6209,
+          "empiricalCoveragePct": 77.19
         }
       },
       "intervalEvaluation": {
         "intervalType": "model_quantile_p10_p90",
         "nominalCoveragePct": 80,
-        "empiricalCoveragePct": 79.43,
-        "meanWidthM": 3.6913,
+        "empiricalCoveragePct": 79.06,
+        "meanWidthM": 3.6917,
         "sampleCount": 20737
       }
     }
@@ -92,9 +92,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-06",
       "observed_mbgl": 7.88,
-      "estimate_mbgl": 7.84,
-      "band_p10": 6.82,
-      "band_p90": 8.62,
+      "estimate_mbgl": 7.93,
+      "band_p10": 6.92,
+      "band_p90": 8.6,
       "trend_m_per_yr": 1.58
     },
     {
@@ -106,9 +106,9 @@
       "aquifer": "coastal",
       "as_of": "2026-06",
       "observed_mbgl": 5.32,
-      "estimate_mbgl": 4.85,
-      "band_p10": 3.97,
-      "band_p90": 6.06,
+      "estimate_mbgl": 4.98,
+      "band_p10": 4.01,
+      "band_p90": 6.17,
       "trend_m_per_yr": 1.19
     },
     {
@@ -120,9 +120,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-06",
       "observed_mbgl": 5.7,
-      "estimate_mbgl": 5.31,
+      "estimate_mbgl": 5.23,
       "band_p10": 4.17,
-      "band_p90": 5.88,
+      "band_p90": 6.02,
       "trend_m_per_yr": 1.37
     },
     {
@@ -134,9 +134,9 @@
       "aquifer": "coastal",
       "as_of": "2026-06",
       "observed_mbgl": 57.3,
-      "estimate_mbgl": 50.17,
-      "band_p10": 40.78,
-      "band_p90": 56.34,
+      "estimate_mbgl": 49.55,
+      "band_p10": 40.12,
+      "band_p90": 55.09,
       "trend_m_per_yr": 2.82
     },
     {
@@ -148,9 +148,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-06",
       "observed_mbgl": 4.97,
-      "estimate_mbgl": 4.87,
-      "band_p10": 3.28,
-      "band_p90": 7.2,
+      "estimate_mbgl": 4.79,
+      "band_p10": 3.11,
+      "band_p90": 6.43,
       "trend_m_per_yr": -6.0
     },
     {
@@ -164,7 +164,7 @@
       "observed_mbgl": 2.83,
       "estimate_mbgl": 2.75,
       "band_p10": 2.28,
-      "band_p90": 3.04,
+      "band_p90": 3.1,
       "trend_m_per_yr": 0.28
     },
     {
@@ -176,9 +176,9 @@
       "aquifer": "coastal",
       "as_of": "2026-06",
       "observed_mbgl": 1.4,
-      "estimate_mbgl": 1.35,
+      "estimate_mbgl": 1.32,
       "band_p10": 0.99,
-      "band_p90": 2.36,
+      "band_p90": 1.57,
       "trend_m_per_yr": 0.16
     },
     {
@@ -190,9 +190,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-06",
       "observed_mbgl": 9.54,
-      "estimate_mbgl": 8.09,
-      "band_p10": 5.46,
-      "band_p90": 9.66,
+      "estimate_mbgl": 7.98,
+      "band_p10": 5.51,
+      "band_p90": 9.55,
       "trend_m_per_yr": 1.01
     },
     {
@@ -205,8 +205,8 @@
       "as_of": "2026-06",
       "observed_mbgl": 2.63,
       "estimate_mbgl": 5.07,
-      "band_p10": 3.66,
-      "band_p90": 5.91,
+      "band_p10": 3.63,
+      "band_p90": 5.95,
       "trend_m_per_yr": null
     },
     {
@@ -218,9 +218,9 @@
       "aquifer": "coastal",
       "as_of": "2026-06",
       "observed_mbgl": 5.0,
-      "estimate_mbgl": 4.68,
-      "band_p10": 3.97,
-      "band_p90": 4.97,
+      "estimate_mbgl": 4.72,
+      "band_p10": 3.93,
+      "band_p90": 4.98,
       "trend_m_per_yr": 0.08
     },
     {
@@ -232,9 +232,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-07",
       "observed_mbgl": 43.74,
-      "estimate_mbgl": 20.35,
-      "band_p10": 11.09,
-      "band_p90": 28.87,
+      "estimate_mbgl": 20.16,
+      "band_p10": 11.74,
+      "band_p90": 28.61,
       "trend_m_per_yr": 6.0
     },
     {
@@ -246,9 +246,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 1.65,
-      "estimate_mbgl": 2.31,
-      "band_p10": 1.23,
-      "band_p90": 3.89,
+      "estimate_mbgl": 2.38,
+      "band_p10": 1.29,
+      "band_p90": 3.5,
       "trend_m_per_yr": 0.19
     },
     {
@@ -260,9 +260,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.96,
-      "estimate_mbgl": 4.71,
-      "band_p10": 3.42,
-      "band_p90": 5.45,
+      "estimate_mbgl": 4.79,
+      "band_p10": 3.36,
+      "band_p90": 5.72,
       "trend_m_per_yr": 1.22
     },
     {
@@ -274,9 +274,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 11.63,
-      "estimate_mbgl": 9.46,
-      "band_p10": 8.29,
-      "band_p90": 11.84,
+      "estimate_mbgl": 9.66,
+      "band_p10": 8.23,
+      "band_p90": 11.96,
       "trend_m_per_yr": 4.28
     },
     {
@@ -288,9 +288,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.54,
-      "estimate_mbgl": 7.82,
-      "band_p10": 7.1,
-      "band_p90": 8.82,
+      "estimate_mbgl": 7.88,
+      "band_p10": 7.17,
+      "band_p90": 8.83,
       "trend_m_per_yr": 1.36
     },
     {
@@ -302,9 +302,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.16,
-      "estimate_mbgl": 11.56,
-      "band_p10": 9.41,
-      "band_p90": 13.49,
+      "estimate_mbgl": 11.59,
+      "band_p10": 9.3,
+      "band_p90": 13.14,
       "trend_m_per_yr": 1.67
     },
     {
@@ -316,9 +316,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 30.75,
-      "estimate_mbgl": 30.65,
-      "band_p10": 27.34,
-      "band_p90": 34.36,
+      "estimate_mbgl": 30.32,
+      "band_p10": 27.0,
+      "band_p90": 34.93,
       "trend_m_per_yr": -4.4
     },
     {
@@ -330,9 +330,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 9.98,
-      "estimate_mbgl": 10.61,
-      "band_p10": 8.76,
-      "band_p90": 12.7,
+      "estimate_mbgl": 10.66,
+      "band_p10": 8.58,
+      "band_p90": 12.4,
       "trend_m_per_yr": 4.67
     },
     {
@@ -344,9 +344,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 9.15,
-      "estimate_mbgl": 9.0,
-      "band_p10": 7.79,
-      "band_p90": 10.13,
+      "estimate_mbgl": 9.03,
+      "band_p10": 7.88,
+      "band_p90": 10.24,
       "trend_m_per_yr": 1.14
     },
     {
@@ -358,9 +358,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.66,
-      "estimate_mbgl": 9.13,
-      "band_p10": 5.38,
-      "band_p90": 15.69,
+      "estimate_mbgl": 8.73,
+      "band_p10": 5.42,
+      "band_p90": 15.24,
       "trend_m_per_yr": -2.53
     },
     {
@@ -372,9 +372,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 11.27,
-      "estimate_mbgl": 9.19,
-      "band_p10": 7.77,
-      "band_p90": 10.67,
+      "estimate_mbgl": 9.33,
+      "band_p10": 7.66,
+      "band_p90": 10.85,
       "trend_m_per_yr": 5.23
     },
     {
@@ -386,9 +386,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.46,
-      "estimate_mbgl": 4.44,
-      "band_p10": 3.43,
-      "band_p90": 4.79,
+      "estimate_mbgl": 4.42,
+      "band_p10": 3.53,
+      "band_p90": 4.73,
       "trend_m_per_yr": 0.54
     },
     {
@@ -400,9 +400,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.36,
-      "estimate_mbgl": 12.41,
-      "band_p10": 11.15,
-      "band_p90": 13.8,
+      "estimate_mbgl": 12.58,
+      "band_p10": 10.62,
+      "band_p90": 14.0,
       "trend_m_per_yr": 3.21
     },
     {
@@ -414,9 +414,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 8.3,
-      "estimate_mbgl": 7.85,
-      "band_p10": 7.0,
-      "band_p90": 9.03,
+      "estimate_mbgl": 8.02,
+      "band_p10": 7.06,
+      "band_p90": 9.17,
       "trend_m_per_yr": 2.51
     },
     {
@@ -428,9 +428,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.04,
-      "estimate_mbgl": 2.65,
-      "band_p10": 1.85,
-      "band_p90": 3.47,
+      "estimate_mbgl": 2.83,
+      "band_p10": 1.92,
+      "band_p90": 3.42,
       "trend_m_per_yr": 0.22
     },
     {
@@ -442,9 +442,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.28,
-      "estimate_mbgl": 5.06,
-      "band_p10": 4.3,
-      "band_p90": 5.72,
+      "estimate_mbgl": 5.11,
+      "band_p10": 4.55,
+      "band_p90": 5.68,
       "trend_m_per_yr": -1.1
     },
     {
@@ -456,9 +456,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.5,
-      "estimate_mbgl": 3.88,
-      "band_p10": 3.15,
-      "band_p90": 4.25,
+      "estimate_mbgl": 3.83,
+      "band_p10": 3.2,
+      "band_p90": 4.44,
       "trend_m_per_yr": -0.1
     },
     {
@@ -470,9 +470,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.22,
-      "estimate_mbgl": 7.86,
-      "band_p10": 7.19,
-      "band_p90": 8.96,
+      "estimate_mbgl": 7.92,
+      "band_p10": 7.16,
+      "band_p90": 8.85,
       "trend_m_per_yr": 0.73
     },
     {
@@ -484,9 +484,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 34.39,
-      "estimate_mbgl": 28.49,
-      "band_p10": 14.34,
-      "band_p90": 39.53,
+      "estimate_mbgl": 31.19,
+      "band_p10": 18.49,
+      "band_p90": 39.07,
       "trend_m_per_yr": 6.0
     },
     {
@@ -498,9 +498,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 15.36,
-      "estimate_mbgl": 14.17,
-      "band_p10": 12.96,
-      "band_p90": 15.21,
+      "estimate_mbgl": 14.18,
+      "band_p10": 12.63,
+      "band_p90": 15.31,
       "trend_m_per_yr": -0.15
     },
     {
@@ -512,9 +512,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.76,
-      "estimate_mbgl": 4.55,
-      "band_p10": 2.97,
-      "band_p90": 6.34,
+      "estimate_mbgl": 4.63,
+      "band_p10": 2.9,
+      "band_p90": 6.18,
       "trend_m_per_yr": 0.3
     },
     {
@@ -526,9 +526,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.66,
-      "estimate_mbgl": 4.33,
-      "band_p10": 3.52,
-      "band_p90": 5.4,
+      "estimate_mbgl": 4.5,
+      "band_p10": 3.49,
+      "band_p90": 5.26,
       "trend_m_per_yr": 1.05
     },
     {
@@ -540,9 +540,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 24.95,
-      "estimate_mbgl": 22.87,
-      "band_p10": 21.06,
-      "band_p90": 24.54,
+      "estimate_mbgl": 23.15,
+      "band_p10": 21.14,
+      "band_p90": 24.22,
       "trend_m_per_yr": 5.04
     },
     {
@@ -554,9 +554,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.9,
-      "estimate_mbgl": 7.88,
-      "band_p10": 7.08,
-      "band_p90": 9.05,
+      "estimate_mbgl": 8.05,
+      "band_p10": 6.97,
+      "band_p90": 9.17,
       "trend_m_per_yr": 2.12
     },
     {
@@ -568,9 +568,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.63,
-      "estimate_mbgl": 8.43,
-      "band_p10": 5.38,
-      "band_p90": 11.32,
+      "estimate_mbgl": 8.41,
+      "band_p10": 5.66,
+      "band_p90": 11.29,
       "trend_m_per_yr": 5.11
     },
     {
@@ -582,9 +582,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 15.94,
-      "estimate_mbgl": 14.7,
-      "band_p10": 13.61,
-      "band_p90": 15.8,
+      "estimate_mbgl": 14.85,
+      "band_p10": 14.04,
+      "band_p90": 15.82,
       "trend_m_per_yr": 2.34
     },
     {
@@ -596,9 +596,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.03,
-      "estimate_mbgl": 4.6,
-      "band_p10": 4.01,
-      "band_p90": 4.84,
+      "estimate_mbgl": 4.62,
+      "band_p10": 4.0,
+      "band_p90": 4.94,
       "trend_m_per_yr": 0.18
     },
     {
@@ -610,9 +610,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.02,
-      "estimate_mbgl": 2.25,
-      "band_p10": 1.52,
-      "band_p90": 3.02,
+      "estimate_mbgl": 2.33,
+      "band_p10": 1.63,
+      "band_p90": 3.1,
       "trend_m_per_yr": 0.09
     },
     {
@@ -624,9 +624,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.0,
-      "estimate_mbgl": 4.01,
-      "band_p10": 3.01,
-      "band_p90": 4.67,
+      "estimate_mbgl": 4.06,
+      "band_p10": 2.94,
+      "band_p90": 4.7,
       "trend_m_per_yr": 1.78
     },
     {
@@ -638,9 +638,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.9,
-      "estimate_mbgl": 2.93,
-      "band_p10": 2.64,
-      "band_p90": 3.32,
+      "estimate_mbgl": 3.01,
+      "band_p10": 2.65,
+      "band_p90": 3.28,
       "trend_m_per_yr": 0.3
     },
     {
@@ -652,9 +652,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 0.77,
-      "estimate_mbgl": 0.96,
-      "band_p10": 0.65,
-      "band_p90": 1.14,
+      "estimate_mbgl": 0.92,
+      "band_p10": 0.66,
+      "band_p90": 1.07,
       "trend_m_per_yr": 0.2
     },
     {
@@ -666,9 +666,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.83,
-      "estimate_mbgl": 3.24,
-      "band_p10": 2.11,
-      "band_p90": 3.5,
+      "estimate_mbgl": 3.35,
+      "band_p10": 2.22,
+      "band_p90": 3.7,
       "trend_m_per_yr": null
     },
     {
@@ -680,9 +680,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.95,
-      "estimate_mbgl": 5.74,
-      "band_p10": 4.61,
-      "band_p90": 7.12,
+      "estimate_mbgl": 5.97,
+      "band_p10": 4.32,
+      "band_p90": 7.3,
       "trend_m_per_yr": 3.69
     },
     {
@@ -694,9 +694,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.58,
-      "estimate_mbgl": 11.66,
-      "band_p10": 10.22,
-      "band_p90": 13.6,
+      "estimate_mbgl": 11.7,
+      "band_p10": 10.02,
+      "band_p90": 13.36,
       "trend_m_per_yr": 2.9
     },
     {
@@ -708,9 +708,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.08,
-      "estimate_mbgl": 4.0,
-      "band_p10": 3.21,
-      "band_p90": 4.42,
+      "estimate_mbgl": 3.93,
+      "band_p10": 3.28,
+      "band_p90": 4.4,
       "trend_m_per_yr": 1.38
     },
     {
@@ -722,9 +722,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.08,
-      "estimate_mbgl": 5.34,
-      "band_p10": 4.02,
-      "band_p90": 6.51,
+      "estimate_mbgl": 5.43,
+      "band_p10": 4.31,
+      "band_p90": 6.06,
       "trend_m_per_yr": 0.82
     },
     {
@@ -736,9 +736,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.64,
-      "estimate_mbgl": 4.39,
-      "band_p10": 3.51,
-      "band_p90": 5.22,
+      "estimate_mbgl": 4.42,
+      "band_p10": 3.7,
+      "band_p90": 5.34,
       "trend_m_per_yr": 1.26
     },
     {
@@ -750,9 +750,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.67,
-      "estimate_mbgl": 4.63,
-      "band_p10": 2.71,
-      "band_p90": 6.05,
+      "estimate_mbgl": 4.83,
+      "band_p10": 2.49,
+      "band_p90": 6.06,
       "trend_m_per_yr": 3.98
     },
     {
@@ -764,9 +764,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.55,
-      "estimate_mbgl": 10.89,
-      "band_p10": 9.24,
-      "band_p90": 12.17,
+      "estimate_mbgl": 10.92,
+      "band_p10": 9.47,
+      "band_p90": 12.05,
       "trend_m_per_yr": -0.83
     },
     {
@@ -778,9 +778,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.1,
-      "estimate_mbgl": 3.13,
+      "estimate_mbgl": 2.95,
       "band_p10": 2.45,
-      "band_p90": 3.22,
+      "band_p90": 3.13,
       "trend_m_per_yr": 0.46
     },
     {
@@ -792,9 +792,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 19.79,
-      "estimate_mbgl": 19.63,
-      "band_p10": 17.99,
-      "band_p90": 21.29,
+      "estimate_mbgl": 19.76,
+      "band_p10": 18.73,
+      "band_p90": 20.77,
       "trend_m_per_yr": -0.64
     },
     {
@@ -806,9 +806,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.04,
-      "estimate_mbgl": 3.25,
-      "band_p10": 2.11,
-      "band_p90": 4.03,
+      "estimate_mbgl": 3.26,
+      "band_p10": 2.13,
+      "band_p90": 4.09,
       "trend_m_per_yr": 2.08
     },
     {
@@ -820,9 +820,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 1.02,
-      "estimate_mbgl": 1.48,
-      "band_p10": 0.64,
-      "band_p90": 2.0,
+      "estimate_mbgl": 1.42,
+      "band_p10": 0.85,
+      "band_p90": 1.87,
       "trend_m_per_yr": 0.85
     },
     {
@@ -834,9 +834,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.16,
-      "estimate_mbgl": 6.08,
-      "band_p10": 5.25,
-      "band_p90": 6.71,
+      "estimate_mbgl": 6.02,
+      "band_p10": 5.43,
+      "band_p90": 6.6,
       "trend_m_per_yr": -0.25
     },
     {
@@ -848,9 +848,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 10.5,
-      "estimate_mbgl": 12.22,
-      "band_p10": 10.87,
-      "band_p90": 13.81,
+      "estimate_mbgl": 12.09,
+      "band_p10": 10.5,
+      "band_p90": 13.9,
       "trend_m_per_yr": -4.0
     },
     {
@@ -862,9 +862,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.21,
-      "estimate_mbgl": 6.03,
-      "band_p10": 5.49,
-      "band_p90": 7.01,
+      "estimate_mbgl": 6.05,
+      "band_p10": 5.44,
+      "band_p90": 7.08,
       "trend_m_per_yr": 0.41
     },
     {
@@ -876,9 +876,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.56,
-      "estimate_mbgl": 9.08,
-      "band_p10": 8.78,
-      "band_p90": 10.84,
+      "estimate_mbgl": 9.18,
+      "band_p10": 8.67,
+      "band_p90": 10.78,
       "trend_m_per_yr": 2.52
     },
     {
@@ -890,9 +890,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 13.66,
-      "estimate_mbgl": 12.98,
-      "band_p10": 11.17,
-      "band_p90": 16.03,
+      "estimate_mbgl": 12.13,
+      "band_p10": 10.74,
+      "band_p90": 16.47,
       "trend_m_per_yr": -5.46
     },
     {
@@ -904,9 +904,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.55,
-      "estimate_mbgl": 2.09,
-      "band_p10": 1.84,
-      "band_p90": 2.42,
+      "estimate_mbgl": 2.2,
+      "band_p10": 1.87,
+      "band_p90": 2.4,
       "trend_m_per_yr": -0.11
     },
     {
@@ -918,9 +918,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.83,
-      "estimate_mbgl": 5.46,
-      "band_p10": 4.51,
-      "band_p90": 6.79,
+      "estimate_mbgl": 5.55,
+      "band_p10": 4.52,
+      "band_p90": 6.55,
       "trend_m_per_yr": 4.15
     },
     {
@@ -932,9 +932,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 15.47,
-      "estimate_mbgl": 14.28,
-      "band_p10": 13.36,
-      "band_p90": 15.47,
+      "estimate_mbgl": 14.53,
+      "band_p10": 13.67,
+      "band_p90": 15.7,
       "trend_m_per_yr": 2.3
     },
     {
@@ -946,9 +946,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.74,
-      "estimate_mbgl": 4.36,
-      "band_p10": 3.11,
-      "band_p90": 4.52,
+      "estimate_mbgl": 4.2,
+      "band_p10": 3.02,
+      "band_p90": 4.57,
       "trend_m_per_yr": 1.16
     },
     {
@@ -960,9 +960,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.38,
-      "estimate_mbgl": 7.2,
-      "band_p10": 6.64,
-      "band_p90": 7.94,
+      "estimate_mbgl": 7.13,
+      "band_p10": 6.51,
+      "band_p90": 8.07,
       "trend_m_per_yr": -0.04
     },
     {
@@ -974,9 +974,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.3,
-      "estimate_mbgl": 3.92,
-      "band_p10": 3.2,
-      "band_p90": 3.95,
+      "estimate_mbgl": 3.84,
+      "band_p10": 3.22,
+      "band_p90": 4.21,
       "trend_m_per_yr": 0.5
     },
     {
@@ -988,9 +988,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 21.9,
-      "estimate_mbgl": 20.67,
-      "band_p10": 19.2,
-      "band_p90": 22.97,
+      "estimate_mbgl": 20.61,
+      "band_p10": 18.91,
+      "band_p90": 22.78,
       "trend_m_per_yr": -0.54
     },
     {
@@ -1002,9 +1002,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.84,
-      "estimate_mbgl": 4.51,
-      "band_p10": 3.68,
-      "band_p90": 5.36,
+      "estimate_mbgl": 4.6,
+      "band_p10": 3.51,
+      "band_p90": 5.58,
       "trend_m_per_yr": 1.54
     },
     {
@@ -1016,9 +1016,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 11.04,
-      "estimate_mbgl": 10.23,
-      "band_p10": 8.15,
-      "band_p90": 12.37,
+      "estimate_mbgl": 10.25,
+      "band_p10": 7.97,
+      "band_p90": 12.46,
       "trend_m_per_yr": 3.38
     },
     {
@@ -1030,9 +1030,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 16.76,
-      "estimate_mbgl": 16.72,
-      "band_p10": 12.87,
-      "band_p90": 17.73,
+      "estimate_mbgl": 16.5,
+      "band_p10": 13.01,
+      "band_p90": 17.99,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1044,9 +1044,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.32,
-      "estimate_mbgl": 2.4,
-      "band_p10": 1.63,
-      "band_p90": 2.64,
+      "estimate_mbgl": 2.46,
+      "band_p10": 1.73,
+      "band_p90": 2.77,
       "trend_m_per_yr": 0.95
     },
     {
@@ -1058,9 +1058,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.06,
-      "estimate_mbgl": 3.65,
-      "band_p10": 2.58,
-      "band_p90": 4.69,
+      "estimate_mbgl": 3.75,
+      "band_p10": 2.86,
+      "band_p90": 4.82,
       "trend_m_per_yr": 1.63
     },
     {
@@ -1072,9 +1072,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 22.92,
-      "estimate_mbgl": 22.81,
-      "band_p10": 19.33,
-      "band_p90": 24.39,
+      "estimate_mbgl": 22.87,
+      "band_p10": 18.84,
+      "band_p90": 24.44,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1086,9 +1086,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.28,
-      "estimate_mbgl": 5.38,
-      "band_p10": 3.85,
-      "band_p90": 6.94,
+      "estimate_mbgl": 5.6,
+      "band_p10": 4.06,
+      "band_p90": 6.93,
       "trend_m_per_yr": 2.78
     },
     {
@@ -1100,9 +1100,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 31.49,
-      "estimate_mbgl": 32.2,
-      "band_p10": 26.26,
-      "band_p90": 34.94,
+      "estimate_mbgl": 31.92,
+      "band_p10": 25.87,
+      "band_p90": 35.02,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1114,9 +1114,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.68,
-      "estimate_mbgl": 3.77,
-      "band_p10": 2.81,
-      "band_p90": 4.2,
+      "estimate_mbgl": 3.82,
+      "band_p10": 2.76,
+      "band_p90": 4.26,
       "trend_m_per_yr": 0.62
     },
     {
@@ -1128,9 +1128,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.1,
-      "estimate_mbgl": 2.86,
-      "band_p10": 2.39,
-      "band_p90": 3.38,
+      "estimate_mbgl": 2.83,
+      "band_p10": 2.27,
+      "band_p90": 3.25,
       "trend_m_per_yr": 1.78
     },
     {
@@ -1142,9 +1142,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.44,
-      "estimate_mbgl": 8.49,
-      "band_p10": 7.76,
-      "band_p90": 9.75,
+      "estimate_mbgl": 8.63,
+      "band_p10": 7.91,
+      "band_p90": 9.8,
       "trend_m_per_yr": 1.71
     },
     {
@@ -1156,9 +1156,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 8.77,
-      "estimate_mbgl": 2.96,
-      "band_p10": 2.19,
-      "band_p90": 3.42,
+      "estimate_mbgl": 2.93,
+      "band_p10": 2.26,
+      "band_p90": 3.28,
       "trend_m_per_yr": 5.74
     },
     {
@@ -1170,9 +1170,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.11,
-      "estimate_mbgl": 3.57,
-      "band_p10": 3.14,
-      "band_p90": 4.14,
+      "estimate_mbgl": 3.47,
+      "band_p10": 3.11,
+      "band_p90": 4.1,
       "trend_m_per_yr": 1.31
     },
     {
@@ -1184,9 +1184,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.53,
-      "estimate_mbgl": 6.91,
-      "band_p10": 6.24,
-      "band_p90": 8.32,
+      "estimate_mbgl": 6.96,
+      "band_p10": 6.03,
+      "band_p90": 8.39,
       "trend_m_per_yr": 3.44
     },
     {
@@ -1198,9 +1198,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 26.69,
-      "estimate_mbgl": 24.56,
-      "band_p10": 16.71,
-      "band_p90": 28.31,
+      "estimate_mbgl": 24.51,
+      "band_p10": 17.06,
+      "band_p90": 28.56,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1212,9 +1212,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.38,
-      "estimate_mbgl": 6.46,
-      "band_p10": 5.88,
-      "band_p90": 7.01,
+      "estimate_mbgl": 6.59,
+      "band_p10": 6.16,
+      "band_p90": 7.03,
       "trend_m_per_yr": 0.87
     },
     {
@@ -1226,9 +1226,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 48.54,
-      "estimate_mbgl": 48.66,
-      "band_p10": 45.19,
-      "band_p90": 51.79,
+      "estimate_mbgl": 48.43,
+      "band_p10": 46.44,
+      "band_p90": 51.9,
       "trend_m_per_yr": 2.61
     },
     {
@@ -1240,9 +1240,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.43,
-      "estimate_mbgl": 3.79,
-      "band_p10": 2.41,
-      "band_p90": 4.86,
+      "estimate_mbgl": 3.87,
+      "band_p10": 2.4,
+      "band_p90": 5.06,
       "trend_m_per_yr": 3.06
     },
     {
@@ -1254,9 +1254,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.75,
-      "estimate_mbgl": 2.25,
-      "band_p10": 1.78,
-      "band_p90": 2.82,
+      "estimate_mbgl": 2.31,
+      "band_p10": 1.87,
+      "band_p90": 2.89,
       "trend_m_per_yr": 0.56
     },
     {
@@ -1268,9 +1268,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.52,
-      "estimate_mbgl": 5.53,
-      "band_p10": 4.88,
-      "band_p90": 6.89,
+      "estimate_mbgl": 5.66,
+      "band_p10": 4.7,
+      "band_p90": 7.06,
       "trend_m_per_yr": 2.89
     },
     {
@@ -1282,9 +1282,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 27.79,
-      "estimate_mbgl": 20.21,
-      "band_p10": 16.34,
-      "band_p90": 23.92,
+      "estimate_mbgl": 20.35,
+      "band_p10": 17.05,
+      "band_p90": 24.65,
       "trend_m_per_yr": -0.65
     },
     {
@@ -1296,8 +1296,8 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.9,
-      "estimate_mbgl": 2.47,
-      "band_p10": 1.59,
+      "estimate_mbgl": 2.51,
+      "band_p10": 1.73,
       "band_p90": 2.82,
       "trend_m_per_yr": 0.54
     },
@@ -1310,9 +1310,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 8.38,
-      "estimate_mbgl": 9.16,
-      "band_p10": 8.09,
-      "band_p90": 10.73,
+      "estimate_mbgl": 9.35,
+      "band_p10": 8.07,
+      "band_p90": 10.51,
       "trend_m_per_yr": 1.68
     },
     {
@@ -1324,9 +1324,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.59,
-      "estimate_mbgl": 4.6,
-      "band_p10": 3.37,
-      "band_p90": 6.24,
+      "estimate_mbgl": 4.68,
+      "band_p10": 3.39,
+      "band_p90": 5.95,
       "trend_m_per_yr": 4.77
     },
     {
@@ -1338,9 +1338,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.98,
-      "estimate_mbgl": 5.56,
-      "band_p10": 3.9,
-      "band_p90": 7.15,
+      "estimate_mbgl": 5.72,
+      "band_p10": 3.99,
+      "band_p90": 7.24,
       "trend_m_per_yr": 5.25
     },
     {
@@ -1352,9 +1352,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.17,
-      "estimate_mbgl": 9.19,
-      "band_p10": 8.13,
-      "band_p90": 11.84,
+      "estimate_mbgl": 9.42,
+      "band_p10": 7.81,
+      "band_p90": 11.32,
       "trend_m_per_yr": -0.62
     },
     {
@@ -1366,9 +1366,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.86,
-      "estimate_mbgl": 8.66,
-      "band_p10": 7.73,
-      "band_p90": 9.96,
+      "estimate_mbgl": 8.78,
+      "band_p10": 7.36,
+      "band_p90": 9.99,
       "trend_m_per_yr": 0.03
     },
     {
@@ -1380,9 +1380,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.93,
-      "estimate_mbgl": 5.08,
-      "band_p10": 4.35,
-      "band_p90": 6.15,
+      "estimate_mbgl": 5.06,
+      "band_p10": 4.37,
+      "band_p90": 6.54,
       "trend_m_per_yr": 1.1
     },
     {
@@ -1394,9 +1394,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.97,
-      "estimate_mbgl": 2.77,
-      "band_p10": 1.9,
-      "band_p90": 3.05,
+      "estimate_mbgl": 2.74,
+      "band_p10": 1.97,
+      "band_p90": 2.94,
       "trend_m_per_yr": 0.91
     },
     {
@@ -1408,9 +1408,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 56.39,
-      "estimate_mbgl": 55.74,
-      "band_p10": 50.38,
-      "band_p90": 59.24,
+      "estimate_mbgl": 56.29,
+      "band_p10": 50.91,
+      "band_p90": 58.84,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1422,9 +1422,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.2,
-      "estimate_mbgl": 3.18,
-      "band_p10": 2.79,
-      "band_p90": 3.63,
+      "estimate_mbgl": 3.23,
+      "band_p10": 2.81,
+      "band_p90": 3.85,
       "trend_m_per_yr": 0.38
     },
     {
@@ -1436,9 +1436,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.04,
-      "estimate_mbgl": 6.76,
-      "band_p10": 5.75,
-      "band_p90": 7.69,
+      "estimate_mbgl": 6.78,
+      "band_p10": 5.82,
+      "band_p90": 7.63,
       "trend_m_per_yr": 0.31
     },
     {
@@ -1450,9 +1450,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.24,
-      "estimate_mbgl": 5.04,
-      "band_p10": 3.95,
-      "band_p90": 6.86,
+      "estimate_mbgl": 5.14,
+      "band_p10": 3.98,
+      "band_p90": 6.63,
       "trend_m_per_yr": 1.22
     },
     {
@@ -1464,9 +1464,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.71,
-      "estimate_mbgl": 8.25,
-      "band_p10": 4.1,
-      "band_p90": 16.57,
+      "estimate_mbgl": 8.09,
+      "band_p10": 3.11,
+      "band_p90": 16.29,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1478,9 +1478,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.88,
-      "estimate_mbgl": 4.6,
-      "band_p10": 3.89,
-      "band_p90": 5.46,
+      "estimate_mbgl": 4.69,
+      "band_p10": 3.81,
+      "band_p90": 5.38,
       "trend_m_per_yr": 0.17
     },
     {
@@ -1493,8 +1493,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 8.2,
       "estimate_mbgl": 6.94,
-      "band_p10": 6.08,
-      "band_p90": 8.01,
+      "band_p10": 5.97,
+      "band_p90": 7.94,
       "trend_m_per_yr": 2.81
     },
     {
@@ -1507,8 +1507,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 1.42,
       "estimate_mbgl": 1.39,
-      "band_p10": 1.12,
-      "band_p90": 1.56,
+      "band_p10": 1.16,
+      "band_p90": 1.66,
       "trend_m_per_yr": 0.22
     },
     {
@@ -1520,9 +1520,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.9,
-      "estimate_mbgl": 8.42,
-      "band_p10": 7.43,
-      "band_p90": 9.47,
+      "estimate_mbgl": 8.64,
+      "band_p10": 7.75,
+      "band_p90": 9.8,
       "trend_m_per_yr": 0.36
     },
     {
@@ -1534,9 +1534,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 44.23,
-      "estimate_mbgl": 43.65,
-      "band_p10": 39.95,
-      "band_p90": 48.07,
+      "estimate_mbgl": 43.62,
+      "band_p10": 38.83,
+      "band_p90": 47.66,
       "trend_m_per_yr": 0.57
     },
     {
@@ -1548,9 +1548,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 13.07,
-      "estimate_mbgl": 12.34,
-      "band_p10": 11.8,
-      "band_p90": 14.33,
+      "estimate_mbgl": 12.71,
+      "band_p10": 11.78,
+      "band_p90": 14.04,
       "trend_m_per_yr": 2.9
     },
     {
@@ -1562,9 +1562,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.64,
-      "estimate_mbgl": 13.0,
-      "band_p10": 11.51,
-      "band_p90": 14.62,
+      "estimate_mbgl": 12.96,
+      "band_p10": 11.75,
+      "band_p90": 14.27,
       "trend_m_per_yr": 0.7
     },
     {
@@ -1576,9 +1576,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 22.81,
-      "estimate_mbgl": 21.5,
-      "band_p10": 20.18,
-      "band_p90": 23.98,
+      "estimate_mbgl": 21.52,
+      "band_p10": 19.41,
+      "band_p90": 23.96,
       "trend_m_per_yr": 5.97
     },
     {
@@ -1590,9 +1590,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.86,
-      "estimate_mbgl": 5.84,
-      "band_p10": 3.82,
-      "band_p90": 7.65,
+      "estimate_mbgl": 5.71,
+      "band_p10": 3.78,
+      "band_p90": 7.48,
       "trend_m_per_yr": 4.08
     },
     {
@@ -1604,9 +1604,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.95,
-      "estimate_mbgl": 5.93,
-      "band_p10": 4.88,
-      "band_p90": 6.91,
+      "estimate_mbgl": 6.01,
+      "band_p10": 4.96,
+      "band_p90": 6.78,
       "trend_m_per_yr": 1.29
     },
     {
@@ -1618,9 +1618,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.17,
-      "estimate_mbgl": 5.0,
-      "band_p10": 3.97,
-      "band_p90": 5.3,
+      "estimate_mbgl": 4.98,
+      "band_p10": 4.04,
+      "band_p90": 5.42,
       "trend_m_per_yr": -0.46
     },
     {
@@ -1632,9 +1632,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 11.94,
-      "estimate_mbgl": 10.45,
-      "band_p10": 8.6,
-      "band_p90": 11.17,
+      "estimate_mbgl": 10.6,
+      "band_p10": 8.85,
+      "band_p90": 11.68,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1646,9 +1646,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 0.59,
-      "estimate_mbgl": 1.05,
-      "band_p10": 0.57,
-      "band_p90": 1.14,
+      "estimate_mbgl": 0.95,
+      "band_p10": 0.62,
+      "band_p90": 1.37,
       "trend_m_per_yr": -0.32
     },
     {
@@ -1660,9 +1660,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.54,
-      "estimate_mbgl": 11.12,
-      "band_p10": 10.35,
-      "band_p90": 12.24,
+      "estimate_mbgl": 11.21,
+      "band_p10": 10.12,
+      "band_p90": 12.42,
       "trend_m_per_yr": 4.56
     },
     {
@@ -1674,9 +1674,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.75,
-      "estimate_mbgl": 11.47,
-      "band_p10": 10.43,
-      "band_p90": 13.2,
+      "estimate_mbgl": 11.52,
+      "band_p10": 10.01,
+      "band_p90": 13.02,
       "trend_m_per_yr": 1.58
     },
     {
@@ -1688,9 +1688,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.26,
-      "estimate_mbgl": 5.12,
-      "band_p10": 4.69,
-      "band_p90": 6.57,
+      "estimate_mbgl": 5.22,
+      "band_p10": 4.75,
+      "band_p90": 6.68,
       "trend_m_per_yr": 2.3
     },
     {
@@ -1702,9 +1702,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.95,
-      "estimate_mbgl": 2.64,
-      "band_p10": 1.46,
-      "band_p90": 3.11,
+      "estimate_mbgl": 2.65,
+      "band_p10": 1.54,
+      "band_p90": 3.14,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1716,9 +1716,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.15,
-      "estimate_mbgl": 4.51,
-      "band_p10": 3.07,
-      "band_p90": 6.06,
+      "estimate_mbgl": 4.58,
+      "band_p10": 2.95,
+      "band_p90": 6.17,
       "trend_m_per_yr": 1.74
     },
     {
@@ -1730,9 +1730,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.14,
-      "estimate_mbgl": 7.27,
-      "band_p10": 6.07,
-      "band_p90": 8.37,
+      "estimate_mbgl": 7.46,
+      "band_p10": 6.23,
+      "band_p90": 8.65,
       "trend_m_per_yr": 0.77
     },
     {
@@ -1744,9 +1744,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.57,
-      "estimate_mbgl": 6.85,
-      "band_p10": 6.0,
-      "band_p90": 7.83,
+      "estimate_mbgl": 6.97,
+      "band_p10": 6.03,
+      "band_p90": 7.85,
       "trend_m_per_yr": 0.86
     },
     {
@@ -1758,9 +1758,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 20.22,
-      "estimate_mbgl": 12.68,
-      "band_p10": 7.78,
-      "band_p90": 18.5,
+      "estimate_mbgl": 12.01,
+      "band_p10": 7.42,
+      "band_p90": 19.02,
       "trend_m_per_yr": 1.49
     },
     {
@@ -1772,9 +1772,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.5,
-      "estimate_mbgl": 3.86,
-      "band_p10": 3.07,
-      "band_p90": 3.9,
+      "estimate_mbgl": 3.78,
+      "band_p10": 3.23,
+      "band_p90": 4.15,
       "trend_m_per_yr": -0.11
     },
     {
@@ -1786,9 +1786,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.03,
-      "estimate_mbgl": 7.16,
-      "band_p10": 6.59,
-      "band_p90": 8.24,
+      "estimate_mbgl": 7.22,
+      "band_p10": 6.72,
+      "band_p90": 8.62,
       "trend_m_per_yr": 0.33
     },
     {
@@ -1800,9 +1800,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.7,
-      "estimate_mbgl": 3.76,
-      "band_p10": 3.2,
-      "band_p90": 4.05,
+      "estimate_mbgl": 3.75,
+      "band_p10": 3.13,
+      "band_p90": 4.21,
       "trend_m_per_yr": 0.46
     },
     {
@@ -1814,9 +1814,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 11.21,
-      "estimate_mbgl": 9.26,
-      "band_p10": 6.93,
-      "band_p90": 11.51,
+      "estimate_mbgl": 9.4,
+      "band_p10": 7.58,
+      "band_p90": 11.3,
       "trend_m_per_yr": 2.95
     },
     {
@@ -1828,9 +1828,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.58,
-      "estimate_mbgl": 4.23,
-      "band_p10": 2.6,
-      "band_p90": 5.37,
+      "estimate_mbgl": 4.37,
+      "band_p10": 2.46,
+      "band_p90": 5.44,
       "trend_m_per_yr": 5.43
     },
     {
@@ -1842,9 +1842,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.15,
-      "estimate_mbgl": 6.68,
-      "band_p10": 5.51,
-      "band_p90": 7.84,
+      "estimate_mbgl": 6.79,
+      "band_p10": 5.4,
+      "band_p90": 8.02,
       "trend_m_per_yr": 2.89
     },
     {
@@ -1856,9 +1856,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.73,
-      "estimate_mbgl": 5.45,
-      "band_p10": 5.08,
-      "band_p90": 6.96,
+      "estimate_mbgl": 5.62,
+      "band_p10": 4.84,
+      "band_p90": 7.04,
       "trend_m_per_yr": 2.79
     },
     {
@@ -1870,9 +1870,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.37,
-      "estimate_mbgl": 3.81,
-      "band_p10": 3.11,
-      "band_p90": 3.92,
+      "estimate_mbgl": 3.75,
+      "band_p10": 3.12,
+      "band_p90": 3.98,
       "trend_m_per_yr": 1.32
     },
     {
@@ -1884,9 +1884,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 28.15,
-      "estimate_mbgl": 27.98,
-      "band_p10": 24.21,
-      "band_p90": 29.3,
+      "estimate_mbgl": 28.32,
+      "band_p10": 23.66,
+      "band_p90": 29.79,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1898,9 +1898,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.98,
-      "estimate_mbgl": 6.8,
-      "band_p10": 3.19,
-      "band_p90": 10.5,
+      "estimate_mbgl": 6.52,
+      "band_p10": 3.4,
+      "band_p90": 10.53,
       "trend_m_per_yr": 6.0
     },
     {
@@ -1912,9 +1912,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 16.98,
-      "estimate_mbgl": 16.03,
-      "band_p10": 13.4,
-      "band_p90": 18.37,
+      "estimate_mbgl": 16.05,
+      "band_p10": 12.9,
+      "band_p90": 18.67,
       "trend_m_per_yr": 5.11
     },
     {
@@ -1926,9 +1926,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.57,
-      "estimate_mbgl": 11.03,
-      "band_p10": 6.92,
-      "band_p90": 13.84,
+      "estimate_mbgl": 11.47,
+      "band_p10": 7.57,
+      "band_p90": 14.4,
       "trend_m_per_yr": 3.69
     },
     {
@@ -1940,9 +1940,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.7,
-      "estimate_mbgl": 8.04,
-      "band_p10": 7.69,
-      "band_p90": 9.3,
+      "estimate_mbgl": 8.03,
+      "band_p10": 7.7,
+      "band_p90": 9.57,
       "trend_m_per_yr": 1.3
     },
     {
@@ -1954,9 +1954,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.08,
-      "estimate_mbgl": 9.76,
-      "band_p10": 8.63,
-      "band_p90": 11.4,
+      "estimate_mbgl": 9.9,
+      "band_p10": 9.07,
+      "band_p90": 11.48,
       "trend_m_per_yr": 3.49
     },
     {
@@ -1968,9 +1968,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.4,
-      "estimate_mbgl": 5.71,
-      "band_p10": 4.93,
-      "band_p90": 7.13,
+      "estimate_mbgl": 5.82,
+      "band_p10": 4.73,
+      "band_p90": 7.28,
       "trend_m_per_yr": 3.62
     },
     {
@@ -1983,8 +1983,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 3.35,
       "estimate_mbgl": 3.43,
-      "band_p10": 2.23,
-      "band_p90": 4.32,
+      "band_p10": 2.17,
+      "band_p90": 4.46,
       "trend_m_per_yr": 1.65
     },
     {
@@ -1996,9 +1996,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.87,
-      "estimate_mbgl": 7.94,
-      "band_p10": 6.9,
-      "band_p90": 10.18,
+      "estimate_mbgl": 8.17,
+      "band_p10": 6.89,
+      "band_p90": 9.81,
       "trend_m_per_yr": -1.24
     },
     {
@@ -2010,9 +2010,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.1,
-      "estimate_mbgl": 7.23,
-      "band_p10": 5.25,
-      "band_p90": 9.64,
+      "estimate_mbgl": 7.53,
+      "band_p10": 5.07,
+      "band_p90": 9.61,
       "trend_m_per_yr": 2.18
     },
     {
@@ -2024,9 +2024,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 30.14,
-      "estimate_mbgl": 26.85,
-      "band_p10": 15.74,
-      "band_p90": 35.05,
+      "estimate_mbgl": 28.19,
+      "band_p10": 16.55,
+      "band_p90": 35.46,
       "trend_m_per_yr": 6.0
     },
     {
@@ -2038,9 +2038,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.44,
-      "estimate_mbgl": 9.74,
-      "band_p10": 8.84,
-      "band_p90": 11.76,
+      "estimate_mbgl": 9.71,
+      "band_p10": 8.53,
+      "band_p90": 11.25,
       "trend_m_per_yr": 2.1
     },
     {
@@ -2052,9 +2052,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 15.57,
-      "estimate_mbgl": 14.63,
-      "band_p10": 13.43,
-      "band_p90": 15.59,
+      "estimate_mbgl": 14.78,
+      "band_p10": 12.81,
+      "band_p90": 15.84,
       "trend_m_per_yr": 1.59
     },
     {
@@ -2066,9 +2066,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 12.74,
-      "estimate_mbgl": 10.14,
-      "band_p10": 8.49,
-      "band_p90": 11.86,
+      "estimate_mbgl": 10.15,
+      "band_p10": 8.5,
+      "band_p90": 12.06,
       "trend_m_per_yr": 4.33
     },
     {
@@ -2080,9 +2080,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.65,
-      "estimate_mbgl": 6.43,
-      "band_p10": 5.06,
-      "band_p90": 8.39,
+      "estimate_mbgl": 6.58,
+      "band_p10": 4.85,
+      "band_p90": 8.05,
       "trend_m_per_yr": 1.62
     },
     {
@@ -2094,9 +2094,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 18.64,
-      "estimate_mbgl": 15.08,
-      "band_p10": 13.18,
-      "band_p90": 17.05,
+      "estimate_mbgl": 14.81,
+      "band_p10": 13.64,
+      "band_p90": 16.99,
       "trend_m_per_yr": 4.27
     },
     {
@@ -2108,9 +2108,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.57,
-      "estimate_mbgl": 11.42,
-      "band_p10": 9.67,
-      "band_p90": 12.79,
+      "estimate_mbgl": 11.46,
+      "band_p10": 10.13,
+      "band_p90": 12.72,
       "trend_m_per_yr": -2.45
     },
     {
@@ -2122,9 +2122,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 18.66,
-      "estimate_mbgl": 18.97,
-      "band_p10": 16.86,
-      "band_p90": 21.69,
+      "estimate_mbgl": 18.54,
+      "band_p10": 16.98,
+      "band_p90": 21.74,
       "trend_m_per_yr": 4.48
     },
     {
@@ -2136,9 +2136,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.98,
-      "estimate_mbgl": 5.88,
-      "band_p10": 4.88,
-      "band_p90": 6.67,
+      "estimate_mbgl": 5.9,
+      "band_p10": 4.86,
+      "band_p90": 6.49,
       "trend_m_per_yr": -0.21
     },
     {
@@ -2150,9 +2150,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.78,
-      "estimate_mbgl": 6.66,
-      "band_p10": 6.16,
-      "band_p90": 8.07,
+      "estimate_mbgl": 6.73,
+      "band_p10": 5.85,
+      "band_p90": 8.12,
       "trend_m_per_yr": 2.59
     },
     {
@@ -2164,9 +2164,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 20.59,
-      "estimate_mbgl": 17.85,
-      "band_p10": 16.31,
-      "band_p90": 19.61,
+      "estimate_mbgl": 17.76,
+      "band_p10": 15.75,
+      "band_p90": 19.89,
       "trend_m_per_yr": 6.0
     },
     {
@@ -2178,9 +2178,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 1.51,
-      "estimate_mbgl": 1.91,
-      "band_p10": 1.26,
-      "band_p90": 2.63,
+      "estimate_mbgl": 1.93,
+      "band_p10": 1.35,
+      "band_p90": 2.64,
       "trend_m_per_yr": -0.45
     },
     {
@@ -2192,9 +2192,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.79,
-      "estimate_mbgl": 9.38,
-      "band_p10": 7.63,
-      "band_p90": 11.23,
+      "estimate_mbgl": 9.63,
+      "band_p10": 7.93,
+      "band_p90": 11.37,
       "trend_m_per_yr": 1.55
     },
     {
@@ -2206,9 +2206,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.75,
-      "estimate_mbgl": 4.79,
-      "band_p10": 3.13,
-      "band_p90": 6.64,
+      "estimate_mbgl": 4.89,
+      "band_p10": 2.96,
+      "band_p90": 6.76,
       "trend_m_per_yr": 2.5
     },
     {
@@ -2220,9 +2220,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.86,
-      "estimate_mbgl": 3.69,
-      "band_p10": 2.06,
-      "band_p90": 5.04,
+      "estimate_mbgl": 3.97,
+      "band_p10": 1.85,
+      "band_p90": 5.22,
       "trend_m_per_yr": 3.23
     },
     {
@@ -2234,9 +2234,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.51,
-      "estimate_mbgl": 4.79,
-      "band_p10": 2.95,
-      "band_p90": 8.89,
+      "estimate_mbgl": 5.32,
+      "band_p10": 3.13,
+      "band_p90": 8.87,
       "trend_m_per_yr": 6.0
     },
     {
@@ -2248,9 +2248,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 15.04,
-      "estimate_mbgl": 16.44,
-      "band_p10": 14.62,
-      "band_p90": 16.85,
+      "estimate_mbgl": 16.58,
+      "band_p10": 14.85,
+      "band_p90": 16.64,
       "trend_m_per_yr": 0.21
     },
     {
@@ -2262,9 +2262,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.05,
-      "estimate_mbgl": 1.25,
+      "estimate_mbgl": 1.26,
       "band_p10": 1.0,
-      "band_p90": 1.41,
+      "band_p90": 1.42,
       "trend_m_per_yr": 0.31
     },
     {
@@ -2276,9 +2276,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.9,
-      "estimate_mbgl": 7.29,
-      "band_p10": 6.56,
-      "band_p90": 8.53,
+      "estimate_mbgl": 7.41,
+      "band_p10": 6.4,
+      "band_p90": 8.31,
       "trend_m_per_yr": 0.0
     },
     {
@@ -2290,9 +2290,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 32.63,
-      "estimate_mbgl": 24.88,
-      "band_p10": 22.96,
-      "band_p90": 28.15,
+      "estimate_mbgl": 24.64,
+      "band_p10": 22.0,
+      "band_p90": 27.91,
       "trend_m_per_yr": 6.0
     },
     {
@@ -2304,9 +2304,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.45,
-      "estimate_mbgl": 11.83,
-      "band_p10": 8.7,
-      "band_p90": 14.45,
+      "estimate_mbgl": 12.01,
+      "band_p10": 8.35,
+      "band_p90": 14.05,
       "trend_m_per_yr": 1.32
     },
     {
@@ -2318,9 +2318,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.35,
-      "estimate_mbgl": 5.05,
-      "band_p10": 4.1,
-      "band_p90": 5.52,
+      "estimate_mbgl": 4.98,
+      "band_p10": 4.04,
+      "band_p90": 5.49,
       "trend_m_per_yr": 0.92
     },
     {
@@ -2332,9 +2332,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.75,
-      "estimate_mbgl": 7.88,
-      "band_p10": 6.72,
-      "band_p90": 9.17,
+      "estimate_mbgl": 8.17,
+      "band_p10": 6.34,
+      "band_p90": 9.15,
       "trend_m_per_yr": -3.16
     },
     {
@@ -2346,9 +2346,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.68,
-      "estimate_mbgl": 5.81,
-      "band_p10": 5.02,
-      "band_p90": 7.42,
+      "estimate_mbgl": 5.92,
+      "band_p10": 5.15,
+      "band_p90": 6.9,
       "trend_m_per_yr": 1.36
     },
     {
@@ -2360,9 +2360,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 17.0,
-      "estimate_mbgl": 14.44,
-      "band_p10": 11.89,
-      "band_p90": 17.32,
+      "estimate_mbgl": 14.63,
+      "band_p10": 11.53,
+      "band_p90": 17.12,
       "trend_m_per_yr": 6.0
     },
     {
@@ -2374,9 +2374,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.87,
-      "estimate_mbgl": 6.97,
-      "band_p10": 3.78,
-      "band_p90": 9.86,
+      "estimate_mbgl": 7.13,
+      "band_p10": 3.85,
+      "band_p90": 9.94,
       "trend_m_per_yr": 3.66
     },
     {
@@ -2388,9 +2388,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.35,
-      "estimate_mbgl": 8.76,
-      "band_p10": 7.96,
-      "band_p90": 10.8,
+      "estimate_mbgl": 9.03,
+      "band_p10": 8.19,
+      "band_p90": 10.9,
       "trend_m_per_yr": 1.44
     },
     {
@@ -2402,8 +2402,8 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 22.6,
-      "estimate_mbgl": 23.96,
-      "band_p10": 21.4,
+      "estimate_mbgl": 23.82,
+      "band_p10": 22.67,
       "band_p90": 24.88,
       "trend_m_per_yr": 0.85
     },
@@ -2416,9 +2416,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 43.73,
-      "estimate_mbgl": 44.27,
-      "band_p10": 41.01,
-      "band_p90": 47.54,
+      "estimate_mbgl": 44.15,
+      "band_p10": 40.79,
+      "band_p90": 47.49,
       "trend_m_per_yr": 6.0
     },
     {
@@ -2430,9 +2430,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.65,
-      "estimate_mbgl": 7.82,
-      "band_p10": 3.5,
-      "band_p90": 9.56,
+      "estimate_mbgl": 8.41,
+      "band_p10": 3.55,
+      "band_p90": 9.08,
       "trend_m_per_yr": -6.0
     },
     {
@@ -2444,9 +2444,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 0.76,
-      "estimate_mbgl": 1.39,
-      "band_p10": 0.8,
-      "band_p90": 1.99,
+      "estimate_mbgl": 1.41,
+      "band_p10": 0.84,
+      "band_p90": 1.92,
       "trend_m_per_yr": 0.13
     },
     {
@@ -2458,9 +2458,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 16.25,
-      "estimate_mbgl": 15.67,
-      "band_p10": 14.62,
-      "band_p90": 17.42,
+      "estimate_mbgl": 15.88,
+      "band_p10": 14.09,
+      "band_p90": 17.61,
       "trend_m_per_yr": 2.9
     },
     {
@@ -2472,9 +2472,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.44,
-      "estimate_mbgl": 8.34,
-      "band_p10": 7.12,
-      "band_p90": 9.9,
+      "estimate_mbgl": 8.42,
+      "band_p10": 7.2,
+      "band_p90": 9.98,
       "trend_m_per_yr": 2.16
     },
     {
@@ -2486,9 +2486,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.08,
-      "estimate_mbgl": 2.99,
-      "band_p10": 2.24,
-      "band_p90": 3.6,
+      "estimate_mbgl": 3.09,
+      "band_p10": 2.38,
+      "band_p90": 3.76,
       "trend_m_per_yr": 0.57
     },
     {
@@ -2500,9 +2500,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 16.33,
-      "estimate_mbgl": 16.88,
-      "band_p10": 14.51,
-      "band_p90": 18.61,
+      "estimate_mbgl": 16.82,
+      "band_p10": 13.47,
+      "band_p90": 18.48,
       "trend_m_per_yr": 4.85
     },
     {
@@ -2514,9 +2514,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.76,
-      "estimate_mbgl": 7.31,
-      "band_p10": 6.02,
-      "band_p90": 8.34,
+      "estimate_mbgl": 7.39,
+      "band_p10": 6.0,
+      "band_p90": 8.48,
       "trend_m_per_yr": 2.69
     },
     {
@@ -2528,9 +2528,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.36,
-      "estimate_mbgl": 4.57,
-      "band_p10": 3.59,
-      "band_p90": 5.87,
+      "estimate_mbgl": 4.65,
+      "band_p10": 3.45,
+      "band_p90": 5.98,
       "trend_m_per_yr": 2.53
     },
     {
@@ -2542,9 +2542,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.4,
-      "estimate_mbgl": 2.42,
-      "band_p10": 0.67,
-      "band_p90": 3.63,
+      "estimate_mbgl": 2.39,
+      "band_p10": 0.74,
+      "band_p90": 3.6,
       "trend_m_per_yr": 1.38
     },
     {
@@ -2556,9 +2556,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.7,
-      "estimate_mbgl": 8.27,
-      "band_p10": 7.66,
-      "band_p90": 9.85,
+      "estimate_mbgl": 8.39,
+      "band_p10": 7.78,
+      "band_p90": 9.54,
       "trend_m_per_yr": 4.02
     },
     {
@@ -2570,9 +2570,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 11.94,
-      "estimate_mbgl": 9.3,
-      "band_p10": 8.37,
-      "band_p90": 10.92,
+      "estimate_mbgl": 9.48,
+      "band_p10": 8.48,
+      "band_p90": 10.75,
       "trend_m_per_yr": 2.01
     },
     {
@@ -2584,9 +2584,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 12.13,
-      "estimate_mbgl": 11.55,
-      "band_p10": 8.68,
-      "band_p90": 13.63,
+      "estimate_mbgl": 11.4,
+      "band_p10": 8.83,
+      "band_p90": 13.62,
       "trend_m_per_yr": 3.5
     },
     {
@@ -2598,9 +2598,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.55,
-      "estimate_mbgl": 3.18,
-      "band_p10": 2.16,
-      "band_p90": 4.22,
+      "estimate_mbgl": 3.27,
+      "band_p10": 2.13,
+      "band_p90": 4.38,
       "trend_m_per_yr": 1.69
     },
     {
@@ -2612,9 +2612,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.42,
-      "estimate_mbgl": 2.64,
-      "band_p10": 1.96,
-      "band_p90": 3.08,
+      "estimate_mbgl": 2.63,
+      "band_p10": 2.08,
+      "band_p90": 2.92,
       "trend_m_per_yr": 0.41
     },
     {
@@ -2626,9 +2626,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 14.23,
-      "estimate_mbgl": 14.64,
-      "band_p10": 13.84,
-      "band_p90": 15.5,
+      "estimate_mbgl": 14.75,
+      "band_p10": 14.21,
+      "band_p90": 15.53,
       "trend_m_per_yr": 0.41
     },
     {
@@ -2640,9 +2640,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 16.99,
-      "estimate_mbgl": 17.09,
-      "band_p10": 15.44,
-      "band_p90": 18.45,
+      "estimate_mbgl": 17.17,
+      "band_p10": 15.46,
+      "band_p90": 18.66,
       "trend_m_per_yr": 1.1
     },
     {
@@ -2654,9 +2654,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.52,
-      "estimate_mbgl": 1.83,
-      "band_p10": 1.08,
-      "band_p90": 2.38,
+      "estimate_mbgl": 1.92,
+      "band_p10": 1.2,
+      "band_p90": 2.33,
       "trend_m_per_yr": 1.26
     },
     {
@@ -2668,9 +2668,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 25.44,
-      "estimate_mbgl": 26.17,
-      "band_p10": 21.94,
-      "band_p90": 27.65,
+      "estimate_mbgl": 26.01,
+      "band_p10": 22.04,
+      "band_p90": 27.24,
       "trend_m_per_yr": 3.57
     },
     {
@@ -2682,9 +2682,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 20.34,
-      "estimate_mbgl": 21.32,
-      "band_p10": 19.62,
-      "band_p90": 23.67,
+      "estimate_mbgl": 21.68,
+      "band_p10": 19.88,
+      "band_p90": 23.52,
       "trend_m_per_yr": 1.37
     },
     {
@@ -2696,9 +2696,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 10.35,
-      "estimate_mbgl": 10.8,
-      "band_p10": 9.98,
-      "band_p90": 11.65,
+      "estimate_mbgl": 10.74,
+      "band_p10": 9.85,
+      "band_p90": 11.83,
       "trend_m_per_yr": 0.71
     },
     {
@@ -2710,9 +2710,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.17,
-      "estimate_mbgl": 2.86,
-      "band_p10": 2.4,
-      "band_p90": 3.46,
+      "estimate_mbgl": 3.09,
+      "band_p10": 2.37,
+      "band_p90": 3.66,
       "trend_m_per_yr": 1.09
     },
     {
@@ -2724,9 +2724,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 40.29,
-      "estimate_mbgl": 39.05,
-      "band_p10": 32.09,
-      "band_p90": 44.39,
+      "estimate_mbgl": 39.04,
+      "band_p10": 33.08,
+      "band_p90": 44.11,
       "trend_m_per_yr": 6.0
     },
     {
@@ -2738,9 +2738,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 1.32,
-      "estimate_mbgl": 2.24,
-      "band_p10": 1.5,
-      "band_p90": 2.79,
+      "estimate_mbgl": 2.27,
+      "band_p10": 1.55,
+      "band_p90": 2.91,
       "trend_m_per_yr": -0.3
     },
     {
@@ -2752,9 +2752,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.44,
-      "estimate_mbgl": 7.61,
-      "band_p10": 6.75,
-      "band_p90": 9.38,
+      "estimate_mbgl": 7.73,
+      "band_p10": 6.95,
+      "band_p90": 9.2,
       "trend_m_per_yr": 1.7
     },
     {
@@ -2766,9 +2766,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 16.25,
-      "estimate_mbgl": 16.4,
-      "band_p10": 14.5,
-      "band_p90": 17.68,
+      "estimate_mbgl": 16.52,
+      "band_p10": 15.1,
+      "band_p90": 17.7,
       "trend_m_per_yr": 1.38
     },
     {
@@ -2780,9 +2780,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 24.42,
-      "estimate_mbgl": 20.04,
-      "band_p10": 18.15,
-      "band_p90": 23.3,
+      "estimate_mbgl": 20.1,
+      "band_p10": 18.41,
+      "band_p90": 23.42,
       "trend_m_per_yr": -2.5
     },
     {
@@ -2794,9 +2794,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.9,
-      "estimate_mbgl": 4.56,
-      "band_p10": 2.81,
-      "band_p90": 5.53,
+      "estimate_mbgl": 4.61,
+      "band_p10": 2.48,
+      "band_p90": 5.54,
       "trend_m_per_yr": 3.29
     },
     {
@@ -2808,9 +2808,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 9.22,
-      "estimate_mbgl": 8.72,
-      "band_p10": 7.81,
-      "band_p90": 9.87,
+      "estimate_mbgl": 8.77,
+      "band_p10": 7.83,
+      "band_p90": 9.89,
       "trend_m_per_yr": 3.56
     },
     {
@@ -2822,9 +2822,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.42,
-      "estimate_mbgl": 2.88,
-      "band_p10": 2.14,
-      "band_p90": 3.69,
+      "estimate_mbgl": 3.08,
+      "band_p10": 2.06,
+      "band_p90": 3.85,
       "trend_m_per_yr": 1.81
     },
     {
@@ -2836,9 +2836,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.63,
-      "estimate_mbgl": 7.54,
-      "band_p10": 6.95,
-      "band_p90": 8.87,
+      "estimate_mbgl": 7.61,
+      "band_p10": 6.66,
+      "band_p90": 8.48,
       "trend_m_per_yr": 1.5
     },
     {
@@ -2850,9 +2850,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.88,
-      "estimate_mbgl": 5.83,
-      "band_p10": 5.14,
-      "band_p90": 7.73,
+      "estimate_mbgl": 5.91,
+      "band_p10": 5.27,
+      "band_p90": 7.44,
       "trend_m_per_yr": 1.7
     },
     {
@@ -2864,9 +2864,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.71,
-      "estimate_mbgl": 4.61,
-      "band_p10": 2.83,
-      "band_p90": 6.62,
+      "estimate_mbgl": 4.73,
+      "band_p10": 2.61,
+      "band_p90": 6.63,
       "trend_m_per_yr": 2.52
     },
     {
@@ -2878,9 +2878,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 47.45,
-      "estimate_mbgl": 37.94,
-      "band_p10": 18.86,
-      "band_p90": 45.11,
+      "estimate_mbgl": 38.45,
+      "band_p10": 19.89,
+      "band_p90": 45.7,
       "trend_m_per_yr": 3.36
     },
     {
@@ -2892,9 +2892,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 1.98,
-      "estimate_mbgl": 4.47,
-      "band_p10": 2.8,
-      "band_p90": 5.48,
+      "estimate_mbgl": 4.54,
+      "band_p10": 2.77,
+      "band_p90": 5.78,
       "trend_m_per_yr": -0.16
     },
     {
@@ -2906,9 +2906,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.66,
-      "estimate_mbgl": 7.63,
-      "band_p10": 6.87,
-      "band_p90": 9.54,
+      "estimate_mbgl": 7.83,
+      "band_p10": 6.54,
+      "band_p90": 9.09,
       "trend_m_per_yr": 1.74
     },
     {
@@ -2920,9 +2920,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 38.72,
-      "estimate_mbgl": 36.75,
-      "band_p10": 28.89,
-      "band_p90": 41.63,
+      "estimate_mbgl": 36.69,
+      "band_p10": 30.89,
+      "band_p90": 41.15,
       "trend_m_per_yr": 6.0
     },
     {
@@ -2934,9 +2934,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.34,
-      "estimate_mbgl": 7.35,
-      "band_p10": 6.61,
-      "band_p90": 8.41,
+      "estimate_mbgl": 7.5,
+      "band_p10": 6.43,
+      "band_p90": 8.56,
       "trend_m_per_yr": 0.96
     },
     {
@@ -2948,9 +2948,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 11.29,
-      "estimate_mbgl": 9.46,
-      "band_p10": 8.44,
-      "band_p90": 11.08,
+      "estimate_mbgl": 9.65,
+      "band_p10": 8.82,
+      "band_p90": 11.72,
       "trend_m_per_yr": 4.59
     },
     {
@@ -2962,9 +2962,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.66,
-      "estimate_mbgl": 5.91,
-      "band_p10": 5.2,
-      "band_p90": 6.76,
+      "estimate_mbgl": 6.07,
+      "band_p10": 5.16,
+      "band_p90": 6.94,
       "trend_m_per_yr": 1.27
     },
     {
@@ -2976,9 +2976,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.06,
-      "estimate_mbgl": 11.39,
-      "band_p10": 10.65,
-      "band_p90": 12.06,
+      "estimate_mbgl": 11.24,
+      "band_p10": 10.67,
+      "band_p90": 12.38,
       "trend_m_per_yr": 3.05
     },
     {
@@ -2990,9 +2990,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.29,
-      "estimate_mbgl": 9.35,
-      "band_p10": 7.58,
-      "band_p90": 10.95,
+      "estimate_mbgl": 9.33,
+      "band_p10": 7.74,
+      "band_p90": 10.64,
       "trend_m_per_yr": 4.52
     },
     {
@@ -3004,9 +3004,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 17.68,
-      "estimate_mbgl": 18.21,
-      "band_p10": 13.14,
-      "band_p90": 19.89,
+      "estimate_mbgl": 18.47,
+      "band_p10": 13.45,
+      "band_p90": 19.76,
       "trend_m_per_yr": -6.0
     },
     {
@@ -3018,9 +3018,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.5,
-      "estimate_mbgl": 3.17,
-      "band_p10": 2.62,
-      "band_p90": 3.45,
+      "estimate_mbgl": 3.18,
+      "band_p10": 2.6,
+      "band_p90": 3.72,
       "trend_m_per_yr": 1.0
     },
     {
@@ -3032,9 +3032,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.89,
-      "estimate_mbgl": 5.36,
-      "band_p10": 3.25,
-      "band_p90": 7.01,
+      "estimate_mbgl": 5.52,
+      "band_p10": 3.41,
+      "band_p90": 7.0,
       "trend_m_per_yr": 1.09
     },
     {
@@ -3046,9 +3046,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 25.73,
-      "estimate_mbgl": 24.32,
-      "band_p10": 20.75,
-      "band_p90": 25.94,
+      "estimate_mbgl": 24.69,
+      "band_p10": 20.29,
+      "band_p90": 25.89,
       "trend_m_per_yr": -1.29
     },
     {
@@ -3060,9 +3060,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 27.11,
-      "estimate_mbgl": 25.74,
-      "band_p10": 20.95,
-      "band_p90": 28.29,
+      "estimate_mbgl": 25.78,
+      "band_p10": 21.66,
+      "band_p90": 28.06,
       "trend_m_per_yr": 6.0
     },
     {
@@ -3074,9 +3074,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 26.39,
-      "estimate_mbgl": 28.16,
-      "band_p10": 26.82,
-      "band_p90": 30.93,
+      "estimate_mbgl": 27.92,
+      "band_p10": 27.73,
+      "band_p90": 31.54,
       "trend_m_per_yr": 5.52
     },
     {
@@ -3088,9 +3088,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.47,
-      "estimate_mbgl": 6.34,
-      "band_p10": 5.76,
-      "band_p90": 7.61,
+      "estimate_mbgl": 6.33,
+      "band_p10": 5.96,
+      "band_p90": 7.45,
       "trend_m_per_yr": 0.37
     },
     {
@@ -3102,9 +3102,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.96,
-      "estimate_mbgl": 8.99,
-      "band_p10": 8.02,
-      "band_p90": 10.37,
+      "estimate_mbgl": 9.18,
+      "band_p10": 8.08,
+      "band_p90": 10.07,
       "trend_m_per_yr": 5.73
     },
     {
@@ -3116,9 +3116,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 9.63,
-      "estimate_mbgl": 9.49,
-      "band_p10": 8.71,
-      "band_p90": 10.46,
+      "estimate_mbgl": 9.38,
+      "band_p10": 8.77,
+      "band_p90": 10.43,
       "trend_m_per_yr": 3.46
     },
     {
@@ -3130,9 +3130,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.72,
-      "estimate_mbgl": 2.45,
-      "band_p10": 1.8,
-      "band_p90": 2.86,
+      "estimate_mbgl": 2.55,
+      "band_p10": 1.93,
+      "band_p90": 2.84,
       "trend_m_per_yr": -0.27
     },
     {
@@ -3144,9 +3144,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 17.65,
-      "estimate_mbgl": 15.13,
-      "band_p10": 12.63,
-      "band_p90": 17.17,
+      "estimate_mbgl": 15.21,
+      "band_p10": 12.94,
+      "band_p90": 17.34,
       "trend_m_per_yr": 6.0
     },
     {
@@ -3158,9 +3158,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.04,
-      "estimate_mbgl": 5.07,
-      "band_p10": 4.44,
-      "band_p90": 6.67,
+      "estimate_mbgl": 5.21,
+      "band_p10": 4.28,
+      "band_p90": 6.66,
       "trend_m_per_yr": 0.67
     },
     {
@@ -3172,9 +3172,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 9.89,
-      "estimate_mbgl": 9.42,
-      "band_p10": 8.05,
-      "band_p90": 10.62,
+      "estimate_mbgl": 9.57,
+      "band_p10": 7.95,
+      "band_p90": 10.46,
       "trend_m_per_yr": 1.67
     },
     {
@@ -3186,9 +3186,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.1,
-      "estimate_mbgl": 1.63,
-      "band_p10": 1.16,
-      "band_p90": 2.17,
+      "estimate_mbgl": 1.65,
+      "band_p10": 1.27,
+      "band_p90": 2.14,
       "trend_m_per_yr": 1.02
     },
     {
@@ -3200,9 +3200,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.46,
-      "estimate_mbgl": 4.99,
-      "band_p10": 4.07,
-      "band_p90": 6.38,
+      "estimate_mbgl": 5.05,
+      "band_p10": 3.79,
+      "band_p90": 6.43,
       "trend_m_per_yr": -0.71
     },
     {
@@ -3214,9 +3214,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.82,
-      "estimate_mbgl": 3.44,
-      "band_p10": 2.39,
-      "band_p90": 4.44,
+      "estimate_mbgl": 3.6,
+      "band_p10": 2.56,
+      "band_p90": 4.73,
       "trend_m_per_yr": 2.31
     },
     {
@@ -3228,9 +3228,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.22,
-      "estimate_mbgl": 5.75,
-      "band_p10": 4.83,
-      "band_p90": 6.61,
+      "estimate_mbgl": 5.8,
+      "band_p10": 4.91,
+      "band_p90": 6.56,
       "trend_m_per_yr": 0.72
     },
     {
@@ -3242,9 +3242,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.08,
-      "estimate_mbgl": 12.61,
-      "band_p10": 8.82,
-      "band_p90": 13.24,
+      "estimate_mbgl": 12.05,
+      "band_p10": 7.93,
+      "band_p90": 13.31,
       "trend_m_per_yr": 3.95
     },
     {
@@ -3256,9 +3256,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 18.77,
-      "estimate_mbgl": 18.86,
-      "band_p10": 17.19,
-      "band_p90": 19.91,
+      "estimate_mbgl": 18.34,
+      "band_p10": 17.28,
+      "band_p90": 19.42,
       "trend_m_per_yr": 1.83
     },
     {
@@ -3270,9 +3270,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.27,
-      "estimate_mbgl": 2.98,
+      "estimate_mbgl": 3.19,
       "band_p10": 2.09,
-      "band_p90": 3.46,
+      "band_p90": 3.58,
       "trend_m_per_yr": 1.47
     },
     {
@@ -3284,9 +3284,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 11.18,
-      "estimate_mbgl": 9.76,
-      "band_p10": 9.13,
-      "band_p90": 11.0,
+      "estimate_mbgl": 9.86,
+      "band_p10": 9.08,
+      "band_p90": 11.43,
       "trend_m_per_yr": 4.14
     },
     {
@@ -3298,9 +3298,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.4,
-      "estimate_mbgl": 2.77,
-      "band_p10": 1.98,
-      "band_p90": 2.99,
+      "estimate_mbgl": 2.78,
+      "band_p10": 2.0,
+      "band_p90": 3.02,
       "trend_m_per_yr": 1.08
     },
     {
@@ -3312,9 +3312,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.03,
-      "estimate_mbgl": 5.61,
-      "band_p10": 5.07,
-      "band_p90": 6.92,
+      "estimate_mbgl": 5.73,
+      "band_p10": 4.88,
+      "band_p90": 6.41,
       "trend_m_per_yr": -1.1
     },
     {
@@ -3326,9 +3326,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.18,
-      "estimate_mbgl": 4.72,
-      "band_p10": 3.75,
-      "band_p90": 5.38,
+      "estimate_mbgl": 4.8,
+      "band_p10": 3.76,
+      "band_p90": 5.52,
       "trend_m_per_yr": 0.72
     },
     {
@@ -3340,9 +3340,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.55,
-      "estimate_mbgl": 5.48,
-      "band_p10": 4.98,
-      "band_p90": 6.81,
+      "estimate_mbgl": 5.56,
+      "band_p10": 4.67,
+      "band_p90": 6.9,
       "trend_m_per_yr": 2.6
     },
     {
@@ -3354,9 +3354,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.62,
-      "estimate_mbgl": 4.01,
-      "band_p10": 2.34,
-      "band_p90": 4.73,
+      "estimate_mbgl": 4.0,
+      "band_p10": 2.35,
+      "band_p90": 4.74,
       "trend_m_per_yr": 1.96
     },
     {
@@ -3368,8 +3368,8 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.26,
-      "estimate_mbgl": 8.86,
-      "band_p10": 7.74,
+      "estimate_mbgl": 8.76,
+      "band_p10": 7.36,
       "band_p90": 9.76,
       "trend_m_per_yr": 1.84
     },
@@ -3382,9 +3382,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 1.62,
-      "estimate_mbgl": 1.77,
-      "band_p10": 1.17,
-      "band_p90": 3.18,
+      "estimate_mbgl": 1.75,
+      "band_p10": 1.16,
+      "band_p90": 2.72,
       "trend_m_per_yr": 0.65
     },
     {
@@ -3396,9 +3396,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 30.95,
-      "estimate_mbgl": 28.58,
-      "band_p10": 27.37,
-      "band_p90": 31.08,
+      "estimate_mbgl": 28.78,
+      "band_p10": 27.9,
+      "band_p90": 31.46,
       "trend_m_per_yr": 4.26
     },
     {
@@ -3410,9 +3410,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.04,
-      "estimate_mbgl": 4.1,
-      "band_p10": 3.46,
-      "band_p90": 4.75,
+      "estimate_mbgl": 4.09,
+      "band_p10": 3.65,
+      "band_p90": 4.87,
       "trend_m_per_yr": -0.16
     },
     {
@@ -3424,9 +3424,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.49,
-      "estimate_mbgl": 6.04,
-      "band_p10": 5.48,
-      "band_p90": 7.14,
+      "estimate_mbgl": 6.1,
+      "band_p10": 5.46,
+      "band_p90": 6.94,
       "trend_m_per_yr": 1.16
     },
     {
@@ -3438,9 +3438,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.72,
-      "estimate_mbgl": 6.85,
-      "band_p10": 5.47,
-      "band_p90": 8.34,
+      "estimate_mbgl": 6.94,
+      "band_p10": 5.39,
+      "band_p90": 8.47,
       "trend_m_per_yr": 1.28
     },
     {
@@ -3452,9 +3452,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 2.02,
-      "estimate_mbgl": 2.1,
-      "band_p10": 1.65,
-      "band_p90": 2.51,
+      "estimate_mbgl": 2.04,
+      "band_p10": 1.62,
+      "band_p90": 2.77,
       "trend_m_per_yr": 0.07
     },
     {
@@ -3466,9 +3466,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.55,
-      "estimate_mbgl": 3.21,
-      "band_p10": 2.58,
-      "band_p90": 3.81,
+      "estimate_mbgl": 3.24,
+      "band_p10": 2.6,
+      "band_p90": 3.94,
       "trend_m_per_yr": -0.1
     },
     {
@@ -3480,9 +3480,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 15.94,
-      "estimate_mbgl": 15.06,
-      "band_p10": 11.81,
-      "band_p90": 19.14,
+      "estimate_mbgl": 15.3,
+      "band_p10": 12.03,
+      "band_p90": 18.11,
       "trend_m_per_yr": -4.42
     },
     {
@@ -3494,9 +3494,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 29.48,
-      "estimate_mbgl": 18.8,
-      "band_p10": 16.96,
-      "band_p90": 23.01,
+      "estimate_mbgl": 19.05,
+      "band_p10": 16.23,
+      "band_p90": 23.07,
       "trend_m_per_yr": 6.0
     },
     {
@@ -3508,9 +3508,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 20.42,
-      "estimate_mbgl": 19.85,
-      "band_p10": 17.25,
-      "band_p90": 22.53,
+      "estimate_mbgl": 20.08,
+      "band_p10": 17.53,
+      "band_p90": 22.42,
       "trend_m_per_yr": -0.76
     },
     {
@@ -3522,9 +3522,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.78,
-      "estimate_mbgl": 6.07,
-      "band_p10": 4.9,
-      "band_p90": 8.7,
+      "estimate_mbgl": 6.08,
+      "band_p10": 4.76,
+      "band_p90": 8.65,
       "trend_m_per_yr": 5.7
     },
     {
@@ -3536,9 +3536,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.78,
-      "estimate_mbgl": 4.43,
-      "band_p10": 2.99,
-      "band_p90": 5.06,
+      "estimate_mbgl": 4.5,
+      "band_p10": 2.79,
+      "band_p90": 4.93,
       "trend_m_per_yr": 2.64
     },
     {
@@ -3550,9 +3550,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.64,
-      "estimate_mbgl": 4.68,
-      "band_p10": 3.93,
-      "band_p90": 5.49,
+      "estimate_mbgl": 4.8,
+      "band_p10": 3.86,
+      "band_p90": 5.44,
       "trend_m_per_yr": 1.02
     },
     {
@@ -3564,9 +3564,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 10.87,
-      "estimate_mbgl": 10.99,
-      "band_p10": 9.81,
-      "band_p90": 12.39,
+      "estimate_mbgl": 11.18,
+      "band_p10": 10.19,
+      "band_p90": 12.23,
       "trend_m_per_yr": 0.81
     },
     {
@@ -3578,9 +3578,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.74,
-      "estimate_mbgl": 12.95,
-      "band_p10": 11.17,
-      "band_p90": 14.2,
+      "estimate_mbgl": 13.1,
+      "band_p10": 10.97,
+      "band_p90": 14.11,
       "trend_m_per_yr": 3.4
     },
     {
@@ -3592,9 +3592,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 19.34,
-      "estimate_mbgl": 20.45,
-      "band_p10": 17.99,
-      "band_p90": 21.56,
+      "estimate_mbgl": 20.67,
+      "band_p10": 18.07,
+      "band_p90": 21.37,
       "trend_m_per_yr": 0.34
     },
     {
@@ -3606,9 +3606,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.03,
-      "estimate_mbgl": 4.16,
-      "band_p10": 3.64,
-      "band_p90": 4.57,
+      "estimate_mbgl": 4.09,
+      "band_p10": 3.62,
+      "band_p90": 4.72,
       "trend_m_per_yr": 0.25
     },
     {
@@ -3620,9 +3620,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.83,
-      "estimate_mbgl": 3.55,
-      "band_p10": 2.72,
-      "band_p90": 4.25,
+      "estimate_mbgl": 3.57,
+      "band_p10": 2.68,
+      "band_p90": 4.4,
       "trend_m_per_yr": 1.04
     },
     {
@@ -3635,8 +3635,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 2.91,
       "estimate_mbgl": 2.71,
-      "band_p10": 2.03,
-      "band_p90": 2.91,
+      "band_p10": 2.09,
+      "band_p90": 2.93,
       "trend_m_per_yr": 1.06
     },
     {
@@ -3648,9 +3648,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.17,
-      "estimate_mbgl": 4.18,
-      "band_p10": 3.13,
-      "band_p90": 4.37,
+      "estimate_mbgl": 4.13,
+      "band_p10": 3.18,
+      "band_p90": 4.44,
       "trend_m_per_yr": 0.99
     },
     {
@@ -3662,9 +3662,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.96,
-      "estimate_mbgl": 6.72,
-      "band_p10": 6.23,
-      "band_p90": 7.56,
+      "estimate_mbgl": 6.78,
+      "band_p10": 6.12,
+      "band_p90": 7.54,
       "trend_m_per_yr": 0.81
     },
     {
@@ -3676,9 +3676,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.1,
-      "estimate_mbgl": 5.63,
-      "band_p10": 4.26,
-      "band_p90": 6.81,
+      "estimate_mbgl": 5.51,
+      "band_p10": 4.39,
+      "band_p90": 6.75,
       "trend_m_per_yr": 4.39
     },
     {
@@ -3690,9 +3690,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 27.95,
-      "estimate_mbgl": 23.06,
-      "band_p10": 20.05,
-      "band_p90": 24.85,
+      "estimate_mbgl": 23.18,
+      "band_p10": 19.8,
+      "band_p90": 25.02,
       "trend_m_per_yr": 6.0
     },
     {
@@ -3704,9 +3704,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 19.69,
-      "estimate_mbgl": 19.42,
-      "band_p10": 17.96,
-      "band_p90": 21.21,
+      "estimate_mbgl": 19.31,
+      "band_p10": 18.42,
+      "band_p90": 20.61,
       "trend_m_per_yr": 4.34
     },
     {
@@ -3718,9 +3718,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.62,
-      "estimate_mbgl": 5.79,
-      "band_p10": 4.82,
-      "band_p90": 7.49,
+      "estimate_mbgl": 5.85,
+      "band_p10": 4.71,
+      "band_p90": 7.32,
       "trend_m_per_yr": 2.71
     },
     {
@@ -3732,9 +3732,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 8.74,
-      "estimate_mbgl": 7.45,
-      "band_p10": 6.69,
-      "band_p90": 8.25,
+      "estimate_mbgl": 7.48,
+      "band_p10": 6.74,
+      "band_p90": 8.23,
       "trend_m_per_yr": 2.0
     },
     {
@@ -3746,9 +3746,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 29.3,
-      "estimate_mbgl": 28.99,
-      "band_p10": 22.58,
-      "band_p90": 30.86,
+      "estimate_mbgl": 29.02,
+      "band_p10": 23.25,
+      "band_p90": 31.06,
       "trend_m_per_yr": 6.0
     },
     {
@@ -3760,9 +3760,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.31,
-      "estimate_mbgl": 6.61,
-      "band_p10": 5.01,
-      "band_p90": 8.24,
+      "estimate_mbgl": 7.13,
+      "band_p10": 5.16,
+      "band_p90": 8.65,
       "trend_m_per_yr": 3.23
     },
     {
@@ -3774,9 +3774,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 26.12,
-      "estimate_mbgl": 27.97,
-      "band_p10": 26.94,
-      "band_p90": 34.61,
+      "estimate_mbgl": 28.65,
+      "band_p10": 26.31,
+      "band_p90": 35.15,
       "trend_m_per_yr": 4.77
     },
     {
@@ -3788,9 +3788,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.38,
-      "estimate_mbgl": 1.37,
-      "band_p10": 1.04,
-      "band_p90": 1.58,
+      "estimate_mbgl": 1.38,
+      "band_p10": 1.12,
+      "band_p90": 1.64,
       "trend_m_per_yr": 0.46
     },
     {
@@ -3802,9 +3802,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.27,
-      "estimate_mbgl": 3.38,
-      "band_p10": 2.63,
-      "band_p90": 3.6,
+      "estimate_mbgl": 3.36,
+      "band_p10": 2.69,
+      "band_p90": 3.69,
       "trend_m_per_yr": 1.11
     },
     {
@@ -3816,9 +3816,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 14.92,
-      "estimate_mbgl": 12.6,
-      "band_p10": 10.47,
-      "band_p90": 15.24,
+      "estimate_mbgl": 12.83,
+      "band_p10": 10.74,
+      "band_p90": 15.38,
       "trend_m_per_yr": 5.97
     },
     {
@@ -3830,9 +3830,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 17.79,
-      "estimate_mbgl": 17.19,
-      "band_p10": 16.44,
-      "band_p90": 18.98,
+      "estimate_mbgl": 17.33,
+      "band_p10": 16.74,
+      "band_p90": 18.6,
       "trend_m_per_yr": 2.83
     },
     {
@@ -3844,9 +3844,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.74,
-      "estimate_mbgl": 12.01,
-      "band_p10": 10.54,
-      "band_p90": 14.12,
+      "estimate_mbgl": 11.97,
+      "band_p10": 10.47,
+      "band_p90": 14.36,
       "trend_m_per_yr": 6.0
     },
     {
@@ -3858,9 +3858,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.38,
-      "estimate_mbgl": 2.16,
-      "band_p10": 1.27,
-      "band_p90": 2.98,
+      "estimate_mbgl": 2.19,
+      "band_p10": 1.35,
+      "band_p90": 2.91,
       "trend_m_per_yr": 1.56
     },
     {
@@ -3872,9 +3872,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.65,
-      "estimate_mbgl": 6.37,
-      "band_p10": 4.88,
-      "band_p90": 8.04,
+      "estimate_mbgl": 6.14,
+      "band_p10": 4.85,
+      "band_p90": 8.1,
       "trend_m_per_yr": 5.05
     },
     {
@@ -3886,9 +3886,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.92,
-      "estimate_mbgl": 4.77,
-      "band_p10": 3.29,
-      "band_p90": 6.3,
+      "estimate_mbgl": 4.87,
+      "band_p10": 3.09,
+      "band_p90": 6.45,
       "trend_m_per_yr": 3.65
     },
     {
@@ -3900,9 +3900,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.12,
-      "estimate_mbgl": 2.31,
-      "band_p10": 1.48,
-      "band_p90": 3.08,
+      "estimate_mbgl": 2.43,
+      "band_p10": 1.59,
+      "band_p90": 3.17,
       "trend_m_per_yr": 2.62
     },
     {
@@ -3914,9 +3914,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 16.29,
-      "estimate_mbgl": 14.05,
-      "band_p10": 12.24,
-      "band_p90": 15.72,
+      "estimate_mbgl": 14.24,
+      "band_p10": 12.51,
+      "band_p90": 15.35,
       "trend_m_per_yr": 4.07
     },
     {
@@ -3928,9 +3928,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.72,
-      "estimate_mbgl": 5.99,
-      "band_p10": 5.04,
-      "band_p90": 6.91,
+      "estimate_mbgl": 6.01,
+      "band_p10": 5.03,
+      "band_p90": 6.8,
       "trend_m_per_yr": 1.02
     },
     {
@@ -3942,9 +3942,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.8,
-      "estimate_mbgl": 4.48,
-      "band_p10": 3.11,
-      "band_p90": 5.99,
+      "estimate_mbgl": 4.63,
+      "band_p10": 3.1,
+      "band_p90": 6.29,
       "trend_m_per_yr": 2.1
     },
     {
@@ -3956,9 +3956,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.4,
-      "estimate_mbgl": 5.2,
-      "band_p10": 4.16,
-      "band_p90": 6.39,
+      "estimate_mbgl": 5.37,
+      "band_p10": 4.1,
+      "band_p90": 6.38,
       "trend_m_per_yr": 2.35
     },
     {
@@ -3970,9 +3970,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.77,
-      "estimate_mbgl": 1.85,
-      "band_p10": 1.33,
-      "band_p90": 2.12,
+      "estimate_mbgl": 1.79,
+      "band_p10": 1.38,
+      "band_p90": 2.18,
       "trend_m_per_yr": 0.32
     },
     {
@@ -3984,9 +3984,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 16.71,
-      "estimate_mbgl": 16.4,
-      "band_p10": 14.84,
-      "band_p90": 19.07,
+      "estimate_mbgl": 16.41,
+      "band_p10": 14.8,
+      "band_p90": 18.73,
       "trend_m_per_yr": 3.53
     },
     {
@@ -3998,9 +3998,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 18.01,
-      "estimate_mbgl": 14.53,
-      "band_p10": 13.96,
-      "band_p90": 15.24,
+      "estimate_mbgl": 14.6,
+      "band_p10": 13.91,
+      "band_p90": 15.96,
       "trend_m_per_yr": 0.81
     },
     {
@@ -4012,9 +4012,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.22,
-      "estimate_mbgl": 4.89,
-      "band_p10": 3.48,
-      "band_p90": 6.07,
+      "estimate_mbgl": 4.9,
+      "band_p10": 3.55,
+      "band_p90": 5.82,
       "trend_m_per_yr": 1.25
     },
     {
@@ -4026,9 +4026,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.78,
-      "estimate_mbgl": 4.2,
-      "band_p10": 2.38,
-      "band_p90": 5.14,
+      "estimate_mbgl": 4.35,
+      "band_p10": 2.39,
+      "band_p90": 5.37,
       "trend_m_per_yr": 0.16
     },
     {
@@ -4040,9 +4040,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.47,
-      "estimate_mbgl": 6.77,
-      "band_p10": 6.08,
-      "band_p90": 7.95,
+      "estimate_mbgl": 6.88,
+      "band_p10": 6.01,
+      "band_p90": 7.56,
       "trend_m_per_yr": 0.91
     },
     {
@@ -4054,9 +4054,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 17.65,
-      "estimate_mbgl": 17.05,
-      "band_p10": 13.89,
-      "band_p90": 19.69,
+      "estimate_mbgl": 17.59,
+      "band_p10": 13.77,
+      "band_p90": 19.63,
       "trend_m_per_yr": 6.0
     },
     {
@@ -4069,8 +4069,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 4.33,
       "estimate_mbgl": 3.47,
-      "band_p10": 2.52,
-      "band_p90": 3.98,
+      "band_p10": 2.68,
+      "band_p90": 4.05,
       "trend_m_per_yr": 2.07
     },
     {
@@ -4082,9 +4082,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.46,
-      "estimate_mbgl": 9.96,
-      "band_p10": 9.07,
-      "band_p90": 11.57,
+      "estimate_mbgl": 10.16,
+      "band_p10": 9.23,
+      "band_p90": 11.67,
       "trend_m_per_yr": -2.69
     },
     {
@@ -4096,9 +4096,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 16.09,
-      "estimate_mbgl": 15.43,
-      "band_p10": 13.11,
-      "band_p90": 17.49,
+      "estimate_mbgl": 15.18,
+      "band_p10": 13.14,
+      "band_p90": 17.68,
       "trend_m_per_yr": 3.98
     },
     {
@@ -4110,9 +4110,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.21,
-      "estimate_mbgl": 7.85,
-      "band_p10": 7.27,
-      "band_p90": 9.08,
+      "estimate_mbgl": 7.81,
+      "band_p10": 7.25,
+      "band_p90": 9.1,
       "trend_m_per_yr": -0.39
     },
     {
@@ -4124,9 +4124,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.46,
-      "estimate_mbgl": 7.26,
-      "band_p10": 6.7,
-      "band_p90": 8.17,
+      "estimate_mbgl": 7.33,
+      "band_p10": 6.77,
+      "band_p90": 8.2,
       "trend_m_per_yr": 0.36
     },
     {
@@ -4138,9 +4138,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.86,
-      "estimate_mbgl": 7.28,
-      "band_p10": 6.55,
-      "band_p90": 8.36,
+      "estimate_mbgl": 7.47,
+      "band_p10": 6.4,
+      "band_p90": 8.53,
       "trend_m_per_yr": 2.97
     },
     {
@@ -4152,9 +4152,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.64,
-      "estimate_mbgl": 13.6,
-      "band_p10": 11.45,
-      "band_p90": 14.97,
+      "estimate_mbgl": 13.84,
+      "band_p10": 11.56,
+      "band_p90": 15.16,
       "trend_m_per_yr": 1.64
     },
     {
@@ -4166,9 +4166,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 22.75,
-      "estimate_mbgl": 23.05,
-      "band_p10": 20.35,
-      "band_p90": 25.09,
+      "estimate_mbgl": 23.16,
+      "band_p10": 20.46,
+      "band_p90": 25.25,
       "trend_m_per_yr": 0.29
     },
     {
@@ -4180,9 +4180,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.29,
-      "estimate_mbgl": 6.33,
-      "band_p10": 5.9,
-      "band_p90": 7.42,
+      "estimate_mbgl": 6.51,
+      "band_p10": 6.0,
+      "band_p90": 7.17,
       "trend_m_per_yr": 0.62
     },
     {
@@ -4194,9 +4194,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.46,
-      "estimate_mbgl": 8.7,
-      "band_p10": 8.22,
-      "band_p90": 9.18,
+      "estimate_mbgl": 8.8,
+      "band_p10": 8.45,
+      "band_p90": 9.22,
       "trend_m_per_yr": 2.28
     },
     {
@@ -4208,9 +4208,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.85,
-      "estimate_mbgl": 10.88,
-      "band_p10": 10.25,
-      "band_p90": 12.36,
+      "estimate_mbgl": 11.02,
+      "band_p10": 10.66,
+      "band_p90": 12.49,
       "trend_m_per_yr": -0.5
     },
     {
@@ -4222,9 +4222,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.85,
-      "estimate_mbgl": 5.67,
-      "band_p10": 4.85,
-      "band_p90": 6.54,
+      "estimate_mbgl": 5.73,
+      "band_p10": 4.9,
+      "band_p90": 6.38,
       "trend_m_per_yr": -0.42
     },
     {
@@ -4236,9 +4236,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.39,
-      "estimate_mbgl": 10.43,
-      "band_p10": 9.99,
-      "band_p90": 11.41,
+      "estimate_mbgl": 10.59,
+      "band_p10": 10.04,
+      "band_p90": 11.36,
       "trend_m_per_yr": 3.8
     },
     {
@@ -4250,9 +4250,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 18.24,
-      "estimate_mbgl": 16.8,
-      "band_p10": 16.5,
-      "band_p90": 17.81,
+      "estimate_mbgl": 16.42,
+      "band_p10": 16.05,
+      "band_p90": 17.41,
       "trend_m_per_yr": 2.02
     },
     {
@@ -4264,9 +4264,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 14.49,
-      "estimate_mbgl": 15.42,
-      "band_p10": 14.12,
-      "band_p90": 17.19,
+      "estimate_mbgl": 15.29,
+      "band_p10": 14.05,
+      "band_p90": 16.96,
       "trend_m_per_yr": 1.63
     },
     {
@@ -4278,9 +4278,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.61,
-      "estimate_mbgl": 6.95,
-      "band_p10": 6.45,
-      "band_p90": 8.55,
+      "estimate_mbgl": 7.09,
+      "band_p10": 6.61,
+      "band_p90": 8.44,
       "trend_m_per_yr": 0.87
     },
     {
@@ -4292,9 +4292,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.9,
-      "estimate_mbgl": 5.06,
-      "band_p10": 3.79,
-      "band_p90": 5.84,
+      "estimate_mbgl": 5.17,
+      "band_p10": 3.75,
+      "band_p90": 6.1,
       "trend_m_per_yr": 2.74
     },
     {
@@ -4306,9 +4306,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 13.61,
-      "estimate_mbgl": 12.77,
-      "band_p10": 11.1,
-      "band_p90": 14.64,
+      "estimate_mbgl": 12.82,
+      "band_p10": 11.14,
+      "band_p90": 14.44,
       "trend_m_per_yr": 4.06
     },
     {
@@ -4320,9 +4320,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.82,
-      "estimate_mbgl": 4.38,
-      "band_p10": 3.64,
-      "band_p90": 5.33,
+      "estimate_mbgl": 4.5,
+      "band_p10": 3.44,
+      "band_p90": 5.47,
       "trend_m_per_yr": 1.77
     },
     {
@@ -4334,9 +4334,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 17.77,
-      "estimate_mbgl": 11.4,
-      "band_p10": 5.86,
-      "band_p90": 16.64,
+      "estimate_mbgl": 10.71,
+      "band_p10": 5.12,
+      "band_p90": 17.4,
       "trend_m_per_yr": 6.0
     },
     {
@@ -4348,9 +4348,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 10.38,
-      "estimate_mbgl": 10.98,
-      "band_p10": 10.0,
-      "band_p90": 12.02,
+      "estimate_mbgl": 11.05,
+      "band_p10": 9.67,
+      "band_p90": 11.98,
       "trend_m_per_yr": -0.04
     },
     {
@@ -4362,9 +4362,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 52.09,
-      "estimate_mbgl": 49.0,
-      "band_p10": 42.18,
-      "band_p90": 53.64,
+      "estimate_mbgl": 49.53,
+      "band_p10": 42.52,
+      "band_p90": 53.7,
       "trend_m_per_yr": 6.0
     },
     {
@@ -4376,9 +4376,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 9.37,
-      "estimate_mbgl": 7.05,
-      "band_p10": 6.37,
-      "band_p90": 8.32,
+      "estimate_mbgl": 7.15,
+      "band_p10": 6.4,
+      "band_p90": 8.07,
       "trend_m_per_yr": 3.83
     },
     {
@@ -4390,9 +4390,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.7,
-      "estimate_mbgl": 9.66,
-      "band_p10": 8.92,
-      "band_p90": 11.33,
+      "estimate_mbgl": 9.79,
+      "band_p10": 8.7,
+      "band_p90": 11.46,
       "trend_m_per_yr": 3.66
     },
     {
@@ -4404,9 +4404,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 16.51,
-      "estimate_mbgl": 16.34,
-      "band_p10": 13.69,
-      "band_p90": 17.29,
+      "estimate_mbgl": 16.35,
+      "band_p10": 14.36,
+      "band_p90": 17.37,
       "trend_m_per_yr": -3.07
     },
     {
@@ -4418,9 +4418,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.17,
-      "estimate_mbgl": 5.18,
-      "band_p10": 2.77,
-      "band_p90": 6.88,
+      "estimate_mbgl": 5.34,
+      "band_p10": 2.54,
+      "band_p90": 6.92,
       "trend_m_per_yr": 3.58
     },
     {
@@ -4432,9 +4432,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 16.86,
-      "estimate_mbgl": 16.79,
-      "band_p10": 15.92,
-      "band_p90": 17.84,
+      "estimate_mbgl": 16.18,
+      "band_p10": 15.89,
+      "band_p90": 17.34,
       "trend_m_per_yr": 1.54
     },
     {
@@ -4446,9 +4446,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.8,
-      "estimate_mbgl": 3.9,
-      "band_p10": 3.04,
-      "band_p90": 4.69,
+      "estimate_mbgl": 3.96,
+      "band_p10": 3.06,
+      "band_p90": 4.73,
       "trend_m_per_yr": 1.44
     },
     {
@@ -4460,9 +4460,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.41,
-      "estimate_mbgl": 6.11,
-      "band_p10": 5.72,
-      "band_p90": 7.23,
+      "estimate_mbgl": 6.21,
+      "band_p10": 5.46,
+      "band_p90": 7.3,
       "trend_m_per_yr": 1.49
     },
     {
@@ -4474,9 +4474,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 28.97,
-      "estimate_mbgl": 22.24,
-      "band_p10": 15.41,
-      "band_p90": 27.76,
+      "estimate_mbgl": 22.35,
+      "band_p10": 15.42,
+      "band_p90": 27.25,
       "trend_m_per_yr": 6.0
     },
     {
@@ -4488,9 +4488,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 9.01,
-      "estimate_mbgl": 7.96,
-      "band_p10": 6.87,
-      "band_p90": 9.31,
+      "estimate_mbgl": 7.82,
+      "band_p10": 6.98,
+      "band_p90": 9.54,
       "trend_m_per_yr": 0.49
     },
     {
@@ -4502,9 +4502,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.12,
-      "estimate_mbgl": 4.45,
-      "band_p10": 3.21,
-      "band_p90": 5.54,
+      "estimate_mbgl": 4.51,
+      "band_p10": 3.14,
+      "band_p90": 5.44,
       "trend_m_per_yr": 0.8
     },
     {
@@ -4516,8 +4516,8 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.12,
-      "estimate_mbgl": 6.51,
-      "band_p10": 5.98,
+      "estimate_mbgl": 6.65,
+      "band_p10": 5.92,
       "band_p90": 7.23,
       "trend_m_per_yr": 0.55
     },
@@ -4530,9 +4530,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 17.29,
-      "estimate_mbgl": 17.44,
-      "band_p10": 13.14,
-      "band_p90": 18.8,
+      "estimate_mbgl": 17.52,
+      "band_p10": 12.75,
+      "band_p90": 18.93,
       "trend_m_per_yr": 6.0
     },
     {
@@ -4544,9 +4544,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.65,
-      "estimate_mbgl": 8.09,
-      "band_p10": 7.17,
-      "band_p90": 9.03,
+      "estimate_mbgl": 8.15,
+      "band_p10": 7.27,
+      "band_p90": 9.25,
       "trend_m_per_yr": 0.71
     },
     {
@@ -4558,9 +4558,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.37,
-      "estimate_mbgl": 8.67,
-      "band_p10": 8.0,
-      "band_p90": 9.37,
+      "estimate_mbgl": 8.77,
+      "band_p10": 7.85,
+      "band_p90": 9.52,
       "trend_m_per_yr": 0.98
     },
     {
@@ -4572,9 +4572,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.96,
-      "estimate_mbgl": 7.38,
-      "band_p10": 6.32,
-      "band_p90": 8.06,
+      "estimate_mbgl": 7.43,
+      "band_p10": 6.63,
+      "band_p90": 8.34,
       "trend_m_per_yr": 1.64
     },
     {
@@ -4586,9 +4586,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.27,
-      "estimate_mbgl": 3.79,
-      "band_p10": 2.76,
-      "band_p90": 4.91,
+      "estimate_mbgl": 3.76,
+      "band_p10": 2.7,
+      "band_p90": 5.1,
       "trend_m_per_yr": 2.3
     },
     {
@@ -4600,9 +4600,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.43,
-      "estimate_mbgl": 7.61,
-      "band_p10": 6.52,
-      "band_p90": 9.03,
+      "estimate_mbgl": 7.65,
+      "band_p10": 6.69,
+      "band_p90": 9.21,
       "trend_m_per_yr": 3.16
     },
     {
@@ -4614,9 +4614,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.29,
-      "estimate_mbgl": 4.36,
+      "estimate_mbgl": 4.34,
       "band_p10": 2.34,
-      "band_p90": 6.13,
+      "band_p90": 5.83,
       "trend_m_per_yr": 5.41
     },
     {
@@ -4628,9 +4628,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.87,
-      "estimate_mbgl": 1.97,
-      "band_p10": 1.19,
-      "band_p90": 2.48,
+      "estimate_mbgl": 2.11,
+      "band_p10": 1.31,
+      "band_p90": 2.41,
       "trend_m_per_yr": 0.94
     },
     {
@@ -4642,9 +4642,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.93,
-      "estimate_mbgl": 3.38,
-      "band_p10": 2.59,
-      "band_p90": 3.91,
+      "estimate_mbgl": 3.49,
+      "band_p10": 2.83,
+      "band_p90": 4.23,
       "trend_m_per_yr": 2.4
     },
     {
@@ -4656,9 +4656,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 16.73,
-      "estimate_mbgl": 16.56,
-      "band_p10": 14.1,
-      "band_p90": 17.8,
+      "estimate_mbgl": 16.64,
+      "band_p10": 14.22,
+      "band_p90": 17.75,
       "trend_m_per_yr": 0.89
     },
     {
@@ -4670,9 +4670,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.42,
-      "estimate_mbgl": 3.73,
-      "band_p10": 3.0,
-      "band_p90": 4.41,
+      "estimate_mbgl": 3.78,
+      "band_p10": 3.02,
+      "band_p90": 4.3,
       "trend_m_per_yr": 0.68
     },
     {
@@ -4685,8 +4685,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 3.18,
       "estimate_mbgl": 3.62,
-      "band_p10": 2.95,
-      "band_p90": 3.98,
+      "band_p10": 2.97,
+      "band_p90": 4.04,
       "trend_m_per_yr": 0.21
     },
     {
@@ -4698,9 +4698,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 11.14,
-      "estimate_mbgl": 9.14,
-      "band_p10": 7.87,
-      "band_p90": 11.09,
+      "estimate_mbgl": 9.17,
+      "band_p10": 7.65,
+      "band_p90": 11.06,
       "trend_m_per_yr": -1.09
     },
     {
@@ -4712,9 +4712,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 35.24,
-      "estimate_mbgl": 35.91,
-      "band_p10": 31.42,
-      "band_p90": 40.37,
+      "estimate_mbgl": 35.51,
+      "band_p10": 32.52,
+      "band_p90": 40.2,
       "trend_m_per_yr": -4.57
     },
     {
@@ -4726,9 +4726,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.67,
-      "estimate_mbgl": 4.05,
-      "band_p10": 3.42,
-      "band_p90": 4.2,
+      "estimate_mbgl": 4.07,
+      "band_p10": 3.58,
+      "band_p90": 4.42,
       "trend_m_per_yr": -0.34
     },
     {
@@ -4740,9 +4740,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 46.25,
-      "estimate_mbgl": 46.1,
-      "band_p10": 41.13,
-      "band_p90": 49.26,
+      "estimate_mbgl": 46.22,
+      "band_p10": 43.52,
+      "band_p90": 49.44,
       "trend_m_per_yr": 4.98
     },
     {
@@ -4754,9 +4754,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.56,
-      "estimate_mbgl": 4.42,
-      "band_p10": 3.47,
-      "band_p90": 5.22,
+      "estimate_mbgl": 4.36,
+      "band_p10": 3.57,
+      "band_p90": 4.99,
       "trend_m_per_yr": 0.87
     },
     {
@@ -4768,8 +4768,8 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.73,
-      "estimate_mbgl": 3.66,
-      "band_p10": 2.74,
+      "estimate_mbgl": 3.76,
+      "band_p10": 2.76,
       "band_p90": 4.68,
       "trend_m_per_yr": 1.57
     },
@@ -4782,9 +4782,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 10.45,
-      "estimate_mbgl": 10.0,
-      "band_p10": 8.8,
-      "band_p90": 10.98,
+      "estimate_mbgl": 10.29,
+      "band_p10": 8.7,
+      "band_p90": 11.14,
       "trend_m_per_yr": 0.43
     },
     {
@@ -4796,9 +4796,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.29,
-      "estimate_mbgl": 7.98,
-      "band_p10": 7.04,
-      "band_p90": 8.84,
+      "estimate_mbgl": 8.09,
+      "band_p10": 6.64,
+      "band_p90": 8.97,
       "trend_m_per_yr": 0.12
     },
     {
@@ -4810,9 +4810,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.85,
-      "estimate_mbgl": 4.09,
-      "band_p10": 3.5,
-      "band_p90": 4.91,
+      "estimate_mbgl": 4.2,
+      "band_p10": 3.36,
+      "band_p90": 5.1,
       "trend_m_per_yr": 1.75
     },
     {
@@ -4824,9 +4824,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 11.97,
-      "estimate_mbgl": 12.04,
-      "band_p10": 11.12,
-      "band_p90": 13.24,
+      "estimate_mbgl": 12.0,
+      "band_p10": 10.88,
+      "band_p90": 13.57,
       "trend_m_per_yr": 0.91
     },
     {
@@ -4838,9 +4838,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.95,
-      "estimate_mbgl": 3.89,
-      "band_p10": 2.13,
-      "band_p90": 4.64,
+      "estimate_mbgl": 3.88,
+      "band_p10": 2.23,
+      "band_p90": 4.62,
       "trend_m_per_yr": 4.48
     },
     {
@@ -4852,9 +4852,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 17.71,
-      "estimate_mbgl": 16.25,
-      "band_p10": 14.36,
-      "band_p90": 17.83,
+      "estimate_mbgl": 16.27,
+      "band_p10": 14.6,
+      "band_p90": 18.17,
       "trend_m_per_yr": -0.53
     },
     {
@@ -4866,9 +4866,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.67,
-      "estimate_mbgl": 3.89,
-      "band_p10": 2.34,
-      "band_p90": 4.6,
+      "estimate_mbgl": 3.91,
+      "band_p10": 2.32,
+      "band_p90": 4.67,
       "trend_m_per_yr": 2.14
     },
     {
@@ -4880,9 +4880,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.0,
-      "estimate_mbgl": 8.24,
-      "band_p10": 8.08,
-      "band_p90": 26.03,
+      "estimate_mbgl": 7.34,
+      "band_p10": 6.88,
+      "band_p90": 26.02,
       "trend_m_per_yr": 2.55
     },
     {
@@ -4894,9 +4894,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 8.37,
-      "estimate_mbgl": 8.99,
-      "band_p10": 7.91,
-      "band_p90": 9.34,
+      "estimate_mbgl": 9.04,
+      "band_p10": 7.92,
+      "band_p90": 9.46,
       "trend_m_per_yr": 0.03
     },
     {
@@ -4908,9 +4908,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 50.23,
-      "estimate_mbgl": 48.89,
-      "band_p10": 44.21,
-      "band_p90": 54.21,
+      "estimate_mbgl": 49.92,
+      "band_p10": 44.4,
+      "band_p90": 53.64,
       "trend_m_per_yr": 6.0
     },
     {
@@ -4922,9 +4922,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 23.69,
-      "estimate_mbgl": 24.53,
-      "band_p10": 17.5,
-      "band_p90": 29.6,
+      "estimate_mbgl": 24.22,
+      "band_p10": 16.77,
+      "band_p90": 29.29,
       "trend_m_per_yr": 6.0
     },
     {
@@ -4936,9 +4936,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 16.2,
-      "estimate_mbgl": 13.78,
-      "band_p10": 11.85,
-      "band_p90": 16.86,
+      "estimate_mbgl": 13.87,
+      "band_p10": 11.9,
+      "band_p90": 16.7,
       "trend_m_per_yr": 6.0
     },
     {
@@ -4952,7 +4952,7 @@
       "observed_mbgl": 11.48,
       "estimate_mbgl": 11.15,
       "band_p10": 10.56,
-      "band_p90": 12.13,
+      "band_p90": 12.11,
       "trend_m_per_yr": 3.24
     },
     {
@@ -4964,9 +4964,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.33,
-      "estimate_mbgl": 4.38,
+      "estimate_mbgl": 4.52,
       "band_p10": 3.58,
-      "band_p90": 5.67,
+      "band_p90": 5.62,
       "trend_m_per_yr": 1.31
     },
     {
@@ -4978,9 +4978,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.05,
-      "estimate_mbgl": 5.69,
-      "band_p10": 4.79,
-      "band_p90": 6.8,
+      "estimate_mbgl": 5.66,
+      "band_p10": 4.89,
+      "band_p90": 6.29,
       "trend_m_per_yr": 0.61
     },
     {
@@ -4992,9 +4992,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 27.72,
-      "estimate_mbgl": 27.09,
-      "band_p10": 22.66,
-      "band_p90": 35.31,
+      "estimate_mbgl": 27.49,
+      "band_p10": 22.61,
+      "band_p90": 34.62,
       "trend_m_per_yr": -6.0
     },
     {
@@ -5006,9 +5006,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 2.67,
-      "estimate_mbgl": 2.13,
-      "band_p10": 1.28,
-      "band_p90": 2.56,
+      "estimate_mbgl": 2.06,
+      "band_p10": 1.36,
+      "band_p90": 2.5,
       "trend_m_per_yr": 1.43
     },
     {
@@ -5020,9 +5020,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 34.13,
-      "estimate_mbgl": 29.54,
-      "band_p10": 25.92,
-      "band_p90": 32.98,
+      "estimate_mbgl": 29.27,
+      "band_p10": 24.74,
+      "band_p90": 33.15,
       "trend_m_per_yr": 6.0
     },
     {
@@ -5034,9 +5034,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 7.57,
-      "estimate_mbgl": 7.02,
-      "band_p10": 5.6,
-      "band_p90": 7.59,
+      "estimate_mbgl": 7.01,
+      "band_p10": 5.73,
+      "band_p90": 7.52,
       "trend_m_per_yr": 3.32
     },
     {
@@ -5048,9 +5048,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.24,
-      "estimate_mbgl": 8.14,
-      "band_p10": 7.18,
-      "band_p90": 9.83,
+      "estimate_mbgl": 8.26,
+      "band_p10": 7.17,
+      "band_p90": 9.58,
       "trend_m_per_yr": 1.85
     },
     {
@@ -5062,9 +5062,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 9.28,
-      "estimate_mbgl": 9.42,
-      "band_p10": 8.43,
-      "band_p90": 10.66,
+      "estimate_mbgl": 9.51,
+      "band_p10": 8.18,
+      "band_p90": 10.41,
       "trend_m_per_yr": 0.25
     },
     {
@@ -5076,9 +5076,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 9.37,
-      "estimate_mbgl": 8.35,
-      "band_p10": 7.91,
-      "band_p90": 9.35,
+      "estimate_mbgl": 8.4,
+      "band_p10": 7.65,
+      "band_p90": 9.49,
       "trend_m_per_yr": 2.34
     },
     {
@@ -5090,9 +5090,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 16.02,
-      "estimate_mbgl": 14.42,
-      "band_p10": 12.36,
-      "band_p90": 16.74,
+      "estimate_mbgl": 14.11,
+      "band_p10": 12.44,
+      "band_p90": 16.78,
       "trend_m_per_yr": 3.6
     },
     {
@@ -5104,9 +5104,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 17.1,
-      "estimate_mbgl": 17.32,
-      "band_p10": 16.67,
-      "band_p90": 18.15,
+      "estimate_mbgl": 17.55,
+      "band_p10": 15.9,
+      "band_p90": 18.21,
       "trend_m_per_yr": -0.7
     },
     {
@@ -5118,9 +5118,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.2,
-      "estimate_mbgl": 4.15,
-      "band_p10": 3.33,
-      "band_p90": 4.52,
+      "estimate_mbgl": 4.1,
+      "band_p10": 3.28,
+      "band_p90": 4.6,
       "trend_m_per_yr": 0.5
     },
     {
@@ -5132,9 +5132,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 11.27,
-      "estimate_mbgl": 10.01,
-      "band_p10": 8.21,
-      "band_p90": 11.89,
+      "estimate_mbgl": 9.91,
+      "band_p10": 7.99,
+      "band_p90": 11.86,
       "trend_m_per_yr": 3.04
     },
     {
@@ -5146,9 +5146,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 54.41,
-      "estimate_mbgl": 54.49,
-      "band_p10": 51.24,
-      "band_p90": 58.18,
+      "estimate_mbgl": 54.36,
+      "band_p10": 51.76,
+      "band_p90": 57.95,
       "trend_m_per_yr": 1.08
     },
     {
@@ -5160,9 +5160,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.93,
-      "estimate_mbgl": 5.56,
-      "band_p10": 4.74,
-      "band_p90": 6.2,
+      "estimate_mbgl": 5.65,
+      "band_p10": 4.8,
+      "band_p90": 6.32,
       "trend_m_per_yr": 1.9
     },
     {
@@ -5174,9 +5174,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 9.86,
-      "estimate_mbgl": 12.01,
-      "band_p10": 9.3,
-      "band_p90": 13.05,
+      "estimate_mbgl": 11.59,
+      "band_p10": 9.58,
+      "band_p90": 13.58,
       "trend_m_per_yr": -5.56
     },
     {
@@ -5188,9 +5188,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.87,
-      "estimate_mbgl": 8.54,
-      "band_p10": 7.42,
-      "band_p90": 10.18,
+      "estimate_mbgl": 8.73,
+      "band_p10": 7.49,
+      "band_p90": 10.14,
       "trend_m_per_yr": 1.23
     },
     {
@@ -5202,9 +5202,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.49,
-      "estimate_mbgl": 4.4,
-      "band_p10": 3.42,
-      "band_p90": 5.11,
+      "estimate_mbgl": 4.38,
+      "band_p10": 3.38,
+      "band_p90": 4.93,
       "trend_m_per_yr": 0.48
     },
     {
@@ -5216,9 +5216,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.84,
-      "estimate_mbgl": 11.06,
-      "band_p10": 6.68,
-      "band_p90": 15.4,
+      "estimate_mbgl": 11.52,
+      "band_p10": 6.2,
+      "band_p90": 15.92,
       "trend_m_per_yr": 6.0
     },
     {
@@ -5230,9 +5230,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.63,
-      "estimate_mbgl": 6.11,
-      "band_p10": 5.57,
-      "band_p90": 7.3,
+      "estimate_mbgl": 6.19,
+      "band_p10": 5.62,
+      "band_p90": 7.17,
       "trend_m_per_yr": 0.43
     },
     {
@@ -5244,9 +5244,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.85,
-      "estimate_mbgl": 3.92,
-      "band_p10": 2.2,
-      "band_p90": 4.77,
+      "estimate_mbgl": 3.96,
+      "band_p10": 2.18,
+      "band_p90": 4.74,
       "trend_m_per_yr": 2.69
     },
     {
@@ -5258,9 +5258,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 10.54,
-      "estimate_mbgl": 9.48,
-      "band_p10": 8.77,
-      "band_p90": 11.15,
+      "estimate_mbgl": 9.59,
+      "band_p10": 8.85,
+      "band_p90": 10.99,
       "trend_m_per_yr": 3.94
     },
     {
@@ -5272,9 +5272,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.33,
-      "estimate_mbgl": 12.06,
-      "band_p10": 9.96,
-      "band_p90": 13.62,
+      "estimate_mbgl": 12.17,
+      "band_p10": 9.67,
+      "band_p90": 13.09,
       "trend_m_per_yr": 0.78
     },
     {
@@ -5286,9 +5286,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.46,
-      "estimate_mbgl": 10.89,
-      "band_p10": 9.97,
-      "band_p90": 12.58,
+      "estimate_mbgl": 10.77,
+      "band_p10": 9.38,
+      "band_p90": 12.21,
       "trend_m_per_yr": 1.86
     },
     {
@@ -5300,9 +5300,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.6,
-      "estimate_mbgl": 8.31,
-      "band_p10": 6.58,
-      "band_p90": 9.74,
+      "estimate_mbgl": 8.26,
+      "band_p10": 6.52,
+      "band_p90": 9.33,
       "trend_m_per_yr": -2.6
     },
     {
@@ -5314,9 +5314,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 14.46,
-      "estimate_mbgl": 14.89,
-      "band_p10": 13.68,
-      "band_p90": 15.93,
+      "estimate_mbgl": 14.8,
+      "band_p10": 13.91,
+      "band_p90": 15.92,
       "trend_m_per_yr": 1.32
     },
     {
@@ -5328,9 +5328,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 18.57,
-      "estimate_mbgl": 18.72,
-      "band_p10": 16.72,
-      "band_p90": 21.15,
+      "estimate_mbgl": 18.68,
+      "band_p10": 16.26,
+      "band_p90": 21.01,
       "trend_m_per_yr": 3.34
     },
     {
@@ -5342,9 +5342,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.28,
-      "estimate_mbgl": 5.31,
-      "band_p10": 4.78,
-      "band_p90": 6.37,
+      "estimate_mbgl": 5.42,
+      "band_p10": 4.58,
+      "band_p90": 6.41,
       "trend_m_per_yr": -0.68
     },
     {
@@ -5356,9 +5356,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.72,
-      "estimate_mbgl": 5.31,
-      "band_p10": 4.19,
-      "band_p90": 6.2,
+      "estimate_mbgl": 5.32,
+      "band_p10": 4.24,
+      "band_p90": 6.23,
       "trend_m_per_yr": 1.91
     },
     {
@@ -5370,9 +5370,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 11.22,
-      "estimate_mbgl": 10.3,
-      "band_p10": 8.48,
-      "band_p90": 11.58,
+      "estimate_mbgl": 10.22,
+      "band_p10": 8.63,
+      "band_p90": 11.61,
       "trend_m_per_yr": 5.07
     },
     {
@@ -5384,9 +5384,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.1,
-      "estimate_mbgl": 4.8,
-      "band_p10": 3.23,
-      "band_p90": 6.07,
+      "estimate_mbgl": 4.78,
+      "band_p10": 3.38,
+      "band_p90": 5.99,
       "trend_m_per_yr": 1.58
     },
     {
@@ -5398,9 +5398,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.86,
-      "estimate_mbgl": 8.03,
-      "band_p10": 6.4,
-      "band_p90": 9.37,
+      "estimate_mbgl": 8.12,
+      "band_p10": 6.68,
+      "band_p90": 9.64,
       "trend_m_per_yr": 3.74
     },
     {
@@ -5412,9 +5412,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 14.21,
-      "estimate_mbgl": 12.03,
-      "band_p10": 10.94,
-      "band_p90": 14.3,
+      "estimate_mbgl": 12.02,
+      "band_p10": 11.08,
+      "band_p90": 14.53,
       "trend_m_per_yr": -0.63
     },
     {
@@ -5426,9 +5426,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 15.81,
-      "estimate_mbgl": 15.75,
+      "estimate_mbgl": 15.71,
       "band_p10": 13.45,
-      "band_p90": 16.06,
+      "band_p90": 16.2,
       "trend_m_per_yr": 3.85
     },
     {
@@ -5440,9 +5440,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 11.03,
-      "estimate_mbgl": 10.39,
-      "band_p10": 8.24,
-      "band_p90": 12.93,
+      "estimate_mbgl": 10.51,
+      "band_p10": 8.04,
+      "band_p90": 12.79,
       "trend_m_per_yr": 2.53
     },
     {
@@ -5454,9 +5454,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 52.81,
-      "estimate_mbgl": 45.83,
-      "band_p10": 38.93,
-      "band_p90": 48.39,
+      "estimate_mbgl": 45.72,
+      "band_p10": 37.63,
+      "band_p90": 48.58,
       "trend_m_per_yr": 6.0
     },
     {
@@ -5468,9 +5468,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 14.35,
-      "estimate_mbgl": 13.91,
-      "band_p10": 12.5,
-      "band_p90": 16.23,
+      "estimate_mbgl": 14.24,
+      "band_p10": 11.93,
+      "band_p90": 16.2,
       "trend_m_per_yr": 4.26
     },
     {
@@ -5482,9 +5482,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.77,
-      "estimate_mbgl": 4.9,
-      "band_p10": 3.3,
-      "band_p90": 6.71,
+      "estimate_mbgl": 4.99,
+      "band_p10": 3.08,
+      "band_p90": 6.66,
       "trend_m_per_yr": 3.41
     },
     {
@@ -5496,9 +5496,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.73,
-      "estimate_mbgl": 2.53,
-      "band_p10": 1.52,
-      "band_p90": 2.85,
+      "estimate_mbgl": 2.55,
+      "band_p10": 1.65,
+      "band_p90": 3.03,
       "trend_m_per_yr": 1.97
     },
     {
@@ -5510,9 +5510,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.31,
-      "estimate_mbgl": 4.19,
-      "band_p10": 2.43,
-      "band_p90": 5.08,
+      "estimate_mbgl": 4.27,
+      "band_p10": 2.47,
+      "band_p90": 5.15,
       "trend_m_per_yr": 2.61
     },
     {
@@ -5524,9 +5524,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 1.21,
-      "estimate_mbgl": 1.49,
-      "band_p10": 0.47,
-      "band_p90": 2.78,
+      "estimate_mbgl": 1.38,
+      "band_p10": 0.43,
+      "band_p90": 2.73,
       "trend_m_per_yr": 0.71
     },
     {
@@ -5538,9 +5538,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.0,
-      "estimate_mbgl": 5.44,
-      "band_p10": 3.57,
-      "band_p90": 6.77,
+      "estimate_mbgl": 5.53,
+      "band_p10": 3.53,
+      "band_p90": 6.79,
       "trend_m_per_yr": 2.38
     },
     {
@@ -5552,9 +5552,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 8.35,
-      "estimate_mbgl": 8.37,
-      "band_p10": 7.15,
-      "band_p90": 9.31,
+      "estimate_mbgl": 8.46,
+      "band_p10": 7.17,
+      "band_p90": 9.18,
       "trend_m_per_yr": 1.63
     },
     {
@@ -5566,9 +5566,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.33,
-      "estimate_mbgl": 5.0,
-      "band_p10": 4.35,
-      "band_p90": 5.87,
+      "estimate_mbgl": 5.11,
+      "band_p10": 4.34,
+      "band_p90": 5.89,
       "trend_m_per_yr": 0.02
     },
     {
@@ -5580,9 +5580,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 11.07,
-      "estimate_mbgl": 9.4,
-      "band_p10": 8.2,
-      "band_p90": 10.99,
+      "estimate_mbgl": 9.37,
+      "band_p10": 8.18,
+      "band_p90": 11.47,
       "trend_m_per_yr": 3.74
     },
     {
@@ -5594,9 +5594,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.14,
-      "estimate_mbgl": 2.46,
-      "band_p10": 1.6,
-      "band_p90": 3.47,
+      "estimate_mbgl": 2.62,
+      "band_p10": 1.72,
+      "band_p90": 3.43,
       "trend_m_per_yr": 1.09
     },
     {
@@ -5608,9 +5608,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.64,
-      "estimate_mbgl": 3.64,
-      "band_p10": 2.96,
-      "band_p90": 4.08,
+      "estimate_mbgl": 3.68,
+      "band_p10": 2.94,
+      "band_p90": 4.33,
       "trend_m_per_yr": 1.13
     },
     {
@@ -5622,9 +5622,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.74,
-      "estimate_mbgl": 3.54,
-      "band_p10": 2.87,
-      "band_p90": 4.22,
+      "estimate_mbgl": 3.57,
+      "band_p10": 2.78,
+      "band_p90": 4.38,
       "trend_m_per_yr": 0.75
     },
     {
@@ -5636,9 +5636,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 11.28,
-      "estimate_mbgl": 10.76,
-      "band_p10": 9.62,
-      "band_p90": 12.95,
+      "estimate_mbgl": 10.88,
+      "band_p10": 9.91,
+      "band_p90": 13.11,
       "trend_m_per_yr": 0.09
     },
     {
@@ -5650,9 +5650,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.64,
-      "estimate_mbgl": 2.7,
-      "band_p10": 1.74,
-      "band_p90": 3.68,
+      "estimate_mbgl": 2.68,
+      "band_p10": 1.73,
+      "band_p90": 3.48,
       "trend_m_per_yr": 2.77
     },
     {
@@ -5664,9 +5664,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 14.25,
-      "estimate_mbgl": 13.98,
-      "band_p10": 10.24,
-      "band_p90": 16.59,
+      "estimate_mbgl": 14.19,
+      "band_p10": 10.68,
+      "band_p90": 16.54,
       "trend_m_per_yr": 4.49
     },
     {
@@ -5678,9 +5678,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.2,
-      "estimate_mbgl": 7.18,
-      "band_p10": 6.16,
-      "band_p90": 8.53,
+      "estimate_mbgl": 7.28,
+      "band_p10": 6.24,
+      "band_p90": 8.58,
       "trend_m_per_yr": 1.57
     },
     {
@@ -5692,9 +5692,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.31,
-      "estimate_mbgl": 4.49,
-      "band_p10": 3.44,
-      "band_p90": 5.57,
+      "estimate_mbgl": 4.55,
+      "band_p10": 3.46,
+      "band_p90": 5.56,
       "trend_m_per_yr": 1.43
     },
     {
@@ -5707,8 +5707,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 11.71,
       "estimate_mbgl": 10.77,
-      "band_p10": 10.07,
-      "band_p90": 11.62,
+      "band_p10": 9.89,
+      "band_p90": 12.13,
       "trend_m_per_yr": 1.5
     },
     {
@@ -5720,9 +5720,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.04,
-      "estimate_mbgl": 10.66,
-      "band_p10": 7.94,
-      "band_p90": 12.5,
+      "estimate_mbgl": 10.8,
+      "band_p10": 8.1,
+      "band_p90": 12.56,
       "trend_m_per_yr": 4.14
     },
     {
@@ -5734,9 +5734,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.33,
-      "estimate_mbgl": 4.63,
-      "band_p10": 3.07,
-      "band_p90": 5.79,
+      "estimate_mbgl": 4.79,
+      "band_p10": 2.99,
+      "band_p90": 5.77,
       "trend_m_per_yr": 2.18
     },
     {
@@ -5748,9 +5748,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.7,
-      "estimate_mbgl": 4.22,
-      "band_p10": 3.03,
-      "band_p90": 4.84,
+      "estimate_mbgl": 4.29,
+      "band_p10": 3.09,
+      "band_p90": 5.0,
       "trend_m_per_yr": 1.0
     },
     {
@@ -5762,9 +5762,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 28.13,
-      "estimate_mbgl": 28.63,
-      "band_p10": 26.66,
-      "band_p90": 30.38,
+      "estimate_mbgl": 28.6,
+      "band_p10": 27.43,
+      "band_p90": 31.15,
       "trend_m_per_yr": -0.64
     },
     {
@@ -5776,9 +5776,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 22.28,
-      "estimate_mbgl": 23.01,
-      "band_p10": 20.32,
-      "band_p90": 24.55,
+      "estimate_mbgl": 22.81,
+      "band_p10": 21.14,
+      "band_p90": 24.73,
       "trend_m_per_yr": 1.32
     },
     {
@@ -5790,9 +5790,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.03,
-      "estimate_mbgl": 7.01,
-      "band_p10": 6.27,
-      "band_p90": 8.15,
+      "estimate_mbgl": 7.13,
+      "band_p10": 6.47,
+      "band_p90": 8.13,
       "trend_m_per_yr": 1.86
     },
     {
@@ -5804,9 +5804,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 20.55,
-      "estimate_mbgl": 19.56,
-      "band_p10": 17.6,
-      "band_p90": 20.8,
+      "estimate_mbgl": 19.51,
+      "band_p10": 17.02,
+      "band_p90": 20.85,
       "trend_m_per_yr": 3.87
     },
     {
@@ -5818,9 +5818,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.38,
-      "estimate_mbgl": 5.27,
-      "band_p10": 4.54,
-      "band_p90": 5.92,
+      "estimate_mbgl": 5.23,
+      "band_p10": 4.58,
+      "band_p90": 6.05,
       "trend_m_per_yr": 1.02
     },
     {
@@ -5832,9 +5832,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.67,
-      "estimate_mbgl": 7.93,
-      "band_p10": 7.49,
-      "band_p90": 9.37,
+      "estimate_mbgl": 8.12,
+      "band_p10": 7.41,
+      "band_p90": 9.21,
       "trend_m_per_yr": 0.74
     },
     {
@@ -5846,9 +5846,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.35,
-      "estimate_mbgl": 9.28,
-      "band_p10": 8.21,
-      "band_p90": 10.56,
+      "estimate_mbgl": 9.27,
+      "band_p10": 7.96,
+      "band_p90": 10.65,
       "trend_m_per_yr": 1.68
     },
     {
@@ -5860,9 +5860,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.44,
-      "estimate_mbgl": 3.33,
-      "band_p10": 2.64,
-      "band_p90": 3.66,
+      "estimate_mbgl": 3.34,
+      "band_p10": 2.77,
+      "band_p90": 3.7,
       "trend_m_per_yr": 0.74
     },
     {
@@ -5874,9 +5874,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 11.16,
-      "estimate_mbgl": 10.51,
-      "band_p10": 9.14,
-      "band_p90": 12.07,
+      "estimate_mbgl": 10.46,
+      "band_p10": 8.72,
+      "band_p90": 11.99,
       "trend_m_per_yr": 2.54
     },
     {
@@ -5888,9 +5888,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.05,
-      "estimate_mbgl": 3.6,
-      "band_p10": 2.64,
-      "band_p90": 4.73,
+      "estimate_mbgl": 3.61,
+      "band_p10": 2.58,
+      "band_p90": 4.1,
       "trend_m_per_yr": -0.85
     },
     {
@@ -5902,9 +5902,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 15.76,
-      "estimate_mbgl": 16.3,
-      "band_p10": 14.02,
-      "band_p90": 17.38,
+      "estimate_mbgl": 16.52,
+      "band_p10": 14.22,
+      "band_p90": 17.58,
       "trend_m_per_yr": -1.43
     },
     {
@@ -5916,9 +5916,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.61,
-      "estimate_mbgl": 11.52,
-      "band_p10": 8.42,
-      "band_p90": 13.04,
+      "estimate_mbgl": 11.44,
+      "band_p10": 7.92,
+      "band_p90": 13.32,
       "trend_m_per_yr": 6.0
     },
     {
@@ -5930,9 +5930,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 11.59,
-      "estimate_mbgl": 12.21,
-      "band_p10": 10.94,
-      "band_p90": 13.25,
+      "estimate_mbgl": 12.25,
+      "band_p10": 11.03,
+      "band_p90": 13.28,
       "trend_m_per_yr": -3.02
     },
     {
@@ -5944,9 +5944,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 22.4,
-      "estimate_mbgl": 19.88,
-      "band_p10": 19.31,
-      "band_p90": 22.25,
+      "estimate_mbgl": 20.27,
+      "band_p10": 19.07,
+      "band_p90": 21.97,
       "trend_m_per_yr": 5.72
     },
     {
@@ -5958,9 +5958,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.17,
-      "estimate_mbgl": 5.9,
-      "band_p10": 4.95,
-      "band_p90": 7.35,
+      "estimate_mbgl": 5.93,
+      "band_p10": 5.08,
+      "band_p90": 7.1,
       "trend_m_per_yr": -1.94
     },
     {
@@ -5972,9 +5972,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.71,
-      "estimate_mbgl": 8.48,
-      "band_p10": 7.32,
-      "band_p90": 10.25,
+      "estimate_mbgl": 8.47,
+      "band_p10": 7.58,
+      "band_p90": 10.0,
       "trend_m_per_yr": 3.08
     },
     {
@@ -5986,9 +5986,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.06,
-      "estimate_mbgl": 3.55,
-      "band_p10": 0.43,
-      "band_p90": 6.52,
+      "estimate_mbgl": 3.85,
+      "band_p10": 0.13,
+      "band_p90": 7.72,
       "trend_m_per_yr": 0.39
     },
     {
@@ -6000,9 +6000,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 35.66,
-      "estimate_mbgl": 39.04,
-      "band_p10": 33.3,
-      "band_p90": 43.07,
+      "estimate_mbgl": 39.4,
+      "band_p10": 34.97,
+      "band_p90": 42.93,
       "trend_m_per_yr": 6.0
     },
     {
@@ -6014,9 +6014,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.62,
-      "estimate_mbgl": 5.64,
-      "band_p10": 4.99,
-      "band_p90": 6.95,
+      "estimate_mbgl": 5.72,
+      "band_p10": 4.76,
+      "band_p90": 6.77,
       "trend_m_per_yr": 3.42
     },
     {
@@ -6028,9 +6028,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 18.85,
-      "estimate_mbgl": 17.57,
+      "estimate_mbgl": 17.82,
       "band_p10": 15.82,
-      "band_p90": 20.05,
+      "band_p90": 19.97,
       "trend_m_per_yr": 3.46
     },
     {
@@ -6042,9 +6042,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.77,
-      "estimate_mbgl": 4.34,
-      "band_p10": 3.68,
-      "band_p90": 4.69,
+      "estimate_mbgl": 4.26,
+      "band_p10": 3.84,
+      "band_p90": 4.79,
       "trend_m_per_yr": 0.67
     },
     {
@@ -6056,9 +6056,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.97,
-      "estimate_mbgl": 8.55,
-      "band_p10": 7.33,
-      "band_p90": 10.51,
+      "estimate_mbgl": 8.66,
+      "band_p10": 7.29,
+      "band_p90": 10.4,
       "trend_m_per_yr": 2.72
     },
     {
@@ -6070,9 +6070,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 14.57,
-      "estimate_mbgl": 11.87,
-      "band_p10": 9.69,
-      "band_p90": 13.84,
+      "estimate_mbgl": 12.19,
+      "band_p10": 9.99,
+      "band_p90": 13.69,
       "trend_m_per_yr": 6.0
     },
     {
@@ -6084,9 +6084,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.5,
-      "estimate_mbgl": 5.92,
-      "band_p10": 5.05,
-      "band_p90": 7.37,
+      "estimate_mbgl": 5.97,
+      "band_p10": 4.88,
+      "band_p90": 7.14,
       "trend_m_per_yr": 1.9
     },
     {
@@ -6098,9 +6098,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.13,
-      "estimate_mbgl": 4.26,
-      "band_p10": 2.47,
-      "band_p90": 5.01,
+      "estimate_mbgl": 4.47,
+      "band_p10": 2.35,
+      "band_p90": 5.03,
       "trend_m_per_yr": 2.65
     },
     {
@@ -6112,9 +6112,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.54,
-      "estimate_mbgl": 3.82,
-      "band_p10": 2.84,
-      "band_p90": 4.3,
+      "estimate_mbgl": 3.76,
+      "band_p10": 3.03,
+      "band_p90": 4.22,
       "trend_m_per_yr": 0.77
     },
     {
@@ -6126,9 +6126,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.49,
-      "estimate_mbgl": 3.47,
-      "band_p10": 2.08,
-      "band_p90": 5.73,
+      "estimate_mbgl": 3.49,
+      "band_p10": 2.11,
+      "band_p90": 6.19,
       "trend_m_per_yr": 2.18
     },
     {
@@ -6140,9 +6140,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.32,
-      "estimate_mbgl": 5.57,
-      "band_p10": 4.9,
-      "band_p90": 7.15,
+      "estimate_mbgl": 5.55,
+      "band_p10": 4.77,
+      "band_p90": 7.01,
       "trend_m_per_yr": 2.02
     },
     {
@@ -6154,9 +6154,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.46,
-      "estimate_mbgl": 7.41,
-      "band_p10": 7.12,
-      "band_p90": 8.14,
+      "estimate_mbgl": 7.74,
+      "band_p10": 7.33,
+      "band_p90": 8.01,
       "trend_m_per_yr": 1.52
     },
     {
@@ -6168,9 +6168,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.1,
-      "estimate_mbgl": 5.89,
-      "band_p10": 5.05,
-      "band_p90": 7.1,
+      "estimate_mbgl": 5.98,
+      "band_p10": 5.31,
+      "band_p90": 7.12,
       "trend_m_per_yr": 2.3
     },
     {
@@ -6182,9 +6182,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 15.65,
-      "estimate_mbgl": 12.41,
-      "band_p10": 10.09,
-      "band_p90": 14.04,
+      "estimate_mbgl": 12.26,
+      "band_p10": 9.47,
+      "band_p90": 14.33,
       "trend_m_per_yr": 6.0
     },
     {
@@ -6196,9 +6196,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 9.05,
-      "estimate_mbgl": 6.23,
-      "band_p10": 4.07,
-      "band_p90": 8.1,
+      "estimate_mbgl": 6.55,
+      "band_p10": 4.21,
+      "band_p90": 7.86,
       "trend_m_per_yr": 5.75
     },
     {
@@ -6210,9 +6210,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.64,
-      "estimate_mbgl": 3.89,
-      "band_p10": 3.17,
-      "band_p90": 4.88,
+      "estimate_mbgl": 3.94,
+      "band_p10": 2.98,
+      "band_p90": 4.65,
       "trend_m_per_yr": 1.38
     },
     {
@@ -6224,9 +6224,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.39,
-      "estimate_mbgl": 3.04,
-      "band_p10": 1.38,
-      "band_p90": 4.07,
+      "estimate_mbgl": 3.17,
+      "band_p10": 1.68,
+      "band_p90": 4.25,
       "trend_m_per_yr": 1.94
     },
     {
@@ -6238,9 +6238,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 13.22,
-      "estimate_mbgl": 12.06,
-      "band_p10": 11.61,
-      "band_p90": 13.68,
+      "estimate_mbgl": 12.12,
+      "band_p10": 11.72,
+      "band_p90": 13.6,
       "trend_m_per_yr": 1.15
     },
     {
@@ -6252,9 +6252,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 32.22,
-      "estimate_mbgl": 30.84,
-      "band_p10": 27.7,
-      "band_p90": 36.44,
+      "estimate_mbgl": 30.82,
+      "band_p10": 29.61,
+      "band_p90": 35.2,
       "trend_m_per_yr": 2.24
     },
     {
@@ -6266,9 +6266,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 10.02,
-      "estimate_mbgl": 8.68,
-      "band_p10": 8.23,
-      "band_p90": 10.04,
+      "estimate_mbgl": 8.85,
+      "band_p10": 7.89,
+      "band_p90": 9.94,
       "trend_m_per_yr": 1.07
     },
     {
@@ -6280,9 +6280,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.85,
-      "estimate_mbgl": 5.75,
-      "band_p10": 4.53,
-      "band_p90": 6.98,
+      "estimate_mbgl": 5.79,
+      "band_p10": 4.74,
+      "band_p90": 7.05,
       "trend_m_per_yr": 2.05
     },
     {
@@ -6294,9 +6294,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.47,
-      "estimate_mbgl": 7.26,
-      "band_p10": 6.66,
-      "band_p90": 8.83,
+      "estimate_mbgl": 7.43,
+      "band_p10": 6.5,
+      "band_p90": 8.59,
       "trend_m_per_yr": 0.02
     },
     {
@@ -6308,9 +6308,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.13,
-      "estimate_mbgl": 3.89,
+      "estimate_mbgl": 3.91,
       "band_p10": 3.27,
-      "band_p90": 4.27,
+      "band_p90": 4.25,
       "trend_m_per_yr": -0.24
     },
     {
@@ -6322,9 +6322,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 13.79,
-      "estimate_mbgl": 13.45,
-      "band_p10": 11.95,
-      "band_p90": 15.06,
+      "estimate_mbgl": 13.68,
+      "band_p10": 11.65,
+      "band_p90": 14.89,
       "trend_m_per_yr": 3.24
     },
     {
@@ -6336,9 +6336,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 17.57,
-      "estimate_mbgl": 19.83,
-      "band_p10": 17.42,
-      "band_p90": 20.75,
+      "estimate_mbgl": 19.9,
+      "band_p10": 17.05,
+      "band_p90": 20.35,
       "trend_m_per_yr": 0.31
     },
     {
@@ -6350,9 +6350,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 46.98,
-      "estimate_mbgl": 46.55,
-      "band_p10": 42.79,
-      "band_p90": 49.84,
+      "estimate_mbgl": 46.44,
+      "band_p10": 44.11,
+      "band_p90": 50.08,
       "trend_m_per_yr": 5.78
     },
     {
@@ -6364,9 +6364,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.24,
-      "estimate_mbgl": 6.27,
-      "band_p10": 5.55,
-      "band_p90": 7.7,
+      "estimate_mbgl": 6.61,
+      "band_p10": 5.65,
+      "band_p90": 7.69,
       "trend_m_per_yr": 3.0
     },
     {
@@ -6378,9 +6378,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.82,
-      "estimate_mbgl": 7.49,
+      "estimate_mbgl": 7.65,
       "band_p10": 6.67,
-      "band_p90": 9.09,
+      "band_p90": 9.16,
       "trend_m_per_yr": 1.18
     },
     {
@@ -6392,9 +6392,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.18,
-      "estimate_mbgl": 3.72,
-      "band_p10": 2.71,
-      "band_p90": 4.62,
+      "estimate_mbgl": 3.84,
+      "band_p10": 2.82,
+      "band_p90": 4.4,
       "trend_m_per_yr": 0.55
     },
     {
@@ -6406,9 +6406,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.77,
-      "estimate_mbgl": 10.45,
-      "band_p10": 9.78,
-      "band_p90": 12.0,
+      "estimate_mbgl": 10.42,
+      "band_p10": 10.08,
+      "band_p90": 11.96,
       "trend_m_per_yr": -3.68
     },
     {
@@ -6420,9 +6420,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 29.01,
-      "estimate_mbgl": 22.34,
-      "band_p10": 15.98,
-      "band_p90": 28.58,
+      "estimate_mbgl": 22.79,
+      "band_p10": 15.31,
+      "band_p90": 27.53,
       "trend_m_per_yr": 3.64
     },
     {
@@ -6434,9 +6434,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.71,
-      "estimate_mbgl": 6.6,
-      "band_p10": 5.82,
-      "band_p90": 7.3,
+      "estimate_mbgl": 6.56,
+      "band_p10": 5.75,
+      "band_p90": 7.35,
       "trend_m_per_yr": 0.94
     },
     {
@@ -6448,9 +6448,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.35,
-      "estimate_mbgl": 6.01,
-      "band_p10": 5.25,
-      "band_p90": 7.43,
+      "estimate_mbgl": 6.05,
+      "band_p10": 5.43,
+      "band_p90": 7.34,
       "trend_m_per_yr": 2.54
     },
     {
@@ -6462,9 +6462,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.0,
-      "estimate_mbgl": 5.32,
-      "band_p10": 3.92,
-      "band_p90": 7.02,
+      "estimate_mbgl": 5.36,
+      "band_p10": 3.67,
+      "band_p90": 6.99,
       "trend_m_per_yr": 3.12
     },
     {
@@ -6476,9 +6476,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.76,
-      "estimate_mbgl": 9.76,
-      "band_p10": 8.51,
-      "band_p90": 12.07,
+      "estimate_mbgl": 9.69,
+      "band_p10": 8.39,
+      "band_p90": 11.48,
       "trend_m_per_yr": -1.26
     },
     {
@@ -6490,9 +6490,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.28,
-      "estimate_mbgl": 7.23,
-      "band_p10": 5.62,
-      "band_p90": 8.94,
+      "estimate_mbgl": 7.41,
+      "band_p10": 5.8,
+      "band_p90": 8.78,
       "trend_m_per_yr": 2.29
     },
     {
@@ -6504,9 +6504,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.42,
-      "estimate_mbgl": 3.72,
-      "band_p10": 2.73,
-      "band_p90": 4.12,
+      "estimate_mbgl": 3.73,
+      "band_p10": 2.82,
+      "band_p90": 3.84,
       "trend_m_per_yr": 0.93
     },
     {
@@ -6518,9 +6518,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.26,
-      "estimate_mbgl": 8.42,
-      "band_p10": 6.3,
-      "band_p90": 9.6,
+      "estimate_mbgl": 8.41,
+      "band_p10": 6.17,
+      "band_p90": 9.74,
       "trend_m_per_yr": 1.27
     },
     {
@@ -6532,9 +6532,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.85,
-      "estimate_mbgl": 7.85,
-      "band_p10": 6.73,
-      "band_p90": 8.61,
+      "estimate_mbgl": 7.96,
+      "band_p10": 6.58,
+      "band_p90": 8.55,
       "trend_m_per_yr": -0.15
     },
     {
@@ -6546,9 +6546,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 2.58,
-      "estimate_mbgl": 3.3,
-      "band_p10": 2.18,
-      "band_p90": 4.68,
+      "estimate_mbgl": 3.4,
+      "band_p10": 2.29,
+      "band_p90": 4.55,
       "trend_m_per_yr": -0.81
     },
     {
@@ -6560,9 +6560,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 11.33,
-      "estimate_mbgl": 9.33,
-      "band_p10": 8.46,
-      "band_p90": 10.47,
+      "estimate_mbgl": 9.54,
+      "band_p10": 8.33,
+      "band_p90": 10.55,
       "trend_m_per_yr": 2.13
     },
     {
@@ -6574,9 +6574,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.42,
-      "estimate_mbgl": 1.41,
-      "band_p10": 1.17,
-      "band_p90": 1.64,
+      "estimate_mbgl": 1.39,
+      "band_p10": 1.21,
+      "band_p90": 1.66,
       "trend_m_per_yr": 0.48
     },
     {
@@ -6588,9 +6588,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.21,
-      "estimate_mbgl": 2.21,
-      "band_p10": 1.56,
-      "band_p90": 2.8,
+      "estimate_mbgl": 2.32,
+      "band_p10": 1.69,
+      "band_p90": 2.83,
       "trend_m_per_yr": 1.58
     },
     {
@@ -6602,9 +6602,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.34,
-      "estimate_mbgl": 3.6,
-      "band_p10": 3.0,
-      "band_p90": 3.8,
+      "estimate_mbgl": 3.66,
+      "band_p10": 3.16,
+      "band_p90": 4.1,
       "trend_m_per_yr": -0.44
     },
     {
@@ -6617,8 +6617,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 9.37,
       "estimate_mbgl": 9.43,
-      "band_p10": 8.88,
-      "band_p90": 9.93,
+      "band_p10": 9.23,
+      "band_p90": 10.27,
       "trend_m_per_yr": 1.96
     },
     {
@@ -6630,9 +6630,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 28.65,
-      "estimate_mbgl": 28.54,
-      "band_p10": 22.9,
-      "band_p90": 31.67,
+      "estimate_mbgl": 28.84,
+      "band_p10": 22.68,
+      "band_p90": 30.69,
       "trend_m_per_yr": -2.12
     },
     {
@@ -6644,9 +6644,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 7.06,
-      "estimate_mbgl": 6.54,
-      "band_p10": 5.19,
-      "band_p90": 7.88,
+      "estimate_mbgl": 6.84,
+      "band_p10": 5.27,
+      "band_p90": 7.82,
       "trend_m_per_yr": 3.44
     },
     {
@@ -6658,9 +6658,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.99,
-      "estimate_mbgl": 3.64,
-      "band_p10": 2.86,
-      "band_p90": 4.37,
+      "estimate_mbgl": 3.7,
+      "band_p10": 2.99,
+      "band_p90": 4.27,
       "trend_m_per_yr": 0.71
     },
     {
@@ -6672,9 +6672,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.51,
-      "estimate_mbgl": 5.39,
-      "band_p10": 3.76,
-      "band_p90": 7.08,
+      "estimate_mbgl": 5.52,
+      "band_p10": 3.67,
+      "band_p90": 7.2,
       "trend_m_per_yr": 4.89
     },
     {
@@ -6686,8 +6686,8 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.92,
-      "estimate_mbgl": 3.39,
-      "band_p10": 2.16,
+      "estimate_mbgl": 3.45,
+      "band_p10": 2.23,
       "band_p90": 4.35,
       "trend_m_per_yr": 1.97
     },
@@ -6700,9 +6700,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 12.93,
-      "estimate_mbgl": 12.92,
-      "band_p10": 11.7,
-      "band_p90": 14.67,
+      "estimate_mbgl": 12.93,
+      "band_p10": 11.1,
+      "band_p90": 14.48,
       "trend_m_per_yr": 1.02
     },
     {
@@ -6714,9 +6714,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 21.2,
-      "estimate_mbgl": 17.63,
-      "band_p10": 16.06,
-      "band_p90": 22.19,
+      "estimate_mbgl": 17.59,
+      "band_p10": 16.57,
+      "band_p90": 21.35,
       "trend_m_per_yr": 6.0
     },
     {
@@ -6728,9 +6728,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 19.66,
-      "estimate_mbgl": 17.6,
-      "band_p10": 13.59,
-      "band_p90": 20.11,
+      "estimate_mbgl": 18.0,
+      "band_p10": 14.06,
+      "band_p90": 20.09,
       "trend_m_per_yr": 6.0
     },
     {
@@ -6742,9 +6742,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.86,
-      "estimate_mbgl": 4.49,
-      "band_p10": 3.84,
-      "band_p90": 5.51,
+      "estimate_mbgl": 4.57,
+      "band_p10": 4.04,
+      "band_p90": 5.42,
       "trend_m_per_yr": -0.08
     },
     {
@@ -6756,9 +6756,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 13.49,
-      "estimate_mbgl": 11.37,
-      "band_p10": 9.54,
-      "band_p90": 12.88,
+      "estimate_mbgl": 11.29,
+      "band_p10": 9.37,
+      "band_p90": 13.0,
       "trend_m_per_yr": 4.61
     },
     {
@@ -6770,9 +6770,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 10.0,
-      "estimate_mbgl": 9.25,
-      "band_p10": 8.23,
-      "band_p90": 10.29,
+      "estimate_mbgl": 9.32,
+      "band_p10": 7.92,
+      "band_p90": 10.91,
       "trend_m_per_yr": 2.8
     },
     {
@@ -6784,9 +6784,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 1.99,
-      "estimate_mbgl": 1.86,
-      "band_p10": 1.51,
-      "band_p90": 1.88,
+      "estimate_mbgl": 1.75,
+      "band_p10": 1.56,
+      "band_p90": 1.92,
       "trend_m_per_yr": 0.74
     },
     {
@@ -6798,9 +6798,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 51.34,
-      "estimate_mbgl": 50.23,
-      "band_p10": 46.83,
-      "band_p90": 54.03,
+      "estimate_mbgl": 50.39,
+      "band_p10": 45.89,
+      "band_p90": 54.25,
       "trend_m_per_yr": 6.0
     },
     {
@@ -6812,9 +6812,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.87,
-      "estimate_mbgl": 8.9,
-      "band_p10": 8.64,
-      "band_p90": 9.44,
+      "estimate_mbgl": 9.09,
+      "band_p10": 8.74,
+      "band_p90": 9.38,
       "trend_m_per_yr": 1.68
     },
     {
@@ -6826,9 +6826,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.82,
-      "estimate_mbgl": 4.57,
-      "band_p10": 4.14,
-      "band_p90": 5.54,
+      "estimate_mbgl": 4.66,
+      "band_p10": 4.26,
+      "band_p90": 5.49,
       "trend_m_per_yr": 0.66
     },
     {
@@ -6840,9 +6840,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.17,
-      "estimate_mbgl": 3.93,
-      "band_p10": 2.36,
-      "band_p90": 4.78,
+      "estimate_mbgl": 3.91,
+      "band_p10": 2.18,
+      "band_p90": 4.86,
       "trend_m_per_yr": 1.91
     },
     {
@@ -6854,9 +6854,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 13.79,
-      "estimate_mbgl": 13.53,
-      "band_p10": 12.68,
-      "band_p90": 14.69,
+      "estimate_mbgl": 13.71,
+      "band_p10": 13.02,
+      "band_p90": 14.66,
       "trend_m_per_yr": 0.07
     },
     {
@@ -6868,9 +6868,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.87,
-      "estimate_mbgl": 5.72,
-      "band_p10": 4.33,
-      "band_p90": 6.92,
+      "estimate_mbgl": 5.64,
+      "band_p10": 4.52,
+      "band_p90": 6.83,
       "trend_m_per_yr": 3.14
     },
     {
@@ -6882,9 +6882,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.5,
-      "estimate_mbgl": 3.11,
-      "band_p10": 2.53,
-      "band_p90": 3.12,
+      "estimate_mbgl": 3.14,
+      "band_p10": 2.34,
+      "band_p90": 3.24,
       "trend_m_per_yr": 1.1
     },
     {
@@ -6896,9 +6896,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 20.18,
-      "estimate_mbgl": 19.08,
-      "band_p10": 15.76,
-      "band_p90": 20.56,
+      "estimate_mbgl": 19.18,
+      "band_p10": 15.08,
+      "band_p90": 20.36,
       "trend_m_per_yr": 6.0
     },
     {
@@ -6910,9 +6910,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 1.28,
-      "estimate_mbgl": 2.46,
-      "band_p10": 1.27,
-      "band_p90": 3.08,
+      "estimate_mbgl": 2.49,
+      "band_p10": 1.3,
+      "band_p90": 2.97,
       "trend_m_per_yr": 0.53
     },
     {
@@ -6924,9 +6924,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.4,
-      "estimate_mbgl": 7.82,
+      "estimate_mbgl": 7.74,
       "band_p10": 5.49,
-      "band_p90": 9.59,
+      "band_p90": 9.83,
       "trend_m_per_yr": 6.0
     },
     {
@@ -6938,9 +6938,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.52,
-      "estimate_mbgl": 4.79,
-      "band_p10": 3.17,
-      "band_p90": 5.26,
+      "estimate_mbgl": 4.8,
+      "band_p10": 3.16,
+      "band_p90": 5.42,
       "trend_m_per_yr": 1.9
     },
     {
@@ -6952,9 +6952,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 13.43,
-      "estimate_mbgl": 12.22,
-      "band_p10": 10.88,
-      "band_p90": 13.4,
+      "estimate_mbgl": 12.2,
+      "band_p10": 10.51,
+      "band_p90": 13.32,
       "trend_m_per_yr": 2.48
     },
     {
@@ -6966,9 +6966,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 13.54,
-      "estimate_mbgl": 15.95,
-      "band_p10": 14.9,
-      "band_p90": 16.5,
+      "estimate_mbgl": 15.92,
+      "band_p10": 15.04,
+      "band_p90": 16.86,
       "trend_m_per_yr": -1.77
     },
     {
@@ -6980,9 +6980,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 1.63,
-      "estimate_mbgl": 2.8,
-      "band_p10": 1.71,
-      "band_p90": 3.5,
+      "estimate_mbgl": 2.89,
+      "band_p10": 1.92,
+      "band_p90": 3.65,
       "trend_m_per_yr": 0.96
     },
     {
@@ -6994,9 +6994,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 14.36,
-      "estimate_mbgl": 14.13,
-      "band_p10": 11.95,
-      "band_p90": 14.77,
+      "estimate_mbgl": 13.85,
+      "band_p10": 11.58,
+      "band_p90": 15.6,
       "trend_m_per_yr": -5.56
     },
     {
@@ -7008,9 +7008,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.96,
-      "estimate_mbgl": 5.38,
+      "estimate_mbgl": 5.52,
       "band_p10": 4.43,
-      "band_p90": 6.3,
+      "band_p90": 6.28,
       "trend_m_per_yr": 0.38
     },
     {
@@ -7022,9 +7022,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.1,
-      "estimate_mbgl": 1.71,
-      "band_p10": 0.85,
-      "band_p90": 2.05,
+      "estimate_mbgl": 1.73,
+      "band_p10": 0.91,
+      "band_p90": 2.13,
       "trend_m_per_yr": 1.64
     },
     {
@@ -7036,9 +7036,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.33,
-      "estimate_mbgl": 2.26,
-      "band_p10": 1.67,
-      "band_p90": 2.56,
+      "estimate_mbgl": 2.42,
+      "band_p10": 1.75,
+      "band_p90": 2.65,
       "trend_m_per_yr": 0.93
     },
     {
@@ -7050,9 +7050,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.17,
-      "estimate_mbgl": 2.15,
-      "band_p10": 1.83,
-      "band_p90": 2.51,
+      "estimate_mbgl": 2.28,
+      "band_p10": 1.84,
+      "band_p90": 2.54,
       "trend_m_per_yr": 0.76
     },
     {
@@ -7064,9 +7064,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.25,
-      "estimate_mbgl": 5.12,
-      "band_p10": 3.82,
-      "band_p90": 6.84,
+      "estimate_mbgl": 5.15,
+      "band_p10": 4.06,
+      "band_p90": 6.45,
       "trend_m_per_yr": 2.82
     },
     {
@@ -7078,9 +7078,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.67,
-      "estimate_mbgl": 11.14,
-      "band_p10": 9.89,
-      "band_p90": 12.44,
+      "estimate_mbgl": 11.07,
+      "band_p10": 9.78,
+      "band_p90": 12.34,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7092,9 +7092,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 12.8,
-      "estimate_mbgl": 11.35,
-      "band_p10": 9.71,
-      "band_p90": 12.5,
+      "estimate_mbgl": 11.31,
+      "band_p10": 9.33,
+      "band_p90": 12.54,
       "trend_m_per_yr": 5.5
     },
     {
@@ -7106,9 +7106,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.78,
-      "estimate_mbgl": 7.04,
-      "band_p10": 5.58,
-      "band_p90": 7.62,
+      "estimate_mbgl": 7.05,
+      "band_p10": 5.77,
+      "band_p90": 7.44,
       "trend_m_per_yr": 2.18
     },
     {
@@ -7120,9 +7120,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.88,
-      "estimate_mbgl": 6.92,
-      "band_p10": 6.44,
-      "band_p90": 7.69,
+      "estimate_mbgl": 7.08,
+      "band_p10": 6.53,
+      "band_p90": 7.79,
       "trend_m_per_yr": 1.76
     },
     {
@@ -7134,9 +7134,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 25.18,
-      "estimate_mbgl": 21.61,
-      "band_p10": 16.1,
-      "band_p90": 25.93,
+      "estimate_mbgl": 22.13,
+      "band_p10": 16.32,
+      "band_p90": 26.27,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7149,8 +7149,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 5.17,
       "estimate_mbgl": 5.2,
-      "band_p10": 4.5,
-      "band_p90": 5.79,
+      "band_p10": 4.57,
+      "band_p90": 5.85,
       "trend_m_per_yr": 0.43
     },
     {
@@ -7162,9 +7162,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.55,
-      "estimate_mbgl": 7.75,
-      "band_p10": 7.21,
-      "band_p90": 8.45,
+      "estimate_mbgl": 7.92,
+      "band_p10": 7.07,
+      "band_p90": 8.63,
       "trend_m_per_yr": 1.23
     },
     {
@@ -7176,9 +7176,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.89,
-      "estimate_mbgl": 8.73,
-      "band_p10": 1.32,
-      "band_p90": 9.74,
+      "estimate_mbgl": 9.01,
+      "band_p10": 1.61,
+      "band_p90": 9.42,
       "trend_m_per_yr": -6.0
     },
     {
@@ -7190,9 +7190,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 11.28,
-      "estimate_mbgl": 10.65,
-      "band_p10": 8.74,
-      "band_p90": 11.98,
+      "estimate_mbgl": 10.59,
+      "band_p10": 8.92,
+      "band_p90": 11.91,
       "trend_m_per_yr": 4.47
     },
     {
@@ -7204,9 +7204,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.29,
-      "estimate_mbgl": 4.86,
-      "band_p10": 3.77,
-      "band_p90": 5.87,
+      "estimate_mbgl": 4.97,
+      "band_p10": 3.72,
+      "band_p90": 5.93,
       "trend_m_per_yr": 1.32
     },
     {
@@ -7218,9 +7218,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.14,
-      "estimate_mbgl": 3.13,
-      "band_p10": 2.29,
-      "band_p90": 4.05,
+      "estimate_mbgl": 3.27,
+      "band_p10": 2.3,
+      "band_p90": 4.24,
       "trend_m_per_yr": 0.04
     },
     {
@@ -7232,9 +7232,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 29.82,
-      "estimate_mbgl": 29.9,
-      "band_p10": 23.77,
-      "band_p90": 32.47,
+      "estimate_mbgl": 30.21,
+      "band_p10": 25.31,
+      "band_p90": 32.45,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7246,9 +7246,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.32,
-      "estimate_mbgl": 4.1,
-      "band_p10": 2.95,
-      "band_p90": 5.29,
+      "estimate_mbgl": 4.21,
+      "band_p10": 2.94,
+      "band_p90": 5.1,
       "trend_m_per_yr": 0.88
     },
     {
@@ -7260,9 +7260,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.26,
-      "estimate_mbgl": 7.6,
-      "band_p10": 5.19,
-      "band_p90": 7.71,
+      "estimate_mbgl": 7.63,
+      "band_p10": 5.1,
+      "band_p90": 7.91,
       "trend_m_per_yr": 3.97
     },
     {
@@ -7274,9 +7274,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 41.8,
-      "estimate_mbgl": 39.64,
-      "band_p10": 35.17,
-      "band_p90": 44.54,
+      "estimate_mbgl": 39.53,
+      "band_p10": 35.27,
+      "band_p90": 44.15,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7289,8 +7289,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 16.69,
       "estimate_mbgl": 16.91,
-      "band_p10": 15.25,
-      "band_p90": 17.83,
+      "band_p10": 14.89,
+      "band_p90": 17.87,
       "trend_m_per_yr": 3.48
     },
     {
@@ -7302,9 +7302,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 17.63,
-      "estimate_mbgl": 13.56,
-      "band_p10": 12.6,
-      "band_p90": 14.49,
+      "estimate_mbgl": 13.45,
+      "band_p10": 12.19,
+      "band_p90": 14.79,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7316,9 +7316,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.67,
-      "estimate_mbgl": 12.06,
-      "band_p10": 10.71,
-      "band_p90": 13.83,
+      "estimate_mbgl": 12.26,
+      "band_p10": 9.77,
+      "band_p90": 14.02,
       "trend_m_per_yr": 4.55
     },
     {
@@ -7330,9 +7330,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.8,
-      "estimate_mbgl": 7.78,
-      "band_p10": 7.13,
-      "band_p90": 8.65,
+      "estimate_mbgl": 7.79,
+      "band_p10": 7.33,
+      "band_p90": 8.6,
       "trend_m_per_yr": -1.33
     },
     {
@@ -7344,9 +7344,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 0.89,
-      "estimate_mbgl": 1.92,
-      "band_p10": 0.54,
-      "band_p90": 3.33,
+      "estimate_mbgl": 1.73,
+      "band_p10": 0.7,
+      "band_p90": 3.03,
       "trend_m_per_yr": 0.86
     },
     {
@@ -7358,9 +7358,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 20.5,
-      "estimate_mbgl": 14.25,
-      "band_p10": 10.31,
-      "band_p90": 17.54,
+      "estimate_mbgl": 13.98,
+      "band_p10": 10.24,
+      "band_p90": 17.71,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7372,9 +7372,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 9.2,
-      "estimate_mbgl": 8.68,
-      "band_p10": 8.0,
-      "band_p90": 9.76,
+      "estimate_mbgl": 8.85,
+      "band_p10": 8.16,
+      "band_p90": 9.67,
       "trend_m_per_yr": 2.72
     },
     {
@@ -7386,9 +7386,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 9.39,
-      "estimate_mbgl": 7.27,
-      "band_p10": 5.15,
-      "band_p90": 9.49,
+      "estimate_mbgl": 7.43,
+      "band_p10": 5.25,
+      "band_p90": 9.5,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7400,9 +7400,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.83,
-      "estimate_mbgl": 5.13,
-      "band_p10": 4.4,
-      "band_p90": 5.81,
+      "estimate_mbgl": 5.15,
+      "band_p10": 4.48,
+      "band_p90": 5.62,
       "trend_m_per_yr": -0.09
     },
     {
@@ -7414,9 +7414,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 28.1,
-      "estimate_mbgl": 27.3,
-      "band_p10": 25.94,
-      "band_p90": 29.08,
+      "estimate_mbgl": 27.59,
+      "band_p10": 25.97,
+      "band_p90": 28.95,
       "trend_m_per_yr": 4.28
     },
     {
@@ -7428,9 +7428,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 9.11,
-      "estimate_mbgl": 9.61,
-      "band_p10": 6.21,
-      "band_p90": 10.82,
+      "estimate_mbgl": 9.6,
+      "band_p10": 6.51,
+      "band_p90": 10.71,
       "trend_m_per_yr": 5.69
     },
     {
@@ -7442,9 +7442,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.64,
-      "estimate_mbgl": 6.39,
-      "band_p10": 5.62,
-      "band_p90": 7.28,
+      "estimate_mbgl": 6.46,
+      "band_p10": 5.69,
+      "band_p90": 7.27,
       "trend_m_per_yr": 0.67
     },
     {
@@ -7456,9 +7456,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.29,
-      "estimate_mbgl": 5.01,
-      "band_p10": 4.19,
-      "band_p90": 5.62,
+      "estimate_mbgl": 5.02,
+      "band_p10": 4.42,
+      "band_p90": 5.83,
       "trend_m_per_yr": 1.22
     },
     {
@@ -7470,9 +7470,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 16.03,
-      "estimate_mbgl": 14.03,
-      "band_p10": 12.99,
-      "band_p90": 16.35,
+      "estimate_mbgl": 14.08,
+      "band_p10": 12.4,
+      "band_p90": 16.22,
       "trend_m_per_yr": 1.71
     },
     {
@@ -7484,9 +7484,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 15.62,
-      "estimate_mbgl": 14.59,
-      "band_p10": 13.17,
-      "band_p90": 16.77,
+      "estimate_mbgl": 14.65,
+      "band_p10": 12.52,
+      "band_p90": 16.76,
       "trend_m_per_yr": 1.49
     },
     {
@@ -7498,9 +7498,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 21.65,
-      "estimate_mbgl": 17.21,
-      "band_p10": 14.01,
-      "band_p90": 19.72,
+      "estimate_mbgl": 17.33,
+      "band_p10": 13.78,
+      "band_p90": 19.74,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7512,9 +7512,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.2,
-      "estimate_mbgl": 7.0,
-      "band_p10": 6.41,
-      "band_p90": 7.78,
+      "estimate_mbgl": 6.96,
+      "band_p10": 6.43,
+      "band_p90": 8.12,
       "trend_m_per_yr": 1.97
     },
     {
@@ -7526,9 +7526,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 18.72,
-      "estimate_mbgl": 16.03,
-      "band_p10": 12.57,
-      "band_p90": 19.8,
+      "estimate_mbgl": 16.04,
+      "band_p10": 13.33,
+      "band_p90": 19.31,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7540,9 +7540,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.17,
-      "estimate_mbgl": 7.68,
-      "band_p10": 6.32,
-      "band_p90": 9.23,
+      "estimate_mbgl": 7.81,
+      "band_p10": 6.51,
+      "band_p90": 8.94,
       "trend_m_per_yr": 2.47
     },
     {
@@ -7554,9 +7554,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.77,
-      "estimate_mbgl": 4.85,
-      "band_p10": 4.23,
-      "band_p90": 5.28,
+      "estimate_mbgl": 4.94,
+      "band_p10": 4.45,
+      "band_p90": 5.46,
       "trend_m_per_yr": 0.23
     },
     {
@@ -7568,9 +7568,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.6,
-      "estimate_mbgl": 8.67,
-      "band_p10": 7.83,
-      "band_p90": 9.33,
+      "estimate_mbgl": 8.58,
+      "band_p10": 7.45,
+      "band_p90": 9.29,
       "trend_m_per_yr": 1.54
     },
     {
@@ -7582,9 +7582,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 21.57,
-      "estimate_mbgl": 16.43,
-      "band_p10": 12.96,
-      "band_p90": 18.99,
+      "estimate_mbgl": 16.57,
+      "band_p10": 13.05,
+      "band_p90": 18.68,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7596,9 +7596,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.32,
-      "estimate_mbgl": 2.12,
-      "band_p10": 1.42,
-      "band_p90": 2.55,
+      "estimate_mbgl": 2.15,
+      "band_p10": 1.49,
+      "band_p90": 2.56,
       "trend_m_per_yr": 1.27
     },
     {
@@ -7610,9 +7610,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.96,
-      "estimate_mbgl": 5.36,
-      "band_p10": 4.47,
-      "band_p90": 6.1,
+      "estimate_mbgl": 5.32,
+      "band_p10": 4.62,
+      "band_p90": 6.0,
       "trend_m_per_yr": 0.36
     },
     {
@@ -7624,9 +7624,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 8.39,
-      "estimate_mbgl": 7.58,
-      "band_p10": 7.12,
-      "band_p90": 8.88,
+      "estimate_mbgl": 7.91,
+      "band_p10": 6.96,
+      "band_p90": 8.76,
       "trend_m_per_yr": 0.64
     },
     {
@@ -7638,9 +7638,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 35.73,
-      "estimate_mbgl": 26.3,
-      "band_p10": 22.25,
-      "band_p90": 29.34,
+      "estimate_mbgl": 26.19,
+      "band_p10": 22.7,
+      "band_p90": 29.11,
       "trend_m_per_yr": 6.0
     },
     {
@@ -7652,9 +7652,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.24,
-      "estimate_mbgl": 3.88,
-      "band_p10": 2.36,
-      "band_p90": 5.19,
+      "estimate_mbgl": 4.04,
+      "band_p10": 2.08,
+      "band_p90": 5.4,
       "trend_m_per_yr": 3.44
     },
     {
@@ -7666,9 +7666,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.14,
-      "estimate_mbgl": 1.44,
-      "band_p10": 1.02,
-      "band_p90": 1.65,
+      "estimate_mbgl": 1.43,
+      "band_p10": 1.01,
+      "band_p90": 1.59,
       "trend_m_per_yr": 0.21
     },
     {
@@ -7680,9 +7680,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.72,
-      "estimate_mbgl": 11.01,
-      "band_p10": 9.69,
-      "band_p90": 12.54,
+      "estimate_mbgl": 10.97,
+      "band_p10": 9.29,
+      "band_p90": 12.52,
       "trend_m_per_yr": 1.43
     },
     {
@@ -7694,9 +7694,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.88,
-      "estimate_mbgl": 6.12,
-      "band_p10": 4.79,
-      "band_p90": 7.5,
+      "estimate_mbgl": 6.3,
+      "band_p10": 4.86,
+      "band_p90": 7.3,
       "trend_m_per_yr": 3.58
     },
     {
@@ -7708,9 +7708,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 20.3,
-      "estimate_mbgl": 19.65,
-      "band_p10": 18.2,
-      "band_p90": 21.1,
+      "estimate_mbgl": 19.76,
+      "band_p10": 19.07,
+      "band_p90": 20.76,
       "trend_m_per_yr": 0.62
     },
     {
@@ -7722,9 +7722,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 9.76,
-      "estimate_mbgl": 7.21,
-      "band_p10": 6.18,
-      "band_p90": 8.19,
+      "estimate_mbgl": 7.24,
+      "band_p10": 6.23,
+      "band_p90": 7.9,
       "trend_m_per_yr": 4.16
     },
     {
@@ -7736,9 +7736,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.62,
-      "estimate_mbgl": 3.15,
-      "band_p10": 2.36,
-      "band_p90": 3.53,
+      "estimate_mbgl": 3.22,
+      "band_p10": 2.38,
+      "band_p90": 3.59,
       "trend_m_per_yr": 2.56
     },
     {
@@ -7750,9 +7750,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 13.9,
-      "estimate_mbgl": 14.92,
-      "band_p10": 13.71,
-      "band_p90": 16.71,
+      "estimate_mbgl": 15.06,
+      "band_p10": 13.97,
+      "band_p90": 16.49,
       "trend_m_per_yr": 1.38
     },
     {
@@ -7764,9 +7764,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.85,
-      "estimate_mbgl": 6.16,
-      "band_p10": 4.34,
-      "band_p90": 7.98,
+      "estimate_mbgl": 6.44,
+      "band_p10": 4.45,
+      "band_p90": 8.08,
       "trend_m_per_yr": 2.65
     },
     {
@@ -7778,9 +7778,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.48,
-      "estimate_mbgl": 3.11,
-      "band_p10": 2.66,
-      "band_p90": 3.37,
+      "estimate_mbgl": 3.18,
+      "band_p10": 2.65,
+      "band_p90": 3.48,
       "trend_m_per_yr": 0.04
     },
     {
@@ -7792,9 +7792,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 15.64,
-      "estimate_mbgl": 15.16,
-      "band_p10": 13.88,
-      "band_p90": 17.12,
+      "estimate_mbgl": 15.17,
+      "band_p10": 13.99,
+      "band_p90": 16.89,
       "trend_m_per_yr": 0.79
     },
     {
@@ -7806,9 +7806,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.98,
-      "estimate_mbgl": 7.34,
-      "band_p10": 6.71,
-      "band_p90": 7.98,
+      "estimate_mbgl": 7.5,
+      "band_p10": 6.76,
+      "band_p90": 8.18,
       "trend_m_per_yr": 1.73
     },
     {
@@ -7820,9 +7820,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.35,
-      "estimate_mbgl": 7.88,
-      "band_p10": 6.93,
-      "band_p90": 8.92,
+      "estimate_mbgl": 7.95,
+      "band_p10": 7.18,
+      "band_p90": 8.8,
       "trend_m_per_yr": 2.08
     },
     {
@@ -7834,9 +7834,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 21.62,
-      "estimate_mbgl": 18.93,
-      "band_p10": 16.18,
-      "band_p90": 22.27,
+      "estimate_mbgl": 18.99,
+      "band_p10": 15.93,
+      "band_p90": 21.58,
       "trend_m_per_yr": -0.53
     },
     {
@@ -7848,9 +7848,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.42,
-      "estimate_mbgl": 11.88,
-      "band_p10": 10.74,
-      "band_p90": 12.86,
+      "estimate_mbgl": 11.81,
+      "band_p10": 11.06,
+      "band_p90": 13.19,
       "trend_m_per_yr": 3.12
     },
     {
@@ -7862,9 +7862,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 17.37,
-      "estimate_mbgl": 15.47,
-      "band_p10": 12.71,
-      "band_p90": 18.18,
+      "estimate_mbgl": 15.64,
+      "band_p10": 12.7,
+      "band_p90": 18.32,
       "trend_m_per_yr": 2.9
     },
     {
@@ -7876,9 +7876,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 21.02,
-      "estimate_mbgl": 20.27,
-      "band_p10": 18.5,
-      "band_p90": 22.48,
+      "estimate_mbgl": 20.41,
+      "band_p10": 18.9,
+      "band_p90": 22.05,
       "trend_m_per_yr": 3.63
     },
     {
@@ -7891,8 +7891,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 0.83,
       "estimate_mbgl": 1.61,
-      "band_p10": 1.02,
-      "band_p90": 1.86,
+      "band_p10": 1.04,
+      "band_p90": 1.91,
       "trend_m_per_yr": 0.28
     },
     {
@@ -7904,9 +7904,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.97,
-      "estimate_mbgl": 5.44,
-      "band_p10": 3.6,
-      "band_p90": 6.04,
+      "estimate_mbgl": 5.38,
+      "band_p10": 3.56,
+      "band_p90": 6.09,
       "trend_m_per_yr": 3.35
     },
     {
@@ -7918,9 +7918,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.15,
-      "estimate_mbgl": 4.64,
-      "band_p10": 3.51,
-      "band_p90": 5.19,
+      "estimate_mbgl": 4.5,
+      "band_p10": 3.62,
+      "band_p90": 5.17,
       "trend_m_per_yr": 0.55
     },
     {
@@ -7932,9 +7932,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.59,
-      "estimate_mbgl": 6.09,
-      "band_p10": 5.53,
-      "band_p90": 7.64,
+      "estimate_mbgl": 6.16,
+      "band_p10": 5.42,
+      "band_p90": 7.31,
       "trend_m_per_yr": -0.99
     },
     {
@@ -7946,9 +7946,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 7.61,
-      "estimate_mbgl": 7.3,
-      "band_p10": 6.76,
-      "band_p90": 8.35,
+      "estimate_mbgl": 7.53,
+      "band_p10": 6.79,
+      "band_p90": 8.26,
       "trend_m_per_yr": 1.01
     },
     {
@@ -7960,9 +7960,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.25,
-      "estimate_mbgl": 11.9,
-      "band_p10": 11.1,
-      "band_p90": 12.98,
+      "estimate_mbgl": 11.46,
+      "band_p10": 10.75,
+      "band_p90": 13.33,
       "trend_m_per_yr": 2.52
     },
     {
@@ -7974,9 +7974,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 9.71,
-      "estimate_mbgl": 9.47,
-      "band_p10": 7.57,
-      "band_p90": 11.24,
+      "estimate_mbgl": 9.45,
+      "band_p10": 7.66,
+      "band_p90": 11.27,
       "trend_m_per_yr": -0.21
     },
     {
@@ -7988,9 +7988,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 1.25,
-      "estimate_mbgl": 1.69,
-      "band_p10": 1.1,
-      "band_p90": 2.42,
+      "estimate_mbgl": 1.73,
+      "band_p10": 1.24,
+      "band_p90": 2.45,
       "trend_m_per_yr": 0.53
     },
     {
@@ -8002,9 +8002,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 20.22,
-      "estimate_mbgl": 19.07,
-      "band_p10": 17.15,
-      "band_p90": 22.74,
+      "estimate_mbgl": 19.41,
+      "band_p10": 16.31,
+      "band_p90": 22.16,
       "trend_m_per_yr": 6.0
     },
     {
@@ -8016,9 +8016,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 8.68,
-      "estimate_mbgl": 8.41,
-      "band_p10": 6.63,
-      "band_p90": 10.35,
+      "estimate_mbgl": 8.45,
+      "band_p10": 6.42,
+      "band_p90": 9.95,
       "trend_m_per_yr": 4.59
     },
     {
@@ -8030,9 +8030,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.03,
-      "estimate_mbgl": 2.77,
-      "band_p10": 1.83,
-      "band_p90": 3.58,
+      "estimate_mbgl": 2.88,
+      "band_p10": 2.1,
+      "band_p90": 3.71,
       "trend_m_per_yr": 0.49
     },
     {
@@ -8044,9 +8044,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.43,
-      "estimate_mbgl": 5.1,
-      "band_p10": 4.27,
-      "band_p90": 6.07,
+      "estimate_mbgl": 5.26,
+      "band_p10": 4.14,
+      "band_p90": 6.15,
       "trend_m_per_yr": 1.96
     },
     {
@@ -8059,8 +8059,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 1.53,
       "estimate_mbgl": 1.72,
-      "band_p10": 1.35,
-      "band_p90": 2.07,
+      "band_p10": 1.42,
+      "band_p90": 2.09,
       "trend_m_per_yr": -0.02
     },
     {
@@ -8073,8 +8073,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 5.05,
       "estimate_mbgl": 4.65,
-      "band_p10": 2.6,
-      "band_p90": 5.79,
+      "band_p10": 2.48,
+      "band_p90": 5.69,
       "trend_m_per_yr": 4.2
     },
     {
@@ -8086,9 +8086,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.94,
-      "estimate_mbgl": 3.98,
-      "band_p10": 3.2,
-      "band_p90": 4.88,
+      "estimate_mbgl": 4.01,
+      "band_p10": 3.29,
+      "band_p90": 5.05,
       "trend_m_per_yr": 0.13
     },
     {
@@ -8100,9 +8100,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 6.23,
-      "estimate_mbgl": 6.54,
-      "band_p10": 5.3,
-      "band_p90": 8.05,
+      "estimate_mbgl": 6.73,
+      "band_p10": 5.34,
+      "band_p90": 7.83,
       "trend_m_per_yr": -0.1
     },
     {
@@ -8114,9 +8114,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.28,
-      "estimate_mbgl": 3.49,
-      "band_p10": 1.32,
-      "band_p90": 5.94,
+      "estimate_mbgl": 4.06,
+      "band_p10": 1.38,
+      "band_p90": 4.41,
       "trend_m_per_yr": -6.0
     },
     {
@@ -8129,8 +8129,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 1.13,
       "estimate_mbgl": 1.44,
-      "band_p10": 1.06,
-      "band_p90": 1.7,
+      "band_p10": 1.08,
+      "band_p90": 1.69,
       "trend_m_per_yr": 0.33
     },
     {
@@ -8142,9 +8142,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.73,
-      "estimate_mbgl": 2.16,
-      "band_p10": 1.41,
-      "band_p90": 2.73,
+      "estimate_mbgl": 2.08,
+      "band_p10": 1.61,
+      "band_p90": 2.76,
       "trend_m_per_yr": -0.46
     },
     {
@@ -8156,9 +8156,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 19.96,
-      "estimate_mbgl": 19.57,
-      "band_p10": 17.59,
-      "band_p90": 21.79,
+      "estimate_mbgl": 19.74,
+      "band_p10": 17.11,
+      "band_p90": 21.94,
       "trend_m_per_yr": 3.82
     },
     {
@@ -8170,9 +8170,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 2.71,
-      "estimate_mbgl": 3.04,
-      "band_p10": 2.45,
-      "band_p90": 3.59,
+      "estimate_mbgl": 3.13,
+      "band_p10": 2.29,
+      "band_p90": 3.78,
       "trend_m_per_yr": 0.57
     },
     {
@@ -8184,9 +8184,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.39,
-      "estimate_mbgl": 4.66,
-      "band_p10": 4.02,
-      "band_p90": 4.87,
+      "estimate_mbgl": 4.73,
+      "band_p10": 3.92,
+      "band_p90": 4.95,
       "trend_m_per_yr": -0.37
     },
     {
@@ -8198,9 +8198,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 19.2,
-      "estimate_mbgl": 18.49,
-      "band_p10": 16.96,
-      "band_p90": 19.9,
+      "estimate_mbgl": 18.59,
+      "band_p10": 17.0,
+      "band_p90": 19.46,
       "trend_m_per_yr": 2.38
     },
     {
@@ -8212,9 +8212,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 13.37,
-      "estimate_mbgl": 12.31,
-      "band_p10": 11.71,
-      "band_p90": 14.51,
+      "estimate_mbgl": 12.25,
+      "band_p10": 11.93,
+      "band_p90": 14.3,
       "trend_m_per_yr": 1.2
     },
     {
@@ -8226,9 +8226,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 9.65,
-      "estimate_mbgl": 8.55,
-      "band_p10": 7.6,
-      "band_p90": 9.45,
+      "estimate_mbgl": 8.59,
+      "band_p10": 7.36,
+      "band_p90": 9.79,
       "trend_m_per_yr": 3.35
     },
     {
@@ -8240,9 +8240,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.12,
-      "estimate_mbgl": 13.01,
-      "band_p10": 11.65,
-      "band_p90": 14.47,
+      "estimate_mbgl": 13.22,
+      "band_p10": 11.6,
+      "band_p90": 14.54,
       "trend_m_per_yr": 2.74
     },
     {
@@ -8254,9 +8254,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.11,
-      "estimate_mbgl": 9.6,
-      "band_p10": 8.39,
-      "band_p90": 11.19,
+      "estimate_mbgl": 9.53,
+      "band_p10": 8.35,
+      "band_p90": 10.98,
       "trend_m_per_yr": 1.84
     },
     {
@@ -8268,9 +8268,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 8.3,
-      "estimate_mbgl": 7.81,
-      "band_p10": 7.44,
-      "band_p90": 8.7,
+      "estimate_mbgl": 7.79,
+      "band_p10": 7.39,
+      "band_p90": 8.79,
       "trend_m_per_yr": 0.82
     },
     {
@@ -8282,9 +8282,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 5.85,
-      "estimate_mbgl": 5.47,
-      "band_p10": 4.52,
-      "band_p90": 5.99,
+      "estimate_mbgl": 5.54,
+      "band_p10": 4.71,
+      "band_p90": 6.14,
       "trend_m_per_yr": 1.91
     },
     {
@@ -8296,9 +8296,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.19,
-      "estimate_mbgl": 13.66,
-      "band_p10": 12.07,
-      "band_p90": 15.77,
+      "estimate_mbgl": 13.36,
+      "band_p10": 11.74,
+      "band_p90": 16.23,
       "trend_m_per_yr": 3.81
     },
     {
@@ -8310,9 +8310,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.73,
-      "estimate_mbgl": 5.93,
-      "band_p10": 4.93,
-      "band_p90": 8.02,
+      "estimate_mbgl": 5.97,
+      "band_p10": 4.82,
+      "band_p90": 7.59,
       "trend_m_per_yr": 1.05
     },
     {
@@ -8324,9 +8324,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 3.39,
-      "estimate_mbgl": 3.36,
-      "band_p10": 2.39,
-      "band_p90": 3.79,
+      "estimate_mbgl": 3.32,
+      "band_p10": 2.44,
+      "band_p90": 3.86,
       "trend_m_per_yr": 1.33
     },
     {
@@ -8338,9 +8338,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.26,
-      "estimate_mbgl": 6.72,
-      "band_p10": 6.21,
-      "band_p90": 7.82,
+      "estimate_mbgl": 6.83,
+      "band_p10": 6.26,
+      "band_p90": 7.74,
       "trend_m_per_yr": 2.09
     },
     {
@@ -8353,8 +8353,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 22.66,
       "estimate_mbgl": 11.96,
-      "band_p10": 9.4,
-      "band_p90": 13.91,
+      "band_p10": 9.53,
+      "band_p90": 14.08,
       "trend_m_per_yr": 6.0
     },
     {
@@ -8366,9 +8366,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 4.49,
-      "estimate_mbgl": 4.6,
-      "band_p10": 3.59,
-      "band_p90": 5.29,
+      "estimate_mbgl": 4.56,
+      "band_p10": 3.8,
+      "band_p90": 5.3,
       "trend_m_per_yr": 0.93
     },
     {
@@ -8380,9 +8380,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.08,
-      "estimate_mbgl": 8.4,
-      "band_p10": 5.62,
-      "band_p90": 9.09,
+      "estimate_mbgl": 8.36,
+      "band_p10": 4.86,
+      "band_p90": 9.63,
       "trend_m_per_yr": 0.69
     },
     {
@@ -8394,9 +8394,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 15.04,
-      "estimate_mbgl": 14.21,
-      "band_p10": 11.77,
-      "band_p90": 17.46,
+      "estimate_mbgl": 14.32,
+      "band_p10": 11.34,
+      "band_p90": 17.37,
       "trend_m_per_yr": 4.3
     },
     {
@@ -8408,9 +8408,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.4,
-      "estimate_mbgl": 4.07,
-      "band_p10": 3.51,
-      "band_p90": 4.33,
+      "estimate_mbgl": 4.04,
+      "band_p10": 3.6,
+      "band_p90": 4.4,
       "trend_m_per_yr": 0.55
     },
     {
@@ -8422,9 +8422,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.0,
-      "estimate_mbgl": 4.69,
-      "band_p10": 4.03,
-      "band_p90": 5.37,
+      "estimate_mbgl": 4.76,
+      "band_p10": 3.91,
+      "band_p90": 5.33,
       "trend_m_per_yr": 0.27
     },
     {
@@ -8436,9 +8436,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.71,
-      "estimate_mbgl": 3.36,
-      "band_p10": 2.15,
-      "band_p90": 3.72,
+      "estimate_mbgl": 3.4,
+      "band_p10": 2.17,
+      "band_p90": 3.79,
       "trend_m_per_yr": 1.0
     },
     {
@@ -8450,9 +8450,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.11,
-      "estimate_mbgl": 4.86,
-      "band_p10": 3.3,
-      "band_p90": 6.52,
+      "estimate_mbgl": 5.04,
+      "band_p10": 2.87,
+      "band_p90": 6.74,
       "trend_m_per_yr": 4.09
     },
     {
@@ -8464,9 +8464,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 12.48,
-      "estimate_mbgl": 11.62,
-      "band_p10": 9.97,
-      "band_p90": 13.35,
+      "estimate_mbgl": 11.63,
+      "band_p10": 9.85,
+      "band_p90": 13.41,
       "trend_m_per_yr": 4.55
     },
     {
@@ -8478,9 +8478,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 4.99,
-      "estimate_mbgl": 4.86,
-      "band_p10": 3.69,
-      "band_p90": 6.02,
+      "estimate_mbgl": 4.91,
+      "band_p10": 3.61,
+      "band_p90": 6.07,
       "trend_m_per_yr": 1.84
     },
     {
@@ -8492,9 +8492,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.05,
-      "estimate_mbgl": 6.11,
-      "band_p10": 5.63,
-      "band_p90": 6.89,
+      "estimate_mbgl": 6.25,
+      "band_p10": 5.5,
+      "band_p90": 7.05,
       "trend_m_per_yr": 1.0
     },
     {
@@ -8506,9 +8506,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 18.9,
-      "estimate_mbgl": 14.48,
-      "band_p10": 6.02,
-      "band_p90": 18.79,
+      "estimate_mbgl": 14.11,
+      "band_p10": 5.73,
+      "band_p90": 18.9,
       "trend_m_per_yr": 0.05
     },
     {
@@ -8520,9 +8520,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.55,
-      "estimate_mbgl": 10.84,
-      "band_p10": 8.81,
-      "band_p90": 12.1,
+      "estimate_mbgl": 10.86,
+      "band_p10": 9.1,
+      "band_p90": 12.36,
       "trend_m_per_yr": 4.06
     },
     {
@@ -8534,9 +8534,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 0.4,
-      "estimate_mbgl": 1.48,
-      "band_p10": 0.89,
-      "band_p90": 1.67,
+      "estimate_mbgl": 1.5,
+      "band_p10": 0.85,
+      "band_p90": 1.79,
       "trend_m_per_yr": -0.17
     },
     {
@@ -8548,9 +8548,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.14,
-      "estimate_mbgl": 2.97,
-      "band_p10": 2.52,
-      "band_p90": 3.67,
+      "estimate_mbgl": 3.15,
+      "band_p10": 2.51,
+      "band_p90": 3.69,
       "trend_m_per_yr": 1.07
     },
     {
@@ -8562,9 +8562,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 2.49,
-      "estimate_mbgl": 2.46,
-      "band_p10": 1.86,
-      "band_p90": 2.69,
+      "estimate_mbgl": 2.49,
+      "band_p10": 1.9,
+      "band_p90": 2.68,
       "trend_m_per_yr": 1.54
     },
     {
@@ -8576,9 +8576,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.98,
-      "estimate_mbgl": 6.95,
-      "band_p10": 5.35,
-      "band_p90": 9.18,
+      "estimate_mbgl": 6.92,
+      "band_p10": 5.22,
+      "band_p90": 8.92,
       "trend_m_per_yr": -5.02
     },
     {
@@ -8590,9 +8590,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 1.82,
-      "estimate_mbgl": 1.53,
-      "band_p10": 0.93,
-      "band_p90": 1.9,
+      "estimate_mbgl": 1.51,
+      "band_p10": 1.04,
+      "band_p90": 1.95,
       "trend_m_per_yr": 1.43
     },
     {
@@ -8604,9 +8604,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 7.58,
-      "estimate_mbgl": 8.34,
-      "band_p10": 7.06,
-      "band_p90": 9.25,
+      "estimate_mbgl": 8.44,
+      "band_p10": 7.19,
+      "band_p90": 9.39,
       "trend_m_per_yr": 1.89
     },
     {
@@ -8618,9 +8618,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 20.49,
-      "estimate_mbgl": 19.75,
-      "band_p10": 17.73,
-      "band_p90": 21.55,
+      "estimate_mbgl": 19.82,
+      "band_p10": 17.91,
+      "band_p90": 21.98,
       "trend_m_per_yr": 2.86
     },
     {
@@ -8632,9 +8632,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 10.47,
-      "estimate_mbgl": 5.17,
-      "band_p10": 2.02,
-      "band_p90": 8.47,
+      "estimate_mbgl": 5.05,
+      "band_p10": 1.98,
+      "band_p90": 8.31,
       "trend_m_per_yr": 6.0
     },
     {
@@ -8646,9 +8646,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 17.42,
-      "estimate_mbgl": 16.51,
-      "band_p10": 14.56,
-      "band_p90": 17.37,
+      "estimate_mbgl": 16.52,
+      "band_p10": 13.23,
+      "band_p90": 17.63,
       "trend_m_per_yr": -0.9
     },
     {
@@ -8660,9 +8660,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.38,
-      "estimate_mbgl": 3.64,
-      "band_p10": 1.99,
-      "band_p90": 4.63,
+      "estimate_mbgl": 3.53,
+      "band_p10": 2.1,
+      "band_p90": 4.74,
       "trend_m_per_yr": 0.77
     },
     {
@@ -8674,9 +8674,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 12.66,
-      "estimate_mbgl": 11.49,
-      "band_p10": 9.16,
-      "band_p90": 13.7,
+      "estimate_mbgl": 11.85,
+      "band_p10": 9.41,
+      "band_p90": 13.75,
       "trend_m_per_yr": 4.37
     },
     {
@@ -8688,8 +8688,8 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 7.82,
-      "estimate_mbgl": 8.04,
-      "band_p10": 7.19,
+      "estimate_mbgl": 8.19,
+      "band_p10": 7.34,
       "band_p90": 9.22,
       "trend_m_per_yr": 1.52
     },
@@ -8702,9 +8702,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 13.78,
-      "estimate_mbgl": 13.92,
-      "band_p10": 12.39,
-      "band_p90": 14.63,
+      "estimate_mbgl": 14.07,
+      "band_p10": 12.44,
+      "band_p90": 15.27,
       "trend_m_per_yr": 2.22
     },
     {
@@ -8716,9 +8716,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 10.59,
-      "estimate_mbgl": 10.22,
-      "band_p10": 8.96,
-      "band_p90": 11.88,
+      "estimate_mbgl": 10.39,
+      "band_p10": 9.04,
+      "band_p90": 12.06,
       "trend_m_per_yr": 3.29
     },
     {
@@ -8730,8 +8730,8 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.1,
-      "estimate_mbgl": 2.45,
-      "band_p10": 2.09,
+      "estimate_mbgl": 2.52,
+      "band_p10": 1.79,
       "band_p90": 3.4,
       "trend_m_per_yr": 0.73
     },
@@ -8744,9 +8744,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.29,
-      "estimate_mbgl": 5.36,
-      "band_p10": 3.3,
-      "band_p90": 7.06,
+      "estimate_mbgl": 5.46,
+      "band_p10": 3.17,
+      "band_p90": 7.09,
       "trend_m_per_yr": 3.94
     },
     {
@@ -8758,9 +8758,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.03,
-      "estimate_mbgl": 4.59,
-      "band_p10": 4.12,
-      "band_p90": 5.2,
+      "estimate_mbgl": 4.64,
+      "band_p10": 4.15,
+      "band_p90": 5.13,
       "trend_m_per_yr": 2.08
     },
     {
@@ -8772,9 +8772,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 20.24,
-      "estimate_mbgl": 21.77,
-      "band_p10": 18.17,
-      "band_p90": 23.33,
+      "estimate_mbgl": 21.02,
+      "band_p10": 18.92,
+      "band_p90": 23.2,
       "trend_m_per_yr": 0.95
     },
     {
@@ -8786,9 +8786,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 6.84,
-      "estimate_mbgl": 5.36,
-      "band_p10": 4.17,
-      "band_p90": 6.62,
+      "estimate_mbgl": 5.46,
+      "band_p10": 4.26,
+      "band_p90": 6.5,
       "trend_m_per_yr": 2.33
     },
     {
@@ -8800,9 +8800,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 3.56,
-      "estimate_mbgl": 4.3,
-      "band_p10": 3.49,
-      "band_p90": 4.82,
+      "estimate_mbgl": 4.32,
+      "band_p10": 3.48,
+      "band_p90": 4.72,
       "trend_m_per_yr": 0.31
     },
     {
@@ -8814,9 +8814,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 4.24,
-      "estimate_mbgl": 4.58,
-      "band_p10": 2.87,
-      "band_p90": 5.34,
+      "estimate_mbgl": 4.64,
+      "band_p10": 2.83,
+      "band_p90": 5.58,
       "trend_m_per_yr": 1.83
     },
     {
@@ -8828,9 +8828,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 3.25,
-      "estimate_mbgl": 2.99,
-      "band_p10": 1.95,
-      "band_p90": 4.19,
+      "estimate_mbgl": 3.19,
+      "band_p10": 2.1,
+      "band_p90": 4.34,
       "trend_m_per_yr": 2.22
     },
     {
@@ -8842,9 +8842,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.26,
-      "estimate_mbgl": 7.18,
-      "band_p10": 6.56,
-      "band_p90": 8.9,
+      "estimate_mbgl": 7.14,
+      "band_p10": 6.67,
+      "band_p90": 8.6,
       "trend_m_per_yr": -0.28
     },
     {
@@ -8856,9 +8856,9 @@
       "aquifer": "hard_rock",
       "as_of": "2026-08",
       "observed_mbgl": 7.97,
-      "estimate_mbgl": 7.78,
-      "band_p10": 6.03,
-      "band_p90": 8.81,
+      "estimate_mbgl": 7.72,
+      "band_p10": 6.26,
+      "band_p90": 8.8,
       "trend_m_per_yr": 4.05
     },
     {
@@ -8871,8 +8871,8 @@
       "as_of": "2026-08",
       "observed_mbgl": 4.9,
       "estimate_mbgl": 4.7,
-      "band_p10": 4.02,
-      "band_p90": 5.15,
+      "band_p10": 3.99,
+      "band_p90": 5.06,
       "trend_m_per_yr": 0.77
     },
     {
@@ -8884,9 +8884,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 14.59,
-      "estimate_mbgl": 14.56,
-      "band_p10": 13.26,
-      "band_p90": 16.02,
+      "estimate_mbgl": 14.65,
+      "band_p10": 12.37,
+      "band_p90": 16.04,
       "trend_m_per_yr": 4.1
     },
     {
@@ -8898,9 +8898,9 @@
       "aquifer": "alluvial",
       "as_of": "2026-08",
       "observed_mbgl": 5.6,
-      "estimate_mbgl": 5.79,
-      "band_p10": 4.94,
-      "band_p90": 6.6,
+      "estimate_mbgl": 5.84,
+      "band_p10": 5.03,
+      "band_p90": 6.48,
       "trend_m_per_yr": 1.28
     },
     {
@@ -8912,9 +8912,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 5.81,
-      "estimate_mbgl": 4.47,
-      "band_p10": 2.81,
-      "band_p90": 5.84,
+      "estimate_mbgl": 4.6,
+      "band_p10": 2.53,
+      "band_p90": 5.82,
       "trend_m_per_yr": 4.0
     },
     {
@@ -8926,9 +8926,9 @@
       "aquifer": "coastal",
       "as_of": "2026-08",
       "observed_mbgl": 6.92,
-      "estimate_mbgl": 6.32,
-      "band_p10": 5.16,
-      "band_p90": 7.42,
+      "estimate_mbgl": 6.33,
+      "band_p10": 5.31,
+      "band_p90": 7.41,
       "trend_m_per_yr": 2.57
     }
   ]
