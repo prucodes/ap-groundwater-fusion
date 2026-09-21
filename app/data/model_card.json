@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "modelName": "AP Mandal Groundwater Temporal Nowcast",
   "modelVersion": "phase0-nowcast-2.0.0",
-  "buildTimestamp": "2026-09-19T11:51:13+00:00",
+  "buildTimestamp": "2026-09-21T07:54:20+00:00",
   "trainingPeriod": {
     "start": "2014-12",
     "end": "2026-08"
@@ -70,15 +70,15 @@
     },
     "spatialEstimation": {
       "task": "whole_mandal_spatial_estimation",
-      "generatedAt": "2026-09-19T11:54:21+00:00",
+      "generatedAt": "2026-09-21T08:01:15+00:00",
       "validation": "5-fold GroupKFold with whole mandals held out",
       "rowCount": 85791,
       "mandalCount": 651,
       "reportedMethod": "inverse_distance_weighted_same_month_neighbours",
       "reportedMetric": {
-        "rmseM": 7.4048,
-        "maeM": 4.8441,
-        "r2": 0.4081
+        "rmseM": 7.4049,
+        "maeM": 4.844,
+        "r2": 0.408
       },
       "methods": {
         "A naive (predict average)": {
@@ -92,14 +92,14 @@
           "r2": 0.3251
         },
         "C IDW neighbours": {
-          "rmseM": 7.4048,
-          "maeM": 4.8441,
-          "r2": 0.4081
+          "rmseM": 7.4049,
+          "maeM": 4.844,
+          "r2": 0.408
         },
         "D fusion (static + IDW)": {
-          "rmseM": 8.1493,
-          "maeM": 5.3094,
-          "r2": 0.2831
+          "rmseM": 8.0703,
+          "maeM": 5.2524,
+          "r2": 0.2969
         }
       },
       "terrainCohortsForReportedMethod": {
@@ -111,14 +111,14 @@
         },
         "coastal": {
           "sampleCount": 29980,
-          "rmseM": 5.6077,
-          "maeM": 3.7856,
+          "rmseM": 5.6074,
+          "maeM": 3.7852,
           "r2": 0.4646
         },
         "hard_rock": {
           "sampleCount": 30594,
-          "rmseM": 8.3097,
-          "maeM": 5.6703,
+          "rmseM": 8.31,
+          "maeM": 5.6704,
           "r2": 0.3709
         }
       },
@@ -132,7 +132,7 @@
     },
     "directForecast": {
       "task": "direct_multi_horizon_forecast",
-      "generatedAt": "2026-09-19T11:54:26+00:00",
+      "generatedAt": "2026-09-21T08:01:23+00:00",
       "featureTiming": "features available at forecast origin; no future rainfall",
       "releaseGate": {
         "requiredImprovementPct": 5,
@@ -262,7 +262,7 @@
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",
-      "generatedAt": "2026-09-19T11:54:27+00:00",
+      "generatedAt": "2026-09-21T08:01:24+00:00",
       "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
       "overlapPeriod": {
         "start": "2014-06",
@@ -336,13 +336,13 @@
   },
   "inputHashes": {
     "apwrimsHistory": "b5d60daf9305e1e0aca519b1c7f5c9f06a3fa59263f2084efd940075bbe9fdbb",
-    "nowcasts": "8c64891ed6d9b438504fa2c4fd877723f5e6de5506a0c73ae6ffc96bb8a67d20",
+    "nowcasts": "6c502e8d0d2733208e6eb272a4834358abc6c8aea832323da3d9bf182c57ef82",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
     "districtSignals": "182d4ba44f3dfe16f3dc24731c2eeb3f60b44235ff2a4c5e591690de2e368882",
     "climateContext": "9e082f287c165332f625bc1a7dee84c594ef39878571eb1aa5654e6945953ad4",
-    "graceProvenance": "abe6e7b2b1433f63c77dbd4d89e77f2062349341c0105d2b9567db6b92447b9c",
+    "graceProvenance": "5fb95d6866494a39ee944ec187ce6080a15b29c9b559beee0b53e654ed1d9b60",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "1adb05a7ec03c4e7f67e1accb7204ce61e1f75bed51cfe1c4a58cdd7a9ec8843"
+    "evaluations": "146da4f4c65e78812a0b8ea3975dd84f18c8559e133f4a06dda0418a5de93228"
   },
-  "generatedAt": "2026-09-19T11:54:27+00:00"
+  "generatedAt": "2026-09-21T08:01:24+00:00"
 }
