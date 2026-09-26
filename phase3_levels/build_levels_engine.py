@@ -119,7 +119,9 @@ def build_frame():
     df = df.sort_values(["mkey", "date"]).reset_index(drop=True)
     mo = df.date.str.slice(5, 7).astype(int)
     df["month_sin"] = np.sin(2*np.pi*(mo-1)/12); df["month_cos"] = np.cos(2*np.pi*(mo-1)/12)
-    df = calendar_history_features(df)
+    regimes = series_regimes()
+    df["regime_start"] = df.mkey.map(regimes)
+    df = calendar_history_features(df, regimes)
     g = df.groupby("mkey", group_keys=False)
     df["rain_1m"] = df.rain_mm
     periods = pd.PeriodIndex(df.date, freq="M")
@@ -136,7 +138,7 @@ def build_frame():
     ll = df.mkey.map(locations); df["lat"] = ll.map(lambda x: x[0]); df["lon"] = ll.map(lambda x: x[1])
     df["location_basis"] = df.mkey.map(basis).fillna("none")
     df["boundary_index"] = df.mkey.map(boundary_index)
-    df["mandal_base"] = df.groupby("mkey").level_mbgl.transform("mean")
+    df["mandal_base"] = current_regime_mean(df)
     df = df.dropna(subset=["lat", "lon", "lag1", "lag12"]).reset_index(drop=True)
     return df
 
@@ -203,15 +205,38 @@ def identity_norm(value):
     return re.sub(r"\s+", " ", re.sub(r"[^A-Z0-9 ]", " ", str(value).upper())).strip().replace(" ", "")
 
 
-def calendar_history_features(df):
+def series_regimes():
+    """Mandals whose series steps to a new level, and the month it stepped.
+
+    Written by build_series_discontinuities.py and reviewed by hand, like the
+    boundary aliases. A reading from before the step describes a different well,
+    so no feature is allowed to reach across it.
+    """
+    path = os.path.join(HERE, "data", "mandal_series_discontinuities.csv")
+    if not os.path.exists(path):
+        return {}
+    table = pd.read_csv(path)
+    return dict(zip(table.mandal_uuid.astype(str), table.regime_start.astype(str)))
+
+
+def calendar_history_features(df, regimes=None):
     """Calendar offsets, not previous-row offsets; no cross-UUID rolling leak."""
     df = df.copy()
+    regimes = regimes or {}
     periods = pd.PeriodIndex(df.date, freq="M")
+    regime = df.mkey.map(regimes)
     lookup = df.set_index(["mkey", "date"]).level_mbgl
     prior = {}
     for offset in (1, 2, 3, 6, 12, 13):
-        keys = pd.MultiIndex.from_arrays([df.mkey, (periods - offset).astype(str)])
-        prior[offset] = pd.Series(lookup.reindex(keys).to_numpy(), index=df.index)
+        source = (periods - offset).astype(str)
+        keys = pd.MultiIndex.from_arrays([df.mkey, source])
+        values = pd.Series(lookup.reindex(keys).to_numpy(), index=df.index)
+        # Only a lag that STRADDLES the step is wrong: the row sits in the new
+        # regime and reaches back into the old well. History entirely on one
+        # side of the step is internally consistent and stays.
+        here = pd.Series(df.date.to_numpy(), index=df.index)
+        crosses = regime.notna() & (here >= regime) & (pd.Series(source, index=df.index) < regime)
+        prior[offset] = values.mask(crosses)
     df["lag1"], df["lag12"] = prior[1], prior[12]
     df["lag2"], df["lag3"], df["lag6"] = prior[2], prior[3], prior[6]
     df["roll3"] = pd.concat([prior[1], prior[2], prior[3]], axis=1).mean(axis=1)
@@ -230,12 +255,27 @@ def sha256(path):
     return digest.hexdigest()
 
 
+def current_regime_mean(df):
+    """A mandal's mean level, ignoring readings from before it stepped."""
+    if "regime_start" not in df:
+        return df.groupby("mkey").level_mbgl.transform("mean")
+    eligible = df.regime_start.isna() | (df.date >= df.regime_start)
+    base = df[eligible].groupby("mkey").level_mbgl.mean()
+    return df.mkey.map(base).fillna(df.groupby("mkey").level_mbgl.transform("mean"))
+
+
 def reset_mandal_base(train, target):
     """Derive the historical mandal mean from training rows only."""
     train = train.copy()
     target = target.copy()
     global_mean = float(train.level_mbgl.mean())
-    base = train.groupby("mkey").level_mbgl.mean()
+    if "regime_start" in train:
+        eligible = train.regime_start.isna() | (train.date >= train.regime_start)
+        base = train[eligible].groupby("mkey").level_mbgl.mean()
+        base = base.reindex(train.mkey.unique())
+        base = base.fillna(train.groupby("mkey").level_mbgl.mean())
+    else:
+        base = train.groupby("mkey").level_mbgl.mean()
     train["mandal_base"] = train.mkey.map(base).fillna(global_mean)
     target["mandal_base"] = target.mkey.map(base).fillna(global_mean)
     return train, target
@@ -476,7 +516,13 @@ def evaluate_temporal_nowcast(df):
 
 def main():
     df = build_frame()
-    latest_idx = df.sort_values("date").groupby("mkey").tail(1).index
+    # A mandal whose series stepped has no eligible row in its new regime until
+    # a year of it exists. Publishing its last pre-step row would put a reading
+    # of a different well on screen as this month's level, so it gets no
+    # nowcast at all and the record falls back to measured-only.
+    stale = df.regime_start.notna() & (df.date < df.regime_start)
+    eligible = df[~stale]
+    latest_idx = eligible.sort_values("date").groupby("mkey").tail(1).index
     latest = df.loc[latest_idx].copy()
     train = df.drop(index=latest_idx).copy()
     train, latest = reset_mandal_base(train, latest)

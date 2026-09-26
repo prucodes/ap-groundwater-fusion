@@ -385,6 +385,14 @@
             "outsideModelBand",
             "excessBeyondBandM"
           ]
+        },
+        "seriesRegimeStart": {
+          "description": "Month the depth series steps to a new level and stays there, indicating the well behind it changed. Null for an unbroken series.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}$"
         }
       }
     },

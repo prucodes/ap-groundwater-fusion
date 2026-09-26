@@ -212,3 +212,54 @@ def test_a_forecast_never_blends_toward_an_anchor_the_model_rejects():
         move = abs(row["value"] - row["originLevelMbgl"])
         if move > (row["upper"] - row["lower"]):
             assert row["lower"] <= row["value"] <= row["upper"]
+
+
+def _discontinuities():
+    path = os.path.join(ROOT, "phase3_levels", "data", "mandal_series_discontinuities.csv")
+    with open(path) as handle:
+        return list(csv.DictReader(handle))
+
+
+def test_no_feature_reaches_across_a_step_in_the_series():
+    """A lag that straddles the step is a reading of a different well."""
+    rows = _discontinuities()
+    assert rows, "the reviewed discontinuity table should not be empty"
+    frame = engine.build_frame()
+    for row in rows:
+        own = frame[frame.mkey == row["mandal_uuid"]]
+        if own.empty:
+            continue
+        after = own[own.date >= row["regime_start"]]
+        for _, record in after.iterrows():
+            for offset, column in ((1, "lag1"), (12, "lag12")):
+                year, month = (int(part) for part in record.date.split("-"))
+                month -= offset
+                year, month = year + (month - 1) // 12, (month - 1) % 12 + 1
+                if f"{year:04d}-{month:02d}" < row["regime_start"]:
+                    assert pd.isna(record[column]), (
+                        f"{row['mandal']} {record.date} {column} reaches before the step"
+                    )
+
+
+def test_history_entirely_on_one_side_of_a_step_is_kept():
+    """Only straddling lags go. A mandal's older history is still usable."""
+    frame = engine.build_frame()
+    for row in _discontinuities():
+        own = frame[frame.mkey == row["mandal_uuid"]]
+        before = own[own.date < row["regime_start"]]
+        if len(before) > 24:
+            assert before.lag12.notna().mean() > 0.8, f"{row['mandal']} lost its own older history"
+
+
+def test_a_mandal_that_just_stepped_is_not_modelled_from_the_old_well():
+    nowcasts = json.load(open(os.path.join(
+        ROOT, "phase3_levels", "outputs", "mandal_nowcasts_v2.json")))
+    published = {row["sourceSeriesId"]: row for row in nowcasts["mandals"]}
+    for row in _discontinuities():
+        published_row = published.get(row["mandal_uuid"])
+        if published_row is None:
+            continue
+        assert published_row["as_of"] >= row["regime_start"], (
+            f"{row['mandal']} is published as of {published_row['as_of']}, "
+            f"before its step at {row['regime_start']}"
+        )

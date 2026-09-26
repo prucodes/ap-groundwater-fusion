@@ -112,8 +112,14 @@ def calibrate(frame):
 
 
 def origin_rows(df):
-    """Each mandal's latest month, with the target-season and year-ago anchor."""
-    latest = df.sort_values("date").groupby("mkey").tail(1).copy()
+    """Each mandal's latest month, with the target-season and year-ago anchor.
+
+    A mandal whose series stepped to a new level has no eligible origin until a
+    year of the new regime exists; forecasting from its last pre-step reading
+    would carry a different well three months into the future.
+    """
+    eligible = df[df.regime_start.isna() | (df.date >= df.regime_start)]
+    latest = eligible.sort_values("date").groupby("mkey").tail(1).copy()
     periods = pd.PeriodIndex(latest.date, freq="M")
     target = periods + HORIZON_MONTHS
     latest["cur"] = latest.level_mbgl

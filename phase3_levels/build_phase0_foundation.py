@@ -218,6 +218,15 @@ def build_records(generated_at):
         "extractionCategories": os.path.join(HERE, "data", "mandal_extraction_cgwb2024.csv"),
         "evaluations": os.path.join(OUT, "phase0_evaluations.json"),
     }
+    # Mandals whose depth series steps to a new level: the reading is real, the
+    # history behind it is a different well, and nothing is modelled from it
+    # until a year of the new regime exists.
+    discontinuity_path = os.path.join(HERE, "data", "mandal_series_discontinuities.csv")
+    regime_starts = {}
+    if os.path.exists(discontinuity_path):
+        with open(discontinuity_path) as handle:
+            regime_starts = {row["mandal_uuid"]: row["regime_start"]
+                             for row in csv.DictReader(handle)}
     # The released 3-month forecast. Optional so a checkout without it still
     # builds; where it is absent, records carry no forecast rather than a guess.
     forecast_path = os.path.join(OUT, "mandal_forecast_3m.json")
@@ -548,12 +557,23 @@ def build_records(generated_at):
                 "excessAsShareOfBandWidth": round(excess / band_width, 2) if band_width > 0 else None,
             }
 
+        # A record can aggregate several source series, and the one the model
+        # used need not be among the ones its history came from. If any of them
+        # stepped, the record's history is not one continuous well.
+        series_here = set(source_ids)
+        if nowcast_source is not None and nowcast_source.get("sourceSeriesId"):
+            series_here.add(nowcast_source["sourceSeriesId"])
+        stepped = [regime_starts[sid] for sid in series_here if sid in regime_starts]
+        regime_start = min(stepped) if stepped else None
+
         basis_value = nowcast["value"] if nowcast else (
             observation["latestMeasuredValue"] if observation else None
         )
         if basis_value is None:
             monitoring = "insufficient_data"
         elif coverage == "measured_only":
+            # Including every mandal whose series stepped too recently to model
+            # from: the reading is real, the well behind it needs confirming.
             monitoring = "verify"
         elif (
             band_check is not None
@@ -673,6 +693,7 @@ def build_records(generated_at):
                 "measuredTrendMPerYear": trend,
                 "contextAgreement": agreement,
                 "observationVsModelBand": band_check,
+                "seriesRegimeStart": regime_start,
             },
             "provenance": {
                 "sourceNames": [

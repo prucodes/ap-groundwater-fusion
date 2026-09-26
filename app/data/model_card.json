@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "modelName": "AP Mandal Groundwater Temporal Nowcast",
   "modelVersion": "phase0-nowcast-3.0.0",
-  "buildTimestamp": "2026-09-26T04:05:09+00:00",
+  "buildTimestamp": "2026-09-26T05:25:14+00:00",
   "trainingPeriod": {
     "start": "2015-06",
     "end": "2026-07"
@@ -42,39 +42,39 @@
         "start": "2024-01",
         "end": "2026-08"
       },
-      "sampleCount": 21826,
+      "sampleCount": 21785,
       "model": {
-        "maeM": 1.0248,
-        "rmseM": 2.2124,
-        "r2": 0.9265
+        "maeM": 1.0212,
+        "rmseM": 2.1957,
+        "r2": 0.9271
       },
       "baseline": {
         "name": "same_month_previous_year",
-        "maeM": 2.3753
+        "maeM": 2.3626
       },
       "lastReadingBaseline": {
         "name": "carry_last_reading_forward",
-        "maeM": 1.1421,
-        "skillPct": 10.27
+        "maeM": 1.1387,
+        "skillPct": 10.32
       },
       "depthBands": [
         {
           "band": "0-5m",
-          "sampleCount": 8719,
-          "maeM": 0.5625,
-          "lastReadingMaeM": 0.6586
+          "sampleCount": 8702,
+          "maeM": 0.5571,
+          "lastReadingMaeM": 0.6536
         },
         {
           "band": "5-10m",
-          "sampleCount": 7096,
-          "maeM": 0.8317,
-          "lastReadingMaeM": 0.9616
+          "sampleCount": 7082,
+          "maeM": 0.8309,
+          "lastReadingMaeM": 0.9609
         },
         {
           "band": "10-20m",
-          "sampleCount": 4333,
-          "maeM": 1.4573,
-          "lastReadingMaeM": 1.602
+          "sampleCount": 4328,
+          "maeM": 1.4549,
+          "lastReadingMaeM": 1.5995
         },
         {
           "band": "20-30m",
@@ -84,9 +84,9 @@
         },
         {
           "band": "30m+",
-          "sampleCount": 688,
-          "maeM": 3.839,
-          "lastReadingMaeM": 3.9139
+          "sampleCount": 683,
+          "maeM": 3.8231,
+          "lastReadingMaeM": 3.8999
         }
       ],
       "calibration": {
@@ -109,9 +109,9 @@
       },
       "terrainCohorts": {
         "alluvial": {
-          "sampleCount": 6390,
-          "maeM": 0.8154,
-          "empiricalCoveragePct": 81.83
+          "sampleCount": 6378,
+          "maeM": 0.809,
+          "empiricalCoveragePct": 81.84
         },
         "coastal": {
           "sampleCount": 7477,
@@ -119,17 +119,17 @@
           "empiricalCoveragePct": 84.67
         },
         "hard_rock": {
-          "sampleCount": 7959,
-          "maeM": 1.4135,
-          "empiricalCoveragePct": 85.15
+          "sampleCount": 7930,
+          "maeM": 1.4098,
+          "empiricalCoveragePct": 85.17
         }
       },
       "intervalEvaluation": {
         "intervalType": "conformalised_quantile_p10_p90",
         "nominalCoveragePct": 80,
-        "empiricalCoveragePct": 84.01,
-        "meanWidthM": 3.0817,
-        "sampleCount": 21826
+        "empiricalCoveragePct": 84.03,
+        "meanWidthM": 3.0799,
+        "sampleCount": 21785
       }
     },
     "rollingOriginNowcast": {
@@ -140,14 +140,14 @@
         "start": "2024-09",
         "end": "2026-08"
       },
-      "sampleCount": 16385,
-      "maeM": 0.9122,
-      "lastReadingMaeM": 1.0635,
-      "skillVsLastReadingPct": 14.22
+      "sampleCount": 16344,
+      "maeM": 0.9064,
+      "lastReadingMaeM": 1.0588,
+      "skillVsLastReadingPct": 14.39
     },
     "spatialEstimation": {
       "task": "whole_mandal_spatial_estimation",
-      "generatedAt": "2026-09-26T04:39:26+00:00",
+      "generatedAt": "2026-09-26T05:29:45+00:00",
       "validation": "5-fold GroupKFold with whole mandals held out",
       "rowCount": 85791,
       "mandalCount": 651,
@@ -209,7 +209,7 @@
     },
     "directForecast": {
       "task": "direct_multi_horizon_forecast",
-      "generatedAt": "2026-09-26T04:41:23+00:00",
+      "generatedAt": "2026-09-26T05:31:54+00:00",
       "featureTiming": "features available at forecast origin; no future rainfall",
       "baselineDefinitions": {
         "noChange": "the level at the forecast origin",
@@ -234,18 +234,18 @@
             "start": "2023-12",
             "end": "2026-07"
           },
-          "sampleCount": 20397,
+          "sampleCount": 20345,
           "model": {
-            "maeM": 1.16,
-            "rmseM": 2.2027,
-            "r2": 0.9242
+            "maeM": 1.1532,
+            "rmseM": 2.1799,
+            "r2": 0.9252
           },
           "baselines": {
             "noChange": {
-              "maeM": 1.1266
+              "maeM": 1.1226
             },
             "seasonal": {
-              "maeM": 2.3321
+              "maeM": 2.3187
             }
           },
           "beatsBothBaselinesByFivePct": false,
@@ -270,18 +270,18 @@
             "start": "2023-10",
             "end": "2026-05"
           },
-          "sampleCount": 20350,
+          "sampleCount": 20298,
           "model": {
-            "maeM": 1.9874,
-            "rmseM": 3.3169,
-            "r2": 0.8267
+            "maeM": 1.9728,
+            "rmseM": 3.2761,
+            "r2": 0.8297
           },
           "baselines": {
             "noChange": {
-              "maeM": 2.2308
+              "maeM": 2.218
             },
             "seasonal": {
-              "maeM": 2.3292
+              "maeM": 2.3157
             }
           },
           "beatsBothBaselinesByFivePct": true,
@@ -308,73 +308,73 @@
               {
                 "cut": "2024-10",
                 "trainRows": 51938,
-                "testRows": 2026
+                "testRows": 2023
               },
               {
                 "cut": "2025-01",
-                "trainRows": 53964,
-                "testRows": 2042
+                "trainRows": 53961,
+                "testRows": 2039
               },
               {
                 "cut": "2025-04",
-                "trainRows": 56006,
-                "testRows": 2034
+                "trainRows": 56000,
+                "testRows": 2031
               },
               {
                 "cut": "2025-07",
-                "trainRows": 58040,
-                "testRows": 2024
+                "trainRows": 58031,
+                "testRows": 2020
               },
               {
                 "cut": "2025-10",
-                "trainRows": 60064,
-                "testRows": 2041
+                "trainRows": 60051,
+                "testRows": 2035
               },
               {
                 "cut": "2026-01",
-                "trainRows": 62105,
-                "testRows": 2042
+                "trainRows": 62086,
+                "testRows": 2034
               },
               {
                 "cut": "2026-04",
-                "trainRows": 64147,
-                "testRows": 2042
+                "trainRows": 64120,
+                "testRows": 2027
               },
               {
                 "cut": "2026-07",
-                "trainRows": 66189,
-                "testRows": 1332
+                "trainRows": 66147,
+                "testRows": 1322
               }
             ],
-            "sampleCount": 20350,
-            "maeM": 1.7767,
+            "sampleCount": 20298,
+            "maeM": 1.7614,
             "baselines": {
               "noChange": {
-                "maeM": 2.2308
+                "maeM": 2.218
               },
               "seasonal": {
-                "maeM": 2.3292
+                "maeM": 2.3157
               }
             },
             "beatsBothBaselinesByFivePct": true,
             "terrainCohorts": {
               "alluvial": {
-                "sampleCount": 6058,
-                "maeM": 1.3657,
-                "noChangeMaeM": 1.6834,
-                "improvementPct": 18.87
+                "sampleCount": 6046,
+                "maeM": 1.3389,
+                "noChangeMaeM": 1.6661,
+                "improvementPct": 19.64
               },
               "coastal": {
                 "sampleCount": 6818,
-                "maeM": 1.3905,
+                "maeM": 1.3939,
                 "noChangeMaeM": 1.9444,
-                "improvementPct": 28.48
+                "improvementPct": 28.31
               },
               "hard_rock": {
-                "sampleCount": 7474,
-                "maeM": 2.4621,
-                "noChangeMaeM": 2.9357,
-                "improvementPct": 16.13
+                "sampleCount": 7434,
+                "maeM": 2.4419,
+                "noChangeMaeM": 2.9179,
+                "improvementPct": 16.31
               }
             },
             "everyTerrainCohortImproves": true
@@ -394,18 +394,18 @@
             "start": "2023-07",
             "end": "2026-02"
           },
-          "sampleCount": 20308,
+          "sampleCount": 20256,
           "model": {
-            "maeM": 2.8203,
-            "rmseM": 4.4809,
-            "r2": 0.6858
+            "maeM": 2.8032,
+            "rmseM": 4.4439,
+            "r2": 0.6887
           },
           "baselines": {
             "noChange": {
-              "maeM": 3.0407
+              "maeM": 3.0174
             },
             "seasonal": {
-              "maeM": 2.3265
+              "maeM": 2.313
             }
           },
           "beatsBothBaselinesByFivePct": false,
@@ -432,73 +432,73 @@
               {
                 "cut": "2024-10",
                 "trainRows": 50805,
-                "testRows": 2026
+                "testRows": 2023
               },
               {
                 "cut": "2025-01",
-                "trainRows": 52831,
-                "testRows": 2028
+                "trainRows": 52828,
+                "testRows": 2025
               },
               {
                 "cut": "2025-04",
-                "trainRows": 54859,
-                "testRows": 2033
+                "trainRows": 54853,
+                "testRows": 2030
               },
               {
                 "cut": "2025-07",
-                "trainRows": 56892,
-                "testRows": 2027
+                "trainRows": 56883,
+                "testRows": 2023
               },
               {
                 "cut": "2025-10",
-                "trainRows": 58919,
-                "testRows": 2036
+                "trainRows": 58906,
+                "testRows": 2030
               },
               {
                 "cut": "2026-01",
-                "trainRows": 60955,
-                "testRows": 2039
+                "trainRows": 60936,
+                "testRows": 2031
               },
               {
                 "cut": "2026-04",
-                "trainRows": 62994,
-                "testRows": 2037
+                "trainRows": 62967,
+                "testRows": 2022
               },
               {
                 "cut": "2026-07",
-                "trainRows": 65031,
-                "testRows": 1331
+                "trainRows": 64989,
+                "testRows": 1321
               }
             ],
-            "sampleCount": 20308,
-            "maeM": 2.2877,
+            "sampleCount": 20256,
+            "maeM": 2.2628,
             "baselines": {
               "noChange": {
-                "maeM": 3.0407
+                "maeM": 3.0174
               },
               "seasonal": {
-                "maeM": 2.3265
+                "maeM": 2.313
               }
             },
             "beatsBothBaselinesByFivePct": false,
             "terrainCohorts": {
               "alluvial": {
-                "sampleCount": 6049,
-                "maeM": 1.6717,
-                "noChangeMaeM": 2.2641,
-                "improvementPct": 26.17
+                "sampleCount": 6037,
+                "maeM": 1.6261,
+                "noChangeMaeM": 2.2293,
+                "improvementPct": 27.06
               },
               "coastal": {
                 "sampleCount": 6804,
-                "maeM": 1.7578,
+                "maeM": 1.7557,
                 "noChangeMaeM": 2.6561,
-                "improvementPct": 33.82
+                "improvementPct": 33.9
               },
               "hard_rock": {
-                "sampleCount": 7455,
-                "maeM": 3.2712,
-                "noChangeMaeM": 4.0218,
-                "improvementPct": 18.66
+                "sampleCount": 7415,
+                "maeM": 3.2464,
+                "noChangeMaeM": 3.9905,
+                "improvementPct": 18.65
               }
             },
             "everyTerrainCohortImproves": true
@@ -520,18 +520,18 @@
             "start": "2023-01",
             "end": "2025-08"
           },
-          "sampleCount": 20413,
+          "sampleCount": 20361,
           "model": {
-            "maeM": 3.4979,
-            "rmseM": 5.61,
-            "r2": 0.5106
+            "maeM": 3.4827,
+            "rmseM": 5.581,
+            "r2": 0.5122
           },
           "baselines": {
             "noChange": {
-              "maeM": 2.3332
+              "maeM": 2.3197
             },
             "seasonal": {
-              "maeM": 2.3332
+              "maeM": 2.3197
             }
           },
           "beatsBothBaselinesByFivePct": false,
@@ -549,7 +549,7 @@
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",
-      "generatedAt": "2026-09-26T04:41:23+00:00",
+      "generatedAt": "2026-09-26T05:31:55+00:00",
       "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
       "overlapPeriod": {
         "start": "2014-06",
@@ -574,9 +574,9 @@
     "intervalEvaluation": {
       "intervalType": "conformalised_quantile_p10_p90",
       "nominalCoveragePct": 80,
-      "empiricalCoveragePct": 84.01,
-      "meanWidthM": 3.0817,
-      "sampleCount": 21826
+      "empiricalCoveragePct": 84.03,
+      "meanWidthM": 3.0799,
+      "sampleCount": 21785
     }
   },
   "forecastRelease": {
@@ -630,13 +630,13 @@
   },
   "inputHashes": {
     "apwrimsHistory": "b5d60daf9305e1e0aca519b1c7f5c9f06a3fa59263f2084efd940075bbe9fdbb",
-    "nowcasts": "f6476f91ec9bc88942a7e742a1463af6c1fece6da9d246357cbebc4eb4dd1be5",
+    "nowcasts": "9228d1f0b08f05757fc250d739dd5857aed69ce0aa598b9635e47ffcbf80adcb",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
     "districtSignals": "182d4ba44f3dfe16f3dc24731c2eeb3f60b44235ff2a4c5e591690de2e368882",
     "climateContext": "9e082f287c165332f625bc1a7dee84c594ef39878571eb1aa5654e6945953ad4",
     "graceProvenance": "5fb95d6866494a39ee944ec187ce6080a15b29c9b559beee0b53e654ed1d9b60",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "f31d68930730f6d26d14fd645773d1226739daa6b474fa301449355efbbbc530"
+    "evaluations": "8ac914972c1579a2ae2a1f650a0de00783a8e333968740ed8df541e74319fc11"
   },
-  "generatedAt": "2026-09-26T05:13:13+00:00"
+  "generatedAt": "2026-09-26T05:34:08+00:00"
 }
