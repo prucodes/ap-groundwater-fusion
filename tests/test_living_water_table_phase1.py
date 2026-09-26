@@ -60,9 +60,14 @@ def test_coverage_states_reconcile_without_value_substitution():
     assert counts["boundary_only"] == manifest["counts"]["boundaryOnlyCount"]
     assert counts["no_data"] == manifest["counts"]["noDataCount"]
 
+    released = load_json("app/data/model_card.json")["forecastRelease"]["releasedHorizons"]
     for record in records:
         status = record["identity"]["coverageStatus"]
-        assert record["forecast"] is None
+        # A forecast may only ride on a record that carries a model estimate,
+        # and only at a horizon the card says is released.
+        if record["forecast"] is not None:
+            assert record["nowcast"] is not None
+            assert record["forecast"]["horizonMonths"] in released
         if status == "modelled":
             nowcast = record["nowcast"]
             assert nowcast is not None

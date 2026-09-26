@@ -57,7 +57,7 @@ function deterministicAnswer(question: string, district: string): string {
   if (q) {
     const m = findMandal(q);
     if (m) {
-      return `${titleCase(m.mandal_name)} (${titleCase(m.district_name)}): latest measured mandal aggregate ${f(m.display_mbgl)} m below ground for ${m.latest_observation_period || "an unspecified period"}; modelled nowcast ${f(m.estimate_mbgl)} m with model P10–P90 ${f(m.estimate_band_p10)}–${f(m.estimate_band_p90)} m. Year-on-year measured trend ${(m.trend_m_per_yr ?? 0) > 0 ? "deepening" : "recovering"} ${f(Math.abs(m.trend_m_per_yr ?? 0))} m/yr. Coverage: ${m.coverage_status}; ${m.observation_month_count} observation months. No forecast horizon is released. Prototype, not an official result.`;
+      return `${titleCase(m.mandal_name)} (${titleCase(m.district_name)}): latest measured mandal aggregate ${f(m.display_mbgl)} m below ground for ${m.latest_observation_period || "an unspecified period"}; modelled nowcast ${f(m.estimate_mbgl)} m with model P10–P90 ${f(m.estimate_band_p10)}–${f(m.estimate_band_p90)} m. Year-on-year measured trend ${(m.trend_m_per_yr ?? 0) > 0 ? "deepening" : "recovering"} ${f(Math.abs(m.trend_m_per_yr ?? 0))} m/yr. Coverage: ${m.coverage_status}; ${m.observation_month_count} observation months. Released three-month outlook ${f(m.forecast_mbgl)} m for ${m.forecast_target_period || "an unspecified month"} with P10\u2013P90 ${f(m.forecast_band_p10)}\u2013${f(m.forecast_band_p90)} m. No other horizon is released. Prototype, not an official result.`;
     }
     if (/(over.?extract|pumping|despite)/.test(q)) {
       const over = mandals.filter((x) => x.sensor_satellite_agreement === "declining_despite_positive_climate_balance").sort((a, b) => (b.trend_m_per_yr ?? 0) - (a.trend_m_per_yr ?? 0)).slice(0, 6);
@@ -84,7 +84,7 @@ Rules:
 - GRACE-DA is regional model-assimilated context, not direct mandal groundwater depth.
 - Rainfall minus actual ET is climate context, not direct measured recharge.
 - Context agreement categories are patterns to investigate, never causal attributions.
-- No forecast horizon is released. Do not invent a future value.
+- Only the three-month horizon is released. Quote it only with its interval and its target month, and invent no other future value.
 - Do not recommend permits, pumping restrictions or field orders. Suggest monitoring, history review or field verification.
 - Be concise and plain-language. Plain text, no markdown headers, max ~2 short paragraphs or a short list.`;
 

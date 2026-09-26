@@ -72,7 +72,16 @@ def main():
         observation = record.get("observation")
         nowcast = record.get("nowcast")
         forecast = record.get("forecast")
-        require(forecast is None, f"{prefix} forecast must be null until release gate passes", errors)
+        if forecast is None:
+            pass
+        else:
+            released = model_card["forecastRelease"]["releasedHorizons"]
+            require(forecast["horizonMonths"] in released, f"{prefix} forecast horizon is released", errors)
+            require(forecast["releaseStatus"] == "released", f"{prefix} forecast release status", errors)
+            require(forecast["unit"] == "m_bgl", f"{prefix} forecast unit", errors)
+            require(bool(MONTH.match(forecast.get("targetDate", ""))), f"{prefix} forecast target period", errors)
+            require(forecast["lower"] <= forecast["value"] <= forecast["upper"], f"{prefix} forecast interval order", errors)
+            require(forecast["beatsBaselines"] is True, f"{prefix} forecast beat its baselines", errors)
         if observation:
             require(observation.get("unit") == "m_bgl", f"{prefix} observation unit", errors)
             require(bool(MONTH.match(observation.get("observationPeriod", ""))), f"{prefix} observation period", errors)
@@ -95,7 +104,18 @@ def main():
     require(counts["measuredOnlyCount"] == coverage["measured_only"], "manifest measured-only count", errors)
     require(counts["boundaryOnlyCount"] == coverage["boundary_only"], "manifest boundary-only count", errors)
     require(counts["historySeriesCount"] == len(series_bundle["series"]), "manifest history count", errors)
-    require(model_card["forecastRelease"]["releasedHorizons"] == [], "forecast release gate", errors)
+    release = model_card["forecastRelease"]
+    # A horizon may only be published if this run's own evidence still supports
+    # it. Releasing is a decision; keeping it released is a measurement.
+    require(
+        set(release["releasedHorizons"]) <= set(release["horizonsClearingTheGate"]),
+        "every released horizon still clears the gate",
+        errors,
+    )
+    for horizon in model_card["evaluations"]["directForecast"]["horizons"]:
+        if horizon["horizonMonths"] in release["releasedHorizons"]:
+            require(not horizon["releaseBlockers"], f"released horizon {horizon['horizonMonths']} has no blockers", errors)
+            require(horizon["rollingOriginValidated"] is True, f"released horizon {horizon['horizonMonths']} is rolling-origin validated", errors)
     require(
         model_card["evaluations"]["crossNetworkComparison"]["interpretation"]
         == "network comparability diagnostic; not model accuracy",

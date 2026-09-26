@@ -55,6 +55,7 @@ jobs:
           # Legacy V1 artifacts are deliberately excluded.
           git add \
             phase3_levels/outputs/mandal_nowcasts_v2.json \
+            phase3_levels/outputs/mandal_forecast_3m.json \
             phase3_levels/outputs/phase0_evaluations.json \
             phase3_levels/outputs/weekly_run_log.json \
             phase3_levels/data \

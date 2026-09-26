@@ -69,7 +69,19 @@ def test_contract_identity_enums_units_and_dates():
         assert record["assessment"]["contextAgreement"] not in LEGACY_AGREEMENT
         observation = record["observation"]
         nowcast = record["nowcast"]
-        assert record["forecast"] is None
+        forecast = record["forecast"]
+        if forecast is not None:
+            assert forecast["releaseStatus"] == "released"
+            assert forecast["horizonMonths"] in MODEL_CARD["forecastRelease"]["releasedHorizons"]
+            assert forecast["unit"] == "m_bgl"
+            assert MONTH.fullmatch(forecast["targetDate"])
+            assert MONTH.fullmatch(forecast["originPeriod"])
+            assert forecast["lower"] <= forecast["value"] <= forecast["upper"]
+            # Published because it was measured to beat both naive rules, not
+            # because somebody wanted a forward number on the page.
+            assert forecast["beatsBaselines"] is True
+            assert forecast["evaluationMetric"]["maeM"] < forecast["baselineMetric"]["noChangeMaeM"]
+            assert forecast["evaluationMetric"]["maeM"] < forecast["baselineMetric"]["seasonalMaeM"]
         if observation:
             assert observation["unit"] == "m_bgl"
             assert MONTH.fullmatch(observation["observationPeriod"])
@@ -158,15 +170,17 @@ def test_model_card_separates_evaluation_tasks_and_gates_forecasts():
         evaluations["crossNetworkComparison"]["interpretation"]
         == "network comparability diagnostic; not model accuracy"
     )
-    assert MODEL_CARD["forecastRelease"]["releasedHorizons"] == []
-    assert MODEL_CARD["forecastRelease"]["status"] == "not_released"
+    release = MODEL_CARD["forecastRelease"]
+    # Releasing is a decision; staying released is a measurement. A horizon may
+    # only be published while this run's own evidence still clears the gate.
+    assert set(release["releasedHorizons"]) <= set(release["horizonsClearingTheGate"])
+    assert release["status"] == ("released" if release["releasedHorizons"] else "not_released")
     for horizon in evaluations["directForecast"]["horizons"]:
         assert set(horizon["baselines"]) == {"noChange", "seasonal"}
         assert horizon["sampleCount"] > 0
         # Clearing the gate is evidence, not permission. A horizon may pass and
         # must still stay unreleased until somebody decides to publish it.
         assert horizon["releaseStatus"] == "research_only"
-        assert horizon["horizonMonths"] not in evaluations["directForecast"]["releasedHorizons"]
         rolling = horizon["rollingOrigin"]
         if rolling.get("validated"):
             assert rolling["originCount"] >= 4

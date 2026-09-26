@@ -95,6 +95,19 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
             )}
           </span>
         </div>
+        {mandal.forecast_mbgl !== null && mandal.forecast_mbgl !== undefined && (
+          <div className="kvRow">
+            <span className="k">
+              {mandal.forecast_horizon_months}-month outlook · {mandal.forecast_target_period}
+            </span>
+            <span className="v">
+              {formatNumber(mandal.forecast_mbgl)} mbgl
+              {(mandal.forecast_band_p10 ?? null) !== null && (
+                <span className="muted"> · P10–P90 {formatNumber(mandal.forecast_band_p10)}–{formatNumber(mandal.forecast_band_p90)} mbgl</span>
+              )}
+            </span>
+          </div>
+        )}
         {mandal.obs_outside_band ? (
           <div className="sideCaveat" style={{ color: "var(--rust)", fontWeight: 600 }}>
             ⚠ The latest measured aggregate sits {formatNumber(mandal.obs_band_excess_m)} m outside the model&rsquo;s own
@@ -102,7 +115,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
           </div>
         ) : (
           <div className="sideCaveat">
-            No forecast horizon is released. The displayed range is a model P10–P90 quantile range, not a guaranteed confidence interval.
+            Only the three-month horizon is released, on rolling-origin validation. Both ranges are model P10–P90 quantile ranges, not guaranteed confidence intervals.
           </div>
         )}
       </div>

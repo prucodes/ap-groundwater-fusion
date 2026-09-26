@@ -1,7 +1,7 @@
 {
   "manifestVersion": "2.0.0",
   "dataContractVersion": "2.0.0",
-  "generatedAt": "2026-09-26T04:49:31+00:00",
+  "generatedAt": "2026-09-26T05:13:13+00:00",
   "generator": "phase3_levels/build_phase0_foundation.py",
   "generatorVersion": "phase0-publisher-2.0.0",
   "officialAdministrativeUnitCount": null,
@@ -37,7 +37,7 @@
     "rainfallValidPeriod": "2026.08",
     "etValidPeriod": "2025",
     "modelBuildTimestamp": "2026-09-26T04:05:09+00:00",
-    "uiGenerationTimestamp": "2026-09-26T04:49:31+00:00"
+    "uiGenerationTimestamp": "2026-09-26T05:13:13+00:00"
   },
   "joinDiagnostics": {
     "joinIdentity": "normalized district plus normalized mandal",
@@ -81,18 +81,18 @@
   "files": [
     {
       "file": "mandal_groundwater_records_v2.json",
-      "bytes": 3633520,
-      "sha256": "e0aee187ed441112cdaaf283665cecf30c1bc402279b73d983fd96ed23180bed"
+      "bytes": 4091272,
+      "sha256": "80bffb7f0d0d4591e73f36b35c4bf70df1e723431b1a718678021d8648a60c0f"
     },
     {
       "file": "mandal_observation_series_v2.json",
       "bytes": 6902481,
-      "sha256": "4b7a15f3ca0f192712733771e446b022b0f0e9a074b0cb2920ee8d2a95652cdd"
+      "sha256": "4debfaf232ab5a5a76871290d6bab0f0795b76de8bdce45c49015af231cf9a23"
     },
     {
       "file": "model_card.json",
-      "bytes": 20413,
-      "sha256": "e42f5cc9a3bdaebb7770a61530f658e970ac0676f567c9f2d1bb34d0b17267cf"
+      "bytes": 20672,
+      "sha256": "31754303df2992da57ed4ad1818ac8604425d1a7aa614ddb96b63597de8f3deb"
     },
     {
       "file": "ap_map_geometry.json",
@@ -136,22 +136,22 @@
         "file": "app/data/mandal_groundwater_records_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 3633520,
-        "sha256": "e0aee187ed441112cdaaf283665cecf30c1bc402279b73d983fd96ed23180bed"
+        "bytes": 4091272,
+        "sha256": "80bffb7f0d0d4591e73f36b35c4bf70df1e723431b1a718678021d8648a60c0f"
       },
       {
         "file": "app/data/mandal_observation_series_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
         "bytes": 6902481,
-        "sha256": "4b7a15f3ca0f192712733771e446b022b0f0e9a074b0cb2920ee8d2a95652cdd"
+        "sha256": "4debfaf232ab5a5a76871290d6bab0f0795b76de8bdce45c49015af231cf9a23"
       },
       {
         "file": "app/data/model_card.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 20413,
-        "sha256": "e42f5cc9a3bdaebb7770a61530f658e970ac0676f567c9f2d1bb34d0b17267cf"
+        "bytes": 20672,
+        "sha256": "31754303df2992da57ed4ad1818ac8604425d1a7aa614ddb96b63597de8f3deb"
       },
       {
         "file": "app/data/ap_map_geometry.json",

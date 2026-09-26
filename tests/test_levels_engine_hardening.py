@@ -155,3 +155,60 @@ def engine_foundation_threshold():
     source = open(os.path.join(ROOT, "phase3_levels", "build_phase0_foundation.py")).read()
     line = next(l for l in source.splitlines() if l.startswith("VERIFY_BAND_EXCESS"))
     return float(line.split("=")[1])
+
+
+FORECAST = os.path.join(ROOT, "phase3_levels", "outputs", "mandal_forecast_3m.json")
+
+
+def test_released_forecast_targets_three_months_past_its_own_origin():
+    bundle = json.load(open(FORECAST))
+    assert bundle["horizonMonths"] == 3
+    for row in bundle["forecasts"]:
+        year, month = (int(part) for part in row["originPeriod"].split("-"))
+        month += bundle["horizonMonths"]
+        year, month = year + (month - 1) // 12, (month - 1) % 12 + 1
+        assert row["targetPeriod"] == f"{year:04d}-{month:02d}"
+
+
+def test_the_forecast_band_never_claims_more_precision_than_the_model():
+    """Calibration can say a band over-covers. On a forward number we widen
+    where needed and never narrow."""
+    bundle = json.load(open(FORECAST))
+    for value in bundle["method"]["conformalWidenM"].values():
+        assert value >= 0
+    for row in bundle["forecasts"]:
+        assert row["lower"] <= row["value"] <= row["upper"]
+        assert row["upper"] > row["lower"]
+
+
+def test_nothing_is_published_beyond_the_horizon_that_earned_it():
+    card = json.load(open(os.path.join(ROOT, "app", "data", "model_card.json")))
+    release = card["forecastRelease"]
+    assert release["releasedHorizons"] == [3]
+    assert set(release["releasedHorizons"]) <= set(release["horizonsClearingTheGate"])
+    horizons = {h["horizonMonths"]: h for h in card["evaluations"]["directForecast"]["horizons"]}
+    released = horizons[3]
+    assert released["rollingOriginValidated"] is True
+    assert released["releaseBlockers"] == []
+    rolling = released["rollingOrigin"]
+    assert rolling["beatsBothBaselinesByFivePct"] is True
+    assert rolling["everyTerrainCohortImproves"] is True
+    for horizon, detail in horizons.items():
+        if horizon != 3:
+            assert detail["releaseBlockers"], f"h={horizon} is unreleased and must say why"
+
+
+def test_a_forecast_never_blends_toward_an_anchor_the_model_rejects():
+    """A year-ago reading outside the model's own band is describing a
+    different regime -- a swapped well, a reporting change -- not the same
+    place a year earlier."""
+    bundle = json.load(open(FORECAST))
+    anchored = [row for row in bundle["forecasts"] if row["anchoredToYearAgo"]]
+    model_only = [row for row in bundle["forecasts"] if not row["anchoredToYearAgo"]]
+    assert anchored and model_only, "both paths should be exercised by real data"
+    # Nothing may be dragged more than the band's own width away from where the
+    # mandal stands today without the band widening to admit it.
+    for row in bundle["forecasts"]:
+        move = abs(row["value"] - row["originLevelMbgl"])
+        if move > (row["upper"] - row["lower"]):
+            assert row["lower"] <= row["value"] <= row["upper"]
