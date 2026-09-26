@@ -120,6 +120,9 @@ export type MandalGroundwaterRecordV2 = {
       /** How far outside, in widths of the model's own band. */
       excessAsShareOfBandWidth: number | null;
     } | null;
+    /** Set when the depth series steps to a new level: the history behind this
+     *  record is not one continuous well. Null for an unbroken series. */
+    seriesRegimeStart: string | null;
   };
   provenance: {
     sourceNames: string[];
@@ -165,6 +168,7 @@ export type MandalGroundwaterView = {
   estimate_band_p90?: number | null;
   obs_model_gap_m?: number | null;
   obs_outside_band?: boolean | null;
+  series_regime_start?: string | null;
   forecast_mbgl?: number | null;
   forecast_band_p10?: number | null;
   forecast_band_p90?: number | null;

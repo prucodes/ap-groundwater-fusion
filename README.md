@@ -63,6 +63,23 @@ its district centroid (the record says which). The alias table is deliberately
 read the rows it proposes and the leftovers it lists in
 `mandal_boundary_unresolved.csv`, then commit both.
 
+**Two lists need a person, not the pipeline.**
+`phase3_levels/data/mandal_boundary_unresolved.csv` holds the 61 mandals whose
+polygon could not be identified without guessing, and
+`phase3_levels/data/mandal_series_discontinuities.csv` holds the mandals whose
+depth series steps to a new level and stays there -- a well swapped mid-record,
+or a change in what the source reports. Kalla read 27-33 m every month to
+February 2026 and 1.2-3.1 m from March; Undi did the same thing in the same
+month. Regenerate the second with
+`python3 phase3_levels/build_series_discontinuities.py` after a refresh that
+adds months, and confirm each row against the source before trusting it.
+
+No feature is allowed to reach across a step, a mandal's mean level is taken
+from its current regime only, and a mandal whose series stepped within the last
+year is published measured-only and flagged for verification rather than
+modelled from a different well. Chinnagottigallu stepped in October 2024 and is
+modelled normally again, on its new regime.
+
 Run the active path in this order:
 
 ```bash

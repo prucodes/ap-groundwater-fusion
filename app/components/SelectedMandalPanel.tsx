@@ -95,6 +95,13 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
             )}
           </span>
         </div>
+        {mandal.series_regime_start && (
+          <div className="sideCaveat" style={{ color: "var(--rust)", fontWeight: 600 }}>
+            ⚠ This mandal&rsquo;s readings step to a new level at {mandal.series_regime_start} and stay there,
+            which a water table does not do — the well behind them appears to have changed. Its history before
+            that month describes a different well, and nothing is modelled across the step.
+          </div>
+        )}
         {mandal.forecast_mbgl !== null && mandal.forecast_mbgl !== undefined && (
           <div className="kvRow">
             <span className="k">
