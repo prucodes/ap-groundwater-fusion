@@ -157,6 +157,7 @@ export const mandals: MandalGroundwaterView[] = groundwaterRecords.map((record, 
   const intervalWidth =
     record.nowcast ? record.nowcast.upper - record.nowcast.lower : null;
   const status = viewStatus(record);
+  const bandCheck = record.assessment.observationVsModelBand;
   const balanceCategory = record.signals.climateBalance.category;
   return {
     id: record.identity.mandalId,
@@ -175,6 +176,9 @@ export const mandals: MandalGroundwaterView[] = groundwaterRecords.map((record, 
     estimate_band_p90: record.nowcast?.upper ?? null,
     obs_model_gap_m:
       measured !== null && nowcast !== null ? Math.round(Math.abs(measured - nowcast) * 100) / 100 : null,
+    obs_outside_band: bandCheck?.outsideModelBand ?? null,
+    obs_band_excess_m: bandCheck?.excessBeyondBandM ?? null,
+    obs_band_excess_ratio: bandCheck?.excessAsShareOfBandWidth ?? null,
     display_mbgl: measured,
     display_basis: measured !== null ? "measured" : "modelled",
     trend_m_per_yr: record.assessment.measuredTrendMPerYear,

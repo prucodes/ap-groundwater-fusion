@@ -49,7 +49,9 @@ export default function OverviewPage() {
     .filter((v): v is number => v !== null)
     .sort((a, b) => a - b);
   const medianBandWidth = bandWidths[Math.floor(bandWidths.length / 2)] ?? null;
-  const modelGapCount = mandals.filter((m) => (m.obs_model_gap_m ?? 0) >= 2).length;
+  // Readings that land outside the model's own P10–P90 band. A fixed metre
+  // threshold could not scale with how uncertain the model says it is.
+  const outsideBandCount = mandals.filter((m) => m.obs_outside_band === true).length;
   const temporalEval = modelCard.evaluations.temporalNowcast;
   const intervalEval = modelCard.evaluations.intervalEvaluation;
   const baselineLiftPct = Math.round(((temporalEval.baseline.maeM - temporalEval.model.maeM) / temporalEval.baseline.maeM) * 100);
@@ -117,9 +119,9 @@ export default function OverviewPage() {
         />
         <KpiCard
           icon={<IconLayers />}
-          label="Measured–Model Gap"
-          value={<CountUp value={modelGapCount} />}
-          foot="mandals with ≥2 m gap · verify before use"
+          label="Outside the Model Band"
+          value={<CountUp value={outsideBandCount} />}
+          foot="reading outside its own P10–P90 · verify before use"
           footAccent
           accent="var(--cyan)"
         />

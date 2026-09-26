@@ -16,115 +16,332 @@
     "provenance"
   ],
   "properties": {
-    "contractVersion": { "const": "2.0.0" },
+    "contractVersion": {
+      "const": "2.0.0"
+    },
     "identity": {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "mandalId", "mandalName", "districtId", "districtName", "boundaryId",
-        "boundarySource", "boundaryStatus", "identifierStatus", "coverageStatus",
-        "joinedSourceSeriesIds", "joinMethod"
+        "mandalId",
+        "mandalName",
+        "districtId",
+        "districtName",
+        "boundaryId",
+        "boundarySource",
+        "boundaryStatus",
+        "identifierStatus",
+        "coverageStatus",
+        "joinedSourceSeriesIds",
+        "joinMethod"
       ],
       "properties": {
-        "mandalId": { "type": "string", "minLength": 1 },
-        "mandalName": { "type": "string", "minLength": 1 },
-        "districtId": { "type": "string", "minLength": 1 },
-        "districtName": { "type": "string", "minLength": 1 },
-        "boundaryId": { "type": "string", "minLength": 1 },
-        "boundarySource": { "type": "string", "minLength": 1 },
-        "boundaryStatus": { "enum": ["prototype", "official"] },
-        "identifierStatus": { "enum": ["temporary", "official"] },
-        "coverageStatus": {
-          "enum": ["modelled", "measured_only", "boundary_only", "no_data", "excluded"]
+        "mandalId": {
+          "type": "string",
+          "minLength": 1
         },
-        "coverageReason": { "type": ["string", "null"] },
+        "mandalName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "districtId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "districtName": {
+          "type": "string",
+          "minLength": 1
+        },
+        "boundaryId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "boundarySource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "boundaryStatus": {
+          "enum": [
+            "prototype",
+            "official"
+          ]
+        },
+        "identifierStatus": {
+          "enum": [
+            "temporary",
+            "official"
+          ]
+        },
+        "coverageStatus": {
+          "enum": [
+            "modelled",
+            "measured_only",
+            "boundary_only",
+            "no_data",
+            "excluded"
+          ]
+        },
+        "coverageReason": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
         "joinedSourceSeriesIds": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "uniqueItems": true
         },
         "joinMethod": {
-          "enum": ["district_and_mandal", "district_and_reconciled_mandal", "boundary_only"]
+          "enum": [
+            "district_and_mandal",
+            "district_and_reconciled_mandal",
+            "boundary_only"
+          ]
         }
       }
     },
     "observation": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "required": [
-        "latestMeasuredValue", "unit", "observationPeriod", "aggregationMethod",
-        "observationRecordCount", "uniqueObservationMonthCount", "physicalStationCount",
-        "sourceStatus", "authorizationStatus", "validityPeriod", "fetchDate"
+        "latestMeasuredValue",
+        "unit",
+        "observationPeriod",
+        "aggregationMethod",
+        "observationRecordCount",
+        "uniqueObservationMonthCount",
+        "physicalStationCount",
+        "sourceStatus",
+        "authorizationStatus",
+        "validityPeriod",
+        "fetchDate"
       ],
       "properties": {
-        "latestMeasuredValue": { "type": "number" },
-        "unit": { "const": "m_bgl" },
-        "observationPeriod": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$" },
-        "aggregationMethod": { "type": "string" },
-        "observationRecordCount": { "type": "integer", "minimum": 1 },
-        "uniqueObservationMonthCount": { "type": "integer", "minimum": 1 },
-        "physicalStationCount": { "type": ["integer", "null"], "minimum": 1 },
-        "sourceStatus": { "enum": ["session_sample", "authorized_source", "unknown"] },
-        "authorizationStatus": { "enum": ["pending", "authorized", "unknown"] },
+        "latestMeasuredValue": {
+          "type": "number"
+        },
+        "unit": {
+          "const": "m_bgl"
+        },
+        "observationPeriod": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}$"
+        },
+        "aggregationMethod": {
+          "type": "string"
+        },
+        "observationRecordCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "uniqueObservationMonthCount": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "physicalStationCount": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "sourceStatus": {
+          "enum": [
+            "session_sample",
+            "authorized_source",
+            "unknown"
+          ]
+        },
+        "authorizationStatus": {
+          "enum": [
+            "pending",
+            "authorized",
+            "unknown"
+          ]
+        },
         "validityPeriod": {
           "type": "object",
-          "required": ["start", "end"],
+          "required": [
+            "start",
+            "end"
+          ],
           "properties": {
-            "start": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$" },
-            "end": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$" }
+            "start": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}$"
+            },
+            "end": {
+              "type": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}$"
+            }
           }
         },
-        "fetchDate": { "type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" }
+        "fetchDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+        }
       }
     },
     "nowcast": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "required": [
-        "value", "unit", "targetPeriod", "modelVersion", "lower", "upper",
-        "intervalType", "eligibleEvaluationCohort", "qualityStatus"
+        "value",
+        "unit",
+        "targetPeriod",
+        "modelVersion",
+        "lower",
+        "upper",
+        "intervalType",
+        "eligibleEvaluationCohort",
+        "qualityStatus"
       ],
       "properties": {
-        "value": { "type": "number" },
-        "unit": { "const": "m_bgl" },
-        "targetPeriod": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$" },
-        "modelVersion": { "type": "string" },
-        "lower": { "type": "number" },
-        "upper": { "type": "number" },
-        "intervalType": { "const": "conformalised_quantile_p10_p90" },
-        "eligibleEvaluationCohort": { "type": "string" },
-        "qualityStatus": { "enum": ["eligible", "limited", "not_evaluated"] }
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "const": "m_bgl"
+        },
+        "targetPeriod": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}$"
+        },
+        "modelVersion": {
+          "type": "string"
+        },
+        "lower": {
+          "type": "number"
+        },
+        "upper": {
+          "type": "number"
+        },
+        "intervalType": {
+          "const": "conformalised_quantile_p10_p90"
+        },
+        "eligibleEvaluationCohort": {
+          "type": "string"
+        },
+        "qualityStatus": {
+          "enum": [
+            "eligible",
+            "limited",
+            "not_evaluated"
+          ]
+        }
       }
     },
     "forecast": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "required": [
-        "issueDate", "targetDate", "horizonMonths", "value", "unit", "lower", "upper",
-        "modelVersion", "evaluationMetric", "baselineMetric", "beatsBaselines", "releaseStatus"
+        "issueDate",
+        "targetDate",
+        "horizonMonths",
+        "value",
+        "unit",
+        "lower",
+        "upper",
+        "modelVersion",
+        "evaluationMetric",
+        "baselineMetric",
+        "beatsBaselines",
+        "releaseStatus"
       ],
       "properties": {
-        "issueDate": { "type": "string", "format": "date" },
-        "targetDate": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$" },
-        "horizonMonths": { "type": "integer", "minimum": 1 },
-        "value": { "type": "number" },
-        "unit": { "const": "m_bgl" },
-        "lower": { "type": ["number", "null"] },
-        "upper": { "type": ["number", "null"] },
-        "modelVersion": { "type": "string" },
-        "evaluationMetric": { "type": "object" },
-        "baselineMetric": { "type": "object" },
-        "beatsBaselines": { "type": "boolean" },
-        "releaseStatus": { "enum": ["released", "experimental", "research_only", "not_released"] }
+        "issueDate": {
+          "type": "string",
+          "format": "date"
+        },
+        "targetDate": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}$"
+        },
+        "horizonMonths": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "const": "m_bgl"
+        },
+        "lower": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "upper": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "modelVersion": {
+          "type": "string"
+        },
+        "evaluationMetric": {
+          "type": "object"
+        },
+        "baselineMetric": {
+          "type": "object"
+        },
+        "beatsBaselines": {
+          "type": "boolean"
+        },
+        "releaseStatus": {
+          "enum": [
+            "released",
+            "experimental",
+            "research_only",
+            "not_released"
+          ]
+        }
       }
     },
-    "signals": { "type": "object" },
-    "quality": { "type": "object" },
+    "signals": {
+      "type": "object"
+    },
+    "quality": {
+      "type": "object"
+    },
     "assessment": {
       "type": "object",
-      "required": ["monitoringStatus", "measuredTrendMPerYear", "contextAgreement"],
+      "required": [
+        "monitoringStatus",
+        "measuredTrendMPerYear",
+        "contextAgreement"
+      ],
       "properties": {
         "monitoringStatus": {
-          "enum": ["stable", "watch", "stress", "verify", "insufficient_data"]
+          "enum": [
+            "stable",
+            "watch",
+            "stress",
+            "verify",
+            "insufficient_data"
+          ]
         },
-        "measuredTrendMPerYear": { "type": ["number", "null"] },
+        "measuredTrendMPerYear": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
         "contextAgreement": {
           "enum": [
             "declining_despite_positive_climate_balance",
@@ -132,25 +349,69 @@
             "stable_or_recovering",
             "unknown"
           ]
+        },
+        "observationVsModelBand": {
+          "description": "Whether the latest reading sits inside the nowcast's own P10-P90 band for the same month. Null when the two describe different months.",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "comparedPeriod": {
+              "type": "string"
+            },
+            "outsideModelBand": {
+              "type": "boolean"
+            },
+            "excessBeyondBandM": {
+              "type": "number"
+            },
+            "excessAsShareOfBandWidth": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "comparedPeriod",
+            "outsideModelBand",
+            "excessBeyondBandM"
+          ]
         }
       }
     },
-    "provenance": { "type": "object" }
+    "provenance": {
+      "type": "object"
+    }
   },
   "allOf": [
     {
       "if": {
         "properties": {
           "identity": {
-            "properties": { "coverageStatus": { "const": "modelled" } }
+            "properties": {
+              "coverageStatus": {
+                "const": "modelled"
+              }
+            }
           }
         }
       },
       "then": {
         "properties": {
-          "observation": { "type": "object" },
-          "nowcast": { "type": "object" },
-          "forecast": { "type": ["object", "null"] }
+          "observation": {
+            "type": "object"
+          },
+          "nowcast": {
+            "type": "object"
+          },
+          "forecast": {
+            "type": [
+              "object",
+              "null"
+            ]
+          }
         }
       }
     },
@@ -158,15 +419,25 @@
       "if": {
         "properties": {
           "identity": {
-            "properties": { "coverageStatus": { "const": "measured_only" } }
+            "properties": {
+              "coverageStatus": {
+                "const": "measured_only"
+              }
+            }
           }
         }
       },
       "then": {
         "properties": {
-          "observation": { "type": "object" },
-          "nowcast": { "type": "null" },
-          "forecast": { "type": "null" }
+          "observation": {
+            "type": "object"
+          },
+          "nowcast": {
+            "type": "null"
+          },
+          "forecast": {
+            "type": "null"
+          }
         }
       }
     },
@@ -174,15 +445,28 @@
       "if": {
         "properties": {
           "identity": {
-            "properties": { "coverageStatus": { "enum": ["boundary_only", "no_data"] } }
+            "properties": {
+              "coverageStatus": {
+                "enum": [
+                  "boundary_only",
+                  "no_data"
+                ]
+              }
+            }
           }
         }
       },
       "then": {
         "properties": {
-          "observation": { "type": "null" },
-          "nowcast": { "type": "null" },
-          "forecast": { "type": "null" }
+          "observation": {
+            "type": "null"
+          },
+          "nowcast": {
+            "type": "null"
+          },
+          "forecast": {
+            "type": "null"
+          }
         }
       }
     }

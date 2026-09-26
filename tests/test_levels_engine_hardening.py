@@ -94,3 +94,64 @@ def test_the_engine_models_the_change_not_the_level():
     assert "lag1" in engine.NUM
     source = open(os.path.join(ROOT, "phase3_levels", "build_levels_engine.py")).read()
     assert "level_mbgl - train.lag1" in source
+
+
+def _records():
+    return json.load(open(os.path.join(ROOT, "app", "data", "mandal_groundwater_records_v2.json")))["records"]
+
+
+def test_band_check_is_present_exactly_when_the_two_describe_the_same_month():
+    for record in _records():
+        observation, nowcast = record.get("observation"), record.get("nowcast")
+        comparable = (
+            observation is not None
+            and nowcast is not None
+            and observation["observationPeriod"] == nowcast["targetPeriod"]
+        )
+        check = record["assessment"]["observationVsModelBand"]
+        assert (check is not None) is comparable
+        if check:
+            assert check["comparedPeriod"] == nowcast["targetPeriod"]
+
+
+def test_the_band_check_agrees_with_the_numbers_it_was_derived_from():
+    checked = 0
+    for record in _records():
+        check = record["assessment"]["observationVsModelBand"]
+        if not check:
+            continue
+        measured = record["observation"]["latestMeasuredValue"]
+        lower, upper = record["nowcast"]["lower"], record["nowcast"]["upper"]
+        inside = lower <= measured <= upper
+        assert check["outsideModelBand"] is not inside
+        assert (check["excessBeyondBandM"] == 0) is inside
+        if not inside:
+            expected = round(max(lower - measured, measured - upper), 2)
+            assert abs(check["excessBeyondBandM"] - expected) <= 0.01
+        checked += 1
+    assert checked > 500
+
+
+def test_verify_means_the_reading_left_the_band_not_a_fixed_number_of_metres():
+    """The old rule fired at a flat 8 m, which says nothing about a model whose
+    band is 1 m wide in one mandal and 6 m wide in another."""
+    flagged = [r for r in _records() if r["assessment"]["monitoringStatus"] == "verify"]
+    assert flagged, "some mandal should need checking"
+    for record in flagged:
+        check = record["assessment"]["observationVsModelBand"]
+        if check is None:
+            assert record["identity"]["coverageStatus"] == "measured_only"
+            continue
+        assert check["outsideModelBand"] is True
+        assert check["excessAsShareOfBandWidth"] > engine_foundation_threshold()
+    # and nothing inside its band is asked to be verified
+    for record in _records():
+        check = record["assessment"]["observationVsModelBand"]
+        if check and not check["outsideModelBand"]:
+            assert record["assessment"]["monitoringStatus"] != "verify"
+
+
+def engine_foundation_threshold():
+    source = open(os.path.join(ROOT, "phase3_levels", "build_phase0_foundation.py")).read()
+    line = next(l for l in source.splitlines() if l.startswith("VERIFY_BAND_EXCESS"))
+    return float(line.split("=")[1])
