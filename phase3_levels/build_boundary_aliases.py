@@ -22,6 +22,11 @@ OUT = os.path.join(HERE, "data", "mandal_boundary_aliases.csv")
 REPORT = os.path.join(HERE, "data", "mandal_boundary_unresolved.csv")
 
 # Qualifiers that name part of a town, not a different place.
+# Every pair this admits is a transliteration a reader can check by eye:
+# GUDI PALLE for GUDUPALLE, ANAPARTHI for ANAPARTHY. The bar sits where the
+# proposals stop being obvious -- below it come genuinely different villages.
+MIN_SIMILARITY = 0.88
+
 QUALIFIER = re.compile(
     r"\b(?:URBAN|RURAL|MANDAL|MUNICIPALITY|MPL|CORPORATION|TOWN|M)\b"
     r"|\b(?:NORTH|SOUTH|EAST|WEST|CENTRAL)\b(?=\s*$)"
@@ -85,7 +90,7 @@ def build(sources, boundaries):
             reverse=True,
         )
         clear = len(scored) == 1 or (scored and scored[0][0] - scored[1][0] >= 0.06)
-        if scored and scored[0][0] >= 0.90 and clear:
+        if scored and scored[0][0] >= MIN_SIMILARITY and clear:
             aliases.append((row, scored[0][1], "transliteration_variant_same_district"))
             taken.add(scored[0][1])
             in_district[key(row["district"])].remove(scored[0][1])

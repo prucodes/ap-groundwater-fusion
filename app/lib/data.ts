@@ -71,6 +71,10 @@ export type ModelCard = {
       model: { maeM: number; rmseM: number; r2: number };
       baseline: { name: string; maeM: number };
       terrainCohorts: Record<string, { sampleCount: number; maeM: number; empiricalCoveragePct: number }>;
+      /** The rule the model has to beat: carry the last reading forward. */
+      lastReadingBaseline: { name: string; maeM: number; skillPct: number };
+      /** One statewide average hides the error where a reader's water sits. */
+      depthBands: { band: string; sampleCount: number; maeM: number; lastReadingMaeM: number }[];
     };
     spatialEstimation: {
       validation: string;

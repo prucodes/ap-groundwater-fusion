@@ -156,6 +156,26 @@ export default function OverviewPage() {
         </Link>
       </div>
 
+      {/* One statewide average hides the thing a reader actually needs: the
+          error where THEIR water sits. Shown against the rule the model has to
+          beat, so the comparison cannot be read as flattering. */}
+      <div className="depthBandStrip">
+        <div className="depthBandIntro">
+          <span className="validationEyebrow">Accuracy by depth</span>
+          <span>
+            The statewide average is carried by shallow mandals. Each band is the model&rsquo;s error against
+            simply carrying the last reading forward.
+          </span>
+        </div>
+        {temporalEval.depthBands.map((band) => (
+          <div className="depthBandCell" key={band.band}>
+            <span>{band.band}</span>
+            <strong>{formatNumber(band.maeM)} m</strong>
+            <em>vs {formatNumber(band.lastReadingMaeM)} m</em>
+          </div>
+        ))}
+      </div>
+
       <div className="overviewCockpit">
         <div className="overviewMapColumn">
         <section className="card mapCard overviewMapLead">
