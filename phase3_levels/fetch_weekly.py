@@ -74,7 +74,11 @@ STEPS = [
     # POWER. Until 2026-09-19 this was loaded once and stopped at 2025-12, so every
     # 2026 month reached the model with no rainfall. Incremental: most weeks it
     # finds the last complete month already stored and fetches nothing.
-    ("fetch NASA POWER rainfall (model input)",
+    # CHIRPS at 5.5 km is the model's rainfall; this appends the one new month
+    # rather than walking the archive. POWER stays as the fallback behind it.
+    ("extend CHIRPS rainfall history (model input)",
+     [PY, os.path.join(HERE, "fetch_chirps_history.py")], False, 1800),
+    ("fetch NASA POWER rainfall (fallback)",
      [PY, os.path.join(HERE, "fetch_nasa_power_rainfall.py")], False, 2700),
     ("build holdout-safe nowcasts", [PY, os.path.join(HERE, "build_levels_engine.py")], True),
     # Rolling-origin forecast validation retrains once per quarterly cut per

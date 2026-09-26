@@ -63,6 +63,17 @@ its district centroid (the record says which). The alias table is deliberately
 read the rows it proposes and the leftovers it lists in
 `mandal_boundary_unresolved.csv`, then commit both.
 
+**Rainfall for the model comes from CHIRPS**
+(`phase3_levels/data/mandal_rain_history_chirps.csv`, 0.05 degrees, about
+5.5 km, keyed by boundary index because sixteen district/mandal name pairs
+repeat). NASA POWER stands behind it as a fallback: it serves MERRA-2
+reanalysis at roughly 55 km, one cell across sixteen mandals, and joins by
+name, which left one row in seven with no rainfall at all. Measured on the
+same held-out period CHIRPS is better (0.9845 m against 0.9925 m) and reaches
+100% of rows rather than 85%. IMD gridded was tested too and is worse (0.9961 m
+at 75% coverage, and it stops in December 2025). The weekly refresh appends
+the one new month; `--rebuild` walks the archive again.
+
 **Two lists need a person, not the pipeline.**
 `phase3_levels/data/mandal_boundary_unresolved.csv` holds the 61 mandals whose
 polygon could not be identified without guessing, and
@@ -83,6 +94,7 @@ modelled normally again, on its new regime.
 Run the active path in this order:
 
 ```bash
+python3 phase3_levels/fetch_chirps_history.py     # appends the newest month
 python3 phase3_levels/build_levels_engine.py
 python3 phase3_levels/evaluate_phase0.py
 python3 phase3_levels/build_forecast.py
