@@ -18,6 +18,7 @@
   },
   "supportedUseCases": [
     "Current-period temporal nowcast or gap fill for lag-eligible mandals",
+    "Three-month directional outlook with its published interval, for prioritisation",
     "Monitoring prioritization with explicit measured/modelled separation",
     "Regional climate and GRACE-DA context review"
   ],
@@ -26,7 +27,8 @@
     "Sensorless statewide accuracy inferred from temporal holdout metrics",
     "Permit, pumping restriction or field-order automation",
     "Direct recharge measurement from rainfall minus evapotranspiration",
-    "Released future forecasting at any horizon"
+    "Future forecasting at any horizon other than the released three months",
+    "Reading a forecast midpoint without the interval that travels with it"
   ],
   "evaluations": {
     "temporalNowcast": {
@@ -578,8 +580,10 @@
     }
   },
   "forecastRelease": {
-    "releasedHorizons": [],
-    "status": "not_released",
+    "releasedHorizons": [
+      3
+    ],
+    "status": "released",
     "gate": {
       "requiredImprovementPct": 5,
       "requiresRollingOriginValidation": true,
@@ -589,7 +593,7 @@
     "horizonsClearingTheGate": [
       3
     ],
-    "reason": "No horizon is published. Releasing a forward number is an owner decision, not a consequence of passing the gate."
+    "reason": "Released horizons: [3]. A horizon is published only when it both clears the gate and is listed in RELEASED_FORECAST_HORIZONS; clearing the gate alone does not publish it."
   },
   "cohortDefinitions": {
     "temporalNowcast": "source-UUID mandal-months with exact calendar lag1 and lag12 and a resolved location; missing rainfall stays missing",
@@ -634,5 +638,5 @@
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
     "evaluations": "f31d68930730f6d26d14fd645773d1226739daa6b474fa301449355efbbbc530"
   },
-  "generatedAt": "2026-09-26T04:49:31+00:00"
+  "generatedAt": "2026-09-26T05:13:13+00:00"
 }

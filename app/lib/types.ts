@@ -62,8 +62,10 @@ export type MandalGroundwaterRecordV2 = {
     lower: number | null;
     upper: number | null;
     modelVersion: string;
-    evaluationMetric: Record<string, unknown>;
-    baselineMetric: Record<string, unknown>;
+    intervalType: "conformalised_quantile_p10_p90";
+    originPeriod: string;
+    evaluationMetric: { task: string; maeM: number; sampleCount: number; originCount: number };
+    baselineMetric: { noChangeMaeM: number; seasonalMaeM: number };
     beatsBaselines: boolean;
     releaseStatus: "released" | "experimental" | "research_only" | "not_released";
   } | null;
@@ -163,6 +165,11 @@ export type MandalGroundwaterView = {
   estimate_band_p90?: number | null;
   obs_model_gap_m?: number | null;
   obs_outside_band?: boolean | null;
+  forecast_mbgl?: number | null;
+  forecast_band_p10?: number | null;
+  forecast_band_p90?: number | null;
+  forecast_target_period?: string | null;
+  forecast_horizon_months?: number | null;
   obs_band_excess_m?: number | null;
   obs_band_excess_ratio?: number | null;
   display_mbgl?: number | null;

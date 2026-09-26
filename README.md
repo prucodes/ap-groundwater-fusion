@@ -41,15 +41,18 @@ are P10–P90 quantile ranges widened per aquifer by split conformal calibration
 which brings measured coverage close to the nominal 80% in every terrain; they
 are still not guaranteed confidence intervals. Accuracy scales with depth, so
 read `depthBands` in the model card rather than the statewide average alone.
-No forecast horizon is released. Rolling-origin validation now runs for the
-3- and 6-month horizons: the 3-month horizon clears the release gate (1.78 m
-against 2.23 m for assuming no change and 2.33 m for a year-ago lookup, and it
-improves in every terrain), the 6-month horizon does not, because a year-ago
-lookup is already as good as the model at that range. Clearing the gate is
-evidence, not permission -- `horizonsClearingTheGate` records it while
-`releasedHorizons` stays empty until the project decides to publish a forward
-number. Rainfall minus actual ET is climate context rather than direct
-measured recharge.
+**The 3-month horizon is released; no other horizon is.** Under rolling-origin
+validation it is 1.78 m against 2.23 m for assuming no change and 2.33 m for a
+year-ago lookup, and it improves in every aquifer and every depth band. The
+6-month horizon is not released, because at that range a year-ago lookup is
+already as good as the model. Publishing is a decision, not a consequence:
+`RELEASED_FORECAST_HORIZONS` in `build_phase0_foundation.py` names what the
+project chose to publish, and a horizon listed there still drops out of
+`releasedHorizons` if a later run stops clearing the gate. The published number
+is the model blended with the same month a year before the target, weighted per
+depth band, inside a per-aquifer conformalised P10-P90 band that is never
+narrowed below the model's own. Rainfall minus actual ET is climate context
+rather than direct measured recharge.
 
 Every source series is reconciled to a prototype boundary by
 `phase3_levels/source_identity.py`, then by the reviewed alias table
@@ -65,6 +68,7 @@ Run the active path in this order:
 ```bash
 python3 phase3_levels/build_levels_engine.py
 python3 phase3_levels/evaluate_phase0.py
+python3 phase3_levels/build_forecast.py
 python3 phase3_levels/build_real_app_data.py
 python3 phase3_levels/validate_phase0.py
 python3 -m pytest -q

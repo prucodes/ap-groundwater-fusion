@@ -23,6 +23,12 @@ OUT = os.path.join(HERE, "outputs")
 # 1 m wide. About a quarter of readings fall outside the band at all, which is
 # an 80% band doing its job, so the flag needs the margin to stay useful.
 VERIFY_BAND_EXCESS = 0.5
+
+# Horizons the project has decided to publish. Clearing the release gate is
+# evidence that a horizon COULD be released; appearing here is the decision
+# that it IS. A horizon listed here still drops out if the evidence stops
+# supporting it, so the release cannot outlive its own validation.
+RELEASED_FORECAST_HORIZONS = (3,)
 CONTRACT_VERSION = "2.0.0"
 BUILDER_VERSION = "phase0-publisher-2.0.0"
 GEOMETRY_VERSION = "public-prototype-2026-07"
@@ -159,6 +165,48 @@ def trend_from_series(series):
     return round(max(-6.0, min(6.0, latest["value"] - by_period[previous_period])), 2)
 
 
+def forecast_for(bundle, by_series, nowcast_source, generated_at):
+    """The released forecast for this mandal, or None where there is not one.
+
+    Only the 3-month horizon is released, and only because rolling-origin
+    validation says it beats both naive rules in every aquifer. The numbers
+    that earned the release travel with every row, so a reader never has to
+    take the forecast on trust.
+    """
+    if bundle is None or nowcast_source is None:
+        return None
+    row = by_series.get(nowcast_source.get("sourceSeriesId"))
+    if row is None:
+        return None
+    validation = bundle["validation"]
+    return {
+        "issueDate": generated_at[:10],
+        "targetDate": row["targetPeriod"],
+        "horizonMonths": bundle["horizonMonths"],
+        "value": row["value"],
+        "unit": "m_bgl",
+        "lower": row["lower"],
+        "upper": row["upper"],
+        "modelVersion": bundle["modelVersion"],
+        "intervalType": bundle["intervalType"],
+        "originPeriod": row["originPeriod"],
+        "evaluationMetric": {
+            "task": "rolling_origin_direct_forecast",
+            "maeM": validation["maeM"],
+            "sampleCount": validation["sampleCount"],
+            "originCount": validation["originCount"],
+        },
+        "baselineMetric": {
+            "noChangeMaeM": validation["baselines"]["noChange"]["maeM"],
+            "seasonalMaeM": validation["baselines"]["seasonal"]["maeM"],
+        },
+        "beatsBaselines": bool(
+            validation["beatsBothBaselinesByFivePct"] and validation["everyTerrainCohortImproves"]
+        ),
+        "releaseStatus": "released",
+    }
+
+
 def build_records(generated_at):
     paths = {
         "apwrimsHistory": os.path.join(HERE, "apwrims", "apwrims_gw_history.csv"),
@@ -170,6 +218,14 @@ def build_records(generated_at):
         "extractionCategories": os.path.join(HERE, "data", "mandal_extraction_cgwb2024.csv"),
         "evaluations": os.path.join(OUT, "phase0_evaluations.json"),
     }
+    # The released 3-month forecast. Optional so a checkout without it still
+    # builds; where it is absent, records carry no forecast rather than a guess.
+    forecast_path = os.path.join(OUT, "mandal_forecast_3m.json")
+    forecast_bundle = json.load(open(forecast_path)) if os.path.exists(forecast_path) else None
+    forecasts_by_series = (
+        {row["sourceSeriesId"]: row for row in forecast_bundle["forecasts"]}
+        if forecast_bundle else {}
+    )
     missing_required = [path for path in paths.values() if not os.path.exists(path)]
     if missing_required:
         raise FileNotFoundError(f"required Phase 0 inputs are missing: {missing_required}")
@@ -560,7 +616,9 @@ def build_records(generated_at):
             },
             "observation": observation,
             "nowcast": nowcast,
-            "forecast": None,
+            "forecast": forecast_for(
+                forecast_bundle, forecasts_by_series, nowcast_source, generated_at
+            ),
             "signals": {
                 "graceDa": {
                     "groundwaterPercentile": district_context.get("gw_percentile"),
@@ -672,6 +730,8 @@ def build_model_card(context, generated_at):
     spatial = evaluations["spatialEstimation"]
     direct = evaluations["directForecast"]
     cross = evaluations["crossNetworkComparison"]
+    clearing = [h["horizonMonths"] for h in direct["horizons"] if not h.get("releaseBlockers")]
+    released = [h for h in RELEASED_FORECAST_HORIZONS if h in clearing]
     return {
         "schemaVersion": "1.0.0",
         "modelName": "AP Mandal Groundwater Temporal Nowcast",
@@ -689,6 +749,7 @@ def build_model_card(context, generated_at):
         },
         "supportedUseCases": [
             "Current-period temporal nowcast or gap fill for lag-eligible mandals",
+            "Three-month directional outlook with its published interval, for prioritisation",
             "Monitoring prioritization with explicit measured/modelled separation",
             "Regional climate and GRACE-DA context review",
         ],
@@ -697,7 +758,8 @@ def build_model_card(context, generated_at):
             "Sensorless statewide accuracy inferred from temporal holdout metrics",
             "Permit, pumping restriction or field-order automation",
             "Direct recharge measurement from rainfall minus evapotranspiration",
-            "Released future forecasting at any horizon",
+            "Future forecasting at any horizon other than the released three months",
+            "Reading a forecast midpoint without the interval that travels with it",
         ],
         "evaluations": {
             "temporalNowcast": temporal,
@@ -708,8 +770,8 @@ def build_model_card(context, generated_at):
             "intervalEvaluation": evaluations["intervalEvaluation"],
         },
         "forecastRelease": {
-            "releasedHorizons": [],
-            "status": "not_released",
+            "releasedHorizons": released,
+            "status": "released" if released else "not_released",
             "gate": direct["releaseGate"],
             # Clearing the gate is evidence that a horizon COULD be released.
             # Publishing a forward number is a separate decision by the project
@@ -718,7 +780,11 @@ def build_model_card(context, generated_at):
                 horizon["horizonMonths"] for horizon in direct["horizons"]
                 if not horizon.get("releaseBlockers")
             ],
-            "reason": "No horizon is published. Releasing a forward number is an owner decision, not a consequence of passing the gate.",
+            "reason": (
+                f"Released horizons: {released}. A horizon is published only when it both clears "
+                "the gate and is listed in RELEASED_FORECAST_HORIZONS; clearing the gate alone "
+                "does not publish it."
+            ),
         },
         "cohortDefinitions": {
             "temporalNowcast": temporal["eligibleCohort"],

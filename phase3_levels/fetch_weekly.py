@@ -80,6 +80,9 @@ STEPS = [
     # Rolling-origin forecast validation retrains once per quarterly cut per
     # candidate horizon, which is slow on a 2-core runner.
     ("evaluate model tasks", [PY, os.path.join(HERE, "evaluate_phase0.py")], True, 3600),
+    # The released 3-month forecast. Required: the app publishes it, so a
+    # silent failure would leave last week's forward numbers on screen.
+    ("build released 3-month forecast", [PY, os.path.join(HERE, "build_forecast.py")], True),
     ("publish V2 app data",  [PY, os.path.join(HERE, "build_real_app_data.py")], True),
     # The Crystal 3D view embeds its own dataset, rebuilt here from the measured
     # series just published. Optional: a failure keeps last week's view, and the

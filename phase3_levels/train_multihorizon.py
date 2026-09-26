@@ -64,10 +64,14 @@ NUM = ["lat", "lon", "specific_yield", "cur", "lag1", "lag2", "lag3", "lag6", "l
 CAT = ["aquifer_type"]
 
 
-def est():
+def est(quantile=None):
+    """The point estimator, or a p10/p90 quantile twin of it for the band."""
+    params = dict(max_iter=600, learning_rate=0.05, max_depth=8,
+                  l2_regularization=1.0, random_state=0)
+    reg = (HistGradientBoostingRegressor(loss="quantile", quantile=quantile, **params)
+           if quantile is not None else HistGradientBoostingRegressor(**params))
     pre = ColumnTransformer([("num", "passthrough", NUM), ("cat", OneHotEncoder(handle_unknown="ignore"), CAT)])
-    return Pipeline([("pre", pre), ("reg", HistGradientBoostingRegressor(
-        max_iter=600, learning_rate=0.05, max_depth=8, l2_regularization=1.0, random_state=0))])
+    return Pipeline([("pre", pre), ("reg", reg)])
 
 
 def metrics(actual, predicted):
