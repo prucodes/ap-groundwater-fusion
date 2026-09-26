@@ -110,6 +110,14 @@ export type MandalGroundwaterRecordV2 = {
     monitoringStatus: "stable" | "watch" | "stress" | "verify" | "insufficient_data";
     measuredTrendMPerYear: number | null;
     contextAgreement: GroundwaterAgreement;
+    /** Null when the reading and the nowcast do not describe the same month. */
+    observationVsModelBand: {
+      comparedPeriod: string;
+      outsideModelBand: boolean;
+      excessBeyondBandM: number;
+      /** How far outside, in widths of the model's own band. */
+      excessAsShareOfBandWidth: number | null;
+    } | null;
   };
   provenance: {
     sourceNames: string[];
@@ -154,6 +162,9 @@ export type MandalGroundwaterView = {
   estimate_band_p10?: number | null;
   estimate_band_p90?: number | null;
   obs_model_gap_m?: number | null;
+  obs_outside_band?: boolean | null;
+  obs_band_excess_m?: number | null;
+  obs_band_excess_ratio?: number | null;
   display_mbgl?: number | null;
   display_basis?: "measured" | "modelled";
   trend_m_per_yr?: number | null;

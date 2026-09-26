@@ -19,7 +19,7 @@ const STATUSES: { bucket: string; def: string; criteria: string }[] = [
   {
     bucket: "Verify",
     def: "Sensor reading diverges from the model — field-check before acting",
-    criteria: "Latest sensor vs model estimate gap ≥ 8 m",
+    criteria: "Reading outside the model's own P10–P90 by more than half that band's width",
   },
   {
     bucket: "Low Confidence",

@@ -36,6 +36,8 @@ type SeedProps = {
   estimateLow: number | null;
   estimateHigh: number | null;
   gap: number | null;
+  outsideBand: boolean;
+  bandExcess: number | null;
   balance: number | null;
   balanceStatus: string;
   agreement: string;
@@ -92,8 +94,8 @@ function tooltipHtml(p: SeedProps) {
     (p.estimateLow !== null && p.estimateHigh !== null
       ? `<span class="tipRow"><i>Model band P10–P90</i><b>${p.estimateLow}–${p.estimateHigh} mbgl</b></span>`
       : "") +
-    (p.gap !== null && p.gap >= 2
-      ? `<span class="tipRow"><i>Measured–model gap</i><b style="color:#c65a46">${p.gap} m</b></span>`
+    (p.outsideBand && p.bandExcess !== null
+      ? `<span class="tipRow"><i>Outside the model band by</i><b style="color:#c65a46">${p.bandExcess} m</b></span>`
       : "") +
     (p.balance !== null
       ? `<span class="tipRow"><i>Water balance</i><b style="color:${balColor(p.balanceStatus)}">${p.balanceStatus} (${p.balance > 0 ? "+" : ""}${p.balance} mm)</b></span>`
@@ -218,6 +220,8 @@ export function LiveMap({
               estimateLow: rec?.estimate_band_p10 ?? null,
               estimateHigh: rec?.estimate_band_p90 ?? null,
               gap: rec?.obs_model_gap_m ?? null,
+              outsideBand: rec?.obs_outside_band === true,
+              bandExcess: rec?.obs_band_excess_m ?? null,
               balance: rec?.water_balance_mm ?? null,
               balanceStatus: rec?.water_balance_status ?? "",
               agreement: rec?.sensor_satellite_agreement ?? "",

@@ -16,6 +16,13 @@ from collections import defaultdict
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.abspath(os.path.join(HERE, "..", "app", "data"))
 OUT = os.path.join(HERE, "outputs")
+
+# A reading is worth checking when it lands outside the model's own p10-p90
+# band by more than half that band's width. A fixed metre threshold cannot say
+# this: 2 m is unremarkable where the band is 6 m wide and glaring where it is
+# 1 m wide. About a quarter of readings fall outside the band at all, which is
+# an 80% band doing its job, so the flag needs the margin to stay useful.
+VERIFY_BAND_EXCESS = 0.5
 CONTRACT_VERSION = "2.0.0"
 BUILDER_VERSION = "phase0-publisher-2.0.0"
 GEOMETRY_VERSION = "public-prototype-2026-07"
@@ -467,12 +474,38 @@ def build_records(generated_at):
         else:
             agreement = "unknown"
 
+        # Does the measured reading sit inside the model's own uncertainty?
+        # Both must describe the same month, or this compares different things.
+        band_check = None
+        if (
+            observation is not None
+            and nowcast is not None
+            and observation["observationPeriod"] == nowcast["targetPeriod"]
+        ):
+            measured_value = observation["latestMeasuredValue"]
+            band_width = nowcast["upper"] - nowcast["lower"]
+            excess = max(nowcast["lower"] - measured_value, measured_value - nowcast["upper"], 0.0)
+            band_check = {
+                "comparedPeriod": nowcast["targetPeriod"],
+                "outsideModelBand": excess > 0,
+                "excessBeyondBandM": round(excess, 2),
+                "excessAsShareOfBandWidth": round(excess / band_width, 2) if band_width > 0 else None,
+            }
+
         basis_value = nowcast["value"] if nowcast else (
             observation["latestMeasuredValue"] if observation else None
         )
         if basis_value is None:
             monitoring = "insufficient_data"
         elif coverage == "measured_only":
+            monitoring = "verify"
+        elif (
+            band_check is not None
+            and band_check["excessAsShareOfBandWidth"] is not None
+            and band_check["excessAsShareOfBandWidth"] > VERIFY_BAND_EXCESS
+        ):
+            # The sensor and the model disagree by more than the model claims it
+            # could be wrong by. Neither number is usable until someone looks.
             monitoring = "verify"
         elif basis_value >= 20 or (trend is not None and trend > 1.2):
             monitoring = "stress"
@@ -581,6 +614,7 @@ def build_records(generated_at):
                 "monitoringStatus": monitoring,
                 "measuredTrendMPerYear": trend,
                 "contextAgreement": agreement,
+                "observationVsModelBand": band_check,
             },
             "provenance": {
                 "sourceNames": [

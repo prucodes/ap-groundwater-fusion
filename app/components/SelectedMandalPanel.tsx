@@ -95,9 +95,10 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
             )}
           </span>
         </div>
-        {(mandal.obs_model_gap_m ?? 0) >= 8 ? (
+        {mandal.obs_outside_band ? (
           <div className="sideCaveat" style={{ color: "var(--rust)", fontWeight: 600 }}>
-            ⚠ The latest measured aggregate differs by {formatNumber(mandal.obs_model_gap_m)} m from the nowcast — review before use.
+            ⚠ The latest measured aggregate sits {formatNumber(mandal.obs_band_excess_m)} m outside the model&rsquo;s own
+            P10–P90 band — further apart than the model says it could be wrong — so review before use.
           </div>
         ) : (
           <div className="sideCaveat">
