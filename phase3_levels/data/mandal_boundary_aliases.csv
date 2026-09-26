@@ -1,0 +1,43 @@
+mandal_uuid,district,mandal,boundary_index,boundary_district,boundary_mandal,method
+16f05aae-8b8e-49ba-b6cd-b2e84572cba8,NTR,Vijayawada Central,247,NTR,VIJAYAWADA (URBAN),unique_unclaimed_name_single_district
+18faaca7-5d83-4b4f-bfc9-661cb2633b37,Prakasam,Ongole_Rural,376,PRAKASAM,ONGOLE,qualifier_stripped_same_district
+1f5c77f8-92ee-457a-8069-774c4a02b16e,Chittoor,Chittoor_ Rural,658,CHITTOOR,CHITTOOR,qualifier_stripped_same_district
+303419d8-5110-4307-a57d-cea0725f306f,Krishna,Machilipatnam_North,271,KRISHNA,MACHILIPATNAM,qualifier_stripped_same_district
+3c5ef83e-5a7a-4d9f-a0ac-fcf443eb9264,Srikakulam,SRIKAKULAM MANDAL,33,SRIKAKULAM,SRIKAKULAM,qualifier_stripped_same_district
+43329743-b736-4e13-a895-ca6d55e59286,Sri Potti Sriramulu Nellore,Nellore Rural,414,SRI POTTI SRIRAMULU NELLORE,NELLORE,qualifier_stripped_same_district
+4b1e336f-fdd6-48f7-8092-fd10b70878f9,Kurnool,Adoni 2,508,KURNOOL,ADONI,qualifier_stripped_same_district
+523939a5-f371-424a-afc2-2626c7bfbbe5,NTR,Vijayawada East,247,NTR,VIJAYAWADA (URBAN),unique_unclaimed_name_single_district
+532eb57d-2ebf-4bc8-ba88-72440949bc39,Kurnool,Kurnool Urban,496,KURNOOL,KURNOOL,qualifier_stripped_same_district
+586cc703-176f-49a4-9b69-4588dd527a3a,Ananthapuramu,Anantapur_Urban,567,ANANTHAPURAMU,ANANTAPUR,qualifier_stripped_same_district
+5a7667ba-a37b-4025-9550-1fac8a990423,Kurnool,Kurnool Rural,496,KURNOOL,KURNOOL,qualifier_stripped_same_district
+5d26897f-60ea-42fc-9ca7-1a8a6d3ebe8f,Nandyal,Nandyal_Urban,521,NANDYAL,NANDYAL,qualifier_stripped_same_district
+61007ebb-a187-4bbe-9b31-4728497a5eeb,Eluru,POLAVARAM (M),186,ELURU,POLAVARAM,qualifier_stripped_same_district
+64ce40b7-ec8f-4f85-b5e3-c282cfd343d7,NTR,Vijayawada North,247,NTR,VIJAYAWADA (URBAN),unique_unclaimed_name_single_district
+71a987f6-27a6-4c47-9582-e5d772861423,Ananthapuramu,Anantapur_Rural,567,ANANTHAPURAMU,ANANTAPUR,qualifier_stripped_same_district
+756983d9-4123-4056-9e1d-f97aec3ca3ba,Krishna,Machilipatnam_South,271,KRISHNA,MACHILIPATNAM,qualifier_stripped_same_district
+7dd7eaf5-aeda-464f-95e1-9193230825e8,Vizianagaram,Vizianagaram Urban,67,VIZIANAGARAM,VIZIANAGARAM,qualifier_stripped_same_district
+8767a82d-f9f6-4a71-9857-b087a9a1fd9b,Kurnool,Adoni 1,508,KURNOOL,ADONI,qualifier_stripped_same_district
+8a8582de-7e2e-488a-b8e7-4e9bf12d2c07,Sri Potti Sriramulu Nellore,Nellore Urban,414,SRI POTTI SRIRAMULU NELLORE,NELLORE,qualifier_stripped_same_district
+8dcf428a-07f1-4131-9cdb-97f142916de3,Nandyal,Nandyal_Rural,521,NANDYAL,NANDYAL,qualifier_stripped_same_district
+95d348f4-2a6b-4250-82cf-511cd090ddf4,Vizianagaram,Vizianagaram Rural,67,VIZIANAGARAM,VIZIANAGARAM,qualifier_stripped_same_district
+9bd38b06-949f-4399-90b3-21af34f0f99e,NTR,Vijayawada West,247,NTR,VIJAYAWADA (URBAN),unique_unclaimed_name_single_district
+c2b446e6-1d1f-4134-bc68-4e06c44724e4,Guntur,Guntur East,311,GUNTUR,GUNTUR,qualifier_stripped_same_district
+c6dc222e-409f-42f1-94e0-32c57b57c43f,Prakasam,Ongole_Urban,376,PRAKASAM,ONGOLE,qualifier_stripped_same_district
+cf888ee9-da38-4c4d-9118-99c6930eeb90,Eluru,Eluru_Urban,203,ELURU,ELURU,qualifier_stripped_same_district
+df66e44b-0da4-4204-a664-aa00f788e226,Eluru,Eluru_Rural,203,ELURU,ELURU,qualifier_stripped_same_district
+e54d1178-e721-46bd-b05a-3b13dd6a50be,Guntur,Guntur West,311,GUNTUR,GUNTUR,qualifier_stripped_same_district
+f9074956-b52a-4fab-be0c-856c5a85a90e,Chittoor,Chittoor_Urban,658,CHITTOOR,CHITTOOR,qualifier_stripped_same_district
+fe5f6216-77de-4e35-96c7-0eab75c0528f,Bapatla,BAPATLA(M),330,BAPATLA,BAPATLA,qualifier_stripped_same_district
+0b26b5ca-74ca-4f7c-9cbb-80637943da0b,Kurnool,PATTIKANDA,527,KURNOOL,PATTIKONDA,transliteration_variant_same_district
+0f6215d8-c44f-4542-9dae-bf9782428738,Srikakulam,KOTABOMMAL,22,SRIKAKULAM,KOTABOMMALI,transliteration_variant_same_district
+1edcabf6-3da7-4ea4-8128-9cb2a5b3a7a0,Palnadu,NAKARIKALLU,297,PALNADU,NEKARIKALLU,transliteration_variant_same_district
+26744963-5b70-4e5e-9100-245a27dec85d,Y.S.R Kadapa,Pendlimarry,469,Y.S.R KADAPA,PENDLIMARRI,transliteration_variant_same_district
+3cb56660-d601-4e30-aab8-a5fadd77f496,Prakasam,BALLIKURUVA,342,PRAKASAM,BALLIKURAVA,transliteration_variant_same_district
+66ea4ed5-4ddc-49ac-a743-10377c192397,Markapuram,GIDDALURU,370,MARKAPURAM,GIDDALUR,transliteration_variant_same_district
+993aecb4-377a-47e9-8127-87439caa35ee,Guntur,THADEPALLE,291,GUNTUR,TADEPALLE,transliteration_variant_same_district
+9b06799c-0744-4c83-b747-885a361d47fc,Chittoor,YADAMARI,667,CHITTOOR,YADAMARRI,transliteration_variant_same_district
+a8f01e46-52af-4685-8435-607a840a6df3,Sri Potti Sriramulu Nellore,PODLAKUR,413,SRI POTTI SRIRAMULU NELLORE,PODALAKUR,transliteration_variant_same_district
+b253af52-0651-419b-9e3d-53bc3666f137,Krishna,AVANIGADA,274,KRISHNA,AVANIGADDA,transliteration_variant_same_district
+b3b99aa6-b6ff-43fd-aa20-06a81b062bd0,Kakinada,ROUTHULAPUDI,126,KAKINADA,ROWTHULAPUDI,transliteration_variant_same_district
+e7d72d0e-efe3-42e5-b263-119b4651d77b,Vizianagaram,BHOGHAPURAM,71,VIZIANAGARAM,BHOGAPURAM,transliteration_variant_same_district
+ecb7b40b-27a1-4538-bffd-d5934d0ce025,Markapuram,BESTAVARIPETA,368,MARKAPURAM,BESTAWARIPETA,transliteration_variant_same_district

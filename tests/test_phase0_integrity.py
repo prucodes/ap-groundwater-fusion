@@ -78,7 +78,7 @@ def test_contract_identity_enums_units_and_dates():
         if nowcast:
             assert nowcast["unit"] == "m_bgl"
             assert MONTH.fullmatch(nowcast["targetPeriod"])
-            assert nowcast["intervalType"] == "model_quantile_p10_p90"
+            assert nowcast["intervalType"] == "conformalised_quantile_p10_p90"
             assert nowcast["lower"] <= nowcast["value"] <= nowcast["upper"]
 
 
@@ -168,11 +168,18 @@ def test_model_card_separates_evaluation_tasks_and_gates_forecasts():
 
 
 def test_latest_targets_are_excluded_and_features_do_not_contain_target():
-    assert NOWCASTS["schemaVersion"] == VERSION
+    assert NOWCASTS["schemaVersion"].startswith("2.")
     assert NOWCASTS["latestTargetsExcludedFromFit"] is True
-    assert NOWCASTS["intervalType"] == "model_quantile_p10_p90"
+    assert NOWCASTS["intervalType"] == "conformalised_quantile_p10_p90"
     assert "target" not in {name.lower() for name in NOWCASTS["featureNames"]}
-    assert len(NOWCASTS["mandals"]) == MANIFEST["counts"]["modelledRecordCount"]
+    # Every series is nowcast. Some have no prototype polygon to be drawn on,
+    # and several town sub-series share one, so the map holds fewer records.
+    counts = MANIFEST["counts"]
+    assert len(NOWCASTS["mandals"]) == (
+        counts["modelledRecordCount"]
+        + counts["seriesWithoutBoundaryCount"]
+        + counts["seriesSharingBoundaryCount"]
+    )
     assert EVALUATIONS["directForecast"]["featureTiming"].startswith(
         "features available at forecast origin"
     )

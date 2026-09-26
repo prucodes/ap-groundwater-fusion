@@ -49,7 +49,7 @@ export type MandalGroundwaterRecordV2 = {
     modelVersion: string;
     lower: number;
     upper: number;
-    intervalType: "model_quantile_p10_p90";
+    intervalType: "conformalised_quantile_p10_p90";
     eligibleEvaluationCohort: string;
     qualityStatus: "eligible" | "limited" | "not_evaluated";
   } | null;

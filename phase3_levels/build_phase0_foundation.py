@@ -183,7 +183,25 @@ def build_records(generated_at):
         boundary_relaxed[(norm(feature["d"]), norm(feature["m"]))].append(boundary_index)
     assigned_nowcasts = {}
     remaining_nowcasts = []
-    for row in nowcast_bundle["mandals"]:
+    # The engine already resolved every series to a boundary, or decided it
+    # could not without guessing. Inherit that decision rather than re-deriving
+    # it here: several town sub-series can share one polygon, and a series with
+    # no polygon stays out of the map records instead of being fuzzy-matched
+    # onto somebody else's.
+    unmapped_series, shared_boundary_series, unplaced_series = [], [], []
+    carries_index = any("boundaryIndex" in row for row in nowcast_bundle["mandals"])
+    for row in nowcast_bundle["mandals"] if carries_index else []:
+        index = row.get("boundaryIndex")
+        if index is None:
+            # The engine could not place this one without guessing. Let the
+            # cascade below try, as it always has, rather than lose the record.
+            unmapped_series.append(row)
+            remaining_nowcasts.append(row)
+        elif index in assigned_nowcasts:
+            shared_boundary_series.append(row)
+        else:
+            assigned_nowcasts[int(index)] = row
+    for row in [] if carries_index else nowcast_bundle["mandals"]:
         candidates = [
             index
             for index in boundary_exact.get(
@@ -263,10 +281,12 @@ def build_records(generated_at):
                 if index not in assigned_nowcasts
             )
         if not scored or scored[-1][0] < 0.86:
-            raise ValueError(
-                "nowcast must map to one unused boundary: "
-                f"{row['district']}|{row['mandal']} (best={scored[-1] if scored else None})"
-            )
+            # Some series genuinely have no polygon in the prototype boundary
+            # set. They still carry a nowcast; they just cannot be drawn. Better
+            # an absent record than one pinned on somebody else's mandal.
+            if row not in unplaced_series:
+                unplaced_series.append(row)
+            continue
         assigned_nowcasts[scored[-1][1]] = row
     district_signals = {norm(row["d"]): row for row in district_geometry["districts"]}
     climate = {}
@@ -397,7 +417,7 @@ def build_records(generated_at):
                 "modelVersion": nowcast_bundle["modelVersion"],
                 "lower": round(lower, 2),
                 "upper": round(upper, 2),
-                "intervalType": "model_quantile_p10_p90",
+                "intervalType": "conformalised_quantile_p10_p90",
                 "eligibleEvaluationCohort": evaluations["temporalNowcast"]["eligibleCohort"],
                 "qualityStatus": "eligible",
             }
@@ -607,6 +627,8 @@ def build_records(generated_at):
         "graceProvenance": grace_provenance,
         "nowcastBundle": nowcast_bundle,
         "evaluations": evaluations,
+        "seriesWithoutBoundaryCount": len(unplaced_series),
+        "seriesSharingBoundaryCount": len(shared_boundary_series),
     }
 
 
@@ -623,7 +645,14 @@ def build_model_card(context, generated_at):
         "buildTimestamp": context["nowcastBundle"]["generatedAt"],
         "trainingPeriod": context["nowcastBundle"]["trainingPeriod"],
         "targetVariable": "groundwater depth below ground level",
+        "modelledQuantity": "change in depth from the previous month, added back to the last reading",
         "unit": "m_bgl",
+        "estimator": {
+            "family": "gradient_boosted_regression_trees",
+            "models": "p50 plus p10 and p90 under quantile loss",
+            "blendedWith": "carry_last_reading_forward, at a weight calibrated per depth band",
+            "intervalCalibration": "split conformal, per aquifer, on a held-out year",
+        },
         "supportedUseCases": [
             "Current-period temporal nowcast or gap fill for lag-eligible mandals",
             "Monitoring prioritization with explicit measured/modelled separation",
@@ -638,6 +667,7 @@ def build_model_card(context, generated_at):
         ],
         "evaluations": {
             "temporalNowcast": temporal,
+            "rollingOriginNowcast": evaluations["rollingOriginNowcast"],
             "spatialEstimation": spatial,
             "directForecast": direct,
             "crossNetworkComparison": cross,
@@ -657,6 +687,8 @@ def build_model_card(context, generated_at):
         "knownLimitations": [
             "APWRIMS-format source remains a browser-session research sample with authorization pending.",
             "Prototype boundaries and identifiers are not official administrative identifiers.",
+            "Mandals whose prototype polygon cannot be identified without guessing fall back to their district centroid; the record says which.",
+            "Accuracy scales with depth. The statewide average is carried by shallow mandals; see depthBands.",
             "Physical station counts cannot be verified from the source schema.",
             "GRACE-DA is coarse regional model-assimilated storage context, not direct mandal depth.",
             "Cross-network comparison pairs different sites and potentially different aquifers.",
@@ -745,6 +777,8 @@ def build_manifest(context, generated_at, active_paths):
         "counts": {
             "boundaryFeatureCount": len(records),
             "rawSourceSeriesCount": context["rawSeriesCount"],
+            "seriesWithoutBoundaryCount": context["seriesWithoutBoundaryCount"],
+            "seriesSharingBoundaryCount": context["seriesSharingBoundaryCount"],
             "observationRowCount": context["observationRowCount"],
             "validObservationRowCount": context["validObservationRowCount"],
             "historySeriesCount": sum(record["observation"] is not None for record in records),

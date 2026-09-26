@@ -25,6 +25,7 @@ def main():
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
         "modelVersion": nowcast["modelVersion"],
         "temporalNowcast": nowcast["evaluation"]["temporalNowcast"],
+        "rollingOriginNowcast": nowcast["evaluation"]["rollingOriginNowcast"],
         "intervalEvaluation": nowcast["evaluation"]["temporalNowcast"]["intervalEvaluation"],
         "spatialEstimation": evaluate_spatial(),
         "directForecast": evaluate_direct_forecasts(),
