@@ -1,0 +1,260 @@
+mandal_uuid,district,mandal,labelled_aquifer,specific_yield,implied_by_yield
+b0c01664-efeb-424f-ab63-d85b8f058a40,Kakinada,Thondangi,coastal,0.091,alluvial
+0401e626-cc6b-4c84-a8dd-5b183b83a55d,Kakinada,Samalkota,coastal,0.1108,alluvial
+619799d0-07f0-41c8-9e54-5e03e9b8b42d,Kakinada,Pithapuram,coastal,0.1115,alluvial
+464570aa-bd91-4bfa-8cc4-26dde11a0ef1,Kakinada,Gollaprolu,coastal,0.1119,alluvial
+bb150848-2c56-4bd0-82ef-769725e30370,Kakinada,Pedapudi,coastal,0.1214,alluvial
+bbe36f32-dc3e-4be5-bab3-d7a9a846a3b1,Kakinada,Kajuluru,coastal,0.13,alluvial
+d2d9ebf3-71e3-4c5d-b492-4a73e6eca5fc,Kakinada,Karapa,coastal,0.13,alluvial
+f7f47c6d-e791-4945-b795-a2e879acceca,Kakinada,Thallarevu,coastal,0.13,alluvial
+9b84f7f0-759e-4fb2-836b-13025abdcb7e,Eluru,Buttayagudem,alluvial,0.041,coastal
+ad87fb1f-8daa-4801-8bad-6d398612c6ce,NTR,Vissannapet,alluvial,0.0412,coastal
+b9bba65f-596f-4284-970d-21977fc94f4e,NTR,G.Konduru,alluvial,0.0417,coastal
+da9c1b4a-8348-4dbe-9229-8ebe2bf8ff91,East Godavari,Korukonda,alluvial,0.0435,coastal
+61007ebb-a187-4bbe-9b31-4728497a5eeb,Eluru,POLAVARAM (M),alluvial,0.0458,coastal
+2356ad35-54fa-45cc-813f-1e147cb09fe3,NTR,A KONDURU,alluvial,0.0472,coastal
+9b8c41a6-23da-4ef4-a033-bca38cc7f154,NTR,Reddigudem,alluvial,0.0501,coastal
+0acf39b5-23d2-4c8b-b512-829b5f81a7f1,Bapatla,Martur,alluvial,0.0509,coastal
+afec623b-4534-4570-9b19-248c3ad1ca92,East Godavari,Rangampeta,alluvial,0.0546,coastal
+9e81ee53-02f8-4678-86c4-ec7697a60867,Guntur,Vatticherukuru,alluvial,0.0569,coastal
+0c1b8cec-30a2-4c89-9f65-f45bfc4a6e96,Eluru,Kamavarapukota,alluvial,0.057,coastal
+aacd2235-5387-4d39-919e-cbb4d9295b97,Eluru,Musunuru,alluvial,0.0582,coastal
+0958def2-b4b8-426a-bb89-6f38cba6f487,Guntur,Kakumanu,alluvial,0.0583,coastal
+65234f68-d99b-476c-bbb5-3d4d94b99b18,Eluru,Jangareddigudem,alluvial,0.0609,coastal
+60e4f857-24f0-4a26-8dd9-07b6a1aa92bc,Bapatla,Parchur,alluvial,0.0617,coastal
+7c4ebbcf-a2b0-42c4-aa36-02b73fbac27e,Guntur,Pedakakani,alluvial,0.0653,coastal
+ba460230-3f43-4b37-88e0-b467a0424eef,Eluru,Agiripalle,alluvial,0.0725,coastal
+2f4d0a39-ab7a-4675-8aa7-e0d00d38ce6b,Eluru,Nuzvid,alluvial,0.0748,coastal
+b7c410fe-31da-456e-b047-3916775b7c99,Guntur,Mangalagiri,alluvial,0.0773,coastal
+42207d88-3b04-4ea5-a093-60a2444c71b0,Bapatla,Karamchedu,alluvial,0.0801,coastal
+9287e75c-5e32-4dea-b6d2-5af7f8debdd9,Eluru,Koyyalagudem,alluvial,0.0808,coastal
+43bea361-78f2-419b-beda-deeac728af5e,NTR,Vijayawada (Rural),alluvial,0.0811,coastal
+1114eff9-37c6-4b6b-88d2-85c3efb7db8a,East Godavari,Gopalapuram,alluvial,0.0862,coastal
+1866f8ef-7ba7-4c46-8d44-e93236a24b74,East Godavari,Tallapudi,alluvial,0.0867,coastal
+2fae3539-babc-4251-8d88-69ec4afb799e,Bapatla,Chirala,alluvial,0.0889,coastal
+0a40634a-e3b4-4065-a125-4932ac790a63,Krishna,Gannavaram,alluvial,0.0895,coastal
+0766db38-2384-4607-954c-1dfbc6c8637b,Palnadu,Rentachintala,alluvial,0.018,hard_rock
+1c195e9c-bb02-41d5-9844-b45db63c919f,Palnadu,Durgi,alluvial,0.018,hard_rock
+33ccc955-442e-43f0-839e-f3791e9246f4,Sri Potti Sriramulu Nellore,Kavali,coastal,0.018,hard_rock
+4056173c-5c19-40f4-8396-d3e28f287c48,Sri Potti Sriramulu Nellore,Seetharamapuram,coastal,0.018,hard_rock
+6e0cc489-ffda-4170-9fe6-45f865d10fcf,Sri Potti Sriramulu Nellore,Udayagiri,coastal,0.018,hard_rock
+6eac5327-f620-44b5-a668-5cc82387095f,Sri Potti Sriramulu Nellore,Varikuntapadu,coastal,0.018,hard_rock
+70006dfa-762b-4280-b57d-5a08ac45fded,Markapuram,Komarolu,coastal,0.018,hard_rock
+8002ca6e-7b95-4a0d-bd69-16de5938c50a,Palnadu,Gurazala,alluvial,0.018,hard_rock
+a9c7ec9c-51d8-45ba-b445-3db93083d95a,Markapuram,Ardhaveedu,coastal,0.018,hard_rock
+be33b37c-c776-4e25-90d2-1dc2942e674f,Markapuram,Racherla,coastal,0.018,hard_rock
+cb2f8b94-b3a5-4c26-b821-803d0c6bec9c,Palnadu,Bollapalle,alluvial,0.018,hard_rock
+e9fb8430-50ea-4570-8383-a87f982d4919,Palnadu,Rajupalem,alluvial,0.018,hard_rock
+a755eab4-c6db-4589-a20a-3f4758cc6676,Markapuram,Cumbum,coastal,0.0181,hard_rock
+0d17618e-dc9d-436a-91de-0aac694947fa,Palnadu,Machavaram,alluvial,0.0182,hard_rock
+5005b5cb-3157-4417-9ffc-9894b0d874fa,Palnadu,Macherla,alluvial,0.0182,hard_rock
+80e52e6e-95b0-4c32-b9bf-7c04e8d94179,Prakasam,Kandukur,coastal,0.0183,hard_rock
+e65b22f5-a890-4ef0-9a8c-fe65586f217b,Sri Potti Sriramulu Nellore,Marripadu,coastal,0.0183,hard_rock
+711bda5d-c725-46d3-9675-21eafa2b155a,Markapuram,Tripuranthakam,coastal,0.0184,hard_rock
+9e103bdd-9f38-47e7-a7bf-a058c23e7b31,Markapuram,Pullalacheruvu,coastal,0.0184,hard_rock
+ca478743-03fe-49ea-abf9-73bd3bac2b28,Sri Potti Sriramulu Nellore,Bogole,coastal,0.0184,hard_rock
+07649149-740a-4308-b50a-a3fa80ba3f9c,Markapuram,Pamur,coastal,0.0185,hard_rock
+bb0a06a3-3faf-4ca8-8d61-842f17996c71,Prakasam,Kurichedu,coastal,0.0185,hard_rock
+1c1bb1cd-6cb4-48e3-b7c5-509bea7bfd49,Markapuram,Dornala,coastal,0.0186,hard_rock
+2c5ebdcc-248b-4e85-97c2-b8e5d5d8c62d,Palnadu,Karempudi,alluvial,0.0186,hard_rock
+4611c1e3-2506-42de-b995-12c20cf93a92,Sri Potti Sriramulu Nellore,Duttalur,coastal,0.0186,hard_rock
+4ea6cf25-5128-4004-94e6-b106a949ef75,Prakasam,Gudluru,coastal,0.0186,hard_rock
+766c4ecd-46d9-45c1-aaf3-012ed9f28063,Palnadu,Dachepalle,alluvial,0.0186,hard_rock
+0f86ede4-8a8b-44e7-b625-c27821d9765d,Prakasam,Voletivaripalem,coastal,0.0187,hard_rock
+13c9a830-f912-414b-b2ec-2544c1214983,Markapuram,Veligandla,coastal,0.0187,hard_rock
+6d645b71-26bd-4cc7-8654-d7d5748c61e7,Markapuram,Yerragondapalem,coastal,0.0187,hard_rock
+6d6e4494-4e40-4895-83e0-cb63be62e7a1,Sri Potti Sriramulu Nellore,Jaladanki,coastal,0.0187,hard_rock
+a58cb588-b7fd-4969-ac28-3fde04a76feb,Palnadu,Vinukonda,alluvial,0.0187,hard_rock
+b8f987f0-0ebb-4525-8c0d-71d9dfcf8114,Prakasam,Lingasamudram,coastal,0.0187,hard_rock
+1d9e0b1c-aab6-4850-9452-9aec5da2a1c4,Markapuram,Markapur,coastal,0.0189,hard_rock
+4534f557-5e7f-4d86-812c-6bb90b112263,Sri Potti Sriramulu Nellore,Vinjamur,coastal,0.019,hard_rock
+79fd8a8f-a4b2-461e-bb2a-2f1b367969a3,Sri Potti Sriramulu Nellore,Kaligiri,coastal,0.0191,hard_rock
+2d461eb2-abac-4d56-96aa-4dddc5836841,Sri Potti Sriramulu Nellore,Ananthasagaram,coastal,0.0193,hard_rock
+c5ab6be6-26aa-402e-b3af-4e5805cbb082,Prakasam,Donakonda,coastal,0.0195,hard_rock
+59ca2a42-da0b-4599-a700-46122fe4dc31,Markapuram,Kanigiri,coastal,0.0197,hard_rock
+ccc8313b-8677-4041-afba-0ffd855287da,Sri Potti Sriramulu Nellore,Allur,coastal,0.0197,hard_rock
+be08af1b-93eb-4d33-bc0b-57d40b17778b,Palnadu,Piduguralla,alluvial,0.0198,hard_rock
+40241aa0-24cc-49ed-9f4c-69152554baac,Prakasam,Santhamaguluru,coastal,0.0199,hard_rock
+43c8b867-37d4-47cb-b2d8-dbaacc9a0c68,Sri Potti Sriramulu Nellore,Dagadarthi,coastal,0.0199,hard_rock
+ef9733a7-6374-48b7-ba01-0cb68ad6b20d,Sri Potti Sriramulu Nellore,Anumasamudrampeta,coastal,0.0201,hard_rock
+b8e17707-1cf9-49aa-9da5-823da9d4756e,Markapuram,Konakanamitla,coastal,0.0202,hard_rock
+1e6b30a1-c575-4993-9fc9-e6fd565268db,Sri Potti Sriramulu Nellore,Kaluvoya,coastal,0.021,hard_rock
+c64308f3-95a9-4aff-ad68-fb66b70983d9,Sri Potti Sriramulu Nellore,Sangam,coastal,0.0211,hard_rock
+ec9974b7-b49b-46d6-ad26-687d9d90f1ed,Sri Potti Sriramulu Nellore,Chejerla,coastal,0.0213,hard_rock
+f0f559c5-55ef-448d-aabd-7b2a305fc18c,Sri Potti Sriramulu Nellore,Kodavalur,coastal,0.0216,hard_rock
+5c6f746c-8116-4b5e-b2b2-e78fe1a6eb43,Prakasam,Ulavapadu,coastal,0.0217,hard_rock
+1e38b3b1-2c8a-4dff-a43f-006c3d3e3539,Sri Potti Sriramulu Nellore,Buchireddipalem,coastal,0.0219,hard_rock
+59b1cba7-18ca-43f5-a0d7-a2890d9cd649,Palnadu,Narasaraopet,alluvial,0.0221,hard_rock
+44b1f8ee-0fc6-4138-88ac-11e5bd13504a,NTR,Jaggayyapeta,alluvial,0.0222,hard_rock
+355b24dc-466f-4d14-9a4c-578a0514ea68,Sri Potti Sriramulu Nellore,Rapur,coastal,0.0223,hard_rock
+f291d014-dc85-4789-8620-0fe554be78fa,NTR,Vatsavai,alluvial,0.0223,hard_rock
+67db1559-8eb6-422c-a975-1c26b274db5d,NTR,Penuganchiprolu,alluvial,0.0224,hard_rock
+a1ed1458-340e-46c4-88ca-a50acaff36e0,Sri Potti Sriramulu Nellore,Indukurpet,coastal,0.0224,hard_rock
+3229d352-6ce0-41d6-99fe-b1e866fadc58,Palnadu,Nuzendla,alluvial,0.0225,hard_rock
+75c1f82b-cd5b-4559-b6de-e0397d3b62b3,Prakasam,Zarugumilli,coastal,0.0225,hard_rock
+1238478a-2962-449b-badf-89847f71c766,Palnadu,Atchampet,alluvial,0.0226,hard_rock
+243335dc-f433-4101-b9c7-f87e87da5ec6,NTR,Nandigama,alluvial,0.0226,hard_rock
+74c08d1c-14eb-4f16-ab32-27431f51f0b0,NTR,Chandarlapadu,alluvial,0.0226,hard_rock
+a7beae2a-da54-49b9-88b4-d43593ee65aa,Sri Potti Sriramulu Nellore,Vidavalur,coastal,0.0226,hard_rock
+25a49e88-9047-4334-a003-1072cc6b29c9,Palnadu,Bellamkonda,alluvial,0.0227,hard_rock
+cb4ab750-5f8a-4c3b-8cf1-2fbda359e275,Sri Potti Sriramulu Nellore,Thotapalligudur,coastal,0.0227,hard_rock
+51fe0838-94a8-435e-8ae5-e52d7f8035ee,Sri Potti Sriramulu Nellore,Kovur,coastal,0.0229,hard_rock
+012df7d6-23f4-4ce0-9f6c-783d00622084,Srikakulam,Ranastalam,coastal,0.023,hard_rock
+0399a83d-8c2c-421e-9c98-5680c12de597,Srikakulam,Saravakota,coastal,0.023,hard_rock
+0484c56e-9564-4dd1-ad0a-92ca67dffb13,Srikakulam,Hiramandalam,coastal,0.023,hard_rock
+0699b7a6-d4a3-4072-a974-ad799a7894cb,Visakhapatnam,Anandapuram,coastal,0.023,hard_rock
+06c77d9d-6366-463d-8a6c-b1d515c94134,Polavaram,Kunavaram,coastal,0.023,hard_rock
+095c405f-ccaf-4d01-8bd4-884279173303,Vizianagaram,Kothavalasa,coastal,0.023,hard_rock
+0b3d5e90-3d74-4f7f-bf61-6fd844335f09,Srikakulam,Laveru,coastal,0.023,hard_rock
+1078933b-c353-4521-8d36-974a5cd6985b,Guntur,Medikonduru,alluvial,0.023,hard_rock
+112c236a-6f63-4757-9ef7-6ad1ab22d324,Vizianagaram,Badangi,coastal,0.023,hard_rock
+11c6ca26-db81-499c-a8fc-dc17372ef4c8,Konaseema,Ramachandrapuram,alluvial,0.023,hard_rock
+1437f9bf-207a-4d7e-bd9d-0af79b6ef8db,Srikakulam,Burja,coastal,0.023,hard_rock
+146838bc-a0f7-4d70-bf93-54ae1e7225f7,Anakapalli,Rolugunta,coastal,0.023,hard_rock
+15b3a31f-1350-47aa-997d-1aedb5027e0c,Sri Potti Sriramulu Nellore,Chillakur,coastal,0.023,hard_rock
+15d24770-389a-4d4a-bea7-07393c154227,Srikakulam,Gara,coastal,0.023,hard_rock
+17284a50-d99a-4f44-8042-975c58895d66,Alluri Sitharama Raju,Ananthagiri,coastal,0.023,hard_rock
+17a848bd-3c1c-4317-b30c-d15d2f73d37a,Palnadu,Krosuru,alluvial,0.023,hard_rock
+183552f1-8870-4b03-ad98-af0ce5843b16,Polavaram,Maredumilli,coastal,0.023,hard_rock
+19cf5dff-2e61-4bb3-adbf-ca3f258a5e3d,Vizianagaram,Bobbili,coastal,0.023,hard_rock
+1fa47fc1-5da1-4e10-8100-611bd9df6226,Alluri Sitharama Raju,G.Madugula,coastal,0.023,hard_rock
+2344c2eb-ee58-4a75-a12b-6c3849c409bf,East Godavari,Gokavaram,alluvial,0.023,hard_rock
+23641e0b-7aa7-4fec-be89-2b08baebe2cf,Vizianagaram,Gurla,coastal,0.023,hard_rock
+280bcc72-63e5-4e0f-b394-5c052c764673,Vizianagaram,Gantyada,coastal,0.023,hard_rock
+295fc294-754e-4aa4-8533-1bdc829106da,Vizianagaram,Jami,coastal,0.023,hard_rock
+2b27c193-a0cf-4120-8a3c-e7b661311424,Alluri Sitharama Raju,Paderu,coastal,0.023,hard_rock
+2ceca0e3-3d2f-4bb6-b5e5-5eeb2a7b8252,Vizianagaram,Pusapatirega,coastal,0.023,hard_rock
+2ddfc1ed-bbba-43ea-a34d-6003c9cf6e8c,Srikakulam,Pathapatnam,coastal,0.023,hard_rock
+2ed576e5-8d55-401c-83e4-47c9194d0025,Vizianagaram,Cheepurupalle,coastal,0.023,hard_rock
+2f99b4fa-f5de-46d1-b0cb-0f5f97ec22c5,Polavaram,Y.Ramavaram,coastal,0.023,hard_rock
+3170512b-4202-4f09-aac2-1dad09004f64,Alluri Sitharama Raju,Dumbriguda,coastal,0.023,hard_rock
+32b650ce-fb85-4575-86e8-5eea5fd7f6f8,Srikakulam,Lakshminarsupeta,coastal,0.023,hard_rock
+32bec69c-fc45-4f77-a44c-e65556bbae0f,Vizianagaram,Garividi,coastal,0.023,hard_rock
+339d9833-eef2-4d3e-8509-641eb3bec96b,Vizianagaram,Lakkavarapukota,coastal,0.023,hard_rock
+3431a2d5-97d5-4d86-851b-291969a66913,NTR,Veerullapadu,alluvial,0.023,hard_rock
+34781e01-74da-4453-9dee-51615c1e6c31,Parvathipuram Manyam,Makkuva,coastal,0.023,hard_rock
+36f19db2-368d-4e32-b7df-ea23c1a8f9a3,Polavaram,Addateegala,coastal,0.023,hard_rock
+375bff52-1d4e-4199-8290-93a38cb01de5,Srikakulam,Vajrapukothuru,coastal,0.023,hard_rock
+37e3ff10-31bc-45d7-8721-34cc15362092,Anakapalli,Kotauratla,coastal,0.023,hard_rock
+38577c74-ac0d-44e3-a188-b250189b91e2,Parvathipuram Manyam,Komarada,coastal,0.023,hard_rock
+3a746041-a5e4-4c03-b324-c4eba262c311,Vizianagaram,Therlam,coastal,0.023,hard_rock
+3c5ef83e-5a7a-4d9f-a0ac-fcf443eb9264,Srikakulam,SRIKAKULAM MANDAL,coastal,0.023,hard_rock
+3e4c1b5e-4778-4f7b-b814-7398072e7d0e,Anakapalli,S.Rayavaram,coastal,0.023,hard_rock
+3e7f8704-30b8-42e3-bfb2-f894a77c4cf1,Vizianagaram,Rajam,coastal,0.023,hard_rock
+411b2bb1-7001-4cc6-929b-62daece2bcf6,Srikakulam,Meliaputti,coastal,0.023,hard_rock
+462ce093-fc32-4e8c-bb58-4976059bd1e5,Vizianagaram,Santhakaviti,coastal,0.023,hard_rock
+477bc99c-e5df-4562-bfbf-ef8845138e69,Anakapalli,Kasimkota,coastal,0.023,hard_rock
+4831c167-3dde-4684-8eea-1b0c2c8f934f,Anakapalli,Paravada,coastal,0.023,hard_rock
+4e85eba6-935f-4e34-a1dc-9bce551189ca,Srikakulam,Amadalavalasa,coastal,0.023,hard_rock
+4ed4ad0b-5740-44a0-9b10-9e4ce3200cf6,Alluri Sitharama Raju,Koyyuru,coastal,0.023,hard_rock
+50449311-079d-4baa-9ac6-c388285eceb8,Visakhapatnam,Gajuwaka,coastal,0.023,hard_rock
+52043404-2763-4805-9e04-9ecd94a6cbfc,Parvathipuram Manyam,Garugubilli,coastal,0.023,hard_rock
+520ad93f-d6fd-4e6f-823e-3d17ca979e67,Vizianagaram,Dattirajeru,coastal,0.023,hard_rock
+5217e2e1-cedb-4ff9-abba-a74dae5d0222,Polavaram,Vararamachandrapuram,coastal,0.023,hard_rock
+56cff6ac-95b5-4826-86d4-fda40c875a79,Alluri Sitharama Raju,Chintapalle,coastal,0.023,hard_rock
+5abb6c72-e024-4a98-a82c-de9c4de89839,Parvathipuram Manyam,Parvathipuram,coastal,0.023,hard_rock
+5b93e4bd-7f87-4136-b8ff-244e73bcf5f1,Sri Potti Sriramulu Nellore,Sydapuram,coastal,0.023,hard_rock
+5d774342-5a6b-4f48-9da3-f28f57f79797,Alluri Sitharama Raju,Hukumpeta,coastal,0.023,hard_rock
+5fffd8a5-efcb-4267-b669-6082e9fd1f52,Vizianagaram,Denkada,coastal,0.023,hard_rock
+621b50b3-3e2b-442b-812e-856a004aa89e,Anakapalli,Ravikamatham,coastal,0.023,hard_rock
+6284286a-8c85-429e-b34c-fa56d590adbb,Parvathipuram Manyam,Gummalakshmipuram,coastal,0.023,hard_rock
+6a54c010-9d08-440b-866f-2fcebcaf5d00,Alluri Sitharama Raju,Araku Valley,coastal,0.023,hard_rock
+6d891b69-37a2-4cdb-8cf7-ed2536a3732b,Guntur,Tadikonda,alluvial,0.023,hard_rock
+76fa9279-79b6-4f52-8a4a-fc787daefb18,Parvathipuram Manyam,Pachipenta,coastal,0.023,hard_rock
+78f60b9a-7a23-4769-a8e8-06950aa85839,Sri Potti Sriramulu Nellore,Muthukur,coastal,0.023,hard_rock
+7bd990ed-0131-497a-bfb4-434cfdca5552,Srikakulam,Narasannapeta,coastal,0.023,hard_rock
+7e298ad9-4507-4b8e-b79d-a4463a581e24,Visakhapatnam,Padmanabham,coastal,0.023,hard_rock
+8098b2ab-fcac-421e-af8a-5f60750ea4df,Alluri Sitharama Raju,Munchingi Puttu,coastal,0.023,hard_rock
+84c42391-071a-4058-b804-d1e8c020de1e,Anakapalli,Butchayyapeta,coastal,0.023,hard_rock
+87820ced-e383-42af-bdb6-1811fabe6b3b,Srikakulam,Nandigam,coastal,0.023,hard_rock
+878ee25b-7f5a-4ad0-9b30-3cfa081af3ec,Srikakulam,Kanchili,coastal,0.023,hard_rock
+8a3e7f5f-86a5-4c04-a18d-6ffa7ae66a01,Visakhapatnam,Visakhapatnam (Rural),coastal,0.023,hard_rock
+8adef9ed-a21d-446c-a9f2-d73d07445b85,Srikakulam,Mandasa,coastal,0.023,hard_rock
+8fe9c51e-149e-41a3-adcb-fea446164bec,Anakapalli,Nathavaram,coastal,0.023,hard_rock
+90078389-41b3-49d6-a9fa-667ecfabf197,Srikakulam,Kothuru,coastal,0.023,hard_rock
+91763692-1a4f-45dd-9eb7-c193ce31d498,Kakinada,Kotananduru,coastal,0.023,hard_rock
+91b7a8f0-ce7e-4883-a0de-d5088755000f,Sri Potti Sriramulu Nellore,Manubolu,coastal,0.023,hard_rock
+953c18d6-3841-4821-aba4-173463c07b77,Anakapalli,Munagapaka,coastal,0.023,hard_rock
+97131478-1230-47b5-900f-cad49f41ed40,Srikakulam,Sompeta,coastal,0.023,hard_rock
+98aa48f3-6abd-430a-aba0-3031d65241e1,Polavaram,Rampachodavaram,coastal,0.023,hard_rock
+9c69ed4d-1b08-4cf1-816e-e6b2d884d34d,Vizianagaram,Srungavarapukota,coastal,0.023,hard_rock
+9d1cbdd5-9b8f-4613-8acf-995667a44d56,Anakapalli,Makavarapalem,coastal,0.023,hard_rock
+9e407b1a-9d23-4f79-aca6-5e491c52b161,Srikakulam,Santhabommali,coastal,0.023,hard_rock
+9f763556-bccd-40f2-bd49-e8544525b868,Parvathipuram Manyam,Bhamini,coastal,0.023,hard_rock
+a4ae658e-72d3-4969-b4db-f5c5b7c5713f,Parvathipuram Manyam,Veeraghattam,coastal,0.023,hard_rock
+a6d6621e-0830-4757-aae3-0791053ccfcd,Srikakulam,Etcherla,coastal,0.023,hard_rock
+a8f57895-5ee4-4aca-8dd1-0264d73248b2,Sri Potti Sriramulu Nellore,Kota,coastal,0.023,hard_rock
+a99cae35-482b-4cfc-aaa4-3c09777c130e,Srikakulam,Tekkali,coastal,0.023,hard_rock
+ad802a2d-35cf-40d0-9cf4-5d2342446dad,Parvathipuram Manyam,Salur,coastal,0.023,hard_rock
+adde9990-e9c0-4d77-b824-79cfd5ebb394,Anakapalli,K.Kotapadu,coastal,0.023,hard_rock
+aedb595b-b7af-42cb-8b64-22cb193cd9cd,Visakhapatnam,Pedagantyada,coastal,0.023,hard_rock
+b3ff3c1d-ae0a-41c3-9514-a59730fa78c7,Sri Potti Sriramulu Nellore,Venkatachalam,coastal,0.023,hard_rock
+b43b8b3c-1b81-43e9-8ed1-265f09888adb,Palnadu,Sattenapalle,alluvial,0.023,hard_rock
+b4770314-bc8f-44d1-8a86-57dcc5a2c293,Vizianagaram,Ramabhadrapuram,coastal,0.023,hard_rock
+b55ded5e-21e9-426d-a6aa-bb021bcde3d6,Visakhapatnam,Bheemunipatnam,coastal,0.023,hard_rock
+b95ee233-1e54-49fd-b468-d29425036d49,Visakhapatnam,Pendurthi,coastal,0.023,hard_rock
+b9606fb8-a76d-4b04-99e7-d96ac1338488,Palnadu,Pedakurapadu,alluvial,0.023,hard_rock
+c2fd48fd-f51f-48ac-888a-0d2fb7f60309,Palnadu,Nadendla,alluvial,0.023,hard_rock
+c712bc08-2c7e-4fad-8616-45f2eb46d8fb,Vizianagaram,Merakamudidam,coastal,0.023,hard_rock
+c746e90d-682c-44d1-a0e8-7fcd25600589,Vizianagaram,Bondapalle,coastal,0.023,hard_rock
+c7b721b6-0dd4-4b17-9d02-bf28cdca4acb,Parvathipuram Manyam,Kurupam,coastal,0.023,hard_rock
+c84e81fa-1b67-4c41-ae35-8aa27f132a9f,Palnadu,Muppalla,alluvial,0.023,hard_rock
+cc93bfc0-4371-4c82-b094-9a4c56210298,Anakapalli,Atchutapuram,coastal,0.023,hard_rock
+cd665f90-d82a-4332-acac-7171af3a6ce7,Vizianagaram,Nellimarla,coastal,0.023,hard_rock
+cffd59ba-0b37-47d2-b96e-61603e2e8ef4,Palnadu,Amaravathi,alluvial,0.023,hard_rock
+d1154a62-bcf6-4ab1-8c86-b9c80358b3d2,Vizianagaram,Gajapathinagaram,coastal,0.023,hard_rock
+d25d84bd-5db3-4571-8f7c-a74066f25251,NTR,Gampalagudem,alluvial,0.023,hard_rock
+d34fac4f-a819-4f4d-92ff-04d3ca76a37a,Guntur,Phirangipuram,alluvial,0.023,hard_rock
+d362d1e2-3c5d-4b5b-9236-8eaf85ff1772,Anakapalli,Madugula,coastal,0.023,hard_rock
+d4d6ee30-8f22-4fa3-b24c-3d1a8969fc7f,Vizianagaram,Vepada,coastal,0.023,hard_rock
+d5603b41-129c-4abd-9ddd-be351a920898,Srikakulam,Ponduru,coastal,0.023,hard_rock
+d7d2377c-6743-4dff-8da6-d01bb506b3f7,Srikakulam,Palasa,coastal,0.023,hard_rock
+dba7058f-cf58-448a-8563-9c72f12cdde1,Vizianagaram,Mentada,coastal,0.023,hard_rock
+dcff1f1a-7861-48ba-a6ba-425b032ba470,Polavaram,Chintur,coastal,0.023,hard_rock
+df7e22f1-3739-4520-ac5a-1f690648bdbf,Anakapalli,Chodavaram,coastal,0.023,hard_rock
+e19a3768-0fae-439a-9615-f3ae5c4d77bf,Anakapalli,Golugonda,coastal,0.023,hard_rock
+e25eba69-f28b-4810-b985-5b96682f52ff,Parvathipuram Manyam,Seethampeta,coastal,0.023,hard_rock
+e335dbd6-029c-4be4-bf87-8953ba09e6e8,Srikakulam,Jalumuru,coastal,0.023,hard_rock
+e36d0add-48de-4c0e-a841-d226fbfa671f,Srikakulam,Sarubujjili,coastal,0.023,hard_rock
+e541e9fc-9308-42d4-8823-a9f05e6663a9,Srikakulam,Polaki,coastal,0.023,hard_rock
+e79a9098-3c5c-4db3-9ab6-f6b153192e0c,Anakapalli,Nakkapalle,coastal,0.023,hard_rock
+e93cb238-543e-4dd6-bf3a-b927a5ac3f1d,Anakapalli,Cheedikada,coastal,0.023,hard_rock
+f17d2dbc-5f01-4602-aef4-8a273f9498b5,Srikakulam,Ichchapuram,coastal,0.023,hard_rock
+f695f7fa-53c8-4d53-91bb-3ac0a527b4ca,Anakapalli,Rambilli,coastal,0.023,hard_rock
+f7baf7ba-35ea-4fe1-94a6-9dcd7739d7d4,Anakapalli,Sabbavaram,coastal,0.023,hard_rock
+f9d97f05-c04c-4f47-aa31-8230a43d47f2,Parvathipuram Manyam,Palakonda,coastal,0.023,hard_rock
+fb171688-0f26-43cf-a285-a177fd1f57ae,Vizianagaram,Vangara,coastal,0.023,hard_rock
+fc019dc6-d365-4d27-88fe-7343266e9bc1,Anakapalli,Anakapalle,coastal,0.023,hard_rock
+fd3005e3-f487-4b85-8e3b-b22b6372b990,Srikakulam,Kaviti,coastal,0.023,hard_rock
+fd6c2c2b-80bc-4609-b2a1-d0b7859f701c,Anakapalli,Narsipatnam,coastal,0.023,hard_rock
+a253fc6c-2456-4017-a350-c72ff9252993,Prakasam,Darsi,coastal,0.0231,hard_rock
+53ec1a05-ff39-4a2a-8986-5d80823493b1,Prakasam,Ponnaluru,coastal,0.0249,hard_rock
+95ea5ada-271e-4806-b129-b581dd402716,Prakasam,Singarayakonda,coastal,0.0252,hard_rock
+7a669cae-7557-4aaf-9faa-69d9d50a95a5,Eluru,Chintalapudi,alluvial,0.0253,hard_rock
+0891e8fc-1c29-4c4f-85bc-0ee853465304,Palnadu,Edlapadu,alluvial,0.0271,hard_rock
+4156ba78-4e8f-430e-95fc-da8bb2be1b7a,Prakasam,Mundlamuru,coastal,0.0275,hard_rock
+5a699f0d-a972-4291-b0d7-025998b36a37,Polavaram,Rajavommangi,coastal,0.0278,hard_rock
+078c616a-601d-475a-a006-664ed9bc6e66,Polavaram,Devipatnam,coastal,0.0282,hard_rock
+d28800f2-7c46-432d-86a9-4cad9fec768c,Markapuram,Podili,coastal,0.0286,hard_rock
+f441cc30-1c9a-4bdf-914f-6e31c29ea200,East Godavari,Rajanagaram,alluvial,0.0304,hard_rock
+fc1f82fe-d48c-4c6b-8dd7-bda457b9f71c,Eluru,T NARASAPURAM,alluvial,0.0305,hard_rock
+858cbe39-0ae9-45f4-b06c-2ee9476f7620,Prakasam,Kondapi,coastal,0.0313,hard_rock
+1cdc0963-8371-459b-bfff-2f4c61e130a9,Prakasam,Marripudi,coastal,0.0319,hard_rock
+81dcea8a-923b-436c-9ba2-f71ebce16e01,Prakasam,Tangutur,coastal,0.0319,hard_rock
+e2d7220d-728c-4a00-a0bd-0e848a966980,Prakasam,Thallur,coastal,0.032,hard_rock
+ac73afb7-8895-4ac1-97a8-d5125e147cdb,Anakapalli,Payakaraopeta,coastal,0.0323,hard_rock
+30738ab3-f549-4ad0-a592-53f4f5bcdee7,Eluru,Kukunoor,alluvial,0.0328,hard_rock
+379f8a00-e4fc-4815-ae36-f219105fb204,Guntur,Pedanandipadu,alluvial,0.0332,hard_rock
+fbaf04d4-d185-43df-9ced-1c66c1463a24,Eluru,Velairpadu,alluvial,0.0339,hard_rock
+2c884d7b-bf67-420e-8942-4b937061667f,Prakasam,Santhanuthala Padu,coastal,0.0343,hard_rock
+5b557fb5-da4c-434f-978a-127c39e177c2,Eluru,Chatrai,alluvial,0.0343,hard_rock
+e8fd87eb-8d53-49b5-b479-f1bc0b69cf55,Kakinada,Tuni,coastal,0.0351,hard_rock
+ffdfdce7-a7c1-4325-b6df-20c80867269f,Prakasam,Kotha Patnam,coastal,0.0354,hard_rock
+7d3aee43-6187-407a-ba33-c97c2559c411,Kakinada,Yeleswaram,coastal,0.0355,hard_rock
+4934a77d-134d-4cf8-8eae-87fa5191351e,Kakinada,Jaggampeta,coastal,0.0357,hard_rock
+c24552d6-c8a4-4de8-b230-1aba55161667,Eluru,Lingapalem,alluvial,0.0358,hard_rock
+5e49412a-854f-49b5-a3cf-a2773c01f611,NTR,Tiruvuru,alluvial,0.0361,hard_rock
+ee014bb3-9af0-4356-860d-2c9464421453,NTR,Ibrahimpatnam,alluvial,0.0378,hard_rock
+b786a27d-d1fb-44ca-b019-a01185ebf21b,Guntur,Thullur,alluvial,0.038,hard_rock
+ad8fc126-0335-48a8-b548-8e368c9a6212,Kakinada,Gandepalle,coastal,0.0383,hard_rock
+fdb747f2-797b-4783-ad12-8d38981cfff1,Prakasam,Chimakurthi,coastal,0.0389,hard_rock

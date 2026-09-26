@@ -74,7 +74,7 @@ same held-out period CHIRPS is better (0.9845 m against 0.9925 m) and reaches
 at 75% coverage, and it stops in December 2025). The weekly refresh appends
 the one new month; `--rebuild` walks the archive again.
 
-**Two lists need a person, not the pipeline.**
+**Three lists need a person, not the pipeline.**
 `phase3_levels/data/mandal_boundary_unresolved.csv` holds the 61 mandals whose
 polygon could not be identified without guessing, and
 `phase3_levels/data/mandal_series_discontinuities.csv` holds the mandals whose
@@ -84,6 +84,16 @@ February 2026 and 1.2-3.1 m from March; Undi did the same thing in the same
 month. Regenerate the second with
 `python3 phase3_levels/build_series_discontinuities.py` after a refresh that
 adds months, and confirm each row against the source before trusting it.
+`phase3_levels/data/mandal_aquifer_review.csv` holds the third: 259 mandals
+whose own measured specific yield contradicts the aquifer label they inherit
+from their district -- Macherla and Gurazala sit in the Nallamala hard rock at
+0.018 and are called alluvial because Palnadu is a delta district. The label is
+deliberately NOT corrected from the yield: that was measured, and it moved
+average error 1.0091 -> 1.0064 m (noise) while making band coverage across
+cohorts less uniform, 4.1 -> 6.9 points. The model already reads specific yield
+as a number. What the list does mean is that published terrain cohorts describe
+districts, not aquifers; settling it needs NRSC/Bhuvan ground water prospects
+or CGWB NAQUIM sheets, which are not open to an unregistered fetch.
 
 No feature is allowed to reach across a step, a mandal's mean level is taken
 from its current regime only, and a mandal whose series stepped within the last
