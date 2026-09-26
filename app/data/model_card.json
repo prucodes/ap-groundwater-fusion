@@ -145,7 +145,7 @@
     },
     "spatialEstimation": {
       "task": "whole_mandal_spatial_estimation",
-      "generatedAt": "2026-09-26T04:08:43+00:00",
+      "generatedAt": "2026-09-26T04:39:26+00:00",
       "validation": "5-fold GroupKFold with whole mandals held out",
       "rowCount": 85791,
       "mandalCount": 651,
@@ -207,8 +207,12 @@
     },
     "directForecast": {
       "task": "direct_multi_horizon_forecast",
-      "generatedAt": "2026-09-26T04:08:56+00:00",
+      "generatedAt": "2026-09-26T04:41:23+00:00",
       "featureTiming": "features available at forecast origin; no future rainfall",
+      "baselineDefinitions": {
+        "noChange": "the level at the forecast origin",
+        "seasonal": "the level twelve months before the target month, known at the origin; identical to noChange at h=12"
+      },
       "releaseGate": {
         "requiredImprovementPct": 5,
         "requiresRollingOriginValidation": true,
@@ -221,123 +225,329 @@
           "horizonMonths": 1,
           "task": "direct_forecast",
           "trainingOriginPeriod": {
-            "start": "2014-12",
-            "end": "2023-12"
+            "start": "2016-05",
+            "end": "2023-11"
           },
           "evaluationOriginPeriod": {
-            "start": "2024-01",
+            "start": "2023-12",
             "end": "2026-07"
           },
-          "sampleCount": 21362,
+          "sampleCount": 20397,
           "model": {
-            "maeM": 1.4661,
-            "rmseM": 2.8779,
-            "r2": 0.8766
+            "maeM": 1.16,
+            "rmseM": 2.2027,
+            "r2": 0.9242
           },
           "baselines": {
             "noChange": {
-              "maeM": 1.4683
+              "maeM": 1.1266
             },
             "seasonal": {
-              "maeM": 2.8022
+              "maeM": 2.3321
             }
           },
           "beatsBothBaselinesByFivePct": false,
+          "rollingOrigin": {
+            "validated": false,
+            "reason": "not a release candidate; rolling origin not run at this horizon"
+          },
           "rollingOriginValidated": false,
+          "releaseBlockers": [
+            "rolling_origin_incomplete"
+          ],
           "releaseStatus": "research_only"
         },
         {
           "horizonMonths": 3,
           "task": "direct_forecast",
           "trainingOriginPeriod": {
-            "start": "2014-12",
-            "end": "2023-12"
+            "start": "2016-03",
+            "end": "2023-09"
           },
           "evaluationOriginPeriod": {
-            "start": "2024-01",
+            "start": "2023-10",
             "end": "2026-05"
           },
-          "sampleCount": 19975,
+          "sampleCount": 20350,
           "model": {
-            "maeM": 2.0822,
-            "rmseM": 3.5702,
-            "r2": 0.8077
+            "maeM": 1.9874,
+            "rmseM": 3.3169,
+            "r2": 0.8267
           },
           "baselines": {
             "noChange": {
-              "maeM": 2.5229
+              "maeM": 2.2308
             },
             "seasonal": {
-              "maeM": 3.1606
+              "maeM": 2.3292
             }
           },
           "beatsBothBaselinesByFivePct": true,
-          "rollingOriginValidated": false,
+          "rollingOrigin": {
+            "validated": true,
+            "originCount": 11,
+            "originStep": "3 months",
+            "origins": [
+              {
+                "cut": "2024-01",
+                "trainRows": 47171,
+                "testRows": 1388
+              },
+              {
+                "cut": "2024-04",
+                "trainRows": 48559,
+                "testRows": 1388
+              },
+              {
+                "cut": "2024-07",
+                "trainRows": 49947,
+                "testRows": 1991
+              },
+              {
+                "cut": "2024-10",
+                "trainRows": 51938,
+                "testRows": 2026
+              },
+              {
+                "cut": "2025-01",
+                "trainRows": 53964,
+                "testRows": 2042
+              },
+              {
+                "cut": "2025-04",
+                "trainRows": 56006,
+                "testRows": 2034
+              },
+              {
+                "cut": "2025-07",
+                "trainRows": 58040,
+                "testRows": 2024
+              },
+              {
+                "cut": "2025-10",
+                "trainRows": 60064,
+                "testRows": 2041
+              },
+              {
+                "cut": "2026-01",
+                "trainRows": 62105,
+                "testRows": 2042
+              },
+              {
+                "cut": "2026-04",
+                "trainRows": 64147,
+                "testRows": 2042
+              },
+              {
+                "cut": "2026-07",
+                "trainRows": 66189,
+                "testRows": 1332
+              }
+            ],
+            "sampleCount": 20350,
+            "maeM": 1.7767,
+            "baselines": {
+              "noChange": {
+                "maeM": 2.2308
+              },
+              "seasonal": {
+                "maeM": 2.3292
+              }
+            },
+            "beatsBothBaselinesByFivePct": true,
+            "terrainCohorts": {
+              "alluvial": {
+                "sampleCount": 6058,
+                "maeM": 1.3657,
+                "noChangeMaeM": 1.6834,
+                "improvementPct": 18.87
+              },
+              "coastal": {
+                "sampleCount": 6818,
+                "maeM": 1.3905,
+                "noChangeMaeM": 1.9444,
+                "improvementPct": 28.48
+              },
+              "hard_rock": {
+                "sampleCount": 7474,
+                "maeM": 2.4621,
+                "noChangeMaeM": 2.9357,
+                "improvementPct": 16.13
+              }
+            },
+            "everyTerrainCohortImproves": true
+          },
+          "rollingOriginValidated": true,
+          "releaseBlockers": [],
           "releaseStatus": "research_only"
         },
         {
           "horizonMonths": 6,
           "task": "direct_forecast",
           "trainingOriginPeriod": {
-            "start": "2014-12",
-            "end": "2023-12"
+            "start": "2015-12",
+            "end": "2023-06"
           },
           "evaluationOriginPeriod": {
-            "start": "2024-01",
+            "start": "2023-07",
             "end": "2026-02"
           },
-          "sampleCount": 17902,
+          "sampleCount": 20308,
           "model": {
-            "maeM": 2.5489,
-            "rmseM": 4.1558,
-            "r2": 0.7282
+            "maeM": 2.8203,
+            "rmseM": 4.4809,
+            "r2": 0.6858
           },
           "baselines": {
             "noChange": {
-              "maeM": 3.3071
+              "maeM": 3.0407
             },
             "seasonal": {
-              "maeM": 3.4117
+              "maeM": 2.3265
             }
           },
-          "beatsBothBaselinesByFivePct": true,
-          "rollingOriginValidated": false,
+          "beatsBothBaselinesByFivePct": false,
+          "rollingOrigin": {
+            "validated": true,
+            "originCount": 11,
+            "originStep": "3 months",
+            "origins": [
+              {
+                "cut": "2024-01",
+                "trainRows": 46054,
+                "testRows": 1365
+              },
+              {
+                "cut": "2024-04",
+                "trainRows": 47419,
+                "testRows": 1386
+              },
+              {
+                "cut": "2024-07",
+                "trainRows": 48805,
+                "testRows": 2000
+              },
+              {
+                "cut": "2024-10",
+                "trainRows": 50805,
+                "testRows": 2026
+              },
+              {
+                "cut": "2025-01",
+                "trainRows": 52831,
+                "testRows": 2028
+              },
+              {
+                "cut": "2025-04",
+                "trainRows": 54859,
+                "testRows": 2033
+              },
+              {
+                "cut": "2025-07",
+                "trainRows": 56892,
+                "testRows": 2027
+              },
+              {
+                "cut": "2025-10",
+                "trainRows": 58919,
+                "testRows": 2036
+              },
+              {
+                "cut": "2026-01",
+                "trainRows": 60955,
+                "testRows": 2039
+              },
+              {
+                "cut": "2026-04",
+                "trainRows": 62994,
+                "testRows": 2037
+              },
+              {
+                "cut": "2026-07",
+                "trainRows": 65031,
+                "testRows": 1331
+              }
+            ],
+            "sampleCount": 20308,
+            "maeM": 2.2877,
+            "baselines": {
+              "noChange": {
+                "maeM": 3.0407
+              },
+              "seasonal": {
+                "maeM": 2.3265
+              }
+            },
+            "beatsBothBaselinesByFivePct": false,
+            "terrainCohorts": {
+              "alluvial": {
+                "sampleCount": 6049,
+                "maeM": 1.6717,
+                "noChangeMaeM": 2.2641,
+                "improvementPct": 26.17
+              },
+              "coastal": {
+                "sampleCount": 6804,
+                "maeM": 1.7578,
+                "noChangeMaeM": 2.6561,
+                "improvementPct": 33.82
+              },
+              "hard_rock": {
+                "sampleCount": 7455,
+                "maeM": 3.2712,
+                "noChangeMaeM": 4.0218,
+                "improvementPct": 18.66
+              }
+            },
+            "everyTerrainCohortImproves": true
+          },
+          "rollingOriginValidated": true,
+          "releaseBlockers": [
+            "does_not_beat_both_baselines_by_five_pct_under_rolling_origin"
+          ],
           "releaseStatus": "research_only"
         },
         {
           "horizonMonths": 12,
           "task": "direct_forecast",
           "trainingOriginPeriod": {
-            "start": "2014-12",
-            "end": "2023-12"
+            "start": "2015-06",
+            "end": "2022-12"
           },
           "evaluationOriginPeriod": {
-            "start": "2024-01",
+            "start": "2023-01",
             "end": "2025-08"
           },
-          "sampleCount": 13762,
+          "sampleCount": 20413,
           "model": {
-            "maeM": 2.8773,
-            "rmseM": 4.734,
-            "r2": 0.6444
+            "maeM": 3.4979,
+            "rmseM": 5.61,
+            "r2": 0.5106
           },
           "baselines": {
             "noChange": {
-              "maeM": 2.4026
+              "maeM": 2.3332
             },
             "seasonal": {
-              "maeM": 2.8831
+              "maeM": 2.3332
             }
           },
           "beatsBothBaselinesByFivePct": false,
+          "rollingOrigin": {
+            "validated": false,
+            "reason": "not a release candidate; rolling origin not run at this horizon"
+          },
           "rollingOriginValidated": false,
+          "releaseBlockers": [
+            "rolling_origin_incomplete"
+          ],
           "releaseStatus": "research_only"
         }
       ]
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",
-      "generatedAt": "2026-09-26T04:08:57+00:00",
+      "generatedAt": "2026-09-26T04:41:23+00:00",
       "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
       "overlapPeriod": {
         "start": "2014-06",
@@ -376,7 +586,10 @@
       "requiresNoTargetLeakage": true,
       "requiresReconciledTerrainCohorts": true
     },
-    "reason": "No horizon has completed and passed the required rolling-origin release gate."
+    "horizonsClearingTheGate": [
+      3
+    ],
+    "reason": "No horizon is published. Releasing a forward number is an owner decision, not a consequence of passing the gate."
   },
   "cohortDefinitions": {
     "temporalNowcast": "source-UUID mandal-months with exact calendar lag1 and lag12 and a resolved location; missing rainfall stays missing",
@@ -419,7 +632,7 @@
     "climateContext": "9e082f287c165332f625bc1a7dee84c594ef39878571eb1aa5654e6945953ad4",
     "graceProvenance": "5fb95d6866494a39ee944ec187ce6080a15b29c9b559beee0b53e654ed1d9b60",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "44b70bfe53b613413038a4f8f3b2bd0ec30a6dd59798ea9aee9d0ea10667bcea"
+    "evaluations": "f31d68930730f6d26d14fd645773d1226739daa6b474fa301449355efbbbc530"
   },
-  "generatedAt": "2026-09-26T04:09:54+00:00"
+  "generatedAt": "2026-09-26T04:41:55+00:00"
 }

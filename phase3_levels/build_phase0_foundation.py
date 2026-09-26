@@ -677,7 +677,14 @@ def build_model_card(context, generated_at):
             "releasedHorizons": [],
             "status": "not_released",
             "gate": direct["releaseGate"],
-            "reason": "No horizon has completed and passed the required rolling-origin release gate.",
+            # Clearing the gate is evidence that a horizon COULD be released.
+            # Publishing a forward number is a separate decision by the project
+            # owner, so nothing is released here however the evidence reads.
+            "horizonsClearingTheGate": [
+                horizon["horizonMonths"] for horizon in direct["horizons"]
+                if not horizon.get("releaseBlockers")
+            ],
+            "reason": "No horizon is published. Releasing a forward number is an owner decision, not a consequence of passing the gate.",
         },
         "cohortDefinitions": {
             "temporalNowcast": temporal["eligibleCohort"],

@@ -163,8 +163,19 @@ def test_model_card_separates_evaluation_tasks_and_gates_forecasts():
     for horizon in evaluations["directForecast"]["horizons"]:
         assert set(horizon["baselines"]) == {"noChange", "seasonal"}
         assert horizon["sampleCount"] > 0
+        # Clearing the gate is evidence, not permission. A horizon may pass and
+        # must still stay unreleased until somebody decides to publish it.
         assert horizon["releaseStatus"] == "research_only"
-        assert horizon["rollingOriginValidated"] is False
+        assert horizon["horizonMonths"] not in evaluations["directForecast"]["releasedHorizons"]
+        rolling = horizon["rollingOrigin"]
+        if rolling.get("validated"):
+            assert rolling["originCount"] >= 4
+            assert rolling["sampleCount"] > 0
+            passes = (rolling["beatsBothBaselinesByFivePct"]
+                      and rolling["everyTerrainCohortImproves"])
+            assert bool(horizon["releaseBlockers"]) is not passes
+        else:
+            assert "rolling_origin_incomplete" in horizon["releaseBlockers"] or rolling.get("reason")
 
 
 def test_latest_targets_are_excluded_and_features_do_not_contain_target():
