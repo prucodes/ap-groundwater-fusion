@@ -21,11 +21,13 @@ def test_active_output_is_latest_target_holdout_not_operational_live_nowcast():
     assert 'groupby("mkey").tail(1).index' in engine
     assert "train = df.drop(index=latest_idx)" in engine
     assert "latest targets" in engine
-    assert all(
-        record["nowcast"] is None
-        or record["nowcast"]["modelVersion"] == "phase0-nowcast-2.0.0"
+    published = {
+        record["nowcast"]["modelVersion"]
         for record in records
-    )
+        if record["nowcast"] is not None
+    }
+    assert len(published) == 1, "one model version publishes the whole map"
+    assert published.pop() in engine, "records must name the engine's own version"
 
 
 def test_same_period_measurement_is_primary_and_model_is_evaluation_context():
@@ -62,7 +64,10 @@ def test_measured_only_and_boundary_only_panels_do_not_fabricate_model_fields():
         for record in records
         if record["identity"]["coverageStatus"] == "boundary_only"
     ]
-    assert measured_only and boundary_only
+    counts = load_json("app/data/dataset_manifest.json")["counts"]
+    assert len(measured_only) == counts["measuredOnlyCount"]
+    assert len(boundary_only) == counts["boundaryOnlyCount"]
+    assert boundary_only, "a boundary with no series must still render as a record"
     assert all(record["observation"] and record["nowcast"] is None for record in measured_only)
     assert all(
         record["observation"] is None and record["nowcast"] is None

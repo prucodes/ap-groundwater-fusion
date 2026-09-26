@@ -89,7 +89,7 @@
         "modelVersion": { "type": "string" },
         "lower": { "type": "number" },
         "upper": { "type": "number" },
-        "intervalType": { "const": "model_quantile_p10_p90" },
+        "intervalType": { "const": "conformalised_quantile_p10_p90" },
         "eligibleEvaluationCohort": { "type": "string" },
         "qualityStatus": { "enum": ["eligible", "limited", "not_evaluated"] }
       }

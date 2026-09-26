@@ -80,7 +80,7 @@ def main():
         if nowcast:
             require(nowcast.get("unit") == "m_bgl", f"{prefix} nowcast unit", errors)
             require(bool(MONTH.match(nowcast.get("targetPeriod", ""))), f"{prefix} nowcast period", errors)
-            require(nowcast.get("intervalType") == "model_quantile_p10_p90", f"{prefix} interval label", errors)
+            require(nowcast.get("intervalType") == "conformalised_quantile_p10_p90", f"{prefix} interval label", errors)
             require(nowcast["lower"] <= nowcast["value"] <= nowcast["upper"], f"{prefix} quantile order", errors)
         if status == "modelled":
             require(observation is not None and nowcast is not None, f"{prefix} modelled optional rules", errors)
