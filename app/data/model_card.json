@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "modelName": "AP Mandal Groundwater Temporal Nowcast",
   "modelVersion": "phase0-nowcast-3.0.0",
-  "buildTimestamp": "2026-09-26T05:25:14+00:00",
+  "buildTimestamp": "2026-09-26T14:36:41+00:00",
   "trainingPeriod": {
     "start": "2015-06",
     "end": "2026-07"
@@ -44,9 +44,9 @@
       },
       "sampleCount": 21785,
       "model": {
-        "maeM": 1.0212,
-        "rmseM": 2.1957,
-        "r2": 0.9271
+        "maeM": 1.0091,
+        "rmseM": 2.1936,
+        "r2": 0.9273
       },
       "baseline": {
         "name": "same_month_previous_year",
@@ -55,37 +55,37 @@
       "lastReadingBaseline": {
         "name": "carry_last_reading_forward",
         "maeM": 1.1387,
-        "skillPct": 10.32
+        "skillPct": 11.38
       },
       "depthBands": [
         {
           "band": "0-5m",
           "sampleCount": 8702,
-          "maeM": 0.5571,
+          "maeM": 0.5512,
           "lastReadingMaeM": 0.6536
         },
         {
           "band": "5-10m",
           "sampleCount": 7082,
-          "maeM": 0.8309,
+          "maeM": 0.8151,
           "lastReadingMaeM": 0.9609
         },
         {
           "band": "10-20m",
           "sampleCount": 4328,
-          "maeM": 1.4549,
+          "maeM": 1.4295,
           "lastReadingMaeM": 1.5995
         },
         {
           "band": "20-30m",
           "sampleCount": 990,
-          "maeM": 2.6322,
+          "maeM": 2.636,
           "lastReadingMaeM": 2.7552
         },
         {
           "band": "30m+",
           "sampleCount": 683,
-          "maeM": 3.8231,
+          "maeM": 3.8329,
           "lastReadingMaeM": 3.8999
         }
       ],
@@ -95,40 +95,40 @@
           "end": "2023-12"
         },
         "blendWeightOnModel": {
-          "0-5m": 0.65,
-          "5-10m": 0.7,
-          "10-20m": 0.55,
-          "20-30m": 0.2,
-          "30m+": 0.35
+          "0-5m": 0.7,
+          "5-10m": 0.8,
+          "10-20m": 0.65,
+          "20-30m": 0.15,
+          "30m+": 0.2
         },
         "conformalWidenM": {
-          "alluvial": 0.1544,
-          "coastal": 0.2645,
-          "hard_rock": 0.7742
+          "alluvial": 0.1712,
+          "coastal": 0.268,
+          "hard_rock": 0.7257
         }
       },
       "terrainCohorts": {
         "alluvial": {
           "sampleCount": 6378,
-          "maeM": 0.809,
-          "empiricalCoveragePct": 81.84
+          "maeM": 0.8078,
+          "empiricalCoveragePct": 81.44
         },
         "coastal": {
           "sampleCount": 7477,
-          "maeM": 0.79,
-          "empiricalCoveragePct": 84.67
+          "maeM": 0.7789,
+          "empiricalCoveragePct": 85.5
         },
         "hard_rock": {
           "sampleCount": 7930,
-          "maeM": 1.4098,
-          "empiricalCoveragePct": 85.17
+          "maeM": 1.3882,
+          "empiricalCoveragePct": 84.98
         }
       },
       "intervalEvaluation": {
         "intervalType": "conformalised_quantile_p10_p90",
         "nominalCoveragePct": 80,
-        "empiricalCoveragePct": 84.03,
-        "meanWidthM": 3.0799,
+        "empiricalCoveragePct": 84.12,
+        "meanWidthM": 3.029,
         "sampleCount": 21785
       }
     },
@@ -141,13 +141,13 @@
         "end": "2026-08"
       },
       "sampleCount": 16344,
-      "maeM": 0.9064,
+      "maeM": 0.8967,
       "lastReadingMaeM": 1.0588,
-      "skillVsLastReadingPct": 14.39
+      "skillVsLastReadingPct": 15.31
     },
     "spatialEstimation": {
       "task": "whole_mandal_spatial_estimation",
-      "generatedAt": "2026-09-26T05:29:45+00:00",
+      "generatedAt": "2026-09-26T14:39:53+00:00",
       "validation": "5-fold GroupKFold with whole mandals held out",
       "rowCount": 85791,
       "mandalCount": 651,
@@ -209,7 +209,7 @@
     },
     "directForecast": {
       "task": "direct_multi_horizon_forecast",
-      "generatedAt": "2026-09-26T05:31:54+00:00",
+      "generatedAt": "2026-09-26T14:41:23+00:00",
       "featureTiming": "features available at forecast origin; no future rainfall",
       "baselineDefinitions": {
         "noChange": "the level at the forecast origin",
@@ -236,9 +236,9 @@
           },
           "sampleCount": 20345,
           "model": {
-            "maeM": 1.1532,
-            "rmseM": 2.1799,
-            "r2": 0.9252
+            "maeM": 1.1577,
+            "rmseM": 2.1821,
+            "r2": 0.9251
           },
           "baselines": {
             "noChange": {
@@ -272,9 +272,9 @@
           },
           "sampleCount": 20298,
           "model": {
-            "maeM": 1.9728,
-            "rmseM": 3.2761,
-            "r2": 0.8297
+            "maeM": 1.9717,
+            "rmseM": 3.2722,
+            "r2": 0.8301
           },
           "baselines": {
             "noChange": {
@@ -347,7 +347,7 @@
               }
             ],
             "sampleCount": 20298,
-            "maeM": 1.7614,
+            "maeM": 1.7716,
             "baselines": {
               "noChange": {
                 "maeM": 2.218
@@ -360,21 +360,21 @@
             "terrainCohorts": {
               "alluvial": {
                 "sampleCount": 6046,
-                "maeM": 1.3389,
+                "maeM": 1.3576,
                 "noChangeMaeM": 1.6661,
-                "improvementPct": 19.64
+                "improvementPct": 18.52
               },
               "coastal": {
                 "sampleCount": 6818,
-                "maeM": 1.3939,
+                "maeM": 1.403,
                 "noChangeMaeM": 1.9444,
-                "improvementPct": 28.31
+                "improvementPct": 27.84
               },
               "hard_rock": {
                 "sampleCount": 7434,
-                "maeM": 2.4419,
+                "maeM": 2.4463,
                 "noChangeMaeM": 2.9179,
-                "improvementPct": 16.31
+                "improvementPct": 16.16
               }
             },
             "everyTerrainCohortImproves": true
@@ -396,9 +396,9 @@
           },
           "sampleCount": 20256,
           "model": {
-            "maeM": 2.8032,
-            "rmseM": 4.4439,
-            "r2": 0.6887
+            "maeM": 2.8067,
+            "rmseM": 4.4255,
+            "r2": 0.6913
           },
           "baselines": {
             "noChange": {
@@ -471,7 +471,7 @@
               }
             ],
             "sampleCount": 20256,
-            "maeM": 2.2628,
+            "maeM": 2.2689,
             "baselines": {
               "noChange": {
                 "maeM": 3.0174
@@ -484,21 +484,21 @@
             "terrainCohorts": {
               "alluvial": {
                 "sampleCount": 6037,
-                "maeM": 1.6261,
+                "maeM": 1.6456,
                 "noChangeMaeM": 2.2293,
-                "improvementPct": 27.06
+                "improvementPct": 26.18
               },
               "coastal": {
                 "sampleCount": 6804,
-                "maeM": 1.7557,
+                "maeM": 1.7459,
                 "noChangeMaeM": 2.6561,
-                "improvementPct": 33.9
+                "improvementPct": 34.27
               },
               "hard_rock": {
                 "sampleCount": 7415,
-                "maeM": 3.2464,
+                "maeM": 3.2562,
                 "noChangeMaeM": 3.9905,
-                "improvementPct": 18.65
+                "improvementPct": 18.4
               }
             },
             "everyTerrainCohortImproves": true
@@ -522,9 +522,9 @@
           },
           "sampleCount": 20361,
           "model": {
-            "maeM": 3.4827,
-            "rmseM": 5.581,
-            "r2": 0.5122
+            "maeM": 3.3666,
+            "rmseM": 5.3688,
+            "r2": 0.5486
           },
           "baselines": {
             "noChange": {
@@ -549,7 +549,7 @@
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",
-      "generatedAt": "2026-09-26T05:31:55+00:00",
+      "generatedAt": "2026-09-26T14:41:24+00:00",
       "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
       "overlapPeriod": {
         "start": "2014-06",
@@ -574,8 +574,8 @@
     "intervalEvaluation": {
       "intervalType": "conformalised_quantile_p10_p90",
       "nominalCoveragePct": 80,
-      "empiricalCoveragePct": 84.03,
-      "meanWidthM": 3.0799,
+      "empiricalCoveragePct": 84.12,
+      "meanWidthM": 3.029,
       "sampleCount": 21785
     }
   },
@@ -630,13 +630,13 @@
   },
   "inputHashes": {
     "apwrimsHistory": "b5d60daf9305e1e0aca519b1c7f5c9f06a3fa59263f2084efd940075bbe9fdbb",
-    "nowcasts": "9228d1f0b08f05757fc250d739dd5857aed69ce0aa598b9635e47ffcbf80adcb",
+    "nowcasts": "66caf125cb0f199026daf310d4117c4ab866f2f6668d3f43b0c3a0cac09e6fd4",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
     "districtSignals": "182d4ba44f3dfe16f3dc24731c2eeb3f60b44235ff2a4c5e591690de2e368882",
     "climateContext": "9e082f287c165332f625bc1a7dee84c594ef39878571eb1aa5654e6945953ad4",
     "graceProvenance": "5fb95d6866494a39ee944ec187ce6080a15b29c9b559beee0b53e654ed1d9b60",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "8ac914972c1579a2ae2a1f650a0de00783a8e333968740ed8df541e74319fc11"
+    "evaluations": "9a501eabeaf63ce5c2a95a6e409df620f4848650de13191b4a6080e7f4e0c3a5"
   },
-  "generatedAt": "2026-09-26T05:34:08+00:00"
+  "generatedAt": "2026-09-26T14:43:26+00:00"
 }

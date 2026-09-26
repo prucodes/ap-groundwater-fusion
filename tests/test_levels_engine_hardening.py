@@ -263,3 +263,27 @@ def test_a_mandal_that_just_stepped_is_not_modelled_from_the_old_well():
             f"{row['mandal']} is published as of {published_row['as_of']}, "
             f"before its step at {row['regime_start']}"
         )
+
+
+def test_every_row_has_rainfall_and_it_comes_from_the_finer_product():
+    """POWER joins by name and misses one row in seven; CHIRPS is keyed to the
+    boundary and reaches all of them."""
+    chirps = os.path.join(ROOT, "phase3_levels", "data", "mandal_rain_history_chirps.csv")
+    assert os.path.exists(chirps), "the model's rainfall source should be in the repo"
+    table = pd.read_csv(chirps)
+    assert set(table.columns) >= {"boundary_index", "date", "rain_mm"}
+    # Keyed by boundary, because sixteen district/mandal name pairs repeat.
+    assert not table.duplicated(["boundary_index", "date"]).any()
+    frame = engine.build_frame()
+    assert frame.rain_1m.notna().all(), "no mandal-month may be left without rainfall"
+    assert frame.rain_1m.between(0, 3000).all()
+
+
+def test_power_still_stands_behind_chirps():
+    """A CHIRPS outage should degrade the model, not break the pipeline."""
+    source = open(os.path.join(ROOT, "phase3_levels", "build_levels_engine.py")).read()
+    assert "mandal_rain_history_chirps.csv" in source
+    assert "mandal_rain_history.csv" in source
+    assert source.index("mandal_rain_history_chirps.csv") < source.index(
+        'power_path = os.path.join(HERE, "data", "mandal_rain_history.csv")'
+    ), "CHIRPS is tried first, POWER fills what it cannot"
