@@ -221,6 +221,18 @@ def build_records(generated_at):
     # Mandals whose depth series steps to a new level: the reading is real, the
     # history behind it is a different well, and nothing is modelled from it
     # until a year of the new regime exists.
+    # The reviewed alias table says which source series sits on which boundary.
+    # Without it a mandal the source spells differently from its polygon -- GUDI
+    # PALLE against GUDUPALLE -- has its readings shown nowhere at all.
+    alias_sources = defaultdict(list)
+    alias_path = os.path.join(HERE, "data", "mandal_boundary_aliases.csv")
+    if os.path.exists(alias_path):
+        with open(alias_path) as handle:
+            for row in csv.DictReader(handle):
+                alias_sources[int(row["boundary_index"])].append(
+                    (norm(row["district"]), norm(row["mandal"]))
+                )
+
     discontinuity_path = os.path.join(HERE, "data", "mandal_series_discontinuities.csv")
     regime_starts = {}
     if os.path.exists(discontinuity_path):
@@ -424,12 +436,19 @@ def build_records(generated_at):
             diagnostics["modelledMatches"] += 1
             join_method = "district_and_mandal"
         else:
-            history_rows = (
+            # An aliased series first: its readings belong on this polygon even
+            # though the two spell the mandal differently.
+            aliased = [
+                row
+                for key in alias_sources.get(boundary_index, [])
+                for row in exact_history.get(key, [])
+            ]
+            history_rows = aliased or (
                 []
                 if norm2(mandal_name) in modelled_reconciled_names
                 else reconciled_history.get(reconciled_identity, [])
             )
-            reconcile = bool(history_rows)
+            reconcile = bool(history_rows) and not aliased
             series_candidate = aggregate_history(history_rows, reconcile=True)
             if len(series_candidate) >= 6:
                 coverage = "measured_only"

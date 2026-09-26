@@ -37,9 +37,14 @@ not sensorless spatial accuracy. Whole-mandal estimation is evaluated
 separately. The nowcast models the **change** from the previous month and blends
 it with the previous reading at a weight calibrated per depth band, so a
 published estimate is never worse than carrying that reading forward. Intervals
-are P10–P90 quantile ranges widened per aquifer by split conformal calibration,
-which brings measured coverage close to the nominal 80% in every terrain; they
-are still not guaranteed confidence intervals. Accuracy scales with depth, so
+are P10–P90 quantile ranges widened by split conformal calibration per aquifer
+AND season, which brings measured coverage close to the nominal 80%; they are
+still not guaranteed confidence intervals. Season matters because one offset
+pooled over twelve months is sized for an average month while a published
+nowcast targets exactly one: backtesting the publishing path, a pooled offset
+gave 74.7% coverage on a July target and 85.1% on a May one. A cohort with
+fewer than `MIN_CALIBRATION_ROWS` rows borrows the aquifer-wide offset rather
+than taking a quantile from too little evidence. Accuracy scales with depth, so
 read `depthBands` in the model card rather than the statewide average alone.
 **The 3-month horizon is released; no other horizon is.** Under rolling-origin
 validation it is 1.78 m against 2.23 m for assuming no change and 2.33 m for a

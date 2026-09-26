@@ -1276,6 +1276,70 @@ select:focus-visible {
   box-shadow: var(--shadow-card);
 }
 
+.depthBandStrip {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.5fr) repeat(auto-fit, minmax(96px, 1fr));
+  gap: 10px;
+  align-items: stretch;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--card);
+}
+
+.depthBandIntro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+.depthBandIntro span:last-child {
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.45;
+}
+
+.depthBandCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  justify-content: center;
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(18, 181, 203, 0.06);
+}
+
+.depthBandCell span {
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.depthBandCell strong {
+  color: var(--ink);
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+}
+
+.depthBandCell em {
+  color: var(--muted);
+  font-size: 10.5px;
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 720px) {
+  .depthBandStrip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .depthBandIntro { grid-column: 1 / -1; }
+}
+
 .modelValidationIntro {
   display: flex;
   flex-direction: column;

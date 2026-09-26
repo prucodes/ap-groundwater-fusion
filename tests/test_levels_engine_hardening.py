@@ -304,3 +304,36 @@ def test_the_aquifer_label_is_a_district_proxy_and_says_so():
     limits = " ".join(card["knownLimitations"])
     assert "aquifer_type is assigned from a list of districts" in limits
     assert "mandal_aquifer_review.csv" in limits
+
+
+def test_the_band_is_calibrated_by_season_not_just_terrain():
+    """One offset pooled over twelve months is sized for an average month, and
+    a published nowcast targets exactly one. Backtesting the publishing path, a
+    pooled offset gave 74.7% coverage on a July target and 85.1% on a May one."""
+    assert engine.season_of(["2026-07"])[0] == "monsoon"
+    assert engine.season_of(["2026-11"])[0] == "post_monsoon"
+    assert engine.season_of(["2026-02"])[0] == "rabi"
+    assert engine.season_of(["2026-04"])[0] == "summer"
+    card = json.load(open(os.path.join(ROOT, "app", "data", "model_card.json")))
+    widen = card["evaluations"]["temporalNowcast"]["calibration"]["conformalWidenM"]
+    seasonal = [key for key in widen if "|" in key]
+    assert len(seasonal) >= 8, "the band should be calibrated per aquifer AND season"
+    # And the broader aquifer-only offset must survive as the fallback for a
+    # cohort too small to take a quantile from.
+    assert any("|" not in key for key in widen)
+
+
+def test_a_small_calibration_cohort_borrows_rather_than_invents():
+    """A season with too few rows takes the aquifer-wide offset instead of a
+    quantile drawn from a handful of them."""
+    big, small = 200, 100          # small sits under MIN_CALIBRATION_ROWS
+    actual = np.zeros(big + small)
+    # The large season's band is generous, the small one's misses badly.
+    lower = np.concatenate([np.full(big, -1.0), np.full(small, 4.0)])
+    upper = np.concatenate([np.full(big, 1.0), np.full(small, 9.0)])
+    cohorts = np.array(["hard_rock|monsoon"] * big + ["hard_rock|summer"] * small)
+    broad = np.array(["hard_rock"] * (big + small))
+    offsets = engine.conformal_offsets(actual, lower, upper, cohorts, fallback=broad)
+    assert offsets["hard_rock|summer"] == offsets["hard_rock"], "the small season borrows"
+    assert offsets["hard_rock|monsoon"] != offsets["hard_rock|summer"], "the large one does not"
+    assert offsets["hard_rock|monsoon"] < offsets["hard_rock|summer"]
