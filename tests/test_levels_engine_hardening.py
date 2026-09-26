@@ -287,3 +287,20 @@ def test_power_still_stands_behind_chirps():
     assert source.index("mandal_rain_history_chirps.csv") < source.index(
         'power_path = os.path.join(HERE, "data", "mandal_rain_history.csv")'
     ), "CHIRPS is tried first, POWER fills what it cannot"
+
+
+def test_the_aquifer_label_is_a_district_proxy_and_says_so():
+    """The label is not corrected from the yield -- reclassifying was measured
+    and did not earn it -- so the card has to admit what the label is."""
+    review = os.path.join(ROOT, "phase3_levels", "data", "mandal_aquifer_review.csv")
+    assert os.path.exists(review)
+    with open(review) as handle:
+        rows = list(csv.DictReader(handle))
+    assert rows, "the review list should not be empty while the proxy is in use"
+    for row in rows:
+        assert row["labelled_aquifer"] != row["implied_by_yield"]
+        assert 0 < float(row["specific_yield"]) < 1
+    card = json.load(open(os.path.join(ROOT, "app", "data", "model_card.json")))
+    limits = " ".join(card["knownLimitations"])
+    assert "aquifer_type is assigned from a list of districts" in limits
+    assert "mandal_aquifer_review.csv" in limits

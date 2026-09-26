@@ -817,6 +817,7 @@ def build_model_card(context, generated_at):
             "Prototype boundaries and identifiers are not official administrative identifiers.",
             "Mandals whose prototype polygon cannot be identified without guessing fall back to their district centroid; the record says which.",
             "Accuracy scales with depth. The statewide average is carried by shallow mandals; see depthBands.",
+            "aquifer_type is assigned from a list of districts, so terrain cohorts describe districts rather than aquifers. For 259 of 688 mandals the mandal's own measured specific yield disagrees with its label; they are listed in phase3_levels/data/mandal_aquifer_review.csv. Reclassifying from the yield was measured and did not improve the model, so the label stands.",
             "Physical station counts cannot be verified from the source schema.",
             "GRACE-DA is coarse regional model-assimilated storage context, not direct mandal depth.",
             "Cross-network comparison pairs different sites and potentially different aquifers.",
