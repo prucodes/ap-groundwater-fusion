@@ -77,7 +77,9 @@ STEPS = [
     ("fetch NASA POWER rainfall (model input)",
      [PY, os.path.join(HERE, "fetch_nasa_power_rainfall.py")], False, 2700),
     ("build holdout-safe nowcasts", [PY, os.path.join(HERE, "build_levels_engine.py")], True),
-    ("evaluate model tasks", [PY, os.path.join(HERE, "evaluate_phase0.py")], True),
+    # Rolling-origin forecast validation retrains once per quarterly cut per
+    # candidate horizon, which is slow on a 2-core runner.
+    ("evaluate model tasks", [PY, os.path.join(HERE, "evaluate_phase0.py")], True, 3600),
     ("publish V2 app data",  [PY, os.path.join(HERE, "build_real_app_data.py")], True),
     # The Crystal 3D view embeds its own dataset, rebuilt here from the measured
     # series just published. Optional: a failure keeps last week's view, and the
