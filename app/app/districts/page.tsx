@@ -45,7 +45,7 @@ export default function DistrictsPage() {
           <DistrictMap layer="gw_percentile" height={420} colorOverride={stressColors} />
         </section>
 
-        <section className="card">
+        <section className="card spanRow">
           <div className="cardHead">
             <div className="cardTitle"><span className="titleIcon"><IconDroplet /></span>District Levels — as on {formatPeriod(latestObservationPeriod)} (β)</div>
             <span className="cardSub">m below ground</span>

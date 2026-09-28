@@ -154,7 +154,14 @@ test.describe("the monsoon map is legible at desktop width", () => {
     await settle(page);
 
     const map = await page.locator(".rechargeMapSvg").boundingBox();
-    expect(map!.height).toBeLessThanOrEqual(460);
+    // It has been wrong in both directions: 792px pushed every other block
+    // under the fold, and a 430px correction was called too small. What
+    // actually matters is that it is the largest thing on the page without
+    // being most of it, so both bounds are asserted.
+    expect(map!.height).toBeGreaterThan(480);
+    expect(map!.height).toBeLessThanOrEqual(660);
+    const pageHeight = await page.evaluate(() => document.body.scrollHeight);
+    expect(map!.height).toBeLessThan(pageHeight * 0.25);
 
     const readout = await page.locator(".rechargeReadout").boundingBox();
     // Beside, not below: the readout must overlap the map vertically.
