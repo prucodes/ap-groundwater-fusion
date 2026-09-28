@@ -31,6 +31,9 @@ export default function IrrigationPage() {
   const verifyCount = advisories.filter((a) => a.verifyFirst).length;
   const payload = awarePayload().slice(0, 3);
   const advisoryColors = Object.fromEntries(advisories.map((a) => [a.id, ACTION_META[a.action].color]));
+  // The bar is read against the worst district, not against an absolute ceiling:
+  // the whole point of the score is that it is comparative.
+  const maxScore = Math.max(1, ...advisories.map((a) => a.priorityScore));
 
   return (
     <div className="pageWrap">
@@ -88,8 +91,13 @@ export default function IrrigationPage() {
         <div className="fusionNote" style={{ marginTop: 12 }}>
           <IconInfo />
           <span>
-            Categories reflect available groundwater depth and measured trend. Climate and GRACE-DA signals remain
-            contextual and do not determine an operational groundwater action.
+            Categories are <strong>comparative</strong>: each district is placed by how far it sits above the
+            statewide figure for stressed mandals, deepening trend and this season&rsquo;s measured recharge. A
+            district below the line is not safe, only nearer the middle. Climate and GRACE-DA signals remain
+            contextual and do not determine an operational groundwater action. Every district is currently
+            deepening, the statewide median being {formatNumber(advisories[0]?.stateMedianTrend ?? 0)} m/yr, so the
+            outlook column describes the state of the aquifer rather than separating districts &mdash; the priority
+            column is what separates them.
           </span>
         </div>
       </section>
@@ -103,7 +111,7 @@ export default function IrrigationPage() {
         <div className="tableWrap">
           <table className="dataTable">
             <thead>
-              <tr><th>District</th><th>Advisory</th><th title="Next-season direction from year-on-year trend">Outlook</th><th>Basis</th><th>GW %ile</th><th>Balance</th><th>Why</th></tr>
+              <tr><th>District</th><th>Advisory</th><th title="How far above the statewide norm on stressed mandals, deepening trend and this season's recharge">Priority</th><th title="Measured year-on-year direction. Every district is deepening at present; the figure beside it is this district's median mandal.">Outlook</th><th>Basis</th><th>GW %ile</th><th>Balance</th><th>Why</th></tr>
             </thead>
             <tbody>
               {advisories.map((a) => {
@@ -112,9 +120,22 @@ export default function IrrigationPage() {
                   <tr key={a.district}>
                     <td className="cellStrong">
                       {a.district}
-                      {a.verifyFirst && <span className="verifyPill">verify first</span>}
+                      {a.verifyFirst ? (
+                        <span className="verifyPill">verify first</span>
+                      ) : a.verifyMandals > 0 ? (
+                        <span className="verifyCountPill">{a.verifyMandals} to verify</span>
+                      ) : null}
                     </td>
                     <td><span className="wetTag" style={{ color: m.color, background: `${m.color}1f` }}>{m.label}</span></td>
+                    <td className="cellPct">
+                      <span className="priorityBar" aria-hidden="true">
+                        <span
+                          className="priorityBarFill"
+                          style={{ width: `${Math.min(100, (a.priorityScore / maxScore) * 100)}%`, background: m.color }}
+                        />
+                      </span>
+                      <small style={{ opacity: 0.75 }}>{a.priorityScore.toFixed(1)}</small>
+                    </td>
                     <td style={{ color: a.outlook === "deepening" ? "var(--rust)" : a.outlook === "recovering" ? "var(--green)" : "var(--muted)", fontWeight: 600, fontSize: 12 }}>
                       {a.outlook === "deepening" ? "↓ deepening" : a.outlook === "recovering" ? "↑ recovering" : "→ stable"}
                       {a.trend !== null ? <small style={{ opacity: 0.7 }}> {a.trend > 0 ? "+" : ""}{a.trend}</small> : null}
