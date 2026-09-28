@@ -144,3 +144,32 @@ test.describe("no column is left as dead space", () => {
     expect(await columnVoids(page)).toEqual([]);
   });
 });
+
+/* The map answers "where"; it should not be the whole page. At full card width
+   it rendered 926x792 and left its hover readout half a screen below the
+   cursor that drove it. */
+test.describe("the monsoon map is legible at desktop width", () => {
+  test("the map is capped and its readout sits beside it", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+
+    const map = await page.locator(".rechargeMapSvg").boundingBox();
+    expect(map!.height).toBeLessThanOrEqual(460);
+
+    const readout = await page.locator(".rechargeReadout").boundingBox();
+    // Beside, not below: the readout must overlap the map vertically.
+    expect(readout!.y).toBeLessThan(map!.y + map!.height);
+  });
+
+  test("hovering a mandal names it", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+
+    const before = await page.locator(".rechargeReadout").innerText();
+    await page.locator(".rechargeCell:not(.noData)").nth(120).hover({ force: true });
+    await page.waitForTimeout(250);
+
+    await expect(page.locator(".rechargeTip")).toBeVisible();
+    expect(await page.locator(".rechargeReadout").innerText()).not.toBe(before);
+  });
+});

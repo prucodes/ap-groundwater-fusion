@@ -12,7 +12,7 @@ import {
   IconWaves,
 } from "../../components/icons";
 import { ExportMonsoonWatchButton } from "../../components/ExportButtons";
-import { RainfallHistory, RechargeMap, RechargeTrajectory } from "../../components/MonsoonVisuals";
+import { EnsoTrail, RainfallHistory, RechargeMap, RechargeTrajectory } from "../../components/MonsoonVisuals";
 import { formatNumber, monsoonWatch, titleCase } from "../../lib/data";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -142,9 +142,9 @@ export default function MonsoonPage() {
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconWaves /></span>
-            Every season from its May reading
+            How deep it goes, season by season
           </div>
-          <span className="cardSub">statewide median, {r.mandals} mandals</span>
+          <span className="cardSub">statewide median change from May · {r.mandals} mandals</span>
         </div>
         <RechargeTrajectory />
         <p className="cardNote">
@@ -158,7 +158,7 @@ export default function MonsoonPage() {
           <div className="cardHead">
             <div className="cardTitle">
               <span className="titleIcon"><IconWaves /></span>
-              Every season on the same measure
+              How widespread it is, year by year
             </div>
             <span className="cardSub">share of mandals lower than in May</span>
           </div>
@@ -208,6 +208,7 @@ export default function MonsoonPage() {
                     : ` · ${enso.trend3moC > 0 ? "+" : ""}${enso.trend3moC.toFixed(2)} °C in three months`}
                 </em>
               </div>
+              <EnsoTrail />
               <p className="cardNote">
                 {enso.index}. At or above +0.5 °C for five overlapping seasons is an El Niño, at or below
                 −0.5 °C a La Niña.
@@ -291,7 +292,7 @@ export default function MonsoonPage() {
           </div>
           <span className="cardSub">district median, metres against own normal</span>
         </div>
-        <div className="tableWrap">
+        <div className="tableWrap capped">
           <table className="dataTable compact">
             <thead>
               <tr>
@@ -343,7 +344,7 @@ export default function MonsoonPage() {
             in it authorizes an irrigation instruction.
           </span>
         </div>
-        <div className="tableWrap">
+        <div className="tableWrap capped">
           <table className="dataTable compact">
             <thead>
               <tr>

@@ -22,62 +22,109 @@ function shortfallFill(value: number | undefined) {
   return (SHORT_STOPS.find((stop) => value <= stop.upTo) ?? SHORT_STOPS[SHORT_STOPS.length - 1]).fill;
 }
 
-/** Andhra Pradesh by mandal, shaded by how far this season is from that mandal's own normal. */
+/** Andhra Pradesh by mandal, shaded by how far this season is from that mandal's own normal.
+ *
+ *  The map is capped in height and the legend and readout sit beside it rather
+ *  than under it: at full card width it stood 792px tall, which pushed every
+ *  other block below the fold and put the hover readout half a screen away from
+ *  the cursor it was responding to.
+ */
 export function RechargeMap() {
-  const [hover, setHover] = useState<number | null>(null);
+  const [hover, setHover] = useState<{ index: number; x: number; y: number } | null>(null);
   const byBoundary = new Map<number, (typeof monsoonWatch.mandals)[number]>();
   monsoonWatch.mandals.forEach((m) => {
     if (m.boundaryIndex !== null) byBoundary.set(m.boundaryIndex, m);
   });
-  const active = hover === null ? null : byBoundary.get(hover);
+  const active = hover ? byBoundary.get(hover.index) : null;
+  const activeFeature = hover ? mapGeometry.mandals[hover.index] : null;
 
   return (
-    <div className="rechargeMapWrap">
-      <svg
-        viewBox={`0 0 ${MAP_VIEW.width} ${MAP_VIEW.height}`}
-        className="rechargeMapSvg"
-        role="img"
-        aria-label="Recharge shortfall by mandal, this season against each mandal's own ten-year normal"
-      >
-        {mapGeometry.mandals.map((feature, index) => {
-          const row = byBoundary.get(index);
-          return (
-            <path
-              key={index}
-              d={mandalToPath(feature.rings)}
-              fill={shortfallFill(row?.shortfallM)}
-              className={`rechargeCell ${row ? "" : "noData"} ${hover === index ? "hot" : ""}`}
-              onMouseEnter={() => setHover(index)}
-              onMouseLeave={() => setHover((current) => (current === index ? null : current))}
-            >
-              <title>
-                {row
-                  ? `${row.mandal}, ${row.district}: ${row.shortfallM > 0 ? "+" : ""}${row.shortfallM} m against its own normal`
-                  : `${feature.m}, ${feature.d}: not enough comparable seasons`}
-              </title>
-            </path>
-          );
-        })}
-      </svg>
-
-      <div className="rechargeLegend">
-        {SHORT_STOPS.map((stop) => (
-          <span className="rechargeKey" key={stop.label}>
-            <span className="rechargeSwatch" style={{ background: stop.fill }} />
-            {stop.label}
-          </span>
-        ))}
-        <span className="rechargeKey">
-          <span className="rechargeSwatch noData" />
-          fewer than 7 comparable years
-        </span>
+    <div className="rechargeMapLayout">
+      <div className="rechargeMapFigure">
+        <svg
+          viewBox={`0 0 ${MAP_VIEW.width} ${MAP_VIEW.height}`}
+          className="rechargeMapSvg"
+          role="img"
+          aria-label="Recharge shortfall by mandal, this season against each mandal's own ten-year normal"
+          onMouseLeave={() => setHover(null)}
+        >
+          {mapGeometry.mandals.map((feature, index) => {
+            const row = byBoundary.get(index);
+            return (
+              <path
+                key={index}
+                d={mandalToPath(feature.rings)}
+                fill={shortfallFill(row?.shortfallM)}
+                className={`rechargeCell ${row ? "" : "noData"} ${hover?.index === index ? "hot" : ""}`}
+                onMouseMove={(event) => {
+                  const box = event.currentTarget.ownerSVGElement?.parentElement?.getBoundingClientRect();
+                  setHover({
+                    index,
+                    x: box ? event.clientX - box.left : 0,
+                    y: box ? event.clientY - box.top : 0,
+                  });
+                }}
+              />
+            );
+          })}
+        </svg>
+        {hover && activeFeature ? (
+          <div
+            className="rechargeTip"
+            style={{ left: hover.x, top: hover.y }}
+            role="status"
+          >
+            <strong>{active ? active.mandal : activeFeature.m}</strong>
+            <span>{active ? active.district : activeFeature.d}</span>
+            {active ? (
+              <em className={active.shortfallM > 0 ? "bad" : "good"}>
+                {active.shortfallM > 0 ? "+" : ""}
+                {active.shortfallM.toFixed(2)} m against its own normal
+              </em>
+            ) : (
+              <em>not enough comparable seasons</em>
+            )}
+          </div>
+        ) : null}
       </div>
 
-      <p className="rechargeReadout">
-        {active
-          ? `${active.mandal}, ${active.district} — ${active.thisSeasonM > 0 ? "fell" : "rose"} ${Math.abs(active.thisSeasonM).toFixed(2)} m since May, against ${active.typicalM > 0 ? "a fall of" : "a rise of"} ${Math.abs(active.typicalM).toFixed(2)} m in a normal year.`
-          : "Tap or hover a mandal for its own number. Green mandals recharged as well as they usually do; the deepest reds did not recharge at all."}
-      </p>
+      <div className="rechargeMapSide">
+        <div className="rechargeLegend">
+          {SHORT_STOPS.map((stop) => (
+            <span className="rechargeKey" key={stop.label}>
+              <span className="rechargeSwatch" style={{ background: stop.fill }} />
+              {stop.label}
+            </span>
+          ))}
+          <span className="rechargeKey">
+            <span className="rechargeSwatch noData" />
+            fewer than 7 comparable years
+          </span>
+        </div>
+        <div className={`rechargeReadout ${active ? "live" : ""}`}>
+          {active ? (
+            <>
+              <strong>
+                {active.mandal}, {active.district}
+              </strong>
+              <span>
+                {active.thisSeasonM > 0 ? "Fell" : "Rose"} {Math.abs(active.thisSeasonM).toFixed(2)} m since May,
+                against {active.typicalM > 0 ? "a fall of" : "a rise of"} {Math.abs(active.typicalM).toFixed(2)} m
+                in a normal year.
+              </span>
+              <span className="rechargeReadoutMeta">
+                Now at {active.latestDepthM.toFixed(2)} m · {active.aquifer.replace("_", " ")} ·{" "}
+                {active.comparableYears} comparable years
+              </span>
+            </>
+          ) : (
+            <span>
+              Hover or tap a mandal for its own figures. Green mandals recharged as well as they usually do; the
+              deepest reds did not recharge at all.
+            </span>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
@@ -235,6 +282,44 @@ export function RainfallHistory() {
           line is the {rows.length}-year mean · {current.year} is {Math.abs(current.anomalyPct)}% below it
         </span>
       </div>
+    </div>
+  );
+}
+
+
+/** Two years of the Oceanic Nino Index. The card carried one number; the climb
+ *  from a La Nina winter to the warmest June-August in the record is the part
+ *  that says why this season is being watched. */
+export function EnsoTrail() {
+  const enso = monsoonWatch.enso;
+  if (!enso || enso.recent.length < 6) return null;
+  const rows = enso.recent;
+  const width = 300;
+  const height = 74;
+  const pad = { top: 8, right: 6, bottom: 12, left: 6 };
+  const values = rows.map((r) => r.oniC);
+  // Headroom, or the current point is drawn flush against the top edge and its
+  // marker is clipped exactly when the index is at its most extreme.
+  const lo = Math.min(-0.6, ...values) - 0.25;
+  const hi = Math.max(0.6, ...values) + 0.25;
+  const x = (i: number) => pad.left + (i / (rows.length - 1)) * (width - pad.left - pad.right);
+  const y = (v: number) => pad.top + ((hi - v) / (hi - lo)) * (height - pad.top - pad.bottom);
+  const line = rows.map((r, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)} ${y(r.oniC).toFixed(1)}`).join(" ");
+  const last = rows[rows.length - 1];
+
+  return (
+    <div className="ensoTrail">
+      <svg viewBox={`0 0 ${width} ${height}`} role="img"
+           aria-label={`Oceanic Nino Index over the last ${rows.length} months`}>
+        <line x1={pad.left} x2={width - pad.right} y1={y(0.5)} y2={y(0.5)} className="ensoTrailThreshold" />
+        <line x1={pad.left} x2={width - pad.right} y1={y(-0.5)} y2={y(-0.5)} className="ensoTrailThreshold" />
+        <line x1={pad.left} x2={width - pad.right} y1={y(0)} y2={y(0)} className="ensoTrailZero" />
+        <path d={line} className="ensoTrailLine" />
+        <circle cx={x(rows.length - 1)} cy={y(last.oniC)} r={3.5} className="ensoTrailDot" />
+      </svg>
+      <span className="ensoTrailNote">
+        {rows[0].date} to {last.date} · dashed lines are the ±0.5 °C El Niño and La Niña thresholds
+      </span>
     </div>
   );
 }

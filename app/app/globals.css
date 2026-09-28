@@ -5035,27 +5035,72 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 }
 
 /* ---- Monsoon Watch visuals ----------------------------------------------- */
-.rechargeMapWrap { display: flex; flex-direction: column; gap: 12px; }
-.rechargeMapSvg { width: 100%; height: auto; display: block; }
+/* Map beside its own legend and readout. At full card width the map alone stood
+   792px tall, which pushed every other block below the fold and left the hover
+   readout half a screen from the cursor that drove it. */
+.rechargeMapLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  gap: 18px;
+  align-items: start;
+}
+.rechargeMapFigure { position: relative; }
+.rechargeMapSvg { width: 100%; height: auto; max-height: 430px; display: block; margin: 0 auto; }
 .rechargeCell {
   stroke: var(--card);
   stroke-width: 0.6;
   transition: opacity 0.12s ease;
-  cursor: default;
+  cursor: crosshair;
 }
 .rechargeCell.noData { fill: var(--field); stroke: var(--line); }
-.rechargeCell.hot { stroke: var(--ink); stroke-width: 1.6; }
-.rechargeLegend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 11.5px; color: var(--muted); }
-.rechargeKey { display: inline-flex; align-items: center; gap: 6px; }
-.rechargeSwatch { width: 14px; height: 10px; border-radius: 3px; display: inline-block; }
+.rechargeCell.hot { stroke: var(--ink); stroke-width: 2.2; }
+
+/* Follows the pointer, so the answer appears where the eye already is. */
+.rechargeTip {
+  position: absolute;
+  z-index: 5;
+  transform: translate(14px, -50%);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 10px;
+  max-width: 230px;
+  border-radius: 9px;
+  border: 1px solid var(--line-strong);
+  background: var(--card);
+  box-shadow: 0 6px 20px rgba(7, 29, 53, 0.16);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.rechargeTip strong { font-size: 13px; color: var(--ink); }
+.rechargeTip span { color: var(--muted); }
+.rechargeTip em { font-style: normal; font-weight: 600; }
+.rechargeTip em.bad { color: var(--st-verify); }
+.rechargeTip em.good { color: var(--st-normal); }
+
+.rechargeMapSide { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 16px; }
+.rechargeLegend { display: flex; flex-direction: column; gap: 6px; font-size: 11.5px; color: var(--muted); }
+.rechargeKey { display: inline-flex; align-items: center; gap: 8px; }
+.rechargeSwatch { width: 16px; height: 11px; border-radius: 3px; display: inline-block; flex: none; }
 .rechargeSwatch.noData { background: var(--field); border: 1px solid var(--line-strong); }
 .rechargeReadout {
-  margin: 0;
-  min-height: 34px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 108px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--field);
   font-size: 12.5px;
   line-height: 1.5;
-  color: var(--ink-soft);
+  color: var(--muted);
 }
+.rechargeReadout.live { border-color: var(--line-strong); background: var(--card); }
+.rechargeReadout strong { font-size: 13px; color: var(--ink); }
+.rechargeReadout span { color: var(--ink-soft); }
+.rechargeReadoutMeta { color: var(--muted) !important; font-size: 11.5px; }
 
 .trajectoryWrap, .rainHistWrap { display: flex; flex-direction: column; gap: 10px; }
 .trajectorySvg, .rainHistSvg { width: 100%; height: auto; display: block; }
@@ -5113,4 +5158,27 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
   color: var(--muted);
   background: var(--field);
   border: 1px solid var(--line);
+}
+.ensoTrail { display: flex; flex-direction: column; gap: 4px; margin-top: 12px; }
+.ensoTrail svg { width: 100%; height: auto; display: block; }
+.ensoTrailZero { stroke: var(--line-strong); stroke-width: 1; }
+.ensoTrailThreshold { stroke: var(--line); stroke-width: 1; stroke-dasharray: 3 3; }
+.ensoTrailLine { fill: none; stroke: var(--st-verify); stroke-width: 2.2; stroke-linejoin: round; }
+.ensoTrailDot { fill: var(--st-verify); stroke: var(--card); stroke-width: 1.5; }
+.ensoTrailNote { font-size: 11px; color: var(--muted-2); line-height: 1.4; }
+/* 28 districts and 25 mandals ran to two thousand pixels of table between them.
+   Both scroll in place so the page stays walkable. */
+.tableWrap.capped { max-height: 460px; overflow-y: auto; }
+
+/* These must sit AFTER the base rules above: both are single-class selectors,
+   so source order decides, and an override written earlier in the file loses.
+   It did, and the map collapsed to zero width on a phone while the legend
+   column kept its 220px minimum. */
+@media (max-width: 1080px) {
+  .rechargeMapLayout { grid-template-columns: minmax(0, 1fr); }
+  .rechargeMapSide { position: static; }
+  .rechargeLegend { flex-direction: row; flex-wrap: wrap; gap: 6px 14px; }
+  .rechargeMapSvg { max-height: 380px; }
+  /* A tooltip that follows a finger is worse than useless on a touch screen. */
+  .rechargeTip { display: none; }
 }

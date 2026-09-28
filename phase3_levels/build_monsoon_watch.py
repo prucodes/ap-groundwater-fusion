@@ -97,6 +97,11 @@ def strength(value):
     return "very strong"
 
 
+# How much of the index to carry for the card's sparkline. Two years shows the
+# climb out of the last La Nina as well as this year's rise.
+ENSO_TRAIL_MONTHS = 24
+
+
 def enso_context(oni):
     if not oni:
         return None
@@ -105,7 +110,12 @@ def enso_context(oni):
     season, value = oni[latest]
     prior = oni.get(dates[-4])[1] if len(dates) >= 4 else None
     state = "el_nino" if value >= EL_NINO else "la_nina" if value <= LA_NINA else "neutral"
+    trail = [
+        {"date": date, "season": oni[date][0], "oniC": round(oni[date][1], 2)}
+        for date in dates[-ENSO_TRAIL_MONTHS:]
+    ]
     return {
+        "recent": trail,
         "asOf": latest,
         "season": season,
         "oniC": round(value, 2),
