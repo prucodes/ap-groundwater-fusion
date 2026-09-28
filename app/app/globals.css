@@ -3854,6 +3854,14 @@ pre.jsonBody {
 }
 
 /* Print: show only the snapshot sheet */
+/* The full mandal register, on screen. All 670 rows made this page 29,600px
+   tall, which nobody scrolls. It scrolls inside its own frame instead -- and
+   the print rules below MUST release that cap, or the sheet this page exists
+   to produce would silently print one screenful and stop. */
+.snapRegisterCol { min-width: 0; display: flex; flex-direction: column; }
+.snapRegister { max-height: 68vh; overflow-y: auto; }
+.snapRegisterNote { margin: 0; padding: 0 18px 14px; font-size: 12px; line-height: 1.5; color: var(--muted); }
+
 @media print {
   .sidebar, .protoBanner, .printHide, .footNote { display: none !important; }
   .shell { grid-template-columns: 1fr !important; }
@@ -3861,6 +3869,16 @@ pre.jsonBody {
   body { background: #fff !important; }
   .snapSheet { box-shadow: none !important; border: 1px solid #ddd !important; }
   .card { break-inside: avoid; }
+  /* A 670-row sheet has to be allowed to break across pages; keeping it whole
+     is exactly the wrong instruction for the one card that cannot be. */
+  .snapSheet, .snapBody, .snapRegister { break-inside: auto !important; }
+  /* Release the screen cap so the register prints in full. */
+  .snapRegister { max-height: none !important; overflow: visible !important; }
+  .tableWrap { overflow: visible !important; max-height: none !important; }
+  /* Repeat the column headings on every printed page and never split a row --
+     fifteen pages of a table whose headings appeared once are unreadable. */
+  table.dataTable thead { display: table-header-group; }
+  table.dataTable tr { break-inside: avoid; }
 }
 
 /* Compare */

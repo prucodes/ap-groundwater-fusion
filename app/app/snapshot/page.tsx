@@ -86,7 +86,8 @@ export default function SnapshotPage() {
 
         <div className="snapBody">
           {/* table */}
-          <div className="tableWrap">
+          <div className="snapRegisterCol">
+          <div className="tableWrap snapRegister">
             <table className="dataTable">
               <thead>
                 <tr>
@@ -135,6 +136,12 @@ export default function SnapshotPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+          <p className="snapRegisterNote printHide">
+            All {mandals.length} mandals are listed above — the frame scrolls so the sheet stays readable on
+            screen. Printing or saving to PDF releases it and lays out every row, with the column headings
+            repeated on each page.
+          </p>
           </div>
 
           {/* insights */}
