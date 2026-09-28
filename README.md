@@ -372,7 +372,7 @@ The Map page (`/map`) has a **Mandal ⇄ District toggle**. District mode render
 
 `/scenario` stress-tests the statewide water balance against a **monsoon anomaly dial** (−50%…+20%). For each district it scales annual rainfall by the dial, holds actual ET constant, recomputes `balance = scaled rainfall − ET`, re-tiers it, and shows **which districts tip into deficit** — with live KPIs (deficit count now vs scenario, newly-tipped), a headline, and a sorted district list with current→scenario status flow. A simplified planning aid over real TerraClimate data, clearly labeled — not a calibrated forecast.
 
-## Phase 2G Mandal heat-map + District situation brief
+## Phase 2G Mandal heat-map
 
 `build_mandal_heat.py` zonal-means CHIRPS rainfall and TerraClimate water balance over **all ~670 mandals** → `app/data/ap_mandal_heat.json`. The Map page (`/map`) Mandal view gains a selector — **Fusion status / Water Balance / Rainfall** — rendering a statewide per-mandal choropleth. **GRACE is intentionally excluded at mandal scale** (sub-pixel / false precision) and shown only at district level.
 
@@ -380,7 +380,7 @@ The Map page (`/map`) has a **Mandal ⇄ District toggle**. District mode render
 python3 scripts/build_mandal_heat.py   # -> app/data/ap_mandal_heat.json
 ```
 
-The Districts page now shows a **data-driven Situation Brief** per district (`app/lib/brief.ts`) — a deterministic, auditable narrative (wetness, water balance, mandals flagged, recommended action) with a Copy button. It is generated from real TerraClimate + GRACE-DA + CHIRPS signals and is **upgradeable to a live Claude-written narrative** when an API key is provided. District roll-ups now report the **real district mandal count** (e.g. 63) with seed-fusion coverage shown separately.
+The Districts page carries an **AI Briefing & Q&A** panel (`app/components/AiBrief.tsx` → `app/app/api/ai-brief/route.ts`): every figure is computed deterministically from the fused district roll-ups and only the wording is Claude-written, with a fully deterministic answer served when no `ANTHROPIC_API_KEY` is set. District roll-ups report the **real district mandal count** (e.g. 63) with seed-fusion coverage shown separately.
 
 ## NASA Signals page + overview heat toggle
 

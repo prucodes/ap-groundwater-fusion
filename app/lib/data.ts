@@ -734,10 +734,9 @@ export function districtRollups(): DistrictRollup[] {
         mandal_count: realCount,
         seed_count: rows.length,
         // Counts the Verify bucket, which is what the name says and what every
-        // consumer already assumed: the district brief listed the Verify
-        // mandals by name beside this number, and the irrigation tier escalated
-        // any district holding one. Both were reading a Stress count, which 386
-        // of 670 mandals carry, so both were saturated.
+        // consumer already assumed: the irrigation tier escalates any district
+        // holding one. It was reading a Stress count, which 386 of 670 mandals
+        // carry, so the tier was saturated.
         verify_count: rows.filter((r) => r.status_bucket === "Verify").length,
         normal_count: rows.filter((r) => r.status_bucket === "Normal").length,
         stress_count: rows.filter((r) => r.status_bucket === "Stress").length,

@@ -123,8 +123,8 @@ def test_every_component_of_the_score_is_relative_by_construction():
 
 
 def test_verify_count_counts_the_verify_bucket():
-    """It counted Stress under the name verify, which is what saturated the tier
-    and what made the district brief print a stress count beside verify names."""
+    """It counted Stress under the name verify, which is what saturated the
+    irrigation tier."""
     source = open(DATA_TS).read()
     match = re.search(r"verify_count:\s*rows\.filter\(\(r\)\s*=>\s*r\.status_bucket === \"(\w+)\"\)", source)
     assert match, "verify_count is no longer a simple bucket count; re-read this test"
