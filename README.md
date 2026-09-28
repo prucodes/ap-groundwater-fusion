@@ -97,6 +97,25 @@ February 2026 and 1.2-3.1 m from March; Undi did the same thing in the same
 month. Regenerate the second with
 `python3 phase3_levels/build_series_discontinuities.py` after a refresh that
 adds months, and confirm each row against the source before trusting it.
+`phase3_levels/data/mandal_boundary_misplaced.csv` holds a fourth, and the one
+with the widest reach: **19 of the 670 mandal polygons are filed under the wrong
+district**. A mandal name repeats across the state -- there is an Atmakur in
+several districts and a Ramachandrapuram in several more -- so a polygon matched
+by name alone can land under the wrong one. Two things follow. The district
+outlines in `ap_district_geometry.json` are made of their mandals' rings, so one
+stray polygon stretches a whole district: KONASEEMA currently spans 79.2E to
+82.4E because a Ramachandrapuram belonging near Tirupati sits inside it. And the
+source reconciliation refuses to place a series when a district appears to hold
+two polygons of the same name, which is why 16 of the 57 rows in
+`mandal_boundary_unresolved.csv` are not unresolvable at all -- one of the two
+candidates is misfiled. Run
+`python3 phase3_levels/build_boundary_misplacements.py` to regenerate the list.
+The test is geometric and needs no gazetteer: the median mandal sits 32 km from
+the middle of its district and the 90th percentile 63 km, so the flagged ones at
+104 km and beyond are not a border effect. Eight have unanimous neighbours and
+are as certain as geometry can make them; the rest want a reviewer. Nothing is
+reassigned automatically, for the same reason the alias table is not.
+
 `phase3_levels/data/mandal_aquifer_review.csv` holds the third: 259 mandals
 whose own measured specific yield contradicts the aquifer label they inherit
 from their district -- Macherla and Gurazala sit in the Nallamala hard rock at
