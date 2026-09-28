@@ -7,9 +7,12 @@ import {
   IconDroplet,
   IconGlobe,
   IconInfo,
+  IconMap,
   IconShield,
   IconWaves,
 } from "../../components/icons";
+import { ExportMonsoonWatchButton } from "../../components/ExportButtons";
+import { RainfallHistory, RechargeMap, RechargeTrajectory } from "../../components/MonsoonVisuals";
 import { formatNumber, monsoonWatch, titleCase } from "../../lib/data";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -117,6 +120,39 @@ export default function MonsoonPage() {
         <p className="cardNote">{r.rule}.</p>
       </section>
 
+      <section className="card mapCard">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconMap /></span>
+            Where the season failed
+          </div>
+          <span className="cardSub">each mandal against its own ten-year normal</span>
+        </div>
+        <RechargeMap />
+        {r.flaggedWithoutBoundary > 0 ? (
+          <p className="cardNote">
+            {r.flaggedWithoutBoundary} flagged mandals are <strong>not on this map</strong>: their source series
+            never reconciled to a boundary polygon, so there is nothing to shade. They are in the table below and
+            in the export. A map that quietly omitted them would be worse than one that says so.
+          </p>
+        ) : null}
+      </section>
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconWaves /></span>
+            Every season from its May reading
+          </div>
+          <span className="cardSub">statewide median, {r.mandals} mandals</span>
+        </div>
+        <RechargeTrajectory />
+        <p className="cardNote">
+          Plotted as change from May rather than depth, so each year starts at zero and the lines can be read
+          against each other. Every season before this one turns down as the monsoon arrives. This one does not.
+        </p>
+      </section>
+
       <div className="monsoonGrid">
         <section className="card">
           <div className="cardHead">
@@ -194,6 +230,7 @@ export default function MonsoonPage() {
               CHIRPS, {sw.firstYear}–{sw.lastYear}, mandal means
             </span>
           </div>
+          <RainfallHistory />
           <div className="ensoSeasons">
             {[
               { key: "sw", label: "South-west monsoon", months: "June–September", c: sw },
@@ -297,6 +334,13 @@ export default function MonsoonPage() {
           </div>
           <span className="cardSub">
             {r.flaggedShort} in total · {worst.length} shown, worst first
+          </span>
+        </div>
+        <div className="watchActions">
+          <ExportMonsoonWatchButton />
+          <span>
+            All {r.flaggedShort} rows with their own numbers — the list a district office can work from. Nothing
+            in it authorizes an irrigation instruction.
           </span>
         </div>
         <div className="tableWrap">

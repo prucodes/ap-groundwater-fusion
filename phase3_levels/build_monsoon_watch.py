@@ -229,6 +229,52 @@ def score_recharge(levels, meta, year, target_mm):
     return table
 
 
+def season_trajectory(levels, keys, year, target_mm):
+    """Each season's path from May, on one fixed set of mandals.
+
+    Plotted as change from May rather than depth, so every year starts at zero
+    and the lines can be read against each other: the difference between a year
+    that recharges and one that does not is the whole point, and absolute depth
+    would spread them apart by the long-term drift instead.
+    """
+    out = []
+    for y in range(year - LOOKBACK_YEARS, year + 1):
+        start = f"{y}-{PRE_MONSOON_MONTH:02d}"
+        if start not in levels.columns:
+            continue
+        points = []
+        for month in range(PRE_MONSOON_MONTH, 13):
+            column = f"{y}-{month:02d}"
+            if column not in levels.columns:
+                continue
+            change = (levels.loc[keys, column] - levels.loc[keys, start]).dropna()
+            if len(change) < 100:
+                continue
+            points.append({"month": month, "changeM": round(float(change.median()), 3)})
+        if len(points) >= 3:
+            out.append({"year": y, "current": y == year, "points": points})
+    return out
+
+
+def rainfall_history(rain, months, oni):
+    """Every year's total over `months`, with the ocean state that came with it."""
+    totals = seasonal_totals(rain, months, "mm")
+    yearly = totals.groupby("year")["mm"].mean()
+    mean = float(yearly.mean())
+    out = []
+    for y, value in yearly.items():
+        season = oni.get(f"{int(y)}-07", (None, None))[1]
+        out.append({
+            "year": int(y),
+            "mm": round(float(value), 1),
+            "anomalyPct": round(float(100 * (value / mean - 1)), 1),
+            "oniJjaC": season,
+            "state": "el_nino" if season is not None and season >= EL_NINO
+                     else "la_nina" if season is not None and season <= LA_NINA else "neutral",
+        })
+    return {"months": f"{months[0]:02d}-{months[-1]:02d}", "meanMm": round(mean, 1), "years": out}
+
+
 def season_history(levels, keys, year, target_mm, oni):
     """The same May-to-target measure in each earlier season, on the same mandals."""
     out = []
@@ -264,6 +310,7 @@ def build():
 
     oni = load_oni()
     seasons = season_history(levels, table.index, year, target_mm, oni)
+    trajectory = season_trajectory(levels, table.index, year, target_mm)
     pre = f"{year}-{PRE_MONSOON_MONTH:02d}"
 
     districts = []
@@ -296,7 +343,7 @@ def build():
     # Both halves of the CHIRPS record: the archive that stops in 2013 and the
     # file the weekly refresh appends to. The composites want all 45 years.
     rain_paths = history_paths()
-    rainfall = sw = ne = None
+    rainfall = sw = ne = history = None
     if rain_paths:
         rain = pd.concat([pd.read_csv(path) for path in rain_paths], ignore_index=True)
         rain["year"] = rain.date.str.slice(0, 4).astype(int)
@@ -321,6 +368,10 @@ def build():
                 }
         # index 6 is the JJA season of ONI, 10 is OND: the seasons that drive
         # the south-west and north-east monsoons respectively.
+        # The elapsed months only, so every year in the chart covers the same
+        # stretch as the year being read against them.
+        if elapsed:
+            history = rainfall_history(rain, elapsed, oni)
         sw = composite(seasonal_totals(rain, SW_MONSOON, "mm"), "mm", oni, 6, district_of)
         ne = composite(seasonal_totals(rain, NE_MONSOON, "mm"), "mm", oni, 10, district_of)
 
@@ -340,6 +391,12 @@ def build():
             "shortOfNormalPct": round(float(100 * (table.shortfallM > 0).mean()), 1),
             "flaggedShort": int(table.short.sum()),
             "flaggedSevere": int(table.severe.sum()),
+            # Flagged mandals whose source series never reconciled to a polygon,
+            # so the map cannot draw them. Published as a number because a map
+            # that quietly omits nine flagged mandals is worse than one that
+            # says it does. They are still in the table and the export.
+            "flaggedWithoutBoundary": int(
+                (table.short & table.boundaryIndex.isna()).sum()),
             "medianShortfallM": round(float(table.shortfallM.median()), 2),
             "byAquifer": [
                 {"aquifer": name,
@@ -353,7 +410,9 @@ def build():
                      f">= {SHORTFALL_Z}x its own year-to-year spread"),
         },
         "seasons": seasons,
+        "trajectory": trajectory,
         "rainfall": rainfall,
+        "rainfallHistory": history,
         "elNinoRainfall": {"swMonsoon": sw, "neMonsoon": ne},
         "districts": sorted(districts, key=lambda row: -row["shortfallM"]),
         "mandals": mandals,

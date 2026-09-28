@@ -146,6 +146,7 @@ export type MonsoonWatch = {
     shortOfNormalPct: number;
     flaggedShort: number;
     flaggedSevere: number;
+    flaggedWithoutBoundary: number;
     medianShortfallM: number;
     byAquifer: Array<{ aquifer: string; mandals: number; medianShortfallM: number; fallingPct: number }>;
     rule: string;
@@ -157,6 +158,22 @@ export type MonsoonWatch = {
     fallingPct: number;
     oniJjaC: number | null;
   }>;
+  trajectory: Array<{
+    year: number;
+    current: boolean;
+    points: Array<{ month: number; changeM: number }>;
+  }>;
+  rainfallHistory: {
+    months: string;
+    meanMm: number;
+    years: Array<{
+      year: number;
+      mm: number;
+      anomalyPct: number;
+      oniJjaC: number | null;
+      state: "el_nino" | "la_nina" | "neutral";
+    }>;
+  } | null;
   rainfall: {
     months: string;
     mm: number;
