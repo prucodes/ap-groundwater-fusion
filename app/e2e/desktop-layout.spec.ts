@@ -173,3 +173,63 @@ test.describe("the monsoon map is legible at desktop width", () => {
     expect(await page.locator(".rechargeReadout").innerText()).not.toBe(before);
   });
 });
+
+/* A hydration mismatch makes React throw the server's tree away and rebuild it
+   in the browser. The page still renders, so nothing visible says it happened:
+   the monsoon page carried one for two releases. Its cause was <title> children
+   on the SVG bars, which the browser relocates as document metadata, so they
+   were absent from the parsed server HTML and present once React had hydrated.
+
+   Every route is clean today, so every route is held to it. A failure here
+   names the route; the cause is usually markup whose parsed form differs from
+   what React rendered, or a value that differs between build and browser. */
+const HYDRATION_ROUTES = [
+  "/",
+  "/map",
+  "/mandals",
+  "/estimates",
+  "/districts",
+  "/watchlist",
+  "/alerts",
+  "/monsoon",
+  "/climate",
+  "/methodology",
+  "/snapshot",
+];
+
+test.describe("no route throws while hydrating", () => {
+  for (const route of HYDRATION_ROUTES) {
+    test(`${route} hydrates cleanly`, async ({ page }) => {
+      const errors: string[] = [];
+      page.on("pageerror", (error) => errors.push(String(error)));
+      await page.goto(route);
+      await settle(page);
+      expect(errors, `${route} threw: ${errors.join(" | ")}`).toEqual([]);
+    });
+  }
+});
+
+test.describe("both monsoon charts answer the pointer", () => {
+  test("a rainfall column names its year and the ocean state with it", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+
+    const before = await page.locator(".rainHistReadout").innerText();
+    await page.locator(".rainBar").nth(42).hover({ force: true });
+    await page.waitForTimeout(200);
+    const after = await page.locator(".rainHistReadout").innerText();
+
+    expect(after).not.toBe(before);
+    expect(after).toMatch(/\d{4}/);
+    expect(after).toMatch(/mm/);
+  });
+
+  test("no SVG carries a title child, which the browser would relocate", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+    const titles = await page.evaluate(
+      () => document.querySelectorAll("svg title").length,
+    );
+    expect(titles).toBe(0);
+  });
+});

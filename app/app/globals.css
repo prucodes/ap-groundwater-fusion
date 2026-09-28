@@ -5182,3 +5182,20 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
   /* A tooltip that follows a finger is worse than useless on a touch screen. */
   .rechargeTip { display: none; }
 }
+.rainBar { cursor: crosshair; }
+.rainBar.hot { stroke: var(--ink); stroke-width: 1.4; opacity: 1; }
+.rainHistReadout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  min-height: 20px;
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.rainHistReadout strong { font-size: 13.5px; color: var(--ink); }
+.rainHistReadout span { color: var(--ink-soft); }
+.rainHistReadout em { font-style: normal; font-weight: 600; }
+.rainHistReadout em.el_nino { color: var(--st-verify); }
+.rainHistReadout em.la_nina { color: var(--sig-surface); }
+.rainHistReadout em.neutral { color: var(--muted); }

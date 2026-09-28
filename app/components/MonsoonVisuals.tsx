@@ -222,9 +222,17 @@ export function RechargeTrajectory() {
   );
 }
 
-/** Forty-six June–Augusts, with the El Niño ones marked. */
+/** Forty-six June–Augusts, with the El Niño ones marked.
+ *
+ *  No <title> children on the bars. The browser treats a <title> inside the SVG
+ *  as document metadata and moves it, so it is absent from the parsed server
+ *  HTML and present once React has hydrated -- a mismatch that made React throw
+ *  out the whole tree and re-render it on the client. The readout below the
+ *  chart does the same job and answers faster than a native tooltip.
+ */
 export function RainfallHistory() {
   const history = monsoonWatch.rainfallHistory;
+  const [hover, setHover] = useState<number | null>(null);
   if (!history) return null;
   const rows = history.years;
   const max = Math.max(...rows.map((r) => r.mm));
@@ -235,11 +243,13 @@ export function RainfallHistory() {
   const y = (mm: number) => pad.top + (1 - mm / max) * (height - pad.top - pad.bottom);
   const meanY = y(history.meanMm);
   const current = rows[rows.length - 1];
+  const hovered = rows.find((r) => r.year === hover) ?? null;
 
   return (
     <div className="rainHistWrap">
       <svg viewBox={`0 0 ${width} ${height}`} className="rainHistSvg" role="img"
-           aria-label="June to August rainfall for every year since 1981, El Nino years marked">
+           aria-label="June to August rainfall for every year since 1981, El Nino years marked"
+           onMouseLeave={() => setHover(null)}>
         <line x1={pad.left} x2={width - pad.right} y1={meanY} y2={meanY} className="rainMean" />
         <text x={pad.left - 8} y={meanY + 4} className="trajAxis" textAnchor="end">
           {Math.round(history.meanMm)} mm
@@ -253,13 +263,12 @@ export function RainfallHistory() {
               y={top}
               width={band * 0.72}
               height={height - pad.bottom - top}
-              className={`rainBar ${row.state} ${row.year === current.year ? "current" : ""}`}
-            >
-              <title>
-                {row.year}: {row.mm} mm, {row.anomalyPct > 0 ? "+" : ""}{row.anomalyPct}% —{" "}
-                {row.state === "el_nino" ? "El Niño" : row.state === "la_nina" ? "La Niña" : "neutral"}
-              </title>
-            </rect>
+              className={`rainBar ${row.state} ${row.year === current.year ? "current" : ""} ${
+                hover === row.year ? "hot" : ""
+              }`}
+              onMouseEnter={() => setHover(row.year)}
+              onMouseLeave={() => setHover((y) => (y === row.year ? null : y))}
+            />
           );
         })}
         {rows.filter((r) => r.year % 5 === 0).map((row) => (
@@ -274,6 +283,29 @@ export function RainfallHistory() {
           </text>
         ))}
       </svg>
+      <div className="rainHistReadout">
+        {hovered ? (
+          <>
+            <strong>{hovered.year}</strong>
+            <span>
+              {hovered.mm} mm, {hovered.anomalyPct > 0 ? "+" : ""}
+              {hovered.anomalyPct}% against the {rows.length}-year mean
+            </span>
+            <em className={hovered.state}>
+              {hovered.state === "el_nino"
+                ? "El Niño monsoon"
+                : hovered.state === "la_nina"
+                  ? "La Niña monsoon"
+                  : "neutral"}
+              {hovered.oniJjaC === null
+                ? ""
+                : ` · ONI ${hovered.oniJjaC > 0 ? "+" : ""}${hovered.oniJjaC.toFixed(2)} °C`}
+            </em>
+          </>
+        ) : (
+          <span>Hover a year for its rainfall and the ocean state that came with it.</span>
+        )}
+      </div>
       <div className="trajKey">
         <span><span className="rainKeySwatch el_nino" /> El Niño monsoon</span>
         <span><span className="rainKeySwatch la_nina" /> La Niña monsoon</span>
