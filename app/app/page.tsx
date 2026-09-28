@@ -23,7 +23,7 @@ import {
   IconShield,
   IconWaves,
 } from "../components/icons";
-import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat, mandals, modelCard, selectedMandal, titleCase, verifyMandals, wetnessLabel } from "../lib/data";
+import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat, mandals, modelCard, monsoonWatch, selectedMandal, titleCase, verifyMandals, wetnessLabel } from "../lib/data";
 import type { MandalHeatLayerKey } from "../lib/types";
 
 export default function OverviewPage() {
@@ -55,6 +55,15 @@ export default function OverviewPage() {
   const temporalEval = modelCard.evaluations.temporalNowcast;
   const intervalEval = modelCard.evaluations.intervalEvaluation;
   const baselineLiftPct = Math.round(((temporalEval.baseline.maeM - temporalEval.model.maeM) / temporalEval.baseline.maeM) * 100);
+  // Whether the season that refills the aquifer is working. Measured from the
+  // readings themselves, so it stands apart from everything the model says.
+  const watch = monsoonWatch;
+  const priorSeasons = watch.seasons.filter((s) => s.year !== watch.season.year);
+  const priorFallingLow = Math.min(...priorSeasons.map((s) => s.fallingPct));
+  const priorFallingHigh = Math.max(...priorSeasons.map((s) => s.fallingPct));
+  // Only an exception gets the front page, and only once there are enough past
+  // seasons for "outside every season on record" to mean anything.
+  const seasonFailing = priorSeasons.length >= 3 && watch.recharge.fallingPct > priorFallingHigh;
 
   return (
     <div className="pageWrap">
@@ -155,6 +164,56 @@ export default function OverviewPage() {
           Open model card <IconArrowRight />
         </Link>
       </div>
+
+      {/* The nowcast answers "how deep"; this answers "is the season refilling
+          it". Only raised to the front page when this season is outside the
+          range of every season it can be compared with. */}
+      {seasonFailing ? (
+        <div className="monsoonStrip">
+          <div className="monsoonStripIntro">
+            <span className="validationEyebrow">Monsoon watch</span>
+            <span>
+              The water table is lower than it was in May across most of the state, which has not happened in
+              any season on record.
+            </span>
+          </div>
+          <div className="monsoonStripCell">
+            <span>Lower than May</span>
+            <strong>{formatNumber(watch.recharge.fallingPct)}%</strong>
+            <em>
+              usually {formatNumber(priorFallingLow)}–{formatNumber(priorFallingHigh)}%
+            </em>
+          </div>
+          {watch.rainfall ? (
+            <div className="monsoonStripCell">
+              <span>Rain vs normal</span>
+              <strong>{formatNumber(watch.rainfall.anomalyPct)}%</strong>
+              <em>
+                {watch.rainfall.rankDriest === 1 ? "driest" : `${watch.rainfall.rankDriest}nd driest`} of{" "}
+                {watch.rainfall.ofYears}
+              </em>
+            </div>
+          ) : null}
+          {watch.enso ? (
+            <div className="monsoonStripCell">
+              <span>Ocean state</span>
+              <strong>
+                {watch.enso.oniC > 0 ? "+" : ""}
+                {watch.enso.oniC.toFixed(2)} °C
+              </strong>
+              <em>{watch.enso.state === "el_nino" ? "El Niño" : watch.enso.state === "la_nina" ? "La Niña" : "Neutral"}, {watch.enso.strength}</em>
+            </div>
+          ) : null}
+          <div className="monsoonStripCell">
+            <span>Mandals flagged</span>
+            <strong>{watch.recharge.flaggedShort}</strong>
+            <em>{watch.recharge.flaggedSevere} severe</em>
+          </div>
+          <Link className="validationLink" href="/monsoon">
+            Open monsoon watch <IconArrowRight />
+          </Link>
+        </div>
+      ) : null}
 
       {/* One statewide average hides the thing a reader actually needs: the
           error where THEIR water sits. Shown against the rule the model has to

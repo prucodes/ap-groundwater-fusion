@@ -55,6 +55,7 @@ const DESKTOP_ROUTES = [
   "/estimates",
   "/map",
   "/mandals",
+  "/monsoon",
   "/watchlist",
 ];
 

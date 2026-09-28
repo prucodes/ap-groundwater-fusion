@@ -1,7 +1,7 @@
 import { HeaderHero } from "../../components/HeaderHero";
 import { MethodologyFlow } from "../../components/MethodologyFlow";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
-import { IconAlert, IconDroplet, IconFlow, IconInfo, IconSatellite } from "../../components/icons";
+import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconSatellite } from "../../components/icons";
 import { modelCard } from "../../lib/data";
 
 const labels = [
@@ -131,6 +131,46 @@ export default function MethodologyPage() {
             and ET are drivers/context, and piezometers remain ground truth for absolute level. The product fuses them
             for trend, attribution and verification — not to replace measured levels.
           </span>
+        </div>
+      </section>
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon">
+              <IconCloudRain />
+            </span>
+            Monsoon Watch — how the recharge figures are built
+          </div>
+          <span className="cardSub">measured from readings; no model, no index</span>
+        </div>
+        <div className="methodSteps">
+          <p>
+            For each mandal the watch takes the change in depth from its May reading to its latest reading of the
+            same year, and compares that with the median of the <strong>same mandal&rsquo;s</strong> May-to-that-month
+            change over the previous ten years. Both sides are within-year differences on one mandal, so neither the
+            long-term drift in a district nor the difference between mandals can move the answer.
+          </p>
+          <p>
+            A mandal is flagged short only when it misses its own normal by at least <strong>1 m</strong> and by at
+            least <strong>twice its own year-to-year spread</strong>. Either test alone fails in an opposite way:
+            metres alone flag every naturally swinging hard-rock mandal, and spread alone flags a delta mandal that
+            moved twenty centimetres more than usual. The spread is a median absolute deviation rather than a
+            standard deviation, because one displaced well inflates a standard deviation enough to hide the very
+            season it should flag. Mandals with fewer than seven comparable years are left out rather than compared
+            against a normal that is not yet established.
+          </p>
+          <p>
+            Rainfall context is CHIRPS at 0.05° averaged over each mandal polygon, walked back to <strong>1981</strong>
+            &nbsp;— 45 years and thirteen El Niño events, which is what makes the rainfall composite worth reporting at
+            all. The ocean state is NOAA&rsquo;s Oceanic Niño Index.
+          </p>
+          <p>
+            <strong>The index is context and never an input.</strong> Adding it to the three-month forecast was tested
+            on rolling origin and made the forecast worse — 1.776 m to 1.850 m mean error, and worse in every aquifer.
+            Two El Niño events inside the training record are not enough to learn a response from, so no published
+            figure is derived from it.
+          </p>
         </div>
       </section>
 

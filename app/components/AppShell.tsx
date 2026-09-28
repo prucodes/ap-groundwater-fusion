@@ -38,6 +38,7 @@ const primaryNav = [
   { href: "/mandals", label: "Mandal Insights", Icon: IconCompass, desc: "Per-mandal deep dive: readings, satellite context, trend and agreement." },
   { href: "/watchlist", label: "Verify / Watchlist", Icon: IconActivity, desc: "Mandals where evidence needs field review or source verification." },
   { href: "/alerts", label: "Early Warning", Icon: IconAlert, desc: "Severity-ranked alerts from the fusion engine." },
+  { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
   { href: "/districts", label: "Districts", Icon: IconGrid, desc: "District roll-ups with an auto + AI situation brief per district." },
 ];
 

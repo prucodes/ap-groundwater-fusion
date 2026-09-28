@@ -66,6 +66,7 @@ jobs:
             app/data/dataset_manifest.json \
             app/data/ap_district_geometry.json \
             app/data/ap_mandal_heat.json \
+            app/data/monsoon_watch.json \
             app/data/nasa_provenance.json \
             app/data/satellite_station_samples.json \
             app/public/water-crystal-3d.html

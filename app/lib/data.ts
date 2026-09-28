@@ -9,6 +9,7 @@ import mapGeometryJson from "../data/ap_map_geometry.json";
 import districtGeometryJson from "../data/ap_district_geometry.json";
 import mandalHeatJson from "../data/ap_mandal_heat.json";
 import nasaProvenanceJson from "../data/nasa_provenance.json";
+import monsoonWatchJson from "../data/monsoon_watch.json";
 import type {
   DashboardSummary,
   DistrictGeometry,
@@ -122,6 +123,98 @@ type ObservationSeriesBundle = {
     }
   >;
 };
+
+export type MonsoonWatch = {
+  contractVersion: string;
+  generatedAt: string;
+  season: { year: number; preMonsoonMonth: string; latestMonth: string; monthsElapsed: number };
+  enso: {
+    asOf: string;
+    season: string;
+    oniC: number;
+    state: "el_nino" | "la_nina" | "neutral";
+    strength: string;
+    trend3moC: number | null;
+    source: string;
+    index: string;
+  } | null;
+  recharge: {
+    mandals: number;
+    falling: number;
+    fallingPct: number;
+    shortOfNormal: number;
+    shortOfNormalPct: number;
+    flaggedShort: number;
+    flaggedSevere: number;
+    medianShortfallM: number;
+    byAquifer: Array<{ aquifer: string; mandals: number; medianShortfallM: number; fallingPct: number }>;
+    rule: string;
+  };
+  seasons: Array<{
+    year: number;
+    mandals: number;
+    medianChangeM: number;
+    fallingPct: number;
+    oniJjaC: number | null;
+  }>;
+  rainfall: {
+    months: string;
+    mm: number;
+    normalMm: number;
+    anomalyPct: number;
+    rankDriest: number;
+    ofYears: number;
+    firstYear: number;
+    source: string;
+    product: string;
+  } | null;
+  elNinoRainfall: {
+    swMonsoon: MonsoonComposite | null;
+    neMonsoon: MonsoonComposite | null;
+  };
+  districts: Array<{
+    district: string;
+    mandals: number;
+    thisSeasonM: number;
+    typicalM: number;
+    shortfallM: number;
+    shortMandals: number;
+  }>;
+  mandals: Array<{
+    mandalUuid: string;
+    boundaryIndex: number | null;
+    district: string;
+    mandal: string;
+    aquifer: string;
+    thisSeasonM: number;
+    typicalM: number;
+    shortfallM: number;
+    spreadM: number;
+    latestDepthM: number;
+    comparableYears: number;
+    severity: number;
+    status: "severe" | "short" | "normal";
+  }>;
+};
+
+export type MonsoonComposite = {
+  years: number;
+  firstYear: number;
+  lastYear: number;
+  elNinoYears: number;
+  elNinoAnomalyPct: number | null;
+  laNinaYears: number;
+  laNinaAnomalyPct: number | null;
+  meanMm: number;
+  elNinoBelowNormal: number;
+  belowNormalAllYears: number;
+  allYears: number;
+  elNinoRangePct: [number, number] | null;
+  elNinoYearDetail: Array<{ year: number; mm: number; anomalyPct: number }>;
+  byDistrict: Array<{ district: string; elNinoAnomalyPct: number; elNinoYears: number; meanMm: number }>;
+};
+
+export const monsoonWatch = monsoonWatchJson as unknown as MonsoonWatch;
 
 export const groundwaterRecordCollection = groundwaterRecordsJson as GroundwaterRecordCollectionV2;
 export const groundwaterRecords = groundwaterRecordCollection.records;

@@ -80,6 +80,11 @@ STEPS = [
      [PY, os.path.join(HERE, "fetch_chirps_history.py")], False, 1800),
     ("fetch NASA POWER rainfall (fallback)",
      [PY, os.path.join(HERE, "fetch_nasa_power_rainfall.py")], False, 2700),
+    # The ocean state. One small text file from NOAA, no account, no licence --
+    # the only climate index in this project that can run unattended. Optional:
+    # the monsoon watch's own numbers come from the readings and CHIRPS, so a
+    # failed fetch costs the context line and nothing else.
+    ("fetch ENSO index", [PY, os.path.join(HERE, "fetch_enso_index.py")], False),
     ("build holdout-safe nowcasts", [PY, os.path.join(HERE, "build_levels_engine.py")], True),
     # Rolling-origin forecast validation retrains once per quarterly cut per
     # candidate horizon, which is slow on a 2-core runner.
@@ -92,6 +97,11 @@ STEPS = [
     # series just published. Optional: a failure keeps last week's view, and the
     # test suite blocks publication if a new pre-monsoon year went missing.
     ("rebuild Crystal view data", [PY, os.path.join(HERE, "build_crystal_data.py")], False),
+    # Whether this season is recharging, measured per mandal against its own
+    # past seasons. Built after the app data so it reads the history the site
+    # has just published. Optional: it is a standalone page and a front-page
+    # strip, and last week's file stays readable if this fails.
+    ("build monsoon watch", [PY, os.path.join(HERE, "build_monsoon_watch.py")], False, 1800),
     ("validate V2 contract", [PY, os.path.join(HERE, "validate_phase0.py")], True),
 ]
 
