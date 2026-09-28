@@ -1,5 +1,5 @@
 import type { MandalGroundwaterView } from "./types";
-import { titleCase } from "./data";
+import { monsoonWatch, titleCase } from "./data";
 
 function escape(value: string | number | boolean | null | undefined): string {
   const s = value === null || value === undefined ? "" : String(value);
@@ -113,6 +113,57 @@ export function mandalsToCsv(rows: MandalGroundwaterView[]): string {
     "physical_station_count is blank because station identifiers are not verifiable in the source schema.",
     "Only the 3-month horizon is released; it is a modelled outlook with a P10-P90 interval, not a measurement.",
   ]);
+  return [banner, header.join(","), ...lines].join("\n");
+}
+
+/** The flagged-mandal list, in the shape a district office can act on.
+ *
+ *  Ranked by how far past BOTH flag tests a mandal is, so the top of the file is
+ *  the part worth a field visit. Every column is a measured change in that
+ *  mandal's own readings; nothing here is modelled and nothing here authorizes
+ *  an irrigation instruction. */
+export function monsoonWatchToCsv(): string {
+  const w = monsoonWatch;
+  const banner = csvBanner([
+    `Monsoon recharge watch: ${w.season.preMonsoonMonth} to ${w.season.latestMonth}.`,
+    `Each mandal's change in depth since its May reading, against the median of its OWN change over the previous ten years.`,
+    `Flagged short at >= 1.0 m AND >= 2.0x that mandal's own year-to-year spread. Positive metres mean the water table fell.`,
+    w.enso
+      ? `Ocean state at publication: ${w.enso.season} ${w.enso.asOf.slice(0, 4)} ONI ${w.enso.oniC > 0 ? "+" : ""}${w.enso.oniC} C (${w.enso.state}). Context only; not used to derive any column.`
+      : `Ocean state unavailable at publication.`,
+  ]);
+  const header = [
+    "rank",
+    "district",
+    "mandal",
+    "aquifer",
+    "status",
+    "change_since_may_m",
+    "typical_change_m",
+    "shortfall_m",
+    "own_spread_m",
+    "latest_depth_mbgl",
+    "comparable_years",
+  ];
+  const lines = w.mandals
+    .filter((m) => m.status !== "normal")
+    .map((m, index) =>
+      [
+        index + 1,
+        m.district,
+        m.mandal,
+        m.aquifer,
+        m.status,
+        m.thisSeasonM,
+        m.typicalM,
+        m.shortfallM,
+        m.spreadM,
+        m.latestDepthM,
+        m.comparableYears,
+      ]
+        .map(escape)
+        .join(","),
+    );
   return [banner, header.join(","), ...lines].join("\n");
 }
 

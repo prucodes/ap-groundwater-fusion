@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-09-28T17:36:46+00:00",
+  "generatedAt": "2026-09-28T18:00:40+00:00",
   "season": {
     "year": 2026,
     "preMonsoonMonth": "2026-05",
@@ -25,6 +25,7 @@
     "shortOfNormalPct": 83.6,
     "flaggedShort": 115,
     "flaggedSevere": 82,
+    "flaggedWithoutBoundary": 9,
     "medianShortfallM": 1.4,
     "byAquifer": [
       {
@@ -127,6 +128,410 @@
       "oniJjaC": 1.8
     }
   ],
+  "trajectory": [
+    {
+      "year": 2016,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": -0.501
+        },
+        {
+          "month": 7,
+          "changeM": -0.851
+        },
+        {
+          "month": 8,
+          "changeM": -0.862
+        },
+        {
+          "month": 9,
+          "changeM": -1.8
+        },
+        {
+          "month": 10,
+          "changeM": -1.544
+        },
+        {
+          "month": 11,
+          "changeM": -1.087
+        },
+        {
+          "month": 12,
+          "changeM": -0.802
+        }
+      ]
+    },
+    {
+      "year": 2017,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": -0.1
+        },
+        {
+          "month": 7,
+          "changeM": -0.389
+        },
+        {
+          "month": 8,
+          "changeM": -1.1
+        },
+        {
+          "month": 9,
+          "changeM": -2.182
+        },
+        {
+          "month": 10,
+          "changeM": -3.407
+        },
+        {
+          "month": 11,
+          "changeM": -3.344
+        },
+        {
+          "month": 12,
+          "changeM": -2.224
+        }
+      ]
+    },
+    {
+      "year": 2018,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": 0.061
+        },
+        {
+          "month": 7,
+          "changeM": -0.07
+        },
+        {
+          "month": 8,
+          "changeM": -0.539
+        },
+        {
+          "month": 9,
+          "changeM": -0.762
+        },
+        {
+          "month": 10,
+          "changeM": -0.677
+        },
+        {
+          "month": 11,
+          "changeM": -0.589
+        },
+        {
+          "month": 12,
+          "changeM": -0.536
+        }
+      ]
+    },
+    {
+      "year": 2019,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": 0.197
+        },
+        {
+          "month": 7,
+          "changeM": 0.016
+        },
+        {
+          "month": 8,
+          "changeM": -0.505
+        },
+        {
+          "month": 9,
+          "changeM": -2.123
+        },
+        {
+          "month": 10,
+          "changeM": -3.951
+        },
+        {
+          "month": 11,
+          "changeM": -3.403
+        },
+        {
+          "month": 12,
+          "changeM": -3.55
+        }
+      ]
+    },
+    {
+      "year": 2020,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": -0.462
+        },
+        {
+          "month": 7,
+          "changeM": -0.488
+        },
+        {
+          "month": 8,
+          "changeM": -0.557
+        },
+        {
+          "month": 9,
+          "changeM": -2.011
+        },
+        {
+          "month": 10,
+          "changeM": -0.57
+        },
+        {
+          "month": 11,
+          "changeM": -3.364
+        },
+        {
+          "month": 12,
+          "changeM": -3.145
+        }
+      ]
+    },
+    {
+      "year": 2021,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": 0.0
+        },
+        {
+          "month": 7,
+          "changeM": -0.45
+        },
+        {
+          "month": 8,
+          "changeM": -0.91
+        },
+        {
+          "month": 9,
+          "changeM": -0.945
+        },
+        {
+          "month": 10,
+          "changeM": -0.935
+        },
+        {
+          "month": 11,
+          "changeM": -0.94
+        },
+        {
+          "month": 12,
+          "changeM": -0.935
+        }
+      ]
+    },
+    {
+      "year": 2022,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": -0.08
+        },
+        {
+          "month": 7,
+          "changeM": -0.586
+        },
+        {
+          "month": 8,
+          "changeM": -1.068
+        },
+        {
+          "month": 9,
+          "changeM": -1.426
+        },
+        {
+          "month": 10,
+          "changeM": -2.256
+        },
+        {
+          "month": 11,
+          "changeM": -2.047
+        },
+        {
+          "month": 12,
+          "changeM": -1.904
+        }
+      ]
+    },
+    {
+      "year": 2023,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": 0.242
+        },
+        {
+          "month": 7,
+          "changeM": -0.17
+        },
+        {
+          "month": 8,
+          "changeM": -0.36
+        },
+        {
+          "month": 9,
+          "changeM": -0.635
+        },
+        {
+          "month": 10,
+          "changeM": -0.54
+        },
+        {
+          "month": 11,
+          "changeM": -0.235
+        },
+        {
+          "month": 12,
+          "changeM": -0.818
+        }
+      ]
+    },
+    {
+      "year": 2024,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": -0.258
+        },
+        {
+          "month": 7,
+          "changeM": -1.076
+        },
+        {
+          "month": 8,
+          "changeM": -1.413
+        },
+        {
+          "month": 9,
+          "changeM": -2.37
+        },
+        {
+          "month": 10,
+          "changeM": -2.873
+        },
+        {
+          "month": 11,
+          "changeM": -2.86
+        },
+        {
+          "month": 12,
+          "changeM": -2.888
+        }
+      ]
+    },
+    {
+      "year": 2025,
+      "current": false,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": -0.036
+        },
+        {
+          "month": 7,
+          "changeM": -0.224
+        },
+        {
+          "month": 8,
+          "changeM": -0.993
+        },
+        {
+          "month": 9,
+          "changeM": -1.75
+        },
+        {
+          "month": 10,
+          "changeM": -2.317
+        },
+        {
+          "month": 11,
+          "changeM": -2.717
+        },
+        {
+          "month": 12,
+          "changeM": -2.257
+        }
+      ]
+    },
+    {
+      "year": 2026,
+      "current": true,
+      "points": [
+        {
+          "month": 5,
+          "changeM": 0.0
+        },
+        {
+          "month": 6,
+          "changeM": -0.014
+        },
+        {
+          "month": 7,
+          "changeM": 0.245
+        },
+        {
+          "month": 8,
+          "changeM": 0.44
+        }
+      ]
+    }
+  ],
   "rainfall": {
     "months": "06-08",
     "mm": 324.6,
@@ -137,6 +542,334 @@
     "firstYear": 1981,
     "source": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs",
     "product": "CHIRPS v2.0 monthly, 0.05 degrees, mandal mean"
+  },
+  "rainfallHistory": {
+    "months": "06-08",
+    "meanMm": 450.8,
+    "years": [
+      {
+        "year": 1981,
+        "mm": 381.1,
+        "anomalyPct": -15.5,
+        "oniJjaC": -0.3,
+        "state": "neutral"
+      },
+      {
+        "year": 1982,
+        "mm": 333.2,
+        "anomalyPct": -26.1,
+        "oniJjaC": 0.79,
+        "state": "el_nino"
+      },
+      {
+        "year": 1983,
+        "mm": 483.0,
+        "anomalyPct": 7.1,
+        "oniJjaC": 0.31,
+        "state": "neutral"
+      },
+      {
+        "year": 1984,
+        "mm": 314.9,
+        "anomalyPct": -30.2,
+        "oniJjaC": -0.3,
+        "state": "neutral"
+      },
+      {
+        "year": 1985,
+        "mm": 425.9,
+        "anomalyPct": -5.5,
+        "oniJjaC": -0.49,
+        "state": "neutral"
+      },
+      {
+        "year": 1986,
+        "mm": 399.5,
+        "anomalyPct": -11.4,
+        "oniJjaC": 0.22,
+        "state": "neutral"
+      },
+      {
+        "year": 1987,
+        "mm": 331.4,
+        "anomalyPct": -26.5,
+        "oniJjaC": 1.51,
+        "state": "el_nino"
+      },
+      {
+        "year": 1988,
+        "mm": 529.1,
+        "anomalyPct": 17.4,
+        "oniJjaC": -1.3,
+        "state": "la_nina"
+      },
+      {
+        "year": 1989,
+        "mm": 521.4,
+        "anomalyPct": 15.7,
+        "oniJjaC": -0.31,
+        "state": "neutral"
+      },
+      {
+        "year": 1990,
+        "mm": 418.9,
+        "anomalyPct": -7.1,
+        "oniJjaC": 0.33,
+        "state": "neutral"
+      },
+      {
+        "year": 1991,
+        "mm": 464.1,
+        "anomalyPct": 2.9,
+        "oniJjaC": 0.73,
+        "state": "el_nino"
+      },
+      {
+        "year": 1992,
+        "mm": 432.5,
+        "anomalyPct": -4.1,
+        "oniJjaC": 0.37,
+        "state": "neutral"
+      },
+      {
+        "year": 1993,
+        "mm": 334.0,
+        "anomalyPct": -25.9,
+        "oniJjaC": 0.32,
+        "state": "neutral"
+      },
+      {
+        "year": 1994,
+        "mm": 464.5,
+        "anomalyPct": 3.0,
+        "oniJjaC": 0.44,
+        "state": "neutral"
+      },
+      {
+        "year": 1995,
+        "mm": 461.3,
+        "anomalyPct": 2.3,
+        "oniJjaC": -0.24,
+        "state": "neutral"
+      },
+      {
+        "year": 1996,
+        "mm": 481.5,
+        "anomalyPct": 6.8,
+        "oniJjaC": -0.27,
+        "state": "neutral"
+      },
+      {
+        "year": 1997,
+        "mm": 346.8,
+        "anomalyPct": -23.1,
+        "oniJjaC": 1.6,
+        "state": "el_nino"
+      },
+      {
+        "year": 1998,
+        "mm": 543.2,
+        "anomalyPct": 20.5,
+        "oniJjaC": -0.78,
+        "state": "la_nina"
+      },
+      {
+        "year": 1999,
+        "mm": 397.5,
+        "anomalyPct": -11.8,
+        "oniJjaC": -1.1,
+        "state": "la_nina"
+      },
+      {
+        "year": 2000,
+        "mm": 619.4,
+        "anomalyPct": 37.4,
+        "oniJjaC": -0.55,
+        "state": "la_nina"
+      },
+      {
+        "year": 2001,
+        "mm": 406.9,
+        "anomalyPct": -9.7,
+        "oniJjaC": -0.08,
+        "state": "neutral"
+      },
+      {
+        "year": 2002,
+        "mm": 369.6,
+        "anomalyPct": -18.0,
+        "oniJjaC": 0.79,
+        "state": "el_nino"
+      },
+      {
+        "year": 2003,
+        "mm": 423.9,
+        "anomalyPct": -6.0,
+        "oniJjaC": 0.08,
+        "state": "neutral"
+      },
+      {
+        "year": 2004,
+        "mm": 407.0,
+        "anomalyPct": -9.7,
+        "oniJjaC": 0.47,
+        "state": "neutral"
+      },
+      {
+        "year": 2005,
+        "mm": 391.7,
+        "anomalyPct": -13.1,
+        "oniJjaC": -0.06,
+        "state": "neutral"
+      },
+      {
+        "year": 2006,
+        "mm": 470.1,
+        "anomalyPct": 4.3,
+        "oniJjaC": 0.1,
+        "state": "neutral"
+      },
+      {
+        "year": 2007,
+        "mm": 619.8,
+        "anomalyPct": 37.5,
+        "oniJjaC": -0.56,
+        "state": "la_nina"
+      },
+      {
+        "year": 2008,
+        "mm": 502.1,
+        "anomalyPct": 11.4,
+        "oniJjaC": -0.37,
+        "state": "neutral"
+      },
+      {
+        "year": 2009,
+        "mm": 398.1,
+        "anomalyPct": -11.7,
+        "oniJjaC": 0.45,
+        "state": "neutral"
+      },
+      {
+        "year": 2010,
+        "mm": 640.9,
+        "anomalyPct": 42.2,
+        "oniJjaC": -1.05,
+        "state": "la_nina"
+      },
+      {
+        "year": 2011,
+        "mm": 448.6,
+        "anomalyPct": -0.5,
+        "oniJjaC": -0.43,
+        "state": "neutral"
+      },
+      {
+        "year": 2012,
+        "mm": 512.3,
+        "anomalyPct": 13.6,
+        "oniJjaC": 0.3,
+        "state": "neutral"
+      },
+      {
+        "year": 2013,
+        "mm": 456.3,
+        "anomalyPct": 1.2,
+        "oniJjaC": -0.35,
+        "state": "neutral"
+      },
+      {
+        "year": 2014,
+        "mm": 425.2,
+        "anomalyPct": -5.7,
+        "oniJjaC": 0.1,
+        "state": "neutral"
+      },
+      {
+        "year": 2015,
+        "mm": 424.8,
+        "anomalyPct": -5.8,
+        "oniJjaC": 1.57,
+        "state": "el_nino"
+      },
+      {
+        "year": 2016,
+        "mm": 456.0,
+        "anomalyPct": 1.1,
+        "oniJjaC": -0.31,
+        "state": "neutral"
+      },
+      {
+        "year": 2017,
+        "mm": 542.7,
+        "anomalyPct": 20.4,
+        "oniJjaC": 0.19,
+        "state": "neutral"
+      },
+      {
+        "year": 2018,
+        "mm": 535.8,
+        "anomalyPct": 18.9,
+        "oniJjaC": 0.14,
+        "state": "neutral"
+      },
+      {
+        "year": 2019,
+        "mm": 421.1,
+        "anomalyPct": -6.6,
+        "oniJjaC": 0.33,
+        "state": "neutral"
+      },
+      {
+        "year": 2020,
+        "mm": 534.3,
+        "anomalyPct": 18.5,
+        "oniJjaC": -0.36,
+        "state": "neutral"
+      },
+      {
+        "year": 2021,
+        "mm": 456.8,
+        "anomalyPct": 1.3,
+        "oniJjaC": -0.35,
+        "state": "neutral"
+      },
+      {
+        "year": 2022,
+        "mm": 526.3,
+        "anomalyPct": 16.7,
+        "oniJjaC": -0.76,
+        "state": "la_nina"
+      },
+      {
+        "year": 2023,
+        "mm": 391.3,
+        "anomalyPct": -13.2,
+        "oniJjaC": 1.12,
+        "state": "el_nino"
+      },
+      {
+        "year": 2024,
+        "mm": 552.5,
+        "anomalyPct": 22.6,
+        "oniJjaC": 0.08,
+        "state": "neutral"
+      },
+      {
+        "year": 2025,
+        "mm": 415.7,
+        "anomalyPct": -7.8,
+        "oniJjaC": -0.11,
+        "state": "neutral"
+      },
+      {
+        "year": 2026,
+        "mm": 324.6,
+        "anomalyPct": -28.0,
+        "oniJjaC": 1.8,
+        "state": "el_nino"
+      }
+    ]
   },
   "elNinoRainfall": {
     "swMonsoon": {
