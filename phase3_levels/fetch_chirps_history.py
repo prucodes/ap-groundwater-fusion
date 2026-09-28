@@ -29,6 +29,12 @@ sys.path.insert(0, HERE)
 from fetch_nasa_power_rainfall import _tls_context  # verified TLS, one implementation
 APP = os.path.join(HERE, "..", "app", "data")
 OUT = os.path.join(HERE, "data", "mandal_rain_history_chirps.csv")
+# Months before this live in a second file that is written once and then never
+# touched again. The weekly refresh appends one month; if the deep archive
+# shared the file, every refresh would commit a fresh 2 MB blob of rainfall
+# that has not changed since 1981.
+ARCHIVE_BEFORE = "2014-01"
+ARCHIVE = os.path.join(HERE, "data", "mandal_rain_history_chirps_archive.csv")
 BASE = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs"
 # CHIRPS writes ocean as -9999 without declaring it as nodata. Filling with
 # zero instead of masking once diluted this product three- to six-fold.
@@ -71,6 +77,18 @@ def download(year, month, target, context):
         shutil.copyfileobj(raw, handle)
 
 
+def history_paths():
+    """Both halves of the record, oldest first; the archive may not exist."""
+    return [path for path in (ARCHIVE, OUT) if os.path.exists(path)]
+
+
+def read_rows(path):
+    if not os.path.exists(path):
+        return []
+    with open(path) as handle:
+        return list(csv.DictReader(handle))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--start-year", type=int, default=2014)
@@ -84,9 +102,9 @@ def main():
     # Incremental by default: the weekly refresh should fetch the one new month,
     # not walk the archive again. --rebuild forces the full walk.
     have = set()
-    if os.path.exists(OUT) and not args.rebuild:
-        with open(OUT) as handle:
-            have = {row["date"] for row in csv.DictReader(handle)}
+    if not args.rebuild:
+        for path in history_paths():
+            have |= {row["date"] for row in read_rows(path)}
         if have:
             print(f"  {len(have)} months already on disk; fetching only what is missing")
     context = _tls_context()
@@ -112,16 +130,25 @@ def main():
                                          "rain_mm": round(value, 2)})
                 print(f"  {year}-{month:02d}  {len(rows):>7,} rows", flush=True)
     fields = ["boundary_index", "district", "mandal", "date", "rain_mm"]
-    kept = []
-    if have:
-        with open(OUT) as handle:
-            kept = [row for row in csv.DictReader(handle)]
+    kept = [] if args.rebuild else [row for path in history_paths() for row in read_rows(path)]
     rows = sorted(kept + rows, key=lambda row: (row["date"], int(row["boundary_index"])))
-    with open(OUT, "w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fields)
-        writer.writeheader()
-        writer.writerows(rows)
-    print(f"\n  wrote {len(rows):,} rows -> data/mandal_rain_history_chirps.csv")
+
+    def write(path, chosen):
+        with open(path, "w", newline="") as handle:
+            writer = csv.DictWriter(handle, fieldnames=fields)
+            writer.writeheader()
+            writer.writerows(chosen)
+
+    archive = [row for row in rows if row["date"] < ARCHIVE_BEFORE]
+    current = [row for row in rows if row["date"] >= ARCHIVE_BEFORE]
+    # Only rewrite the archive when it actually gained something, so an ordinary
+    # weekly run leaves that file untouched and commits nothing for it.
+    if archive and len(archive) != len(read_rows(ARCHIVE)):
+        write(ARCHIVE, archive)
+        print(f"  wrote {len(archive):,} rows -> data/{os.path.basename(ARCHIVE)}")
+    write(OUT, current)
+    print(f"\n  wrote {len(current):,} rows -> data/mandal_rain_history_chirps.csv"
+          f" ({len(rows):,} with the archive)")
     if missing:
         print(f"  {len(missing)} months unavailable: {missing[:4]}")
         return 1 if len(missing) > 6 else 0

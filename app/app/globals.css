@@ -4858,3 +4858,178 @@ pre.jsonBody {
   box-shadow: none;
   animation: none;
 }
+
+/* ---- Monsoon Watch -------------------------------------------------------
+   Measured recharge against each mandal's own past seasons, plus the ocean
+   state it sits in. Tokens only, so dark mode follows without a second rule. */
+.cardNote {
+  margin: 12px 0 0;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.cardNote strong { color: var(--ink-soft); }
+
+.monsoonHeadline {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+}
+.monsoonStat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--field);
+}
+.monsoonStat > span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.monsoonStat > strong {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.monsoonStat > em { font-style: normal; font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+/* Both cards run the full height of the row: a short card beside a tall one
+   leaves a void the desktop layout suite fails on, and equal cards read as a
+   pair rather than as one card with an afterthought. */
+.monsoonGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+.monsoonGrid > .card { display: flex; flex-direction: column; }
+.monsoonGrid .seasonBars { flex: 1; justify-content: center; }
+.monsoonGrid .ensoDial { flex: 1; justify-content: center; }
+
+.seasonBars { display: flex; flex-direction: column; gap: 5px; }
+.seasonBar {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 48px 48px;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+.seasonBarLabel { color: var(--muted); }
+.seasonBarTrack { height: 9px; border-radius: 6px; background: var(--chart-track); overflow: hidden; }
+.seasonBarFill { display: block; height: 100%; border-radius: 6px; background: var(--sig-surface); }
+.seasonBar.current .seasonBarFill { background: var(--st-verify); }
+.seasonBar.current .seasonBarLabel,
+.seasonBar.current .seasonBarValue { color: var(--st-verify); font-weight: 700; }
+.seasonBarValue { text-align: right; color: var(--ink-soft); }
+.seasonBarOni { text-align: right; color: var(--muted-2); font-size: 11.5px; }
+
+.ensoDial {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--field);
+}
+.ensoDial.el_nino { border-color: var(--st-verify); background: var(--st-verify-bg); }
+.ensoDial.la_nina { border-color: var(--sig-surface); background: var(--map-sea-a); }
+.ensoState {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ensoDial > strong { font-size: 34px; font-weight: 700; line-height: 1.05; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ensoDial > em { font-style: normal; font-size: 12.5px; color: var(--ink-soft); }
+
+.ensoHonesty {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px dashed var(--line-strong);
+}
+/* .validationEyebrow carries no icon anywhere else, so an unsized SVG inside it
+   expands to fill the card. */
+.ensoHonesty .validationEyebrow { display: inline-flex; align-items: center; gap: 6px; }
+.ensoHonesty .validationEyebrow svg { width: 14px; height: 14px; flex: none; }
+.ensoHonesty p { margin: 6px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--muted); }
+.ensoHonesty strong { color: var(--ink-soft); }
+
+.ensoSeasons { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.ensoSeasonCard {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.ensoSeasonName { font-size: 13px; font-weight: 700; color: var(--ink); }
+.ensoSeasonMonths { font-size: 12px; color: var(--muted); }
+.ensoSeasonCard > strong { font-size: 30px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.ensoSeasonCard > strong.bad { color: var(--st-verify); }
+.ensoSeasonCard > strong.good { color: var(--st-normal); }
+.ensoSeasonCard > em { font-style: normal; font-size: 12px; color: var(--muted); }
+.ensoSeasonFacts { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; font-size: 12.5px; line-height: 1.5; color: var(--muted); }
+.ensoSeasonFacts strong { color: var(--ink-soft); }
+
+.sevPill {
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--st-verify);
+  background: var(--st-verify-bg);
+}
+table.dataTable td.bad { color: var(--st-verify); font-weight: 600; }
+table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
+
+.methodSteps { display: flex; flex-direction: column; gap: 10px; }
+.methodSteps p { margin: 0; font-size: 13px; line-height: 1.65; color: var(--ink-soft); }
+.methodSteps strong { color: var(--ink); }
+
+/* Front page: one line that says whether the season is working. */
+/* Flex, not an auto-repeat grid: `repeat(auto-fit, ...)` beside an `auto`
+   track is an invalid declaration, and the whole rule is dropped -- which
+   stacked this strip into one tall column. */
+.monsoonStrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 24px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  border: 1px solid var(--st-verify);
+  border-radius: 14px;
+  background: var(--st-verify-bg);
+}
+.monsoonStripIntro { flex: 1 1 240px; display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+.monsoonStripCell { flex: 0 1 auto; display: flex; flex-direction: column; gap: 2px; }
+.monsoonStrip > .validationLink { margin-left: auto; }
+.monsoonStripCell > span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.monsoonStripCell > strong { font-size: 22px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
+.monsoonStripCell > em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+
+@media (max-width: 1080px) {
+  .monsoonGrid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .monsoonStripIntro { flex-basis: 100%; }
+  .monsoonStripCell { flex: 1 1 40%; }
+  .monsoonStrip > .validationLink { margin-left: 0; flex-basis: 100%; }
+  .seasonBar { grid-template-columns: 38px minmax(0, 1fr) 42px 42px; gap: 7px; font-size: 11.5px; }
+  .monsoonStat > strong { font-size: 26px; }
+}

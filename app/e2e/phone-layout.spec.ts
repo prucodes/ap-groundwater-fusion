@@ -22,6 +22,7 @@ const ROUTES = [
   "/mandals",
   "/map",
   "/methodology",
+  "/monsoon",
   "/nasa",
   "/readiness",
   "/reports",

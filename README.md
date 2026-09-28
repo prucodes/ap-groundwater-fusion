@@ -79,6 +79,14 @@ same held-out period CHIRPS is better (0.9845 m against 0.9925 m) and reaches
 at 75% coverage, and it stops in December 2025). The weekly refresh appends
 the one new month; `--rebuild` walks the archive again.
 
+The record reaches back to **1981**, 45 years and thirteen El Nino events, which
+is what makes the rainfall composite on the Monsoon Watch page worth reporting.
+It is split in two: `mandal_rain_history_chirps_archive.csv` holds 1981-2013 and
+is written once, and `mandal_rain_history_chirps.csv` holds 2014 onward and is
+the only half the weekly refresh rewrites. A single file would have committed
+two megabytes of unchanged 1981 rainfall every Monday. The model reads the 2014
+half alone, because the depth history it is fitted against starts in 2014.
+
 **Three lists need a person, not the pipeline.**
 `phase3_levels/data/mandal_boundary_unresolved.csv` holds the 61 mandals whose
 polygon could not be identified without guessing, and
@@ -106,6 +114,33 @@ year is published measured-only and flagged for verification rather than
 modelled from a different well. Chinnagottigallu stepped in October 2024 and is
 modelled normally again, on its new regime.
 
+**Monsoon Watch answers a different question from the nowcast.** The nowcast
+says how deep the water is; `phase3_levels/build_monsoon_watch.py` asks whether
+the season that refills it is working. For each mandal it takes the change from
+its May reading to its latest reading of the same year and compares it with the
+median of that same mandal's May-to-that-month change over the previous ten
+years. Both sides are within-year differences on one mandal, so district drift
+and the differences between mandals cancel; no model is involved. A mandal is
+flagged short only when it misses its own normal by at least 1 m *and* by at
+least twice its own year-to-year spread -- metres alone flag every naturally
+swinging hard-rock mandal, spread alone flags a delta mandal that moved twenty
+centimetres more than usual.
+
+The ocean state comes from NOAA's Oceanic Nino Index
+(`phase3_levels/fetch_enso_index.py`), the one climate index here that needs no
+account. **It is context and never an input.** Adding it to the three-month
+forecast was tested on rolling origin and made it worse -- 1.7762 m to 1.8496 m
+MAE, and worse in every aquifer -- because two El Nino events inside the
+training record are not enough to learn a response from.
+
+Measured over 1981-2025, an El Nino June-September brings Andhra Pradesh 15.2%
+less rain (below normal in 6 of 7 such years, against 23 of 45 overall;
+Spearman -0.51, p = 0.0003). The October-December north-east monsoon, often
+assumed to compensate south-east peninsular India, does not: it averages 8.7%
+down, below normal in 9 of 15, and not one of the 28 districts comes out wetter
+-- but individual years run from -55% to +40%, so it is a coin flip with a dry
+tilt rather than a second failure to plan around.
+
 Run the active path in this order:
 
 ```bash
@@ -114,6 +149,8 @@ python3 phase3_levels/build_levels_engine.py
 python3 phase3_levels/evaluate_phase0.py
 python3 phase3_levels/build_forecast.py
 python3 phase3_levels/build_real_app_data.py
+python3 phase3_levels/fetch_enso_index.py         # NOAA ONI, no account needed
+python3 phase3_levels/build_monsoon_watch.py      # is this season recharging?
 python3 phase3_levels/validate_phase0.py
 python3 -m pytest -q
 cd app
