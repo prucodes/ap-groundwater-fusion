@@ -137,6 +137,7 @@ export type MonsoonWatch = {
     trend3moC: number | null;
     source: string;
     index: string;
+    recent: Array<{ date: string; season: string; oniC: number }>;
   } | null;
   recharge: {
     mandals: number;

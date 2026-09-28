@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-09-28T18:00:40+00:00",
+  "generatedAt": "2026-09-28T18:50:40+00:00",
   "season": {
     "year": 2026,
     "preMonsoonMonth": "2026-05",
@@ -8,6 +8,128 @@
     "monthsElapsed": 3
   },
   "enso": {
+    "recent": [
+      {
+        "date": "2024-08",
+        "season": "JAS",
+        "oniC": -0.07
+      },
+      {
+        "date": "2024-09",
+        "season": "ASO",
+        "oniC": -0.17
+      },
+      {
+        "date": "2024-10",
+        "season": "SON",
+        "oniC": -0.21
+      },
+      {
+        "date": "2024-11",
+        "season": "OND",
+        "oniC": -0.3
+      },
+      {
+        "date": "2024-12",
+        "season": "NDJ",
+        "oniC": -0.42
+      },
+      {
+        "date": "2025-01",
+        "season": "DJF",
+        "oniC": -0.45
+      },
+      {
+        "date": "2025-02",
+        "season": "JFM",
+        "oniC": -0.24
+      },
+      {
+        "date": "2025-03",
+        "season": "FMA",
+        "oniC": -0.06
+      },
+      {
+        "date": "2025-04",
+        "season": "MAM",
+        "oniC": 0.02
+      },
+      {
+        "date": "2025-05",
+        "season": "AMJ",
+        "oniC": -0.02
+      },
+      {
+        "date": "2025-06",
+        "season": "MJJ",
+        "oniC": -0.04
+      },
+      {
+        "date": "2025-07",
+        "season": "JJA",
+        "oniC": -0.11
+      },
+      {
+        "date": "2025-08",
+        "season": "JAS",
+        "oniC": -0.26
+      },
+      {
+        "date": "2025-09",
+        "season": "ASO",
+        "oniC": -0.43
+      },
+      {
+        "date": "2025-10",
+        "season": "SON",
+        "oniC": -0.57
+      },
+      {
+        "date": "2025-11",
+        "season": "OND",
+        "oniC": -0.61
+      },
+      {
+        "date": "2025-12",
+        "season": "NDJ",
+        "oniC": -0.6
+      },
+      {
+        "date": "2026-01",
+        "season": "DJF",
+        "oniC": -0.39
+      },
+      {
+        "date": "2026-02",
+        "season": "JFM",
+        "oniC": -0.21
+      },
+      {
+        "date": "2026-03",
+        "season": "FMA",
+        "oniC": 0.11
+      },
+      {
+        "date": "2026-04",
+        "season": "MAM",
+        "oniC": 0.46
+      },
+      {
+        "date": "2026-05",
+        "season": "AMJ",
+        "oniC": 0.95
+      },
+      {
+        "date": "2026-06",
+        "season": "MJJ",
+        "oniC": 1.39
+      },
+      {
+        "date": "2026-07",
+        "season": "JJA",
+        "oniC": 1.8
+      }
+    ],
     "asOf": "2026-07",
     "season": "JJA",
     "oniC": 1.8,

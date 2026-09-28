@@ -155,3 +155,35 @@ test.describe("phone layout", () => {
     expect(await page.evaluate(() => document.body.style.overflow)).not.toBe("hidden");
   });
 });
+
+/* The recharge map collapsed to zero width on a phone: its responsive override
+   was written earlier in the stylesheet than the base rule, both single-class
+   selectors, so source order kept the two-column grid and the 220px legend
+   column starved the map. Nothing else caught it -- the page did not overflow
+   sideways and every other block was fine. */
+test.describe("the monsoon map survives a phone", () => {
+  test("the map is actually drawn and its legend sits below it", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+
+    const svg = page.locator(".rechargeMapSvg");
+    const box = await svg.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.width).toBeGreaterThan(200);
+    expect(box!.height).toBeGreaterThan(120);
+
+    // Stacked, not beside: the legend must start below the map, not next to it.
+    const legend = await page.locator(".rechargeLegend").boundingBox();
+    expect(legend!.y).toBeGreaterThan(box!.y + box!.height - 1);
+  });
+
+  test("the map stays a sensible share of the page", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+    const box = await page.locator(".rechargeMapSvg").boundingBox();
+    const pageHeight = await page.evaluate(() => document.body.scrollHeight);
+    // It once stood 792px tall on desktop and pushed every other block under
+    // the fold. On a phone it must not dominate either.
+    expect(box!.height).toBeLessThan(pageHeight * 0.2);
+  });
+});
