@@ -240,3 +240,59 @@ test.describe("both monsoon charts answer the pointer", () => {
     expect(titles).toBe(0);
   });
 });
+
+/* The executive snapshot exists to be printed. Capping its 670-row register so
+   the screen stays usable is right, and silently truncating the printout to one
+   screenful would be the worst possible way to get it wrong -- nobody would
+   notice until a printed sheet reached someone with rows missing.
+
+   These assert the two halves against each other: the cap exists on screen, and
+   print releases it. Any future scroll cap on this page has to pass both. */
+test.describe("the snapshot caps on screen and prints in full", () => {
+  test("on screen the register scrolls instead of stretching the page", async ({ page }) => {
+    await page.goto("/snapshot");
+    await settle(page);
+
+    const rows = await page.locator("tbody tr").count();
+    expect(rows).toBeGreaterThan(600);
+
+    const register = page.locator(".snapRegister");
+    const box = await register.boundingBox();
+    expect(box!.height).toBeLessThan(900);
+
+    // Every row is present and reachable, not truncated away.
+    const scrollable = await register.evaluate((el) => el.scrollHeight > el.clientHeight + 4);
+    expect(scrollable).toBe(true);
+
+    const pageHeight = await page.evaluate(() => document.body.scrollHeight);
+    expect(pageHeight).toBeLessThan(4000);
+  });
+
+  test("print releases the cap and repeats the column headings", async ({ page }) => {
+    await page.goto("/snapshot");
+    await settle(page);
+    const onScreen = await page.locator(".snapRegister").boundingBox();
+
+    await page.emulateMedia({ media: "print" });
+    await page.waitForTimeout(400);
+
+    const printed = await page.evaluate(() => {
+      const el = document.querySelector(".snapRegister") as HTMLElement;
+      const style = getComputedStyle(el);
+      const thead = getComputedStyle(document.querySelector("table.dataTable thead") as HTMLElement);
+      return {
+        height: el.getBoundingClientRect().height,
+        maxHeight: style.maxHeight,
+        overflowY: style.overflowY,
+        theadDisplay: thead.display,
+      };
+    });
+
+    // The whole register, not one screenful.
+    expect(printed.height).toBeGreaterThan(onScreen!.height * 10);
+    expect(printed.maxHeight).toBe("none");
+    expect(printed.overflowY).toBe("visible");
+    // Fifteen pages of a table whose headings appeared once are unreadable.
+    expect(printed.theadDisplay).toBe("table-header-group");
+  });
+});
