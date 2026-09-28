@@ -173,8 +173,17 @@ export default function OverviewPage() {
           <div className="monsoonStripIntro">
             <span className="validationEyebrow">Monsoon watch</span>
             <span>
-              The water table is lower than it was in May across most of the state, which has not happened in
-              any season on record.
+              {watch.enso?.state === "el_nino" ? (
+                <>
+                  A <strong>{watch.enso.strength} El Niño</strong> is in place, and the water table is lower than
+                  it was in May across most of the state — which has not happened in any season on record.
+                </>
+              ) : (
+                <>
+                  The water table is lower than it was in May across most of the state, which has not happened in
+                  any season on record.
+                </>
+              )}
             </span>
           </div>
           <div className="monsoonStripCell">

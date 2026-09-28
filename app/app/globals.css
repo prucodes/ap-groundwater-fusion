@@ -4083,7 +4083,10 @@ pre.jsonBody {
    ============================================================ */
 
 @media (max-width: 1320px) {
-  .kpiRow { grid-template-columns: repeat(3, 1fr); }
+  /* Was repeat(3, 1fr), which forced exactly three columns and left the fourth
+     card alone on a second row for every four-KPI page at 1280 -- the commonest
+     laptop width. auto-fit still gives three when three is what fits. */
+  .kpiRow { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   .modelValueRow { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .modelValidationStrip { grid-template-columns: minmax(0, 1fr) repeat(3, minmax(110px, 0.45fr)); }
   .validationLink { grid-column: 1 / -1; min-height: 38px; }
@@ -4091,7 +4094,10 @@ pre.jsonBody {
   .overviewGrid { grid-template-columns: 1fr 1fr; }
   .overviewGrid > .mapCard { grid-column: 1 / -1; }
   .metricRow { grid-template-columns: repeat(4, 1fr); }
-  .summaryRow { grid-template-columns: repeat(3, 1fr); }
+  /* Same orphan as .kpiRow: three fixed columns left the fourth tile alone on
+     /alerts and the fifth on /watchlist. A 170px minimum fits five tracks in
+     this column, so four tiles make one row and five make one row. */
+  .summaryRow { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
 }
 
 @media (max-width: 1080px) {
@@ -5040,12 +5046,12 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
    readout half a screen from the cursor that drove it. */
 .rechargeMapLayout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 230px);
   gap: 18px;
   align-items: start;
 }
 .rechargeMapFigure { position: relative; }
-.rechargeMapSvg { width: 100%; height: auto; max-height: 430px; display: block; margin: 0 auto; }
+.rechargeMapSvg { width: 100%; height: auto; max-height: 620px; display: block; margin: 0 auto; }
 .rechargeCell {
   stroke: var(--card);
   stroke-width: 0.6;
@@ -5178,7 +5184,7 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
   .rechargeMapLayout { grid-template-columns: minmax(0, 1fr); }
   .rechargeMapSide { position: static; }
   .rechargeLegend { flex-direction: row; flex-wrap: wrap; gap: 6px 14px; }
-  .rechargeMapSvg { max-height: 380px; }
+  .rechargeMapSvg { max-height: 420px; }
   /* A tooltip that follows a finger is worse than useless on a touch screen. */
   .rechargeTip { display: none; }
 }
@@ -5199,3 +5205,21 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 .rainHistReadout em.el_nino { color: var(--st-verify); }
 .rainHistReadout em.la_nina { color: var(--sig-surface); }
 .rainHistReadout em.neutral { color: var(--muted); }
+.cardLede {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 78ch;
+}
+
+/* The districts page puts its map (which spans both columns) and one table card
+   into .overviewGrid. The card took a single 474px column and left the other
+   half of the row empty. A card that is the only thing on its row spans it. */
+.overviewGrid > .card.spanRow { grid-column: 1 / -1; }
+
+/* /alerts listed all 572 mandals and /watchlist all 587 rows, giving pages
+   75,000px tall on desktop and 150,000px on a phone. Everything is still
+   there; it scrolls inside the card instead of stretching the document. */
+.alertConsole { max-height: 70vh; overflow-y: auto; }
+.watchlistTableScroll { max-height: 70vh; overflow-y: auto; }

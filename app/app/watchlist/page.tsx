@@ -182,7 +182,7 @@ export default function WatchlistPage() {
 
       <div className="watchlistLayout">
         <section className="card">
-          <div className="tableWrap">
+          <div className="tableWrap watchlistTableScroll">
             <table className="dataTable">
               <thead>
                 <tr>

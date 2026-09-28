@@ -51,12 +51,22 @@ export default function MonsoonPage() {
   return (
     <div className="pageWrap">
       <HeaderHero
-        title="Monsoon Watch"
+        title={enso?.state === "el_nino" ? "Monsoon Watch — El Niño" : "Monsoon Watch"}
         subtitle={
           <>
-            The nowcast says how deep the water is. This page asks the other question: is the season that is
-            supposed to <strong>refill</strong> it actually working? Every number here is a measured change in a
-            mandal&rsquo;s own readings against that same mandal&rsquo;s own past seasons. No model is involved.
+            {enso?.state === "el_nino" ? (
+              <>
+                A <strong>{enso.strength} El Niño</strong> is in place — the Pacific index stands at{" "}
+                {enso.oniC > 0 ? "+" : ""}
+                {enso.oniC.toFixed(2)} °C for {enso.season} {enso.asOf.slice(0, 4)}, the warmest
+                June–August in the 1950–{enso.asOf.slice(0, 4)} record. Across 45 years an El Niño
+                costs Andhra Pradesh about {sw ? Math.abs(sw.elNinoAnomalyPct ?? 0) : 15}% of its monsoon rain.
+                This one has cost {rain ? Math.abs(rain.anomalyPct) : 0}%, and the water table has not
+                recharged.{" "}
+              </>
+            ) : null}
+            Every figure below is a measured change in a mandal&rsquo;s own readings against that same
+            mandal&rsquo;s own past seasons. The index is context; no model on this site uses it.
           </>
         }
         showChips={false}
@@ -128,6 +138,12 @@ export default function MonsoonPage() {
           </div>
           <span className="cardSub">each mandal against its own ten-year normal</span>
         </div>
+        <p className="cardLede">
+          This is the El Niño arriving in the aquifer. Not a model of it — the change each mandal&rsquo;s own
+          well has recorded since May, set against what that well normally does by{" "}
+          {monthName(w.season.latestMonth).split(" ")[0]}. The monsoon is the mechanism: rain is down{" "}
+          {rain ? Math.abs(rain.anomalyPct) : 0}% and the water has not come back.
+        </p>
         <RechargeMap />
         {r.flaggedWithoutBoundary > 0 ? (
           <p className="cardNote">
