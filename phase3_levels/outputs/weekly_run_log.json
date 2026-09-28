@@ -1,67 +1,81 @@
 {
-  "ran_at": "2026-09-21T08:01:28",
+  "ran_at": "2026-09-28T08:44:19",
   "steps": [
     {
       "step": "fetch GRACE-DA",
       "ok": true,
       "rc": 0,
-      "secs": 1.8,
+      "secs": 2.7,
       "required": false
     },
     {
       "step": "fetch CHIRPS rain",
       "ok": true,
       "rc": 0,
-      "secs": 1.5,
+      "secs": 1.3,
       "required": false
     },
     {
       "step": "refresh TerraClimate",
       "ok": true,
       "rc": 0,
-      "secs": 36.6,
+      "secs": 3.1,
       "required": false
     },
     {
       "step": "fetch APWRIMS sensor history",
       "ok": true,
       "rc": 0,
-      "secs": 697.3,
+      "secs": 661.1,
       "required": false
     },
     {
       "step": "resample GRACE at districts",
       "ok": true,
       "rc": 0,
-      "secs": 3.8,
+      "secs": 4.6,
       "required": false
     },
     {
       "step": "rebuild mandal rainfall/balance heat",
       "ok": true,
       "rc": 0,
-      "secs": 0.0,
+      "secs": 7.8,
       "required": false
     },
     {
-      "step": "fetch NASA POWER rainfall (model input)",
+      "step": "extend CHIRPS rainfall history (model input)",
       "ok": true,
       "rc": 0,
-      "secs": 1.2,
+      "secs": 0.9,
+      "required": false
+    },
+    {
+      "step": "fetch NASA POWER rainfall (fallback)",
+      "ok": true,
+      "rc": 0,
+      "secs": 362.0,
       "required": false
     },
     {
       "step": "build holdout-safe nowcasts",
       "ok": true,
       "rc": 0,
-      "secs": 23.7,
+      "secs": 56.1,
       "required": true
     },
     {
       "step": "evaluate model tasks",
       "ok": true,
       "rc": 0,
-      "secs": 415.4,
+      "secs": 469.4,
+      "required": true
+    },
+    {
+      "step": "build released 3-month forecast",
+      "ok": true,
+      "rc": 0,
+      "secs": 23.3,
       "required": true
     },
     {
