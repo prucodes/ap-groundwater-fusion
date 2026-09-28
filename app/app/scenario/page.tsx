@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 import { HeaderHero } from "../../components/HeaderHero";
 import { DistrictMap } from "../../components/DistrictMap";
 import { IconArrowRight, IconCloudRain, IconDroplet, IconInfo } from "../../components/icons";
-import { balanceMeta, balanceStatusFor, districtGeometry, formatNumber, titleCase } from "../../lib/data";
+import { balanceMeta, balanceStatusFor, districtGeometry, formatNumber, monsoonWatch, titleCase } from "../../lib/data";
 
 type Row = {
   d: string;
@@ -16,14 +16,36 @@ type Row = {
   tipped: boolean;
 };
 
-const PRESETS = [
-  { key: "normal", label: "Normal monsoon", sub: "Long-period average", delta: 0, tone: "#5e9b6b" },
-  { key: "elnino", label: "El Niño 2026", sub: "IMD outlook · 92% of LPA", delta: -8, tone: "#d79b2e", flagship: true },
-  { key: "below", label: "Below normal", sub: "Weak monsoon", delta: -20, tone: "#c98a1e" },
-  { key: "drought", label: "Severe drought", sub: "Failed monsoon", delta: -40, tone: "#c65a46" },
-];
+/* The El Nino preset used to read "IMD outlook - 92% of LPA" with a delta of
+   -8. Nothing on this site sourced that forecast, and it sat beside a measured
+   deficit on the Monsoon Watch page that disagreed with it. The preset now
+   carries what this project actually measured -- CHIRPS over the elapsed
+   monsoon months against its own 1981-onward mean -- so the two pages agree and
+   the number can be checked. */
+function presets() {
+  const rain = monsoonWatch.rainfall;
+  const enso = monsoonWatch.enso;
+  const measured = rain ? Math.round(rain.anomalyPct) : null;
+  return [
+    { key: "normal", label: "Normal monsoon", sub: "Long-period average", delta: 0, tone: "#5e9b6b" },
+    {
+      key: "elnino",
+      label: `${enso?.state === "el_nino" ? "El Niño" : "This monsoon"} ${monsoonWatch.season.year}`,
+      sub:
+        rain && measured !== null
+          ? `measured Jun–Aug · ${measured}% on the ${rain.firstYear}–${rain.ofYears + rain.firstYear - 2} mean`
+          : "measured so far",
+      delta: measured ?? -8,
+      tone: "#d79b2e",
+      flagship: true,
+    },
+    { key: "below", label: "Below normal", sub: "Weak monsoon", delta: -20, tone: "#c98a1e" },
+    { key: "drought", label: "Severe drought", sub: "Failed monsoon", delta: -40, tone: "#c65a46" },
+  ];
+}
 
 export default function ScenarioPage() {
+  const PRESETS = presets();
   const [delta, setDelta] = useState(-30); // monsoon anomaly %, default 30% below normal
   const [playing, setPlaying] = useState(false);
   const dirRef = useRef(-1);
@@ -127,9 +149,16 @@ export default function ScenarioPage() {
         <div className="fusionNote" style={{ marginTop: 12 }}>
           <IconInfo />
           <span>
-            El Niño crossed threshold in June 2026; IMD projects a <strong>below-normal monsoon (~92% of LPA)</strong>. Tap
-            a preset to model its effect on the statewide water balance — modeled scenario over real TerraClimate data,
-            not a forecast.
+            {monsoonWatch.enso?.state === "el_nino" && monsoonWatch.rainfall ? (
+              <>
+                A {monsoonWatch.enso.strength} El Niño is in place, and rainfall over June–August measured{" "}
+                <strong>{Math.abs(monsoonWatch.rainfall.anomalyPct)}% below</strong> the{" "}
+                {monsoonWatch.rainfall.firstYear}-onward mean (CHIRPS). That measured deficit is what the El Niño
+                preset applies — no forecast is used here, and none is published on this site.{" "}
+              </>
+            ) : null}
+            Tap a preset to model its effect on the statewide water balance — a modelled scenario over real
+            TerraClimate data, not a prediction.
           </span>
         </div>
       </section>

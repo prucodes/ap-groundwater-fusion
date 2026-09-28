@@ -3451,7 +3451,8 @@ pre.jsonBody {
 .seCan, .seCant { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
 .seTag {
   display: inline-block;
-  font-size: 9.5px;
+  /* was 9.5px */
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -3681,7 +3682,9 @@ pre.jsonBody {
 }
 .scenarioRow.tipped { background: rgba(198, 90, 70, 0.06); border-radius: 10px; }
 .srName { font-size: 13px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 9px; flex-wrap: wrap; }
-.srTip { font-size: 9.5px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: #b0432f; background: var(--st-verify-bg); padding: 2px 7px; border-radius: 6px; }
+.srTip {
+  /* was 9.5px, below any legible floor for uppercase tracking */
+  font-size: 11px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; color: #b0432f; background: var(--st-verify-bg); padding: 2px 7px; border-radius: 6px; }
 .srFlow { display: flex; align-items: center; gap: 8px; }
 .srFlow svg { width: 14px; height: 14px; color: var(--muted-2); flex: none; }
 .srStatus { font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
@@ -4441,13 +4444,14 @@ pre.jsonBody {
   .kpiRow4 { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* The cinematic frame bleeds into the app's right gutter on desktop; on a phone
-   that negative margin pushes it past the viewport. */
+/* This frame used to bleed into a 24px right gutter on the app shell. That
+   gutter is gone -- .main now runs to the viewport edge -- so the negative
+   margin pushed the page 24px sideways at every desktop width instead. */
 .crystalFrameWrap {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  margin: 0 -24px 0 0;
+  margin: 0;
 }
 .crystalFrame { border: 0; width: 100%; flex: 1 1 auto; min-height: 0; display: block; }
 .crystalNotice {
@@ -4459,9 +4463,8 @@ pre.jsonBody {
   font: 500 12px/1.45 var(--font-sans, system-ui, sans-serif);
 }
 @media (max-width: 880px) {
-  /* The negative gutter would push the frame past a phone viewport, and the
-     shell's top bar already takes 56px of the screen. */
-  .crystalFrameWrap { margin: 0; height: calc(100dvh - 56px); }
+  /* The shell's top bar already takes 56px of the screen. */
+  .crystalFrameWrap { height: calc(100dvh - 56px); }
 }
 
 /* Tables keep a readable width on phones and scroll inside .tableWrap, instead
@@ -5223,3 +5226,28 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
    there; it scrolls inside the card instead of stretching the document. */
 .alertConsole { max-height: 70vh; overflow-y: auto; }
 .watchlistTableScroll { max-height: 70vh; overflow-y: auto; }
+
+/* Each district's reason names its own numbers, which is what makes it worth
+   reading -- and made every row of the advisory table 250px tall, so the page
+   ran to 7,800px on desktop and 17,800px on a phone. Clamped to four lines,
+   with the full text still in the cell for a screen reader and on hover. */
+.advisoryWhy {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 44ch;
+}
+
+/* The four severity counts are a distribution; a bar says so faster than four
+   numbers side by side do. */
+.actionCardShare {
+  display: block;
+  height: 5px;
+  margin-top: 8px;
+  border-radius: 4px;
+  background: var(--chart-track);
+  overflow: hidden;
+}
+.actionCardShareFill { display: block; height: 100%; border-radius: 4px; background: var(--ac, var(--muted-2)); }
+.actionCardPct { font-size: 11px; color: var(--muted); margin-top: 4px; display: block; }

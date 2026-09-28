@@ -69,6 +69,15 @@ export default function IrrigationPage() {
             </div>
             <div className="actionName">{ACTION_META[k].label}</div>
             <div className="actionGloss">{ACTION_META[k].gloss}</div>
+            <span className="actionCardShare" aria-hidden="true">
+              <span
+                className="actionCardShareFill"
+                style={{ width: `${Math.round((counts[k] / Math.max(1, advisories.length)) * 100)}%` }}
+              />
+            </span>
+            <span className="actionCardPct">
+              {Math.round((counts[k] / Math.max(1, advisories.length)) * 100)}% of {advisories.length} districts
+            </span>
           </div>
         ))}
       </div>
@@ -149,7 +158,11 @@ export default function IrrigationPage() {
                     <td className="cellPct" style={{ color: a.balanceStatus === "Deficit" ? "#c65a46" : "var(--text)" }}>
                       {a.balance !== null ? `${a.balance > 0 ? "+" : ""}${formatNumber(a.balance)} mm` : "—"}
                     </td>
-                    <td className="cellMuted">{a.reason}</td>
+                    <td className="cellMuted">
+                      <span className="advisoryWhy" title={a.reason}>
+                        {a.reason}
+                      </span>
+                    </td>
                   </tr>
                 );
               })}
