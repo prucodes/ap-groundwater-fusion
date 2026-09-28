@@ -1,25 +1,63 @@
-import { datasetManifest, districtGeometry, districtRollups, mandals, titleCase } from "./data";
+import {
+  datasetManifest,
+  districtGeometry,
+  districtRollups,
+  mandals,
+  monsoonWatch,
+  titleCase,
+} from "./data";
 
-/** Mean year-on-year trend (m/yr) of a district's mandals — forward-looking signal.
- *  Positive = water tables deepening (worse). */
+/** Median year-on-year trend (m/yr) of a district's mandals.
+ *  Positive = water tables deepening (worse). Median, not mean, so one mandal
+ *  with a displaced well cannot carry a district. */
 function districtTrends(): Record<string, number> {
-  const acc: Record<string, { t: number; n: number }> = {};
+  const acc: Record<string, number[]> = {};
   for (const m of mandals) {
     const t = m.trend_m_per_yr;
     if (t === null || t === undefined) continue;
-    const k = m.district_name.toUpperCase();
-    (acc[k] ??= { t: 0, n: 0 });
-    acc[k].t += t;
-    acc[k].n += 1;
+    (acc[m.district_name.toUpperCase()] ??= []).push(t);
   }
   const out: Record<string, number> = {};
-  for (const k in acc) out[k] = acc[k].n ? acc[k].t / acc[k].n : 0;
+  for (const k in acc) {
+    const sorted = [...acc[k]].sort((a, b) => a - b);
+    out[k] = sorted[Math.floor(sorted.length / 2)];
+  }
   return out;
 }
 
-/* Prototype monitoring classification. Groundwater depth/trend determines the
-   review tier; climate balance is displayed only as context and cannot create a
-   pumping recommendation. */
+/* Prototype monitoring classification. Groundwater depth, trend and this
+   season's measured recharge determine the review tier; climate balance is
+   displayed only as context and cannot create a pumping recommendation.
+
+   THE TIER IS COMPARATIVE, AND DELIBERATELY SO. The rule this replaces used
+   absolute cuts -- "any mandal in stress" and "trend over 1.0 m/yr" -- and put
+   all 28 districts in the top tier. 386 of 670 mandals carry a stress
+   indicator and the median district trend is 1.58 m/yr, so both tests were
+   true everywhere and the output carried no information. Worse, both were
+   denominated in quantities that grow when the model improves, so any fresh
+   absolute cut would saturate again at the next model change.
+
+   Every component below is instead the district's distance ABOVE a statewide
+   figure computed from the same data. "Everywhere is stressed" cannot make
+   everywhere a priority, because the statewide figure moves with it. */
+
+/** Weights: one point per ten percentage points of extra stressed mandals, per
+ *  half a metre a year of extra deepening, and per ten points of extra mandals
+ *  short of their own recharge this season. */
+const STRESS_POINTS_PER = 10;
+const TREND_POINTS_PER = 0.5;
+const SHORTFALL_POINTS_PER = 10;
+/** Where the priority list stops. This is a judgement about how long a list a
+ *  district office can act on in a month -- not a claim that a district below
+ *  it is safe. It currently yields eleven districts of twenty-eight. */
+const REVIEW_SCORE = 3.0;
+/** A season this far short reaches the list on its own, without waiting for the
+ *  multi-year trend to catch up. */
+const SHORT_SEASON_SHARE = 0.35;
+/** Field verify is about whether a district's readings can be relied on at all,
+ *  not about how stressed it is. Three or more mandals whose readings contradict
+ *  their own signal is a data problem before it is a water problem. */
+const VERIFY_MANDALS = 3;
 
 export type IrrigationAction = "Monitor" | "Review" | "Field verify";
 
@@ -29,6 +67,7 @@ export type DistrictAdvisory = {
   action: IrrigationAction;
   reason: string;
   verifyFirst: boolean;
+  verifyMandals: number;
   seedCount: number;
   hasSensor: boolean;
   gw: number | null;
@@ -36,63 +75,148 @@ export type DistrictAdvisory = {
   balanceStatus: string;
   trend: number | null;
   outlook: "deepening" | "recovering" | "stable";
+  priorityScore: number;
+  stressShare: number | null;
+  rechargeShortShare: number | null;
+  rechargeFlagged: number | null;
+  rechargeCompared: number | null;
+  stateMedianTrend: number;
 };
 
 export const ACTION_META: Record<IrrigationAction, { color: string; label: string; gloss: string }> = {
-  Monitor: { color: "#5e9b6b", label: "Monitor", gloss: "Continue observation and history review." },
-  Review: { color: "#d79b2e", label: "Review history", gloss: "Review measured trends and contextual signals." },
-  "Field verify": { color: "#c65a46", label: "Field verify", gloss: "Confirm the current groundwater level before operational use." },
+  Monitor: { color: "#5e9b6b", label: "Monitor", gloss: "At or below the statewide norm on every measured signal." },
+  Review: { color: "#d79b2e", label: "Review history", gloss: "Measurably worse than the state; review the measured history first." },
+  "Field verify": { color: "#c65a46", label: "Field verify", gloss: "The district's own readings cannot be relied on until confirmed." },
 };
+
+/** This season's recharge, per district, from the monsoon watch. A measured
+ *  change in depth between two readings of the same well -- the same class of
+ *  evidence as the trend, and admissible here for the same reason. Rainfall and
+ *  the ocean state are not, and do not appear. */
+function rechargeByDistrict(): Record<string, { flagged: number; compared: number }> {
+  const acc: Record<string, { flagged: number; compared: number }> = {};
+  for (const m of monsoonWatch.mandals) {
+    const key = m.district.toUpperCase();
+    (acc[key] ??= { flagged: 0, compared: 0 });
+    acc[key].compared += 1;
+    if (m.status !== "normal") acc[key].flagged += 1;
+  }
+  return acc;
+}
+
+/** The statewide figures every district is measured against. */
+function stateNorms() {
+  const withBucket = mandals.filter((m) => m.status_bucket);
+  const stressShare = withBucket.length
+    ? withBucket.filter((m) => m.status_bucket === "Stress").length / withBucket.length
+    : 0;
+  const trends = mandals
+    .map((m) => m.trend_m_per_yr)
+    .filter((t): t is number => t !== null && t !== undefined)
+    .sort((a, b) => a - b);
+  const medianTrend = trends.length ? trends[Math.floor(trends.length / 2)] : 0;
+  const recharge = Object.values(rechargeByDistrict());
+  const compared = recharge.reduce((sum, r) => sum + r.compared, 0);
+  const shortShare = compared ? recharge.reduce((sum, r) => sum + r.flagged, 0) / compared : 0;
+  return { stressShare, medianTrend, shortShare };
+}
 
 export function districtAdvisories(): DistrictAdvisory[] {
   const rollups = districtRollups();
   const trends = districtTrends();
+  const recharge = rechargeByDistrict();
+  const norms = stateNorms();
+
   return districtGeometry.districts
     .map((d) => {
+      const key = d.d.toUpperCase();
       const gw = d.gw_percentile;
       const bal = d.water_balance_mm;
       const status = d.water_balance_status;
-      const rollup = rollups.find((r) => r.district_name.toUpperCase() === d.d.toUpperCase());
+      const rollup = rollups.find((r) => r.district_name.toUpperCase() === key);
       const verify = rollup?.verify_count ?? 0;
       const seedCount = rollup?.seed_count ?? 0;
-      const trend = trends[d.d.toUpperCase()] ?? null;
-      const outlook: DistrictAdvisory["outlook"] =
-        trend === null ? "stable" : trend > 0.3 ? "deepening" : trend < -0.3 ? "recovering" : "stable";
+      const stressShare = rollup && rollup.seed_count ? rollup.stress_count / rollup.seed_count : null;
+      const trend = trends[key] ?? null;
+      const season = recharge[key] ?? null;
+      const shortShare = season && season.compared ? season.flagged / season.compared : null;
+
+      const parts: string[] = [];
+      let score = 0;
+      if (stressShare !== null) {
+        const over = Math.max(0, stressShare - norms.stressShare);
+        score += over * 100 / STRESS_POINTS_PER;
+        if (over > 0) {
+          parts.push(`${Math.round(stressShare * 100)}% of its mandals carry a stress indicator against ${Math.round(norms.stressShare * 100)}% statewide`);
+        }
+      }
+      if (trend !== null) {
+        const over = Math.max(0, trend - norms.medianTrend);
+        score += over / TREND_POINTS_PER;
+        if (over > 0) {
+          parts.push(`its median mandal is deepening ${trend.toFixed(1)} m/yr against ${norms.medianTrend.toFixed(1)} statewide`);
+        }
+      }
+      if (shortShare !== null) {
+        const over = Math.max(0, shortShare - norms.shortShare);
+        score += over * 100 / SHORTFALL_POINTS_PER;
+        if (over > 0 && season) {
+          parts.push(`${season.flagged} of ${season.compared} mandals are short of their own recharge this season against ${Math.round(norms.shortShare * 100)}% statewide`);
+        }
+      }
+      score = Math.round(score * 100) / 100;
 
       let action: IrrigationAction;
       let reason: string;
       if (!seedCount) {
         action = "Field verify";
         reason = "No reconciled mandal groundwater history is available for this prototype district rollup.";
-      } else if (verify > 0 || (trend !== null && trend > 1.0)) {
+      } else if (verify >= VERIFY_MANDALS) {
         action = "Field verify";
-        reason = `Groundwater history includes stress or a strong deepening trend${trend !== null ? ` (~${trend.toFixed(1)} m/yr)` : ""}.`;
-      } else if (trend !== null && trend > 0.3) {
+        reason = `${verify} mandals here are flagged where the measured depth contradicts the satellite signal; confirm the readings before the district figures are used.`;
+      } else if (score >= REVIEW_SCORE || (shortShare !== null && shortShare >= SHORT_SEASON_SHARE)) {
         action = "Review";
-        reason = `Measured groundwater trend is deepening (~${trend.toFixed(1)} m/yr); review the history.`;
+        reason = parts.length
+          ? `Worse than the state on measured signals: ${parts.join("; ")}. Review the history before the rabi allocation.`
+          : "Measured signals place this district above the statewide norm; review the history.";
       } else {
         action = "Monitor";
-        reason = "No strong groundwater deepening signal in the available measured/modelled records.";
+        reason = "At or below the statewide norm on stressed mandals, deepening trend and this season's recharge.";
       }
       reason += status ? ` Climate-balance context: ${status.toLowerCase()} (not direct recharge).` : "";
+
       return {
         id: d.d,
         district: titleCase(d.d),
         action,
         reason,
-        verifyFirst: verify > 0,
+        // What the pill says: this district's readings need ground truth before
+        // its figures are used. Holding a single such mandal is worth printing
+        // as a count, but it is not an instruction to verify the district.
+        verifyFirst: verify >= VERIFY_MANDALS || !seedCount,
+        verifyMandals: verify,
         seedCount,
         hasSensor: seedCount > 0,
         gw,
         balance: bal,
         balanceStatus: status,
         trend: trend === null ? null : Math.round(trend * 100) / 100,
-        outlook,
-      };
+        outlook:
+          trend === null ? "stable" : trend > 0.3 ? "deepening" : trend < -0.3 ? "recovering" : "stable",
+        priorityScore: score,
+        stressShare: stressShare === null ? null : Math.round(stressShare * 1000) / 1000,
+        rechargeShortShare: shortShare === null ? null : Math.round(shortShare * 1000) / 1000,
+        rechargeFlagged: season ? season.flagged : null,
+        rechargeCompared: season ? season.compared : null,
+        stateMedianTrend: Math.round(norms.medianTrend * 100) / 100,
+      } as DistrictAdvisory;
     })
     .sort((a, b) => {
       const order: Record<IrrigationAction, number> = { "Field verify": 0, Review: 1, Monitor: 2 };
-      return order[a.action] - order[b.action];
+      if (order[a.action] !== order[b.action]) return order[a.action] - order[b.action];
+      // Within a tier the score is the ordering a reader actually wants: the
+      // tier is a coarse band, the score says where to start.
+      return b.priorityScore - a.priorityScore;
     });
 }
 
@@ -109,6 +233,9 @@ export type AwareAdvisoryRecord = {
   verify_required: boolean;
   trend_outlook: "deepening" | "recovering" | "stable";
   trend_m_per_yr: number | null;
+  priority_score: number;
+  stress_share: number | null;
+  recharge_short_share: number | null;
   data_basis: "groundwater_history+context" | "context_only";
   source: string;
   as_of: string;
@@ -126,6 +253,9 @@ export function awarePayload(): AwareAdvisoryRecord[] {
     verify_required: a.verifyFirst,
     trend_outlook: a.outlook,
     trend_m_per_yr: a.trend,
+    priority_score: a.priorityScore,
+    stress_share: a.stressShare,
+    recharge_short_share: a.rechargeShortShare,
     data_basis: a.hasSensor ? "groundwater_history+context" : "context_only",
     source: "AP Groundwater Intelligence (unreleased AWARE preview; official schema and field verification required)",
     // Advisory freshness = latest sensor month; the annual water balance it draws on
@@ -142,6 +272,8 @@ export const AWARE_FIELD_MAP: { ours: string; aware: string; note: string }[] = 
   { ours: "water_balance_mm", aware: "water_balance", note: "Annual rainfall − ET (mm/yr)" },
   { ours: "verify_required", aware: "needs_ground_truth", note: "Flag for field verification" },
   { ours: "trend_outlook", aware: "season_outlook", note: "Measured year-on-year direction, not a future forecast" },
+  { ours: "priority_score", aware: "priority_rank", note: "Distance above the statewide norm on stressed mandals, deepening trend and this season's recharge; comparative, not absolute" },
+  { ours: "recharge_short_share", aware: "season_recharge_gap", note: "Share of the district's mandals short of their own ten-year recharge normal this season" },
   { ours: "data_basis", aware: "confidence_basis", note: "Groundwater-history coverage versus context-only" },
   { ours: "as_of", aware: "valid_for", note: "Latest observation period" },
   { ours: "balance_reference_year", aware: "balance_year", note: "Completed year of the annual water-balance input (TerraClimate)" },

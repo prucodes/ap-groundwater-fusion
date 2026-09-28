@@ -732,7 +732,12 @@ export function districtRollups(): DistrictRollup[] {
         district_name: d,
         mandal_count: realCount,
         seed_count: rows.length,
-        verify_count: rows.filter((r) => r.status_bucket === "Stress").length,
+        // Counts the Verify bucket, which is what the name says and what every
+        // consumer already assumed: the district brief listed the Verify
+        // mandals by name beside this number, and the irrigation tier escalated
+        // any district holding one. Both were reading a Stress count, which 386
+        // of 670 mandals carry, so both were saturated.
+        verify_count: rows.filter((r) => r.status_bucket === "Verify").length,
         normal_count: rows.filter((r) => r.status_bucket === "Normal").length,
         stress_count: rows.filter((r) => r.status_bucket === "Stress").length,
         avg_groundwater_percentile: gw.length ? Math.round((gw.reduce((a, b) => a + b, 0) / gw.length) * 100) / 100 : null,
@@ -745,7 +750,9 @@ export function districtRollups(): DistrictRollup[] {
         mandals: rows,
       };
     })
-    .sort((a, b) => b.verify_count - a.verify_count);
+    // Ordered by the stressed-mandal count, as it always was in practice: the
+    // key this sorted on used to hold that number under the other name.
+    .sort((a, b) => b.stress_count - a.stress_count);
 }
 
 /* ---------------- Status distribution (display, includes Insufficient Data) ---------------- */

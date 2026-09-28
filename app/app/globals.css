@@ -5094,3 +5094,23 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
   margin-bottom: 12px;
 }
 .watchActions > span { flex: 1 1 260px; font-size: 12.5px; line-height: 1.5; color: var(--muted); }
+.priorityBar {
+  display: block;
+  width: 56px;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--chart-track);
+  overflow: hidden;
+  margin-bottom: 3px;
+}
+.priorityBarFill { display: block; height: 100%; border-radius: 4px; }
+.verifyCountPill {
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--field);
+  border: 1px solid var(--line);
+}
