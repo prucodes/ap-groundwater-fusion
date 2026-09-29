@@ -58,10 +58,19 @@ Anything a reviewer will ask about.
 ## Rendering it
 
 `python3 scripts/build_elnino_video.py --out dist/el_nino_60s.mp4` draws the
-whole film and writes a 1080×1920 MP4. It fetches NASA's Blue Marble once and
-caches it, re-centres the equirectangular image so the Pacific is one basin
-rather than split down both edges, and composites the sea-surface anomaly, the
-trade winds and the rain over it. The last three scenes are drawn from
+whole film and writes a 1080×1920 MP4. It fetches two public sources once and
+caches them: NASA's Blue Marble for the Earth, and **NOAA's ERSST v5** for the
+sea surface. The equirectangular imagery is re-centred so the Pacific is one
+basin rather than split down both edges.
+
+**The warm water on screen is measured, not painted.** Anomalies are computed
+from ERSST against a 1991–2020 climatology taken from the same file, coloured on
+the diverging ramp these maps are always drawn with, and made fully transparent
+below 0.35 °C so the ocean shows through where nothing is happening. Twelve
+consecutive months — September 2025 to August 2026 — step past during *the fan
+slows*, with the month stamped on screen, so a viewer watches this El Niño
+actually arrive rather than being shown an illustration of one. ERSST's own
+licence field reads "No constraints on data access or use". The last three scenes are drawn from
 `app/data/monsoon_watch.json` and `ap_map_geometry.json`, so the figures on
 screen are the published ones and move with the weekly refresh.
 
