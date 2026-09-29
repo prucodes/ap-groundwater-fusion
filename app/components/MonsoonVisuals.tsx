@@ -404,3 +404,86 @@ export function EnsoTrail() {
     </div>
   );
 }
+
+/** How an El Niño reaches a well in Andhra Pradesh, in four measured steps.
+ *
+ *  Written because the explainers that circulate are Pacific-facing and stop
+ *  at the ocean: they show sea surface temperature off Peru and never reach a
+ *  monsoon, let alone an aquifer. Every figure here is one this site already
+ *  publishes and sources, so the chain can be checked rather than believed.
+ *
+ *  The honesty that matters is in the last line: three of these links are
+ *  measured directly and the one between the ocean and the rain is a
+ *  statistical association over 45 years. Nothing here models a mechanism.
+ */
+export function ElNinoChain() {
+  const w = monsoonWatch;
+  const enso = w.enso;
+  const rain = w.rainfall;
+  const sw = w.elNinoRainfall.swMonsoon;
+  const volume = w.recharge.volume;
+  if (!enso || !rain || !sw) return null;
+
+  const steps = [
+    {
+      key: "ocean",
+      eyebrow: "1 · The Pacific",
+      value: `${enso.oniC > 0 ? "+" : ""}${enso.oniC.toFixed(2)} °C`,
+      lead: "warmer than normal in the Niño 3.4 box",
+      body: `A band of the equatorial Pacific runs warm, and the atmosphere above it shifts with it. ${enso.season} ${enso.asOf.slice(0, 4)} is the warmest June–August in the index since 1950.`,
+      source: "NOAA Oceanic Niño Index",
+    },
+    {
+      key: "monsoon",
+      eyebrow: "2 · The monsoon",
+      value: `${sw.elNinoAnomalyPct}%`,
+      lead: "average June–September rain in El Niño years",
+      body: `Measured across ${sw.years} years and ${sw.elNinoYears} El Niño events over Andhra Pradesh itself — below normal in ${sw.elNinoBelowNormal} of ${sw.elNinoYears}, against ${sw.belowNormalAllYears} of ${sw.allYears} years in general.`,
+      source: `CHIRPS ${sw.firstYear}–${sw.lastYear}`,
+    },
+    {
+      key: "season",
+      eyebrow: "3 · This season",
+      value: `${rain.anomalyPct}%`,
+      lead: `June–August rain, ${rain.rankDriest === 1 ? "the driest" : `${rain.rankDriest}nd driest`} of ${rain.ofYears}`,
+      body: `Worse than an average El Niño, which is why the ocean explains the direction and not the size. ${formatMm(rain.mm)} mm fell against a ${formatMm(rain.normalMm)} mm normal.`,
+      source: `CHIRPS, ${rain.firstYear} onward`,
+    },
+    {
+      key: "aquifer",
+      eyebrow: "4 · The aquifer",
+      value: `${w.recharge.fallingPct}%`,
+      lead: "of mandals lower than they were in May",
+      body: volume
+        ? `In every earlier season that figure ran between ${Math.min(...w.seasons.filter((s) => s.year !== w.season.year).map((s) => s.fallingPct))}% and ${Math.max(...w.seasons.filter((s) => s.year !== w.season.year).map((s) => s.fallingPct))}%. The shortfall comes to ${formatMm(Math.round(volume.shortfallMm3))} million m³ of water.`
+        : "Measured in the wells themselves, against each mandal's own ten-year normal.",
+      source: "APWRIMS monthly readings",
+    },
+  ];
+
+  return (
+    <div className="chain">
+      {steps.map((step, index) => (
+        <div className="chainStep" key={step.key}>
+          <span className="chainEyebrow">{step.eyebrow}</span>
+          <strong className="chainValue">{step.value}</strong>
+          <span className="chainLead">{step.lead}</span>
+          <p className="chainBody">{step.body}</p>
+          <span className="chainSource">{step.source}</span>
+          {index < steps.length - 1 ? (
+            <span className="chainArrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" role="presentation">
+                <path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2"
+                      strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          ) : null}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function formatMm(value: number) {
+  return value.toLocaleString("en-IN", { maximumFractionDigits: 0 });
+}

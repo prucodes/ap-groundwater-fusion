@@ -5307,3 +5307,68 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 @media (max-width: 460px) {
   .monsoonHeadline { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* How an El Nino reaches a well. A chain, not a grid: the arrows carry the
+   argument, and on a phone they turn to point down the column. */
+.chain {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+}
+.chainStep {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 15px 16px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--field);
+}
+.chainEyebrow {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.chainValue {
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.chainLead { font-size: 12.5px; font-weight: 600; color: var(--ink-soft); line-height: 1.4; }
+.chainBody { margin: 6px 0 0; font-size: 12px; line-height: 1.55; color: var(--muted); }
+.chainSource {
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: 11px;
+  color: var(--muted-2);
+}
+.chainArrow {
+  position: absolute;
+  right: -16px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--card);
+  color: var(--muted-2);
+}
+.chainArrow svg { width: 15px; height: 15px; }
+
+@media (max-width: 860px) {
+  .chain { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .chainArrow {
+    right: 50%;
+    top: auto;
+    bottom: -21px;
+    transform: translateX(50%) rotate(90deg);
+  }
+}

@@ -12,7 +12,7 @@ import {
   IconWaves,
 } from "../../components/icons";
 import { ExportMonsoonWatchButton } from "../../components/ExportButtons";
-import { EnsoTrail, RainfallHistory, RechargeMap, RechargeTrajectory } from "../../components/MonsoonVisuals";
+import { ElNinoChain, EnsoTrail, RainfallHistory, RechargeMap, RechargeTrajectory } from "../../components/MonsoonVisuals";
 import { formatNumber, monsoonWatch, titleCase } from "../../lib/data";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -138,6 +138,24 @@ export default function MonsoonPage() {
           ) : null}
         </div>
         <p className="cardNote">{r.rule}.</p>
+      </section>
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconGlobe /></span>
+            How an El Niño reaches a well in Andhra Pradesh
+          </div>
+          <span className="cardSub">four steps, each one measured</span>
+        </div>
+        <ElNinoChain />
+        <p className="cardNote">
+          Explainers of El Niño stop at the ocean — they show the Pacific warming and never reach a monsoon,
+          let alone an aquifer. Three of the links above are measured directly in Andhra Pradesh. The one
+          between the ocean and the rain is a <strong>statistical association across 45 years</strong>, strong
+          and consistent in direction, and it is not a mechanism this site models: the ocean explains why a
+          poor monsoon was more likely, never how much rain any particular month will bring.
+        </p>
       </section>
 
       <section className="card mapCard">
