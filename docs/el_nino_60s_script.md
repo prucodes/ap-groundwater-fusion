@@ -55,6 +55,24 @@ Anything a reviewer will ask about.
 
 ---
 
+## Rendering it
+
+`python3 scripts/build_elnino_video.py --out dist/el_nino_60s.mp4` draws the
+whole film and writes a 1080×1920 MP4. It fetches NASA's Blue Marble once and
+caches it, re-centres the equirectangular image so the Pacific is one basin
+rather than split down both edges, and composites the sea-surface anomaly, the
+trade winds and the rain over it. The last three scenes are drawn from
+`app/data/monsoon_watch.json` and `ap_map_geometry.json`, so the figures on
+screen are the published ones and move with the weekly refresh.
+
+**It has no narration.** Nothing here can synthesise speech, so the film is
+silent and the captions carry the script's words verbatim — which is how these
+are watched. Recording a voice over it is the one step left to a person, and
+the table above is what they read.
+
+`dist/` is gitignored: the generator rebuilds the film, and an 8 MB MP4
+regenerated on every refresh does not belong in the history.
+
 ## Production notes
 
 **Footage.** Lines 6–8 are screen recordings of
