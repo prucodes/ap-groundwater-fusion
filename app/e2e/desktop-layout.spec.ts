@@ -339,3 +339,45 @@ test.describe("the recharge map reads in metres and in water", () => {
     expect(svg!.width).toBeGreaterThan(card!.width * 0.95);
   });
 });
+
+/* The panel that explains what an El Nino is. It carries eighteen months of
+   imagery, so it is also the heaviest thing on the page: the frames were 4.3 MB
+   as PNGs before they became WebP. */
+test.describe("the Pacific panel explains and stays light", () => {
+  test("it shows one month at a time and the scrubber changes it", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+
+    const frames = page.locator(".pacField");
+    expect(await frames.count()).toBeGreaterThan(11);
+    // Exactly one visible, or the anomaly fields stack into mud.
+    expect(await page.locator(".pacField.on").count()).toBe(1);
+
+    const before = await page.locator(".pacMonth").innerText();
+    await page.locator(".pacScrub").fill("2");
+    await page.waitForTimeout(300);
+    expect(await page.locator(".pacMonth").innerText()).not.toBe(before);
+  });
+
+  test("Andhra Pradesh is marked on the map, on the India side", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+    const stage = await page.locator(".pacStage").boundingBox();
+    const pin = await page.locator(".pacPin").boundingBox();
+    const across = (pin!.x - stage!.x) / stage!.width;
+    expect(across).toBeGreaterThan(0);
+    expect(across).toBeLessThan(0.2);
+    await expect(page.locator(".pacPin")).toContainText("Andhra Pradesh");
+  });
+
+  test("playing advances the months", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+    await page.locator(".pacScrub").fill("0");
+    await page.waitForTimeout(200);
+    const first = await page.locator(".pacMonth").innerText();
+    await page.locator(".pacPlay").click();
+    await page.waitForTimeout(1500);
+    expect(await page.locator(".pacMonth").innerText()).not.toBe(first);
+  });
+});

@@ -19,6 +19,11 @@ STATIC_BY_DESIGN = {
     "ap_district_geometry.json": "district polygons and their layer ranges",
     "dashboard_summary.json": "a July 2026 snapshot; the UI derives its live figures in data.ts instead",
     "source_readiness.json": "hand-maintained description of which sources are live",
+    "enso_pacific.json": (
+        "the Pacific panel's month frames; built by phase3_levels/build_enso_pacific.py "
+        "from a 159 MB source that gains one month at a time, so it is run deliberately "
+        "rather than weekly, like the boundary alias table"
+    ),
 }
 
 

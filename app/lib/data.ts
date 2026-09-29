@@ -10,6 +10,7 @@ import districtGeometryJson from "../data/ap_district_geometry.json";
 import mandalHeatJson from "../data/ap_mandal_heat.json";
 import nasaProvenanceJson from "../data/nasa_provenance.json";
 import monsoonWatchJson from "../data/monsoon_watch.json";
+import pacificEnsoJson from "../data/enso_pacific.json";
 import type {
   DashboardSummary,
   DistrictGeometry,
@@ -251,6 +252,24 @@ export type MonsoonComposite = {
 };
 
 export const monsoonWatch = monsoonWatchJson as unknown as MonsoonWatch;
+
+export type PacificEnsoData = {
+  contractVersion: string;
+  window: { lon0: number; lon1: number; lat0: number; lat1: number };
+  basemap: string;
+  aspect: number;
+  andhraPradesh: { xPct: number; yPct: number };
+  months: Array<{ month: string; file: string; nino34C: number; nino34ThreeMonthC: number }>;
+  source: string;
+  basemapSource: string;
+};
+
+export const pacificEnso = pacificEnsoJson as PacificEnsoData;
+
+/** The site is served under a project subpath on Pages, so anything in public/
+ *  needs it prepended. next.config.mjs already exports it for exactly this;
+ *  the crystal page reads the same variable. */
+export const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const groundwaterRecordCollection = groundwaterRecordsJson as GroundwaterRecordCollectionV2;
 export const groundwaterRecords = groundwaterRecordCollection.records;
