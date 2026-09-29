@@ -139,9 +139,14 @@ anomaly across a window that runs from the Bay of Bengal to Peru -- so India and
 South America are in the same picture, which no circulating explainer does --
 one frame per month, with Andhra Pradesh marked. Stepping through it, the warm
 water leaves Indonesia and slides east. The colour is the measurement; nothing
-is drawn. It is NOT part of the weekly refresh: the source is a 159 MB file that
-gains one month at a time, so run it when the ocean state has moved enough to be
-worth republishing, the way the alias table is run. The figure beside each month
+is drawn. It is NOT part of the weekly refresh: the source is a 159 MB file that gains one
+month at a time, so pulling it every Monday would spend a quarter of a gigabyte
+a month to add nothing. `.github/workflows/enso_pacific_monthly.yml` runs it on
+the 8th at 06:00 UTC instead -- late enough that NOAA has posted the previous
+month, two hours clear of the weekly job so their pushes cannot collide, and it
+rebases if one lands anyway. It commits only when a new month actually arrived,
+and refuses to publish a panel whose running mean has drifted from the
+published index. The figure beside each month
 is that single month's anomaly in the Nino 3.4 box; the published index is a
 three-month running mean of the same box, and a test holds the two within
 0.35 C of each other so the panel can never quietly drift from the headline.
