@@ -133,6 +133,19 @@ year is published measured-only and flagged for verification rather than
 modelled from a different well. Chinnagottigallu stepped in October 2024 and is
 modelled normally again, on its new regime.
 
+**The Pacific panel shows what an El Nino is, rather than defining it.**
+`phase3_levels/build_enso_pacific.py` renders NOAA's measured sea-surface
+anomaly across a window that runs from the Bay of Bengal to Peru -- so India and
+South America are in the same picture, which no circulating explainer does --
+one frame per month, with Andhra Pradesh marked. Stepping through it, the warm
+water leaves Indonesia and slides east. The colour is the measurement; nothing
+is drawn. It is NOT part of the weekly refresh: the source is a 159 MB file that
+gains one month at a time, so run it when the ocean state has moved enough to be
+worth republishing, the way the alias table is run. The figure beside each month
+is that single month's anomaly in the Nino 3.4 box; the published index is a
+three-month running mean of the same box, and a test holds the two within
+0.35 C of each other so the panel can never quietly drift from the headline.
+
 **Monsoon Watch answers a different question from the nowcast.** The nowcast
 says how deep the water is; `phase3_levels/build_monsoon_watch.py` asks whether
 the season that refills it is working. For each mandal it takes the change from

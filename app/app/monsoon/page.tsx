@@ -13,7 +13,8 @@ import {
 } from "../../components/icons";
 import { ExportMonsoonWatchButton } from "../../components/ExportButtons";
 import { ElNinoChain, EnsoTrail, RainfallHistory, RechargeMap, RechargeTrajectory } from "../../components/MonsoonVisuals";
-import { formatNumber, monsoonWatch, titleCase } from "../../lib/data";
+import { PacificEnso } from "../../components/PacificEnso";
+import { formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -138,6 +139,33 @@ export default function MonsoonPage() {
           ) : null}
         </div>
         <p className="cardNote">{r.rule}.</p>
+      </section>
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconWaves /></span>
+            What an El Niño is
+          </div>
+          <span className="cardSub">measured sea surface, {pacificEnso.months[0].month} to{" "}
+            {pacificEnso.months[pacificEnso.months.length - 1].month}</span>
+        </div>
+        <p className="cardLede">
+          Trade winds normally blow west along the equator, dragging warm surface water away from South America
+          and piling it up near Indonesia, where it falls as rain. Cold water rises behind it, off Peru. Every
+          few years those winds slacken and the warm water slides back east — and the rain goes with it. Press
+          play and watch it happen: this is not an illustration, it is NOAA&rsquo;s measurement, month by month,
+          and Andhra Pradesh is marked on the same map.
+        </p>
+        <PacificEnso />
+        <p className="cardNote">
+          {pacificEnso.source}. Earth imagery: {pacificEnso.basemapSource}. The figure beside each month is that
+          <strong> single month&rsquo;s</strong> average anomaly in the Niño 3.4 box. The published index —{" "}
+          {enso ? `the ${enso.oniC > 0 ? "+" : ""}${enso.oniC.toFixed(2)} °C quoted above` : "the one quoted above"} — is a
+          three-month running mean of the same box, so it lags a fast-rising month and reads lower. Computed here
+          against a 1991–2020 baseline, the running mean lands within about 0.2 °C of NOAA&rsquo;s published
+          value throughout this event.
+        </p>
       </section>
 
       <section className="card">
