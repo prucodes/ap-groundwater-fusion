@@ -27,6 +27,7 @@ Outputs app/data/monsoon_watch.json.
 import csv
 import datetime
 import json
+import math
 import os
 import statistics
 import sys
@@ -38,6 +39,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from build_levels_engine import (aquifer_of, build_frame, identity_norm,  # noqa: E402
                                  resolve_locations)
+from shapely.geometry import Polygon  # noqa: E402
 from fetch_chirps_history import history_paths  # noqa: E402
 
 APP = os.path.join(HERE, "..", "app", "data")
@@ -68,6 +70,27 @@ SW_MONSOON = (6, 7, 8, 9)
 NE_MONSOON = (10, 11, 12)
 ONI_SOURCE = "https://psl.noaa.gov/data/correlation/oni.data"
 CHIRPS_SOURCE = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs"
+
+
+# Andhra Pradesh's mid-latitude, for turning degrees into kilometres. Across one
+# state a flat projection is accurate to well under a percent.
+MID_LAT = 16.0
+
+
+def mandal_areas(geo):
+    """Each boundary's area in square kilometres, by boundary index."""
+    out = {}
+    for index, feature in enumerate(geo["mandals"]):
+        rings = [ring for ring in feature.get("rings", []) if len(ring) >= 4]
+        if not rings:
+            continue
+        polygon = Polygon(rings[0])
+        if not polygon.is_valid:
+            polygon = polygon.buffer(0)
+        if polygon.is_empty:
+            continue
+        out[index] = polygon.area * 111.32 * 110.57 * math.cos(math.radians(MID_LAT))
+    return out
 
 
 def utc_now():
@@ -198,6 +221,31 @@ def composite(totals, label, oni, index, district_of):
     }
 
 
+def volume_summary(table):
+    """The shortfall as water rather than as water table.
+
+    Only mandals that reconciled to a polygon have an area, so the total is
+    stated with the count it covers rather than implied to be statewide.
+    """
+    placed = table[table.shortfallMm3.notna()]
+    if placed.empty:
+        return None
+    total = float(placed.shortfallMm3.sum())
+    area = float(placed.areaKm2.sum())
+    return {
+        "shortfallMm3": round(total, 0),
+        "mandals": int(len(placed)),
+        "ofMandals": int(len(table)),
+        "areaKm2": round(area, 0),
+        # The same quantity as a depth spread over the ground it was measured
+        # on, which is the one comparison that needs no outside figure.
+        "asDepthMm": round(1000 * total * 1e6 / (area * 1e6), 1) if area else None,
+        "note": ("shortfall in metres of water table x the mandal's specific yield x its area; "
+                 "specific yield is the CGWB measurement where one exists for that mandal, "
+                 "otherwise the documented aquifer proxy"),
+    }
+
+
 def score_recharge(levels, meta, year, target_mm):
     """Each mandal's May-to-target change against its own median for that stretch.
 
@@ -314,9 +362,26 @@ def build():
     levels = frame.pivot_table(index="mkey", columns="date", values="level_mbgl", aggfunc="last")
     latest_month = sorted(levels.columns)[-1]
     year, target_mm = int(latest_month[:4]), int(latest_month[5:7])
-    meta = frame.drop_duplicates("mkey").set_index("mkey")[["district", "mandal", "aquifer_type"]]
+    meta = frame.drop_duplicates("mkey").set_index("mkey")[
+        ["district", "mandal", "aquifer_type", "specific_yield"]]
     table = score_recharge(levels, meta, year, target_mm)
     table["boundaryIndex"] = [boundary_index.get(key) for key in table.index]
+
+    # Metres of water table are not water. A metre lost from hard rock holds a
+    # fraction of the water a metre lost from the delta does, so a map coloured
+    # by metres answers "will my bore still reach it" and not "how much has this
+    # district actually lost". Both are wanted; only the first was published.
+    # Specific yield is taken from the frame, so this inherits the engine's own
+    # decision about where the measured CGWB value overrides the aquifer proxy.
+    areas = mandal_areas(geo)
+    table["areaKm2"] = [
+        areas.get(int(index)) if index is not None and not pd.isna(index) else None
+        for index in table.boundaryIndex
+    ]
+    table["shortfallMm3"] = [
+        None if area is None or pd.isna(area) or pd.isna(yield_) else shortfall * float(yield_) * area
+        for shortfall, yield_, area in zip(table.shortfallM, table.specific_yield, table.areaKm2)
+    ]
 
     oni = load_oni()
     seasons = season_history(levels, table.index, year, target_mm, oni)
@@ -343,6 +408,12 @@ def build():
             "thisSeasonM": round(float(row.thisSeasonM), 2),
             "typicalM": round(float(row.typicalM), 2),
             "shortfallM": round(float(row.shortfallM), 2),
+            # Four decimals, not three: hard-rock yields sit near 0.02, where a
+            # third-decimal rounding moves the product by about 3% and the
+            # published columns stop multiplying out to the published volume.
+            "specificYield": None if pd.isna(row.specific_yield) else round(float(row.specific_yield), 4),
+            "areaKm2": None if pd.isna(row.areaKm2) else round(float(row.areaKm2), 1),
+            "shortfallMm3": None if pd.isna(row.shortfallMm3) else round(float(row.shortfallMm3), 1),
             "spreadM": round(float(row.spreadM), 2),
             "latestDepthM": round(float(row.latestDepthM), 2),
             "comparableYears": int(row.comparableYears),
@@ -412,9 +483,12 @@ def build():
                 {"aquifer": name,
                  "mandals": int(len(rows)),
                  "medianShortfallM": round(float(rows.shortfallM.median()), 2),
+                 "medianSpecificYield": round(float(rows.specific_yield.median()), 3),
+                 "shortfallMm3": round(float(rows.shortfallMm3.sum(skipna=True)), 0),
                  "fallingPct": round(float(100 * (rows.thisSeasonM > 0).mean()), 1)}
                 for name, rows in table.groupby("aquifer_type")
             ],
+            "volume": volume_summary(table),
             "rule": (f"May-to-{latest_month} change against the same mandal's median over the "
                      f"previous {LOOKBACK_YEARS} years; flagged short at >= {SHORTFALL_M} m AND "
                      f">= {SHORTFALL_Z}x its own year-to-year spread"),

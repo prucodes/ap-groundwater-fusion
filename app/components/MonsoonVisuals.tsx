@@ -17,9 +17,27 @@ const SHORT_STOPS: Array<{ upTo: number; fill: string; label: string }> = [
   { upTo: Infinity, fill: "#9e2f22", label: "more than 4 m short" },
 ];
 
+/* The same ramp read against water rather than water table. A metre lost from
+   hard rock holds about a fifth of the water a metre lost from the delta does,
+   so the two views rank mandals differently and both are wanted: metres answer
+   "will my bore still reach it", volume answers "how much has this place
+   actually lost". */
+const VOLUME_STOPS: Array<{ upTo: number; fill: string; label: string }> = [
+  { upTo: 0, fill: "#2f7d6b", label: "gained" },
+  { upTo: 5, fill: "#8fbfae", label: "under 5 Mm³" },
+  { upTo: 20, fill: "#f2d7a0", label: "5–20 Mm³" },
+  { upTo: 50, fill: "#e2a05f", label: "20–50 Mm³" },
+  { upTo: 100, fill: "#cf6b46", label: "50–100 Mm³" },
+  { upTo: Infinity, fill: "#9e2f22", label: "over 100 Mm³" },
+];
+
+function fillFor(stops: typeof SHORT_STOPS, value: number | null | undefined) {
+  if (value === null || value === undefined) return "var(--field)";
+  return (stops.find((stop) => value <= stop.upTo) ?? stops[stops.length - 1]).fill;
+}
+
 function shortfallFill(value: number | undefined) {
-  if (value === undefined) return "var(--field)";
-  return (SHORT_STOPS.find((stop) => value <= stop.upTo) ?? SHORT_STOPS[SHORT_STOPS.length - 1]).fill;
+  return fillFor(SHORT_STOPS, value);
 }
 
 /** Andhra Pradesh by mandal, shaded by how far this season is from that mandal's own normal.
@@ -31,6 +49,8 @@ function shortfallFill(value: number | undefined) {
  */
 export function RechargeMap() {
   const [hover, setHover] = useState<{ index: number; x: number; y: number } | null>(null);
+  const [view, setView] = useState<"metres" | "volume">("metres");
+  const stops = view === "metres" ? SHORT_STOPS : VOLUME_STOPS;
   const byBoundary = new Map<number, (typeof monsoonWatch.mandals)[number]>();
   monsoonWatch.mandals.forEach((m) => {
     if (m.boundaryIndex !== null) byBoundary.set(m.boundaryIndex, m);
@@ -41,6 +61,21 @@ export function RechargeMap() {
   return (
     <div className="rechargeMapLayout">
       <div className="rechargeMapFigure">
+        <div className="rechargeToggle" role="group" aria-label="Colour the map by">
+          {([
+            { k: "metres", label: "Metres of water table" },
+            { k: "volume", label: "Water lost" },
+          ] as const).map((option) => (
+            <button
+              key={option.k}
+              type="button"
+              className={view === option.k ? "on" : ""}
+              onClick={() => setView(option.k)}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
         <svg
           viewBox={`0 0 ${MAP_VIEW.width} ${MAP_VIEW.height}`}
           className="rechargeMapSvg"
@@ -54,7 +89,7 @@ export function RechargeMap() {
               <path
                 key={index}
                 d={mandalToPath(feature.rings)}
-                fill={shortfallFill(row?.shortfallM)}
+                fill={fillFor(stops, view === "metres" ? row?.shortfallM : row?.shortfallMm3)}
                 className={`rechargeCell ${row ? "" : "noData"} ${hover?.index === index ? "hot" : ""}`}
                 onMouseMove={(event) => {
                   const box = event.currentTarget.ownerSVGElement?.parentElement?.getBoundingClientRect();
@@ -78,8 +113,16 @@ export function RechargeMap() {
             <span>{active ? active.district : activeFeature.d}</span>
             {active ? (
               <em className={active.shortfallM > 0 ? "bad" : "good"}>
-                {active.shortfallM > 0 ? "+" : ""}
-                {active.shortfallM.toFixed(2)} m against its own normal
+                {view === "metres" || active.shortfallMm3 === null ? (
+                  <>
+                    {active.shortfallM > 0 ? "+" : ""}
+                    {active.shortfallM.toFixed(2)} m against its own normal
+                  </>
+                ) : (
+                  <>
+                    {active.shortfallMm3.toFixed(1)} Mm³ of water short
+                  </>
+                )}
               </em>
             ) : (
               <em>not enough comparable seasons</em>
@@ -90,7 +133,7 @@ export function RechargeMap() {
 
       <div className="rechargeMapSide">
         <div className="rechargeLegend">
-          {SHORT_STOPS.map((stop) => (
+          {stops.map((stop) => (
             <span className="rechargeKey" key={stop.label}>
               <span className="rechargeSwatch" style={{ background: stop.fill }} />
               {stop.label}
@@ -116,6 +159,12 @@ export function RechargeMap() {
                 Now at {active.latestDepthM.toFixed(2)} m · {active.aquifer.replace("_", " ")} ·{" "}
                 {active.comparableYears} comparable years
               </span>
+              {active.shortfallMm3 !== null && active.specificYield !== null ? (
+                <span className="rechargeReadoutMeta">
+                  {active.shortfallMm3.toFixed(1)} Mm³ of water — {active.shortfallM.toFixed(2)} m over{" "}
+                  {active.areaKm2?.toFixed(0)} km² at a specific yield of {active.specificYield}
+                </span>
+              ) : null}
             </>
           ) : (
             <span>
@@ -165,8 +214,8 @@ export function RechargeTrajectory() {
   const lo = Math.min(...all) - headroom;
   const hi = Math.max(...all) + headroom;
   const width = 720;
-  const height = 300;
-  const pad = { top: 18, right: 14, bottom: 30, left: 54 };
+  const height = 236;
+  const pad = { top: 16, right: 14, bottom: 26, left: 54 };
   const x = (month: number) => pad.left + ((month - 5) / 7) * (width - pad.left - pad.right);
   const y = (value: number) =>
     pad.top + ((hi - value) / (hi - lo || 1)) * (height - pad.top - pad.bottom);

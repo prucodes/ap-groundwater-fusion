@@ -145,6 +145,17 @@ least twice its own year-to-year spread -- metres alone flag every naturally
 swinging hard-rock mandal, spread alone flags a delta mandal that moved twenty
 centimetres more than usual.
 
+**Metres of water table are not water.** A metre lost from hard rock holds
+roughly a fifth of what a metre lost from the delta does, so the watch also
+publishes the shortfall as volume: metres x the mandal's specific yield x its
+area, in million cubic metres. Specific yield is taken from the frame the model
+itself uses, so it inherits the engine's decision about where the measured CGWB
+value overrides the aquifer proxy. The two readings rank mandals differently and
+answer different questions -- metres answer whether a bore will still reach
+water, volume answers how much a place has actually lost -- and the map colours
+by either. Only mandals that reconciled to a polygon have an area, so the total
+is stated with the count it covers rather than implied to be statewide.
+
 The ocean state comes from NOAA's Oceanic Nino Index
 (`phase3_levels/fetch_enso_index.py`), the one climate index here that needs no
 account. **It is context and never an input.** Adding it to the three-month
