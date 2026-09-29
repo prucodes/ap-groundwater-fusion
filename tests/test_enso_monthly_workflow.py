@@ -44,9 +44,12 @@ def test_it_rebases_rather_than_failing_if_main_moved():
 def test_it_refuses_to_publish_a_panel_that_disagrees_with_the_index():
     body = open(MONTHLY).read()
     assert "tests/test_enso_pacific.py" in body
+    assert "tests/test_temperature_record.py" in body
+    assert "build_temperature_record.py" in body
     committed = body[body.index("git add"):]
     assert "app/data/enso_pacific.json" in committed
     assert "app/public/enso" in committed
+    assert "app/data/ap_temperature.json" in committed
 
 
 def test_it_says_nothing_when_the_month_has_not_landed():

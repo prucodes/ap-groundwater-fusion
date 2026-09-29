@@ -14,7 +14,8 @@ import {
 import { ExportMonsoonWatchButton } from "../../components/ExportButtons";
 import { ElNinoChain, EnsoTrail, RainfallHistory, RechargeMap, RechargeTrajectory } from "../../components/MonsoonVisuals";
 import { PacificEnso } from "../../components/PacificEnso";
-import { formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
+import { TemperatureRecord } from "../../components/TemperatureRecord";
+import { apTemperature, formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -364,6 +365,34 @@ export default function MonsoonPage() {
           </div>
         </section>
       ) : null}
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconActivity /></span>
+            The other cost: heat
+          </div>
+          <span className="cardSub">
+            {apTemperature.records.ghcn_cams.firstYear}–{apTemperature.records.ghcn_cams.lastYear} ·
+            two independent records
+          </span>
+        </div>
+        <p className="cardLede">
+          An El Niño does not only take rain away. Measured over seventy-eight years and more than thirty
+          events, Andhra Pradesh runs hotter in El Niño years than in La Niña ones even after the warming
+          trend is removed — and hotter ground takes more water out of what little arrives. Two long records
+          are drawn here rather than one, because they agree on that and on the warming, and disagree by
+          nearly a factor of three on its rate. Showing both is the honest way to publish a disagreement.
+        </p>
+        <TemperatureRecord />
+        <p className="cardNote">
+          Sources: {Object.values(apTemperature.records).map((r) => `${r.label} (${r.note})`).join("; ")}.
+          Sampled by how much of each grid cell falls inside the state, weighted by latitude.{" "}
+          <strong>No rate is published as a single figure and nothing here is projected forward</strong> — this
+          site carries no climate model, and the same rule keeps the ocean index out of the groundwater
+          forecast.
+        </p>
+      </section>
 
       <section className="card">
         <div className="cardHead">
