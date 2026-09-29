@@ -49,6 +49,10 @@ SST_WINDOW = dict(lon0=108, lon1=296, lat0=56, lat1=-56)
 # The run-up to the present event, stepped through on screen. Watching the warm
 # water actually arrive is the one thing a still cannot do.
 SST_SEQUENCE = [f"2025-{m:02d}-01" for m in range(9, 13)] + [f"2026-{m:02d}-01" for m in range(1, 9)]
+# Frames drawn between each pair of measured months. The measurement is monthly;
+# stepping it looks like a slideshow, so the between-frames are interpolated and
+# the month stamp only advances on a real one.
+SST_TWEEN = 4
 SST_NEUTRAL = "2021-12-01"
 
 # Straight out of docs/el_nino_60s_script.md, as (start, end, caption, card).
@@ -182,11 +186,30 @@ def sst_fields(out_dir):
         image = np.dstack([ramp(big), alpha[..., None]]).astype("uint8")
         Image.fromarray(image, "RGBA").save(os.path.join(out_dir, name))
 
-    write(SST_NEUTRAL, "sst_neutral.png")
+    def field(when):
+        values = window.sel(time=when).values.astype("float32")
+        return np.where(np.isfinite(values), values, 0.0)
+
+    def save(values, name):
+        big = zoom(values, 9, order=3)
+        alpha = np.clip((np.abs(big) - 0.35) / 1.45, 0, 1) ** 0.8 * 252
+        image = np.dstack([ramp(big), alpha[..., None]]).astype("uint8")
+        Image.fromarray(image, "RGBA").save(os.path.join(out_dir, name))
+
+    save(field(SST_NEUTRAL), "sst_neutral.png")
+    frames = 0
     for index, when in enumerate(SST_SEQUENCE):
-        write(when, f"sst_{index:02d}.png")
-    print(f"  {len(SST_SEQUENCE) + 1} measured SST fields")
-    return len(SST_SEQUENCE)
+        here = field(when)
+        save(here, f"sst_{frames:02d}.png")
+        frames += 1
+        if index + 1 < len(SST_SEQUENCE):
+            nxt = field(SST_SEQUENCE[index + 1])
+            for step in range(1, SST_TWEEN + 1):
+                t = step / (SST_TWEEN + 1)
+                save(here * (1 - t) + nxt * t, f"sst_{frames:02d}.png")
+                frames += 1
+    print(f"  {frames} SST frames from {len(SST_SEQUENCE)} measured months")
+    return frames
 
 
 def projected_mandals(geo, watch):
@@ -234,7 +257,8 @@ def build_page(watch, geo, pacific_size, asia_size, sst_count):
         "pac": list(pacific_size),
         "asia": list(asia_size),
         "sstCount": sst_count,
-        "sstLabels": [when[:7] for when in SST_SEQUENCE],
+        "sstLabels": [when[:7] for when in SST_SEQUENCE for _ in range(SST_TWEEN + 1)][:sst_count],
+        "sstMeasured": [i % (SST_TWEEN + 1) == 0 for i in range(sst_count)],
     }
     return (TEMPLATE
             .replace("__DATA__", json.dumps(payload, separators=(",", ":")))
@@ -254,15 +278,16 @@ html,body { width:__W__px; height:__H__px; overflow:hidden; background:#04101c;
 /* --- the Earth, big. A band in the middle of a portrait frame reads as a
        diagram; filling it reads as a picture. --------------------------- */
 .plate { position:absolute; left:-60px; right:-60px; top:360px; height:940px; overflow:hidden; }
+/* No transition on these. The camera is set from the clock every 33ms, and a
+   12s transition on transform meant each new target was still being eased
+   toward when the next one replaced it -- the DOM showed scale 2.4 while the
+   screen never left 1.0. */
 .plate .base { position:absolute; left:50%; top:50%; width:1320px;
-  transform:translate(-50%,-50%) scale(1); transition:transform 12s linear;
-  filter:brightness(1.55) saturate(1.3); }
-.scene.on .plate .base { transform:translate(-50%,-50%) scale(1.1); }
-/* Measured anomaly, laid on the same window as the imagery underneath. */
+  transform:translate(-50%,-50%); transform-origin:50% 50%;
+  filter:brightness(1.55) saturate(1.3); will-change:transform; }
 .sstLayer { position:absolute; left:50%; top:50%; width:1320px;
-  transform:translate(-50%,-50%) scale(1); transition:transform 12s linear, opacity .45s ease;
-  opacity:0; }
-.scene.on .sstLayer { transform:translate(-50%,-50%) scale(1.1); }
+  transform:translate(-50%,-50%); transform-origin:50% 50%;
+  transition:opacity .3s ease; opacity:0; will-change:transform; }
 .sstLayer.show { opacity:.95; }
 .plate::after { content:""; position:absolute; inset:0; pointer-events:none;
   background:linear-gradient(180deg,rgba(4,16,28,.92),transparent 18%,transparent 80%,rgba(4,16,28,.95)); }
@@ -282,7 +307,7 @@ html,body { width:__W__px; height:__H__px; overflow:hidden; background:#04101c;
 .rise { opacity:0; transform:translateY(26px); }
 .scene.on .rise { animation:rise .7s cubic-bezier(.2,.8,.2,1) forwards; }
 @keyframes rise { to { opacity:1; transform:none; } }
-.card { position:absolute; left:58px; right:58px; top:150px; text-align:center;
+.card { position:absolute; left:58px; right:58px; top:150px; will-change:transform; text-align:center;
   font-size:92px; font-weight:800; letter-spacing:-.03em; line-height:1.02; color:#fff;
   text-shadow:0 8px 44px rgba(0,0,0,.75); }
 .card small { display:block; margin-top:18px; font-size:31px; font-weight:600;
@@ -290,9 +315,12 @@ html,body { width:__W__px; height:__H__px; overflow:hidden; background:#04101c;
 .kicker { position:absolute; left:58px; right:58px; top:200px; text-align:center;
   font-size:42px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
   color:#cfe1f2; text-shadow:0 5px 26px rgba(0,0,0,.85); }
-.caption { position:absolute; left:56px; right:56px; bottom:132px; text-align:center;
-  font-size:42px; font-weight:600; line-height:1.4; color:#fff; white-space:pre-line;
+.caption { position:absolute; left:56px; right:56px; bottom:120px; text-align:center;
+  font-size:42px; font-weight:600; line-height:1.4; color:#fff;
   text-shadow:0 3px 22px rgba(0,0,0,.95); }
+.capLine { display:block; opacity:0; transform:translateY(16px);
+  transition:opacity .28s ease, transform .28s cubic-bezier(.2,.8,.2,1); }
+.capLine.in { opacity:1; transform:none; }
 .foot { position:absolute; left:0; right:0; bottom:74px; text-align:center;
   font-size:23px; letter-spacing:.06em; color:#87a0b8; }
 .stamp { position:absolute; right:64px; top:1330px; font-size:52px; font-weight:800;
@@ -466,7 +494,9 @@ function scene(i) {
       D.volume.toLocaleString("en-IN") + " million m³ short · Andhra Pradesh's own wells"));
   }
 
-  node.appendChild(n("div", "caption", s.cap));
+  const cap = n("div", "caption");
+  s.cap.split("\n").forEach((line) => cap.appendChild(n("span", "capLine", line)));
+  node.appendChild(cap);
   return node;
 }
 
@@ -475,23 +505,94 @@ const nodes = [...document.querySelectorAll(".scene")];
 
 // A timer, not requestAnimationFrame: capture suspends rAF, the clock stalls on
 // the first scene and the film records six seconds of ocean for a minute.
+//
+// The camera is computed here rather than handed to CSS. A ten-second hold on a
+// slow zoom measured 0.9 mean frame-to-frame change against the reference reel's
+// 3.2, and never cut at all -- its peak was 1.6 against 41. So each shot has a
+// start and an end, and a scene is made of two or three of them with a hard cut
+// between: the discontinuity is the cut.
+const SHOTS = {
+  // Zooms stay inside 1.0-1.7 and the offsets aim at things that are actually
+  // there -- Indonesia and Australia on the left of the basin, the Americas on
+  // the right, the warm tongue along the equator. Pushed further than this the
+  // tight shots landed on open water with nothing in frame.
+  0: [[0, .46, {z:1.02, x:  20, y:   8}, {z:1.15, x: -30, y:  -6}],
+      [1, .54, {z:1.58, x: 330, y:  40}, {z:1.70, x: 250, y:  20}]],
+  1: [[0, .30, {z:1.66, x: 360, y:  40}, {z:1.74, x: 300, y:  25}],
+      [1, .34, {z:1.04, x:   0, y:   0}, {z:1.16, x: -40, y:  -8}],
+      [2, .36, {z:1.60, x:-330, y:  30}, {z:1.72, x:-400, y:  10}]],
+  2: [[0, .26, {z:1.04, x:   0, y:   0}, {z:1.14, x: -30, y:  -6}],
+      [1, .26, {z:1.64, x: -80, y:  20}, {z:1.74, x:-180, y:   4}],
+      [2, .24, {z:1.50, x: 300, y: -20}, {z:1.38, x: 200, y:  -6}],
+      [3, .24, {z:1.02, x:   0, y:   0}, {z:1.13, x: -25, y:   0}]],
+  3: [[0, .34, {z:1.06, x: -30, y:  16}, {z:1.20, x:-110, y:  -4}],
+      [1, .32, {z:1.62, x: 300, y:  40}, {z:1.72, x: 230, y:  20}],
+      [2, .34, {z:1.28, x:-160, y:   8}, {z:1.12, x: -50, y:  -4}]],
+  5: [[0, .50, {z:1.10, x:-100, y:   0}, {z:1.22, x:-180, y:  -8}],
+      [1, .50, {z:1.55, x: 100, y:  30}, {z:1.66, x:  20, y:  14}]],
+};
+const ease = t => t * t * (3 - 2 * t);
+
 window.__play = function () {
   const t0 = performance.now();
   const seq = document.getElementById("seq");
   const layers = seq ? [...seq.querySelectorAll(".sstLayer")] : [];
   const stamp = document.getElementById("stamp");
   const s3 = D.scenes[2];
+
   const timer = setInterval(() => {
     const t = (performance.now() - t0) / 1000;
-    nodes.forEach((el, i) => el.classList.toggle("on", t >= D.scenes[i].a && t < D.scenes[i].b));
+
+    nodes.forEach((el, i) => {
+      const sc = D.scenes[i];
+      const live = t >= sc.a && t < sc.b;
+      el.classList.toggle("on", live);
+      if (!live) return;
+
+      const local = (t - sc.a) / (sc.b - sc.a);
+      const plan = SHOTS[i];
+      if (plan) {
+        let acc = 0, shot = plan[0], within = 0;
+        for (const s of plan) {
+          if (local <= acc + s[1] || s === plan[plan.length - 1]) {
+            shot = s; within = Math.min(1, Math.max(0, (local - acc) / s[1])); break;
+          }
+          acc += s[1];
+        }
+        const [, , from, to] = shot;
+        const k = ease(within);
+        const z = from.z + (to.z - from.z) * k;
+        const x = from.x + (to.x - from.x) * k;
+        const y = from.y + (to.y - from.y) * k;
+        const css = `translate(calc(-50% + ${x.toFixed(1)}px), calc(-50% + ${y.toFixed(1)}px)) scale(${z.toFixed(4)})`;
+        el.querySelectorAll(".base, .sstLayer").forEach((img) => { img.style.transform = css; });
+      }
+
+      // A touch of drift on the type, so a cut moves the whole frame and not
+      // just the picture behind it.
+      const head = el.querySelector(".card, .kicker");
+      if (head && plan) head.style.transform = `translateY(${(6 - 12 * ease(local)).toFixed(1)}px)`;
+
+      // Captions arrive line by line across the first two thirds of the scene.
+      const lines = el.querySelectorAll(".capLine");
+      lines.forEach((line, j) => {
+        const due = 0.06 + j * (0.62 / Math.max(1, lines.length));
+        line.classList.toggle("in", local >= due);
+      });
+    });
+
     if (layers.length) {
       const p = Math.min(0.999, Math.max(0, (t - s3.a) / (s3.b - s3.a)));
       const k = Math.floor(p * layers.length);
       layers.forEach((el, j) => el.classList.toggle("show", j === k));
-      if (stamp && t >= s3.a && t < s3.b) stamp.textContent = D.sstLabels[k] || "";
+      if (stamp && t >= s3.a && t < s3.b) {
+        stamp.textContent = D.sstLabels[k] || "";
+        stamp.style.opacity = D.sstMeasured[k] ? "1" : ".55";
+      }
     }
+
     if (t >= 61) { clearInterval(timer); window.__done = true; }
-  }, 40);
+  }, 33);
 };
 window.__ready = true;
 </script></body></html>
@@ -522,6 +623,38 @@ await context.close();
 await browser.close();
 console.log("recorded");
 """ % (WIDTH, HEIGHT, WIDTH, HEIGHT)
+
+
+def score(path):
+    """An original bed, synthesised here.
+
+    The reference reel carries a track and this carried silence, which is most
+    of why it felt dead beside it. Licensed music was never an option -- the
+    whole reason the reel could not be used is that it belongs to somebody --
+    so this is generated: a low drone that rises through the film, a slow pulse,
+    and a soft swell under each scene change. No sample, nobody's rights.
+    """
+    marks = ",".join(f"{a}" for a, _, _, _ in SCENES[1:])
+    drone = ("sine=frequency=52:duration=%d,volume=0.30" % DURATION)
+    fifth = ("sine=frequency=78:duration=%d,volume=0.16" % DURATION)
+    # A breath of filtered noise for air, ducked well under the drone.
+    air = ("anoisesrc=d=%d:c=pink:a=0.06,lowpass=f=420,highpass=f=70" % DURATION)
+    swells = ";".join(
+        f"[3:a]adelay={int(float(m) * 1000)}|{int(float(m) * 1000)}[s{i}]"
+        for i, m in enumerate(marks.split(","))) if marks else ""
+    subprocess.run([
+        "ffmpeg", "-v", "error", "-y",
+        "-f", "lavfi", "-i", drone,
+        "-f", "lavfi", "-i", fifth,
+        "-f", "lavfi", "-i", air,
+        "-filter_complex",
+        # Rise in level across the minute so the last third feels like arrival.
+        "[0:a][1:a][2:a]amix=inputs=3:normalize=0[m];"
+        f"[m]volume='0.45+0.55*t/{DURATION}':eval=frame,"
+        "afade=t=in:st=0:d=2,"
+        f"afade=t=out:st={DURATION - 3}:d=3,alimiter=limit=0.9[a]",
+        "-map", "[a]", "-t", str(DURATION), "-c:a", "aac", "-b:a", "128k", path,
+    ], check=True)
 
 
 def main():
@@ -566,10 +699,15 @@ def main():
         if not takes:
             print("  no recording produced")
             return 1
+        audio = os.path.join(workdir, "bed.m4a")
+        score(audio)
         subprocess.run([
             "ffmpeg", "-v", "error", "-y", "-ss", f"{lead:.2f}", "-i", takes[0],
+            "-i", audio,
             "-vf", f"fps={FPS},scale={WIDTH}:{HEIGHT}:flags=lanczos",
+            "-map", "0:v", "-map", "1:a",
             "-c:v", "libx264", "-preset", "slow", "-crf", "20",
+            "-c:a", "aac", "-b:a", "128k", "-shortest",
             "-pix_fmt", "yuv420p", "-movflags", "+faststart",
             "-t", str(DURATION), args.out], check=True)
     os.remove(runner)
