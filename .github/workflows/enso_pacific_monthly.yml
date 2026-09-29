@@ -1,0 +1,60 @@
+name: Pacific panel — monthly ENSO refresh
+
+# NOAA posts the previous month of ERSST in the first week, so this runs on the
+# 8th: late enough that the month is there, and early enough that the panel is
+# never more than a few weeks behind the index quoted beside it.
+#
+# It is deliberately NOT part of the weekly refresh. The source file is 159 MB
+# and gains one month at a time, so pulling it every Monday would spend a
+# quarter of a gigabyte a month to add nothing.
+#
+# 06:00 rather than 02:00 keeps it clear of phase3_weekly_levels.yml when the
+# 8th falls on a Monday: that job pushes to main and its own push fails if main
+# has moved under it.
+on:
+  schedule:
+    - cron: "0 6 8 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  # Never two of these at once, and never one while a dispatch is running.
+  group: enso-pacific
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install numpy scipy pandas xarray netCDF4 pillow certifi
+
+      - name: Rebuild the Pacific panel
+        run: python3 phase3_levels/build_enso_pacific.py
+
+      - name: Check the panel still agrees with the published index
+        # The panel's running mean is computed here; the index beside it comes
+        # from NOAA. If a refresh ever put them at odds, that is a fault worth
+        # stopping on rather than publishing.
+        run: python3 -m pytest tests/test_enso_pacific.py -q
+
+      - name: Commit if the ocean moved
+        run: |
+          git config user.name "phase3-bot"
+          git config user.email "bot@local"
+          git add app/data/enso_pacific.json app/public/enso
+          if git diff --cached --quiet; then
+            echo "no new month; nothing to publish"
+            exit 0
+          fi
+          latest=$(python3 -c "import json;print(json.load(open('app/data/enso_pacific.json'))['months'][-1]['month'])")
+          git commit -m "chore(enso): Pacific panel through $latest"
+          # Rebase rather than fail if the weekly refresh landed while this ran.
+          git pull --rebase --autostash origin main
+          git push
