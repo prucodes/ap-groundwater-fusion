@@ -4899,7 +4899,9 @@ pre.jsonBody {
 
 .monsoonHeadline {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  /* Five stats now. At 190px only four tracks fit this card, which left the
+     fifth alone on a second row -- the same orphan the KPI rows had. */
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
   gap: 10px;
 }
 .monsoonStat {
@@ -5269,3 +5271,39 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 }
 .actionCardShareFill { display: block; height: 100%; border-radius: 4px; background: var(--ac, var(--muted-2)); }
 .actionCardPct { font-size: 11px; color: var(--muted); margin-top: 4px; display: block; }
+/* Metres or water: the same map answering two different questions. */
+.rechargeToggle {
+  display: inline-flex;
+  gap: 2px;
+  margin-bottom: 10px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--field);
+}
+.rechargeToggle button {
+  border: 0;
+  border-radius: 7px;
+  padding: 5px 11px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+}
+.rechargeToggle button.on { color: var(--ink); background: var(--card); box-shadow: var(--shadow-sm, 0 1px 3px rgba(7,29,53,0.1)); }
+.monsoonStat > strong small { font-size: 15px; font-weight: 600; margin-left: 2px; color: var(--muted); }
+
+/* Five stats orphan a lone card at four columns. Below the width where all five
+   fit, three (3 + 2) reads better than four (4 + 1); below that, two. These sit
+   after the base rule because source order decides between single-class
+   selectors -- the mistake that once collapsed the recharge map to nothing. */
+@media (max-width: 1200px) {
+  .monsoonHeadline { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .monsoonHeadline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 460px) {
+  .monsoonHeadline { grid-template-columns: minmax(0, 1fr); }
+}

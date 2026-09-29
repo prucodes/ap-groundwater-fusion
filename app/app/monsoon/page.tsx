@@ -114,6 +114,16 @@ export default function MonsoonPage() {
             <strong>{r.flaggedShort}</strong>
             <em>{r.flaggedSevere} of them severe</em>
           </div>
+          {r.volume ? (
+            <div className="monsoonStat">
+              <span>Water short</span>
+              <strong>{formatNumber(Math.round(r.volume.shortfallMm3))}<small> Mm³</small></strong>
+              <em>
+                across {r.volume.mandals} mandals · {formatNumber(r.volume.asDepthMm)} mm over the{" "}
+                {formatNumber(Math.round(r.volume.areaKm2))} km² measured
+              </em>
+            </div>
+          ) : null}
           {rain ? (
             <div className="monsoonStat">
               <span>Rain, {monthName(`${w.season.year}-${rain.months.slice(0, 2)}`).slice(0, 3)}–
@@ -145,6 +155,15 @@ export default function MonsoonPage() {
           {rain ? Math.abs(rain.anomalyPct) : 0}% and the water has not come back.
         </p>
         <RechargeMap />
+        {r.volume ? (
+          <p className="cardNote">
+            <strong>Metres are not water.</strong> A metre of water table in hard rock holds a fraction of what a
+            metre in the delta does, so the two views rank mandals differently and answer different questions:
+            metres answer whether a bore will still reach water, volume answers how much this place has actually
+            lost. {r.volume.note.charAt(0).toUpperCase() + r.volume.note.slice(1)}.{" "}
+            {r.volume.mandals} of {r.volume.ofMandals} compared mandals have a polygon and so a volume.
+          </p>
+        ) : null}
         {r.flaggedWithoutBoundary > 0 ? (
           <p className="cardNote">
             {r.flaggedWithoutBoundary} flagged mandals are <strong>not on this map</strong>: their source series
@@ -370,6 +389,7 @@ export default function MonsoonPage() {
                 <th>This season</th>
                 <th>Typical</th>
                 <th>Shortfall</th>
+                <th title="Metres of water table x the mandal's specific yield x its area">Water short</th>
                 <th>Now at</th>
               </tr>
             </thead>
@@ -385,6 +405,7 @@ export default function MonsoonPage() {
                   <td>{m.thisSeasonM > 0 ? "+" : ""}{formatNumber(m.thisSeasonM)} m</td>
                   <td>{m.typicalM > 0 ? "+" : ""}{formatNumber(m.typicalM)} m</td>
                   <td className="bad">+{formatNumber(m.shortfallM)} m</td>
+                  <td>{m.shortfallMm3 === null ? "—" : `${formatNumber(m.shortfallMm3)} Mm³`}</td>
                   <td>{formatNumber(m.latestDepthM)} m</td>
                 </tr>
               ))}

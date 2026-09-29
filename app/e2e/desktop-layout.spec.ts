@@ -296,3 +296,46 @@ test.describe("the snapshot caps on screen and prints in full", () => {
     expect(printed.theadDisplay).toBe("table-header-group");
   });
 });
+
+/* Metres of water table and the water they hold rank mandals differently --
+   a metre lost from hard rock is a fraction of a metre lost from the delta.
+   If the two views agreed, the second would be decoration. */
+test.describe("the recharge map reads in metres and in water", () => {
+  test("switching the view recolours the map and changes what the tooltip says",
+    async ({ page }) => {
+      await page.goto("/monsoon");
+      await settle(page);
+
+      const cell = page.locator(".rechargeCell:not(.noData)").nth(150);
+      await cell.hover({ force: true });
+      await page.waitForTimeout(200);
+      const inMetres = await page.locator(".rechargeTip").innerText();
+      expect(inMetres).toMatch(/against its own normal/);
+
+      const fillsBefore = await page.evaluate(() =>
+        [...document.querySelectorAll(".rechargeCell")].slice(0, 120).map((c) => c.getAttribute("fill")).join("|"));
+
+      await page.getByRole("button", { name: "Water lost" }).click();
+      await page.waitForTimeout(250);
+
+      const fillsAfter = await page.evaluate(() =>
+        [...document.querySelectorAll(".rechargeCell")].slice(0, 120).map((c) => c.getAttribute("fill")).join("|"));
+      expect(fillsAfter).not.toBe(fillsBefore);
+
+      await cell.hover({ force: true });
+      await page.waitForTimeout(200);
+      expect(await page.locator(".rechargeTip").innerText()).toMatch(/Mm³ of water short/);
+      await expect(page.locator(".rechargeLegend")).toContainText("Mm³");
+    });
+
+  test("the season card is lowered but the chart still spans its card", async ({ page }) => {
+    await page.goto("/monsoon");
+    await settle(page);
+    const svg = await page.locator(".trajectorySvg").boundingBox();
+    const card = await page.locator(".trajectoryWrap").boundingBox();
+    // Shortened by reshaping the viewBox, not by capping height -- a cap would
+    // have narrowed it and left whitespace either side.
+    expect(svg!.height).toBeLessThan(340);
+    expect(svg!.width).toBeGreaterThan(card!.width * 0.95);
+  });
+});

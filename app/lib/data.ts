@@ -149,7 +149,22 @@ export type MonsoonWatch = {
     flaggedSevere: number;
     flaggedWithoutBoundary: number;
     medianShortfallM: number;
-    byAquifer: Array<{ aquifer: string; mandals: number; medianShortfallM: number; fallingPct: number }>;
+    volume: {
+      shortfallMm3: number;
+      mandals: number;
+      ofMandals: number;
+      areaKm2: number;
+      asDepthMm: number | null;
+      note: string;
+    } | null;
+    byAquifer: Array<{
+      aquifer: string;
+      mandals: number;
+      medianShortfallM: number;
+      medianSpecificYield: number;
+      shortfallMm3: number;
+      fallingPct: number;
+    }>;
     rule: string;
   };
   seasons: Array<{
@@ -207,6 +222,9 @@ export type MonsoonWatch = {
     thisSeasonM: number;
     typicalM: number;
     shortfallM: number;
+    specificYield: number | null;
+    areaKm2: number | null;
+    shortfallMm3: number | null;
     spreadM: number;
     latestDepthM: number;
     comparableYears: number;
