@@ -11,6 +11,7 @@ import mandalHeatJson from "../data/ap_mandal_heat.json";
 import nasaProvenanceJson from "../data/nasa_provenance.json";
 import monsoonWatchJson from "../data/monsoon_watch.json";
 import pacificEnsoJson from "../data/enso_pacific.json";
+import apTemperatureJson from "../data/ap_temperature.json";
 import type {
   DashboardSummary,
   DistrictGeometry,
@@ -265,6 +266,46 @@ export type PacificEnsoData = {
 };
 
 export const pacificEnso = pacificEnsoJson as PacificEnsoData;
+
+export type TemperatureRecordSeries = {
+  label: string;
+  note: string;
+  source: string;
+  cells: number;
+  gridDegrees: number;
+  canRankYears: boolean;
+  firstYear: number;
+  lastYear: number;
+  warmestYear: number;
+  warmestAnomalyC: number;
+  series: Array<{ year: number; anomalyC: number }>;
+  enso: {
+    elNinoYears: number;
+    laNinaYears: number;
+    elNinoAnomalyC: number;
+    laNinaAnomalyC: number;
+    differenceC: number;
+    pValue: number;
+    trendRSquared: number;
+    trendCPerDecade: number;
+  } | null;
+};
+
+export type ApTemperature = {
+  contractVersion: string;
+  baseline: string;
+  records: Record<string, TemperatureRecordSeries>;
+  agreement: {
+    warmestYear: number | null;
+    warmestYearFrom: string[];
+    bothWarming: boolean;
+    bothHotterInElNino: boolean;
+    trendRangeCPerDecade: [number, number];
+  };
+  publishes: string;
+};
+
+export const apTemperature = apTemperatureJson as unknown as ApTemperature;
 
 /** The site is served under a project subpath on Pages, so anything in public/
  *  needs it prepended. next.config.mjs already exports it for exactly this;

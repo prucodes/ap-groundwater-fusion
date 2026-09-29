@@ -151,6 +151,26 @@ is that single month's anomaly in the Nino 3.4 box; the published index is a
 three-month running mean of the same box, and a test holds the two within
 0.35 C of each other so the panel can never quietly drift from the headline.
 
+**The heat card publishes what two temperature records agree on, and no more.**
+`phase3_levels/build_temperature_record.py` reads GHCN_CAMS (0.5 degrees, 1948
+on) and NOAAGlobalTemp (5 degrees, 1850 on), weights each grid cell by how much
+of it falls inside the state, and writes `app/data/ap_temperature.json`. Both are
+certain Andhra Pradesh is warming and both find El Nino years hotter here once
+the trend is removed -- +0.34 C and +0.15 C against La Nina years across 15 and
+17 events, p = 0.003 and 0.022 -- which is a heat cost on top of the rainfall
+cost, on far better sample sizes than the two El Ninos the groundwater record
+covers. They disagree by nearly a factor of three on the RATE, so the rate is
+published as the range they span and never as a figure, and a test fails if a
+single record's rate reaches the component. Nothing is projected forward; there
+is no climate model here. The full measurement pass is in
+`docs/temperature_record_findings.md`, including why the twelve years of NASA
+POWER temperature already in the repo cannot answer the question.
+
+One trap worth knowing: a five-degree cell is larger than Andhra Pradesh, and
+asking that product which single year was warmest gave 2016 or 2024 depending on
+whether one cell or two were sampled. Cells are weighted by intersection area
+now, and a record coarser than the state is barred from ranking years at all.
+
 **Monsoon Watch answers a different question from the nowcast.** The nowcast
 says how deep the water is; `phase3_levels/build_monsoon_watch.py` asks whether
 the season that refills it is working. For each mandal it takes the change from

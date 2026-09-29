@@ -1,8 +1,11 @@
-name: Pacific panel — monthly ENSO refresh
+name: Climate panels — monthly refresh
 
-# NOAA posts the previous month of ERSST in the first week, so this runs on the
-# 8th: late enough that the month is there, and early enough that the panel is
-# never more than a few weeks behind the index quoted beside it.
+# Rebuilds the two panels that come from NOAA's long records: the Pacific
+# sea-surface animation and the state's temperature record.
+#
+# NOAA posts the previous month in the first week, so this runs on the 8th:
+# late enough that the month is there, and early enough that the panels are
+# never more than a few weeks behind the index quoted beside them.
 #
 # It is deliberately NOT part of the weekly refresh. The source file is 159 MB
 # and gains one month at a time, so pulling it every Monday would spend a
@@ -33,28 +36,33 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install dependencies
-        run: pip install numpy scipy pandas xarray netCDF4 pillow certifi
+        run: pip install numpy scipy pandas xarray netCDF4 pillow shapely certifi
 
       - name: Rebuild the Pacific panel
         run: python3 phase3_levels/build_enso_pacific.py
 
-      - name: Check the panel still agrees with the published index
+      - name: Rebuild the temperature record
+        run: python3 phase3_levels/build_temperature_record.py
+
+      - name: Check the panels still say what they are allowed to say
         # The panel's running mean is computed here; the index beside it comes
         # from NOAA. If a refresh ever put them at odds, that is a fault worth
         # stopping on rather than publishing.
-        run: python3 -m pytest tests/test_enso_pacific.py -q
+        # The Pacific panel must still agree with the published index, and the
+        # temperature card must still be publishing a range rather than a rate.
+        run: python3 -m pytest tests/test_enso_pacific.py tests/test_temperature_record.py -q
 
       - name: Commit if the ocean moved
         run: |
           git config user.name "phase3-bot"
           git config user.email "bot@local"
-          git add app/data/enso_pacific.json app/public/enso
+          git add app/data/enso_pacific.json app/data/ap_temperature.json app/public/enso
           if git diff --cached --quiet; then
             echo "no new month; nothing to publish"
             exit 0
           fi
           latest=$(python3 -c "import json;print(json.load(open('app/data/enso_pacific.json'))['months'][-1]['month'])")
-          git commit -m "chore(enso): Pacific panel through $latest"
+          git commit -m "chore(enso): climate panels through $latest"
           # Rebase rather than fail if the weekly refresh landed while this ran.
           git pull --rebase --autostash origin main
           git push
