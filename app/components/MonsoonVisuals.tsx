@@ -430,7 +430,7 @@ export function ElNinoChain() {
       eyebrow: "1 · The Pacific",
       value: `${enso.oniC > 0 ? "+" : ""}${enso.oniC.toFixed(2)} °C`,
       lead: "warmer than normal in the Niño 3.4 box",
-      body: `A band of the equatorial Pacific runs warm, and the atmosphere above it shifts with it. ${enso.season} ${enso.asOf.slice(0, 4)} is the warmest June–August in the index since 1950.`,
+      body: `A band of the equatorial Pacific runs warm. The index describes the ${enso.season} ${enso.asOf.slice(0, 4)} ocean state; local rainfall outcomes also depend on other climate and weather influences.`,
       source: "NOAA Oceanic Niño Index",
     },
     {
@@ -446,7 +446,7 @@ export function ElNinoChain() {
       eyebrow: "3 · This season",
       value: `${rain.anomalyPct}%`,
       lead: `June–August rain, ${rain.rankDriest === 1 ? "the driest" : `${rain.rankDriest}nd driest`} of ${rain.ofYears}`,
-      body: `Worse than an average El Niño, which is why the ocean explains the direction and not the size. ${formatMm(rain.mm)} mm fell against a ${formatMm(rain.normalMm)} mm normal.`,
+      body: `${formatMm(rain.mm)} mm fell against a ${formatMm(rain.normalMm)} mm normal for the same months. This observed deficit is not an attribution to El Niño.`,
       source: `CHIRPS, ${rain.firstYear} onward`,
     },
     {
@@ -455,7 +455,7 @@ export function ElNinoChain() {
       value: `${w.recharge.fallingPct}%`,
       lead: "of mandals lower than they were in May",
       body: volume
-        ? `In every earlier season that figure ran between ${Math.min(...w.seasons.filter((s) => s.year !== w.season.year).map((s) => s.fallingPct))}% and ${Math.max(...w.seasons.filter((s) => s.year !== w.season.year).map((s) => s.fallingPct))}%. The shortfall comes to ${formatMm(Math.round(volume.shortfallMm3))} million m³ of water.`
+        ? `In the comparison seasons that figure ranged from ${Math.min(...w.seasons.filter((s) => s.year !== w.season.year).map((s) => s.fallingPct))}% to ${Math.max(...w.seasons.filter((s) => s.year !== w.season.year).map((s) => s.fallingPct))}%. The derived storage-shortfall estimate is ${formatMm(Math.round(volume.shortfallMm3))} million m³, using area and specific-yield assumptions.`
         : "Measured in the wells themselves, against each mandal's own ten-year normal.",
       source: "APWRIMS monthly readings",
     },

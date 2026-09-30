@@ -1,0 +1,144 @@
+{
+  "title": "From the Pacific to Andhra Pradesh",
+  "snapshot": "2026-08",
+  "sourceHash": "57d6cc109d08041c63631ab8df48fefcaca7506447725cfef276ca6df70c0ea3",
+  "duration": 178.44,
+  "chapters": [
+    {
+      "id": "connection",
+      "title": "A connected planet",
+      "start": 0,
+      "text": "An ocean thousands of kilometres away can change the odds of rain in Andhra Pradesh. The connection begins in the Pacific."
+    },
+    {
+      "id": "normal",
+      "title": "The Pacific engine",
+      "start": 9.136,
+      "text": "Normally, trade winds push warm surface water towards Indonesia. Cold water rises near South America."
+    },
+    {
+      "id": "nino",
+      "title": "El Ni\u00f1o / When the pattern shifts",
+      "start": 18.44,
+      "text": "El Nino is a recurring ocean and atmosphere pattern. Trade winds weaken, warmth spreads east, and tropical rainfall shifts."
+    },
+    {
+      "id": "history",
+      "title": "A pattern with a history",
+      "start": 28.704,
+      "text": "The powerful events of nineteen ninety seven to ninety eight, and twenty fifteen to sixteen, show this is a recurring pattern."
+    },
+    {
+      "id": "india",
+      "title": "The India connection",
+      "start": 37.264,
+      "text": "That changes atmospheric circulation and can weaken India's summer monsoon. The Indian Ocean and local weather also shape the outcome."
+    },
+    {
+      "id": "ap-history",
+      "title": "Andhra Pradesh / 45 years of rain",
+      "start": 47.36,
+      "text": "In the project's 45 year Andhra Pradesh record, 6 of 7 El Nino summer monsoons had below average rain. Individual years varied widely."
+    },
+    {
+      "id": "rain",
+      "title": "Andhra Pradesh / rainfall",
+      "start": 58.776,
+      "text": "In this project's June to August 2026 snapshot, Andhra Pradesh rainfall was 28.4 percent below its historical average."
+    },
+    {
+      "id": "recharge",
+      "title": "From rain to groundwater",
+      "start": 68.68,
+      "text": "Some rain seeps through soil and rock, replenishing groundwater. Pumping and geology change how much water remains."
+    },
+    {
+      "id": "mandals",
+      "title": "Andhra Pradesh / well readings",
+      "start": 78.248,
+      "text": "By August, 62.7 percent of monitored mandals had deeper water levels than in May. These are observations, not an El Nino forecast."
+    },
+    {
+      "id": "districts",
+      "title": "Districts / change against own history",
+      "start": 89.856,
+      "text": "Districts show different groundwater shortfalls against their own normal seasons. These are medians of local observations, not predictions of the next season."
+    },
+    {
+      "id": "well",
+      "title": "A closer look / Orvakal",
+      "start": 101.224,
+      "text": "In Orvakal, depth to water increased from 15.07 to 28.97 metres, instead of its usual seasonal rise. Deeper means farther below ground."
+    },
+    {
+      "id": "outlook",
+      "title": "Possible outcomes / conditional",
+      "start": 114.32,
+      "text": "If rainfall stays low and pumping continues, recharge can weaken and drought risk can rise. Local forecasts need more than the Pacific index."
+    },
+    {
+      "id": "prepare",
+      "title": "Preparedness / homes, farms and communities",
+      "start": 125.616,
+      "text": "Prepare for a possible dry spell. Fix leaks and protect drinking water. Capture rain safely. Use drip irrigation and mulch where suitable, guided by crop needs. Track wells and storage, and agree a village contingency plan with local teams."
+    },
+    {
+      "id": "cities",
+      "title": "Cities / reduce the impact",
+      "start": 145.408,
+      "text": "Cities cannot stop El Nino. They can reduce water stress. Repair leaking mains. Reuse safely treated water for non-drinking needs. Protect lakes and rainwater systems. Plan essential supplies with local water teams."
+    },
+    {
+      "id": "close",
+      "title": "A proposed state review",
+      "start": 165.2,
+      "text": "For a state review, verify local readings, identify priority water supplies, and assign teams to track action. El Nino is climate context, not a mandal forecast."
+    }
+  ],
+  "sources": [
+    {
+      "label": "NOAA: ENSO and the Indian monsoon",
+      "url": "https://www.climate.gov/news-features/blogs/enso/enso-and-indian-monsoon%E2%80%A6-not-straightforward-you%E2%80%99d-think"
+    },
+    {
+      "label": "NASA Blue Marble",
+      "url": "https://visibleearth.nasa.gov/collection/1484/blue-marble"
+    },
+    {
+      "label": "NOAA: major historical El Nino events",
+      "url": "https://www.climate.gov/news-features/understanding-climate/2015-state-climate-el-ni%C3%B1o-came-saw-and-conquered"
+    },
+    {
+      "label": "NOAA ERSST v5",
+      "url": "https://psl.noaa.gov/data/gridded/data.noaa.ersst.v5.html"
+    },
+    {
+      "label": "CHIRPS",
+      "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs"
+    },
+    {
+      "label": "NIDM: drought preparedness and water conservation",
+      "url": "https://www.nidm.gov.in/PDF/IEC/CZ_NIDM25.pdf"
+    },
+    {
+      "label": "NIDM: drought management and drinking-water contingency plans",
+      "url": "https://nidm.gov.in/PDF/manuals/Drought_Manual.pdf"
+    },
+    {
+      "label": "ICAR: water-smart irrigation and mulching",
+      "url": "https://icar.gov.in/sites/default/files/2025-11/December_2025%20Indian%20Farming.pdf"
+    },
+    {
+      "label": "Jal Shakti: Catch the Rain",
+      "url": "https://jsactr.mowr.gov.in/website/index.aspx"
+    },
+    {
+      "label": "MoHUA: AMRUT 2.0 urban water security",
+      "url": "https://www.mohua.gov.in/upload/uploadfiles/files/AMRUT-Operational-Guidelines.pdf"
+    },
+    {
+      "label": "Project snapshot and methodology",
+      "url": "https://prucodes.github.io/ap-groundwater-fusion/monsoon/"
+    }
+  ]
+}

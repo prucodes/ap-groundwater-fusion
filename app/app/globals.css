@@ -5431,6 +5431,11 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
   background: linear-gradient(90deg, #0c2c84, #1e60be, #6eb4e6, #cde8f6, #fff, #fde0b4, #f6a050, #de5028, #8c1212);
 }
 .pacLegendMid { flex: 1; text-align: center; }
+.pacificSourceNotes { margin-top:12px; color:var(--muted); font-size:11px; }
+.pacificSourceNotes summary { cursor:pointer; }
+@media (max-width:720px) {
+  .pacificEvidenceSection .cardHead { flex-direction:column; align-items:flex-start; gap:8px; }
+}
 
 @media (max-width: 720px) {
   .pacNote { display: none; }

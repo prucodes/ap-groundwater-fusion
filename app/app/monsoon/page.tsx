@@ -14,6 +14,7 @@ import {
 import { ExportMonsoonWatchButton } from "../../components/ExportButtons";
 import { ElNinoChain, EnsoTrail, RainfallHistory, RechargeMap, RechargeTrajectory } from "../../components/MonsoonVisuals";
 import { PacificEnso } from "../../components/PacificEnso";
+import { MonsoonFilm } from "../../components/MonsoonFilm";
 import { formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -59,15 +60,12 @@ export default function MonsoonPage() {
               <>
                 A <strong>{enso.strength} El Niño</strong> is in place — the Pacific index stands at{" "}
                 {enso.oniC > 0 ? "+" : ""}
-                {enso.oniC.toFixed(2)} °C for {enso.season} {enso.asOf.slice(0, 4)}, the warmest
-                June–August in the 1950–{enso.asOf.slice(0, 4)} record. Across 45 years an El Niño
-                costs Andhra Pradesh about {sw ? Math.abs(sw.elNinoAnomalyPct ?? 0) : 15}% of its monsoon rain.
-                This one has cost {rain ? Math.abs(rain.anomalyPct) : 0}%, and the water table has not
-                recharged.{" "}
+                {enso.oniC.toFixed(2)} °C for {enso.season} {enso.asOf.slice(0, 4)}.
+                Andhra Pradesh rainfall and groundwater changes are shown alongside that climate context.{" "}
               </>
             ) : null}
-            Every figure below is a measured change in a mandal&rsquo;s own readings against that same
-            mandal&rsquo;s own past seasons. The index is context; no model on this site uses it.
+            Compare each mandal&rsquo;s measured groundwater change with its own past seasons.
+            Water-volume shortfalls are derived estimates. The index is context; no model on this site uses it.
           </>
         }
         showChips={false}
@@ -81,8 +79,10 @@ export default function MonsoonPage() {
         <span className="provRibbonDot" />
         <span className="provRibbonItem"><IconGlobe /> NOAA Oceanic Niño Index</span>
         <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconShield /> measured, not modelled</span>
+        <span className="provRibbonItem"><IconShield /> observations + derived estimates</span>
       </div>
+
+      <MonsoonFilm />
 
       <section className="card">
         <div className="cardHead">
@@ -117,7 +117,7 @@ export default function MonsoonPage() {
           </div>
           {r.volume ? (
             <div className="monsoonStat">
-              <span>Water short</span>
+              <span>Estimated water shortfall</span>
               <strong>{formatNumber(Math.round(r.volume.shortfallMm3))}<small> Mm³</small></strong>
               <em>
                 across {r.volume.mandals} mandals · {formatNumber(r.volume.asDepthMm)} mm over the{" "}
@@ -141,23 +141,23 @@ export default function MonsoonPage() {
         <p className="cardNote">{r.rule}.</p>
       </section>
 
-      <section className="card">
+      <section className="card pacificEvidenceSection" id="pacific-evidence">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconWaves /></span>
-            What an El Niño is
+            Pacific evidence explorer
           </div>
-          <span className="cardSub">measured sea surface, {pacificEnso.months[0].month} to{" "}
+          <span className="cardSub">monthly ocean reconstruction, {pacificEnso.months[0].month} to{" "}
             {pacificEnso.months[pacificEnso.months.length - 1].month}</span>
         </div>
         <p className="cardLede">
-          Trade winds normally blow west along the equator, dragging warm surface water away from South America
-          and piling it up near Indonesia, where it falls as rain. Cold water rises behind it, off Peru. Every
-          few years those winds slacken and the warm water slides back east — and the rain goes with it. Press
-          play and watch it happen: this is not an illustration, it is NOAA&rsquo;s measurement, month by month,
-          and Andhra Pradesh is marked on the same map.
+          El Niño is a recurring warming of the central and eastern equatorial Pacific, coupled with changes
+          in atmospheric circulation. The film explains the mechanism; this record shows how ocean
+          temperature anomalies evolved. Rainfall over India also depends on the Indian Ocean and local weather.
         </p>
         <PacificEnso />
+        <details className="pacificSourceNotes">
+        <summary>Source and index notes</summary>
         <p className="cardNote">
           {pacificEnso.source}. Earth imagery: {pacificEnso.basemapSource}. The figure beside each month is that
           <strong> single month&rsquo;s</strong> average anomaly in the Niño 3.4 box. The published index —{" "}
@@ -166,15 +166,16 @@ export default function MonsoonPage() {
           against a 1991–2020 baseline, the running mean lands within about 0.2 °C of NOAA&rsquo;s published
           value throughout this event.
         </p>
+        </details>
       </section>
 
       <section className="card">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconGlobe /></span>
-            How an El Niño reaches a well in Andhra Pradesh
+            From ocean context to local groundwater evidence
           </div>
-          <span className="cardSub">four steps, each one measured</span>
+          <span className="cardSub">observations, association and derived estimates</span>
         </div>
         <ElNinoChain />
         <p className="cardNote">
@@ -195,10 +196,10 @@ export default function MonsoonPage() {
           <span className="cardSub">each mandal against its own ten-year normal</span>
         </div>
         <p className="cardLede">
-          This is the El Niño arriving in the aquifer. Not a model of it — the change each mandal&rsquo;s own
-          well has recorded since May, set against what that well normally does by{" "}
-          {monthName(w.season.latestMonth).split(" ")[0]}. The monsoon is the mechanism: rain is down{" "}
-          {rain ? Math.abs(rain.anomalyPct) : 0}% and the water has not come back.
+          These are changes in each mandal&rsquo;s groundwater readings since May, compared with its
+          own historical change by {monthName(w.season.latestMonth).split(" ")[0]}.
+          Rainfall, pumping, geology and other local factors can contribute; this map does not attribute
+          individual changes to El Niño.
         </p>
         <RechargeMap />
         {r.volume ? (

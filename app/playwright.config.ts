@@ -23,6 +23,11 @@ export default defineConfig({
   },
   projects: [
     {
+      name: "film",
+      testMatch: /monsoon-film\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
       name: "phone",
       testMatch: /phone-layout\.spec\.ts/,
       // Pixel 5 is Chromium-based, so the whole suite needs one browser

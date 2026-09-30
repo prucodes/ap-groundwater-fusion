@@ -70,7 +70,7 @@ def test_the_association_is_not_described_as_a_mechanism():
     """The ocean makes a poor monsoon likelier. It does not tell this site how
     much rain a month will bring, and the page must not imply that it does."""
     page = open(os.path.join(ROOT, "app", "app", "monsoon", "page.tsx")).read()
-    start = page.index("How an El Niño reaches a well")
+    start = page.index("From ocean context to local groundwater evidence")
     note = page[start:start + 1400]
     assert "statistical association" in note
     assert "not a mechanism this site models" in note

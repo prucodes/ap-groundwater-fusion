@@ -42,3 +42,7 @@ app/test-results/
 # Rendered video and its fetched NASA stills. The generator rebuilds both, and
 # a 8 MB MP4 regenerated on every data refresh does not belong in git history.
 dist/
+.video-python/
+app/public/films/monsoon/voice-*.mp3
+app/public/films/monsoon/voice-*.sha256
+app/public/films/monsoon/voice-*.jsonl

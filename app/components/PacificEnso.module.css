@@ -1,0 +1,51 @@
+.explorer { min-width:0; color:var(--ink); }
+.readout { display:flex; justify-content:space-between; gap:20px; align-items:center; margin-bottom:16px; }
+.eyebrow { font-size:10px; color:#287d7d; font-weight:650; }
+.readout h3 { font-size:21px; margin:5px 0; font-weight:650; }
+.values { display:flex; gap:30px; }
+.values div { display:flex; flex-direction:column; gap:5px; }
+.values strong { font-size:27px; font-weight:600; font-variant-numeric:tabular-nums; }
+.values span { font-size:11px; color:var(--muted); }
+.toolbar { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom:12px; }
+.toolbar > span { color:var(--muted); font-size:10px; }
+.segmented { display:flex; border:1px solid var(--line); border-radius:4px; overflow:hidden; }
+.segmented button { border:0; padding:8px 12px; background:transparent; color:var(--muted); font:inherit; font-size:11px; cursor:pointer; }
+.segmented button[aria-pressed=true] { background:#226e6c; color:#fff; }
+.explorer .stage { position:relative; overflow:hidden; background:#031421; border:0; border-radius:6px; }
+.base,.field,.overlay { position:absolute; inset:0; width:100%; height:100%; }
+.field { transition:opacity .16s linear; }
+.overlay text { fill:#fff; font:600 12px Arial,sans-serif; paint-order:stroke; stroke:#071924; stroke-width:3px; stroke-linejoin:round; }
+.explorer .apPin em { left:-5px; transform:none; top:17px; padding:3px 6px; background:#073b3ce8; color:#c5ffed; font-size:10px; font-weight:600; }
+.explorer .apPin i { width:7px; height:7px; background:#adffe8; border:1px solid #fff; box-shadow:0 0 0 4px #65e3c65c; }
+.place { position:absolute; font-size:11px; color:#fff; }
+.place i { display:block; width:4px; height:4px; background:#fff; border-radius:50%; box-shadow:0 0 0 2px #fff4; }
+.place em { position:absolute; top:10px; left:-10px; font-style:normal; white-space:nowrap; background:#041422e8; padding:3px 7px; border-radius:3px; }
+.place em::before { position:absolute; top:-6px; left:11px; height:6px; width:1px; background:#fff; content:""; }
+.america em { left:auto; right:-7px; }.america em::before { left:auto; right:9px; }
+.ocean { position:absolute; left:56%; top:25%; font-size:11px; color:#d3e3ee; }
+.legend { display:flex; align-items:center; gap:9px; font-size:10px; margin:11px 0; color:var(--muted); }
+.legend i { width:85px; height:6px; background:linear-gradient(90deg,#0c2c84,#6eb4e6,#fff); }
+.legend i:nth-of-type(2) { background:linear-gradient(90deg,#fff,#f6a050,#8c1212); }
+.legend em { margin-left:auto; font-style:normal; }
+.controls { display:flex; align-items:center; gap:8px; }
+.controls button { width:34px; height:34px; border-radius:4px; border:1px solid var(--line); color:var(--ink); background:var(--field); display:grid; place-items:center; cursor:pointer; flex:none; }
+.controls button:disabled { opacity:.3; cursor:default; }
+.controls svg { width:16px; height:16px; }
+.controls input { width:0; min-width:0; flex:1; order:0; flex-basis:auto; accent-color:#247d77; }
+.timeline { display:flex; margin:6px 0 10px; }
+.timeline button { position:relative; flex:1; min-width:0; border:0; border-bottom:2px solid transparent; background:transparent; color:var(--muted); padding:0 2px 6px; cursor:pointer; font-size:10px; }
+.timeline button[aria-pressed=true] { border-bottom-color:#247d77; background:#549f9512; color:var(--ink); }
+.barArea { position:relative; display:block; height:60px; }
+.barArea::after { position:absolute; top:40px; height:1px; left:0; right:0; background:var(--line); content:""; }
+.barArea i { position:absolute; left:20%; right:20%; }
+.timeline small { display:block; font-size:8px; height:13px; margin-top:3px; }
+.note { font-size:11px; line-height:1.65; color:var(--muted); margin:0; }
+.explorer button:focus-visible { outline:2px solid #247d77; outline-offset:2px; }
+@media(max-width:760px) {
+ .readout { display:block; }.values{margin-top:14px;gap:20px}.values strong{font-size:23px}.values span{font-size:10px}
+ .readout h3{font-size:18px}.toolbar{align-items:flex-start;flex-direction:column}.toolbar > span{font-size:10px}
+ .segmented button{padding:8px 10px}.place{font-size:8px}.place em{padding:2px 4px}.ocean{font-size:8px;left:51%;top:18%}
+ .explorer .apPin em{font-size:7px;padding:2px 3px;top:12px;left:-13px}.legend{flex-wrap:wrap;gap:6px}.legend i{width:65px}.legend em{flex-basis:100%;margin:0}
+ .timeline button{font-size:8px;padding:0 0 6px}.timeline small{font-size:7px}
+}
+@media(prefers-reduced-motion:reduce){.field{transition:none}}

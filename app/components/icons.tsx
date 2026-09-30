@@ -154,6 +154,14 @@ export const IconChevronLeft = (p: IconProps) => (
   </svg>
 );
 
+export const IconPlay = (p: IconProps) => (
+  <svg {...base(p)}><path d="m8 5 11 7-11 7V5Z" /></svg>
+);
+
+export const IconPause = (p: IconProps) => (
+  <svg {...base(p)}><path d="M8 5v14M16 5v14" /></svg>
+);
+
 export const IconChevronRight = (p: IconProps) => (
   <svg {...base(p)}>
     <path d="m9 18 6-6-6-6" />
