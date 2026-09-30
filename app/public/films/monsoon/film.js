@@ -408,7 +408,7 @@
   const mapColors=['#53b6a4','#c4d8b2','#f1cb84','#e99562','#df5f53','#40565f'];
   const colorFor=v=>v===null?mapColors[5]:v<=0?mapColors[0]:v<1?mapColors[1]:v<2?mapColors[2]:v<4?mapColors[3]:mapColors[4];
   const mapMeshes=D.shapes.map(m=>{
-    const shapes=m.rings.map(r=>new THREE.Shape(r.map(v=>{const p=mapXYZ(v);return new THREE.Vector2(p.x,p.y);}))); 
+    const shapes=m.rings.map(r=>new THREE.Shape(r.map(v=>{const p=mapXYZ(v);return new THREE.Vector2(p.x,p.y);})));
     const material=new THREE.MeshStandardMaterial({color:colorFor(m.shortfall),roughness:.72,metalness:.12});
     const mesh=new THREE.Mesh(new THREE.ExtrudeGeometry(shapes,{depth:.05,bevelEnabled:false}),material);mapScene.add(mesh);
     m.rings.forEach(r=>{

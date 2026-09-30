@@ -5443,3 +5443,38 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
   .pacScrub { order: 3; flex-basis: 100%; }
   .pacRamp { width: 120px; }
 }
+
+/* ---- The other cost: heat ------------------------------------------------
+   Two records on one baseline. The gap between the lines is the disagreement,
+   and it is meant to be visible. */
+.tempWrap { display: flex; flex-direction: column; gap: 14px; }
+.tempChart { width: 100%; height: auto; display: block; }
+.tempGrid { stroke: var(--hairline); stroke-width: 1; }
+.tempZero { stroke: var(--line-strong); stroke-width: 1.5; stroke-dasharray: 5 5; }
+.tempAxis { font-size: 11px; fill: var(--muted); }
+.tempLine { fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+.tempPeak { font-size: 12px; font-weight: 700; fill: var(--ink); }
+
+.tempKey { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: baseline; font-size: 12px; color: var(--ink-soft); }
+.tempKey > span { display: inline-flex; align-items: baseline; gap: 7px; }
+.tempKey i { width: 18px; height: 3px; border-radius: 2px; align-self: center; }
+.tempKey em { font-style: normal; font-size: 11px; color: var(--muted-2); }
+.tempKeyNote { color: var(--muted); font-style: italic; }
+
+.tempFindings { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 10px; }
+.tempFinding {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--field);
+}
+.tempFinding.muted { background: transparent; border-style: dashed; }
+.tempFinding > span {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--muted);
+}
+.tempFinding > strong {
+  font-size: 30px; font-weight: 700; line-height: 1.1; color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.tempFinding > strong small { font-size: 14px; font-weight: 600; color: var(--muted); margin-left: 4px; }
+.tempFinding > em { font-style: normal; font-size: 12px; line-height: 1.5; color: var(--muted); margin-top: 4px; }
+.tempFinding > em strong { color: var(--ink-soft); }
