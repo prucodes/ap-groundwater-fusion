@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { AppShell } from "../components/AppShell";
+import { VISIT_COUNTER_SCRIPT } from "../lib/visit-counter";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -48,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               "(function(){try{var q=new URLSearchParams(location.search).get('theme');var t=q||localStorage.getItem('ap-gw-theme');if(t){document.documentElement.dataset.theme=t;if(q){localStorage.setItem('ap-gw-theme',q);}}}catch(e){}})();",
           }}
         />
+        <script dangerouslySetInnerHTML={{ __html: VISIT_COUNTER_SCRIPT }} />
       </head>
       <body
         suppressHydrationWarning

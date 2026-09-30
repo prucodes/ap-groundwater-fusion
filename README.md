@@ -439,6 +439,30 @@ Forwardable docs (themed, print-to-PDF) live in `docs/`: `aware_integration_note
 
 Roadmap: GRACE depletion trend + real time-series, SMAP soil moisture (NASA Earthdata login), and Sentinel-1 InSAR land subsidence (alluvial-belt pilot) are the next sources.
 
+## Visit counting
+
+The hosted site counts visits with GoatCounter (`app/lib/visit-counter.ts`), which sets no
+cookies, stores no IP address and builds no cross-site profile. Figures appear at
+**https://prucodes.goatcounter.com** — the same site the other `prucodes` projects report into,
+so this project's rows are the ones under the `/ap-groundwater-fusion/` path prefix and its
+events the ones prefixed `ap-gw/`.
+
+What is recorded is the page, plus — on `/monsoon` — whether a visit used the film, the Pacific
+map, the mandal map or the CSV, and which sections came into view. Each is counted at most once
+per page load, so a figure is the number of visits that did something, not the number of clicks.
+Section markers are independent reach figures and **not a funnel**: a reader who jumps to the end
+records the end and not the middle, so the numbers need not fall in reading order.
+
+The address is counted as `location.pathname` plus only `view` and `granularity`. A selected
+mandal, a quality filter and the theme are deliberately left out: counting them would publish
+which place an official was looking at and split one screen into hundreds of rows. Nothing is
+counted for a browser sending Global Privacy Control (which count.js does not check itself), and
+a reader can switch counting off for good by loading any page with `#toggle-goatcounter` on the
+end. count.js is not fetched at all on localhost or a LAN address, so dev builds and the layout
+tests make no outside request.
+
+Guards: `tests/test_visit_counter.py` and `app/e2e/analytics.spec.ts`.
+
 ## Important V0 Notes
 
 - Boundary standardization requires an actual prototype boundary file placed under `data/raw/boundaries/`.

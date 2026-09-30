@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MAP_VIEW, mandalToPath, mapGeometry, monsoonWatch } from "../lib/data";
+import { countEvent } from "../lib/visit-counter";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -70,7 +71,12 @@ export function RechargeMap() {
               key={option.k}
               type="button"
               className={view === option.k ? "on" : ""}
-              onClick={() => setView(option.k)}
+              onClick={() => {
+                // Metres is what the map opens on, so only the deliberate move to volume
+                // says anything about whether that view is wanted.
+                if (option.k === "volume") countEvent("monsoon/map-volume", "Monsoon: coloured the map by water lost");
+                setView(option.k);
+              }}
             >
               {option.label}
             </button>
@@ -92,6 +98,7 @@ export function RechargeMap() {
                 fill={fillFor(stops, view === "metres" ? row?.shortfallM : row?.shortfallMm3)}
                 className={`rechargeCell ${row ? "" : "noData"} ${hover?.index === index ? "hot" : ""}`}
                 onMouseMove={(event) => {
+                  countEvent("monsoon/map-inspect", "Monsoon: read a mandal off the map");
                   const box = event.currentTarget.ownerSVGElement?.parentElement?.getBoundingClientRect();
                   setHover({
                     index,

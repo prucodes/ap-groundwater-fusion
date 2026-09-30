@@ -35,6 +35,11 @@ export default defineConfig({
       use: { ...devices["Pixel 5"], viewport: { width: 375, height: 812 } },
     },
     {
+      name: "analytics",
+      testMatch: /analytics\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 900 } },
+    },
+    {
       name: "desktop",
       testMatch: /desktop-layout\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 900 } },
