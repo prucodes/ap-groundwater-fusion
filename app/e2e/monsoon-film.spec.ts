@@ -44,6 +44,11 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState)).toBeGreaterThanOrEqual(2);
     expect(await video.evaluate((v: HTMLVideoElement) => v.duration)).toBeCloseTo(film.duration, 1);
     await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.videoWidth)).toBe(viewport.width < 760 ? 1080 : 1920);
+    // Checked before the chapter assertions so a server that does not answer Range requests
+    // fails here, naming itself, rather than below as a seek that silently did nothing:
+    // Chromium reports unseekable media as seekable [[0, 0]] and discards currentTime.
+    expect(await video.evaluate((v: HTMLVideoElement) =>
+      v.seekable.length ? v.seekable.end(v.seekable.length - 1) : 0)).toBeCloseTo(film.duration, 1);
     if (viewport.width < 760) await section.getByRole("combobox", { name: "Film chapter" }).selectOption("2");
     else await section.getByRole("button", { name: /El Niño/ }).click();
     await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.currentTime)).toBeGreaterThan(film.chapters[2].start + .8);
