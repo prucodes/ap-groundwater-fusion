@@ -2,6 +2,7 @@
 
 import type { MandalGroundwaterView } from "../lib/types";
 import { downloadCsv, mandalsToCsv, monsoonWatchToCsv } from "../lib/csv";
+import { countEvent } from "../lib/visit-counter";
 import { IconDownload, IconPrinter } from "./icons";
 
 export function ExportCsvButton({
@@ -31,7 +32,10 @@ export function ExportMonsoonWatchButton({ label = "Download flagged mandals (CS
     <button
       className="ghostBtn"
       type="button"
-      onClick={() => downloadCsv("ap_monsoon_recharge_watch.csv", monsoonWatchToCsv())}
+      onClick={() => {
+        countEvent("monsoon/csv", "Monsoon: downloaded the flagged mandals");
+        downloadCsv("ap_monsoon_recharge_watch.csv", monsoonWatchToCsv());
+      }}
     >
       <IconDownload />
       {label}

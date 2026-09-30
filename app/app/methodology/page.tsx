@@ -192,6 +192,34 @@ export default function MethodologyPage() {
           ))}
         </div>
       </section>
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon">
+              <IconFlow />
+            </span>
+            How this site is measured
+          </div>
+          <span className="cardSub">what is recorded about a visit</span>
+        </div>
+        <div className="methodSteps">
+          <p>
+            Visits are counted with <a href="https://www.goatcounter.com/" target="_blank" rel="noreferrer">
+            GoatCounter</a>, which sets no cookies, stores no IP address and builds no profile across sites. What
+            is recorded is the page opened, and — on the Monsoon Watch page — whether a visit used the film, the
+            Pacific map, the mandal map or the download, and which of the page&rsquo;s sections came into view.
+            Each of those is counted at most once per visit, so a figure means the number of visits that did
+            something rather than the number of clicks one reader made.
+          </p>
+          <p>
+            It exists to answer one question honestly: which of this evidence is actually reaching anyone. Nothing
+            is recorded for a browser that sends Global Privacy Control, and any reader can switch counting off
+            for this site for good by opening a page with <code>#toggle-goatcounter</code> on the end of the
+            address.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

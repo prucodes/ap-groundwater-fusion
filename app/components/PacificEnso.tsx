@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { countEvent } from "../lib/visit-counter";
 import { basePath, mapGeometry, pacificEnso } from "../lib/data";
 import { IconChevronLeft, IconChevronRight, IconPause, IconPlay } from "./icons";
 import styles from "./PacificEnso.module.css";
@@ -31,7 +32,11 @@ export function PacificEnso() {
     const timer = setTimeout(() => setIndex(index + 1), 650);
     return () => clearTimeout(timer);
   }, [playing, index]);
-  const select = (next: number) => { setPlaying(false); setIndex(next); };
+  const select = (next: number) => {
+    countEvent("monsoon/pacific-scrub", "Monsoon: moved through Pacific months");
+    setPlaying(false);
+    setIndex(next);
+  };
   const month = data.months[index];
   const box = project(190, 5), end = project(240, -5);
 
@@ -47,7 +52,7 @@ export function PacificEnso() {
       <div className={styles.toolbar}>
         <div role="group" aria-label="Pacific map layer" className={styles.segmented}>
           <button type="button" aria-pressed={layer === "anomaly"} onClick={() => setLayer("anomaly")}>Temperature anomaly</button>
-          <button type="button" aria-pressed={layer === "earth"} onClick={() => setLayer("earth")}>Earth imagery</button>
+          <button type="button" aria-pressed={layer === "earth"} onClick={() => { countEvent("monsoon/pacific-earth", "Monsoon: switched the Pacific map to Earth imagery"); setLayer("earth"); }}>Earth imagery</button>
         </div>
         <span>Baseline 1991–2020 · Not a rainfall forecast</span>
       </div>
@@ -67,7 +72,7 @@ export function PacificEnso() {
       </div>
       <div className={styles.legend}><span>−3 °C</span><i /><span>0</span><i /><span>+3 °C</span><em>Sea-surface temperature difference from normal</em></div>
       <div className={styles.controls}>
-        <button type="button" className="pacPlay" title={playing ? "Pause months" : "Play months"} aria-label={playing ? "Pause months" : "Play through the months"} onClick={() => { if (index === data.months.length - 1) setIndex(0); setPlaying(!playing); }}>{playing ? <IconPause /> : <IconPlay />}</button>
+        <button type="button" className="pacPlay" title={playing ? "Pause months" : "Play months"} aria-label={playing ? "Pause months" : "Play through the months"} onClick={() => { countEvent("monsoon/pacific-play", "Monsoon: played the Pacific months"); if (index === data.months.length - 1) setIndex(0); setPlaying(!playing); }}>{playing ? <IconPause /> : <IconPlay />}</button>
         <button type="button" title="Previous month" aria-label="Previous month" disabled={index === 0} onClick={() => select(index - 1)}><IconChevronLeft /></button>
         <input className="pacScrub" type="range" min={0} max={data.months.length - 1} value={index} onChange={event => select(Number(event.target.value))} aria-label="Month" aria-valuetext={monthLabel(month.month)} />
         <button type="button" title="Next month" aria-label="Next month" disabled={index === data.months.length - 1} onClick={() => select(index + 1)}><IconChevronRight /></button>
