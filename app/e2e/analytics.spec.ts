@@ -80,7 +80,7 @@ test("counts an interaction once, however many times a visit uses it", async ({ 
 
 test("holds an interaction that happens before count.js arrives", async ({ page }) => {
   await page.goto("/monsoon/");
-  const volume = page.getByRole("button", { name: "Water lost" });
+  const volume = page.getByRole("button", { name: "Storage proxy" });
   await volume.scrollIntoViewIfNeeded();
   await volume.click();
   await volume.click();
@@ -103,7 +103,7 @@ test("records how far down a long page a visit actually read", async ({ page }) 
 
   await page.getByText("The other cost: heat").scrollIntoViewIfNeeded();
   await expect.poll(reached).toContain("ap-gw/monsoon/reached-heat");
-  await page.getByText("Mandals flagged short").scrollIntoViewIfNeeded();
+  await page.getByText("Provisional groundwater review queue", { exact: true }).scrollIntoViewIfNeeded();
   await expect.poll(reached).toContain("ap-gw/monsoon/reached-flagged");
 });
 
@@ -112,7 +112,7 @@ test("does not invent the sections a visit skipped over", async ({ page }) => {
   const sent = await recordSends(page);
   // A reader who jumps to the end has not read the middle, so the middle is not counted.
   // These are reach figures per section, which is why they need not fall in reading order.
-  await page.getByText("Mandals flagged short").scrollIntoViewIfNeeded();
+  await page.getByText("Provisional groundwater review queue", { exact: true }).scrollIntoViewIfNeeded();
   await expect
     .poll(async () => (await sent()).map((row) => row.path))
     .toContain("ap-gw/monsoon/reached-flagged");
