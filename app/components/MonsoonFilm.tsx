@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { countEvent } from "../lib/visit-counter";
 import film from "../data/monsoon_film.json";
 import { basePath } from "../lib/data";
 import styles from "./MonsoonFilm.module.css";
@@ -29,6 +30,7 @@ export function MonsoonFilm() {
   }, []);
   function seek(index: number) {
     if (!ref.current) return;
+    countEvent("monsoon/film-chapter", "Monsoon film: jumped to a chapter");
     ref.current.currentTime = film.chapters[index].start;
     setActive(index);
     void ref.current.play().catch(() => { /* Native controls remain available. */ });
@@ -53,6 +55,9 @@ export function MonsoonFilm() {
         src={`${assets}/pacific-to-ap-${vertical ? "portrait" : "landscape"}.mp4`}
         aria-label="El Nino explained: history, India's monsoon, and Andhra Pradesh groundwater"
         onError={() => setFailed(true)}
+        // onPlay rather than a click handler: the film uses the browser's own controls.
+        onPlay={() => countEvent("monsoon/film-play", "Monsoon film: started")}
+        onEnded={() => countEvent("monsoon/film-finished", "Monsoon film: watched to the end")}
         onLoadedMetadata={() => {
           if (!ref.current) return;
           ref.current.currentTime = resume.current.time;
@@ -88,11 +93,11 @@ export function MonsoonFilm() {
           Prototype boundaries. Synthetic narration. Local outcomes are conditional, not forecasts.
           The film is a fixed research edition, not a live update; its seasonal baseline is under review.</p>
         <div className={styles.downloads}>
-          <a href={`${assets}/pacific-to-ap-landscape.mp4`} download>Download film</a>
-          <a href={`${assets}/pacific-to-ap-portrait.mp4`} download>Vertical / WhatsApp</a>
+          <a href={`${assets}/pacific-to-ap-landscape.mp4`} download onClick={() => countEvent("monsoon/film-download", "Monsoon film: downloaded")}>Download film</a>
+          <a href={`${assets}/pacific-to-ap-portrait.mp4`} download onClick={() => countEvent("monsoon/film-share", "Monsoon film: took the vertical cut to share")}>Vertical / WhatsApp</a>
         </div>
       </div>
-      <details className={styles.transcript}>
+      <details className={styles.transcript} onToggle={event => { if (event.currentTarget.open) countEvent("monsoon/film-transcript", "Monsoon film: opened the transcript"); }}>
         <summary>Transcript and sources</summary>
         {film.chapters.map((chapter) => <p key={chapter.id}><strong>{clock(chapter.start)} · {chapter.title}</strong><br />{chapter.text}</p>)}
         <ul>{film.sources.map((source) => <li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul>

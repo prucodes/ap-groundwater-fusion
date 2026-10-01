@@ -11,6 +11,12 @@ import { defineConfig, devices } from "@playwright/test";
  *
  * PAGES_BASE_PATH is set empty so routes are served from the server root
  * rather than under the Pages project subpath.
+ *
+ * The files are served by scripts/serve-static.mjs rather than
+ * `python3 -m http.server`, which ignores Range requests. Without Range,
+ * Chromium reports the monsoon film as unseekable and discards a seek without
+ * error, so the chapter assertions failed for a reason that was not the app's.
+ * GitHub Pages answers those requests with 206, and so does that script.
  */
 export default defineConfig({
   testDir: "./e2e",
@@ -45,6 +51,11 @@ export default defineConfig({
       use: { ...devices["Pixel 5"], viewport: { width: 375, height: 812 } },
     },
     {
+      name: "analytics",
+      testMatch: /analytics\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 900 } },
+    },
+    {
       name: "desktop",
       testMatch: /desktop-layout\.spec\.ts/,
       use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 900 } },
@@ -54,7 +65,7 @@ export default defineConfig({
     ? undefined
     : {
         command:
-          "PAGES_BASE_PATH= npm run build:static && python3 -m http.server 3100 --bind 127.0.0.1 --directory out",
+          "PAGES_BASE_PATH= npm run build:static && node scripts/serve-static.mjs --port 3100 --bind 127.0.0.1 --directory out",
         url: "http://127.0.0.1:3100/",
         // Exporting ~670 mandal pages takes a while on a cold build.
         timeout: 600_000,

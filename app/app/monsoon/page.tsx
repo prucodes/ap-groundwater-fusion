@@ -17,6 +17,7 @@ import { PacificEnso } from "../../components/PacificEnso";
 import { MonsoonFilm } from "../../components/MonsoonFilm";
 import { TemperatureRecord } from "../../components/TemperatureRecord";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
+import { CountedReach } from "../../components/CountedReach";
 import { apTemperature, formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
 import styles from "./MonsoonPage.module.css";
 
@@ -189,6 +190,7 @@ export default function MonsoonPage() {
       </section>
 
       <section className="card mapCard" id="monsoon-map">
+        <CountedReach event="monsoon/reached-map" title="Monsoon: reached the map of where the season failed" />
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconMap /></span>
@@ -366,6 +368,7 @@ export default function MonsoonPage() {
       ) : null}
 
       <section className="card">
+        <CountedReach event="monsoon/reached-heat" title="Monsoon: reached the temperature record" />
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconActivity /></span>
@@ -435,6 +438,7 @@ export default function MonsoonPage() {
       </section>
 
       <section className="card">
+        <CountedReach event="monsoon/reached-flagged" title="Monsoon: reached the flagged mandal list" />
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconDroplet /></span>

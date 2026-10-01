@@ -2,6 +2,7 @@
 
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { MAP_VIEW, mandalToPath, mapGeometry, monsoonWatch } from "../lib/data";
+import { countEvent } from "../lib/visit-counter";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -73,6 +74,7 @@ export function RechargeMap() {
   }, [hover, view]);
 
   function show(index: number, element: SVGPathElement, point?: { clientX: number; clientY: number }) {
+    countEvent("monsoon/map-inspect", "Monsoon: read a mandal off the map");
     const frame = figure.current?.getBoundingClientRect(), bounds = element.getBoundingClientRect();
     if (frame) setHover({ index, x: (point?.clientX ?? bounds.x + bounds.width / 2) - frame.x, y: (point?.clientY ?? bounds.y + bounds.height / 2) - frame.y });
   }
@@ -90,7 +92,12 @@ export function RechargeMap() {
               type="button"
               className={view === option.k ? "on" : ""}
               aria-pressed={view === option.k}
-              onClick={() => setView(option.k)}
+              onClick={() => {
+                // Metres is what the map opens on, so only the deliberate move to volume
+                // says anything about whether that view is wanted.
+                if (option.k === "volume") countEvent("monsoon/map-volume", "Monsoon: coloured the map by water lost");
+                setView(option.k);
+              }}
             >
               {option.label}
             </button>

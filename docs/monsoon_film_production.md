@@ -86,6 +86,11 @@ PYTHONPATH=.video-python python3 scripts/prepare_monsoon_film.py --voice
 python3 -m http.server 4178 --bind 127.0.0.1 --directory app/public
 ```
 
+That server is fine for the renderer, which reads the scene assets start to finish. To watch
+the finished film in a browser, serve it with `node app/scripts/serve-static.mjs` instead:
+`python3 -m http.server` ignores Range requests, and Chromium will not let you seek in a video
+served without them.
+
 In another terminal:
 
 ```sh
