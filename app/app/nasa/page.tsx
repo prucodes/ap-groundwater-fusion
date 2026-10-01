@@ -14,6 +14,7 @@ import {
 } from "../../components/icons";
 import {
   districtGeometry,
+  datasetManifest,
   formatNumber,
   nasaProvenance,
   satelliteSamples,
@@ -83,9 +84,9 @@ export default function NasaSignalsPage() {
         title="NASA GRACE-DA — Raw Signal & Provenance"
         subtitle={
           <>
-            The <strong>unfused satellite truth layer</strong>: raw NASA/NDMC GRACE-DA groundwater, root-zone and
-            surface percentiles — exactly as extracted, with full source provenance. Percentiles (0–100), <em>not</em>{" "}
-            groundwater depth. This is the evidence behind every fused number in the dashboard.
+            <strong>Satellite-model context</strong>: NASA/NDMC GRACE-DA groundwater, root-zone and surface percentiles,
+            with extraction provenance. These assimilated-model indicators are not direct well measurements or
+            groundwater depth. A fetch date does not establish the valid observation period.
           </>
         }
         showChips={false}
@@ -108,7 +109,7 @@ export default function NasaSignalsPage() {
       {/* Signal-strength centerpiece */}
       <section className="card">
         <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconActivity /></span>Signal Strength — across all 28 district centroids</div>
+          <div className="cardTitle"><span className="titleIcon"><IconActivity /></span>Signal Strength / {satelliteSamples.length} district-centroid samples</div>
           <span className="cardSub">mean with min–max range · GRACE-DA</span>
         </div>
         <div className="sigGaugeRow">
@@ -119,8 +120,8 @@ export default function NasaSignalsPage() {
         <div className="fusionNote" style={{ marginTop: 16 }}>
           <IconInfo />
           <span>
-            {signalRead} A <strong>percentile</strong> compares today against this location&apos;s
-            own 1948–2014 history; it is a measure of <strong>stress and trend</strong>, never an absolute water depth.
+            {signalRead} A <strong>percentile</strong> describes relative wetness against the product&apos;s reference history,
+            not a water-table depth or a trend from a single sample. Valid period: {datasetManifest.periods.graceValidPeriod || "not supplied in the published manifest"}.
           </span>
         </div>
       </section>
@@ -132,13 +133,13 @@ export default function NasaSignalsPage() {
             <span className="titleIcon"><IconDroplet /></span>
             District Groundwater Percentile — where the signal lands
           </div>
-          <span className="cardSub">zonal mean per district</span>
+          <span className="cardSub">district-centroid sample / regional context</span>
         </div>
         <DistrictMap layer="gw_percentile" height={440} />
         <div className="choroLegend">
           <div className="choroHead">
             <span>NASA Groundwater %ile <span className="choroUnit">(0–100)</span></span>
-            <span className="choroPeriod">{sampleDate}</span>
+            <span className="choroPeriod">Fetched {sampleDate}</span>
           </div>
           <div className="choroBar" style={{ background: "linear-gradient(90deg, #e6f1f8, #0e6f95)" }} />
           <div className="choroScale">
@@ -186,7 +187,8 @@ export default function NasaSignalsPage() {
           <IconShield />
           <span>
             Every value on this page traces to one of these open NASA files — with its source URL, resolution and a
-            SHA-256 checksum so the exact raster can be re-fetched and verified. {nasaProvenance.data_label}.
+            SHA-256 checksum to identify the retained input. Current-file URLs may later serve a different raster, so
+            reproducibility requires retaining the original bytes. {nasaProvenance.data_label}.
           </span>
         </div>
       </section>

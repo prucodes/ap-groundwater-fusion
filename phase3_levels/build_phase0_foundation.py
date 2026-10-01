@@ -59,6 +59,22 @@ def refresh_state(fetch_date, run_date):
     return {"status": status, "fetchDate": fetch_date}
 
 
+def apwrims_refresh_state(history_hash, run_date, receipt_path=None):
+    receipt_path = receipt_path or os.path.join(REPO_ROOT, "data", "refresh_receipts", "apwrims.json")
+    try:
+        with open(receipt_path) as handle:
+            receipt = json.load(handle)
+        if not isinstance(receipt, dict) or receipt.get("historySha256") != history_hash:
+            return refresh_state(None, run_date)
+        fetched = receipt.get("fetchedAt")
+        fetched_date = datetime.datetime.fromisoformat(fetched).date().isoformat() if fetched else None
+        if fetched_date and fetched_date > run_date:
+            return refresh_state(None, run_date)
+        return {**refresh_state(fetched_date, run_date), "checkedAt": receipt.get("checkedAt")}
+    except (OSError, ValueError, TypeError):
+        return refresh_state(None, run_date)
+
+
 def norm(value):
     text = str(value).upper().strip()
     text = re.sub(r"\(.*?\)", " ", text)
@@ -968,9 +984,7 @@ def build_manifest(context, generated_at, active_paths):
         },
         "joinDiagnostics": context["diagnostics"],
         "refreshStatus": {
-            # APWRIMS needs an authorised session cookie (APWRIMS_COOKIE) that the
-            # unattended pipeline never has, so it is always a retained local input.
-            "apwrims": {"status": "retained_local_input", "fetchDate": None},
+            "apwrims": apwrims_refresh_state(context["inputHashes"]["apwrimsHistory"], run_date),
             "graceDa": refresh_state(
                 context["graceProvenance"].get("fetch_date"), run_date
             ),

@@ -31,6 +31,7 @@ export type DatasetManifestV2 = {
   manifestVersion: "2.0.0";
   dataContractVersion: "2.0.0";
   generatedAt: string;
+  refreshStatus?: Record<string, { status: string; fetchDate: string | null; checkedAt?: string | null }>;
   counts: {
     boundaryFeatureCount: number;
     rawSourceSeriesCount: number;
@@ -341,9 +342,7 @@ function viewStatus(record: MandalGroundwaterRecordV2): {
 export const mandals: MandalGroundwaterView[] = groundwaterRecords.map((record, index) => {
   const series = observationSeries[record.identity.mandalId]?.observations ?? [];
   const values = series.map((row) => row.value);
-  const median = values.length
-    ? [...values].sort((a, b) => a - b)[Math.floor(values.length / 2)]
-    : null;
+  const historicalMedian = values.length ? median(values) : null;
   const average = values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : null;
   const measured = record.observation?.latestMeasuredValue ?? null;
   const nowcast = record.nowcast?.value ?? null;
@@ -362,7 +361,7 @@ export const mandals: MandalGroundwaterView[] = groundwaterRecords.map((record, 
     observation_month_count: record.observation?.uniqueObservationMonthCount ?? 0,
     physical_station_count: record.observation?.physicalStationCount ?? null,
     latest_observation_period: record.observation?.observationPeriod ?? "",
-    median_groundwater_mbgl: median === null ? null : Math.round(median * 100) / 100,
+    median_groundwater_mbgl: historicalMedian === null ? null : Math.round(historicalMedian * 100) / 100,
     avg_groundwater_mbgl: average === null ? null : Math.round(average * 100) / 100,
     estimate_mbgl: nowcast,
     estimate_band_p10: record.nowcast?.lower ?? null,

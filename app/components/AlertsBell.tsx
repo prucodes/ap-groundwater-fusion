@@ -36,8 +36,8 @@ export function AlertsBell({ collapsed = false }: { collapsed?: boolean }) {
       {open && (
         <div className="alertsPanel">
           <div className="alertsHead">
-            <strong>Early Warning</strong>
-            <span>{count} urgent · {alerts.length} active</span>
+            <strong>Research review queue</strong>
+            <span>{count} priority · {alerts.length} scored for review</span>
           </div>
           <div className="alertsList">
             {alerts.slice(0, 6).map((a) => {
@@ -68,7 +68,7 @@ export function AlertsBell({ collapsed = false }: { collapsed?: boolean }) {
             })}
           </div>
           <button className="alertsFoot" onClick={() => { setOpen(false); router.push("/alerts"); }}>
-            Open early-warning console <IconArrowRight />
+            Open review queue <IconArrowRight />
           </button>
         </div>
       )}

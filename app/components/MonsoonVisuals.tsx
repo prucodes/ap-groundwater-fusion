@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { MAP_VIEW, mandalToPath, mapGeometry, monsoonWatch } from "../lib/data";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -17,13 +17,9 @@ const SHORT_STOPS: Array<{ upTo: number; fill: string; label: string }> = [
   { upTo: Infinity, fill: "#9e2f22", label: "more than 4 m short" },
 ];
 
-/* The same ramp read against water rather than water table. A metre lost from
-   hard rock holds about a fifth of the water a metre lost from the delta does,
-   so the two views rank mandals differently and both are wanted: metres answer
-   "will my bore still reach it", volume answers "how much has this place
-   actually lost". */
+/* Volume is an illustrative area/specific-yield proxy, not measured storage. */
 const VOLUME_STOPS: Array<{ upTo: number; fill: string; label: string }> = [
-  { upTo: 0, fill: "#2f7d6b", label: "gained" },
+  { upTo: 0, fill: "#2f7d6b", label: "at or above baseline" },
   { upTo: 5, fill: "#8fbfae", label: "under 5 Mm³" },
   { upTo: 20, fill: "#f2d7a0", label: "5–20 Mm³" },
   { upTo: 50, fill: "#e2a05f", label: "20–50 Mm³" },
@@ -48,28 +44,52 @@ function shortfallFill(value: number | undefined) {
  *  the cursor it was responding to.
  */
 export function RechargeMap() {
+  const figure = useRef<HTMLDivElement>(null);
+  const tip = useRef<HTMLDivElement>(null);
+  const tipId = useId();
+  const [focusIndex, setFocusIndex] = useState(0);
+  const [position, setPosition] = useState({ left: 8, top: 8 });
   const [hover, setHover] = useState<{ index: number; x: number; y: number } | null>(null);
   const [view, setView] = useState<"metres" | "volume">("metres");
   const stops = view === "metres" ? SHORT_STOPS : VOLUME_STOPS;
-  const byBoundary = new Map<number, (typeof monsoonWatch.mandals)[number]>();
+  const byBoundary = new Map<number, (typeof monsoonWatch.mandals)[number] | null>();
   monsoonWatch.mandals.forEach((m) => {
-    if (m.boundaryIndex !== null) byBoundary.set(m.boundaryIndex, m);
+    if (m.boundaryIndex !== null) byBoundary.set(m.boundaryIndex, byBoundary.has(m.boundaryIndex) ? null : m);
   });
   const active = hover ? byBoundary.get(hover.index) : null;
   const activeFeature = hover ? mapGeometry.mandals[hover.index] : null;
 
+  useLayoutEffect(() => {
+    if (!hover || !figure.current || !tip.current) return;
+    const place = () => {
+      const frame = figure.current!, card = tip.current!;
+      const left = hover.x + card.offsetWidth + 18 < frame.clientWidth ? hover.x + 14 : hover.x - card.offsetWidth - 14;
+      setPosition({ left: Math.max(8, Math.min(frame.clientWidth - card.offsetWidth - 8, left)), top: Math.max(8, Math.min(frame.clientHeight - card.offsetHeight - 8, hover.y - card.offsetHeight / 2)) });
+    };
+    place();
+    const observer = new ResizeObserver(place);
+    observer.observe(figure.current); observer.observe(tip.current);
+    return () => observer.disconnect();
+  }, [hover, view]);
+
+  function show(index: number, element: SVGPathElement, point?: { clientX: number; clientY: number }) {
+    const frame = figure.current?.getBoundingClientRect(), bounds = element.getBoundingClientRect();
+    if (frame) setHover({ index, x: (point?.clientX ?? bounds.x + bounds.width / 2) - frame.x, y: (point?.clientY ?? bounds.y + bounds.height / 2) - frame.y });
+  }
+
   return (
     <div className="rechargeMapLayout">
-      <div className="rechargeMapFigure">
+      <div className="rechargeMapFigure" ref={figure}>
         <div className="rechargeToggle" role="group" aria-label="Colour the map by">
           {([
             { k: "metres", label: "Metres of water table" },
-            { k: "volume", label: "Water lost" },
+            { k: "volume", label: "Storage proxy" },
           ] as const).map((option) => (
             <button
               key={option.k}
               type="button"
               className={view === option.k ? "on" : ""}
+              aria-pressed={view === option.k}
               onClick={() => setView(option.k)}
             >
               {option.label}
@@ -79,8 +99,8 @@ export function RechargeMap() {
         <svg
           viewBox={`0 0 ${MAP_VIEW.width} ${MAP_VIEW.height}`}
           className="rechargeMapSvg"
-          role="img"
-          aria-label="Recharge shortfall by mandal, this season against each mandal's own ten-year normal"
+          role="group"
+          aria-label="Seasonal groundwater departure by prototype mandal"
           onMouseLeave={() => setHover(null)}
         >
           {mapGeometry.mandals.map((feature, index) => {
@@ -91,13 +111,22 @@ export function RechargeMap() {
                 d={mandalToPath(feature.rings)}
                 fill={fillFor(stops, view === "metres" ? row?.shortfallM : row?.shortfallMm3)}
                 className={`rechargeCell ${row ? "" : "noData"} ${hover?.index === index ? "hot" : ""}`}
-                onMouseMove={(event) => {
-                  const box = event.currentTarget.ownerSVGElement?.parentElement?.getBoundingClientRect();
-                  setHover({
-                    index,
-                    x: box ? event.clientX - box.left : 0,
-                    y: box ? event.clientY - box.top : 0,
-                  });
+                role="button" tabIndex={focusIndex === index ? 0 : -1}
+                aria-label={`${feature.m}, ${feature.d}: ${row ? `${row.shortfallM.toFixed(2)} m seasonal departure` : "unresolved or missing evidence"}`}
+                aria-describedby={hover?.index === index ? tipId : undefined}
+                onMouseMove={event => show(index, event.currentTarget, event)}
+                onClick={event => show(index, event.currentTarget)}
+                onFocus={event => { setFocusIndex(index); show(index, event.currentTarget); }}
+                onBlur={() => setHover(null)}
+                onKeyDown={event => {
+                  if (event.key === "Escape") setHover(null);
+                  if (event.key === "Enter" || event.key === " ") { event.preventDefault(); show(index, event.currentTarget); }
+                  if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
+                    event.preventDefault();
+                    const offset = event.key === "ArrowRight" || event.key === "ArrowDown" ? 1 : -1;
+                    const next = (index + offset + mapGeometry.mandals.length) % mapGeometry.mandals.length;
+                    figure.current?.querySelectorAll<SVGPathElement>(".rechargeCell")[next]?.focus();
+                  }
                 }}
               />
             );
@@ -106,8 +135,9 @@ export function RechargeMap() {
         {hover && activeFeature ? (
           <div
             className="rechargeTip"
-            style={{ left: hover.x, top: hover.y }}
-            role="status"
+            ref={tip} id={tipId}
+            style={{ ...position, "--recharge-tone": active ? fillFor(stops, view === "metres" ? active.shortfallM : active.shortfallMm3) : "var(--muted)" } as CSSProperties}
+            role="tooltip"
           >
             <strong>{active ? active.mandal : activeFeature.m}</strong>
             <span>{active ? active.district : activeFeature.d}</span>
@@ -120,12 +150,12 @@ export function RechargeMap() {
                   </>
                 ) : (
                   <>
-                    {active.shortfallMm3.toFixed(1)} Mm³ of water short
+                    {active.shortfallMm3.toFixed(1)} Mm³ storage proxy
                   </>
                 )}
               </em>
             ) : (
-              <em>not enough comparable seasons</em>
+              <em>{byBoundary.get(hover.index) === null ? "Multiple source series; reconciliation required" : "Not enough comparable seasons"}</em>
             )}
           </div>
         ) : null}
@@ -141,10 +171,10 @@ export function RechargeMap() {
           ))}
           <span className="rechargeKey">
             <span className="rechargeSwatch noData" />
-            fewer than 7 comparable years
+            unresolved or missing evidence
           </span>
         </div>
-        <div className={`rechargeReadout ${active ? "live" : ""}`}>
+        <div className={`rechargeReadout ${active ? "live" : ""}`} aria-live="polite">
           {active ? (
             <>
               <strong>
@@ -156,20 +186,19 @@ export function RechargeMap() {
                 in a normal year.
               </span>
               <span className="rechargeReadoutMeta">
-                Now at {active.latestDepthM.toFixed(2)} m · {active.aquifer.replace("_", " ")} ·{" "}
+                Recorded at {active.latestDepthM.toFixed(2)} m bgl · {active.aquifer.replace("_", " ")} ·{" "}
                 {active.comparableYears} comparable years
               </span>
               {active.shortfallMm3 !== null && active.specificYield !== null ? (
                 <span className="rechargeReadoutMeta">
-                  {active.shortfallMm3.toFixed(1)} Mm³ of water — {active.shortfallM.toFixed(2)} m over{" "}
+                  {active.shortfallMm3.toFixed(1)} Mm³ storage proxy — {active.shortfallM.toFixed(2)} m over{" "}
                   {active.areaKm2?.toFixed(0)} km² at a specific yield of {active.specificYield}
                 </span>
               ) : null}
             </>
           ) : (
             <span>
-              Hover or tap a mandal for its own figures. Green mandals recharged as well as they usually do; the
-              deepest reds did not recharge at all.
+              {hover && byBoundary.get(hover.index) === null ? "Multiple source series share this boundary; reconcile their identities before using a local value." : "Colours show departure from the retained seasonal baseline, not measured recharge, crop condition or a drought declaration."}
             </span>
           )}
         </div>
@@ -421,7 +450,6 @@ export function ElNinoChain() {
   const enso = w.enso;
   const rain = w.rainfall;
   const sw = w.elNinoRainfall.swMonsoon;
-  const volume = w.recharge.volume;
   if (!enso || !rain || !sw) return null;
 
   const steps = [
@@ -438,7 +466,7 @@ export function ElNinoChain() {
       eyebrow: "2 · The monsoon",
       value: `${sw.elNinoAnomalyPct}%`,
       lead: "average June–September rain in El Niño years",
-      body: `Measured across ${sw.years} years and ${sw.elNinoYears} El Niño events over Andhra Pradesh itself — below normal in ${sw.elNinoBelowNormal} of ${sw.elNinoYears}, against ${sw.belowNormalAllYears} of ${sw.allYears} years in general.`,
+      body: `CHIRPS analysis across ${sw.years} years: below normal in ${sw.elNinoBelowNormal} of ${sw.elNinoYears} warm-index years, against ${sw.belowNormalAllYears} of ${sw.allYears} overall. These are historical associations, not independent causal events.`,
       source: `CHIRPS ${sw.firstYear}–${sw.lastYear}`,
     },
     {
@@ -454,9 +482,7 @@ export function ElNinoChain() {
       eyebrow: "4 · The aquifer",
       value: `${w.recharge.fallingPct}%`,
       lead: "of mandals lower than they were in May",
-      body: volume
-        ? `In the comparison seasons that figure ranged from ${Math.min(...w.seasons.filter((s) => s.year !== w.season.year).map((s) => s.fallingPct))}% to ${Math.max(...w.seasons.filter((s) => s.year !== w.season.year).map((s) => s.fallingPct))}%. The derived storage-shortfall estimate is ${formatMm(Math.round(volume.shortfallMm3))} million m³, using area and specific-yield assumptions.`
-        : "Measured in the wells themselves, against each mandal's own ten-year normal.",
+      body: "Derived from monthly source-series depth changes. The baseline inherits model-history eligibility filters; hydrological review is pending. This is not measured recharge or a crop-loss forecast.",
       source: "APWRIMS monthly readings",
     },
   ];

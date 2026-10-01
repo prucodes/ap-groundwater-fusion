@@ -26,7 +26,7 @@ function advisoryCsv() {
   const body = rows.map((r) =>
     [r.district, r.action, r.gw ?? "", r.balance ?? "", r.balanceStatus, r.verifyFirst].map(esc).join(","),
   );
-  return [csvBanner(["District irrigation advisory — rule-based, verify-first; advisory field = Draw/Hold/Conserve."]), head.join(","), ...body].join("\n");
+  return [csvBanner(["District monitoring preview: Monitor / Review / Field verify. Not an irrigation or pumping recommendation. Seasonal baseline review pending; official identity, source authority and field validation required."]), head.join(","), ...body].join("\n");
 }
 
 export function IrrigationExports() {
@@ -37,10 +37,10 @@ export function IrrigationExports() {
         type="button"
         onClick={() => downloadText("ap_aware_advisory_payload.json", JSON.stringify(awarePayload(), null, 2), "application/json")}
       >
-        <IconDownload /> AWARE payload (JSON)
+        <IconDownload /> AWARE draft (JSON)
       </button>
       <button className="ghostBtn" type="button" onClick={() => downloadCsv("ap_irrigation_advisory.csv", advisoryCsv())}>
-        <IconDownload /> Advisory (CSV)
+        <IconDownload /> Monitoring preview (CSV)
       </button>
       <button className="ghostBtn" type="button" onClick={() => window.print()}>
         <IconPrinter /> Print / PDF

@@ -70,6 +70,9 @@ jobs:
             app/data/nasa_provenance.json \
             app/data/satellite_station_samples.json \
             app/public/water-crystal-3d.html
+          if [ -d data/refresh_receipts ]; then
+            git add data/refresh_receipts
+          fi
           git commit -m "chore(phase3): weekly levels refresh" || echo "no changes"
           git push
 

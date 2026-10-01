@@ -84,9 +84,9 @@ export type DistrictAdvisory = {
 };
 
 export const ACTION_META: Record<IrrigationAction, { color: string; label: string; gloss: string }> = {
-  Monitor: { color: "#5e9b6b", label: "Monitor", gloss: "At or below the statewide norm on every measured signal." },
+  Monitor: { color: "#5e9b6b", label: "Monitor", gloss: "Below the prototype review threshold; not a safety clearance." },
   Review: { color: "#d79b2e", label: "Review history", gloss: "Measurably worse than the state; review the measured history first." },
-  "Field verify": { color: "#c65a46", label: "Field verify", gloss: "The district's own readings cannot be relied on until confirmed." },
+  "Field verify": { color: "#c65a46", label: "Field verify", gloss: "Coverage or consistency checks require field corroboration." },
 };
 
 /** This season's recharge, per district, from the monsoon watch. A measured
@@ -161,7 +161,7 @@ export function districtAdvisories(): DistrictAdvisory[] {
         const over = Math.max(0, shortShare - norms.shortShare);
         score += over * 100 / SHORTFALL_POINTS_PER;
         if (over > 0 && season) {
-          parts.push(`${season.flagged} of ${season.compared} mandals are short of their own recharge this season against ${Math.round(norms.shortShare * 100)}% statewide`);
+          parts.push(`${season.flagged} of ${season.compared} source series carry provisional seasonal shortfall flags against ${Math.round(norms.shortShare * 100)}% statewide`);
         }
       }
       score = Math.round(score * 100) / 100;
@@ -173,7 +173,7 @@ export function districtAdvisories(): DistrictAdvisory[] {
         reason = "No reconciled mandal groundwater history is available for this prototype district rollup.";
       } else if (verify >= VERIFY_MANDALS) {
         action = "Field verify";
-        reason = `${verify} mandals here are flagged where the measured depth contradicts the satellite signal; confirm the readings before the district figures are used.`;
+        reason = `${verify} mandals have verification flags; inspect observation history and model-band checks before interpreting the district figures.`;
       } else if (score >= REVIEW_SCORE || (shortShare !== null && shortShare >= SHORT_SEASON_SHARE)) {
         action = "Review";
         reason = parts.length
@@ -181,7 +181,7 @@ export function districtAdvisories(): DistrictAdvisory[] {
           : "Measured signals place this district above the statewide norm; review the history.";
       } else {
         action = "Monitor";
-        reason = "At or below the statewide norm on stressed mandals, deepening trend and this season's recharge.";
+        reason = "Below the comparative review threshold; continue monitoring. This does not establish adequate groundwater supply.";
       }
       reason += status ? ` Climate-balance context: ${status.toLowerCase()} (not direct recharge).` : "";
 
@@ -240,6 +240,8 @@ export type AwareAdvisoryRecord = {
   source: string;
   as_of: string;
   balance_reference_year: string;
+  operational_use: false;
+  method_status: "seasonal_baseline_review_pending";
 };
 
 export function awarePayload(): AwareAdvisoryRecord[] {
@@ -262,6 +264,8 @@ export function awarePayload(): AwareAdvisoryRecord[] {
     // is a completed-year figure (TerraClimate), kept separate so neither looks stale.
     as_of: datasetManifest.periods.latestObservationPeriod || districtGeometry.balance_year,
     balance_reference_year: districtGeometry.balance_year,
+    operational_use: false,
+    method_status: "seasonal_baseline_review_pending",
   }));
 }
 

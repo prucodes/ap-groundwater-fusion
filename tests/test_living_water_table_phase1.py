@@ -183,9 +183,15 @@ def test_phase1_ui_contains_fallback_quality_accessibility_and_disclosures():
 
 def test_navigation_and_package_policy():
     shell = (APP / "components" / "AppShell.tsx").read_text()
+    estimates = (APP / "app" / "estimates" / "page.tsx").read_text()
+    command_palette = (APP / "components" / "CommandPalette.tsx").read_text()
     package = load_json("app/package.json")
-    assert 'href: "/living-water-table"' in shell
-    assert 'label: "Living Water Table"' in shell
+    assert 'href: "/living-water-table"' not in shell
+    assert 'href: "/crystal", label: "Water Depth 3D"' in shell
+    assert "Advanced model evidence" in estimates
+    assert 'href="/living-water-table">Open Model Evidence Lab' in estimates
+    assert 'label: "Model Evidence Lab"' in command_palette
+    assert 'href: "/living-water-table"' in command_palette
     assert package["dependencies"]["@react-three/fiber"] == "^9.6.1"
     assert "@react-three/drei" not in package["dependencies"]
     forbidden = {"deck.gl", "maplibre-gl", "cesium", "@react-three/postprocessing"}

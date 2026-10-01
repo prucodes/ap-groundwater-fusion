@@ -26,13 +26,15 @@ function MandalPicker({
   value,
   onChange,
   exclude,
+  label,
 }: {
   value: string;
   onChange: (id: string) => void;
   exclude?: string;
+  label: string;
 }) {
   return (
-    <select className="compareSelect" value={value} onChange={(e) => onChange(e.target.value)}>
+    <select className="compareSelect" aria-label={label} value={value} onChange={(e) => onChange(e.target.value)}>
       {mandals
         .filter((m) => m.id !== exclude)
         .map((m) => (
@@ -93,9 +95,9 @@ export default function ComparePage() {
 
       <section className="card">
         <div className="comparePickers">
-          <MandalPicker value={a.id} onChange={setAId} exclude={b.id} />
+          <MandalPicker value={a.id} onChange={setAId} exclude={b.id} label="First mandal" />
           <span className="compareVs"><IconColumns /> vs</span>
-          <MandalPicker value={b.id} onChange={setBId} exclude={a.id} />
+          <MandalPicker value={b.id} onChange={setBId} exclude={a.id} label="Second mandal" />
         </div>
 
         <div className="compareGrid">
@@ -105,7 +107,9 @@ export default function ComparePage() {
         </div>
 
         <div className="compareTable">
-          <Row label="Median groundwater (APWRIMS)" a={<><b>{formatNumber(a.median_groundwater_mbgl)}</b> mbgl</>} b={<><b>{formatNumber(b.median_groundwater_mbgl)}</b> mbgl</>} highlight />
+          <Row label="Latest recorded depth (m bgl)" a={formatNumber(a.display_mbgl)} b={formatNumber(b.display_mbgl)} highlight />
+          <Row label="Observation period" a={a.latest_observation_period || "Not supplied"} b={b.latest_observation_period || "Not supplied"} />
+          <Row label="Historical median (m bgl)" a={formatNumber(a.median_groundwater_mbgl)} b={formatNumber(b.median_groundwater_mbgl)} />
           <Row label="Observation months" a={a.observation_month_count} b={b.observation_month_count} />
           <Row label="NASA groundwater pctl" a={rings(a, "groundwater_percentile", "#12b5cb")} b={rings(b, "groundwater_percentile", "#12b5cb")} highlight />
           <Row label="Root-zone moisture pctl" a={rings(a, "rootzone_percentile", "#5e9b6b")} b={rings(b, "rootzone_percentile", "#5e9b6b")} />
@@ -122,15 +126,16 @@ export default function ComparePage() {
             b={<BalanceCell m={b} />}
             highlight
           />
-          <Row label="Sensor–satellite agreement" a={<AgreementTag value={a.sensor_satellite_agreement} />} b={<AgreementTag value={b.sensor_satellite_agreement} />} highlight />
+          <Row label="Groundwater / climate context" a={<AgreementTag value={a.sensor_satellite_agreement} />} b={<AgreementTag value={b.sensor_satellite_agreement} />} highlight />
           <Row label="Confidence" a={<ConfidenceBadge label={a.confidence_label} />} b={<ConfidenceBadge label={b.confidence_label} />} />
-          <Row label="Observation period" a={a.latest_observation_period || "—"} b={b.latest_observation_period || "—"} />
           <Row
             label="Recommended action"
-            a={<span style={{ fontSize: 12, color: "var(--muted)" }}>{a.recommended_action.split(".")[0]}.</span>}
-            b={<span style={{ fontSize: 12, color: "var(--muted)" }}>{b.recommended_action.split(".")[0]}.</span>}
+            a={<span style={{ fontSize: 12, color: "var(--muted)" }}>{a.recommended_action}</span>}
+            b={<span style={{ fontSize: 12, color: "var(--muted)" }}>{b.recommended_action}</span>}
           />
         </div>
+
+        <p className="cardSub">{!a.latest_observation_period || !b.latest_observation_period ? "One or both observation periods are unavailable; no contemporaneous comparison is established." : a.latest_observation_period !== b.latest_observation_period ? "Different observation periods: depths are not a same-month comparison." : "Observation periods match. Well coverage and local geology can still differ."} Historical medians use each location&apos;s available history.</p>
 
         <div className="compareLinks">
           <Link className="linkAction" href={`/mandals/${a.id}`}>Open {titleCase(a.mandal_name)} <IconArrowRight /></Link>

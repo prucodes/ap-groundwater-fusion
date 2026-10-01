@@ -7,6 +7,7 @@ import { IconDroplet, IconLeaf, IconWaves, IconShield, IconInfo } from "../../co
 import {
   balanceMeta,
   dashboardSummary,
+  datasetManifest,
   districts,
   formatNumber,
   graceDistrictCount,
@@ -39,7 +40,7 @@ export default function SnapshotPage() {
       : `NASA GRACE-DA groundwater averages percentile ${Math.round(s.avg_groundwater_percentile)} across ${graceDistrictCount} districts — ${wetnessLabel(s.avg_groundwater_percentile).toLowerCase()} for this time of year.`,
     ...(s.avg_water_balance_mm !== null && s.avg_water_balance_mm !== undefined
       ? [
-          `${s.deficit_mandals} mandals run an annual water deficit (TerraClimate ${s.balance_year}) — evapotranspiration exceeds rainfall over the year.`,
+          `${s.deficit_mandals} prototype units carry the low climate-balance category (TerraClimate ${s.balance_year}); this is not measured aquifer depletion.`,
         ]
       : []),
     ...(yoyMedian !== null
@@ -94,7 +95,7 @@ export default function SnapshotPage() {
                   <th>#</th>
                   <th>District</th>
                   <th>Mandal</th>
-                  <th>Median mbgl</th>
+                  <th>Historical median (m bgl)</th>
                   <th>Modelled nowcast (m)</th>
                   <th>Coverage</th>
                   <th title="Year-on-year change: + deeper/worse (red), − recovering (green)">YoY</th>
@@ -102,7 +103,7 @@ export default function SnapshotPage() {
                   <th>Root-Zone</th>
                   <th>Surface</th>
                   <th>Water Balance</th>
-                  <th>Assessment</th>
+                  <th>Own-history wetness</th>
                   <th>Status</th>
                 </tr>
               </thead>
@@ -157,14 +158,14 @@ export default function SnapshotPage() {
             </ul>
             <div className="snapWhy">
               <strong>Why this matters</strong>
-              <p>District moisture watch, irrigation planning support, recharge monitoring, and AWARE-ready groundwater intelligence.</p>
+              <p>Identify records for verification and compare dated context. Not an allocation plan, drought declaration or released AWARE advisory.</p>
             </div>
           </aside>
         </div>
 
         <div className="snapFoot">
           <IconInfo />
-          <span>{prototypeNotice} Data period: {s.sample_fetch_date} (latest GRACE-DA sample). Values are percentiles (0–100), not groundwater depth.</span>
+          <span>{prototypeNotice} Observations through {datasetManifest.periods.latestObservationPeriod}; model targets {datasetManifest.periods.modelTargetPeriodRange.start} to {datasetManifest.periods.modelTargetPeriodRange.end}; GRACE-DA fetched {s.sample_fetch_date} (valid period not supplied). Depth is m below ground; NASA columns are percentiles, not depth. Climate balance uses {datasetManifest.periods.etValidPeriod} reference data. Not live telemetry.</span>
         </div>
       </section>
     </div>

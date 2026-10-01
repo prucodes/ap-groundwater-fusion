@@ -6,7 +6,7 @@ import { LivingWaterTableClient } from "../../components/living-water-table/Livi
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Living Water Table — Andhra Pradesh | Experimental",
+  title: "Model Evidence Lab | Andhra Pradesh",
   description:
     "Interactive Phase 1 Prototype V2 groundwater-depth view with explicit modelled, measured-only and boundary-only states.",
 };

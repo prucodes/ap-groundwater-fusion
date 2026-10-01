@@ -5083,21 +5083,23 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 }
 .rechargeCell.noData { fill: var(--field); stroke: var(--line); }
 .rechargeCell.hot { stroke: var(--ink); stroke-width: 2.2; }
+.rechargeCell:focus-visible { outline: none; stroke: var(--ink); stroke-width: 2.8; }
 
 /* Follows the pointer, so the answer appears where the eye already is. */
 .rechargeTip {
   position: absolute;
   z-index: 5;
-  transform: translate(14px, -50%);
+  transform: none;
   pointer-events: none;
   display: flex;
   flex-direction: column;
   gap: 1px;
   padding: 8px 10px;
-  max-width: 230px;
-  border-radius: 9px;
-  border: 1px solid var(--line-strong);
-  background: var(--card);
+  max-width: min(230px, calc(100% - 16px));
+  border-radius: 6px;
+  border: 1px solid color-mix(in srgb, var(--recharge-tone) 35%, var(--line-strong));
+  border-top: 2px solid var(--recharge-tone);
+  background: color-mix(in srgb, var(--recharge-tone) 6%, var(--card));
   box-shadow: 0 6px 20px rgba(7, 29, 53, 0.16);
   font-size: 12px;
   line-height: 1.4;
@@ -5478,3 +5480,19 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 .tempFinding > strong small { font-size: 14px; font-weight: 600; color: var(--muted); margin-left: 4px; }
 .tempFinding > em { font-style: normal; font-size: 12px; line-height: 1.5; color: var(--muted); margin-top: 4px; }
 .tempFinding > em strong { color: var(--ink-soft); }
+
+/* Keep the executive view scan-first; evaluation detail remains one action away. */
+.overviewEvaluation { border-block: 1px solid var(--line); padding: 11px 0; }
+.overviewEvaluation > summary { cursor: pointer; font-size: 12px; color: var(--muted); }
+.overviewEvaluation > summary > span:first-child { color: var(--ink); font-weight: 600; }
+.overviewEvaluation > summary > strong { color: var(--teal); padding: 0 18px; font-variant-numeric: tabular-nums; }
+.overviewEvaluation[open] > summary { margin-bottom: 14px; }
+.overviewEvaluation .modelValidationStrip { background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+.overviewEvaluation .depthBandStrip { border-radius: 0; border-inline: 0; box-shadow: none; }
+.modelValueRow .kpiCard { border-radius: 7px; box-shadow: none; }
+.dataTable button.linkAction { border: 0; background: none; padding: 4px 0; font: inherit; text-align: left; }
+.dataTable button.linkAction:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+.estMapSvg [role="button"]:focus-visible { stroke: var(--ink); stroke-width: 2; outline: none; }
+@media(max-width:720px) {
+  .overviewEvaluation > summary > span:last-child { display: block; margin: 7px 0 0 18px; }
+}

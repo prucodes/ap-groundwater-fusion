@@ -128,7 +128,8 @@ export function monsoonWatchToCsv(): string {
     `Monsoon recharge watch: ${w.season.preMonsoonMonth} to ${w.season.latestMonth}.`,
     `Each mandal's change in depth since its May reading, against the median of its OWN change over the previous ten years.`,
     `Flagged short at >= 1.0 m AND >= 2.0x that mandal's own year-to-year spread. Positive metres mean the water table fell.`,
-    `water_short_mm3 = shortfall_m x specific_yield x area_km2, in million cubic metres. Specific yield is the CGWB measurement where one exists for that mandal, otherwise the documented aquifer proxy.`,
+    `water_short_mm3 is a legacy column name for an illustrative storage proxy, NOT measured water lost or allocable supply: shortfall_m x specific_yield x area_km2. Specific yield may be interpolated or assigned from an aquifer proxy. Do not sum duplicate boundary areas.`,
+    `Research snapshot, not live telemetry. Seasonal baseline review pending; flags are provisional. Rows are source series, not unique boundary units. No issued advisory.`,
     w.enso
       ? `Ocean state at publication: ${w.enso.season} ${w.enso.asOf.slice(0, 4)} ONI ${w.enso.oniC > 0 ? "+" : ""}${w.enso.oniC} C (${w.enso.state}). Context only; not used to derive any column.`
       : `Ocean state unavailable at publication.`,

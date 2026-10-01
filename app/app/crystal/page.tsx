@@ -13,13 +13,13 @@ export default function CrystalWaterTablePage() {
   return (
     <div className="crystalFrameWrap">
       {/* Full-bleed frame with no app chrome, so without this it would be the
-          one view rendering modelled depths with no provenance on screen. It
+          one view rendering recorded depths with no provenance on screen. It
           sits above the frame in normal flow rather than floating over it —
           as an overlay it covered the 3D view's own heading on a phone. */}
       <p className="crystalNotice">
-        Prototype — cinematic view of <strong>modelled</strong> depth-to-water
-        estimates with uncertainty, not official APWRIMS measurements. Height and
-        motion are presentational.
+        Prototype — cinematic view of <strong>recorded May depth-to-water</strong>.
+        Missing May readings are interpolated and marked in the view. Not official
+        APWRIMS results; height and motion are presentational, not aquifer geometry.
       </p>
       <iframe
         // Next rewrites next/image and <Link> for basePath, but not a raw

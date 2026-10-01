@@ -11,11 +11,14 @@ import { balanceMeta, districtRollups, districtSeries, formatNumber, formatPerio
 import { AiBrief } from "../../components/AiBrief";
 import { DistrictMap } from "../../components/DistrictMap";
 import { DistrictTrendGrid } from "../../components/DistrictTrendGrid";
+import { DistrictProfile } from "../../components/governance/DistrictProfile";
+import styles from "../../components/governance/Governance.module.css";
 
 export default function DistrictsPage() {
   const router = useRouter();
   const rollups = districtRollups();
   const [selected, setSelected] = useState(rollups[0]?.district_name);
+  const [view, setView] = useState<"profile" | "map">("profile");
   const current = rollups.find((r) => r.district_name === selected) ?? rollups[0];
 
   // colour every district by its worst stress status for the map
@@ -30,24 +33,27 @@ export default function DistrictsPage() {
       <HeaderHero
         title="Districts — Groundwater Levels & Stress"
         subtitle={
-          <>All 28 districts, estimated groundwater <strong>level in metres</strong> (modelled β, calibrated to APWRIMS) with year-on-year change and stress. Select a district to drill down.</>
+          <>{rollups.length} district groups in the prototype dataset. Compare <strong>modelled depth</strong> with measured year-on-year change, then inspect the mandals behind each signal.</>
         }
         showChips={false}
         variant="compact"
       />
 
-      <div className="overviewGrid">
+      <div className={styles.districtWorkspace}>
         <section className="card mapCard">
           <div className="cardHead">
-            <div className="cardTitle"><span className="titleIcon"><IconMap /></span>District Stress Map</div>
-            <span className="cardSub">coloured by worst mandal status</span>
+            <div className="cardTitle"><span className="titleIcon"><IconActivity /></span>{view === "profile" ? "District pressure profile" : "District status map"}</div>
+            <div className="segmented" aria-label="District view">
+              <button className={`segBtn ${view === "profile" ? "active" : ""}`} aria-pressed={view === "profile"} onClick={() => setView("profile")}><IconActivity /> Profile</button>
+              <button className={`segBtn ${view === "map" ? "active" : ""}`} aria-pressed={view === "map"} onClick={() => setView("map")}><IconMap /> Map</button>
+            </div>
           </div>
-          <DistrictMap layer="gw_percentile" height={420} colorOverride={stressColors} />
+          {view === "profile" ? <DistrictProfile rows={rollups} selected={selected} onSelect={setSelected} /> : <><DistrictMap layer="gw_percentile" height={420} colorOverride={stressColors} /><p className="cardSub">Most severe review or coverage category per district, not a district drought classification.</p></>}
         </section>
 
-        <section className="card spanRow">
+        <section className="card">
           <div className="cardHead">
-            <div className="cardTitle"><span className="titleIcon"><IconDroplet /></span>District Levels — as on {formatPeriod(latestObservationPeriod)} (β)</div>
+            <div className="cardTitle"><span className="titleIcon"><IconDroplet /></span>District levels / available nowcasts</div>
             <span className="cardSub">m below ground</span>
           </div>
           <div className="tableWrap" style={{ maxHeight: 420, overflowY: "auto" }}>
@@ -57,14 +63,14 @@ export default function DistrictsPage() {
               </thead>
               <tbody>
                 {levelRows.map((r) => {
-                  const t = r.avg_trend_m_per_yr ?? 0;
-                  const tcol = t > 0.1 ? "var(--rust)" : t < -0.1 ? "var(--green)" : "var(--muted)";
+                  const t = r.avg_trend_m_per_yr;
+                  const tcol = t !== null && t > 0.1 ? "var(--rust)" : t !== null && t < -0.1 ? "var(--green)" : "var(--muted)";
                   return (
-                    <tr key={r.district_name} onClick={() => setSelected(r.district_name)} style={{ cursor: "pointer" }}>
-                      <td className="cellStrong">{titleCase(r.district_name)}</td>
+                    <tr key={r.district_name} className={selected === r.district_name ? "selected" : ""}>
+                      <td className="cellStrong"><button className="linkAction" onClick={() => setSelected(r.district_name)}>{titleCase(r.district_name)}</button></td>
                       <td className="num"><strong>{formatNumber(r.avg_estimate_mbgl)}</strong> m</td>
                       <td className="num" style={{ color: tcol, whiteSpace: "nowrap" }}>
-                        {t > 0.1 ? "↓" : t < -0.1 ? "↑" : "≈"} {formatNumber(Math.abs(t))}
+                        {t === null ? "No comparison" : `${t > 0.1 ? "↓" : t < -0.1 ? "↑" : "≈"} ${formatNumber(Math.abs(t))}`}
                       </td>
                       <td className="num" style={{ color: r.stress_count ? "var(--rust)" : "var(--muted)" }}>{r.stress_count}</td>
                       <td><StatusBadge bucket={r.worst_bucket} /></td>
@@ -104,7 +110,7 @@ export default function DistrictsPage() {
           ~6,400px of a 6,500px page. Collapsed rather than removed: it carries
           mandal and in-stress counts the compact tiles do not. */}
       <details className="rawTable districtCards">
-        <summary>Show all 28 district cards — mandal counts, stress counts and average level</summary>
+        <summary>Show all {rollups.length} district cards — mandal counts, stress counts and average level</summary>
       <div className="reportGrid">
         {rollups.map((r) => {
           const meta = statusMeta(r.worst_bucket);
@@ -170,7 +176,7 @@ export default function DistrictsPage() {
               <span className="titleIcon">
                 <IconLayers />
               </span>
-              {titleCase(current.district_name)} District · {current.seed_count} of {current.mandal_count} mandals modelled
+              {titleCase(current.district_name)} District · {current.mandals.filter(m => m.estimate_mbgl != null).length} of {current.mandals.length} prototype units modelled
             </div>
             <ExportCsvButton
               rows={current.mandals}
@@ -202,9 +208,9 @@ export default function DistrictsPage() {
               <thead>
                 <tr>
                   <th>Mandal</th>
-                  <th>Measured (median)</th>
+                  <th>Historical median</th>
                   <th>Est. Level β</th>
-                  <th>Vs Normal</th>
+                  <th>NASA GW percentile</th>
                   <th>Root-Zone</th>
                   <th>Water Balance</th>
                   <th>Status</th>

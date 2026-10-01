@@ -1,6 +1,6 @@
 "use client";
 
-import { mandals, satelliteSamples, titleCase } from "../lib/data";
+import { datasetManifest, modelCard, mandals, satelliteSamples, titleCase } from "../lib/data";
 import { csvBanner, downloadCsv, mandalsToCsv } from "../lib/csv";
 import { awarePayload, districtAdvisories } from "../lib/irrigation";
 import { IconDownload, IconDroplet, IconLeaf, IconSatellite, IconDatabase } from "./icons";
@@ -26,7 +26,7 @@ function advisoryCsv() {
   const rows = districtAdvisories();
   const head = ["district", "advisory", "gw_percentile", "water_balance_mm", "water_balance_status", "verify_first"];
   const body = rows.map((r) => [r.district, r.action, r.gw ?? "", r.balance ?? "", r.balanceStatus, r.verifyFirst].map(esc).join(","));
-  return [csvBanner(["District irrigation advisory — rule-based, verify-first."]), head.join(","), ...body].join("\n");
+  return [csvBanner(["Unreleased district monitoring preview; not a pumping or allocation advisory.", "Seasonal baseline review pending; categories require field and departmental verification."]), head.join(","), ...body].join("\n");
 }
 
 function nasaSamplesCsv() {
@@ -36,14 +36,15 @@ function nasaSamplesCsv() {
       .map(esc)
       .join(","),
   );
-  return [csvBanner(["NASA GRACE-DA / soil-moisture percentiles sampled at station points (0-100), not depth."]), head.join(","), ...body].join("\n");
+  return [csvBanner(["NASA GRACE-DA / soil-moisture percentiles sampled at district centroids (0-100), not depth.", "The sampled column is the fetch date, not a confirmed observation period."]), head.join(","), ...body].join("\n");
 }
 
 const ITEMS = [
   { icon: <IconDroplet />, name: "Mandal fusion table", desc: "APWRIMS readings fused with satellite signals, per mandal.", fmt: "CSV", run: () => downloadCsv("ap_mandal_fusion.csv", mandalsToCsv(mandals)) },
-  { icon: <IconLeaf />, name: "Irrigation advisory", desc: "Draw / hold / conserve call per district.", fmt: "CSV", run: () => downloadCsv("ap_irrigation_advisory.csv", advisoryCsv()) },
-  { icon: <IconDatabase />, name: "AWARE payload", desc: "Advisory records shaped for the AWARE bridge.", fmt: "JSON", run: () => downloadText("ap_aware_advisory_payload.json", JSON.stringify(awarePayload(), null, 2), "application/json") },
-  { icon: <IconSatellite />, name: "NASA GRACE samples", desc: "Raw GRACE-DA percentiles at station points.", fmt: "CSV", run: () => downloadCsv("ap_nasa_grace_samples.csv", nasaSamplesCsv()) },
+  { icon: <IconLeaf />, name: "District monitoring preview", desc: "Monitor / review / field verify. Not operational advice.", fmt: "CSV", run: () => downloadCsv("ap_irrigation_advisory.csv", advisoryCsv()) },
+  { icon: <IconDatabase />, name: "AWARE draft payload", desc: "Unreleased schema preview. Nothing is dispatched.", fmt: "JSON", run: () => downloadText("ap_aware_advisory_payload.json", JSON.stringify(awarePayload(), null, 2), "application/json") },
+  { icon: <IconSatellite />, name: "NASA GRACE samples", desc: "Satellite-model percentiles at district centroids.", fmt: "CSV", run: () => downloadCsv("ap_nasa_grace_samples.csv", nasaSamplesCsv()) },
+  { icon: <IconDatabase />, name: "Evidence & model pack", desc: "Source periods, coverage, input hashes and model evaluation.", fmt: "JSON", run: () => downloadText("ap_evidence_model_pack.json", JSON.stringify({ releaseStatus: "research_only", operationalUse: false, caveats: ["Not live telemetry or official APWRIMS results.", "Seasonal baseline review pending; this pack does not independently certify source data."], manifest: datasetManifest, modelCard }, null, 2), "application/json") },
 ];
 
 export function ReportDownloads() {

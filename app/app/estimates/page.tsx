@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
 import { KpiCard } from "../../components/KpiCard";
 import { CountUp } from "../../components/CountUp";
@@ -98,6 +99,12 @@ export default function EstimatesPage() {
         variant="compact"
       />
 
+      <details className="rawTable">
+        <summary>Advanced model evidence</summary>
+        <p className="cardSub">Measured values, held-out model comparisons, uncertainty and no-data boundaries.</p>
+        <Link className="linkAction" href="/living-water-table">Open Model Evidence Lab</Link>
+      </details>
+
       <div className="provRibbon">
         <span className="provRibbonItem"><IconActivity /> APWRIMS-format history · {bundle.n_mandals} modelled mandals · through {datasetManifest.periods.latestObservationPeriod}</span>
         <span className="provRibbonDot" />
@@ -113,7 +120,7 @@ export default function EstimatesPage() {
           icon={<IconDroplet />}
           label="Modelled Mandals"
           value={<CountUp value={bundle.n_mandals} />}
-          foot="metres below ground, as of latest month"
+          foot={`targets ${datasetManifest.periods.modelTargetPeriodRange.start} to ${datasetManifest.periods.modelTargetPeriodRange.end}`}
           accent="var(--teal)"
         />
         <KpiCard
@@ -203,8 +210,9 @@ export default function EstimatesPage() {
           </div>
           <div className="estMethodBody">
             <p className="estMethodLead">
-              We trained on <strong>{bundle.n_mandals} mandals × 12 years</strong> of real APWRIMS depth, then tested by
-              holding out the 2024–2026 evaluation period for lag-eligible mandal-months.
+              Current nowcasts cover <strong>{bundle.n_mandals} lag-eligible prototype units</strong>.
+              Available APWRIMS-format histories have gaps; evaluation holds out recent eligible mandal-months,
+              not a complete twelve-year panel for every unit.
             </p>
             <div className="estMetricGrid">
               <div className="estMetric"><span className="estMetricVal">{bundle.backtest.forecast_mae_m} m</span><span className="estMetricLbl">rolling temporal holdout MAE</span></div>

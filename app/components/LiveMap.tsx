@@ -77,7 +77,7 @@ function tooltipHtml(p: SeedProps) {
   const agree = agreementMeta(p.agreement);
   const agreeColor = agree.className === "strong" ? "#c65a46" : agree.className === "agree" ? "#5e9b6b" : "#d79b2e";
   return (
-    `<span class="tipHead"><b>${titleCase(p.m)}</b>` +
+    `<span class="tipHead" style="border-left:3px solid ${meta.color};padding-left:8px;background:${meta.color}0d"><b>${titleCase(p.m)}</b>` +
     `<span class="tipPill" style="color:${meta.color};background:${meta.color}22">${meta.label}</span></span>` +
     `<span class="tipDist">${titleCase(p.d)} District</span>` +
     `<span class="tipExplain">Different evidence layers — not duplicate readings. Depth is in m below ground; satellite values are 0–100 wetness percentiles.</span>` +
@@ -412,7 +412,7 @@ export function LiveMap({
       <div ref={containerRef} className="liveMap" style={{ height }} />
       {mode === "status" && (
         <div className="liveBadge">
-          <span className="liveBadgeDot" /> LIVE
+          <span className="liveBadgeDot" /> SNAPSHOT
           <span className="liveBadgeSep">·</span> {mappedCount} mandals
         </div>
       )}

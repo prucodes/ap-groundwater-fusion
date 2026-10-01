@@ -21,6 +21,7 @@ import {
   IconMenu,
   IconSatellite,
   IconSearch,
+  IconSettings,
   IconWaves,
   IconX,
 } from "./icons";
@@ -37,9 +38,11 @@ const primaryNav = [
   { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
   { href: "/mandals", label: "Mandal Insights", Icon: IconCompass, desc: "Per-mandal deep dive: readings, satellite context, trend and agreement." },
   { href: "/watchlist", label: "Verify / Watchlist", Icon: IconActivity, desc: "Mandals where evidence needs field review or source verification." },
-  { href: "/alerts", label: "Early Warning", Icon: IconAlert, desc: "Severity-ranked alerts from the fusion engine." },
+  { href: "/alerts", label: "Review Queue", Icon: IconAlert, desc: "Prototype review priorities, separate from missing evidence. Not an official early warning." },
   { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
+  { href: "/agriculture", label: "Agriculture & Water", Icon: IconLeaf, desc: "Crop-water planning lab and observed groundwater evidence. Not a field irrigation advisory." },
   { href: "/districts", label: "Districts", Icon: IconGrid, desc: "District roll-ups with an auto + AI situation brief per district." },
+  { href: "/crystal", label: "Water Depth 3D", Icon: IconWaves, desc: "Recorded May depth by mandal and district; optional schematic relief." },
 ];
 
 // Secondary — evidence, exports, and lab-style views. Kept reachable without
@@ -48,15 +51,14 @@ const moreNav = [
   { href: "/estimates", label: "Modelled Levels β", Icon: IconDroplet, desc: "Calculated mandal groundwater depth in metres with model bands." },
   { href: "/nasa", label: "NASA Signals", Icon: IconSatellite, desc: "Raw, unfused GRACE-DA satellite-model context with provenance." },
   { href: "/climate", label: "Climate & Balance", Icon: IconWaves, desc: "Rainfall in vs ET out — the water budget behind groundwater." },
-  { href: "/readiness", label: "Data Readiness", Icon: IconDatabase, desc: "Which sources are live or pending — and their quality." },
+  { href: "/readiness", label: "Data Readiness", Icon: IconDatabase, desc: "Source periods, coverage and operational release gates." },
   { href: "/methodology", label: "Methodology", Icon: IconFlow, desc: "How fusion works and what each signal means." },
   { href: "/reports", label: "Reports", Icon: IconFile, desc: "Generated and exportable reports." },
   { href: "/snapshot", label: "Executive Snapshot", Icon: IconFile, desc: "One-page printable summary for officials." },
   { href: "/compare", label: "Compare", Icon: IconColumns, desc: "Side-by-side comparison of any two mandals or districts." },
   { href: "/scenario", label: "Scenario Lab", Icon: IconCloudRain, desc: "Monsoon what-if: dial rainfall up/down and watch who tips into deficit." },
-  { href: "/irrigation", label: "AWARE Preview", Icon: IconLeaf, desc: "Draw/hold/conserve advisory preview + the AWARE export bridge." },
-  { href: "/living-water-table", label: "Living Water Table", Icon: IconDroplet, desc: "Experimental 3D groundwater-depth view.", badge: "3D" },
-  { href: "/crystal", label: "Crystal 3D Lab", Icon: IconWaves, desc: "Cinematic liquid-map view for demos.", badge: "LAB" },
+  { href: "/irrigation", label: "AWARE Preview", Icon: IconLeaf, desc: "Monitor, review and field-verify preview + the AWARE export bridge." },
+  { href: "/settings", label: "Workspace", Icon: IconSettings, desc: "Appearance, dataset edition and data policy." },
 ];
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -193,7 +195,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
           <div className="navGroupLabel"><span>Evidence &amp; Labs</span></div>
 
-          {moreNav.map(({ href, label, Icon, desc, badge }) => {
+          {moreNav.map(({ href, label, Icon, desc }) => {
             const active = pathname.startsWith(href);
             return (
               <Link className={`navItem ${active ? "active" : ""}`} href={href} key={href} title={`${label} — ${desc}`}>
@@ -201,7 +203,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <Icon />
                 </span>
                 <span className="navLabel">{label}</span>
-                {badge ? <span className="navBadge">{badge}</span> : null}
               </Link>
             );
           })}

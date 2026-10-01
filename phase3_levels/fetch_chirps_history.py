@@ -11,6 +11,7 @@ and then deleted; nothing larger than one raster is ever on disk.
 """
 import argparse
 import csv
+import datetime
 import gzip
 import json
 import os
@@ -89,6 +90,11 @@ def read_rows(path):
         return list(csv.DictReader(handle))
 
 
+def last_complete_month(today=None):
+    today = today or datetime.datetime.now(datetime.timezone.utc).date()
+    return (today.replace(day=1) - datetime.timedelta(days=1)).strftime("%Y-%m")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--start-year", type=int, default=2014)
@@ -98,7 +104,7 @@ def main():
     shapes = mandal_shapes()
     print(f"  {len(shapes)} mandal polygons")
 
-    end_year, end_month = (int(part) for part in (args.end or "2026-08").split("-"))
+    end_year, end_month = (int(part) for part in (args.end or last_complete_month()).split("-"))
     # Incremental by default: the weekly refresh should fetch the one new month,
     # not walk the archive again. --rebuild forces the full walk.
     have = set()

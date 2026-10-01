@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
 import { AgreementTag, ConfidenceBadge } from "../../components/Badges";
 import { SelectedMandalPanel } from "../../components/SelectedMandalPanel";
@@ -25,7 +25,7 @@ function reasonFor(m: MandalGroundwaterView) {
   if (m.sensor_satellite_agreement === "declining_without_positive_climate_balance") {
     return "Measured decline without a positive climatic water balance — review history";
   }
-  if (m.confidence_label.toLowerCase().includes("low")) {
+  if (["Limited", "Not Assessed"].includes(m.confidence_label)) {
     return "Sparse history — collect more readings";
   }
   return "Deep or deepening water table — monitor";
@@ -66,14 +66,14 @@ const summaryCards = [
   },
   {
     key: "low",
-    label: "Low Confidence",
-    meta: "single recent reading",
+    label: "Limited Evidence",
+    meta: "limited or not assessed",
     icon: <IconShield />,
     bg: "var(--st-low-bg)",
     color: "#5f5494",
     accent: false,
     count: (rows: MandalGroundwaterView[]) =>
-      rows.filter((r) => r.confidence_label.toLowerCase().includes("low")).length,
+      rows.filter((r) => ["Limited", "Not Assessed"].includes(r.confidence_label)).length,
   },
   {
     key: "insufficient",
@@ -93,19 +93,23 @@ export default function WatchlistPage() {
   const [agreement, setAgreement] = useState("all");
   const [confidence, setConfidence] = useState("all");
   const [selectedId, setSelectedId] = useState(base[0]?.id);
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get("district");
+    if (requested && districts.includes(requested)) setDistrict(requested);
+  }, []);
 
   const filtered = useMemo(
     () =>
       base.filter((m) => {
         if (district !== "all" && m.district_name !== district) return false;
         if (agreement !== "all" && m.sensor_satellite_agreement !== agreement) return false;
-        if (confidence !== "all" && !m.confidence_label.toLowerCase().includes(confidence)) return false;
+        if (confidence !== "all" && m.confidence_label !== confidence) return false;
         return true;
       }),
     [base, district, agreement, confidence],
   );
 
-  const current = mandals.find((m) => m.id === selectedId) ?? filtered[0] ?? base[0];
+  const current = filtered.find((m) => m.id === selectedId) ?? filtered[0];
 
   function reset() {
     setDistrict("all");
@@ -143,8 +147,8 @@ export default function WatchlistPage() {
       <section className="card" style={{ padding: 0 }}>
         <div className="filterRow">
           <div className="selectField">
-            <label>District</label>
-            <select value={district} onChange={(e) => setDistrict(e.target.value)}>
+            <label htmlFor="watch-district">District</label>
+            <select id="watch-district" value={district} onChange={(e) => setDistrict(e.target.value)}>
               <option value="all">All Districts</option>
               {districts.map((d) => (
                 <option key={d} value={d}>
@@ -154,20 +158,20 @@ export default function WatchlistPage() {
             </select>
           </div>
           <div className="selectField">
-            <label>Signal</label>
-            <select value={agreement} onChange={(e) => setAgreement(e.target.value)}>
+            <label htmlFor="watch-signal">Signal</label>
+            <select id="watch-signal" value={agreement} onChange={(e) => setAgreement(e.target.value)}>
               <option value="all">All Signals</option>
               <option value="declining_despite_positive_climate_balance">Decline despite positive balance</option>
               <option value="declining_without_positive_climate_balance">Decline without positive balance</option>
               <option value="stable_or_recovering">Stable / recovering</option>
+              <option value="unknown">Unknown context</option>
             </select>
           </div>
           <div className="selectField">
-            <label>Confidence</label>
-            <select value={confidence} onChange={(e) => setConfidence(e.target.value)}>
+            <label htmlFor="watch-confidence">Completeness</label>
+            <select id="watch-confidence" value={confidence} onChange={(e) => setConfidence(e.target.value)}>
               <option value="all">All Confidence</option>
-              <option value="verify">Verify</option>
-              <option value="low">Low</option>
+              {Array.from(new Set(base.map(row => row.confidence_label))).sort().map(label => <option key={label} value={label}>{label}</option>)}
             </select>
           </div>
           <button className="resetBtn" type="button" onClick={reset}>
@@ -189,7 +193,7 @@ export default function WatchlistPage() {
                   <th>#</th>
                   <th>District</th>
                   <th>Mandal</th>
-                  <th>Sensor Signal (Median)</th>
+                  <th>Historical Median (m bgl)</th>
                   <th>NASA GW</th>
                   <th>Root-Zone</th>
                   <th>Surface</th>
@@ -206,14 +210,14 @@ export default function WatchlistPage() {
                   return (
                     <tr
                       key={m.id}
-                      className={selectedId === m.id ? "selected" : ""}
+                      className={current?.id === m.id ? "selected" : ""}
                       onClick={() => setSelectedId(m.id)}
                     >
                       <td>
                         <span className="cellRank">{i + 1}</span>
                       </td>
                       <td>{titleCase(m.district_name)}</td>
-                      <td className="cellStrong">{titleCase(m.mandal_name)}</td>
+                      <td className="cellStrong"><button className="linkAction" onClick={() => setSelectedId(m.id)} aria-label={`Inspect ${titleCase(m.mandal_name)}`}>{titleCase(m.mandal_name)}</button></td>
                       <td>
                         <div className="depthBar">
                           <span className="depthTrack">
@@ -249,7 +253,7 @@ export default function WatchlistPage() {
                         <ConfidenceBadge label={m.confidence_label} />
                       </td>
                       <td style={{ maxWidth: 170, color: "var(--muted)" }}>{reasonFor(m)}</td>
-                      <td style={{ maxWidth: 200 }}>{m.recommended_action.split(".")[0]}.</td>
+                      <td style={{ maxWidth: 200 }}>{m.recommended_action}</td>
                     </tr>
                   );
                 })}
@@ -267,9 +271,9 @@ export default function WatchlistPage() {
           <div className="fusionNote" style={{ marginTop: 16 }}>
             <IconInfo />
             <span>
-              <strong>Why these mandals are flagged:</strong> real APWRIMS readings (2014-2026) and NASA satellite-model
-              percentiles disagree, or confidence is low on a single recent reading. NASA values are percentiles
-              (0–100), not groundwater depth. Resolve with official APWRIMS data and official mandal boundaries.
+              <strong>Review basis:</strong> depth, measured year-on-year change, model-band checks and explicit data gaps.
+              Climate agreement is context, not a comparison between metres and NASA percentiles. Completeness is
+              separate from water condition. NASA values are satellite-model percentiles, not measured depth.
             </span>
           </div>
         </section>

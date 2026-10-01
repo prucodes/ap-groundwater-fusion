@@ -33,6 +33,7 @@ export function MandalStatusMap({
   maxHeight?: number;
 }) {
   const [hover, setHover] = useState<HoverState | null>(null);
+  const [focusIndex, setFocusIndex] = useState(0);
 
   const hoverRec = hover ? mandalByMapKey(hover.d, hover.m) : undefined;
 
@@ -41,7 +42,7 @@ export function MandalStatusMap({
       <svg
         viewBox={`0 0 ${MAP_VIEW.width} ${MAP_VIEW.height}`}
         className="estMapSvg"
-        role="img"
+        role="group"
         aria-label="Groundwater status by mandal"
         style={
           maxHeight
@@ -61,6 +62,11 @@ export function MandalStatusMap({
           return (
             <path
               key={`${m.d}|${m.m}|${i}`}
+              data-mandal="true"
+              tabIndex={i === focusIndex ? 0 : -1}
+              role="button"
+              aria-label={`${titleCase(m.m)}, ${titleCase(m.d)}: ${rec ? statusMeta(rec.status_bucket).label : "No groundwater data"}`}
+              aria-pressed={selected}
               d={mandalToPath(m.rings)}
               fill={fill}
               fillOpacity={selected ? 1 : 0.9}
@@ -68,6 +74,18 @@ export function MandalStatusMap({
               strokeWidth={selected ? 1.4 : active ? 1.1 : 0.3}
               onMouseEnter={() => setHover({ d: m.d, m: m.m, id: rec?.id })}
               onMouseLeave={() => setHover(null)}
+              onFocus={() => { setFocusIndex(i); setHover({ d: m.d, m: m.m, id: rec?.id }); }}
+              onKeyDown={event => {
+                if (event.key === "Escape") { setHover(null); return; }
+                if (event.key === "Enter" || event.key === " ") { event.preventDefault(); if (rec) onSelect(rec.id); return; }
+                if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) {
+                  event.preventDefault();
+                  const paths = event.currentTarget.ownerSVGElement?.querySelectorAll<SVGPathElement>("[data-mandal]");
+                  if (!paths?.length) return;
+                  const next = event.key === "Home" ? 0 : event.key === "End" ? paths.length - 1 : (i + (["ArrowRight", "ArrowDown"].includes(event.key) ? 1 : -1) + paths.length) % paths.length;
+                  paths[next].focus();
+                }
+              }}
               onClick={() => rec && onSelect(rec.id)}
               style={{ cursor: rec ? "pointer" : "default", transition: "stroke-width .1s" }}
             />
@@ -76,7 +94,7 @@ export function MandalStatusMap({
       </svg>
 
       {hover ? (
-        <div className="estHoverCard">
+        <div className="estHoverCard" style={{ borderLeft: `3px solid ${hoverRec ? statusMeta(hoverRec.status_bucket).color : "var(--muted)"}` }} aria-live="polite">
           <div className="estHoverTitle">{titleCase(hover.m)}</div>
           <div className="estHoverSub">{titleCase(hover.d)} District</div>
           {layer ? (
@@ -96,6 +114,9 @@ export function MandalStatusMap({
                 <span>Estimated depth</span>
                 <span>{formatNumber(hoverRec.estimate_mbgl)} m</span>
               </div>
+              <div className="estHoverRow"><span>Latest recorded</span><span>{formatNumber(hoverRec.display_mbgl)} m bgl</span></div>
+              <div className="estHoverRow"><span>Observation period</span><span>{hoverRec.latest_observation_period || "Not supplied"}</span></div>
+              <div className="estHoverSub">Prototype boundary / not an official result</div>
             </>
           ) : (
             <div className="estHoverRow">

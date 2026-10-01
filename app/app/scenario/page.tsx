@@ -27,20 +27,20 @@ function presets() {
   const enso = monsoonWatch.enso;
   const measured = rain ? Math.round(rain.anomalyPct) : null;
   return [
-    { key: "normal", label: "Normal monsoon", sub: "Long-period average", delta: 0, tone: "#5e9b6b" },
-    {
+    { key: "normal", label: "Reference year", sub: `TerraClimate ${districtGeometry.balance_year}`, delta: 0, tone: "#5e9b6b" },
+    ...(measured !== null && rain ? [{
       key: "elnino",
       label: `${enso?.state === "el_nino" ? "El Niño" : "This monsoon"} ${monsoonWatch.season.year}`,
       sub:
         rain && measured !== null
-          ? `measured Jun–Aug · ${measured}% on the ${rain.firstYear}–${rain.ofYears + rain.firstYear - 2} mean`
+          ? `CHIRPS ${rain.months} · ${measured}% anomaly`
           : "measured so far",
-      delta: measured ?? -8,
+      delta: measured,
       tone: "#d79b2e",
       flagship: true,
-    },
-    { key: "below", label: "Below normal", sub: "Weak monsoon", delta: -20, tone: "#c98a1e" },
-    { key: "drought", label: "Severe drought", sub: "Failed monsoon", delta: -40, tone: "#c65a46" },
+    }] : []),
+    { key: "below", label: "Lower rainfall", sub: "Illustrative stress test", delta: -20, tone: "#c98a1e" },
+    { key: "drought", label: "Severe reduction", sub: "Not a drought classification", delta: -40, tone: "#c65a46" },
   ];
 }
 
@@ -93,7 +93,7 @@ export default function ScenarioPage() {
   const tipped = rows.filter((r) => r.tipped).length;
   const total = rows.length;
 
-  const label = delta === 0 ? "a normal monsoon" : `a monsoon ${Math.abs(delta)}% ${delta < 0 ? "below" : "above"} normal`;
+  const label = delta === 0 ? `the ${districtGeometry.balance_year} reference rainfall` : `annual rainfall ${Math.abs(delta)}% ${delta < 0 ? "below" : "above"} the ${districtGeometry.balance_year} reference`;
 
   const scenarioMap = useMemo(() => {
     const m: Record<string, number> = {};
@@ -119,7 +119,7 @@ export default function ScenarioPage() {
       <section className="card">
         <div className="cardHead">
           <div className="cardTitle"><span className="titleIcon"><IconCloudRain /></span>Scenario presets</div>
-          <span className="cardSub">jump to a monsoon outlook</span>
+          <span className="cardSub">annual rainfall sensitivity / not a forecast</span>
         </div>
         <div className="presetRow">
           {PRESETS.map((p, i) => {
@@ -151,10 +151,9 @@ export default function ScenarioPage() {
           <span>
             {monsoonWatch.enso?.state === "el_nino" && monsoonWatch.rainfall ? (
               <>
-                A {monsoonWatch.enso.strength} El Niño is in place, and rainfall over June–August measured{" "}
-                <strong>{Math.abs(monsoonWatch.rainfall.anomalyPct)}% below</strong> the{" "}
-                {monsoonWatch.rainfall.firstYear}-onward mean (CHIRPS). That measured deficit is what the El Niño
-                preset applies — no forecast is used here, and none is published on this site.{" "}
+                The published ONI indicates {monsoonWatch.enso.strength} El Niño conditions. CHIRPS {monsoonWatch.rainfall.months} rainfall was{" "}
+                <strong>{Math.abs(monsoonWatch.rainfall.anomalyPct)}% {monsoonWatch.rainfall.anomalyPct < 0 ? "below" : "above"}</strong> its historical mean.
+                Reusing that seasonal anomaly to scale a whole reference year is an illustrative assumption, not an ENSO forecast.{" "}
               </>
             ) : null}
             Tap a preset to model its effect on the statewide water balance — a modelled scenario over real
@@ -167,7 +166,7 @@ export default function ScenarioPage() {
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconCloudRain /></span>
-            Drought Simulation — statewide water balance
+            Rainfall sensitivity / climate balance
           </div>
           <div className={`simBadge ${playing ? "live" : ""}`}>
             <span className="simBadgeDot" /> {playing ? "SIMULATING" : "MODELED SCENARIO"}
@@ -179,7 +178,7 @@ export default function ScenarioPage() {
           <div className="simOverlay">
             <div className="simReadout" style={{ color: delta < 0 ? "var(--rust)" : delta > 0 ? "var(--green)" : "var(--ink)" }}>
               {delta > 0 ? "+" : ""}{delta}%
-              <span className="simReadoutLbl">monsoon</span>
+              <span className="simReadoutLbl">annual rainfall</span>
             </div>
             <div className="simCounters">
               <span className="simCount">
@@ -258,12 +257,12 @@ export default function ScenarioPage() {
           <div className="scenarioKpi">
             <span className="skNum">{deficitScenario}<span className="skOf">/{total}</span></span>
             <span className="skLbl">districts in deficit</span>
-            <span className="skMeta">{deficitNow} at normal monsoon</span>
+            <span className="skMeta">{deficitNow} in reference year</span>
           </div>
           <div className="scenarioKpi">
             <span className="skNum" style={{ color: tipped > 0 ? "var(--rust)" : "var(--green)" }}>{tipped}</span>
             <span className="skLbl">newly tip into deficit</span>
-            <span className="skMeta">vs a normal year</span>
+            <span className="skMeta">vs reference rainfall</span>
           </div>
           <div className="scenarioKpi">
             <span className="skNum">{formatNumber(Math.round(rows.reduce((a, r) => a + r.scenarioBalance, 0) / (total || 1)))}</span>
@@ -276,7 +275,7 @@ export default function ScenarioPage() {
           <IconCloudRain />
           <span>
             Under <strong>{label}</strong>, <strong style={{ color: "var(--rust)" }}>{deficitScenario} of {total}</strong> AP
-            districts run an annual water deficit{tipped > 0 ? <> — <strong>{tipped} newly tip</strong> into stress.</> : "."}
+            district groups enter the prototype low-balance category{tipped > 0 ? <>; <strong>{tipped} newly cross</strong> its threshold.</> : "."}
           </span>
         </div>
 
@@ -326,7 +325,8 @@ export default function ScenarioPage() {
           <span>
             <strong>Simplified scenario:</strong> annual rainfall is scaled by the monsoon dial and actual ET is held
             constant; balance = scaled rainfall − ET, re-tiered (Surplus ≥ 250, Balanced ≥ 50, Deficit &lt; 50 mm/yr). A
-            planning aid over real TerraClimate data — not a calibrated forecast. Confirm with official APWRIMS data.
+            sensitivity test over TerraClimate data, not a calibrated forecast. The legacy "Deficit" label means below 50 mm,
+            including some positive balances; it does not necessarily mean ET exceeds rainfall or establish groundwater depletion.
           </span>
         </div>
       </section>

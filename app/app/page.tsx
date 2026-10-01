@@ -32,10 +32,10 @@ export default function OverviewPage() {
   const [mapView, setMapView] = useState<"status" | MandalHeatLayerKey>("status");
   const current = selectedMandal(selectedId);
   const verifyCount = verifyMandals().length;
-  const verifyPct = Math.round((verifyCount / datasetManifest.counts.modelledRecordCount) * 100);
+  const verifyPct = Math.round((verifyCount / Math.max(1, mandals.length)) * 100);
   const modelledRows = mandals.filter((m) => m.estimate_mbgl !== null && m.estimate_mbgl !== undefined);
   const modelledDepths = modelledRows.map((m) => m.estimate_mbgl as number).sort((a, b) => a - b);
-  const medianModelledDepth = modelledDepths[Math.floor(modelledDepths.length / 2)] ?? null;
+  const medianModelledDepth = modelledDepths.length ? (modelledDepths[Math.floor((modelledDepths.length - 1) / 2)] + modelledDepths[Math.floor(modelledDepths.length / 2)]) / 2 : null;
   const deepestNowcast = [...modelledRows].sort((a, b) => (b.estimate_mbgl ?? 0) - (a.estimate_mbgl ?? 0))[0];
   const bandWidths = modelledRows
     .map((m) =>
@@ -48,7 +48,7 @@ export default function OverviewPage() {
     )
     .filter((v): v is number => v !== null)
     .sort((a, b) => a - b);
-  const medianBandWidth = bandWidths[Math.floor(bandWidths.length / 2)] ?? null;
+  const medianBandWidth = bandWidths.length ? (bandWidths[Math.floor((bandWidths.length - 1) / 2)] + bandWidths[Math.floor(bandWidths.length / 2)]) / 2 : null;
   // Readings that land outside the model's own P10–P90 band. A fixed metre
   // threshold could not scale with how uncertain the model says it is.
   const outsideBandCount = mandals.filter((m) => m.obs_outside_band === true).length;
@@ -80,13 +80,13 @@ export default function OverviewPage() {
         variant="compact"
         actions={
           <>
-            <Link className="heroAction heroActionLead" href="/crystal">
-              <span className="heroActionLabel">Crystal Water Table</span>
-              <span className="heroActionSub">Cinematic 3D · measured pre-monsoon depth</span>
+            <Link className="heroAction heroActionLead" href="/districts">
+              <span className="heroActionLabel">District Review</span>
+              <span className="heroActionSub">Depth, direction and evidence coverage</span>
             </Link>
-            <Link className="heroAction" href="/living-water-table">
-              <span className="heroActionLabel">Living Water Table</span>
-              <span className="heroActionSub">Analytical 3D surface</span>
+            <Link className="heroAction" href="/agriculture">
+              <span className="heroActionLabel">Agriculture &amp; Water</span>
+              <span className="heroActionSub">Crop context and district verification</span>
             </Link>
           </>
         }
@@ -94,8 +94,7 @@ export default function OverviewPage() {
 
       <div className="sourceMiniBar">
         <span>
-          <strong>Prototype evidence mode.</strong> Not official until official APWRIMS export and official mandal
-          boundaries are supplied.
+          <strong>Research evidence mode.</strong> Source authorization, official identities, method approval and field validation remain pending.
         </span>
         <span className="sourceMiniMeta">
           {datasetManifest.counts.modelledRecordCount} modelled · {datasetManifest.counts.boundaryFeatureCount} boundaries · GRACE fetch{" "}
@@ -108,7 +107,7 @@ export default function OverviewPage() {
           icon={<IconDroplet />}
           label="Median Modelled Nowcast"
           value={<>{medianModelledDepth !== null ? formatNumber(medianModelledDepth) : "—"}<span className="unit">m</span></>}
-          foot="metres below ground · current target period"
+          foot={`m below ground / targets ${datasetManifest.periods.modelTargetPeriodRange.start} to ${datasetManifest.periods.modelTargetPeriodRange.end}`}
           accent="var(--teal)"
         />
         <KpiCard
@@ -136,6 +135,8 @@ export default function OverviewPage() {
         />
       </div>
 
+      <details className="overviewEvaluation">
+      <summary><span>Model evaluation &amp; uncertainty</span><strong>{formatNumber(temporalEval.model.maeM)} m MAE</strong><span>Temporal holdout / not a field replacement</span></summary>
       <div className="modelValidationStrip">
         <div className="modelValidationIntro">
           <span className="validationEyebrow">How accurate is β?</span>
@@ -164,6 +165,11 @@ export default function OverviewPage() {
           Open model card <IconArrowRight />
         </Link>
       </div>
+      <div className="depthBandStrip">
+        <div className="depthBandIntro"><span className="validationEyebrow">Accuracy by depth</span><span>Error by depth band versus carrying the last reading forward.</span></div>
+        {temporalEval.depthBands.map(band => <div className="depthBandCell" key={band.band}><span>{band.band}</span><strong>{formatNumber(band.maeM)} m</strong><em>vs {formatNumber(band.lastReadingMaeM)} m baseline</em></div>)}
+      </div>
+      </details>
 
       {/* The nowcast answers "how deep"; this answers "is the season refilling
           it". Only raised to the front page when this season is outside the
@@ -175,13 +181,12 @@ export default function OverviewPage() {
             <span>
               {watch.enso?.state === "el_nino" ? (
                 <>
-                  A <strong>{watch.enso.strength} El Niño</strong> is in place, and the water table is lower than
-                  it was in May across most of the state — which has not happened in any season on record.
+                  The published ONI indicates <strong>{watch.enso.strength} El Niño conditions</strong>.
+                  More monitored source series are deeper than May than in the available comparison seasons.
                 </>
               ) : (
                 <>
-                  The water table is lower than it was in May across most of the state, which has not happened in
-                  any season on record.
+                  More monitored source series are deeper than May than in the available comparison seasons.
                 </>
               )}
             </span>
@@ -190,7 +195,7 @@ export default function OverviewPage() {
             <span>Lower than May</span>
             <strong>{formatNumber(watch.recharge.fallingPct)}%</strong>
             <em>
-              usually {formatNumber(priorFallingLow)}–{formatNumber(priorFallingHigh)}%
+              source-series share / prior {formatNumber(priorFallingLow)}–{formatNumber(priorFallingHigh)}%
             </em>
           </div>
           {watch.rainfall ? (
@@ -198,7 +203,7 @@ export default function OverviewPage() {
               <span>Rain vs normal</span>
               <strong>{formatNumber(watch.rainfall.anomalyPct)}%</strong>
               <em>
-                {watch.rainfall.rankDriest === 1 ? "driest" : `${watch.rainfall.rankDriest}nd driest`} of{" "}
+                dryness rank {watch.rainfall.rankDriest} of{" "}
                 {watch.rainfall.ofYears}
               </em>
             </div>
@@ -214,9 +219,9 @@ export default function OverviewPage() {
             </div>
           ) : null}
           <div className="monsoonStripCell">
-            <span>Mandals flagged</span>
+            <span>Provisional series flags</span>
             <strong>{watch.recharge.flaggedShort}</strong>
-            <em>{watch.recharge.flaggedSevere} severe</em>
+            <em>baseline review pending</em>
           </div>
           <Link className="validationLink" href="/monsoon">
             Open monsoon watch <IconArrowRight />
@@ -227,23 +232,6 @@ export default function OverviewPage() {
       {/* One statewide average hides the thing a reader actually needs: the
           error where THEIR water sits. Shown against the rule the model has to
           beat, so the comparison cannot be read as flattering. */}
-      <div className="depthBandStrip">
-        <div className="depthBandIntro">
-          <span className="validationEyebrow">Accuracy by depth</span>
-          <span>
-            The statewide average is carried by shallow mandals. Each band is the model&rsquo;s error against
-            simply carrying the last reading forward.
-          </span>
-        </div>
-        {temporalEval.depthBands.map((band) => (
-          <div className="depthBandCell" key={band.band}>
-            <span>{band.band}</span>
-            <strong>{formatNumber(band.maeM)} m</strong>
-            <em>vs {formatNumber(band.lastReadingMaeM)} m</em>
-          </div>
-        ))}
-      </div>
-
       <div className="overviewCockpit">
         <div className="overviewMapColumn">
         <section className="card mapCard overviewMapLead">
@@ -321,7 +309,7 @@ export default function OverviewPage() {
             <KpiCard
               icon={<IconDroplet />}
               label="Regional GRACE-DA Wetness"
-              value={<CountUp value={s.avg_groundwater_percentile ?? 0} decimals={0} />}
+              value={s.avg_groundwater_percentile === null ? "No data" : <CountUp value={s.avg_groundwater_percentile} decimals={0} />}
               foot={`${wetnessLabel(s.avg_groundwater_percentile)} for this time of year · district scale`}
               accent="var(--cyan)"
             />
@@ -382,14 +370,14 @@ export default function OverviewPage() {
               </span>
               Top Mandals to Verify
               <span className="cardSub" style={{ marginLeft: 6 }}>
-                mismatch / low confidence
+                depth / measured decline
               </span>
             </div>
             <Link className="linkAction" href="/watchlist">
               View full watchlist <IconArrowRight />
             </Link>
           </div>
-          <MandalTable rows={mandals} limit={8} selectedId={selectedId} onSelect={setSelectedId} />
+          <MandalTable rows={verifyMandals()} limit={8} selectedId={selectedId} onSelect={setSelectedId} />
         </section>
 
         <div className="contentGrid">

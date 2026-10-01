@@ -23,6 +23,16 @@ export default defineConfig({
   },
   projects: [
     {
+      name: "governance",
+      testMatch: /governance.*\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 1000 } },
+    },
+    {
+      name: "agriculture",
+      testMatch: /agriculture.*\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
       name: "film",
       testMatch: /monsoon-film\.spec\.ts/,
       use: { ...devices["Desktop Chrome"] },

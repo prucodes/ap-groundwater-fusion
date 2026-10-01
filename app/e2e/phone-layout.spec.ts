@@ -143,10 +143,9 @@ test.describe("phone layout", () => {
     await page.locator(".mobileNavBtn").click();
     await page.waitForTimeout(400);
 
-    // The export uses trailing slashes, so match the prefix rather than an
-    // exact href.
+    // Static export adds a trailing slash; the Node production app does not.
     await page.locator('.sidebarNav a[href^="/map"]').first().click();
-    await page.waitForURL("**/map/**");
+    await page.waitForURL(url => url.pathname === "/map" || url.pathname === "/map/");
     await page.waitForTimeout(500);
 
     const box = await page.locator(".sidebar").boundingBox();

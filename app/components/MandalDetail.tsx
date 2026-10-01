@@ -124,7 +124,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
       {/* metric row */}
       <div className="metricRow stagger">
         <div className="metricCard">
-          <div className="metricCardLabel">Measured Groundwater (Median)</div>
+          <div className="metricCardLabel">Historical Median Depth</div>
           <div className="depthGauge">
             <span className="depthGaugeTrack">
               <span className="depthGaugeFill" style={{ height: `${depthPct}%` }} />
@@ -134,7 +134,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
               <small> mbgl</small>
             </span>
           </div>
-          <div className="metricSub">Observation period {mandal.latest_observation_period || "—"}</div>
+          <div className="metricSub">Available history / latest {mandal.latest_observation_period || "not supplied"}</div>
         </div>
 
         <div className="metricCard">

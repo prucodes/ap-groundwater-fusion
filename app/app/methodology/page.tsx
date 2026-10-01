@@ -1,11 +1,12 @@
 import { HeaderHero } from "../../components/HeaderHero";
 import { MethodologyFlow } from "../../components/MethodologyFlow";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
+import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconSatellite } from "../../components/icons";
 import { modelCard } from "../../lib/data";
 
 const labels = [
-  { code: "APWRIMS (AP-GWD)", text: "Real APWRIMS mandal readings (2014-2026). Modelled estimates — not official results." },
+  { code: "APWRIMS (AP-GWD)", text: "Recorded mandal depth history. Modelled nowcasts are separate derived values; neither is presented as a certified official output." },
   { code: "measured_public", text: "Public measured groundwater (e.g. NWIC). Labeled public, never official_apwrims." },
   { code: "official_apwrims", text: "Official APWRIMS / AP government export. Pending — required for official results." },
   { code: "satellite-model", text: "NASA/NDMC GRACE-DA percentiles (0–100). Real signal, not groundwater depth." },
@@ -23,9 +24,9 @@ const signals = [
     tone: "var(--teal)",
   },
   {
-    name: "NASA GRACE-FO (satellite gravity)",
-    can: "Change in total water storage — the only satellite that senses water deep underground, at basin scale.",
-    cant: "Native resolution is much coarser than its 0.25° grid (effective support ~100s of km / multi-district), monthly, and a storage anomaly — not an absolute water-table depth. Used only as district-scale context.",
+    name: "NASA / NDMC GRACE-DA (assimilated model)",
+    can: "Percentile indicators of groundwater and soil wetness from a land model assimilating satellite-gravity observations.",
+    cant: "The 0.25° model grid does not imply independent well-scale observations. Regional context, not measured depth, recoverable storage or a mandal forecast.",
     tone: "var(--cyan)",
   },
   {
@@ -127,9 +128,9 @@ export default function MethodologyPage() {
         <div className="fusionNote" style={{ marginTop: 14 }}>
           <IconDroplet />
           <span>
-            <strong>Bottom line:</strong> GRACE-FO is the only satellite that senses deep groundwater storage; rainfall
-            and ET are drivers/context, and piezometers remain ground truth for absolute level. The product fuses them
-            for trend, attribution and verification — not to replace measured levels.
+            <strong>Bottom line:</strong> piezometer readings establish observed depth; GRACE-DA, rainfall and ET add
+            regional context. The product supports comparison and verification, not causal attribution or replacement
+            of field measurements. <a href="https://nasagrace.unl.edu/" target="_blank" rel="noreferrer">NASA / NDMC product documentation</a>.
           </span>
         </div>
       </section>
@@ -142,14 +143,14 @@ export default function MethodologyPage() {
             </span>
             Monsoon Watch — how the recharge figures are built
           </div>
-          <span className="cardSub">measured from readings; no model, no index</span>
+          <span className="cardSub">derived depth changes / baseline review pending</span>
         </div>
         <div className="methodSteps">
           <p>
-            For each mandal the watch takes the change in depth from its May reading to its latest reading of the
+            For each source series the watch takes the change in depth from its May reading to its latest reading of the
             same year, and compares that with the median of the <strong>same mandal&rsquo;s</strong> May-to-that-month
-            change over the previous ten years. Both sides are within-year differences on one mandal, so neither the
-            long-term drift in a district nor the difference between mandals can move the answer.
+            change over the previous ten years. These are seasonal depth changes, not direct recharge volumes.
+            Station composition, gaps and changes in monitoring practice can affect comparisons.
           </p>
           <p>
             A mandal is flagged short only when it misses its own normal by at least <strong>1 m</strong> and by at
@@ -166,13 +167,14 @@ export default function MethodologyPage() {
             all. The ocean state is NOAA&rsquo;s Oceanic Niño Index.
           </p>
           <p>
-            <strong>The index is context and never an input.</strong> Adding it to the three-month forecast was tested
+            <strong>ONI groups rainfall-history composites; it does not generate local groundwater predictions.</strong> Adding it to the three-month forecast was tested
             on rolling origin and made the forecast worse — 1.776 m to 1.850 m mean error, and worse in every aquifer.
-            Two El Niño events inside the training record are not enough to learn a response from, so no published
-            figure is derived from it.
+            The groundwater forecast experiment remains research-only. Historical ENSO associations do not establish a local forecast or causation.
           </p>
         </div>
       </section>
+
+      <WatchEvidenceStatus />
 
       <section className="card">
         <div className="cardHead">

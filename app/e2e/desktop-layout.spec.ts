@@ -315,7 +315,7 @@ test.describe("the recharge map reads in metres and in water", () => {
       const fillsBefore = await page.evaluate(() =>
         [...document.querySelectorAll(".rechargeCell")].slice(0, 120).map((c) => c.getAttribute("fill")).join("|"));
 
-      await page.getByRole("button", { name: "Water lost" }).click();
+      await page.getByRole("button", { name: "Storage proxy" }).click();
       await page.waitForTimeout(250);
 
       const fillsAfter = await page.evaluate(() =>
@@ -324,7 +324,7 @@ test.describe("the recharge map reads in metres and in water", () => {
 
       await cell.hover({ force: true });
       await page.waitForTimeout(200);
-      expect(await page.locator(".rechargeTip").innerText()).toMatch(/Mm³ of water short/);
+      expect(await page.locator(".rechargeTip").innerText()).toMatch(/Mm³ storage proxy/);
       await expect(page.locator(".rechargeLegend")).toContainText("Mm³");
     });
 

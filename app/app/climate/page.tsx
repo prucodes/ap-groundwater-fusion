@@ -38,9 +38,7 @@ export default function ClimatePage() {
         title="Climate & Water Balance"
         subtitle={
           <>
-            The water <strong>budget</strong> behind groundwater: how much rain comes in (CHIRPS) versus how much leaves
-            as evaporation and transpiration (TerraClimate). The home for the two open climate signals — with full
-            source provenance. Annual figures, mm.
+            <strong>Climate context</strong> for groundwater review. Annual balance uses TerraClimate rainfall minus actual evapotranspiration; CHIRPS monthly rainfall is shown separately. Neither measures recharge or pumping.
           </>
         }
         showChips={false}
@@ -60,7 +58,7 @@ export default function ClimatePage() {
       {/* Water budget flow */}
       <section className="card">
         <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconWaves /></span>The water budget — statewide average</div>
+          <div className="cardTitle"><span className="titleIcon"><IconWaves /></span>Climate balance / equal-weight district mean</div>
           <span className="cardSub">annual, TerraClimate {districtGeometry.balance_year}</span>
         </div>
         <div className="budgetFlow">
@@ -83,16 +81,15 @@ export default function ClimatePage() {
           </div>
         </div>
         <div className="budgetMeta">
-          <span><b>{deficitDistricts}</b> of {withBal.length} districts run an annual deficit</span>
+          <span><b>{deficitDistricts}</b> of {withBal.length} districts carry a low-balance flag</span>
           <span className="dotsep" />
           <span>Latest monthly rainfall (CHIRPS {formatPeriod(districtGeometry.rainfall_period)}): <b>{formatNumber(monthlyRain)} mm</b></span>
         </div>
         <div className="fusionNote" style={{ marginTop: 14 }}>
           <IconInfo />
           <span>
-            When rainfall exceeds ET the aquifer can recharge (surplus); when ET wins, the area draws down (deficit).
-            This is the <strong>input/output</strong> story — it explains <em>why</em> groundwater moves; it is not itself
-            a groundwater level.
+            Rainfall minus actual ET is a <strong>climatic indicator</strong>, not an aquifer budget. Runoff, soil storage,
+            geology and pumping also matter. The same value cannot establish groundwater recharge, depletion or causality.
           </span>
         </div>
       </section>
@@ -157,7 +154,7 @@ export default function ClimatePage() {
           <IconSatellite />
           <span>
             CHIRPS is a real satellite-gauge rainfall product; TerraClimate is a <strong>modeled</strong> climate dataset
-            (not a satellite). Both are open and free. Figures are prototype values pending official APWRIMS data.
+            (not a satellite). These research summaries need local validation and do not become official groundwater findings when a climate layer updates. <a href="https://www.climatologylab.org/terraclimate.html" target="_blank" rel="noreferrer">TerraClimate methods and limitations</a>.
           </span>
         </div>
       </section>

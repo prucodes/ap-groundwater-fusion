@@ -71,7 +71,10 @@ export default function MapPage() {
   // Priority list — most-stressed first, capped (rendering all ~640 was slow).
   // Explicit boundary coverage — how many of the prototype polygons resolve to data.
   const totalBoundaries = mapGeometry.mandals.length;
-  const mappedBoundaries = mapGeometry.mandals.filter((g) => mandalByMapKey(g.d, g.m)).length;
+  const mappedBoundaries = mapGeometry.mandals.filter((g) => {
+    const row = mandalByMapKey(g.d, g.m);
+    return row && (row.estimate_mbgl != null || row.display_mbgl != null);
+  }).length;
 
   const SEV: Record<string, number> = { Stress: 0, Verify: 1, Watch: 2, "Low Confidence": 3, Normal: 4 };
   const topMandals = [...mandals]
@@ -84,8 +87,8 @@ export default function MapPage() {
         title="Groundwater Status Map"
         subtitle={
           <>
-            Switch between <strong>mandal fusion status</strong> (APWRIMS sensors + NASA) and a{" "}
-            <strong>statewide district heat-map</strong> of real satellite layers.
+            <strong>Mandal monitoring status</strong> from recorded depth and modelled estimates, alongside
+            satellite-model and climate context. Sources have different periods and spatial support.
           </>
         }
         showChips={false}
@@ -153,7 +156,7 @@ export default function MapPage() {
                     <MapLegend />
                     <div className="mapHint">
                       Coverage: <strong>{mappedBoundaries}</strong> of {totalBoundaries} prototype mandal
-                      boundaries have a fused record; {totalBoundaries - mappedBoundaries} have no usable APWRIMS
+                      boundaries have a measured or modelled depth; {totalBoundaries - mappedBoundaries} have no usable APWRIMS
                       series yet (shown grey).
                     </div>
                   </>

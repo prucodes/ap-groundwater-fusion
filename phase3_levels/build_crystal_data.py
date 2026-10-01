@@ -169,6 +169,7 @@ def build():
         stage = match_extraction(extraction, identity["districtName"], identity["mandalName"])
         stage_matched += stage is not None
         out.append({
+            "id": identity["mandalId"],
             "b": ordinal,
             "n": identity["mandalName"].title(),
             "d": identity["districtName"].title(),

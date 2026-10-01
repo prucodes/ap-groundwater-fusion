@@ -24,10 +24,10 @@ export type MandalAlert = {
 };
 
 export const SEVERITY_META: Record<Severity, { color: string; className: string; label: string }> = {
-  Critical: { color: "#c65a46", className: "critical", label: "Critical" },
-  High: { color: "#e07b39", className: "high", label: "High" },
+  Critical: { color: "#c65a46", className: "critical", label: "Priority 1" },
+  High: { color: "#e07b39", className: "high", label: "Priority 2" },
   Watch: { color: "#d79b2e", className: "watch", label: "Watch" },
-  Normal: { color: "#5e9b6b", className: "normal", label: "Normal" },
+  Normal: { color: "#5e9b6b", className: "normal", label: "No score trigger" },
 };
 
 function severityFor(score: number): Severity {
@@ -57,8 +57,10 @@ export function alertFor(m: MandalGroundwaterView): MandalAlert {
   if (
     m.coverage_status === "boundary_only" ||
     m.coverage_status === "no_data" ||
+    m.coverage_status === "excluded" ||
     groundwaterValue === null ||
-    groundwaterValue === undefined
+    groundwaterValue === undefined ||
+    !Number.isFinite(groundwaterValue)
   ) {
     return {
       mandal: m,
@@ -114,10 +116,10 @@ export function activeAlerts(): MandalAlert[] {
   return computeAlerts().filter((a) => a.state === "scored" && a.severity !== "Normal");
 }
 
-export function severityCounts(): Record<Severity, number> {
+export function severityCounts(alerts: MandalAlert[] = computeAlerts()): Record<Severity, number> {
   const counts: Record<Severity, number> = { Critical: 0, High: 0, Watch: 0, Normal: 0 };
-  for (const a of computeAlerts()) counts[a.severity] += 1;
+  for (const a of alerts) if (a.state === "scored") counts[a.severity] += 1;
   return counts;
 }
 
-export const MAX_ALERT_SCORE = 8;
+export const MAX_ALERT_SCORE = 7;

@@ -13,6 +13,7 @@ authorised to bulk-harvest. This is an authorization-pending research sample, no
 official data, and the run is rate-limited on purpose.
 """
 import json, os, ssl, sys, time, urllib.request, urllib.error, http.client, csv, datetime
+import hashlib
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "apwrims")
@@ -35,6 +36,33 @@ COOKIE = os.environ.get("APWRIMS_COOKIE")
 # newly published months; pin it with APWRIMS_END (YYYYMM) to reproduce a run.
 SDATE = os.environ.get("APWRIMS_START", "201406")
 EDATE = os.environ.get("APWRIMS_END", datetime.date.today().strftime("%Y%m"))
+RECEIPT = os.path.join(HERE, "..", "data", "refresh_receipts", "apwrims.json")
+
+
+def write_receipt(history_path, status, receipt_path=RECEIPT):
+    receipt_path = os.fspath(receipt_path)
+    with open(history_path, "rb") as handle:
+        digest = hashlib.sha256(handle.read()).hexdigest()
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds")
+    prior = {}
+    try:
+        with open(receipt_path) as handle:
+            prior = json.load(handle)
+        if not isinstance(prior, dict):
+            prior = {}
+    except (OSError, ValueError):
+        pass
+    fetched = now if status == "refreshed" else prior.get("fetchedAt") if prior.get("historySha256") == digest else None
+    counts = stored_month_counts(history_path)
+    receipt = {"source": BASE + "/api/v2/gwlevels/chart", "status": status, "checkedAt": now,
+               "fetchedAt": fetched, "latestPeriod": max(counts) if counts else None,
+               "historySha256": digest, "rowCount": sum(counts.values()),
+               "authorizationStatus": "research_pending", "scope": "sample_probe" if status == "checked_no_new_month" else "monthly_history"}
+    os.makedirs(os.path.dirname(receipt_path) or ".", exist_ok=True)
+    with open(receipt_path + ".tmp", "w") as handle:
+        json.dump(receipt, handle, indent=2)
+        handle.write("\n")
+    os.replace(receipt_path + ".tmp", receipt_path)
 
 
 def _tls_context():
@@ -262,6 +290,7 @@ def main():
                 f"({stored[portal_latest]} mandals). Skipping the full crawl; "
                 f"set APWRIMS_FORCE=1 to override."
             )
+            write_receipt(out_path, "checked_no_new_month")
             return
         print(f"Crawling: {reason}.")
     # Write to a temp file and only swap it in on success. Streaming straight
@@ -298,6 +327,8 @@ def main():
         sys.exit(f"{refusal} The existing history at {out_path} is untouched.")
 
     os.replace(tmp_path, out_path)
+    if not only:
+        write_receipt(out_path, "refreshed")
     delta = n_rows - previous_rows
     print(f"\nWrote {n_rows} rows ({delta:+d} vs previous) -> {out_path}")
 

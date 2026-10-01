@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   useCallback,
@@ -370,15 +371,15 @@ export function LivingWaterTablePage() {
         <div>
           <div className={styles.breadcrumb}>
             Andhra Pradesh Groundwater Assessment <span aria-hidden="true">/</span>{" "}
-            Living Water Table
+            Model Evidence Lab
           </div>
           <div className={styles.titleRow}>
-            <h1>Living Water Table — Andhra Pradesh</h1>
+            <h1>Model Evidence Lab</h1>
             <span className={styles.experimentalBadge}>Experimental</span>
           </div>
           <p>
-            A restrained 3D analytical view of V2 measured groundwater status,
-            held-out model comparisons and explicit no-data boundaries.
+            Advanced comparison: measured groundwater, held-out model estimates,
+            uncertainty and no-data boundaries. <Link href="/crystal">Recorded May depth atlas</Link>
           </p>
         </div>
         <div className={styles.headerControls}>

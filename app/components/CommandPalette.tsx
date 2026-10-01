@@ -36,6 +36,7 @@ const PAGES: Item[] = [
   { label: "Verify / Watchlist", sub: "Priority verification queue", href: "/watchlist", kind: "page" },
   { label: "Early Warning", sub: "Severity-ranked fusion alerts", href: "/alerts", kind: "page" },
   { label: "Districts", sub: "Roll-ups + AI situation brief", href: "/districts", kind: "page" },
+  { label: "Agriculture & Water", sub: "Crop-water lab, fieldbook and seasonal evidence", href: "/agriculture", kind: "page" },
   { label: "Modelled Groundwater Levels β", sub: "Calculated mandal depth in metres + model bands", href: "/estimates", kind: "page" },
   { label: "NASA Signals", sub: "Raw GRACE-DA context + provenance", href: "/nasa", kind: "page" },
   { label: "Climate & Balance", sub: "Rainfall vs ET — the water budget", href: "/climate", kind: "page" },
@@ -45,9 +46,9 @@ const PAGES: Item[] = [
   { label: "Executive Snapshot", sub: "One-page printable summary", href: "/snapshot", kind: "page" },
   { label: "Compare", sub: "Side-by-side of two areas", href: "/compare", kind: "page" },
   { label: "Scenario Lab", sub: "Monsoon what-if + drought sim", href: "/scenario", kind: "page" },
-  { label: "AWARE Preview", sub: "Draw/hold/conserve + AWARE bridge", href: "/irrigation", kind: "page" },
-  { label: "Living Water Table", sub: "Experimental 3D groundwater-depth view", href: "/living-water-table", kind: "page" },
-  { label: "Crystal 3D Lab", sub: "Cinematic liquid-map demo view", href: "/crystal", kind: "page" },
+  { label: "AWARE Preview", sub: "Monitor, review and field-verify + AWARE bridge", href: "/irrigation", kind: "page" },
+  { label: "Model Evidence Lab", sub: "Advanced measured-versus-model comparison", href: "/living-water-table", kind: "page" },
+  { label: "Water Depth 3D", sub: "Recorded May depth by mandal and district", href: "/crystal", kind: "page" },
 ];
 
 const PAGE_ICON: Record<string, React.ReactNode> = {
@@ -64,6 +65,7 @@ const PAGE_ICON: Record<string, React.ReactNode> = {
   "/districts": <IconGrid />,
   "/scenario": <IconCloudRain />,
   "/irrigation": <IconLeaf />,
+  "/agriculture": <IconLeaf />,
   "/compare": <IconColumns />,
   "/snapshot": <IconFile />,
   "/readiness": <IconDatabase />,

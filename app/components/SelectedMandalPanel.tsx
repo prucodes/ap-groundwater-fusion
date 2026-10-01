@@ -54,7 +54,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
           <IconFlask /> Measured Input · APWRIMS (APWRIMS-format)
         </div>
         <div className="kvRow">
-          <span className="k">Median groundwater</span>
+          <span className="k">Historical median depth</span>
           <span className="v">{formatNumber(mandal.median_groundwater_mbgl)} mbgl</span>
         </div>
         <div className="kvRow">

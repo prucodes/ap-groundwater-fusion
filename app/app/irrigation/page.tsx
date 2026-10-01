@@ -16,6 +16,7 @@ import {
 } from "../../components/icons";
 import { formatNumber } from "../../lib/data";
 import { IrrigationExports } from "../../components/IrrigationExports";
+import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import {
   ACTION_META,
   AWARE_FIELD_MAP,
@@ -50,6 +51,7 @@ export default function IrrigationPage() {
       />
 
       <IrrigationExports />
+      <WatchEvidenceStatus />
 
       <div className="srcStrip">
         <span className="srcLabel">Derived from</span>
@@ -103,10 +105,9 @@ export default function IrrigationPage() {
             Categories are <strong>comparative</strong>: each district is placed by how far it sits above the
             statewide figure for stressed mandals, deepening trend and this season&rsquo;s measured recharge. A
             district below the line is not safe, only nearer the middle. Climate and GRACE-DA signals remain
-            contextual and do not determine an operational groundwater action. Every district is currently
-            deepening, the statewide median being {formatNumber(advisories[0]?.stateMedianTrend ?? 0)} m/yr, so the
-            outlook column describes the state of the aquifer rather than separating districts &mdash; the priority
-            column is what separates them.
+            contextual and do not determine an operational groundwater action. {advisories.filter(a => a.outlook === "deepening").length} of {advisories.length} district groups have a deepening indicator.
+            The statewide median measured comparison is {formatNumber(advisories[0]?.stateMedianTrend)} m/yr.
+            Seasonal source-series counts and their baseline remain provisional; priority is not an approved intervention tier.
           </span>
         </div>
       </section>
@@ -115,7 +116,7 @@ export default function IrrigationPage() {
       <section className="card">
         <div className="cardHead">
           <div className="cardTitle"><span className="titleIcon"><IconLeaf /></span>District monitoring categories</div>
-          <span className="cardSub">{verifyCount > 0 ? `${verifyCount} flagged for field-verify first` : "ranked: conserve → draw"}</span>
+          <span className="cardSub">{verifyCount > 0 ? `${verifyCount} flagged for field-verify first` : "comparative research ranking"}</span>
         </div>
         <div className="tableWrap">
           <table className="dataTable">
@@ -224,9 +225,9 @@ export default function IrrigationPage() {
         <div className="fusionNote" style={{ marginTop: 14 }}>
           <IconDroplet />
           <span>
-            Everything up to the push is built: the advisory payload is shaped and ready. Going live needs RTGS to provide
-            the <strong>AWARE endpoint + exact schema</strong>; we then map the fields above and stream advisories on each
-            data refresh. See the AWARE integration note in <strong>Reports</strong>.
+            <strong>Draft payload only.</strong> Operational integration also needs authorized feeds, an approved schema,
+            baseline validation, departmental sign-off, access controls, delivery receipts and failure handling.
+            Nothing on this page is dispatched to AWARE.
           </span>
         </div>
       </section>

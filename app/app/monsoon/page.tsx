@@ -16,7 +16,9 @@ import { ElNinoChain, EnsoTrail, RainfallHistory, RechargeMap, RechargeTrajector
 import { PacificEnso } from "../../components/PacificEnso";
 import { MonsoonFilm } from "../../components/MonsoonFilm";
 import { TemperatureRecord } from "../../components/TemperatureRecord";
+import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { apTemperature, formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
+import styles from "./MonsoonPage.module.css";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -52,14 +54,14 @@ export default function MonsoonPage() {
   const maxFalling = Math.max(...w.seasons.map((s) => s.fallingPct));
 
   return (
-    <div className="pageWrap">
+    <div className={`pageWrap ${styles.page}`}>
       <HeaderHero
         title={enso?.state === "el_nino" ? "Monsoon Watch — El Niño" : "Monsoon Watch"}
         subtitle={
           <>
             {enso?.state === "el_nino" ? (
               <>
-                A <strong>{enso.strength} El Niño</strong> is in place — the Pacific index stands at{" "}
+                The retained Pacific index indicates <strong>{enso.strength} El Niño conditions</strong> at{" "}
                 {enso.oniC > 0 ? "+" : ""}
                 {enso.oniC.toFixed(2)} °C for {enso.season} {enso.asOf.slice(0, 4)}.
                 Andhra Pradesh rainfall and groundwater changes are shown alongside that climate context.{" "}
@@ -83,16 +85,17 @@ export default function MonsoonPage() {
         <span className="provRibbonItem"><IconShield /> observations + derived estimates</span>
       </div>
 
-      <MonsoonFilm />
+      <WatchEvidenceStatus />
+      <nav className={styles.nav} aria-label="Monsoon sections"><a href="#season-evidence">Season evidence</a><a href="#monsoon-film-title">Film brief</a><a href="#pacific-evidence">Pacific record</a><a href="#monsoon-map">Groundwater map</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
 
-      <section className="card">
+      <section className={styles.season} id="season-evidence" aria-label="Season evidence">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconActivity /></span>
             This season so far
           </div>
           <span className="cardSub">
-            {monthName(w.season.preMonsoonMonth)} → {monthName(w.season.latestMonth)} · {r.mandals} mandals
+            {monthName(w.season.preMonsoonMonth)} → {monthName(w.season.latestMonth)} · {r.mandals} source series
           </span>
         </div>
         <div className="monsoonHeadline">
@@ -100,30 +103,27 @@ export default function MonsoonPage() {
             <span>Lower than in May</span>
             <strong>{formatNumber(r.fallingPct)}%</strong>
             <em>
-              {r.falling} of {r.mandals} mandals
+              {r.falling} of {r.mandals} source series
               {priorLow === null || priorHigh === null
                 ? ""
                 : ` · ${formatNumber(priorLow)}–${formatNumber(priorHigh)}% in the previous ${prior.length} seasons`}
             </em>
           </div>
           <div className="monsoonStat">
-            <span>Short of their own normal</span>
+            <span>Short of retained baseline</span>
             <strong>{formatNumber(r.shortOfNormalPct)}%</strong>
             <em>median shortfall {formatNumber(r.medianShortfallM)} m</em>
           </div>
           <div className="monsoonStat">
-            <span>Flagged short</span>
+            <span>Provisional shortfall flags</span>
             <strong>{r.flaggedShort}</strong>
-            <em>{r.flaggedSevere} of them severe</em>
+            <em>{r.flaggedSevere} larger shortfalls · not crop loss</em>
           </div>
           {r.volume ? (
             <div className="monsoonStat">
-              <span>Estimated water shortfall</span>
-              <strong>{formatNumber(Math.round(r.volume.shortfallMm3))}<small> Mm³</small></strong>
-              <em>
-                across {r.volume.mandals} mandals · {formatNumber(r.volume.asDepthMm)} mm over the{" "}
-                {formatNumber(Math.round(r.volume.areaKm2))} km² measured
-              </em>
+              <span>State storage estimate</span>
+              <strong>Under review</strong>
+              <em>Boundary duplicates and specific-yield assumptions require validation</em>
             </div>
           ) : null}
           {rain ? (
@@ -139,8 +139,9 @@ export default function MonsoonPage() {
             </div>
           ) : null}
         </div>
-        <p className="cardNote">{r.rule}.</p>
+        <p className="cardNote">{r.rule}. Source-series totals are not unique boundary counts; the Agriculture review uses reconciled boundary units. Baseline review pending.</p>
       </section>
+      <MonsoonFilm />
 
       <section className="card pacificEvidenceSection" id="pacific-evidence">
         <div className="cardHead">
@@ -180,19 +181,18 @@ export default function MonsoonPage() {
         </div>
         <ElNinoChain />
         <p className="cardNote">
-          Explainers of El Niño stop at the ocean — they show the Pacific warming and never reach a monsoon,
-          let alone an aquifer. Three of the links above are measured directly in Andhra Pradesh. The one
-          between the ocean and the rain is a <strong>statistical association across 45 years</strong>, strong
-          and consistent in direction, and it is not a mechanism this site models: the ocean explains why a
-          poor monsoon was more likely, never how much rain any particular month will bring.
+          The ocean index, gridded rainfall estimates and groundwater source readings are different kinds
+          of evidence. The ocean-rain link is a historical statistical association,
+          not a mechanism this site models or a forecast for an individual district.
+          Groundwater movement also reflects pumping and local conditions.
         </p>
       </section>
 
-      <section className="card mapCard">
+      <section className="card mapCard" id="monsoon-map">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconMap /></span>
-            Where the season failed
+            Seasonal groundwater departures
           </div>
           <span className="cardSub">each mandal against its own ten-year normal</span>
         </div>
@@ -205,16 +205,15 @@ export default function MonsoonPage() {
         <RechargeMap />
         {r.volume ? (
           <p className="cardNote">
-            <strong>Metres are not water.</strong> A metre of water table in hard rock holds a fraction of what a
-            metre in the delta does, so the two views rank mandals differently and answer different questions:
-            metres answer whether a bore will still reach water, volume answers how much this place has actually
-            lost. {r.volume.note.charAt(0).toUpperCase() + r.volume.note.slice(1)}.{" "}
-            {r.volume.mandals} of {r.volume.ofMandals} compared mandals have a polygon and so a volume.
+            <strong>Depth change is not measured recharge or water lost.</strong> The volume view is an
+            illustrative storage proxy using prototype area and specific yield, which may be interpolated
+            or assigned from an aquifer proxy. It is not an extraction entitlement or an allocation estimate.
+            Multiple series mapped to one boundary are left unresolved, not silently selected or added.
           </p>
         ) : null}
         {r.flaggedWithoutBoundary > 0 ? (
           <p className="cardNote">
-            {r.flaggedWithoutBoundary} flagged mandals are <strong>not on this map</strong>: their source series
+            {r.flaggedWithoutBoundary} flagged source series are <strong>not on this map</strong>: they
             never reconciled to a boundary polygon, so there is nothing to shade. They are in the table below and
             in the export. A map that quietly omitted them would be worse than one that says so.
           </p>
@@ -227,12 +226,12 @@ export default function MonsoonPage() {
             <span className="titleIcon"><IconWaves /></span>
             How deep it goes, season by season
           </div>
-          <span className="cardSub">statewide median change from May · {r.mandals} mandals</span>
+          <span className="cardSub">source-series median change from May · {r.mandals} series</span>
         </div>
         <RechargeTrajectory />
         <p className="cardNote">
-          Plotted as change from May rather than depth, so each year starts at zero and the lines can be read
-          against each other. Every season before this one turns down as the monsoon arrives. This one does not.
+          Plotted as change from May, with a historical range from the retained comparison seasons.
+          A rise or fall in water level alone does not isolate recharge from pumping, geology or changes in monitoring.
         </p>
       </section>
 
@@ -243,7 +242,7 @@ export default function MonsoonPage() {
               <span className="titleIcon"><IconWaves /></span>
               How widespread it is, year by year
             </div>
-            <span className="cardSub">share of mandals lower than in May</span>
+            <span className="cardSub">share of source series lower than in May</span>
           </div>
           <div className="seasonBars">
             {w.seasons.map((s) => (
@@ -264,7 +263,7 @@ export default function MonsoonPage() {
           </div>
           <p className="cardNote">
             Right-hand column is the Oceanic Niño Index for that June–August. It is shown for context and is
-            <strong> not</strong> used to produce any figure on this page.
+            <strong> not</strong> an input to the groundwater-depth comparisons. It is used to group years in the historical rainfall analysis below.
           </p>
         </section>
 
@@ -293,8 +292,9 @@ export default function MonsoonPage() {
               </div>
               <EnsoTrail />
               <p className="cardNote">
-                {enso.index}. At or above +0.5 °C for five overlapping seasons is an El Niño, at or below
-                −0.5 °C a La Niña.
+                {enso.index}. The traditional ONI episode criterion uses at least five overlapping seasons
+                at or above +0.5 °C (warm) or at or below −0.5 °C (cool). Current conditions and official
+                declarations also consider atmospheric evidence; this index is not a local forecast.
               </p>
             </>
           ) : (
@@ -308,7 +308,7 @@ export default function MonsoonPage() {
           <div className="cardHead">
             <div className="cardTitle">
               <span className="titleIcon"><IconCloudRain /></span>
-              What El Niño has actually done to Andhra Pradesh&rsquo;s rain
+              Andhra Pradesh rainfall in warm-index years
             </div>
             <span className="cardSub">
               CHIRPS, {sw.firstYear}–{sw.lastYear}, mandal means
@@ -327,15 +327,15 @@ export default function MonsoonPage() {
                   {c.elNinoAnomalyPct !== null && c.elNinoAnomalyPct > 0 ? "+" : ""}
                   {formatNumber(c.elNinoAnomalyPct)}%
                 </strong>
-                <em>average across {c.elNinoYears} El Niño years</em>
+                <em>average across {c.elNinoYears} warm-index years</em>
                 <div className="ensoSeasonFacts">
                   <span>
-                    Below normal in <strong>{c.elNinoBelowNormal} of {c.elNinoYears}</strong> El Niño years,
+                    Below normal in <strong>{c.elNinoBelowNormal} of {c.elNinoYears}</strong> warm-index years,
                     against {c.belowNormalAllYears} of {c.allYears} years overall.
                   </span>
                   {c.elNinoRangePct ? (
                     <span>
-                      Individual El Niño years ranged{" "}
+                      Individual warm-index years ranged{" "}
                       <strong>
                         {formatNumber(c.elNinoRangePct[0])}% to {c.elNinoRangePct[1] > 0 ? "+" : ""}
                         {formatNumber(c.elNinoRangePct[1])}%
@@ -348,10 +348,9 @@ export default function MonsoonPage() {
             ))}
           </div>
           <p className="cardNote">
-            The south-west monsoon signal is strong and consistent. The north-east monsoon is not: it is often
-            assumed to compensate south-east peninsular India during an El Niño, and in Andhra Pradesh&rsquo;s
-            own record it does not — but neither does it reliably fail. Planning the rabi season on a
-            north-east monsoon rescue is a coin flip, and this page will not call it one way or the other.
+            Historical composites use years whose JJA (summer) or OND (winter) ONI is at least +0.5 °C,
+            not a count of independent confirmed events. Small samples and other climate influences limit
+            interpretation. These averages are neither a local forecast nor evidence that El Niño caused a particular loss.
           </p>
           <div className="ensoHonesty">
             <span className="validationEyebrow"><IconInfo /> Why the index is context and never a prediction</span>
@@ -359,9 +358,8 @@ export default function MonsoonPage() {
               Adding the Oceanic Niño Index to the three-month forecast was tested on rolling origin and made it{" "}
               <strong>worse</strong> — 1.776 m to 1.850 m mean error, and worse in every aquifer. Two El Niño
               events inside the training record are not enough to learn a response from, so the model does not
-              use it, and no figure on this page is derived from it. The recharge numbers come from the readings
-              and the rainfall numbers from CHIRPS; the ocean state is shown beside them so a reader can see
-              what the deficit sits in.
+              use it. Groundwater changes come from the readings and rainfall estimates from CHIRPS.
+              ONI is used to group historical rainfall years for comparison, not to forecast local outcomes.
             </p>
           </div>
         </section>
@@ -379,11 +377,9 @@ export default function MonsoonPage() {
           </span>
         </div>
         <p className="cardLede">
-          An El Niño does not only take rain away. Measured over seventy-eight years and more than thirty
-          events, Andhra Pradesh runs hotter in El Niño years than in La Niña ones even after the warming
-          trend is removed — and hotter ground takes more water out of what little arrives. Two long records
-          are drawn here rather than one, because they agree on that and on the warming, and disagree by
-          nearly a factor of three on its rate. Showing both is the honest way to publish a disagreement.
+          Two gridded historical temperature products provide climate context. Their trends and warm-index
+          composites differ; neither is a field temperature measurement, attribution of a local heat event,
+          or a forecast of crop water demand.
         </p>
         <TemperatureRecord />
         <p className="cardNote">
@@ -408,7 +404,7 @@ export default function MonsoonPage() {
             <thead>
               <tr>
                 <th>District</th>
-                <th>Mandals</th>
+                <th>Source series</th>
                 <th>This season</th>
                 <th>Typical</th>
                 <th>Shortfall</th>
@@ -432,9 +428,9 @@ export default function MonsoonPage() {
           </table>
         </div>
         <p className="cardNote">
-          A positive change means the water table fell between May and {monthName(w.season.latestMonth)}, when it
-          should be rising. &ldquo;Typical&rdquo; is the median of the same district&rsquo;s mandals over the
-          previous ten seasons.
+          A positive depth change means the water table fell between May and {monthName(w.season.latestMonth)}.
+          These district medians summarise retained source-series comparisons; they are not area-weighted
+          recharge estimates. Historical-baseline approval remains pending.
         </p>
       </section>
 
@@ -442,17 +438,17 @@ export default function MonsoonPage() {
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconDroplet /></span>
-            Mandals flagged short
+            Provisional groundwater review queue
           </div>
           <span className="cardSub">
-            {r.flaggedShort} in total · {worst.length} shown, worst first
+            {r.flaggedShort} source series · {worst.length} shown, largest departure first
           </span>
         </div>
         <div className="watchActions">
           <ExportMonsoonWatchButton />
           <span>
-            All {r.flaggedShort} rows with their own numbers — the list a district office can work from. Nothing
-            in it authorizes an irrigation instruction.
+            All {r.flaggedShort} source-series rows with their own numbers. Baseline and identity verification
+            are required before operational use; this is not an irrigation instruction.
           </span>
         </div>
         <div className="tableWrap capped">
@@ -465,8 +461,8 @@ export default function MonsoonPage() {
                 <th>This season</th>
                 <th>Typical</th>
                 <th>Shortfall</th>
-                <th title="Metres of water table x the mandal's specific yield x its area">Water short</th>
-                <th>Now at</th>
+                <th title="Illustrative estimate: depth departure x specific yield x prototype area">Storage proxy</th>
+                <th>Recorded depth</th>
               </tr>
             </thead>
             <tbody>
@@ -482,7 +478,7 @@ export default function MonsoonPage() {
                   <td>{m.typicalM > 0 ? "+" : ""}{formatNumber(m.typicalM)} m</td>
                   <td className="bad">+{formatNumber(m.shortfallM)} m</td>
                   <td>{m.shortfallMm3 === null ? "—" : `${formatNumber(m.shortfallMm3)} Mm³`}</td>
-                  <td>{formatNumber(m.latestDepthM)} m</td>
+                  <td>{formatNumber(m.latestDepthM)} m bgl</td>
                 </tr>
               ))}
             </tbody>

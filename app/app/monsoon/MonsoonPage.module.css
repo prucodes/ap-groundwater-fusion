@@ -1,0 +1,13 @@
+.page, .page * { letter-spacing: 0; }
+.nav { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 24px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+.nav a { font-size: 12px; font-weight: 500; color: var(--ink-soft); text-decoration: none; }
+.nav a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+.nav a:last-child { margin-left: auto; color: var(--accent); }
+.season { padding: 10px 0 18px; border-bottom: 1px solid var(--line); scroll-margin-top: 75px; }
+.page .season :global(.monsoonStat) { border: 0; border-left: 1px solid var(--line); border-radius: 0; background: transparent; padding: 8px 16px; }
+.page .season :global(.monsoonStat:first-child) { border-left: 0; padding-left: 0; }
+.page .season :global(.monsoonStat > span) { font-size: 10px; color: var(--muted); font-weight: 500; }
+.page .season :global(.monsoonStat > strong) { font-size: 27px; line-height: 1.3; }
+.page .season :global(.monsoonStat > em) { font-size: 10px; line-height: 1.6; }
+.page .season :global(.cardNote) { font-size: 11px; }
+@media (max-width: 760px) { .nav { gap: 10px 18px; } .nav a { font-size: 11px; } .nav a:last-child { margin-left: 0; } .page .season :global(.monsoonStat) { border-left: 0; border-top: 1px solid var(--line); padding: 10px 0; } .page .season :global(.monsoonHeadline) { grid-template-columns: repeat(2, minmax(0, 1fr)); } .page .season :global(.monsoonStat > strong) { font-size: 23px; } }

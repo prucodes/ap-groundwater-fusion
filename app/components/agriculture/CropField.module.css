@@ -1,0 +1,108 @@
+.lab { display: grid; grid-template-columns: minmax(0, 1fr) 300px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--card); }
+.visual { min-width: 0; }
+.tools { display: flex; gap: 5px; }
+.scene { position: relative; aspect-ratio: 1.62; height: auto; min-height: 400px; max-height: 740px; width: 100%; background: #edf3f1; overflow: hidden; isolation: isolate; }
+.scene canvas { display: block; width: 100% !important; height: 100% !important; max-width: none !important; touch-action: pan-y !important; }
+.scene canvas[data-lens="true"] { cursor: crosshair; }
+.scene::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, #132f3659, transparent 26%, transparent 88%, #10271d88); }
+.sceneTitle, .stageCoefficient { position: absolute; top: 16px; z-index: 1; pointer-events: none; color: white; text-shadow: 0 1px 3px #15312499; }
+.sceneTitle { left: 22px; }
+.sceneTitle > span, .stageCoefficient > span { display: block; font: 500 9px var(--font-mono); color: #e3f0e6; }
+.sceneTitle strong { display: flex; align-items: baseline; gap: 10px; font-size: 23px; line-height: 1.5; font-weight: 500; }
+.sceneTitle small { font-size: 10px; color: #f1f5ed; font-weight: 400; }
+.stageCoefficient { right: 22px; text-align: right; }
+.stageCoefficient strong { display: block; font: 400 29px var(--font-mono); line-height: 1.6; }
+.sceneReadouts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); background: var(--card); }
+.sceneReadouts button { display: flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 6px; min-width: 0; text-align: left; border: 0; border-right: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--ink-soft); }
+.sceneReadouts button:last-child { border-right: 0; }
+.sceneReadouts button[aria-pressed="true"] { background: color-mix(in srgb, var(--ag-green) 6%, var(--card)); box-shadow: inset 0 -2px var(--ag-green); }
+.sceneReadouts svg { width: 20px; height: 20px; color: #2789af; flex-shrink: 0; }
+.sceneReadouts button:nth-child(2) svg { color: #448b64; }
+.sceneReadouts button:nth-child(3) svg { color: #ac852e; }
+.sceneReadouts span { font-size: 9px; }
+.sceneReadouts strong { display: block; font-size: 18px; font-weight: 500; line-height: 1.5; font-variant-numeric: tabular-nums; }
+.sceneReadouts small { font-size: 10px; color: var(--muted); }
+.sceneCredit { position: absolute; bottom: 9px; right: 18px; font-size: 8px; color: #eff7ed; z-index: 1; }
+.processCaption { position: absolute; bottom: 30px; left: 22px; z-index: 1; pointer-events: none; border-left: 2px solid #a2dace; padding: 7px 12px; color: #f3f8ee; background: #142b29cc; backdrop-filter: blur(7px); }
+.processCaption > span { display: block; font: 9px var(--font-mono); color: #b9d5ca; }
+.processCaption > strong { display: block; font: 400 24px var(--font-mono); margin: 3px 0; }
+.processCaption small { font: 10px var(--font-sans); color: #dbe6df; }
+.processCaption[data-focus="rain"] { border-color: #b6d8f0; }
+.processCaption[data-focus="crop"] { border-color: #e9d89f; }
+.stagePreview { display: block; width: 100%; aspect-ratio: 1.8; margin-bottom: 12px; background-repeat: no-repeat; border-radius: 4px; filter: saturate(.65); transition: filter .2s; }
+.stageButtons button[aria-pressed="true"] .stagePreview, .stageButtons button:hover .stagePreview { filter: saturate(1); }
+.fallback { position: absolute; inset: 0; z-index: 0; }
+.fallback img { width: 100%; height: 100%; object-fit: cover; opacity: .45; }
+.fallback span { position: absolute; top: 42%; width: 100%; text-align: center; color: #22443a; background: #fffffff0; padding: 12px; font-size: 11px; }
+.controls { padding: 20px; border-left: 1px solid var(--line); min-width: 0; }
+.activeStage { display: flex; align-items: center; gap: 9px; margin-top: 19px; padding: 15px 0; border-block: 1px solid var(--line); color: var(--ag-green); }
+.activeStage svg { width: 23px; height: 23px; }
+.activeStage span { font-size: 9px; color: var(--muted); display: block; }
+.activeStage strong { display: block; font-size: 14px; font-weight: 500; margin-top: 5px; }
+.activeStage b { margin-left: auto; font: 400 22px var(--font-mono); }
+.activeStage small { display: block; text-align: right; font: 9px var(--font-sans); color: var(--muted); }
+.balanceSummary { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--line); }
+.balanceSummary > span { color: var(--ag-green); font-size: 9px; font-weight: 600; }
+.balanceSummary > strong { display: block; font: 400 42px var(--font-mono); margin: 8px 0; color: var(--ink); }
+.balanceSummary strong small { font-size: 18px; color: var(--muted); }
+.balanceSummary p { font-size: 11px; line-height: 1.7; color: var(--ink-soft); }
+.balanceSummary > small { display: block; font-size: 9px; line-height: 1.5; color: var(--muted); margin-top: 10px; }
+.stageTimeline { padding: 16px 16px 8px; }
+.timelineHead { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 13px; }
+.timelineHead > small { font-size: 9px; color: var(--muted); }
+.stageButtons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
+.stageButtons button { min-width: 0; border: 0; border-top: 2px solid var(--line); background: transparent; padding: 11px 9px; text-align: left; color: var(--muted); }
+.stageButtons button:hover { background: var(--field); }
+.stageButtons button[aria-pressed="true"] { border-color: var(--ag-green); color: var(--ag-green); background: color-mix(in srgb, var(--ag-green) 7%, var(--card)); }
+.stageName { display: flex; align-items: center; gap: 8px; }
+.stageName i { font: normal 9px var(--font-mono); opacity: .65; }
+.stageName strong { font-size: 11px; font-weight: 600; }
+.stageDemand { display: block; font: 500 19px var(--font-mono); color: var(--ink); margin: 10px 0; }
+.stageDemand > small { font: 9px var(--font-sans); color: var(--muted); }
+.stageDemand em { font: normal 9px var(--font-sans); float: right; margin-top: 6px; color: var(--muted); }
+.stageTrack { display: flex; width: 100%; height: 5px; background: var(--line); }
+.stageTrack i { display: block; height: 100%; transition: width .3s; }
+:global([data-theme="dark"]) .scene { background: #1e302e; }
+:global([data-theme="dark"]) .sceneTitle, :global([data-theme="dark"]) .stageCoefficient { color: #e4f0e9; }
+:global([data-theme="dark"]) .sceneTitle span, :global([data-theme="dark"]) .sceneTitle small, :global([data-theme="dark"]) .stageCoefficient span, :global([data-theme="dark"]) .sceneCredit { color: #aac5b9; }
+@media (min-width: 1700px) { .lab { grid-template-columns: minmax(0, 1fr) 335px; } }
+@media (max-width: 1180px) { .lab { grid-template-columns: minmax(0, 1fr) 270px; } .controls { padding: 16px; } .sceneReadouts svg { width: 15px; height: 15px; } .sceneReadouts button { gap: 5px; } .stageDemand em { float: none; display: block; } }
+@media (max-width: 980px) {
+  .lab { grid-template-columns: minmax(0, 1fr); }
+  .controls { border-left: 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; }
+  .controls > div:first-child { grid-column: 1 / -1; margin: 0; }
+  .activeStage { margin: 0; border-top: 0; padding: 0 0 12px; }
+  .balanceSummary { margin-top: 0; }
+  .scene { max-height: 630px; }
+}
+@media (max-width: 600px) {
+  .scene { height: 420px; min-height: 0; aspect-ratio: auto; }
+  .processCaption { left: 14px; bottom: 28px; padding: 6px 9px; }
+  .processCaption > strong { font-size: 20px; }
+  .processCaption small { font-size: 9px; }
+  .sceneTitle { top: 15px; left: 14px; }
+  .sceneTitle strong { display: block; font-size: 21px; }
+  .sceneTitle small { display: block; font-size: 10px; }
+  .stageCoefficient { top: 15px; right: 14px; }
+  .stageCoefficient strong { font-size: 25px; }
+  .sceneReadouts button { display: block; padding: 10px 5px; text-align: center; }
+  .sceneReadouts svg { display: none; }
+  .sceneReadouts span { font-size: 8px; }
+  .sceneReadouts strong { font-size: 16px; }
+  .sceneCredit { font-size: 7px; right: 10px; }
+  .controls { display: block; padding: 16px; }
+  .controls > div:first-child { margin-bottom: 15px; }
+  .activeStage { margin: 18px 0 0; padding: 13px 0; border-top: 1px solid var(--line); }
+  .balanceSummary { margin-top: 18px; }
+  .balanceSummary > strong { font-size: 34px; }
+  .timelineHead { display: block; }
+  .timelineHead > small { display: block; margin-top: 5px; }
+  .stageTimeline { padding: 14px 8px 4px; }
+  .stageButtons button { padding: 10px 5px; }
+  .stageName { gap: 5px; }
+  .stageName i { display: none; }
+  .stageName strong { font-size: 10px; }
+  .stageDemand { font-size: 17px; }
+  .stageDemand em { margin-top: 3px; font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) { .stageTrack i { transition: none; } }

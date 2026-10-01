@@ -85,7 +85,8 @@ export function MonsoonFilm() {
       <div className={styles.meta}>
         <p>Snapshot: {film.snapshot}. NOAA ocean reconstruction, CHIRPS rainfall and project APWRIMS well series.
           Circulation is schematic; the aquifer, village and city scenes are AI-generated illustrations, not site imagery.
-          Prototype boundaries. Synthetic narration. Local outcomes are conditional, not forecasts.</p>
+          Prototype boundaries. Synthetic narration. Local outcomes are conditional, not forecasts.
+          The film is a fixed research edition, not a live update; its seasonal baseline is under review.</p>
         <div className={styles.downloads}>
           <a href={`${assets}/pacific-to-ap-landscape.mp4`} download>Download film</a>
           <a href={`${assets}/pacific-to-ap-portrait.mp4`} download>Vertical / WhatsApp</a>

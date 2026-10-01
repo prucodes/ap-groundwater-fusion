@@ -2,8 +2,7 @@ import type { MandalGroundwaterView } from "../lib/types";
 import { balanceMeta, formatNumber } from "../lib/data";
 import { IconCloudRain, IconLeaf } from "./icons";
 
-/* Annual water balance: rainfall (supply) vs actual ET (demand) → net.
-   Negative/near-zero net = demand met by stored/groundwater (overdraft pressure). */
+/* Climatic context only: annual precipitation minus modelled actual ET. */
 export function WaterBalanceCard({ mandal, year }: { mandal: MandalGroundwaterView; year?: string }) {
   const et = mandal.annual_et_mm;
   const net = mandal.water_balance_mm;
@@ -12,18 +11,14 @@ export function WaterBalanceCard({ mandal, year }: { mandal: MandalGroundwaterVi
   const supply = et + net; // annual precipitation = ET + (precip - ET)
   const max = Math.max(supply, et, 1);
   const meta = balanceMeta(mandal.water_balance_status);
-  const deficit = mandal.water_balance_status === "Deficit";
-
-  const note = deficit
-    ? "Crop + atmospheric demand nearly equals or exceeds rainfall — the shortfall is met by stored / groundwater, i.e. overdraft pressure."
-    : "Rainfall comfortably exceeds demand — conditions favour recharge over the year.";
+  const note = "Rainfall minus modelled actual ET is climatic context, not crop water requirement, groundwater recharge, pumping or safe yield.";
 
   return (
     <div>
       <div className="wbRows">
         <div className="wbRow">
           <span className="wbLabel">
-            <IconCloudRain /> Rainfall (supply)
+            <IconCloudRain /> Annual rainfall
           </span>
           <span className="wbTrack">
             <span className="wbFill supply" style={{ width: `${(supply / max) * 100}%` }} />
@@ -32,7 +27,7 @@ export function WaterBalanceCard({ mandal, year }: { mandal: MandalGroundwaterVi
         </div>
         <div className="wbRow">
           <span className="wbLabel">
-            <IconLeaf /> Evapotranspiration (demand)
+            <IconLeaf /> Modelled actual ET
           </span>
           <span className="wbTrack">
             <span className="wbFill demand" style={{ width: `${(et / max) * 100}%` }} />
@@ -43,7 +38,7 @@ export function WaterBalanceCard({ mandal, year }: { mandal: MandalGroundwaterVi
 
       <div className="wbNet">
         <div>
-          <span className="wbNetLabel">Net annual balance</span>
+          <span className="wbNetLabel">Annual rainfall minus actual ET</span>
           <span className="wbNetValue" style={{ color: meta.color }}>
             {net > 0 ? "+" : ""}
             {formatNumber(net)} mm
@@ -56,8 +51,8 @@ export function WaterBalanceCard({ mandal, year }: { mandal: MandalGroundwaterVi
 
       <p className="wbNote">{note}</p>
       <div className="sideCaveat" style={{ marginTop: 10 }}>
-        TerraClimate {year || ""} annual actual ET vs rainfall (~4 km, modeled). Recharge-vs-demand context — not
-        groundwater depth.
+        TerraClimate {year || ""} annual actual ET vs rainfall (~4 km, modeled). Not groundwater depth
+        or a field irrigation instruction.
       </div>
     </div>
   );
