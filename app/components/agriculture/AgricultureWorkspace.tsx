@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { agricultureCsv, AGREEMENT_RULES, WATER_SIGNALS, type Agreement, type AgricultureEvidence, type AgricultureMandal, type WaterSignal } from "../../lib/agriculture";
+import { agricultureCsv, AGREEMENT_RULES, outlineLabel, WATER_SIGNALS, type Agreement, type AgricultureEvidence, type AgricultureMandal, type WaterSignal } from "../../lib/agriculture";
 import { IconArrowRight, IconChevronLeft, IconChevronRight, IconDownload, IconGrid, IconInfo, IconLeaf, IconMap, IconSearch, IconShield } from "../icons";
 import { CropWaterLab } from "./CropWaterLab";
 import { GovernanceBrief } from "./GovernanceBrief";
@@ -80,7 +80,7 @@ function SelectedEvidence({ row, evidence, choices, onSelect }: { row: Agricultu
       </>}
       <SeasonContext row={row} evidence={evidence} />
       <div className={styles.nextReview}><IconShield /><div><strong>Proposed field check</strong><p>{row.signal === "unavailable" ? "Reconcile source identity and confirm a current groundwater reading." : isFlagged(row) ? "Confirm current well readings, irrigation source and crop stage before reviewing supply options." : "Continue local monitoring. Not flagged does not mean crops are safe."}</p><small>Not assigned · not an issued advisory</small></div></div>
-      <p className={styles.sourceNote}>{row.sourceStatus}. Prototype boundary. Water-table movement is not a direct recharge measurement.</p>
+      <p className={styles.sourceNote}>{row.sourceStatus}. {outlineLabel(row)}. Water-table movement is not a direct recharge measurement.</p>
       {row.id ? <Link className={styles.detailLink} href={`/mandals/${row.id}`}>Full groundwater record <IconArrowRight /></Link> : null}
     </> : <p className={styles.emptyDetail}>No mandals match these filters.</p>}
   </aside>;
@@ -150,7 +150,7 @@ function MandalMap({ evidence, rows, active, mapView, onSelect }: { evidence: Ag
         <div><dt>Gauge rain <small>season</small></dt><dd>{context.rain}</dd></div>
         <div><dt>Soil moisture <small>{evidence.water.soil ? `${evidence.water.soil.depthCm} cm` : ""}</small></dt><dd>{context.soil}</dd></div>
       </dl>; })()}
-      <p className={styles.tooltipCaveat}>Prototype boundary · crop records not connected</p>
+      <p className={styles.tooltipCaveat}>{outlineLabel(hover.row)} · crop records not connected</p>
     </div>}
   </div>;
 }

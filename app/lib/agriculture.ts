@@ -15,6 +15,8 @@ export type AgricultureMandal = {
   district: string;
   mandal: string;
   path: string;
+  /** Drawn with the State's official outline (AWARE, rebuilt) rather than the public prototype. */
+  officialOutline: boolean;
   signal: WaterSignal;
   reason: string | null;
   depthM: number | null;
@@ -140,12 +142,18 @@ function summarizeWater(water: WaterContext | null | undefined): AgricultureWate
   };
 }
 
-/** One result per prototype boundary, never one per raw source series.
+/** The outline a row is drawn with, worded as boundaryLabel in lib/data (which
+ * client code cannot import without the data it carries). */
+export function outlineLabel(row: Pick<AgricultureMandal, "officialOutline">) {
+  return row.officialOutline ? "Official boundary (AWARE, rebuilt)" : "Public prototype boundary";
+}
+
+/** One result per boundary unit, never one per raw source series.
  * Ambiguous joins remain missing rather than selecting the first or worst row. */
 export function buildAgricultureEvidence(
   watch: MonsoonWatch,
   records: MandalGroundwaterRecordV2[],
-  features: Array<{ d: string; m: string; path: string }>,
+  features: Array<{ d: string; m: string; path: string; src?: string }>,
   water?: WaterContext | null,
 ): AgricultureEvidence {
   const soilRows = uniqueByBoundary(water?.soilMoisture?.mandals, features.length);
@@ -188,6 +196,7 @@ export function buildAgricultureEvidence(
     const rain: AgricultureMandal["rain"] = rainRow ? { actualMm: rainRow.actualMm, normalMm: rainRow.normalMm, deviationPct: rainRow.deviationPct, category: rainRow.category, gauges: rainRow.gauges } : null;
     return {
       index, id: record?.identity.mandalId ?? null, district: feature.d, mandal: feature.m, path: feature.path,
+      officialOutline: feature.src === "official",
       signal, reason,
       depthM: usable ? row.latestDepthM : null, changeM: usable ? row.thisSeasonM : null,
       typicalM: usable ? row.typicalM : null, shortfallM: usable ? row.shortfallM : null,
@@ -264,17 +273,17 @@ export function agricultureCsv(rows: AgricultureMandal[], evidence: Pick<Agricul
   const soil = evidence.water?.soil, rain = evidence.water?.rain;
   return [
     "# Agriculture water watch - PROTOTYPE; not a crop-loss estimate or irrigation instruction.",
-    `# Period: ${evidence.startPeriod} to ${evidence.period}. One row per prototype boundary; unresolved joins retained.`,
+    `# Period: ${evidence.startPeriod} to ${evidence.period}. One row per boundary unit; unresolved joins retained. outline: official = the State's outline (AWARE, rebuilt), prototype = public prototype.`,
     "# Positive change means deeper groundwater. Crop area, crop stage and canal delivery records are not connected.",
     soil ? `# Soil moisture: APWRIMS copy of the NRSC VIC model (modelled, not measured), ${soil.depthCm} cm, as of ${soil.asOf ?? "unconfirmed date"}; rank 1 = driest for that date since ${soil.baselineYears?.[0] ?? "record start"}.` : "# Soil moisture: not available in this build.",
     rain ? `# Gauge rainfall: APWRIMS / AP DES mandal rain gauges, ${rain.start} to ${rain.end}, against the department's normal for the same window.` : "# Gauge rainfall: not available in this build.",
     `# Signals pointing to stress (0-3), each a stated test, not a score: ${AGREEMENT_RULES.groundwater}; ${AGREEMENT_RULES.rain}; ${AGREEMENT_RULES.soil}.`,
     "# Seasonal baseline review pending. Flags are provisional; not approved operational advisories.",
-    ["district", "mandal", "mandal_id", "water_signal", "depth_mbgl", "season_change_m", "typical_change_m", "shortfall_m", "comparable_years", "source_status", "missing_reason",
+    ["district", "mandal", "mandal_id", "water_signal", "depth_mbgl", "season_change_m", "typical_change_m", "shortfall_m", "comparable_years", "source_status", "outline", "missing_reason",
       "soil_moisture_pct", "soil_moisture_week_ago_pct", "soil_moisture_same_date_median_pct", "soil_moisture_rank_driest", "soil_moisture_of_years",
       "gauge_rain_mm", "gauge_rain_normal_mm", "gauge_rain_departure_pct", "gauge_rain_category",
       "signals_pointing_to_stress", "signals_known", "crop_exposure_ha"].join(","),
-    ...rows.map(row => [row.district, row.mandal, row.id, row.signal, row.depthM, row.changeM, row.typicalM, row.shortfallM, row.comparableYears, row.sourceStatus, row.reason,
+    ...rows.map(row => [row.district, row.mandal, row.id, row.signal, row.depthM, row.changeM, row.typicalM, row.shortfallM, row.comparableYears, row.sourceStatus, row.officialOutline ? "official" : "prototype", row.reason,
       row.soil?.pct, row.soil?.weekAgoPct, row.soil?.median, row.soil?.rankDriest, row.soil?.ofYears,
       row.rain?.actualMm, row.rain?.normalMm, row.rain?.deviationPct, row.rain?.category,
       row.agreement.stressed, row.agreement.known, null].map(cell).join(",")),

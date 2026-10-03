@@ -39,7 +39,7 @@ export function MandalSeasonContext({ mandalId }: { mandalId: string }) {
           <strong className={styles.figure} data-tone={rain.deviationPct <= -20 ? "short" : undefined}>{signed(rain.deviationPct, 0)}<small> against normal</small></strong>
           <p>{rain.actualMm.toFixed(0)} mm against a normal of {rain.normalMm.toFixed(0)} mm · {rain.category ? CATEGORY[rain.category] : "uncategorised"} · {rain.rainyDays ?? "?"} rainy days · {rain.gauges ?? "?"} gauges</p>
           {rain.lastMonth.actualMm !== null && rain.lastMonth.normalMm ? <p className={styles.note}>Last month: {rain.lastMonth.actualMm.toFixed(0)} mm against {rain.lastMonth.normalMm.toFixed(0)} mm.</p> : null}
-        </> : <p className={styles.note}>No unique gauge record for this prototype boundary.</p>}
+        </> : <p className={styles.note}>No unique gauge record for this boundary.</p>}
         <p className={styles.source}>Measured: AP DES mandal rain gauges via APWRIMS.</p>
       </div>
       <div className={styles.block}>
@@ -50,7 +50,7 @@ export function MandalSeasonContext({ mandalId }: { mandalId: string }) {
             {soilSection.depthsCm.map((depth, index) => <li key={depth}><span>{depth} cm</span><span className={styles.track}><i style={{ width: `${Math.min(100, soil.pct[index])}%` }} /></span><b>{soil.pct[index].toFixed(0)}%</b></li>)}
           </ul>
           <p className={styles.note}>{soil.baseline ? `${driest(soil.baseline.rankDriest)} of ${soil.baseline.ofYears} years for this date (range ${soil.baseline.min.toFixed(0)} to ${soil.baseline.max.toFixed(0)}%).` : "Too few earlier years to call anything usual."}{soil.weekAgoPct !== null ? ` A week earlier: ${soil.weekAgoPct.toFixed(0)}%.` : ""}</p>
-        </> : <p className={styles.note}>No unique model record for this prototype boundary.</p>}
+        </> : <p className={styles.note}>No unique model record for this boundary.</p>}
         <p className={styles.source}>Modelled: NRSC VIC land-surface model via APWRIMS; plant-available water as a share of what the soil holds.</p>
       </div>
       <div className={styles.block}>

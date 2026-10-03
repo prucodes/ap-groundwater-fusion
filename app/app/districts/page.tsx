@@ -7,7 +7,7 @@ import { StatusBadge } from "../../components/Badges";
 import { PercentileBar } from "../../components/Signals";
 import { ExportCsvButton } from "../../components/ExportButtons";
 import { IconActivity, IconCheck, IconDroplet, IconGrid, IconLayers, IconMap } from "../../components/icons";
-import { balanceMeta, districtRollups, districtSeries, formatNumber, formatPeriod, latestObservationPeriod, mandals, statusMeta, titleCase } from "../../lib/data";
+import { balanceMeta, districtRollups, districtSeries, formatNumber, formatPeriod, latestObservationPeriod, mandals, officialStatusLine, statusMeta, titleCase } from "../../lib/data";
 import { AiBrief } from "../../components/AiBrief";
 import { DistrictMap } from "../../components/DistrictMap";
 import { DistrictTrendGrid } from "../../components/DistrictTrendGrid";
@@ -247,7 +247,7 @@ export default function DistrictsPage() {
         <span className="dotsep" />
         Aggregated from real APWRIMS readings (2014-2026) + NASA satellite-model percentiles
         <span className="dotsep" />
-        Not official until APWRIMS export &amp; official boundaries
+        {officialStatusLine}
       </div>
     </div>
   );

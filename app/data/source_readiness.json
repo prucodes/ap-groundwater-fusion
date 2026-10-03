@@ -48,21 +48,39 @@
   "official_flag": false
  },
  {
-  "label": "Official APWRIMS export",
+  "label": "State groundwater network's latest reading (AWARE, via the AI Living Labs data lake; pulled by a signed-in user)",
+  "status": "available",
+  "data_label": "measured-state-snapshot",
+  "official_flag": false
+ },
+ {
+  "label": "NOAA Climate Prediction Center El Niño outlook (forecast)",
+  "status": "available",
+  "data_label": "forecast-enso-outlook",
+  "official_flag": false
+ },
+ {
+  "label": "Official mandal outlines (AWARE; rebuilt from the State's vertices, checked against the official area)",
+  "status": "partial",
+  "data_label": "official_boundary",
+  "official_flag": false
+ },
+ {
+  "label": "Official mandal codes (LGD) and assembly/parliamentary constituencies (AWARE)",
+  "status": "partial",
+  "data_label": "official_admin_ids",
+  "official_flag": false
+ },
+ {
+  "label": "Official APWRIMS export (authorised full history)",
   "status": "pending",
   "data_label": "official_apwrims",
   "official_flag": false
  },
  {
-  "label": "Official APWRIMS/APSAC/RTGS boundaries",
+  "label": "Station-level well history (DWLR) from the data lake: requested",
   "status": "pending",
-  "data_label": "official_boundary",
-  "official_flag": false
- },
- {
-  "label": "APWRIMS admin IDs",
-  "status": "pending",
-  "data_label": "official_admin_ids",
+  "data_label": "official_station_history",
   "official_flag": false
  },
  {

@@ -2,6 +2,7 @@ import {
   CATEGORY_META, HYDRO_LABEL, IMPACT_META, RAIN_CLASS_META, RULES, SPI_LABEL, place, shortDate, signed, signedPct,
   type DroughtMandal, type DroughtWeek, type ImpactClass,
 } from "../../lib/drought";
+import { boundaryLabel, mapGeometry } from "../../lib/data";
 import styles from "./Drought.module.css";
 
 const WHY: Record<DroughtMandal["t1Why"], string> = {
@@ -72,7 +73,7 @@ export function MandalMatrix({ row, weeks, light = false, sown, sowingAsOf, comp
     <article className={styles.inspector} aria-label={`${place(row.m)}: drought manual check`}>
       <header className={styles.inspectorHead}>
         <h3>{place(row.m)}</h3>
-        <small>{place(row.d)} district · prototype boundary</small>
+        <small>{`${place(row.d)} district · ${boundaryLabel(mapGeometry.mandals[row.i])}`}</small>
         <div>
           <span className={styles.verdict} style={{ background: meta.color, color: meta.ink }} data-testid="drought-verdict">{meta.label}</span>
           {!light && row.prev !== row.category ? <span className={styles.moved}>a week earlier: {CATEGORY_META[row.prev].label}</span> : null}

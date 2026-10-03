@@ -22,7 +22,7 @@ test("the overview carries this water year beside the groundwater", async ({ pag
 test("the sidebar names each feed and its own date", async ({ page }) => {
   await page.goto("/");
   const status = page.locator(".sidebarStatus");
-  for (const feed of ["CHIRPS rainfall ·", "Rain gauges · to", "Soil moisture ·", "Reservoirs ·"]) await expect(status).toContainText(feed);
+  for (const feed of ["CHIRPS rainfall ·", "Rain gauges · to", "Soil moisture ·", "Reservoirs ·", "State wells ·"]) await expect(status).toContainText(feed);
 });
 
 test("both maps can show gauge rain and soil moisture", async ({ page }) => {

@@ -60,6 +60,8 @@
 .table tr { cursor: pointer; }
 .table tbody tr:hover { background: var(--row-hover); }
 .rowOn { background: var(--st-watch-bg) !important; }
+.serial { width: 56px; text-align: right; font: 600 11.5px var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+th.serial { padding: 9px 10px; font: 600 11px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-soft); }
 .cell { display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; }
 
 .section { margin-top: 22px; }

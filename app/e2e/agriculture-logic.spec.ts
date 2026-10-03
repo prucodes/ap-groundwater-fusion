@@ -90,6 +90,17 @@ test("export retains caveats, filtered rows, empty crop area and formula safety"
   expect(csv.trim().endsWith(',""')).toBe(true);
 });
 
+test("each row carries its own outline source, on the map and in the export", () => {
+  const mixed = buildAgricultureEvidence(watch, records,
+    geometry.mandals.map((feature, i) => ({ d: feature.d, m: feature.m, path: "M0 0Z", src: i === 0 ? "official" : "prototype" })));
+  expect(mixed.mandals[0].officialOutline).toBe(true);
+  expect(mixed.mandals[1].officialOutline).toBe(false);
+  const csv = agricultureCsv(mixed.mandals.slice(0, 2), mixed);
+  expect(csv).toContain("source_status,outline,missing_reason");
+  expect(csv).toContain('"official"');
+  expect(csv).toContain('"prototype"');
+});
+
 test("soil and gauge rain join by boundary and leave the groundwater classification alone", () => {
   const groundwater = ({ boundaries, compared, flagged, severe, unresolved, unmappedSeries, ambiguousBoundaries }: typeof evidence.counts) =>
     ({ boundaries, compared, flagged, severe, unresolved, unmappedSeries, ambiguousBoundaries });

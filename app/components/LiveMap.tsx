@@ -213,7 +213,7 @@ export function LiveMap({
       const L = (await import("leaflet")).default;
       if (cancelled || !containerRef.current) return;
 
-      // Build GeoJSON from the simplified prototype boundaries (lon/lat rings).
+      // Build GeoJSON from the map outlines (official where rebuilt, prototype elsewhere; lon/lat rings).
       const features = mapGeometry.mandals
         .filter((f) => (mode === "single" ? sameMandal(f, mandalId) : true))
         .map((f) => {

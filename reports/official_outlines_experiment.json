@@ -1,0 +1,203 @@
+{
+ "generatedAt": "2026-10-03T17:48:24+00:00",
+ "reproduction": {
+  "medianAbsDiffMm": 0.0,
+  "shareOver1Mm": 0.0069
+ },
+ "gate2024on": {
+  "published": {
+   "rows": 20298,
+   "maeM": 1.7969,
+   "noChangeMaeM": 2.218,
+   "byOutlineVerdict": {
+    "already matches": {
+     "rows": 2666,
+     "maeM": 1.9122
+    },
+    "no boundary": {
+     "rows": 1691,
+     "maeM": 1.4819
+    },
+    "prototype kept": {
+     "rows": 1448,
+     "maeM": 1.5393
+    },
+    "right place: finer outline": {
+     "rows": 8634,
+     "maeM": 1.8083
+    },
+    "wrong shape: fixed": {
+     "rows": 5859,
+     "maeM": 1.8821
+    }
+   },
+   "byAquifer": {
+    "alluvial": 1.3447,
+    "coastal": 1.4277,
+    "hard_rock": 2.5032
+   }
+  },
+  "prototypeAllParts": {
+   "rows": 20298,
+   "maeM": 1.801,
+   "noChangeMaeM": 2.218,
+   "byOutlineVerdict": {
+    "already matches": {
+     "rows": 2666,
+     "maeM": 1.9089
+    },
+    "no boundary": {
+     "rows": 1691,
+     "maeM": 1.487
+    },
+    "prototype kept": {
+     "rows": 1448,
+     "maeM": 1.5498
+    },
+    "right place: finer outline": {
+     "rows": 8634,
+     "maeM": 1.8146
+    },
+    "wrong shape: fixed": {
+     "rows": 5859,
+     "maeM": 1.8846
+    }
+   },
+   "byAquifer": {
+    "alluvial": 1.359,
+    "coastal": 1.431,
+    "hard_rock": 2.4999
+   }
+  },
+  "official": {
+   "rows": 20298,
+   "maeM": 1.8001,
+   "noChangeMaeM": 2.218,
+   "byOutlineVerdict": {
+    "already matches": {
+     "rows": 2666,
+     "maeM": 1.9119
+    },
+    "no boundary": {
+     "rows": 1691,
+     "maeM": 1.478
+    },
+    "prototype kept": {
+     "rows": 1448,
+     "maeM": 1.5551
+    },
+    "right place: finer outline": {
+     "rows": 8634,
+     "maeM": 1.8132
+    },
+    "wrong shape: fixed": {
+     "rows": 5859,
+     "maeM": 1.8836
+    }
+   },
+   "byAquifer": {
+    "alluvial": 1.3541,
+    "coastal": 1.439,
+    "hard_rock": 2.4941
+   }
+  }
+ },
+ "long2018on": {
+  "published": {
+   "rows": 58381,
+   "maeM": 2.2233,
+   "noChangeMaeM": 2.3605,
+   "byOutlineVerdict": {
+    "already matches": {
+     "rows": 7996,
+     "maeM": 2.4539
+    },
+    "no boundary": {
+     "rows": 4807,
+     "maeM": 1.9152
+    },
+    "prototype kept": {
+     "rows": 3985,
+     "maeM": 1.9547
+    },
+    "right place: finer outline": {
+     "rows": 24819,
+     "maeM": 2.1776
+    },
+    "wrong shape: fixed": {
+     "rows": 16774,
+     "maeM": 2.3332
+    }
+   },
+   "byAquifer": {
+    "alluvial": 1.5888,
+    "coastal": 1.7768,
+    "hard_rock": 3.1544
+   }
+  },
+  "prototypeAllParts": {
+   "rows": 58381,
+   "maeM": 2.2186,
+   "noChangeMaeM": 2.3605,
+   "byOutlineVerdict": {
+    "already matches": {
+     "rows": 7996,
+     "maeM": 2.4482
+    },
+    "no boundary": {
+     "rows": 4807,
+     "maeM": 1.9186
+    },
+    "prototype kept": {
+     "rows": 3985,
+     "maeM": 1.9597
+    },
+    "right place: finer outline": {
+     "rows": 24819,
+     "maeM": 2.1729
+    },
+    "wrong shape: fixed": {
+     "rows": 16774,
+     "maeM": 2.3243
+    }
+   },
+   "byAquifer": {
+    "alluvial": 1.5923,
+    "coastal": 1.77,
+    "hard_rock": 3.1446
+   }
+  },
+  "official": {
+   "rows": 58381,
+   "maeM": 2.2288,
+   "noChangeMaeM": 2.3605,
+   "byOutlineVerdict": {
+    "already matches": {
+     "rows": 7996,
+     "maeM": 2.4691
+    },
+    "no boundary": {
+     "rows": 4807,
+     "maeM": 1.9114
+    },
+    "prototype kept": {
+     "rows": 3985,
+     "maeM": 1.9771
+    },
+    "right place: finer outline": {
+     "rows": 24819,
+     "maeM": 2.1818
+    },
+    "wrong shape: fixed": {
+     "rows": 16774,
+     "maeM": 2.3345
+    }
+   },
+   "byAquifer": {
+    "alluvial": 1.5955,
+    "coastal": 1.7788,
+    "hard_rock": 3.1619
+   }
+  }
+ }
+}

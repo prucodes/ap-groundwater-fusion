@@ -638,6 +638,13 @@ export const boundarySummary = (() => {
   return `${s.outlines} of ${mapGeometry.mandals.length} mandal outlines are rebuilt from the State's official boundary points (AWARE); the rest are public prototypes.`;
 })();
 
+/** Footers: what still stands between this build and an official result. */
+export const officialStatusLine = (() => {
+  const s = mapGeometry.official_summary;
+  const outlines = s?.outlines ? ` · ${s.outlines} of ${mapGeometry.mandals.length} mandal outlines official (AWARE, rebuilt)` : "";
+  return `Not official until the APWRIMS export is authorised${outlines}`;
+})();
+
 /** One mandal's outline: official (rebuilt from AWARE vertices) or prototype. */
 export function boundaryLabel(feature: { src?: string } | null | undefined) {
   return feature?.src === "official" ? "official boundary (AWARE, rebuilt)" : "public prototype boundary";

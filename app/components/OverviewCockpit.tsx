@@ -28,6 +28,7 @@ import type { MandalHeatLayerKey } from "../lib/types";
 import { waterSummary } from "../lib/waterSummary";
 import { droughtSummary } from "../lib/droughtSummary";
 import { stateSummary } from "../lib/stateSummary";
+import { officialStatusLine } from "../lib/data";
 import { WATER_LAYER_META, isWaterLayer, waterLayerGradient, type WaterMandalLayer } from "../lib/waterMandals";
 
 /** Counts the server works out from the full water context, which never reaches the browser. */
@@ -473,7 +474,7 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
               View full watchlist <IconArrowRight />
             </Link>
           </div>
-          <MandalTable rows={verifyMandals()} limit={8} selectedId={selectedId} onSelect={setSelectedId} />
+          <MandalTable rows={verifyMandals()} limit={16} selectedId={selectedId} onSelect={setSelectedId} />
         </section>
 
         <div className="contentGrid">
@@ -512,7 +513,7 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
         <span className="dotsep" />
         Built for Andhra Pradesh
         <span className="dotsep" />
-        Not for official use without official APWRIMS export &amp; official mandal boundaries
+        {officialStatusLine}
       </div>
     </div>
   );

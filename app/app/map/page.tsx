@@ -180,7 +180,7 @@ export default function MapPage() {
                     </div>
                     <div className="mapHint">
                       <IconInfo style={{ width: 13, height: 13 }} /> {WATER_LAYER_META[mandalView].note} Grey: no unique record for the
-                      prototype boundary. Context only; it does not change any groundwater status.
+                      boundary. Context only; it does not change any groundwater status.
                     </div>
                   </div>
                 ) : (

@@ -83,7 +83,7 @@ export function PacificEnso() {
           <span>{m.month.slice(5)}</span><small>{i === 0 || m.month.endsWith("-01") ? m.month.slice(0, 4) : ""}</small>
         </button>)}
       </div>
-      <p className={styles.note}>Colours show reconstructed ocean temperatures, not wind measurements or water flowing to India. Monthly Niño 3.4 values alone do not establish an ENSO event. AP uses public prototype boundaries.</p>
+      <p className={styles.note}>Colours show reconstructed ocean temperatures, not wind measurements or water flowing to India. Monthly Niño 3.4 values alone do not establish an ENSO event. AP mandal outlines are official where rebuilt from the State's points, prototype elsewhere.</p>
     </div>
   );
 }

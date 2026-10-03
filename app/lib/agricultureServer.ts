@@ -10,6 +10,6 @@ let cached: AgricultureEvidence | null = null;
  * Server code only: it reads the full water context. */
 export function agricultureEvidence(): AgricultureEvidence {
   cached ??= buildAgricultureEvidence(monsoonWatch, groundwaterRecords,
-    mapGeometry.mandals.map(feature => ({ d: feature.d, m: feature.m, path: "" })), waterContext);
+    mapGeometry.mandals.map(feature => ({ d: feature.d, m: feature.m, src: feature.src, path: "" })), waterContext);
   return cached;
 }
