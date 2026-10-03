@@ -20,9 +20,9 @@
 .tally li[data-tone="worse"] b { color: #ff9a85; }
 .tally li[data-tone="better"] b { color: #7fe0c6; }
 
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 14px; margin-top: 18px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 14px; margin-top: 18px; }
 .card {
-  position: relative; display: grid; gap: 8px; align-content: start; padding: 16px 16px 14px 20px; border-radius: var(--radius);
+  position: relative; display: grid; gap: 10px; align-content: start; padding: 18px 20px 16px 22px; border-radius: var(--radius);
   background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-card); color: inherit; text-decoration: none;
   transition: transform .2s var(--ease), box-shadow .2s var(--ease);
 }
@@ -32,22 +32,22 @@
 .card[data-direction="better"]::before { background: var(--teal); }
 .card[data-direction="moved"]::before { background: var(--amber); }
 .cardLabel { font-size: 12.5px; font-weight: 500; line-height: 1.4; color: var(--ink-soft); }
-.values { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.values strong { font: 600 30px/1.1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
-.before { font: 500 15px var(--font-mono); color: var(--muted); }
-.arrow { color: var(--muted-2); }
-.badge { justify-self: start; padding: 3px 9px; border-radius: 999px; font: 600 10.5px var(--font-mono); background: var(--field); color: var(--ink-soft); }
+.value { font: 600 34px/1.05 var(--font-display); letter-spacing: -0.01em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.status { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.was { font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.badge { padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; background: var(--field); color: var(--ink-soft); }
 .card[data-direction="worse"] .badge { background: var(--st-verify-bg); color: var(--rust); }
 .card[data-direction="better"] .badge { background: var(--st-normal-bg); color: var(--teal); }
-.dates { font: 500 10.5px var(--font-mono); color: var(--muted); }
+.dates { padding-top: 10px; border-top: 1px solid var(--hairline); font-size: 11px; color: var(--muted); }
 .note { font-size: 11.5px; color: var(--ink-soft); }
 
-.lists { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+.lists { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 18px; align-items: start; }
 .list { padding: 18px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-card); min-width: 0; }
 .listHead h3 { margin: 0; font: 600 16px var(--font-display); color: var(--ink); }
 .listHead span { display: block; margin-top: 4px; font-size: 11.5px; color: var(--muted); }
 .list ul { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; max-height: 420px; overflow: auto; }
-.list li { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; background: var(--field); }
+.list ul { gap: 0; }
+.list li { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 9px 4px; border-top: 1px solid var(--hairline); }
 .mark { font-size: 11px; color: var(--teal); }
 .list li[data-worse="true"] .mark { color: var(--rust); }
 .where { display: grid; min-width: 0; }

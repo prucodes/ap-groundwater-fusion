@@ -65,6 +65,17 @@
   --sidebar-w: 264px;
   --sidebar-w-collapsed: 76px;
 
+  /* Older names some rules still use. Undefined, they silently dropped those
+     borders and colours; as aliases they follow the theme like everything else. */
+  --border: var(--line);
+  --border-strong: var(--line-strong);
+  --surface: var(--card);
+  --surface-2: var(--field);
+  --text: var(--ink);
+  --text-soft: var(--ink-soft);
+  --text-faint: var(--muted);
+  --deep: var(--deep-navy);
+
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-display: var(--font-space), var(--font-sans);
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
@@ -1041,32 +1052,32 @@ h4 {
    Prototype notice banner
    ============================================================ */
 
+/* One quiet line under the hero, not a box on every page: the caveat stays,
+   the clutter goes. */
 .protoBanner {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 18px;
-  border-radius: var(--radius);
-  background: linear-gradient(90deg, rgba(18, 181, 203, 0.08), rgba(18, 181, 203, 0.03));
-  border: 1px solid rgba(18, 181, 203, 0.28);
-  color: var(--ink-soft);
-  font-size: 12.5px;
+  gap: 9px;
+  padding: 0 6px;
+  margin-top: -6px;
+  color: var(--muted);
+  font-size: 12px;
   line-height: 1.45;
 }
 
 .protoBanner .bannerIcon {
   flex: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
   display: grid;
   place-items: center;
-  background: rgba(18, 181, 203, 0.16);
+  background: rgba(18, 181, 203, 0.12);
   color: var(--teal);
 }
 
-.protoBanner .bannerIcon svg { width: 17px; height: 17px; }
-.protoBanner strong { color: var(--ink); }
+.protoBanner .bannerIcon svg { width: 12px; height: 12px; }
+.protoBanner strong { color: var(--ink-soft); font-weight: 600; }
 
 /* ============================================================
    Cards & layout primitives
@@ -1652,6 +1663,33 @@ select:focus-visible {
   font-weight: 600;
 }
 
+/* Overview verify table: one line per mandal. */
+table.verifyTable tbody td { padding: 11px 12px; white-space: nowrap; }
+table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px 12px; }
+.verifyName { display: inline-flex; align-items: center; gap: 10px; }
+.verifyName > i { flex: none; width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 0 3px var(--hairline); }
+.verifyName > span { display: flex; flex-direction: column; line-height: 1.25; }
+.verifyName strong { color: var(--ink); font-weight: 600; }
+.verifyName small { font-size: 11px; color: var(--muted); }
+.verifyEstimate strong { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.verifyEstimate small { margin-left: 5px; font-size: 10.5px; color: var(--muted-2); font-variant-numeric: tabular-nums; }
+.signalPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--field);
+}
+.signalPill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.signalPill.strong { color: var(--st-verify); background: var(--st-verify-bg); }
+.signalPill.partial { color: #a9741a; background: var(--st-watch-bg); }
+.signalPill.agree { color: var(--st-normal); background: var(--st-normal-bg); }
+:root[data-theme="dark"] .signalPill.partial { color: #ecc46a; }
+
 .agreeTag.strong { color: var(--st-verify); }
 .agreeTag.partial { color: var(--amber); }
 .agreeTag.agree { color: var(--st-normal); }
@@ -2084,21 +2122,23 @@ select:focus-visible {
    NASA Signals — provenance ribbon, signal gauges, raster cards
    ============================================================ */
 
+/* Sources and their dates: a quiet ledger line, label soft, value firm. */
 .provRibbon {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  padding: 12px 18px;
-  border-radius: 14px;
-  background: linear-gradient(120deg, rgba(18, 181, 203, 0.08), rgba(42, 111, 151, 0.05));
-  border: 1px solid var(--border);
-  font-size: 12.5px;
-  color: var(--text-soft);
+  gap: 8px 14px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  font-size: 12px;
+  color: var(--ink);
 }
-.provRibbonItem { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; }
+.provRibbonItem { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.provRibbonItem strong { font-weight: 500; color: var(--muted); }
 .provRibbonItem svg { width: 14px; height: 14px; color: var(--teal); opacity: 0.9; }
-.provRibbonDot { width: 4px; height: 4px; border-radius: 50%; background: var(--border-strong); }
+.provRibbonDot { width: 3px; height: 3px; border-radius: 50%; background: var(--line-strong); }
 
 .sigGaugeRow {
   display: grid;
@@ -2839,6 +2879,20 @@ table.dataTable tbody tr.selected {
 }
 
 .readinessItem:hover { border-color: var(--line-strong); }
+
+/* Overview: a quiet list rather than a stack of boxes. */
+.readinessList.compact { gap: 0; }
+.readinessList.compact .readinessCounts { margin-bottom: 10px; }
+.readinessList.compact .readinessConnected { margin-bottom: 12px; }
+.readinessList.compact .readinessItem {
+  padding: 10px 2px;
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  border-radius: 0;
+  background: transparent;
+}
+.readinessList.compact .readyLabel { font-size: 12.5px; }
+.readinessList.compact .readyMeta strong { color: var(--teal); font-weight: 600; }
 
 .readyIcon {
   width: 30px;
@@ -4790,6 +4844,18 @@ pre.jsonBody {
 .overviewMapColumn .overviewMapLead .liveMapWrap .liveMap { height: 100%; }
 @media (min-width: 1081px) {
   .overviewCockpit { align-items: stretch; }
+  /* The rail's content no longer sets the row's height: the map column does,
+     and the selected mandal scrolls inside a panel exactly as tall. No white
+     gap beside the map whichever mandal is chosen. */
+  .overviewSideStack { position: relative; top: auto; min-height: 560px; }
+  .overviewSideStack > * {
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+  }
 }
 
 /* The detail page's rail is much shorter than its main column, so it left ~960px
@@ -5040,31 +5106,100 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 /* Flex, not an auto-repeat grid: `repeat(auto-fit, ...)` beside an `auto`
    track is an invalid declaration, and the whole rule is dropped -- which
    stacked this strip into one tall column. */
+/* A briefing panel, not an alarm: a neutral card, the story on the left, the
+   figures in an even grid on the right, one accent rule for the mood. Cells
+   flow into the grid whatever their number; intro and link hold column one. */
 .monsoonStrip {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 14px 24px;
-  padding: 16px 18px;
+  --strip-accent: var(--rust);
+  --strip-cells: 4;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) repeat(var(--strip-cells), minmax(0, 1fr));
+  grid-auto-rows: auto;
+  gap: 0;
+  padding: 0;
   margin-bottom: 14px;
-  border: 1px solid var(--st-verify);
-  border-radius: 14px;
-  background: var(--st-verify-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--strip-accent) 7%, transparent), transparent 46%),
+    var(--card);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
 }
-.monsoonStripIntro { flex: 1 1 240px; display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
-.monsoonStripCell { flex: 0 1 auto; display: flex; flex-direction: column; gap: 2px; }
-.monsoonStrip > .validationLink { margin-left: auto; }
-.monsoonStripCell > span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.monsoonStripCell > strong { font-size: 22px; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
-.monsoonStripCell > em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+.monsoonStrip::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--strip-accent), color-mix(in srgb, var(--strip-accent) 30%, transparent));
+}
+.seasonStrip { --strip-accent: var(--teal); --strip-cells: 3; }
+.monsoonStripIntro {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 20px 22px 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.monsoonStripIntro > .validationEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--strip-accent);
+}
+.monsoonStripIntro > .validationEyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--strip-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--strip-accent) 16%, transparent);
+}
+.monsoonStrip > .validationLink {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: end;
+  justify-self: start;
+  margin: 4px 22px 20px;
+}
+.monsoonStripCell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  padding: 18px 20px;
+  border-left: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+.monsoonStripCell > span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); }
+.monsoonStripCell > strong {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.monsoonStripCell > em { font-style: normal; font-size: 11.5px; line-height: 1.45; color: var(--muted); }
+.monsoonStripCell > em a { color: var(--teal); font-weight: 600; }
 
 @media (max-width: 1080px) {
   .monsoonGrid { grid-template-columns: minmax(0, 1fr); }
 }
+@media (max-width: 1180px) {
+  .monsoonStrip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .monsoonStripIntro { grid-column: 1 / -1; padding-bottom: 12px; }
+  .monsoonStrip > .validationLink { grid-column: 1 / -1; grid-row: auto; margin: 14px 22px 18px; }
+}
 @media (max-width: 720px) {
-  .monsoonStripIntro { flex-basis: 100%; }
-  .monsoonStripCell { flex: 1 1 40%; }
-  .monsoonStrip > .validationLink { margin-left: 0; flex-basis: 100%; }
+  .monsoonStripCell { padding: 14px 16px; }
+  .monsoonStripCell > strong { font-size: 22px; }
   .seasonBar { grid-template-columns: 38px minmax(0, 1fr) 42px 42px; gap: 7px; font-size: 11.5px; }
   .monsoonStat > strong { font-size: 26px; }
 }
@@ -5505,3 +5640,11 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 .overviewMapLead .cardHead { flex-wrap: wrap; }
 .overviewMapLead .segmented { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
 .overviewMapLead .segBtn { white-space: nowrap; flex: 0 0 auto; }
+
+/* Watchlist: the two sentences get room to sit on two lines, the rest stays on one. */
+.watchlistTableScroll td { white-space: nowrap; }
+.watchlistTableScroll td.watchText { min-width: 240px; max-width: 300px; white-space: normal; font-size: 12px; line-height: 1.45; }
+.watchlistTableScroll thead th { position: sticky; top: 0; z-index: 1; }
+
+/* Long titles cross the satellite in the artwork: a soft shadow keeps them legible. */
+.hero h1 { text-shadow: 0 2px 22px rgba(5, 18, 38, 0.7); }

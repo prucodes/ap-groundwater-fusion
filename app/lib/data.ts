@@ -951,11 +951,21 @@ export function verifyMandals() {
     .sort((a, b) => (b.estimate_mbgl ?? 0) - (a.estimate_mbgl ?? 0));
 }
 
+/** Review order: the clearest concern first, data gaps last (still listed). */
+const REVIEW_ORDER: Record<string, number> = { Verify: 0, Stress: 1, Watch: 2, "Low Confidence": 3, "Insufficient Data": 4 };
+
 export function watchlistMandals() {
   // Everything that is not a clean "Normal" agreement is reviewable in the watchlist.
+  // Ordered by status, then the fastest measured deepening, then depth -- so the
+  // list opens on mandals with evidence, not on ones with no readings at all.
   return mandals
     .filter((m) => m.status_bucket !== "Normal")
-    .sort((a, b) => a.observation_month_count - b.observation_month_count);
+    .sort(
+      (a, b) =>
+        (REVIEW_ORDER[a.status_bucket] ?? 5) - (REVIEW_ORDER[b.status_bucket] ?? 5) ||
+        (b.trend_m_per_yr ?? -Infinity) - (a.trend_m_per_yr ?? -Infinity) ||
+        (b.median_groundwater_mbgl ?? -Infinity) - (a.median_groundwater_mbgl ?? -Infinity),
+    );
 }
 
 export function selectedMandal(id?: string) {

@@ -112,12 +112,20 @@ export default function ConstituenciesPage() {
 
       <section className={styles.section} aria-label="By parliamentary constituency">
         <h3>By parliamentary constituency</h3>
-        <p>Assessed mandals by groundwater status: stress, watch, stable. Ordered by the share in stress.</p>
+        <p>
+          Assessed mandals by groundwater status, ordered by the share in stress.
+          <span className={styles.pcKey} aria-hidden="true">
+            <i style={{ background: "var(--st-stress)" }} />stress<i style={{ background: "var(--st-watch)" }} />watch<i style={{ background: "var(--st-normal)" }} />stable
+          </span>
+        </p>
         <div className={styles.pcGrid}>
           {byPc.map(p => (
             <div className={styles.pcCard} key={p.pc}>
-              <strong>{p.pc}</strong>
-              <span>{`${p.acs} assembly constituencies · ${p.mandals} mandals · ${p.drought} moderate or severe on the drought manual`}</span>
+              <div className={styles.pcHead}>
+                <strong>{p.pc}</strong>
+                <b>{`${Math.round((100 * p.stress) / Math.max(p.assessed, 1))}%`}<small>stress</small></b>
+              </div>
+              <span title={`${p.drought} mandals moderate or severe on the drought manual`}>{`${p.acs} seats · ${p.mandals} mandals · drought ${p.drought}`}</span>
               <div className={styles.pcBar} role="img" aria-label={`${p.stress} stress, ${p.watch} watch, ${p.stable} stable`}>
                 <i style={{ width: `${(100 * p.stress) / Math.max(p.assessed, 1)}%`, background: "var(--st-stress)" }} />
                 <i style={{ width: `${(100 * p.watch) / Math.max(p.assessed, 1)}%`, background: "var(--st-watch)" }} />
