@@ -1,10 +1,9 @@
-# Codex brief: what was built, film and video, redesign merge, visual polish (2026-10-02)
+# Codex brief: what was built, film and video, redesign merge, visual polish (2026-10-02, updated 2026-10-03)
 
-Written by Claude Code for Codex. It ships with branch
-`worktree-agri-water-context` (worktree `.claude/worktrees/agri-water-context`,
-based on `origin/main` at `ffcf91d`). If you are reading this on `main`, that
-branch has landed. Start every task on a fresh branch off `main`, and never edit
-inside that worktree. Ask the user before committing, pushing or merging.
+Written by Claude Code for Codex. Everything described here is on `main` (PRs #33–#38,
+last at `53c9452`) and live on GitHub Pages. Start every task on a fresh branch off
+`main`, and never edit inside the worktree `.claude/worktrees/agri-water-context`.
+Ask the user before committing, pushing or merging.
 
 The site is reviewed by the Chief Minister's office, the CMO and IAS officers
 (including RTGS). The bar is high, and so is the cost of a wrong or overclaimed
@@ -36,22 +35,52 @@ polish), treat them like any other screen, under these rules:
 - The weekly workflow now opens a GitHub issue when a refresh fails or keeps a feed
   (`phase3_levels/refresh_health.py`).
 
-### Added later on 3 October: the State's own data (AI Living Labs data lake)
+### Added later on 3 October: the State's own data (AI Living Labs data lake, AWARE)
 
-- **Official mandal outlines.** `app/data/ap_map_display.json` is what every map draws
-  (via `mapGeometry` in `lib/data.ts`): official outlines rebuilt from AWARE vertices where
-  they land within 3% of the official area, the prototype elsewhere, same order and names
-  as `ap_map_geometry.json`. **The pipeline and model still read `ap_map_geometry.json`;
-  do not point them at the display file.** Each feature also carries `lgd`, `ac`, `pc`,
-  `div`, `officialKm2`, `src`.
-- **The State network's latest reading** on mandal pages (`MandalStateReading`, server
-  only), the overview strip and the Monsoon page: `gw_state_snapshot.json` (server only)
-  and `gw_state_summary.json` (client-safe). Shown beside our series, never merged.
-- **Constituencies page** (`/constituencies`): `components/constituencies/`, data from
-  `phase3_levels/build_constituencies.py` (weekly).
-- Data lake pulls need a signed-in user (`phase3_levels/fetch_datalake.py`, run by the
-  user, password via getpass). Never add credentials anywhere; never commit
-  `data/raw/datalake/`.
+What landed (PRs #36–#38):
+
+- **Official mandal outlines on every map**: 595 of 670. The data lake gives each
+  boundary's vertices unordered; `phase3_levels/build_official_boundaries.py` rebuilds the
+  ring and keeps it only if it is within 3% of the official area, does not lie over
+  official neighbours (worst first), and touches the mandal it replaces. Names repeat
+  across districts: 16 records landed 10–580 km from their mandal and are withheld,
+  outline and codes. Spikes and crumbs are removed. Result: `app/data/ap_map_display.json`,
+  same order and names as `ap_map_geometry.json`, each feature with `src`
+  (`official`/`prototype`), `lgd`, `ac`, `acCode`, `pc`, `div`, `officialKm2`, `verdict`.
+- **The State network's latest reading** (early September, 1,746 stations): mandal pages
+  (`components/MandalStateReading.tsx`, server only), the overview strip and the Monsoon
+  page. Data `gw_state_snapshot.json` (server only) and `gw_state_summary.json` (client-safe),
+  from `build_datalake_snapshot.py`. Its May value equals our APWRIMS May in 585 of 587
+  mandals: same department series, one month newer. It also carries the department's own
+  depth bands (`ground_water_category`) and AWARE's module counts (groundwater, dry spell
+  and El Niño modules issue nothing).
+- **Constituencies page** (`/constituencies`): all 175 assembly and 25 parliamentary seats,
+  164 drawn with the State's own outline (`build_official_regions.py` →
+  `official_regions.json`), the rest as the union of their mandals. A mandal with no
+  constituency on its State record is placed by location (40 of them); 11 city seats have
+  no mandal of their own on our map and say so. `components/constituencies/`, data
+  `constituencies.json` from `build_constituencies.py` (runs weekly).
+- **District outlines were rebuilt but are not drawn**: next to prototype districts they
+  left seams. The district map is unchanged on purpose.
+- Fixed: Monsoon Watch areas counted only the first part of split mandals; and
+  `prefers-color-scheme` rules gave light pages dark "no data" cells. **This app themes
+  only through `data-theme`; never key colours to `prefers-color-scheme`.**
+
+Rules for these:
+
+- **Maps draw `ap_map_display.json`; the pipeline and model read `ap_map_geometry.json`.**
+  Never point the pipeline at the display file, and never point a map at the raw file
+  (import `mapGeometry` from `lib/data.ts`). The model is re-tested on official outlines
+  before it moves.
+- Data-lake files in `app/data` are builder output: re-run the builder, never hand-edit.
+  The builders need `data/raw/datalake/`, which only the user can pull
+  (`phase3_levels/fetch_datalake.py`, their login via getpass). Never add credentials
+  anywhere; never commit `data/raw/datalake/`.
+- Keep the wording that carries meaning: "one reading, not a monthly mean", "not merged
+  into it", "the model does not use it", "placed by location", "No mandal of its own on
+  this map", whose outline is drawn, and the "N of 175" coverage line.
+- Tests: `app/e2e/governance-constituencies.spec.ts`, `tests/test_official_data.py`
+  (includes "no official outline is drawn far from the mandal it replaces").
 
 ## 1. What was built
 
@@ -260,7 +289,18 @@ behind `main`. At last check it touched these same files:
 - `phase3_levels/build_levels_engine.py`
 - the generated data files
 
-Run `git diff --name-only main...` for the current overlap.
+Run `git diff --name-only main...` for the current overlap. Since that check, `main`
+also changed these, which your redesign will meet:
+- `app/lib/data.ts`: `mapGeometry` now imports `ap_map_display.json`; new helpers
+  `boundarySummary`, `boundaryLabel`, `geometryForMandal`. Your `AtlasMap` must draw
+  `mapGeometry`, not a raw geometry import.
+- `app/lib/types.ts`: `MapMandal` gained `src`, `lgd`, `ac`, `acCode`, `pc`, `div`,
+  `officialKm2`, `verdict`; `MapGeometry` gained `official_*` fields.
+- `app/components/AppShell.tsx`: nav items This Week, Drought Watch, Constituencies.
+- `app/components/MandalDetail.tsx` (adds `MandalStateReading`, `MandalDroughtCheck`),
+  `OverviewCockpit.tsx` (State wells and drought cells), `MapLegend.tsx`,
+  `MandalStatusMap.tsx` (outline labels), `app/app/monsoon/page.tsx` (`EnsoOutlook`, State
+  wells stat), `methodology` and `readiness` pages (new sources; the ledger now has nine).
 
 Steps:
 1. Commit the redesign on its own branch.
@@ -334,6 +374,12 @@ page's answer in five seconds, and an analyst can still find every caveat.
 10. **Presentation conditions.** Check 1920×1080 and 1280×720 at 125–150% zoom,
     as on a projector, and that the Agriculture brief and Snapshot print
     cleanly.
+11. **New screens from 3 October** (Drought Watch, This Week, Constituencies, the
+    El Niño outlook, the mandal "State network" card): bring them into the same
+    visual language. On Constituencies, the selected seat's label can clip at the
+    map edge, and the seats with no mandal of their own read as blank grey; give
+    them a hatch and a legend entry. The sidebar's Data Status could list
+    "State wells · 9 Sep 2026" beside the other feeds.
 
 **Rules for this task:**
 - Do not change any number, date, unit, Measured/Modelled tag, source link or
@@ -368,6 +414,10 @@ page's answer in five seconds, and an analyst can still find every caveat.
 - **Telugu versions** of the one-pager and the film narration. edge-tts has
   Telugu voices. A Telugu speaker must review every line before anything is
   published.
+- **A one-page brief per constituency** (175 printable pages from
+  `constituencies.json`: the seat's mandals, groundwater status, State wells since May,
+  drought-manual reading, rain), for MLA and collector meetings. Every number read from
+  the data files; same caveats as the page.
 
 ## 7. Guardrails
 
@@ -379,3 +429,7 @@ page's answer in five seconds, and an analyst can still find every caveat.
 - Keep "measured" and "modelled" labels on every figure, and each figure's own
   date.
 - Never put a key or token in the repository, a commit message or a chat.
+- The AI Living Labs data lake is pulled only by the signed-in user. Never script around
+  its login, never store a password or refresh token, never commit `data/raw/datalake/`.
+- The State readings are a single snapshot; the model never uses them, and they are never
+  merged into the monthly series.
