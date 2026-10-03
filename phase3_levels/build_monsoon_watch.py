@@ -74,24 +74,23 @@ ONI_SOURCE = "https://psl.noaa.gov/data/correlation/oni.data"
 CHIRPS_V2_SOURCE = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs"
 
 
-# Andhra Pradesh's mid-latitude, for turning degrees into kilometres. Across one
-# state a flat projection is accurate to well under a percent.
-MID_LAT = 16.0
-
-
 def mandal_areas(geo):
-    """Each boundary's area in square kilometres, by boundary index."""
+    """Each boundary's area in square kilometres, by boundary index, with degrees
+    of longitude scaled at the mandal's own latitude."""
     out = {}
     for index, feature in enumerate(geo["mandals"]):
         rings = [ring for ring in feature.get("rings", []) if len(ring) >= 4]
         if not rings:
             continue
-        polygon = Polygon(rings[0])
-        if not polygon.is_valid:
-            polygon = polygon.buffer(0)
-        if polygon.is_empty:
+        # Every ring is a separate part of the mandal (the maps draw them that
+        # way); reading only the first undercounted the eight split mandals.
+        parts = [Polygon(ring) for ring in rings]
+        parts = [part if part.is_valid else part.buffer(0) for part in parts]
+        parts = [part for part in parts if not part.is_empty]
+        if not parts:
             continue
-        out[index] = polygon.area * 111.32 * 110.57 * math.cos(math.radians(MID_LAT))
+        lat = sum(part.centroid.y * part.area for part in parts) / sum(part.area for part in parts)
+        out[index] = sum(part.area for part in parts) * 111.32 * 110.57 * math.cos(math.radians(lat))
     return out
 
 

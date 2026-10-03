@@ -1,5 +1,5 @@
 import districtGeometryJson from "../../data/ap_district_geometry.json";
-import mapGeometryJson from "../../data/ap_map_geometry.json";
+import mapGeometryJson from "../../data/ap_map_display.json";
 import datasetManifestJson from "../../data/dataset_manifest.json";
 import groundwaterRecordsJson from "../../data/mandal_groundwater_records_v2.json";
 import modelCardJson from "../../data/model_card.json";
@@ -17,7 +17,7 @@ import type {
 } from "./types";
 
 const recordsBundle = groundwaterRecordsJson as GroundwaterRecordCollectionV2;
-const mapGeometry = mapGeometryJson as MapGeometry;
+const mapGeometry = mapGeometryJson as unknown as MapGeometry;
 const districtGeometry = districtGeometryJson as DistrictGeometry;
 const manifest = datasetManifestJson as DatasetManifestV2;
 const modelCard = modelCardJson as ModelCard;

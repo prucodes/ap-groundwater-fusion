@@ -81,6 +81,7 @@ jobs:
             app/data/drought_watch.json \
             app/data/drought_watch_summary.json \
             app/data/enso_outlook.json \
+            app/data/constituencies.json \
             app/data/weekly_changes.json \
             app/data/nasa_provenance.json \
             app/data/satellite_station_samples.json \

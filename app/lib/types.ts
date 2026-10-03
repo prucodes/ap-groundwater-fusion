@@ -268,6 +268,16 @@ export type MapMandal = {
   rings: number[][][];
   seed: boolean;
   c?: number[];
+  /** Whose outline is drawn: rebuilt from the State's official vertices, or the public prototype. */
+  src?: "official" | "prototype";
+  /** Official LGD mandal code, assembly and parliamentary constituency, revenue division (AWARE). */
+  lgd?: string | null;
+  ac?: string | null;
+  acCode?: string | null;
+  pc?: string | null;
+  div?: string | null;
+  officialKm2?: number | null;
+  verdict?: string;
 };
 
 export type MapGeometry = {
@@ -279,6 +289,9 @@ export type MapGeometry = {
   feature_count: number;
   mandals: MapMandal[];
   district_structure?: string;
+  official_source?: string;
+  official_method?: string;
+  official_summary?: { official: number; matched: number; outlines: number; verdicts: Record<string, number> };
 };
 
 export type DistrictFeature = {

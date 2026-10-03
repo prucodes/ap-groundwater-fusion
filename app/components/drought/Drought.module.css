@@ -3,7 +3,6 @@
 
 .page { --drought-empty: #d8dee8; --dw-red: #b23a2e; --dw-amber: #e39a3b; --dw-green: #5e9b6b; }
 :global(:root[data-theme="dark"]) .page { --drought-empty: #24364e; }
-@media (prefers-color-scheme: dark) { :global(:root:not([data-theme="light"])) .page { --drought-empty: #24364e; } }
 
 /* ---------- source ribbon ---------- */
 .ribbon { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 12px 16px; margin: 14px 0 0; background: var(--field); border: 1px solid var(--line); border-radius: var(--radius-sm); }

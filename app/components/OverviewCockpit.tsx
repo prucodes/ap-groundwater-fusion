@@ -27,6 +27,7 @@ import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat,
 import type { MandalHeatLayerKey } from "../lib/types";
 import { waterSummary } from "../lib/waterSummary";
 import { droughtSummary } from "../lib/droughtSummary";
+import { stateSummary } from "../lib/stateSummary";
 import { WATER_LAYER_META, isWaterLayer, waterLayerGradient, type WaterMandalLayer } from "../lib/waterMandals";
 
 /** Counts the server works out from the full water context, which never reaches the browser. */
@@ -291,6 +292,16 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
               <Link href="/drought">Drought Watch</Link>
             </em>
           </div>
+          {stateSummary.state?.currentM !== null && stateSummary.state ? (
+            <div className="monsoonStripCell" data-testid="state-network-cell">
+              <span>State wells, early Sep</span>
+              <strong>{`${stateSummary.state.currentM?.toFixed(1)} m`}</strong>
+              <em>
+                {`below ground on average · ${stateSummary.state.sinceMayM !== null ? `${stateSummary.state.sinceMayM.toFixed(1)} m deeper than May` : ""} · `}
+                {`${stateSummary.state.vsYearAgoM !== null ? `${stateSummary.state.vsYearAgoM.toFixed(1)} m deeper than a year ago` : ""} · ${stateSummary.state.stationsTotal.toLocaleString("en-US")} stations (AWARE)`}
+              </em>
+            </div>
+          ) : null}
           <Link className="validationLink" href="/agriculture#agriculture-watch">
             Open the water watch <IconArrowRight />
           </Link>

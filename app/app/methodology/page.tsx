@@ -4,7 +4,8 @@ import { MethodologyFlow } from "../../components/MethodologyFlow";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconSatellite } from "../../components/icons";
-import { modelCard } from "../../lib/data";
+import { mapGeometry, modelCard } from "../../lib/data";
+import { stateSummary } from "../../lib/stateSummary";
 
 const labels = [
   { code: "APWRIMS (AP-GWD)", text: "Recorded mandal depth history. Modelled nowcasts are separate derived values; neither is presented as a certified official output." },
@@ -255,6 +256,43 @@ export default function MethodologyPage() {
             notification by 31 October are the State&rsquo;s. Each judgement the manual leaves open is listed on the page.
           </p>
           <p><Link href="/drought">Open the Drought Watch</Link></p>
+        </div>
+      </section>
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon">
+              <IconDroplet />
+            </span>
+            The State&rsquo;s own geography and well readings (AWARE, via the AI Living Labs data lake)
+          </div>
+          <span className="cardSub">official boundaries, constituencies, latest State reading</span>
+        </div>
+        <div className="methodSteps">
+          <p>
+            <strong>Boundaries.</strong> The State&rsquo;s mandal geography gives every boundary vertex with the official area, LGD codes,
+            revenue division and assembly and parliamentary constituency, but not the order the vertices run in. The outline is
+            rebuilt as the shortest closed path through them (or, failing that, a concave hull tuned to the official area) and is
+            drawn only where it lands within 3% of the official area; elsewhere the public prototype stays.{" "}
+            {mapGeometry.official_summary
+              ? `${mapGeometry.official_summary.outlines} of ${mapGeometry.mandals.length} outlines are official today. `
+              : ""}
+            Compared with the prototypes, about a third were the wrong shape (area off by more than 15%, or overlapping less than
+            their coarseness explains). The model still computes its inputs on the prototype outlines until it is re-tested on these.
+          </p>
+          <p>
+            <strong>Constituencies.</strong> Each mandal is counted in the one assembly constituency its State record names; a
+            constituency&rsquo;s figures are its mandals&rsquo; counts and medians, and its outline is the union of theirs.
+          </p>
+          <p>
+            <strong>The State network&rsquo;s latest reading.</strong> One recent reading per location (early September), with the
+            pre-monsoon, post-monsoon and year-ago levels. Its pre-monsoon value equals our APWRIMS May reading for{" "}
+            {`${stateSummary.summary.preMonsoonSameAsOurMay} of ${stateSummary.summary.preMonsoonComparable}`} mandals, so it is the
+            same department series, a month ahead. It is shown beside our monthly series, never merged into it, and the model
+            does not use it.
+          </p>
+          <p><Link href="/constituencies">Open Constituencies</Link></p>
         </div>
       </section>
 

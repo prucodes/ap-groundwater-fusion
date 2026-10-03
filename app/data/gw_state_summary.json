@@ -1,0 +1,440 @@
+{
+ "contractVersion": "1.0.0",
+ "generatedAt": "2026-10-03T15:18:15+00:00",
+ "source": "AP AWARE groundwater feed (groundwater_aggregatedreadings_api) via the AI Living Labs data lake",
+ "kind": "measured-snapshot",
+ "note": "One recent reading per location from the State's monitoring network, not a monthly mean. Shown beside our monthly series; not merged into it and not used by the model.",
+ "readingDates": {
+  "first": "2026-09-01",
+  "last": "2026-09-09",
+  "mostCommon": "2026-09-09"
+ },
+ "state": {
+  "stations": 1746,
+  "currentM": 11.43,
+  "date": "2026-09-09",
+  "preMonsoonM": 10.1,
+  "postMonsoonM": 6.0,
+  "yearAgoM": 8.25,
+  "sinceMayM": 1.33,
+  "vsYearAgoM": 3.18,
+  "stationsTotal": 1746,
+  "band": "6m-20m"
+ },
+ "summary": {
+  "feedMandals": 688,
+  "matched": 643,
+  "preMonsoonComparable": 587,
+  "preMonsoonSameAsOurMay": 585,
+  "deeperSinceMay": 429,
+  "withChange": 643,
+  "deeperThanYearAgo": 583,
+  "withYear": 643,
+  "medianVsOurLatestM": 0.25,
+  "stationsPerMandal": {
+   "0": 9,
+   "1": 142,
+   "2": 192,
+   "3": 156,
+   "4+": 144
+  },
+  "byOfficialBand": {
+   "<3m": 77,
+   "3m-6m": 148,
+   "6m-20m": 337,
+   ">20m": 81
+  }
+ },
+ "districts": [
+  {
+   "district": "Alluri Sitharama Raju",
+   "stations": 26,
+   "currentM": 10.57,
+   "date": "2026-09-09",
+   "preMonsoonM": 10.2,
+   "postMonsoonM": 7.24,
+   "yearAgoM": 7.75,
+   "sinceMayM": 0.37,
+   "vsYearAgoM": 2.82
+  },
+  {
+   "district": "Anakapalli",
+   "stations": 81,
+   "currentM": 8.63,
+   "date": "2026-09-09",
+   "preMonsoonM": 7.18,
+   "postMonsoonM": 2.89,
+   "yearAgoM": 4.2,
+   "sinceMayM": 1.45,
+   "vsYearAgoM": 4.43
+  },
+  {
+   "district": "Anantapuramu",
+   "stations": 92,
+   "currentM": 16.08,
+   "date": "2026-09-09",
+   "preMonsoonM": 14.33,
+   "postMonsoonM": 9.51,
+   "yearAgoM": 10.5,
+   "sinceMayM": 1.75,
+   "vsYearAgoM": 5.58
+  },
+  {
+   "district": "Annamayya",
+   "stations": 66,
+   "currentM": 18.37,
+   "date": "2026-09-09",
+   "preMonsoonM": 11.67,
+   "postMonsoonM": 5.85,
+   "yearAgoM": 11.08,
+   "sinceMayM": 6.7,
+   "vsYearAgoM": 7.29
+  },
+  {
+   "district": "Bapatla",
+   "stations": 42,
+   "currentM": 3.7,
+   "date": "2026-09-09",
+   "preMonsoonM": 3.91,
+   "postMonsoonM": 2.32,
+   "yearAgoM": 2.51,
+   "sinceMayM": -0.21,
+   "vsYearAgoM": 1.19
+  },
+  {
+   "district": "Chittoor",
+   "stations": 59,
+   "currentM": 16.94,
+   "date": "2026-09-09",
+   "preMonsoonM": 13.63,
+   "postMonsoonM": 6.6,
+   "yearAgoM": 13.01,
+   "sinceMayM": 3.31,
+   "vsYearAgoM": 3.93
+  },
+  {
+   "district": "East Godavari",
+   "stations": 61,
+   "currentM": 23.01,
+   "date": "2026-09-09",
+   "preMonsoonM": 21.92,
+   "postMonsoonM": 17.89,
+   "yearAgoM": 20.14,
+   "sinceMayM": 1.09,
+   "vsYearAgoM": 2.87
+  },
+  {
+   "district": "Eluru",
+   "stations": 71,
+   "currentM": 24.0,
+   "date": "2026-09-09",
+   "preMonsoonM": 21.93,
+   "postMonsoonM": 16.05,
+   "yearAgoM": 18.85,
+   "sinceMayM": 2.07,
+   "vsYearAgoM": 5.15
+  },
+  {
+   "district": "Guntur",
+   "stations": 37,
+   "currentM": 5.65,
+   "date": "2026-09-09",
+   "preMonsoonM": 5.02,
+   "postMonsoonM": 2.75,
+   "yearAgoM": 2.61,
+   "sinceMayM": 0.63,
+   "vsYearAgoM": 3.04
+  },
+  {
+   "district": "Kakinada",
+   "stations": 44,
+   "currentM": 9.69,
+   "date": "2026-09-09",
+   "preMonsoonM": 10.26,
+   "postMonsoonM": 6.05,
+   "yearAgoM": 6.87,
+   "sinceMayM": -0.57,
+   "vsYearAgoM": 2.82
+  },
+  {
+   "district": "Kona Seema",
+   "stations": 31,
+   "currentM": 3.13,
+   "date": "2026-09-09",
+   "preMonsoonM": 3.84,
+   "postMonsoonM": 2.08,
+   "yearAgoM": 2.61,
+   "sinceMayM": -0.71,
+   "vsYearAgoM": 0.52
+  },
+  {
+   "district": "Krishna",
+   "stations": 57,
+   "currentM": 10.44,
+   "date": "2026-09-09",
+   "preMonsoonM": 9.36,
+   "postMonsoonM": 7.69,
+   "yearAgoM": 8.32,
+   "sinceMayM": 1.08,
+   "vsYearAgoM": 2.12
+  },
+  {
+   "district": "Kurnool",
+   "stations": 62,
+   "currentM": 9.17,
+   "date": "2026-09-09",
+   "preMonsoonM": 7.95,
+   "postMonsoonM": 4.51,
+   "yearAgoM": 6.04,
+   "sinceMayM": 1.22,
+   "vsYearAgoM": 3.13
+  },
+  {
+   "district": "Manyam",
+   "stations": 30,
+   "currentM": 7.1,
+   "date": "2026-09-09",
+   "preMonsoonM": 7.99,
+   "postMonsoonM": 4.62,
+   "yearAgoM": 4.91,
+   "sinceMayM": -0.89,
+   "vsYearAgoM": 2.19
+  },
+  {
+   "district": "Markapuram",
+   "stations": 68,
+   "currentM": 21.9,
+   "date": "2026-09-09",
+   "preMonsoonM": 15.94,
+   "postMonsoonM": 7.23,
+   "yearAgoM": 19.38,
+   "sinceMayM": 5.96,
+   "vsYearAgoM": 2.52
+  },
+  {
+   "district": "NTR",
+   "stations": 70,
+   "currentM": 6.21,
+   "date": "2026-09-09",
+   "preMonsoonM": 6.2,
+   "postMonsoonM": 3.28,
+   "yearAgoM": 3.6,
+   "sinceMayM": 0.01,
+   "vsYearAgoM": 2.61
+  },
+  {
+   "district": "Nandyal",
+   "stations": 105,
+   "currentM": 10.47,
+   "date": "2026-09-09",
+   "preMonsoonM": 7.53,
+   "postMonsoonM": 3.92,
+   "yearAgoM": 5.39,
+   "sinceMayM": 2.94,
+   "vsYearAgoM": 5.08
+  },
+  {
+   "district": "Palnadu",
+   "stations": 96,
+   "currentM": 12.67,
+   "date": "2026-09-09",
+   "preMonsoonM": 11.73,
+   "postMonsoonM": 4.76,
+   "yearAgoM": 9.46,
+   "sinceMayM": 0.94,
+   "vsYearAgoM": 3.21
+  },
+  {
+   "district": "Polavaram",
+   "stations": 26,
+   "currentM": 7.48,
+   "date": "2026-09-09",
+   "preMonsoonM": 7.61,
+   "postMonsoonM": 4.58,
+   "yearAgoM": 5.06,
+   "sinceMayM": -0.13,
+   "vsYearAgoM": 2.42
+  },
+  {
+   "district": "Prakasam",
+   "stations": 47,
+   "currentM": 8.37,
+   "date": "2026-09-09",
+   "preMonsoonM": 7.07,
+   "postMonsoonM": 4.3,
+   "yearAgoM": 7.17,
+   "sinceMayM": 1.3,
+   "vsYearAgoM": 1.2
+  },
+  {
+   "district": "S.P.S.Nellore",
+   "stations": 98,
+   "currentM": 7.74,
+   "date": "2026-09-09",
+   "preMonsoonM": 6.75,
+   "postMonsoonM": 4.92,
+   "yearAgoM": 6.33,
+   "sinceMayM": 0.99,
+   "vsYearAgoM": 1.41
+  },
+  {
+   "district": "Sri Satyasai",
+   "stations": 95,
+   "currentM": 21.34,
+   "date": "2026-09-09",
+   "preMonsoonM": 18.28,
+   "postMonsoonM": 10.68,
+   "yearAgoM": 11.02,
+   "sinceMayM": 3.06,
+   "vsYearAgoM": 10.32
+  },
+  {
+   "district": "Srikakulam",
+   "stations": 53,
+   "currentM": 8.09,
+   "date": "2026-09-09",
+   "preMonsoonM": 8.83,
+   "postMonsoonM": 4.44,
+   "yearAgoM": 6.35,
+   "sinceMayM": -0.74,
+   "vsYearAgoM": 1.74
+  },
+  {
+   "district": "Tirupati",
+   "stations": 91,
+   "currentM": 9.93,
+   "date": "2026-09-09",
+   "preMonsoonM": 7.76,
+   "postMonsoonM": 4.1,
+   "yearAgoM": 8.69,
+   "sinceMayM": 2.17,
+   "vsYearAgoM": 1.24
+  },
+  {
+   "district": "Visakhapatnam",
+   "stations": 31,
+   "currentM": 11.93,
+   "date": "2026-09-09",
+   "preMonsoonM": 10.46,
+   "postMonsoonM": 4.37,
+   "yearAgoM": 7.22,
+   "sinceMayM": 1.47,
+   "vsYearAgoM": 4.71
+  },
+  {
+   "district": "Vizianagaram",
+   "stations": 50,
+   "currentM": 5.66,
+   "date": "2026-09-09",
+   "preMonsoonM": 6.29,
+   "postMonsoonM": 2.19,
+   "yearAgoM": 3.5,
+   "sinceMayM": -0.63,
+   "vsYearAgoM": 2.16
+  },
+  {
+   "district": "West Godavari",
+   "stations": 46,
+   "currentM": 7.67,
+   "date": "2026-09-09",
+   "preMonsoonM": 8.23,
+   "postMonsoonM": 7.49,
+   "yearAgoM": 7.75,
+   "sinceMayM": -0.56,
+   "vsYearAgoM": -0.08
+  },
+  {
+   "district": "Y.S.R.Kadapa",
+   "stations": 111,
+   "currentM": 14.12,
+   "date": "2026-09-09",
+   "preMonsoonM": 10.88,
+   "postMonsoonM": 5.79,
+   "yearAgoM": 10.68,
+   "sinceMayM": 3.24,
+   "vsYearAgoM": 3.44
+  }
+ ],
+ "officialBands": [
+  {
+   "label": "<3m",
+   "min": 0.0,
+   "max": 3.0,
+   "color": "#73B2FF",
+   "alert": false
+  },
+  {
+   "label": "3m-6m",
+   "min": 3.0,
+   "max": 6.0,
+   "color": "#4DE600",
+   "alert": false
+  },
+  {
+   "label": "6m-20m",
+   "min": 6.0,
+   "max": 20.0,
+   "color": "#FFD380",
+   "alert": false
+  },
+  {
+   "label": ">20m",
+   "min": 20.0,
+   "max": 1000.0,
+   "color": "#FF5402",
+   "alert": false
+  }
+ ],
+ "awareModules": [
+  {
+   "module": "GROUNDWATER",
+   "advisories": 0,
+   "alerts": 0
+  },
+  {
+   "module": "DRY_SPELL",
+   "advisories": 0,
+   "alerts": 0
+  },
+  {
+   "module": "RAINFALL",
+   "advisories": 0,
+   "alerts": 0
+  },
+  {
+   "module": "RESERVOIR",
+   "advisories": 1,
+   "alerts": 0
+  },
+  {
+   "module": "RESERVOIR_RELEASES",
+   "advisories": 0,
+   "alerts": 0
+  },
+  {
+   "module": "EL_NINO",
+   "advisories": 0,
+   "alerts": 0
+  },
+  {
+   "module": "CROP_HEALTH",
+   "advisories": 0,
+   "alerts": 0
+  },
+  {
+   "module": "PEST_STRESS",
+   "advisories": 0,
+   "alerts": 0
+  },
+  {
+   "module": "HEAT_WATCH",
+   "advisories": 286,
+   "alerts": 0
+  },
+  {
+   "module": "FLOOD_WARNING",
+   "advisories": 0,
+   "alerts": 0
+  }
+ ]
+}

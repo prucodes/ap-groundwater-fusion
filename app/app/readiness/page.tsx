@@ -5,6 +5,7 @@ import { IconClock } from "../../components/icons";
 import { datasetManifest, formatPeriod } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
 import { droughtWatch } from "../../lib/droughtWatch";
+import { stateSummary } from "../../lib/stateSummary";
 import styles from "../../components/governance/Governance.module.css";
 
 const gates = [
@@ -20,6 +21,10 @@ const COUNT_WORDS = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven"
 
 export default function ReadinessPage() {
   const { counts: c, periods: p, refreshStatus: r } = datasetManifest;
+  // AWARE's water modules with nothing issued: the gap this site's watches cover.
+  const quietModules = (stateSummary.awareModules ?? [])
+    .filter(m => ["GROUNDWATER", "DRY_SPELL", "EL_NINO"].includes(m.module) && m.advisories === 0 && m.alerts === 0)
+    .map(m => m.module.toLowerCase().replace("_", " ").replace("el nino", "El Niño"));
   const sources = [
     { name: "APWRIMS-format history", type: "Recorded depth / m bgl", period: formatPeriod(p.latestObservationPeriod), fetch: r?.apwrims.fetchDate, link: "https://apwrims.ap.gov.in/mis/groundwater/levels", detail: `${c.historySeriesCount} history series in the published dataset. ${r?.apwrims.status === "retained_local_input" ? "Retained local input; a full-source fetch receipt is not supplied." : "See the refresh receipt for scope."} Authorization pending.` },
     { name: "NASA / NDMC GRACE-DA", type: "Satellite-model / percentile", period: formatPeriod(p.graceValidPeriod) || "Valid period not supplied", fetch: p.graceFetchDate, link: "https://nasagrace.unl.edu/", detail: "Regional assimilated-model context, not measured depth. A recent download does not establish the raster's observation period." },
@@ -28,6 +33,7 @@ export default function ReadinessPage() {
     ...(waterSummary.soil ? [{ name: "NRSC soil moisture (via APWRIMS)", type: "Modelled / % of capacity", period: waterSummary.soil.asOf ?? "date unconfirmed", fetch: waterSummary.generatedAt.slice(0, 10), link: waterSummary.soil.url, detail: `VIC land-surface model at 0.05°, ${waterSummary.soil.mandals} mandals at four depths, set against the same date since ${waterSummary.soil.firstYear}. Rainfall-driven model, not a field probe.` }] : []),
     ...(waterSummary.reservoirs ? [{ name: "Reservoir storage & releases (via APWRIMS)", type: "Measured / TMC, cusecs", period: waterSummary.reservoirs.asOf?.slice(0, 16).replace("T", " ") ?? "time unknown", fetch: waterSummary.generatedAt.slice(0, 10), link: waterSummary.reservoirs.url, detail: `${waterSummary.reservoirs.count} major and medium reservoirs; ${waterSummary.reservoirs.staleCount} not reporting for 3+ days. Releases are measured at the headworks; the canal command-area map is not public.` }] : []),
     ...(droughtWatch.sources.vci ? [{ name: "NOAA STAR vegetation health (VCI)", type: "Satellite index / 0–100", period: `weeks to about ${droughtWatch.sources.vci.averaged[droughtWatch.sources.vci.averaged.length - 1].approxEnd}`, fetch: droughtWatch.generatedAt.slice(0, 10), link: droughtWatch.sources.vci.url, detail: "VIIRS, 4 km, weekly, against the record since 1981; read per mandal for the Drought Watch's remote-sensing indicator. All vegetation, not cropland alone: the drought manual prefers 56–500 m NDVI/NDWI from the State Remote Sensing Centre or MNCFC." }] : []),
+    ...(stateSummary.state ? [{ name: "AWARE groundwater feed & mandal geography (AI Living Labs data lake)", type: "Measured snapshot / m; official boundaries", period: `${stateSummary.readingDates.first ?? "?"} to ${stateSummary.readingDates.last ?? "?"}`, fetch: stateSummary.generatedAt.slice(0, 10), link: "https://ailivinglabs.ap.gov.in/government-data", detail: `${stateSummary.state.stationsTotal.toLocaleString("en-IN")} stations; one recent reading per mandal beside our monthly series (its May value matches ours in ${stateSummary.summary.preMonsoonSameAsOurMay} of ${stateSummary.summary.preMonsoonComparable}). Mandal geography gives official outlines, LGD codes and constituencies. Pulled by a signed-in user, not by the weekly job.${quietModules.length ? ` AWARE's own ${quietModules.join(", ")} modules showed no advisories or alerts at the pull.` : ""}` }] : []),
     { name: "TerraClimate", type: "Modelled climate / mm", period: formatPeriod(p.etValidPeriod), fetch: r?.evapotranspiration.fetchDate, link: "https://www.climatologylab.org/terraclimate.html", detail: "Annual reference context, not current telemetry. Rain minus actual ET excludes pumping and does not establish aquifer recharge." },
   ];
   return <div className="pageWrap">

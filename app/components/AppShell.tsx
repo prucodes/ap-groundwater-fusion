@@ -9,6 +9,7 @@ import {
   IconChevrons,
   IconCloudRain,
   IconSun,
+  IconTarget,
   IconCalendar,
   IconCompass,
   IconDatabase,
@@ -46,6 +47,7 @@ const primaryNav = [
   { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
   { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
   { href: "/agriculture", label: "Agriculture & Water", Icon: IconLeaf, desc: "Crop-water planning lab and observed groundwater evidence. Not a field irrigation advisory." },
+  { href: "/constituencies", label: "Constituencies", Icon: IconTarget, desc: "Groundwater, the State's latest well readings, the drought manual and rain, by assembly and parliamentary constituency." },
   { href: "/districts", label: "Districts", Icon: IconGrid, desc: "District roll-ups with an auto + AI situation brief per district." },
   { href: "/crystal", label: "Water Depth 3D", Icon: IconWaves, desc: "Recorded May depth by mandal and district; optional schematic relief." },
 ];

@@ -49,3 +49,6 @@ app/public/films/monsoon/voice-*.jsonl
 
 # IMD API responses: cached privately until IMD usage rules are confirmed for publishing.
 data/private/
+
+# AI Living Labs data lake extracts: fetched locally, never committed
+data/raw/datalake/
