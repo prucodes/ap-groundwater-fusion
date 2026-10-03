@@ -385,11 +385,40 @@ export type WaterDistrictContext = {
   soil?: { mandals: number; medianPct: number; withBaseline: number; belowOwnMedian: number; driestOnRecord: number };
   reservoirs?: { count: number; capacityTmc: number; storageTmc: number; storagePct: number | null; lastYearPct: number | null };
 };
+/** October to December so far: season-to-date district gauge figures less the same at 30 September. */
+export type NeMonsoonSoFar =
+  | { status: "notStarted"; start: string; end: string }
+  | { status: "unavailable"; error: string }
+  | { status: "underway" | "complete"; start: string; end: string; basis: string; meanActualMm: number | null; meanNormalMm: number | null;
+      deviationPct: number | null; districts: Array<{ district: string; actualMm: number; normalMm: number; deviationPct: number | null; category: RainCategory | null }> };
+
+export type EnsoOutlook = {
+  contractVersion: string;
+  fetchedAt: string;
+  source: string;
+  kind: "forecast";
+  licence: string;
+  urls: { discussion: string; probabilities: string; strengths: string; outlook: string };
+  index: string;
+  strengthBands: { weak: number; moderate: number; strong: number; veryStrong: number };
+  issued: string;
+  next: string | null;
+  alert: string;
+  synopsis: string;
+  probabilities: Array<{ season: string; label: string; laNina: number; neutral: number; elNino: number }>;
+  strengths: Array<{ season: string; label: string; laNinaVeryStrong: number; laNinaStrong: number; laNinaModerate: number; laNinaWeak: number;
+    neutral: number; elNinoWeak: number; elNinoModerate: number; elNinoStrong: number; elNinoVeryStrong: number }>;
+  outlook: Array<{ season: string; label: string; p5: number; p15: number; p25: number; p50: number; p75: number; p85: number; p95: number }>;
+  peak: { season: string; label: string | null; medianC: number; likelyRangeC: [number, number] };
+  caveat: string;
+};
+
 export type WaterSummary = {
   contractVersion: string;
   generatedAt: string;
   authorizationStatus: string;
-  rain: { start: string; end: string; deviationPct: number | null; gauges: number; mandals: number; categories: Record<RainCategory, number>; url: string } | null;
+  rain: { start: string; end: string; deviationPct: number | null; gauges: number; mandals: number; categories: Record<RainCategory, number>; url: string;
+    neMonsoon?: NeMonsoonSoFar | null } | null;
   soil: { asOf: string | null; weekAgo: string; depthCm: number; firstYear: number | null; lastYear: number | null; url: string;
     mandals: number; medianPct: number | null; belowOwnMedian: number; withBaseline: number; driestOnRecord: number } | null;
   reservoirs: { asOf: string | null; staleCount: number; url: string; count: number; capacityTmc: number; storageTmc: number;

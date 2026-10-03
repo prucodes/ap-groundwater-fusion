@@ -10,7 +10,7 @@
   "strengths": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/roni/strengths/",
   "outlook": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso/roni/outlook/"
  },
- "index": "RONI: CPC's relative Nino-3.4 index, 3-month means, 1991-2020 base",
+ "index": "RONI: CPC's relative Niño 3.4 index, three-month means, 1991–2020 base",
  "strengthBands": {
   "weak": 0.5,
   "moderate": 1.0,
@@ -369,5 +369,5 @@
    2.9
   ]
  },
- "caveat": "An El Nino forecast is a forecast for the tropical Pacific, not a rainfall forecast for Andhra Pradesh."
+ "caveat": "An El Niño forecast is a forecast for the tropical Pacific, not a rainfall forecast for Andhra Pradesh."
 }
