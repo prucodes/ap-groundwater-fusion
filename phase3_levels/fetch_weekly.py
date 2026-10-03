@@ -124,6 +124,10 @@ STEPS = [
     ("build drought watch", [PY, os.path.join(HERE, "build_drought_watch.py")], False, 1800),
     # Last of the builders: this week's headlines beside the ones the site was
     # showing (the files at HEAD), each with its own date. Optional.
+    # Every figure by assembly constituency, from this week's groundwater,
+    # drought and rain with the committed official geography and State
+    # snapshot (those two come from a signed-in data lake pull, not this job).
+    ("build constituencies", [PY, os.path.join(HERE, "build_constituencies.py")], False),
     ("build weekly changes", [PY, os.path.join(HERE, "build_weekly_changes.py")], False),
     ("validate V2 contract", [PY, os.path.join(HERE, "validate_phase0.py")], True),
 ]

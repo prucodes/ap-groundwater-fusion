@@ -5,7 +5,7 @@ import modelCardJson from "../data/model_card.json";
 import datasetManifestJson from "../data/dataset_manifest.json";
 import readinessJson from "../data/source_readiness.json";
 import satelliteSamplesJson from "../data/satellite_station_samples.json";
-import mapGeometryJson from "../data/ap_map_geometry.json";
+import mapGeometryJson from "../data/ap_map_display.json";
 import districtGeometryJson from "../data/ap_district_geometry.json";
 import mandalHeatJson from "../data/ap_mandal_heat.json";
 import nasaProvenanceJson from "../data/nasa_provenance.json";
@@ -629,7 +629,24 @@ export const dashboardSummary = {
 export const graceDistrictCount = liveRasters.find((r) => r.raster_name.startsWith("gws_"))?.count ?? 0;
 export const readinessItems = readinessJson as ReadinessItem[];
 export const satelliteSamples = satelliteSamplesJson as SatelliteSample[];
-export const mapGeometry = mapGeometryJson as MapGeometry;
+export const mapGeometry = mapGeometryJson as unknown as MapGeometry;
+
+/** Statewide: how many outlines come from the State's official boundaries. */
+export const boundarySummary = (() => {
+  const s = mapGeometry.official_summary;
+  if (!s || !s.outlines) return "Public prototype boundaries, not official APWRIMS/APSAC/RTGS boundaries.";
+  return `${s.outlines} of ${mapGeometry.mandals.length} mandal outlines are rebuilt from the State's official boundary points (AWARE); the rest are public prototypes.`;
+})();
+
+/** One mandal's outline: official (rebuilt from AWARE vertices) or prototype. */
+export function boundaryLabel(feature: { src?: string } | null | undefined) {
+  return feature?.src === "official" ? "official boundary (AWARE, rebuilt)" : "public prototype boundary";
+}
+
+/** The geometry feature for a mandal record id, if mapped. */
+export function geometryForMandal(id: string) {
+  return mapGeometry.mandals.find((x) => mandalByMapKey(x.d, x.m)?.id === id) ?? null;
+}
 /* District rainfall in ap_district_geometry.json is an April 2026 snapshot: the
    pipeline rewrites only that file's GRACE fields. It is derived here from the
    weekly per-mandal CHIRPS means instead, with their period. */

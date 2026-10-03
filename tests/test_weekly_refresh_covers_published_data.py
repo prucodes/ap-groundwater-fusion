@@ -19,7 +19,16 @@ SOURCE_DIRS = [os.path.join(ROOT, "app", name) for name in ("lib", "components",
 # Files the pipeline deliberately never regenerates. Each needs a reason, because
 # "it is static" is exactly what was believed about the files that went stale.
 STATIC_BY_DESIGN = {
-    "ap_map_geometry.json": "mandal boundary polygons; changes only when the state redraws them",
+    "ap_map_display.json": (
+        "the outlines the maps draw: official outlines rebuilt from a signed-in data lake pull "
+        "(phase3_levels/fetch_datalake.py, then build_official_boundaries.py --publish) over the "
+        "prototype polygons; the weekly job has no data lake credentials, so it is run deliberately"
+    ),
+    "gw_state_snapshot.json": (
+        "the State network's latest well readings, from the same signed-in data lake pull "
+        "(build_datalake_snapshot.py); dated in the file and refreshed when the pull is re-run"
+    ),
+    "gw_state_summary.json": "the statewide digest of gw_state_snapshot.json, written with it",
     "ap_district_geometry.json": "district polygons and their layer ranges",
     "dashboard_summary.json": "a July 2026 snapshot; the UI derives its live figures in data.ts instead",
     "source_readiness.json": "hand-maintained description of which sources are live",
@@ -109,6 +118,21 @@ def test_the_full_drought_watch_stays_out_of_client_components():
                 if client and ("lib/droughtWatch" in source or "drought_watch.json" in source or "MandalDroughtCheck" in source):
                     offenders.append(os.path.relpath(os.path.join(folder, name), ROOT))
     assert not offenders, f"client components import the full drought watch: {offenders}"
+
+
+def test_the_state_snapshot_stays_out_of_client_components():
+    """Every mandal's State reading is rendered on the server; client code gets none of it."""
+    offenders = []
+    for base in SOURCE_DIRS:
+        for folder, _, names in os.walk(base):
+            for name in names:
+                if not name.endswith((".ts", ".tsx")):
+                    continue
+                source = open(os.path.join(folder, name)).read()
+                client = source.lstrip().startswith(('"use client"', "'use client'"))
+                if client and ("lib/stateSnapshot" in source or "gw_state_snapshot.json" in source or "MandalStateReading" in source):
+                    offenders.append(os.path.relpath(os.path.join(folder, name), ROOT))
+    assert not offenders, f"client components import the State snapshot: {offenders}"
 
 
 def test_the_full_water_context_stays_out_of_client_components():

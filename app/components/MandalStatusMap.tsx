@@ -4,6 +4,7 @@ import { useState } from "react";
 import { IconInfo } from "./icons";
 import {
   MAP_VIEW,
+  boundaryLabel,
   mandalByMapKey,
   mandalHeatColor,
   mandalHeatStatus,
@@ -122,7 +123,7 @@ export function MandalStatusMap({
               </div>
               <div className="estHoverRow"><span>Latest recorded</span><span>{formatNumber(hoverRec.display_mbgl)} m bgl</span></div>
               <div className="estHoverRow"><span>Observation period</span><span>{hoverRec.latest_observation_period || "Not supplied"}</span></div>
-              <div className="estHoverSub">Prototype boundary / not an official result</div>
+              <div className="estHoverSub">{`${boundaryLabel(mapGeometry.mandals.find((f) => f.d === hover?.d && f.m === hover?.m))} · not an official result`}</div>
             </>
           ) : (
             <div className="estHoverRow">

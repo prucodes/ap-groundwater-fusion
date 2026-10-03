@@ -2,7 +2,9 @@ import Link from "next/link";
 import type { MandalGroundwaterView } from "../lib/types";
 import {
   agreementMeta,
+  boundaryLabel,
   depthSeriesFor,
+  geometryForMandal,
   seasonalCycle,
   dashboardSummary,
   formatNumber,
@@ -25,6 +27,7 @@ import { LiveMap } from "./LiveMap";
 import { ActionOutputPreview } from "./ActionOutputPreview";
 import { MandalSeasonContext } from "./MandalSeasonContext";
 import { MandalDroughtCheck } from "./drought/MandalDroughtCheck";
+import { MandalStateReading } from "./MandalStateReading";
 import {
   IconArrowRight,
   IconCalendar,
@@ -244,7 +247,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
               </div>
               <LiveMap mode="single" mandalId={mandal.id} height={220} />
               <div className="mapHint">
-                <IconMap style={{ width: 13, height: 13 }} /> Live basemap © OSM © CARTO · public prototype boundary
+                <IconMap style={{ width: 13, height: 13 }} /> {`Live basemap © OSM © CARTO · ${boundaryLabel(geometryForMandal(mandal.id))}`}
               </div>
             </section>
 
@@ -263,6 +266,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
           </section>
 
           <MandalSeasonContext mandalId={mandal.id} />
+          <MandalStateReading mandalId={mandal.id} />
 
           <MandalDroughtCheck mandalId={mandal.id} />
 

@@ -36,6 +36,23 @@ polish), treat them like any other screen, under these rules:
 - The weekly workflow now opens a GitHub issue when a refresh fails or keeps a feed
   (`phase3_levels/refresh_health.py`).
 
+### Added later on 3 October: the State's own data (AI Living Labs data lake)
+
+- **Official mandal outlines.** `app/data/ap_map_display.json` is what every map draws
+  (via `mapGeometry` in `lib/data.ts`): official outlines rebuilt from AWARE vertices where
+  they land within 3% of the official area, the prototype elsewhere, same order and names
+  as `ap_map_geometry.json`. **The pipeline and model still read `ap_map_geometry.json`;
+  do not point them at the display file.** Each feature also carries `lgd`, `ac`, `pc`,
+  `div`, `officialKm2`, `src`.
+- **The State network's latest reading** on mandal pages (`MandalStateReading`, server
+  only), the overview strip and the Monsoon page: `gw_state_snapshot.json` (server only)
+  and `gw_state_summary.json` (client-safe). Shown beside our series, never merged.
+- **Constituencies page** (`/constituencies`): `components/constituencies/`, data from
+  `phase3_levels/build_constituencies.py` (weekly).
+- Data lake pulls need a signed-in user (`phase3_levels/fetch_datalake.py`, run by the
+  user, password via getpass). Never add credentials anywhere; never commit
+  `data/raw/datalake/`.
+
 ## 1. What was built
 
 ### New data, refreshed every Monday

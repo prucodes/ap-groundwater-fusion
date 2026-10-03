@@ -1,0 +1,37 @@
+import { expect, test } from "@playwright/test";
+import constituencies from "../data/constituencies.json";
+import summary from "../data/gw_state_summary.json";
+
+/* The State's own geography and well readings: constituencies, the State
+   network's latest reading on mandal pages, and its statewide line. */
+
+test("every constituency is on the map and in the table, and a click explains it", async ({ page }) => {
+  await page.goto("/constituencies/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Constituencies");
+  const drawn = constituencies.constituencies.filter(c => c.rings && c.rings.length).length;
+  await expect(page.getByTestId("constituency-map").locator("path[role=\"button\"]")).toHaveCount(drawn);
+  await expect(page.getByTestId("constituency-table").locator("tbody tr")).toHaveCount(constituencies.constituencies.length);
+  const first = page.getByTestId("constituency-table").locator("tbody tr").first();
+  const name = (await first.locator("td").first().innerText()).trim();
+  await first.click();
+  await expect(page.getByTestId("constituency-panel")).toContainText(name);
+  await expect(page.getByTestId("constituency-panel")).toContainText("mandals:");
+  await page.getByRole("button", { name: "Fall since May (State wells)" }).click();
+  await expect(page.getByTestId("constituency-map")).toHaveAttribute("aria-label", /fall since may/i);
+  await expect(page.locator("main")).toContainText("not a declaration");
+});
+
+test("a mandal page shows the State network's latest reading and its constituency", async ({ page }) => {
+  await page.goto("/mandals/ap-temp-mandal-kurnool-alur-512/");
+  const card = page.getByRole("region", { name: /latest reading/ });
+  await expect(card.getByTestId("state-reading")).toContainText("Since May");
+  await expect(card).toContainText("not merged into it");
+  await expect(card).toContainText("Assembly constituency");
+});
+
+test("the overview and monsoon page carry the State wells line", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByTestId("state-network-cell")).toContainText(`${summary.state!.stationsTotal.toLocaleString("en-US")} stations`);
+  await page.goto("/monsoon/");
+  await expect(page.getByTestId("state-network-stat")).toContainText(`of ${summary.summary.withChange} mandals deeper than in May`);
+});

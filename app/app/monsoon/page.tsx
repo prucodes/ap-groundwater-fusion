@@ -21,6 +21,7 @@ import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { CountedReach } from "../../components/CountedReach";
 import { apTemperature, formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
+import { stateSummary } from "../../lib/stateSummary";
 import { day } from "../../components/agriculture/waterContextFormat";
 import styles from "./MonsoonPage.module.css";
 
@@ -153,6 +154,15 @@ export default function MonsoonPage() {
               <strong>{formatNumber(gauges.deviationPct)}%</strong>
               <em>
                 AP DES gauges, measured, to {day(gauges.end)} · {gauges.categories.deficient + gauges.categories.scanty + gauges.categories.noRain} of {gauges.mandals} mandals deficient or worse
+              </em>
+            </div>
+          ) : null}
+          {stateSummary.state && stateSummary.summary.withChange ? (
+            <div className="monsoonStat" data-testid="state-network-stat">
+              <span>State wells, early Sep</span>
+              <strong>{formatNumber(Math.round((100 * stateSummary.summary.deeperSinceMay) / stateSummary.summary.withChange))}%</strong>
+              <em>
+                {`of ${stateSummary.summary.withChange} mandals deeper than in May · ${stateSummary.summary.deeperThanYearAgo} deeper than a year ago · AWARE feed, one reading, ${stateSummary.state.stationsTotal} stations`}
               </em>
             </div>
           ) : null}
