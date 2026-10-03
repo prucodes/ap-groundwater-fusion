@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
 import { MethodologyFlow } from "../../components/MethodologyFlow";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
@@ -223,6 +224,37 @@ export default function MethodologyPage() {
             rain and soil answers are not independent; groundwater is. Each source is joined to its boundary only when the
             join is unique: a boundary two source rows claim gets no value rather than the first or the worst.
           </p>
+        </div>
+      </section>
+
+      <section className="card" aria-labelledby="method-drought">
+        <div className="cardHead">
+          <div className="cardTitle" id="method-drought">
+            <span className="titleIcon">
+              <IconDroplet />
+            </span>
+            Drought Watch — the national drought manual, applied per mandal
+          </div>
+          <span className="cardSub">steps 1–2 of 3 / not a declaration</span>
+        </div>
+        <div className="methodSteps">
+          <p>
+            The Drought Watch follows the <strong>Manual for Drought Management (2020)</strong>, the procedure a State must use to
+            declare drought. Step 1, Trigger 1 (Table 3.11): a <strong>dry spell</strong> of four weeks in a row with under half the
+            week&rsquo;s normal rain sets it; without one, only <strong>large-deficient</strong> rainfall (60% or more below normal)
+            does. Weekly totals come from the AP DES gauges via APWRIMS; SPI from CHIRPS v3 since 1981 is reported as the second
+            rainfall route.
+          </p>
+          <p>
+            Step 2, Trigger 2 (Table 3.12), uses three of the manual&rsquo;s four impact indicators per mandal, each with its own
+            table: the <strong>Vegetation Condition Index</strong> (NOAA&rsquo;s 4 km product; the manual prefers 56–500 m), the{" "}
+            <strong>Percent Available Soil Moisture</strong> (the NRSC model at 30 cm, a four-week mean) and the{" "}
+            <strong>Groundwater Drought Index</strong> (APWRIMS wells, ten years or more). Severe needs two severe and the third at
+            least moderate; moderate needs two at moderate or worse. Area sown and reservoir storage are shown where they exist,
+            by district and by reservoir. Step 3, field verification of crop loss (33% qualifies, over 50% for severe), and the
+            notification by 31 October are the State&rsquo;s. Each judgement the manual leaves open is listed on the page.
+          </p>
+          <p><Link href="/drought">Open the Drought Watch</Link></p>
         </div>
       </section>
 

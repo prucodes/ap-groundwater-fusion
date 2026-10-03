@@ -95,6 +95,10 @@ STEPS = [
     # the monsoon watch's own numbers come from the readings and CHIRPS, so a
     # failed fetch costs the context line and nothing else.
     ("fetch ENSO index", [PY, os.path.join(HERE, "fetch_enso_index.py")], False),
+    # What NOAA's forecasters expect next: four small public pages, monthly.
+    # Optional: a failure, or a page that has changed shape, keeps last
+    # month's outlook, which carries its own issue date.
+    ("fetch ENSO outlook", [PY, os.path.join(HERE, "fetch_enso_outlook.py")], False),
     ("build holdout-safe nowcasts", [PY, os.path.join(HERE, "build_levels_engine.py")], True),
     # Rolling-origin forecast validation retrains once per quarterly cut per
     # candidate horizon, which is slow on a 2-core runner.
@@ -112,6 +116,15 @@ STEPS = [
     # has just published. Optional: it is a standalone page and a front-page
     # strip, and last week's file stays readable if this fails.
     ("build monsoon watch", [PY, os.path.join(HERE, "build_monsoon_watch.py")], False, 1800),
+    # Every mandal through the national drought manual's two triggers: weekly
+    # gauge rain and dry spells, SPI, NOAA's vegetation index, NRSC soil
+    # moisture, the groundwater index, and reservoirs against ten years. After
+    # the app data, because the groundwater index reads the published series.
+    # Optional: a failure keeps last week's file, which carries its own date.
+    ("build drought watch", [PY, os.path.join(HERE, "build_drought_watch.py")], False, 1800),
+    # Last of the builders: this week's headlines beside the ones the site was
+    # showing (the files at HEAD), each with its own date. Optional.
+    ("build weekly changes", [PY, os.path.join(HERE, "build_weekly_changes.py")], False),
     ("validate V2 contract", [PY, os.path.join(HERE, "validate_phase0.py")], True),
 ]
 

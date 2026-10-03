@@ -66,6 +66,7 @@ MIN_BASELINE_YEARS = 5
 AS_OF_LOOKBACK_DAYS = 10
 # Gauges report late; the newest days are left to settle before they count.
 RAIN_SETTLE_DAYS = 2
+SHRINK_TOLERANCE = 0.10   # a district's season-to-date rain may be revised down this much, no more
 # Below these, a response is a truncated or failed one, not the state.
 MIN_MANDALS = 600
 MIN_RESERVOIRS = 100
@@ -316,12 +317,80 @@ def district_rainfall(rows):
     return sorted(out, key=lambda d: d["deviationPct"])
 
 
+def ne_monsoon(start, end, districts, fetch):
+    """October to December so far: the season-to-date figures now, less the
+    same figures at 30 September. The portal only answers cumulative windows
+    from 1 June, so the northeast monsoon is the difference of two of them."""
+    opens = datetime.date(start.year, 10, 1)
+    closes = datetime.date(start.year, 12, 31)
+    if end < opens:
+        return {"status": "notStarted", "start": opens.isoformat(), "end": closes.isoformat()}
+    window_end = min(end, closes)
+    before = {row["district"]: row for row in district_rainfall(fetch(start, opens - datetime.timedelta(days=1), "DISTRICT"))}
+    if window_end != end:
+        pause()
+        districts = district_rainfall(fetch(start, window_end, "DISTRICT"))
+    rows = []
+    for row in districts:
+        then = before.get(row["district"])
+        if not then:
+            continue
+        actual = round(row["actualMm"] - then["actualMm"], 1)
+        normal = round(row["normalMm"] - then["normalMm"], 1)
+        rows.append({"district": row["district"], "actualMm": max(actual, 0.0), "normalMm": max(normal, 0.0),
+                     "deviationPct": round(100 * (actual / normal - 1), 1) if normal > 0 else None,
+                     "category": rain_category(max(actual, 0.0), normal) if normal > 0 else None})
+    total_actual = sum(r["actualMm"] for r in rows)
+    total_normal = sum(r["normalMm"] for r in rows)
+    return {
+        "status": "complete" if window_end == closes else "underway",
+        "start": opens.isoformat(), "end": window_end.isoformat(),
+        "basis": "season-to-date district figures less the same figures at 30 September",
+        # Each district counts once: a plain mean, not weighted by area.
+        "meanActualMm": round(total_actual / len(rows), 1) if rows else None,
+        "meanNormalMm": round(total_normal / len(rows), 1) if rows else None,
+        "deviationPct": round(100 * (total_actual / total_normal - 1), 1) if total_normal > 0 else None,
+        "districts": sorted(rows, key=lambda r: (r["deviationPct"] is None, r["deviationPct"] or 0)),
+    }
+
+
+def check_not_shrinking(new, old, tolerance=SHRINK_TOLERANCE):
+    """Season-to-date rain can only grow. On 3 Oct 2026 the portal briefly
+    dropped September for whole districts (Prakasam read 76 mm for the season,
+    164 mm the evening before); publishing that would have halved the season
+    without a word. A district that shrinks by more than the tolerance means
+    the portal is mid-revision, so this run keeps the previous section."""
+    if not old or not new or old["window"]["start"] != new["window"]["start"] or new["window"]["end"] < old["window"]["end"]:
+        return
+    before = {row["district"]: row["actualMm"] for row in old.get("districts") or []}
+    shrunk = [(row["district"], before[row["district"]], row["actualMm"]) for row in new.get("districts") or []
+              if row["district"] in before and before[row["district"]] >= 20
+              and row["actualMm"] < before[row["district"]] * (1 - tolerance)]
+    if shrunk:
+        named = ", ".join(f"{name} {a:.0f}→{b:.0f} mm" for name, a, b in shrunk[:5])
+        raise RuntimeError(f"season-to-date rain fell in {len(shrunk)} district(s) since the last refresh ({named}); "
+                           "the portal looks mid-revision")
+
+
+def checked_rainfall(old):
+    def build(today, tree, boundaries):
+        new = build_rainfall(today, tree, boundaries)
+        check_not_shrinking(new, old)
+        return new
+    return build
+
+
 def build_rainfall(today, tree, boundaries, fetch=rainfall_table):
     end = today - datetime.timedelta(days=RAIN_SETTLE_DAYS)
     start = water_year_start(end)
     rows = fetch(start, end)
     pause()
     districts = district_rainfall(fetch(start, end, "DISTRICT"))
+    try:
+        pause()
+        northeast = ne_monsoon(start, end, districts, fetch)
+    except Exception as error:  # the NE window is extra; it must not cost the season
+        northeast = {"status": "unavailable", "error": str(error)[:200]}
     if not isinstance(rows, list) or len(rows) < MIN_MANDALS:
         raise RuntimeError(f"gauge rainfall answered for {len(rows) if isinstance(rows, list) else 0} mandals")
     month_end = end.replace(day=1) - datetime.timedelta(days=1)
@@ -381,6 +450,7 @@ def build_rainfall(today, tree, boundaries, fetch=rainfall_table):
         "categories": categories,
         "summary": {"mandals": len(mandals), "mapped": sum(1 for m in mandals if m["boundaryIndex"] is not None)},
         "districts": districts,
+        "neMonsoon": northeast,
         "mandals": mandals,
     }
 
@@ -613,7 +683,7 @@ def summarize(payload):
         "rain": {
             "start": rain["window"]["start"], "end": rain["window"]["end"], "deviationPct": rain["state"]["deviationPct"],
             "gauges": rain["state"]["gauges"], "mandals": rain["summary"]["mandals"], "categories": rain["categories"],
-            "url": rain["url"],
+            "url": rain["url"], "neMonsoon": rain.get("neMonsoon"),
         } if rain else None,
         "soil": {
             "asOf": soil["asOf"], "weekAgo": soil["weekAgo"], "depthCm": soil["headlineDepthCm"],
@@ -721,7 +791,7 @@ def main():
 
     sections, status = assemble(today, [
         ("soilMoisture", needs_tree(build_soil)),
-        ("rainfall", needs_tree(build_rainfall)),
+        ("rainfall", needs_tree(checked_rainfall(previous.get("rainfall")))),
         ("reservoirs", lambda: build_reservoirs(today)),
     ], previous)
     payload = {

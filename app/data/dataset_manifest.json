@@ -1,7 +1,7 @@
 {
   "manifestVersion": "2.0.0",
   "dataContractVersion": "2.0.0",
-  "generatedAt": "2026-10-02T20:43:51+00:00",
+  "generatedAt": "2026-10-03T11:36:56+00:00",
   "generator": "phase3_levels/build_phase0_foundation.py",
   "generatorVersion": "phase0-publisher-2.0.0",
   "officialAdministrativeUnitCount": null,
@@ -37,7 +37,7 @@
     "rainfallValidPeriod": "2026.08",
     "etValidPeriod": "2025",
     "modelBuildTimestamp": "2026-10-02T19:45:15+00:00",
-    "uiGenerationTimestamp": "2026-10-02T20:43:51+00:00"
+    "uiGenerationTimestamp": "2026-10-03T11:36:56+00:00"
   },
   "joinDiagnostics": {
     "joinIdentity": "normalized district plus normalized mandal",
@@ -60,7 +60,7 @@
       "fetchDate": "2026-09-28"
     },
     "rainfall": {
-      "status": "refreshed",
+      "status": "retained_local_input",
       "fetchDate": "2026-10-02"
     },
     "evapotranspiration": {
@@ -82,17 +82,17 @@
     {
       "file": "mandal_groundwater_records_v2.json",
       "bytes": 4480432,
-      "sha256": "38cec53a6a78aa55b4038e67559f70875b5619e3b88aaec90b588c7de927ca73"
+      "sha256": "df73b03f665cbe21c31da358ff4377bf618c615e3a7a7e807466aae20b8a49c2"
     },
     {
       "file": "mandal_observation_series_v2.json",
       "bytes": 6906015,
-      "sha256": "741ff215500aba710f7de2948a70fa31d5dedca5269df25cc1193749d676a146"
+      "sha256": "dcfb8476664081d45877fadaccba507b3bb2c7fa8cc7656c8c0f9db4fa48b5f8"
     },
     {
       "file": "model_card.json",
       "bytes": 21501,
-      "sha256": "c36684c9655d82f8fd657f56cf46414c611bc03e2e785488266f282842e0f15e"
+      "sha256": "be9aaf2738319530b01a321dc36581c051b4b59def71f76be6fa5c7e4603185e"
     },
     {
       "file": "ap_map_geometry.json",
@@ -121,8 +121,8 @@
     },
     {
       "file": "source_readiness.json",
-      "bytes": 2022,
-      "sha256": "36e5674fab3c34d27f2bd357b9f193193c413538ea0fd718c1a950a433477d7a"
+      "bytes": 2447,
+      "sha256": "8415f30ebe246ace9b82b18874167fa0796dbe09811ee63c92eb32e7ce24daf6"
     },
     {
       "file": "satellite_station_samples.json",
@@ -137,21 +137,21 @@
         "status": "active",
         "schemaVersion": "2.0.0",
         "bytes": 4480432,
-        "sha256": "38cec53a6a78aa55b4038e67559f70875b5619e3b88aaec90b588c7de927ca73"
+        "sha256": "df73b03f665cbe21c31da358ff4377bf618c615e3a7a7e807466aae20b8a49c2"
       },
       {
         "file": "app/data/mandal_observation_series_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
         "bytes": 6906015,
-        "sha256": "741ff215500aba710f7de2948a70fa31d5dedca5269df25cc1193749d676a146"
+        "sha256": "dcfb8476664081d45877fadaccba507b3bb2c7fa8cc7656c8c0f9db4fa48b5f8"
       },
       {
         "file": "app/data/model_card.json",
         "status": "active",
         "schemaVersion": "1.0.0",
         "bytes": 21501,
-        "sha256": "c36684c9655d82f8fd657f56cf46414c611bc03e2e785488266f282842e0f15e"
+        "sha256": "be9aaf2738319530b01a321dc36581c051b4b59def71f76be6fa5c7e4603185e"
       },
       {
         "file": "app/data/ap_map_geometry.json",
@@ -192,8 +192,8 @@
         "file": "app/data/source_readiness.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 2022,
-        "sha256": "36e5674fab3c34d27f2bd357b9f193193c413538ea0fd718c1a950a433477d7a"
+        "bytes": 2447,
+        "sha256": "8415f30ebe246ace9b82b18874167fa0796dbe09811ee63c92eb32e7ce24daf6"
       },
       {
         "file": "app/data/satellite_station_samples.json",

@@ -13,6 +13,7 @@ permissions:
   contents: write
   pages: write
   id-token: write
+  issues: write
 
 jobs:
   weekly:
@@ -77,6 +78,10 @@ jobs:
             app/data/water_context.json \
             app/data/water_context_summary.json \
             app/data/water_context_mandals.json \
+            app/data/drought_watch.json \
+            app/data/drought_watch_summary.json \
+            app/data/enso_outlook.json \
+            app/data/weekly_changes.json \
             app/data/nasa_provenance.json \
             app/data/satellite_station_samples.json \
             app/public/water-crystal-3d.html
@@ -104,6 +109,46 @@ jobs:
             curl -fsS -X POST "$DEPLOY_HOOK_URL" && echo "deploy triggered"
           else
             echo "DEPLOY_HOOK_URL not set — skipping (commit alone will deploy if host auto-builds on push)."
+          fi
+
+      # A Monday that published but kept some feeds from last week (an optional
+      # step failed, or the portal looked mid-revision) says so in an issue.
+      - name: Report feeds that kept last week's data
+        continue-on-error: true   # the report must never fail a refresh that published
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          report=$(python3 phase3_levels/refresh_health.py)
+          if [ -z "$report" ]; then
+            echo "every feed refreshed"
+            exit 0
+          fi
+          echo "$report"
+          title="Weekly refresh kept some of last week's data"
+          body=$(printf '%s\n\n%s\n\nRun: %s' "The weekly refresh published on $(date -u +%Y-%m-%d), but these did not refresh:" "$report" "$RUN_URL")
+          open=$(gh issue list --state open --search "\"$title\" in:title" --json number --jq '.[0].number')
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body"
+          fi
+
+      # A failed Monday used to be silent: the site kept last week's data and
+      # said nothing. Open (or add to) one issue so a person hears about it.
+      - name: Raise an issue when the refresh fails
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          title="Weekly refresh failed"
+          body="The weekly refresh failed on $(date -u +%Y-%m-%d). The site still shows the previous week's data. Run: $RUN_URL"
+          open=$(gh issue list --state open --search "\"$title\" in:title" --json number --jq '.[0].number')
+          if [ -n "$open" ]; then
+            gh issue comment "$open" --body "$body"
+          else
+            gh issue create --title "$title" --body "$body"
           fi
 
   deploy:

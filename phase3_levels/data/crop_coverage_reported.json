@@ -1,0 +1,16 @@
+{
+ "source": "Commissionerate of Agriculture, Andhra Pradesh: Season and Crop Coverage Report",
+ "asOf": "2026-09-09",
+ "reportedBy": "Deccan Chronicle, 11 September 2026",
+ "url": "https://www.deccanchronicle.com/southern-states/andhra-pradesh/kharif-crop-sowing-lags-in-ap-amid-rainfall-deficit-1986803",
+ "kind": "reported",
+ "note": "The department's weekly report as quoted in the press, entered by hand. The department publishes it on apagrisnet.gov.in, which did not answer automated requests made from outside India on 2026-10-03, so the weekly refresh cannot read it. Only five districts were quoted. Replace with the department's own district and mandal figures when they are shared.",
+ "state": {"sownLakhHa": 22.82, "normalLakhHa": 30.84, "pctOfNormal": 74},
+ "districts": [
+  {"district": "ANNAMAYYA", "sownLakhHa": null, "pctOfNormal": 26},
+  {"district": "Y.S.R KADAPA", "sownLakhHa": null, "pctOfNormal": 45},
+  {"district": "SRI SATHYA SAI", "sownLakhHa": 1.11, "pctOfNormal": 56},
+  {"district": "ANANTHAPURAMU", "sownLakhHa": 2.38, "pctOfNormal": 69},
+  {"district": "KURNOOL", "sownLakhHa": 3.29, "pctOfNormal": 90}
+ ]
+}

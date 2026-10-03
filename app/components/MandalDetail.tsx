@@ -24,6 +24,7 @@ import { FusionExplanationCard } from "./FusionExplanationCard";
 import { LiveMap } from "./LiveMap";
 import { ActionOutputPreview } from "./ActionOutputPreview";
 import { MandalSeasonContext } from "./MandalSeasonContext";
+import { MandalDroughtCheck } from "./drought/MandalDroughtCheck";
 import {
   IconArrowRight,
   IconCalendar,
@@ -262,6 +263,8 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
           </section>
 
           <MandalSeasonContext mandalId={mandal.id} />
+
+          <MandalDroughtCheck mandalId={mandal.id} />
 
           {mandal.water_balance_mm !== null && mandal.water_balance_mm !== undefined && (
             <section className="card">

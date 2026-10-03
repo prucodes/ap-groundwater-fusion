@@ -1,0 +1,15 @@
+{
+ "fetchedAt": "2026-10-03T11:32:00+00:00",
+ "issued": "2026-09-10",
+ "alert": "El Ni\u00f1o Advisory",
+ "seasons": 9,
+ "peak": {
+  "season": "OND",
+  "label": "Oct\u2013Dec 2026",
+  "medianC": 2.67,
+  "likelyRangeC": [
+   2.44,
+   2.9
+  ]
+ }
+}

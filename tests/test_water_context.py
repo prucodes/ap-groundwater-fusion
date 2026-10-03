@@ -99,6 +99,26 @@ def test_the_portals_total_row_is_a_check_not_a_mandal():
                                fetch=lambda start, end, child="MANDAL": district_rows() if child == "DISTRICT" else bad)
 
 
+def test_the_northeast_monsoon_is_the_season_now_less_the_season_at_30_september():
+    def district(name, actual, normal):
+        return dict(rain_row(name, actual, normal, 1.0, 2.0), locName=name)
+
+    def fetch(start, end, child="MANDAL"):
+        assert child == "DISTRICT" and start == datetime.date(2026, 6, 1)
+        if end == datetime.date(2026, 9, 30):
+            return [district("Nellore", 300.0, 350.0), district("Kurnool", 400.0, 380.0)]
+        return [district("Nellore", 330.0, 410.0), district("Kurnool", 410.0, 400.0)]
+
+    now = context.district_rainfall(fetch(datetime.date(2026, 6, 1), datetime.date(2026, 10, 20), "DISTRICT"))
+    built = context.ne_monsoon(datetime.date(2026, 6, 1), datetime.date(2026, 10, 20), now, fetch)
+    assert built["status"] == "underway" and built["start"] == "2026-10-01" and built["end"] == "2026-10-20"
+    nellore = next(row for row in built["districts"] if row["district"] == "Nellore")
+    assert (nellore["actualMm"], nellore["normalMm"], nellore["deviationPct"]) == (30.0, 60.0, -50.0)
+    assert built["deviationPct"] == round(100 * (40 / 80 - 1), 1)
+    early = context.ne_monsoon(datetime.date(2026, 6, 1), datetime.date(2026, 9, 28), now, fetch)
+    assert early == {"status": "notStarted", "start": "2026-10-01", "end": "2026-12-31"}
+
+
 def test_the_water_year_starts_in_june():
     assert context.water_year_start(datetime.date(2026, 2, 15)) == datetime.date(2025, 6, 1)
     assert context.water_year_start(datetime.date(2026, 6, 1)) == datetime.date(2026, 6, 1)

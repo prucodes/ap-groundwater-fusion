@@ -160,7 +160,53 @@ def seasonal_totals(rain, months, label):
     return grouped.rename(columns={"sum": label})[["boundary_index", "year", label]]
 
 
-def composite(totals, label, oni, index, district_of):
+def season_share(rain, months, district_of):
+    """Each district's share of its annual rain that falls in `months`, over complete years."""
+    annual = rain.groupby(["boundary_index", "year"])["rain_mm"].agg(["sum", "size"])
+    annual = annual[annual["size"] == 12]["sum"].rename("annual")
+    part = seasonal_totals(rain, months, "mm").set_index(["boundary_index", "year"])["mm"].rename("part")
+    joined = pd.concat([annual, part], axis=1).dropna().reset_index()
+    joined["district"] = joined["boundary_index"].map(district_of)
+    return {name: round(float(100 * rows["part"].sum() / rows["annual"].sum()), 1)
+            for name, rows in joined.groupby("district") if rows["annual"].sum() > 0}
+
+
+def after_el_nino(totals, label, oni, very_strong=2.0):
+    """The south-west monsoon in the year after each El Nino winter, statewide.
+
+    An El Nino peaks in the northern winter and usually fades by the next summer,
+    so the season a State plans for next is the one after the peak. A winter
+    counts when its OND ONI is El Nino; very strong from 2.0 degrees.
+    """
+    yearly = totals.groupby("year")[label].mean()
+    if yearly.empty:
+        return None
+    base = yearly.mean()
+    rows = []
+    for year in sorted(yearly.index):
+        winter = oni.get(f"{year - 1}-11", (None, None))[1]
+        if winter is None or winter < EL_NINO:
+            continue
+        rows.append({"year": int(year), "afterWinter": int(year - 1), "oniOndC": round(float(winter), 2),
+                     "mm": round(float(yearly[year]), 1), "anomalyPct": round(float(100 * (yearly[year] / base - 1)), 1)})
+    if not rows:
+        return None
+
+    def summary(group):
+        return {"years": len(group), "belowNormal": sum(1 for r in group if r["anomalyPct"] < 0),
+                "meanAnomalyPct": round(sum(r["anomalyPct"] for r in group) / len(group), 1) if group else None}
+
+    strong = [r for r in rows if r["oniOndC"] >= very_strong]
+    return {
+        "rule": f"June-September rain in the year after a winter whose OND ONI was {EL_NINO} or more",
+        "meanMm": round(float(base), 1), "firstYear": int(yearly.index.min()), "lastYear": int(yearly.index.max()),
+        "allYears": int(len(yearly)), "allYearsBelowNormal": int((yearly < base).sum()),
+        "all": summary(rows), "veryStrong": {**summary(strong), "thresholdC": very_strong},
+        "detail": rows,
+    }
+
+
+def composite(totals, label, oni, index, district_of, shares=None):
     """What El Nino years did to this season's rain, statewide and per district.
 
     Percentages are each district's own long-run mean, so a dry district and a
@@ -191,11 +237,15 @@ def composite(totals, label, oni, index, district_of):
     warm_series = warm_detail[1] if warm_detail else pd.Series(dtype=float)
     districts = []
     for name, rows in frame.groupby("district"):
-        pct, years, _ = anomaly(rows, lambda o: o >= EL_NINO)
+        pct, years, detail = anomaly(rows, lambda o: o >= EL_NINO)
         if pct is None:
             continue
+        district_years, chosen, district_base = detail
         districts.append({"district": name, "elNinoAnomalyPct": pct, "elNinoYears": years,
-                          "meanMm": round(float(rows.groupby("year")[label].mean().mean()), 1)})
+                          "meanMm": round(float(district_years.mean()), 1),
+                          # The district's own count, beside its average, for the same reason as the state's.
+                          "elNinoBelowNormal": int((chosen < district_base).sum()),
+                          "shareOfAnnualPct": (shares or {}).get(name)})
     return {
         "years": int(frame["year"].nunique()),
         "firstYear": int(frame["year"].min()),
@@ -426,7 +476,7 @@ def build():
     # Both halves of the CHIRPS record: the archive that stops in 2013 and the
     # file the weekly refresh appends to. The composites want all 45 years.
     rain_paths = history_paths()
-    rainfall = sw = ne = history = None
+    rainfall = sw = ne = history = after = None
     if rain_paths:
         rain = pd.concat([pd.read_csv(path) for path in rain_paths], ignore_index=True)
         rain["year"] = rain.date.str.slice(0, 4).astype(int)
@@ -455,8 +505,10 @@ def build():
         # stretch as the year being read against them.
         if elapsed:
             history = rainfall_history(rain, elapsed, oni)
-        sw = composite(seasonal_totals(rain, SW_MONSOON, "mm"), "mm", oni, 6, district_of)
-        ne = composite(seasonal_totals(rain, NE_MONSOON, "mm"), "mm", oni, 10, district_of)
+        sw_totals = seasonal_totals(rain, SW_MONSOON, "mm")
+        sw = composite(sw_totals, "mm", oni, 6, district_of, season_share(rain, SW_MONSOON, district_of))
+        ne = composite(seasonal_totals(rain, NE_MONSOON, "mm"), "mm", oni, 10, district_of, season_share(rain, NE_MONSOON, district_of))
+        after = after_el_nino(sw_totals, "mm", oni)
 
     return {
         "contractVersion": CONTRACT_VERSION,
@@ -499,7 +551,7 @@ def build():
         "trajectory": trajectory,
         "rainfall": rainfall,
         "rainfallHistory": history,
-        "elNinoRainfall": {"swMonsoon": sw, "neMonsoon": ne},
+        "elNinoRainfall": {"swMonsoon": sw, "neMonsoon": ne, "afterElNino": after},
         "districts": sorted(districts, key=lambda row: -row["shortfallM"]),
         "mandals": mandals,
     }

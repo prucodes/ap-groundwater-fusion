@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-02T19:53:19+00:00",
+  "generatedAt": "2026-10-03T03:47:34+00:00",
   "season": {
     "year": 2026,
     "preMonsoonMonth": "2026-05",
@@ -1066,169 +1066,225 @@
           "district": "KURNOOL",
           "elNinoAnomalyPct": -23.5,
           "elNinoYears": 7,
-          "meanMm": 490.7
+          "meanMm": 490.7,
+          "elNinoBelowNormal": 7,
+          "shareOfAnnualPct": 69.7
         },
         {
           "district": "ANANTHAPURAMU",
           "elNinoAnomalyPct": -22.7,
           "elNinoYears": 7,
-          "meanMm": 344.2
+          "meanMm": 344.2,
+          "elNinoBelowNormal": 7,
+          "shareOfAnnualPct": 57.4
         },
         {
           "district": "SRI SATHYA SAI",
           "elNinoAnomalyPct": -19.2,
           "elNinoYears": 7,
-          "meanMm": 345.8
+          "meanMm": 345.8,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 54.0
         },
         {
           "district": "ANNAMAYYA",
           "elNinoAnomalyPct": -18.7,
           "elNinoYears": 7,
-          "meanMm": 366.1
+          "meanMm": 366.1,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 49.3
         },
         {
           "district": "NANDYAL",
           "elNinoAnomalyPct": -18.6,
           "elNinoYears": 7,
-          "meanMm": 570.8
+          "meanMm": 570.8,
+          "elNinoBelowNormal": 7,
+          "shareOfAnnualPct": 69.7
         },
         {
           "district": "Y.S.R KADAPA",
           "elNinoAnomalyPct": -18.4,
           "elNinoYears": 7,
-          "meanMm": 423.0
+          "meanMm": 423.0,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 55.9
         },
         {
           "district": "KAKINADA",
           "elNinoAnomalyPct": -16.4,
           "elNinoYears": 7,
-          "meanMm": 751.8
+          "meanMm": 751.8,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 63.3
         },
         {
           "district": "EAST GODAVARI",
           "elNinoAnomalyPct": -16.0,
           "elNinoYears": 7,
-          "meanMm": 851.7
+          "meanMm": 851.7,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 68.0
         },
         {
           "district": "POLAVARAM",
           "elNinoAnomalyPct": -15.2,
           "elNinoYears": 7,
-          "meanMm": 943.3
+          "meanMm": 943.3,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 70.2
         },
         {
           "district": "KONASEEMA",
           "elNinoAnomalyPct": -14.6,
           "elNinoYears": 7,
-          "meanMm": 817.7
+          "meanMm": 817.7,
+          "elNinoBelowNormal": 4,
+          "shareOfAnnualPct": 63.2
         },
         {
           "district": "TIRUPATI",
           "elNinoAnomalyPct": -14.5,
           "elNinoYears": 7,
-          "meanMm": 430.0
+          "meanMm": 430.0,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 37.7
         },
         {
           "district": "SRI POTTI SRIRAMULU NELLORE",
           "elNinoAnomalyPct": -13.4,
           "elNinoYears": 7,
-          "meanMm": 352.2
+          "meanMm": 352.2,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 35.5
         },
         {
           "district": "WEST GODAVARI",
           "elNinoAnomalyPct": -13.2,
           "elNinoYears": 7,
-          "meanMm": 822.2
+          "meanMm": 822.2,
+          "elNinoBelowNormal": 4,
+          "shareOfAnnualPct": 67.3
         },
         {
           "district": "MARKAPURAM",
           "elNinoAnomalyPct": -13.1,
           "elNinoYears": 7,
-          "meanMm": 421.3
+          "meanMm": 421.3,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 53.4
         },
         {
           "district": "CHITTOOR",
           "elNinoAnomalyPct": -12.2,
           "elNinoYears": 7,
-          "meanMm": 477.3
+          "meanMm": 477.3,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 47.5
         },
         {
           "district": "ELURU",
           "elNinoAnomalyPct": -12.2,
           "elNinoYears": 7,
-          "meanMm": 861.0
+          "meanMm": 861.0,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 72.4
         },
         {
           "district": "NTR",
           "elNinoAnomalyPct": -12.0,
           "elNinoYears": 7,
-          "meanMm": 772.2
+          "meanMm": 772.2,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 70.6
         },
         {
           "district": "VISAKHAPATNAM",
           "elNinoAnomalyPct": -11.3,
           "elNinoYears": 7,
-          "meanMm": 655.0
+          "meanMm": 655.0,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 58.9
         },
         {
           "district": "PALNADU",
           "elNinoAnomalyPct": -11.0,
           "elNinoYears": 7,
-          "meanMm": 550.4
+          "meanMm": 550.4,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 62.5
         },
         {
           "district": "ALLURI SITHARAMA RAJU",
           "elNinoAnomalyPct": -10.4,
           "elNinoYears": 7,
-          "meanMm": 967.9
+          "meanMm": 967.9,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 67.3
         },
         {
           "district": "ANAKAPALLI",
           "elNinoAnomalyPct": -10.3,
           "elNinoYears": 7,
-          "meanMm": 758.6
+          "meanMm": 758.6,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 62.0
         },
         {
           "district": "PARVATHIPURAM MANYAM",
           "elNinoAnomalyPct": -9.1,
           "elNinoYears": 7,
-          "meanMm": 944.0
+          "meanMm": 944.0,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 69.3
         },
         {
           "district": "PRAKASAM",
           "elNinoAnomalyPct": -8.7,
           "elNinoYears": 7,
-          "meanMm": 453.2
+          "meanMm": 453.2,
+          "elNinoBelowNormal": 4,
+          "shareOfAnnualPct": 48.7
         },
         {
           "district": "SRIKAKULAM",
           "elNinoAnomalyPct": -8.7,
           "elNinoYears": 7,
-          "meanMm": 718.3
+          "meanMm": 718.3,
+          "elNinoBelowNormal": 5,
+          "shareOfAnnualPct": 62.9
         },
         {
           "district": "VIZIANAGARAM",
           "elNinoAnomalyPct": -8.3,
           "elNinoYears": 7,
-          "meanMm": 744.2
+          "meanMm": 744.2,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 63.5
         },
         {
           "district": "KRISHNA",
           "elNinoAnomalyPct": -8.2,
           "elNinoYears": 7,
-          "meanMm": 747.8
+          "meanMm": 747.8,
+          "elNinoBelowNormal": 3,
+          "shareOfAnnualPct": 63.9
         },
         {
           "district": "BAPATLA",
           "elNinoAnomalyPct": -6.6,
           "elNinoYears": 7,
-          "meanMm": 619.7
+          "meanMm": 619.7,
+          "elNinoBelowNormal": 3,
+          "shareOfAnnualPct": 57.9
         },
         {
           "district": "GUNTUR",
           "elNinoAnomalyPct": -6.6,
           "elNinoYears": 7,
-          "meanMm": 679.3
+          "meanMm": 679.3,
+          "elNinoBelowNormal": 3,
+          "shareOfAnnualPct": 64.6
         }
       ]
     },
@@ -1330,169 +1386,351 @@
           "district": "PARVATHIPURAM MANYAM",
           "elNinoAnomalyPct": -16.1,
           "elNinoYears": 15,
-          "meanMm": 249.9
+          "meanMm": 249.9,
+          "elNinoBelowNormal": 11,
+          "shareOfAnnualPct": 18.4
         },
         {
           "district": "SRIKAKULAM",
           "elNinoAnomalyPct": -16.1,
           "elNinoYears": 15,
-          "meanMm": 314.9
+          "meanMm": 314.9,
+          "elNinoBelowNormal": 11,
+          "shareOfAnnualPct": 27.6
         },
         {
           "district": "VIZIANAGARAM",
           "elNinoAnomalyPct": -13.1,
           "elNinoYears": 15,
-          "meanMm": 299.9
+          "meanMm": 299.9,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 25.6
         },
         {
           "district": "ANNAMAYYA",
           "elNinoAnomalyPct": -12.7,
           "elNinoYears": 15,
-          "meanMm": 268.5
+          "meanMm": 268.5,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 36.2
         },
         {
           "district": "ALLURI SITHARAMA RAJU",
           "elNinoAnomalyPct": -12.4,
           "elNinoYears": 15,
-          "meanMm": 277.0
+          "meanMm": 277.0,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 19.3
         },
         {
           "district": "POLAVARAM",
           "elNinoAnomalyPct": -12.1,
           "elNinoYears": 15,
-          "meanMm": 258.3
+          "meanMm": 258.3,
+          "elNinoBelowNormal": 11,
+          "shareOfAnnualPct": 19.2
         },
         {
           "district": "KAKINADA",
           "elNinoAnomalyPct": -11.7,
           "elNinoYears": 15,
-          "meanMm": 327.9
+          "meanMm": 327.9,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 27.6
         },
         {
           "district": "EAST GODAVARI",
           "elNinoAnomalyPct": -11.6,
           "elNinoYears": 15,
-          "meanMm": 298.4
+          "meanMm": 298.4,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 23.8
         },
         {
           "district": "SRI SATHYA SAI",
           "elNinoAnomalyPct": -11.6,
           "elNinoYears": 15,
-          "meanMm": 196.0
+          "meanMm": 196.0,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 30.6
         },
         {
           "district": "VISAKHAPATNAM",
           "elNinoAnomalyPct": -11.4,
           "elNinoYears": 15,
-          "meanMm": 349.5
+          "meanMm": 349.5,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 31.4
         },
         {
           "district": "CHITTOOR",
           "elNinoAnomalyPct": -10.6,
           "elNinoYears": 15,
-          "meanMm": 392.0
+          "meanMm": 392.0,
+          "elNinoBelowNormal": 11,
+          "shareOfAnnualPct": 39.0
         },
         {
           "district": "WEST GODAVARI",
           "elNinoAnomalyPct": -10.3,
           "elNinoYears": 15,
-          "meanMm": 325.2
+          "meanMm": 325.2,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 26.6
         },
         {
           "district": "ANAKAPALLI",
           "elNinoAnomalyPct": -9.6,
           "elNinoYears": 15,
-          "meanMm": 337.3
+          "meanMm": 337.3,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 27.6
         },
         {
           "district": "ELURU",
           "elNinoAnomalyPct": -9.3,
           "elNinoYears": 15,
-          "meanMm": 236.7
+          "meanMm": 236.7,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 19.9
         },
         {
           "district": "KONASEEMA",
           "elNinoAnomalyPct": -9.2,
           "elNinoYears": 15,
-          "meanMm": 389.2
+          "meanMm": 389.2,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 30.1
         },
         {
           "district": "NANDYAL",
           "elNinoAnomalyPct": -8.7,
           "elNinoYears": 15,
-          "meanMm": 157.1
+          "meanMm": 157.1,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 19.2
         },
         {
           "district": "ANANTHAPURAMU",
           "elNinoAnomalyPct": -8.6,
           "elNinoYears": 15,
-          "meanMm": 169.1
+          "meanMm": 169.1,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 28.2
         },
         {
           "district": "Y.S.R KADAPA",
           "elNinoAnomalyPct": -8.5,
           "elNinoYears": 15,
-          "meanMm": 243.8
+          "meanMm": 243.8,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 32.2
         },
         {
           "district": "TIRUPATI",
           "elNinoAnomalyPct": -5.7,
           "elNinoYears": 15,
-          "meanMm": 586.0
+          "meanMm": 586.0,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 51.3
         },
         {
           "district": "NTR",
           "elNinoAnomalyPct": -4.6,
           "elNinoYears": 15,
-          "meanMm": 227.6
+          "meanMm": 227.6,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 20.8
         },
         {
           "district": "MARKAPURAM",
           "elNinoAnomalyPct": -4.0,
           "elNinoYears": 15,
-          "meanMm": 269.2
+          "meanMm": 269.2,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 34.1
         },
         {
           "district": "KRISHNA",
           "elNinoAnomalyPct": -3.5,
           "elNinoYears": 15,
-          "meanMm": 337.9
+          "meanMm": 337.9,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 28.9
         },
         {
           "district": "SRI POTTI SRIRAMULU NELLORE",
           "elNinoAnomalyPct": -3.2,
           "elNinoYears": 15,
-          "meanMm": 539.9
+          "meanMm": 539.9,
+          "elNinoBelowNormal": 8,
+          "shareOfAnnualPct": 54.5
         },
         {
           "district": "KURNOOL",
           "elNinoAnomalyPct": -2.9,
           "elNinoYears": 15,
-          "meanMm": 139.0
+          "meanMm": 139.0,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 19.8
         },
         {
           "district": "PALNADU",
           "elNinoAnomalyPct": -2.9,
           "elNinoYears": 15,
-          "meanMm": 236.6
+          "meanMm": 236.6,
+          "elNinoBelowNormal": 10,
+          "shareOfAnnualPct": 26.8
         },
         {
           "district": "PRAKASAM",
           "elNinoAnomalyPct": -1.6,
           "elNinoYears": 15,
-          "meanMm": 384.1
+          "meanMm": 384.1,
+          "elNinoBelowNormal": 9,
+          "shareOfAnnualPct": 41.3
         },
         {
           "district": "GUNTUR",
           "elNinoAnomalyPct": -0.0,
           "elNinoYears": 15,
-          "meanMm": 271.3
+          "meanMm": 271.3,
+          "elNinoBelowNormal": 8,
+          "shareOfAnnualPct": 25.8
         },
         {
           "district": "BAPATLA",
           "elNinoAnomalyPct": 0.4,
           "elNinoYears": 15,
-          "meanMm": 355.3
+          "meanMm": 355.3,
+          "elNinoBelowNormal": 8,
+          "shareOfAnnualPct": 33.2
+        }
+      ]
+    },
+    "afterElNino": {
+      "rule": "June-September rain in the year after a winter whose OND ONI was 0.5 or more",
+      "meanMm": 599.0,
+      "firstYear": 1981,
+      "lastYear": 2025,
+      "allYears": 45,
+      "allYearsBelowNormal": 21,
+      "all": {
+        "years": 15,
+        "belowNormal": 4,
+        "meanAnomalyPct": 10.5
+      },
+      "veryStrong": {
+        "years": 3,
+        "belowNormal": 0,
+        "meanAnomalyPct": 12.2,
+        "thresholdC": 2.0
+      },
+      "detail": [
+        {
+          "year": 1983,
+          "afterWinter": 1982,
+          "oniOndC": 2.18,
+          "mm": 712.3,
+          "anomalyPct": 18.9
+        },
+        {
+          "year": 1987,
+          "afterWinter": 1986,
+          "oniOndC": 1.14,
+          "mm": 418.9,
+          "anomalyPct": -30.1
+        },
+        {
+          "year": 1988,
+          "afterWinter": 1987,
+          "oniOndC": 1.25,
+          "mm": 843.8,
+          "anomalyPct": 40.9
+        },
+        {
+          "year": 1992,
+          "afterWinter": 1991,
+          "oniOndC": 1.21,
+          "mm": 559.3,
+          "anomalyPct": -6.6
+        },
+        {
+          "year": 1995,
+          "afterWinter": 1994,
+          "oniOndC": 1.01,
+          "mm": 674.7,
+          "anomalyPct": 12.6
+        },
+        {
+          "year": 1998,
+          "afterWinter": 1997,
+          "oniOndC": 2.4,
+          "mm": 703.3,
+          "anomalyPct": 17.4
+        },
+        {
+          "year": 2003,
+          "afterWinter": 2002,
+          "oniOndC": 1.31,
+          "mm": 502.0,
+          "anomalyPct": -16.2
+        },
+        {
+          "year": 2005,
+          "afterWinter": 2004,
+          "oniOndC": 0.66,
+          "mm": 650.6,
+          "anomalyPct": 8.6
+        },
+        {
+          "year": 2007,
+          "afterWinter": 2006,
+          "oniOndC": 0.94,
+          "mm": 827.2,
+          "anomalyPct": 38.1
+        },
+        {
+          "year": 2010,
+          "afterWinter": 2009,
+          "oniOndC": 1.36,
+          "mm": 787.7,
+          "anomalyPct": 31.5
+        },
+        {
+          "year": 2015,
+          "afterWinter": 2014,
+          "oniOndC": 0.71,
+          "mm": 630.3,
+          "anomalyPct": 5.2
+        },
+        {
+          "year": 2016,
+          "afterWinter": 2015,
+          "oniOndC": 2.64,
+          "mm": 601.6,
+          "anomalyPct": 0.4
+        },
+        {
+          "year": 2019,
+          "afterWinter": 2018,
+          "oniOndC": 0.97,
+          "mm": 583.6,
+          "anomalyPct": -2.6
+        },
+        {
+          "year": 2020,
+          "afterWinter": 2019,
+          "oniOndC": 0.58,
+          "mm": 757.3,
+          "anomalyPct": 26.4
+        },
+        {
+          "year": 2024,
+          "afterWinter": 2023,
+          "oniOndC": 1.99,
+          "mm": 673.2,
+          "anomalyPct": 12.4
         }
       ]
     }

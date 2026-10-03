@@ -4,6 +4,7 @@ import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { IconClock } from "../../components/icons";
 import { datasetManifest, formatPeriod } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
+import { droughtWatch } from "../../lib/droughtWatch";
 import styles from "../../components/governance/Governance.module.css";
 
 const gates = [
@@ -26,6 +27,7 @@ export default function ReadinessPage() {
     ...(waterSummary.rain ? [{ name: "AP DES rain gauges (via APWRIMS)", type: "Measured / mm", period: `${waterSummary.rain.start} to ${waterSummary.rain.end}`, fetch: waterSummary.generatedAt.slice(0, 10), link: waterSummary.rain.url, detail: `${waterSummary.rain.gauges.toLocaleString("en-IN")} gauges across ${waterSummary.rain.mandals} mandals, against the department's normal for the water year. Public dashboard data; source-use authorization pending.` }] : []),
     ...(waterSummary.soil ? [{ name: "NRSC soil moisture (via APWRIMS)", type: "Modelled / % of capacity", period: waterSummary.soil.asOf ?? "date unconfirmed", fetch: waterSummary.generatedAt.slice(0, 10), link: waterSummary.soil.url, detail: `VIC land-surface model at 0.05°, ${waterSummary.soil.mandals} mandals at four depths, set against the same date since ${waterSummary.soil.firstYear}. Rainfall-driven model, not a field probe.` }] : []),
     ...(waterSummary.reservoirs ? [{ name: "Reservoir storage & releases (via APWRIMS)", type: "Measured / TMC, cusecs", period: waterSummary.reservoirs.asOf?.slice(0, 16).replace("T", " ") ?? "time unknown", fetch: waterSummary.generatedAt.slice(0, 10), link: waterSummary.reservoirs.url, detail: `${waterSummary.reservoirs.count} major and medium reservoirs; ${waterSummary.reservoirs.staleCount} not reporting for 3+ days. Releases are measured at the headworks; the canal command-area map is not public.` }] : []),
+    ...(droughtWatch.sources.vci ? [{ name: "NOAA STAR vegetation health (VCI)", type: "Satellite index / 0–100", period: `weeks to about ${droughtWatch.sources.vci.averaged[droughtWatch.sources.vci.averaged.length - 1].approxEnd}`, fetch: droughtWatch.generatedAt.slice(0, 10), link: droughtWatch.sources.vci.url, detail: "VIIRS, 4 km, weekly, against the record since 1981; read per mandal for the Drought Watch's remote-sensing indicator. All vegetation, not cropland alone: the drought manual prefers 56–500 m NDVI/NDWI from the State Remote Sensing Centre or MNCFC." }] : []),
     { name: "TerraClimate", type: "Modelled climate / mm", period: formatPeriod(p.etValidPeriod), fetch: r?.evapotranspiration.fetchDate, link: "https://www.climatologylab.org/terraclimate.html", detail: "Annual reference context, not current telemetry. Rain minus actual ET excludes pumping and does not establish aquifer recharge." },
   ];
   return <div className="pageWrap">

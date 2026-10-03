@@ -42,6 +42,12 @@
   "official_flag": false
  },
  {
+  "label": "NOAA STAR vegetation health index (satellite, 4 km weekly)",
+  "status": "available",
+  "data_label": "satellite-vegetation-condition",
+  "official_flag": false
+ },
+ {
   "label": "Official APWRIMS export",
   "status": "pending",
   "data_label": "official_apwrims",
@@ -75,6 +81,12 @@
   "label": "IMD forecasts, warnings & agromet advisories (API key)",
   "status": "pending",
   "data_label": "imd_api",
+  "official_flag": false
+ },
+ {
+  "label": "Drought manual inputs held by the State: mandal sown area, irrigated share, 56–500 m NDVI/NDWI (APSAC / MNCFC), field verification",
+  "status": "pending",
+  "data_label": "official_drought_inputs",
   "official_flag": false
  }
 ]
