@@ -90,7 +90,15 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
                 <div><dt>Gauge rain</dt><dd>{metricText("rainPct", row.rainPct)}</dd></div>
                 <div><dt>State stations</dt><dd>{row.stations}</dd></div>
               </dl>
-              <p className={styles.panelMandals}><strong>{`${row.mandals} mandals: `}</strong>{row.mandalNames}</p>
+              {row.mandals ? (
+                <p className={styles.panelMandals}><strong>{`${row.mandals} mandals: `}</strong>{row.mandalNames}</p>
+              ) : (
+                <p className={styles.panelMandals}>No mandal of its own on this map: the city is drawn as one mandal, counted in the seat its centre falls in.</p>
+              )}
+              <p className={styles.panelNote}>
+                {`${row.outline === "official" ? `Outline: the State's own${row.officialKm2 ? `, ${row.officialKm2} km²` : ""}` : row.outline === "mandals" ? "Outline: the union of its mandals" : "No outline"}`}
+                {row.placedByLocation ? ` · placed by location: ${row.placedByLocation}` : ""}
+              </p>
             </>
           ) : (
             <p className={styles.panelEmpty}>Point at or select a constituency to see its mandals and figures.</p>

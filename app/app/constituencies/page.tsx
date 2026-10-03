@@ -40,6 +40,9 @@ function rows(): ConstituencyRow[] {
     districts: c.districts.map(name).join(", "),
     mandals: c.mandals.length,
     mandalNames: c.mandals.map(name).join(", "),
+    placedByLocation: c.placedByLocation.map(name).join(", "),
+    outline: c.outline,
+    officialKm2: c.officialKm2,
     path: c.rings ? mandalToPath(c.rings) : null,
     label: labelAt(c.rings),
     stressShare: share(c.groundwater.stress, c.groundwater.assessed),
@@ -94,7 +97,7 @@ export default function ConstituenciesPage() {
         </p>
         <div className={styles.tiles}>
           <div className={styles.tile}><span>Mandals placed</span><strong>{data.summary.mandals}</strong>
-            <em>{data.summary.mandalsWithoutConstituency ? `${data.summary.mandalsWithoutConstituency} not yet matched to a constituency` : "every mapped mandal"}</em></div>
+            <em>{`${data.summary.placedByRecord} by the State's mandal record, ${data.summary.placedByLocation} by location${data.summary.mandalsWithoutConstituency ? `, ${data.summary.mandalsWithoutConstituency} not placed` : ""} · ${data.summary.officialOutlines} official seat outlines`}</em></div>
           <div className={styles.tile}><span>Deeper than May</span><strong>{`${fell}/${withFall}`}</strong>
             <em>{`constituencies, State wells ${stateSummary.readingDates.mostCommon ? `to ${shortDate(stateSummary.readingDates.mostCommon)}` : ""}`}</em></div>
           <div className={styles.tile}><span>Most groundwater stress</span>

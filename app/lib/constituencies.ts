@@ -6,7 +6,13 @@ export type Constituency = {
   pc: string;
   districts: string[];
   mandals: string[];
+  /** Mandals with no constituency on their State record, placed by where their centre falls. */
+  placedByLocation: string[];
   officialOutlines: number;
+  /** Whose outline is drawn: the State's (rebuilt within 3%), or the union of the mandals. */
+  outline: "official" | "mandals" | null;
+  officialKm2: number | null;
+  reserved: string | null;
   groundwater: { assessed: number; stress: number; watch: number; stable: number; medianDepthM: number | null };
   stateReading: { mandals: number; stations: number; medianSinceMayM: number | null; deeperThanYearAgo: number };
   drought: { assessed: number; active: number; severe: number; trigger1: number };
@@ -18,7 +24,7 @@ export type ConstituencyData = {
   generatedAt: string;
   source: string;
   note: string;
-  summary: { constituencies: number; parliamentary: number; stateAssembly: number; stateParliament: number; mandals: number; mandalsWithoutConstituency: number };
+  summary: { constituencies: number; withMandals: number; officialOutlines: number; parliamentary: number; stateAssembly: number; stateParliament: number; mandals: number; placedByRecord: number; placedByLocation: number; mandalsWithoutConstituency: number };
   parliament: Array<{ pc: string; acs: string[] }>;
   constituencies: Constituency[];
 };
@@ -31,6 +37,9 @@ export type ConstituencyRow = {
   districts: string;
   mandals: number;
   mandalNames: string;
+  placedByLocation: string;
+  outline: "official" | "mandals" | null;
+  officialKm2: number | null;
   path: string | null;
   /** Where the constituency's name sits on the map: its largest part's centre. */
   label: [number, number] | null;

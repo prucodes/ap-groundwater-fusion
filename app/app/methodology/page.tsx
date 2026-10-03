@@ -274,7 +274,9 @@ export default function MethodologyPage() {
             <strong>Boundaries.</strong> The State&rsquo;s mandal geography gives every boundary vertex with the official area, LGD codes,
             revenue division and assembly and parliamentary constituency, but not the order the vertices run in. The outline is
             rebuilt as the shortest closed path through them (or, failing that, a concave hull tuned to the official area) and is
-            drawn only where it lands within 3% of the official area; elsewhere the public prototype stays.{" "}
+            drawn only where it lands within 3% of the official area, does not lie over its official neighbours, and touches the
+            mandal it replaces (names repeat across districts, so a record that lands far from its mandal is treated as someone
+            else&rsquo;s and withheld, codes and all); elsewhere the public prototype stays.{" "}
             {mapGeometry.official_summary
               ? `${mapGeometry.official_summary.outlines} of ${mapGeometry.mandals.length} outlines are official today. `
               : ""}
@@ -282,8 +284,10 @@ export default function MethodologyPage() {
             their coarseness explains). The model still computes its inputs on the prototype outlines until it is re-tested on these.
           </p>
           <p>
-            <strong>Constituencies.</strong> Each mandal is counted in the one assembly constituency its State record names; a
-            constituency&rsquo;s figures are its mandals&rsquo; counts and medians, and its outline is the union of theirs.
+            <strong>Constituencies.</strong> Each mandal is counted in the one assembly constituency its State record names, or,
+            without one, the constituency its centre falls in; a constituency&rsquo;s figures are its mandals&rsquo; counts and
+            medians. Its outline is the State&rsquo;s own, rebuilt the same way and kept within 3% of the official area, else the
+            union of its mandals.
           </p>
           <p>
             <strong>The State network&rsquo;s latest reading.</strong> One recent reading per location (early September), with the
