@@ -46,3 +46,6 @@ dist/
 app/public/films/monsoon/voice-*.mp3
 app/public/films/monsoon/voice-*.sha256
 app/public/films/monsoon/voice-*.jsonl
+
+# IMD API responses: cached privately until IMD usage rules are confirmed for publishing.
+data/private/

@@ -17,6 +17,7 @@ import {
   statusMeta,
   titleCase,
 } from "../lib/data";
+import { isWaterLayer, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
 import type { MandalHeatLayerKey } from "../lib/types";
 
 type Mode = "status" | "single";
@@ -72,6 +73,18 @@ function balColor(status: string) {
   return "#98a2b3";
 }
 
+/** Gauge rain and soil moisture for this mandal, when the context has a unique record. */
+function seasonRows(p: { d: string; m: string }) {
+  const rain = waterLayerText("gauge_rain_dev", p.d, p.m);
+  const soil = waterLayerText("soil_pct", p.d, p.m);
+  if (!rain && !soil) return "";
+  return (
+    `<span class="tipSection">This season</span>` +
+    (rain ? `<span class="tipRow"><i>Gauge rain</i><b>${rain}</b></span>` : "") +
+    (soil ? `<span class="tipRow"><i>Soil moisture 30 cm</i><b>${soil}</b></span>` : "")
+  );
+}
+
 function tooltipHtml(p: SeedProps) {
   const meta = statusMeta(p.bucket);
   const agree = agreementMeta(p.agreement);
@@ -100,6 +113,7 @@ function tooltipHtml(p: SeedProps) {
     (p.balance !== null
       ? `<span class="tipRow"><i>Water balance</i><b style="color:${balColor(p.balanceStatus)}">${p.balanceStatus} (${p.balance > 0 ? "+" : ""}${p.balance} mm)</b></span>`
       : "") +
+    seasonRows(p) +
     `<span class="tipRow"><i>Agreement</i><b style="color:${agreeColor}">${agree.label}</b></span>` +
     `<span class="tipFoot">Click to inspect →</span>`
   );
@@ -107,13 +121,13 @@ function tooltipHtml(p: SeedProps) {
 
 function featureStyle(
   p: SeedProps,
-  opts: { heatLayer?: MandalHeatLayerKey | null; dark: boolean; selected: boolean },
+  opts: { heatLayer?: MandalHeatLayerKey | WaterMandalLayer | null; dark: boolean; selected: boolean },
 ): PathOptions {
   if (opts.heatLayer) {
     return {
       weight: opts.selected ? 2 : 0.5,
       color: opts.selected ? "#0d2138" : "#ffffff",
-      fillColor: mandalHeatColor(opts.heatLayer, p.d, p.m),
+      fillColor: isWaterLayer(opts.heatLayer) ? waterLayerColor(opts.heatLayer, p.d, p.m) : mandalHeatColor(opts.heatLayer, p.d, p.m),
       fillOpacity: 0.82,
     };
   }
@@ -153,6 +167,7 @@ function baseTooltipHtml(p: SeedProps) {
     (bal !== null
       ? `<span class="tipRow"><i>Water balance</i><b style="color:${balColor(status)}">${status} (${bal > 0 ? "+" : ""}${bal} mm)</b></span>`
       : "") +
+    seasonRows(p) +
     `<span class="tipFoot">Satellite/model context</span>`
   );
 }
@@ -172,7 +187,7 @@ export function LiveMap({
   onSelect?: (id: string) => void;
   navigateOnClick?: boolean;
   height?: number;
-  heatLayer?: MandalHeatLayerKey | null;
+  heatLayer?: MandalHeatLayerKey | WaterMandalLayer | null;
 }) {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -183,7 +198,7 @@ export function LiveMap({
   selectedRef.current = selectedId;
   const onSelectRef = useRef(onSelect);
   onSelectRef.current = onSelect;
-  const heatRef = useRef<MandalHeatLayerKey | null>(heatLayer);
+  const heatRef = useRef<MandalHeatLayerKey | WaterMandalLayer | null>(heatLayer);
   heatRef.current = heatLayer;
 
   useEffect(() => {

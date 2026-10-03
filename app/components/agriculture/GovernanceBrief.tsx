@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { type AgricultureDistrict, type AgricultureEvidence, WATER_SIGNALS } from "../../lib/agriculture";
+import { AGREEMENT_RULES, type AgricultureDistrict, type AgricultureEvidence, WATER_SIGNALS } from "../../lib/agriculture";
 import { IconArrowRight, IconDownload, IconShield } from "../icons";
+import { signed } from "./waterContextFormat";
 import styles from "./GovernanceBrief.module.css";
 
 const name = (value: string) => /[a-z]/.test(value) ? value : value.split(" ").map(word => word === "NTR" || word.includes(".") ? word : word[0] + word.slice(1).toLowerCase()).join(" ");
@@ -22,7 +23,8 @@ export function GovernanceBrief({ evidence, onInspect }: { evidence: Agriculture
   const total = mode === "flagged" ? evidence.counts.flagged : evidence.counts.unresolved;
   const missing = district.total - district.compared;
   const leads = evidence.mandals.filter(row => row.district === district.name && (mode === "flagged" ? row.signal === "short" || row.signal === "severe" : row.signal === "unavailable"))
-    .sort((a, b) => (b.shortfallM ?? 0) - (a.shortfallM ?? 0) || a.mandal.localeCompare(b.mandal));
+    .sort((a, b) => b.agreement.stressed - a.agreement.stressed || (b.shortfallM ?? 0) - (a.shortfallM ?? 0) || a.mandal.localeCompare(b.mandal));
+  const { soil, rain, reservoirs } = evidence.water;
 
   function downloadBrief(row: AgricultureDistrict) {
     const text = [
@@ -32,7 +34,13 @@ export function GovernanceBrief({ evidence, onInspect }: { evidence: Agriculture
       "",
       `Coverage: ${row.compared}/${row.total} prototype boundary units compared; ${row.total - row.compared} unresolved.`,
       `Provisional seasonal flags: ${row.flagged}/${row.compared} compared units; ${row.severe} larger shortfalls.`,
+      `Groundwater, gauge rain and soil all point to stress in ${row.agreeAll} units: ${AGREEMENT_RULES.groundwater}; ${AGREEMENT_RULES.rain}; ${AGREEMENT_RULES.soil}.`,
       "Groundwater flags are not planted area, crop loss, drought declarations or water available for allocation.",
+      "",
+      "SEASON CONTEXT (STATE)",
+      rain ? `Gauge rainfall ${rain.start} to ${rain.end}: ${signed(rain.deviationPct)} against normal, area-weighted, ${rain.gauges} gauges (AP DES via APWRIMS; measured).` : "Gauge rainfall: not available in this build.",
+      soil ? `Soil moisture ${soil.depthCm} cm on ${soil.asOf ?? "an unconfirmed date"}: ${soil.belowOwnMedian} of ${soil.withBaseline} mandals below their usual level for the date (NRSC VIC via APWRIMS; modelled).` : "Soil moisture: not available in this build.",
+      reservoirs ? `Reservoir storage at ${reservoirs.asOf ?? "unknown time"}: ${reservoirs.state.storagePct}% of capacity against ${reservoirs.state.lastYearPct}% a year ago (Water Resources via APWRIMS; measured at the headworks, not delivered to mandals).` : "Reservoir storage: not available in this build.",
       "",
       "PROPOSED VERIFICATION",
       "Groundwater team: validate the seasonal baseline and current well readings.",
@@ -41,7 +49,7 @@ export function GovernanceBrief({ evidence, onInspect }: { evidence: Agriculture
       "Owner: not assigned. Deadline: not set. Departmental approval: pending.",
       "",
       `RECORDS FOR ${mode === "flagged" ? "FLAG REVIEW" : "SOURCE RECONCILIATION"}`,
-      ...leads.map(item => `${name(item.mandal)} | ${WATER_SIGNALS[item.signal].label} | depth ${item.depthM === null ? "unavailable" : `${item.depthM.toFixed(2)} m bgl`} | shortfall ${item.shortfallM === null ? "unavailable" : `${item.shortfallM.toFixed(2)} m`} | ${item.reason ?? item.sourceStatus}`),
+      ...leads.map(item => `${name(item.mandal)} | ${WATER_SIGNALS[item.signal].label} | depth ${item.depthM === null ? "unavailable" : `${item.depthM.toFixed(2)} m bgl`} | shortfall ${item.shortfallM === null ? "unavailable" : `${item.shortfallM.toFixed(2)} m`} | gauge rain ${item.rain ? signed(item.rain.deviationPct) : "unavailable"} | soil ${item.soil?.rankDriest && item.soil.ofYears ? `${item.soil.rankDriest} driest of ${item.soil.ofYears} years` : "unavailable"} | signals ${item.agreement.stressed} of ${item.agreement.known} | ${item.reason ?? item.sourceStatus}`),
       "",
       "RELEASE GATES",
       "Seasonal baseline review pending: source-history eligibility filters omit valid observations.",
@@ -73,7 +81,7 @@ export function GovernanceBrief({ evidence, onInspect }: { evidence: Agriculture
       </div>
       <div className={styles.dossier} aria-label="District review evidence" aria-live="polite">
         <div className={styles.dossierHead}><span className={styles.eyebrow}>District / {evidence.period}</span><select aria-label="Brief district" value={district.name} onChange={event => setSelected(event.target.value)}>{evidence.districts.slice().sort((a, b) => a.name.localeCompare(b.name)).map(row => <option value={row.name} key={row.name}>{name(row.name)}</option>)}</select><h3>{name(district.name)}</h3></div>
-        <div className={styles.figures}><div><strong>{share(district.flagged, district.compared)}</strong><span>flagged / compared</span><small>{district.flagged} of {district.compared} units</small></div><div><strong>{share(district.compared, district.total)}</strong><span>evidence coverage</span><small>{missing} unresolved of {district.total}</small></div></div>
+        <div className={styles.figures}><div><strong>{share(district.flagged, district.compared)}</strong><span>flagged / compared</span><small>{district.flagged} of {district.compared} units</small></div><div><strong>{share(district.compared, district.total)}</strong><span>evidence coverage</span><small>{missing} unresolved of {district.total}</small></div><div><strong>{district.agreeAll}</strong><span>three signals agree</span><small>groundwater, gauge rain, soil</small></div></div>
         <div className={styles.records}><span>{mode === "flagged" ? "Examples for flag review" : "Examples for source reconciliation"}</span><p>{leads.length ? leads.slice(0, 3).map(row => name(row.mandal)).join(" · ") : "No records in this category."}</p></div>
         <ol className={styles.actions}><li><span>01</span><div><strong>Validate the water signal</strong><p>Groundwater team · baseline and current well readings.</p></div></li><li><span>02</span><div><strong>Establish crop exposure</strong><p>Agriculture team · crop, stage, sown area and irrigation source.</p></div></li><li><span>03</span><div><strong>Check available supply</strong><p>Water Resources team · delivery windows and usable storage.</p></div></li></ol>
         <p className={styles.gate}>Proposed checks only. No owner assigned or action issued. Crop exposure and allocable water remain unknown.</p>

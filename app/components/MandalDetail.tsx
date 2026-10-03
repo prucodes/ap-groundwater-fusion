@@ -23,6 +23,7 @@ import { PercentileRing, Sparkline } from "./charts";
 import { FusionExplanationCard } from "./FusionExplanationCard";
 import { LiveMap } from "./LiveMap";
 import { ActionOutputPreview } from "./ActionOutputPreview";
+import { MandalSeasonContext } from "./MandalSeasonContext";
 import {
   IconArrowRight,
   IconCalendar,
@@ -259,6 +260,8 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
             </div>
             <FusionExplanationCard mandal={mandal} />
           </section>
+
+          <MandalSeasonContext mandalId={mandal.id} />
 
           {mandal.water_balance_mm !== null && mandal.water_balance_mm !== undefined && (
             <section className="card">

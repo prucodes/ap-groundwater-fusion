@@ -3,6 +3,14 @@
   "snapshot": "2026-08",
   "sourceHash": "57d6cc109d08041c63631ab8df48fefcaca7506447725cfef276ca6df70c0ea3",
   "duration": 178.44,
+  "narrated": {
+    "rainProduct": "CHIRPS v2.0",
+    "rainMonths": "06-08",
+    "rainAnomalyPct": -28.4,
+    "elNinoBelowNormal": 6,
+    "elNinoYears": 7,
+    "fallingPct": 62.7
+  },
   "chapters": [
     {
       "id": "connection",

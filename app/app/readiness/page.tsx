@@ -3,23 +3,29 @@ import { HeaderHero } from "../../components/HeaderHero";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { IconClock } from "../../components/icons";
 import { datasetManifest, formatPeriod } from "../../lib/data";
+import { waterSummary } from "../../lib/waterSummary";
 import styles from "../../components/governance/Governance.module.css";
 
 const gates = [
   ["01 / Authority", "Authorized source access", "Written source-use approval, a verified ingestion contract and retained refresh receipts. Public portal access alone does not confer operational authority."],
   ["02 / Identity", "Official administrative crosswalk", "Official boundary polygons, district and mandal identifiers, and resolution of ambiguous or unmatched source series."],
   ["03 / Validation", "Approved methods & field checks", "Independent field corroboration, cohort-specific error limits and approval of the seasonal baseline. Model performance is not a certification."],
-  ["04 / Agriculture", "Crop and supply evidence", "Authorized e-Panta aggregates, crop stage, irrigated area, reservoir releases and command-area delivery records. No crop-loss or allocation claims yet."],
+  ["04 / Agriculture", "Crop and supply evidence", "Authorized e-Panta / APAIMS crop aggregates (APWRIMS already holds crop-sown and crop-stress dashboards behind a login), crop stage, irrigated area, and the canal command-area map with delivery records. Gauge rainfall, soil moisture and reservoir storage are connected as dated context. No crop-loss or allocation claims yet."],
   ["05 / Operations", "Accountable review workflow", "Named departmental reviewers, action records, escalation rules, security review and service monitoring before dispatch."],
   ["06 / Release", "AWARE acceptance", "Agreed schema, access controls, test environment, error handling and approval. Current payloads are unreleased drafts."],
 ];
+
+const COUNT_WORDS = ["No", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
 
 export default function ReadinessPage() {
   const { counts: c, periods: p, refreshStatus: r } = datasetManifest;
   const sources = [
     { name: "APWRIMS-format history", type: "Recorded depth / m bgl", period: formatPeriod(p.latestObservationPeriod), fetch: r?.apwrims.fetchDate, link: "https://apwrims.ap.gov.in/mis/groundwater/levels", detail: `${c.historySeriesCount} history series in the published dataset. ${r?.apwrims.status === "retained_local_input" ? "Retained local input; a full-source fetch receipt is not supplied." : "See the refresh receipt for scope."} Authorization pending.` },
     { name: "NASA / NDMC GRACE-DA", type: "Satellite-model / percentile", period: formatPeriod(p.graceValidPeriod) || "Valid period not supplied", fetch: p.graceFetchDate, link: "https://nasagrace.unl.edu/", detail: "Regional assimilated-model context, not measured depth. A recent download does not establish the raster's observation period." },
-    { name: "CHIRPS rainfall", type: "Satellite-gauge / mm", period: formatPeriod(p.rainfallValidPeriod), fetch: r?.rainfall.fetchDate, link: "https://www.chc.ucsb.edu/data/chirps", detail: `${c.rainfallContextCoverage} prototype polygons have climate context. Rainfall is not measured recharge or a well reading.` },
+    { name: "CHIRPS v3 rainfall", type: "Satellite-gauge / mm", period: formatPeriod(p.rainfallValidPeriod), fetch: r?.rainfall.fetchDate, link: "https://www.chc.ucsb.edu/data/chirps", detail: `${c.rainfallContextCoverage} prototype polygons have climate context. Rainfall is not measured recharge or a well reading.` },
+    ...(waterSummary.rain ? [{ name: "AP DES rain gauges (via APWRIMS)", type: "Measured / mm", period: `${waterSummary.rain.start} to ${waterSummary.rain.end}`, fetch: waterSummary.generatedAt.slice(0, 10), link: waterSummary.rain.url, detail: `${waterSummary.rain.gauges.toLocaleString("en-IN")} gauges across ${waterSummary.rain.mandals} mandals, against the department's normal for the water year. Public dashboard data; source-use authorization pending.` }] : []),
+    ...(waterSummary.soil ? [{ name: "NRSC soil moisture (via APWRIMS)", type: "Modelled / % of capacity", period: waterSummary.soil.asOf ?? "date unconfirmed", fetch: waterSummary.generatedAt.slice(0, 10), link: waterSummary.soil.url, detail: `VIC land-surface model at 0.05°, ${waterSummary.soil.mandals} mandals at four depths, set against the same date since ${waterSummary.soil.firstYear}. Rainfall-driven model, not a field probe.` }] : []),
+    ...(waterSummary.reservoirs ? [{ name: "Reservoir storage & releases (via APWRIMS)", type: "Measured / TMC, cusecs", period: waterSummary.reservoirs.asOf?.slice(0, 16).replace("T", " ") ?? "time unknown", fetch: waterSummary.generatedAt.slice(0, 10), link: waterSummary.reservoirs.url, detail: `${waterSummary.reservoirs.count} major and medium reservoirs; ${waterSummary.reservoirs.staleCount} not reporting for 3+ days. Releases are measured at the headworks; the canal command-area map is not public.` }] : []),
     { name: "TerraClimate", type: "Modelled climate / mm", period: formatPeriod(p.etValidPeriod), fetch: r?.evapotranspiration.fetchDate, link: "https://www.climatologylab.org/terraclimate.html", detail: "Annual reference context, not current telemetry. Rain minus actual ET excludes pumping and does not establish aquifer recharge." },
   ];
   return <div className="pageWrap">
@@ -40,7 +46,7 @@ export default function ReadinessPage() {
     </section>
     <WatchEvidenceStatus />
     <section className={styles.section} aria-labelledby="ledger-title">
-      <div className={styles.heading}><div><span className={styles.eyebrow}>Source ledger</span><h2 id="ledger-title">Four sources. Different clocks.</h2><p>Valid period describes the data; fetch date describes the download. Neither is a live-feed guarantee.</p></div></div>
+      <div className={styles.heading}><div><span className={styles.eyebrow}>Source ledger</span><h2 id="ledger-title">{COUNT_WORDS[sources.length] ?? sources.length} sources. Different clocks.</h2><p>Valid period describes the data; fetch date describes the download. Neither is a live-feed guarantee.</p></div></div>
       <div className={styles.ledger}>{sources.map(source => <article className={styles.source} key={source.name}>
         <div><strong><a href={source.link} target="_blank" rel="noreferrer">{source.name}</a></strong><small>{source.type}</small></div>
         <div><small>Valid / reference period</small><strong>{source.period}</strong></div>

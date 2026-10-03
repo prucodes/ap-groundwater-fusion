@@ -19,6 +19,8 @@ import { TemperatureRecord } from "../../components/TemperatureRecord";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { CountedReach } from "../../components/CountedReach";
 import { apTemperature, formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
+import { waterSummary } from "../../lib/waterSummary";
+import { day } from "../../components/agriculture/waterContextFormat";
 import styles from "./MonsoonPage.module.css";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -45,6 +47,9 @@ export default function MonsoonPage() {
   const r = w.recharge;
   const enso = w.enso;
   const rain = w.rainfall;
+  // The state's own gauges and reservoir telemetry, beside the satellite record.
+  const gauges = waterSummary.rain;
+  const storage = waterSummary.reservoirs;
   const sw = w.elNinoRainfall.swMonsoon;
   const ne = w.elNinoRainfall.neMonsoon;
   const prior = w.seasons.filter((s) => s.year !== w.season.year);
@@ -79,8 +84,10 @@ export default function MonsoonPage() {
       <div className="provRibbon">
         <span className="provRibbonItem"><IconDroplet /> APWRIMS monthly readings</span>
         <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconCloudRain /> CHIRPS rainfall · 1981–{w.season.year}</span>
+        <span className="provRibbonItem"><IconCloudRain /> {rain ? rain.product.split(" monthly")[0] : "CHIRPS"} rainfall · 1981–{w.season.year}</span>
         <span className="provRibbonDot" />
+        {gauges ? <><span className="provRibbonItem"><IconCloudRain /> AP DES rain gauges · to {day(gauges.end)}</span><span className="provRibbonDot" /></> : null}
+        {storage ? <><span className="provRibbonItem"><IconWaves /> APWRIMS reservoirs · {day(storage.asOf)}</span><span className="provRibbonDot" /></> : null}
         <span className="provRibbonItem"><IconGlobe /> NOAA Oceanic Niño Index</span>
         <span className="provRibbonDot" />
         <span className="provRibbonItem"><IconShield /> observations + derived estimates</span>
@@ -129,20 +136,41 @@ export default function MonsoonPage() {
           ) : null}
           {rain ? (
             <div className="monsoonStat">
-              <span>Rain, {monthName(`${w.season.year}-${rain.months.slice(0, 2)}`).slice(0, 3)}–
+              <span>Satellite rain, {monthName(`${w.season.year}-${rain.months.slice(0, 2)}`).slice(0, 3)}–
                 {MONTHS[Number(rain.months.slice(3))]}</span>
               <strong>{formatNumber(rain.anomalyPct)}%</strong>
               <em>
-                {formatNumber(rain.mm)} mm against {formatNumber(rain.normalMm)} normal · {rain.rankDriest}
+                {rain.product.split(" monthly")[0]} · {formatNumber(rain.mm)} mm against {formatNumber(rain.normalMm)} normal · {rain.rankDriest}
                 {rain.rankDriest === 1 ? "st" : rain.rankDriest === 2 ? "nd" : rain.rankDriest === 3 ? "rd" : "th"}
                 {" "}driest of {rain.ofYears} since {rain.firstYear}
               </em>
             </div>
           ) : null}
+          {gauges ? (
+            <div className="monsoonStat">
+              <span>Rain gauges, since 1 Jun</span>
+              <strong>{formatNumber(gauges.deviationPct)}%</strong>
+              <em>
+                AP DES gauges, measured, to {day(gauges.end)} · {gauges.categories.deficient + gauges.categories.scanty + gauges.categories.noRain} of {gauges.mandals} mandals deficient or worse
+              </em>
+            </div>
+          ) : null}
+          {storage ? (
+            <div className="monsoonStat">
+              <span>Reservoir storage</span>
+              <strong>{formatNumber(storage.storagePct)}%</strong>
+              <em>of capacity at {day(storage.asOf)} · {formatNumber(storage.lastYearPct)}% a year ago · {storage.count} reservoirs</em>
+            </div>
+          ) : null}
         </div>
         <p className="cardNote">{r.rule}. Source-series totals are not unique boundary counts; the Agriculture review uses reconciled boundary units. Baseline review pending.</p>
       </section>
-      <MonsoonFilm />
+      <MonsoonFilm live={monsoonWatch.rainfall && monsoonWatch.elNinoRainfall.swMonsoon ? {
+        rainProduct: monsoonWatch.rainfall.product.split(" monthly")[0], rainMonths: monsoonWatch.rainfall.months,
+        rainAnomalyPct: monsoonWatch.rainfall.anomalyPct, year: monsoonWatch.season.year,
+        elNinoBelowNormal: monsoonWatch.elNinoRainfall.swMonsoon.elNinoBelowNormal, elNinoYears: monsoonWatch.elNinoRainfall.swMonsoon.elNinoYears,
+        fallingPct: monsoonWatch.recharge.fallingPct,
+      } : null} />
 
       <section className="card pacificEvidenceSection" id="pacific-evidence">
         <div className="cardHead">
@@ -313,7 +341,7 @@ export default function MonsoonPage() {
               Andhra Pradesh rainfall in warm-index years
             </div>
             <span className="cardSub">
-              CHIRPS, {sw.firstYear}–{sw.lastYear}, mandal means
+              {rain ? rain.product.split(" monthly")[0] : "CHIRPS"}, {sw.firstYear}–{sw.lastYear}, mandal means
             </span>
           </div>
           <RainfallHistory />

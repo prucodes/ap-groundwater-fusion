@@ -26,9 +26,10 @@ performed on 2026-09-30; this is not continuous independent certification.
   These checks do not verify all mandals, station coverage or departmental quality flags.
 - The NOAA ONI file matched JJA 2026 at +1.80 C. This is a three-month ocean index,
   not a mandal rainfall or crop-loss forecast. ONI and RONI are different indices.
-- The CHIRPS v2 monthly catalogue contained August 2026 as its latest available
-  month during the check. Catalogue availability does not independently verify
-  every historical raster or zonal statistic used by the app.
+- The CHIRPS monthly catalogue contained August 2026 as its latest available
+  month during the check (v3 since the 2026-10-02 rebuild; v2 before it).
+  Catalogue availability does not independently verify every historical raster
+  or zonal statistic used by the app.
 - All 593 published seasonal rows reproduce under the existing implementation.
   Reproducibility is not methodological approval: the seasonal baseline inherits
   model-training eligibility filters requiring location and lagged observations.
@@ -48,11 +49,12 @@ performed on 2026-09-30; this is not continuous independent certification.
 | Need | Primary source | Current connection / constraint |
 | --- | --- | --- |
 | Groundwater levels and history | [APWRIMS](https://apwrims.ap.gov.in/mis/groundwater/levels) | Public monthly chart data already ingested; obtain an authorised feed, station metadata, quality flags and revision policy for operational use. August 2026 in sampled series. |
-| Actual crop, area, sowing date and stage | [NIC Andhra Pradesh e-Panta](https://ap.nic.in/en/publication/presentation-of-state-centre/) | Relevant state crop-booking system; not connected. Request approved aggregated access through Agriculture/NIC. Do not scrape personal farmer records. |
-| Observed local rainfall | [AP DES rainfall](https://www.desweather.ap.gov.in/weather/Realtime/DayCount.jsp), [APSDMA Weather Watch](https://apsdmagis.ap.gov.in/weather-watch/index.html) | Relevant official state sources. Direct DES ingestion failed TLS verification; no bypass used. Obtain a trusted endpoint, gauge IDs, accumulation windows and quality flags. |
-| Official weather outlook and advisories | [IMD API documentation](https://mausam.imd.gov.in/imd_latest/contents/api.pdf), [IMD agromet advisories](https://imdagrimet.gov.in/cropAdvisory_3.php) | Documented state-rainfall endpoint returned HTTP 401. Approved access is needed. A discoverable PDF must still be checked for issue and validity dates. |
-| Reservoirs, releases and irrigation delivery | [APWRIMS](https://apwrims.ap.gov.in/) / Water Resources Department | A reservoir dashboard is not proof of water available to a specific farm. Need releases, usable storage, command areas and delivery schedules; not connected to the crop scenarios. |
-| Climate rainfall history | [CHIRPS v2 monthly catalogue](https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs/) | Existing satellite-and-gauge product, useful for consistent historical context. Current app aggregates mandal means; not an official area-weighted AP rainfall total. Do not mix v3 into a v2 baseline. |
+| Actual crop, area, sowing date and stage | [NIC Andhra Pradesh e-Panta](https://ap.nic.in/en/publication/presentation-of-state-centre/) | Relevant state crop-booking system; not connected. APWRIMS already carries crop-sown and crop-stress dashboards (`/mis/cropsown`, `/mis/cropstress`) behind a login. Request read access to their mandal-by-crop aggregates through Agriculture / Water Resources / RTGS. Do not scrape personal farmer records, and do not get around the login. |
+| Observed local rainfall | [APWRIMS rainfall](https://apwrims.ap.gov.in/mis/rainfall) (AP DES mandal gauges) | **Connected 2026-10-02**, weekly: about 3,500 gauges, per mandal, against the department's normal for the water year to date. Direct DES ingestion had failed TLS verification; APWRIMS serves the same network over valid TLS. The portal's headline divides a mandal-average actual by a district-average normal (-35.9% on 2 Oct); the app publishes the area-weighted figure (-33.2%). Gauge IDs and quality flags still need a departmental feed. |
+| Soil moisture | [APWRIMS soil moisture](https://apwrims.ap.gov.in/mis/soilmoisture) (NRSC VIC model, 0.05 degrees) | **Connected 2026-10-02**, weekly: per mandal at 5, 30, 100 and 150 cm, from 2014 onward, set against the same date in earlier years. Modelled, not field measurement, and driven by rainfall. ISRO's EOS-04 500 m product (Bhoonidhi) is open data but revisits every ~17 days, and its API works only from a whitelisted static IP. |
+| Official weather outlook and advisories | [IMD API](https://api.imd.gov.in/public/api_reference.html), [IMD agromet advisories](https://imdagrimet.gov.in/cropAdvisory_3.php) | Not connected. Every endpoint answered HTTP 401 "API key missing" on 2026-10-02. Register and keep the key in Actions secrets. IMD's terms restrict republishing, so check their usage rules before the weekly refresh commits forecasts to a public repository. |
+| Reservoirs, releases and irrigation delivery | [APWRIMS reservoirs](https://apwrims.ap.gov.in/mis/reservoir) / Water Resources Department | **Storage and releases connected 2026-10-02**: 113 major and medium reservoirs (storage, inflow, outflow, the release into each canal at the headworks), plus 11 upstream reservoirs outside AP. Our sums match the portal's own storage totals exactly. Still missing: the canal-to-command-area-to-mandal crosswalk and delivery schedules. A release is not water delivered to a farm. |
+| Climate rainfall history | [CHIRPS v3 monthly catalogue](https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global/tifs/) | **Rebuilt on v3 from 1981 on 2026-10-02**; v2 production ends after December 2026. Not mixed: a manifest records the product, and an incremental run refuses to append across products. June-August 2026 reads -41.5% on v3 (-28.4% on v2); the state's gauges read about -50% for those months. Mandal means, not an official area-weighted AP rainfall total. |
 | ENSO context | [NOAA ONI](https://psl.noaa.gov/data/correlation/oni.data), [NOAA advisory](https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml) | Connected research context. Keep issue period, index version and observation separate from forecast probabilities. |
 | Official geography and accountability | Department-approved mandal/village IDs, boundaries and ownership | Public prototype geography is not sufficient for sanctions, eligibility, allocation or official area totals. Crosswalk and administrative-vintage approval pending. |
 
@@ -81,6 +83,47 @@ performed on 2026-09-30; this is not continuous independent certification.
 - Softer photographic crop-scene water traces, unobstructed roots, and restrained
   status-coloured mandal hover cards. Crop stages and flow are illustrations;
   their visual realism is not evidence of live field observation.
+
+## Changes Made on 2026-10-02
+
+- **Water context connected.** `phase3_levels/fetch_apwrims_context.py` adds three
+  APWRIMS feeds to the weekly refresh:
+  - modelled soil moisture,
+  - gauge rainfall,
+  - reservoir storage with the release into each canal.
+
+  The output is `app/data/water_context.json`, with a receipt in
+  `data/refresh_receipts/apwrims_context.json`. Each feed carries its own as-of
+  date. A feed that fails, or answers with too few mandals or reservoirs, keeps
+  its previous section rather than publishing a partial one.
+- **Agriculture page.** The supply-and-weather step now reads "Partly connected"
+  and lists what is and is not connected. Each mandal shows its gauge rain and
+  soil moisture beside the groundwater record.
+- **Signal agreement.** A count shows how many of three stated tests point to
+  stress:
+  - groundwater shortfall flagged;
+  - gauge rain 20% or more below normal;
+  - 30 cm soil moisture among the driest quarter of years for the date.
+
+  On 2 Oct, all three agree in 21 of the 524 units where all three are usable,
+  and two agree in 154 more. The count is not a score. The soil model is driven
+  by rainfall, so those two tests are not independent. The district brief and
+  the CSV export carry the same counts with their rules.
+- **CHIRPS v3.** The history was rebuilt from 1981 (see above). The Monsoon
+  Watch now reads June-August 2026 as the driest of 46 years. El Nino monsoons
+  average -13.0% (5 of 7 below normal), against -15.2% (6 of 7) on v2.
+- **The narrated film was not re-rendered.** It is a fixed August-2026 edition
+  that speaks the v2 figures. The Monsoon page now says, beside the film, which
+  figures have moved since and to what.
+  Its test now checks the film against its own recorded snapshot instead of the
+  live file. The old check compared the film's hash with the whole live file,
+  `generatedAt` included, so every weekly refresh would have failed on it.
+  Re-narrating needs a human review of the voice-over; that is a release
+  decision.
+- **Re-audit.** The source audit was re-run online against the new snapshot:
+  - CHIRPS v3 has August 2026;
+  - ONI matches;
+  - 3 of 3 APWRIMS probes match.
 
 ## Minimum Credible Departmental Pilot
 

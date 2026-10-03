@@ -108,7 +108,7 @@ export default function EstimatesPage() {
       <div className="provRibbon">
         <span className="provRibbonItem"><IconActivity /> APWRIMS-format history · {bundle.n_mandals} modelled mandals · through {datasetManifest.periods.latestObservationPeriod}</span>
         <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconSatellite /> CHIRPS / TerraClimate · climate context</span>
+        <span className="provRibbonItem"><IconSatellite /> CHIRPS v3 / TerraClimate · climate context</span>
         <span className="provRibbonDot" />
         <span className="provRibbonItem"><IconTarget /> gradient-boosted + quantile bands</span>
         <span className="provRibbonDot" />

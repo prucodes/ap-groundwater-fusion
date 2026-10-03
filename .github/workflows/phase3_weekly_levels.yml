@@ -1,7 +1,8 @@
 name: Phase 3 — weekly groundwater levels
 
 # Hands-off: pulls APWRIMS sensor readings, NASA GRACE-DA, CHIRPS, TerraClimate
-# and NASA POWER rainfall every Monday,
+# and NASA POWER rainfall every Monday, plus APWRIMS soil moisture, gauge
+# rainfall and reservoir storage for the Agriculture page,
 # rebuilds features, and re-predicts mandal levels. No manual feeding.
 on:
   schedule:
@@ -34,6 +35,12 @@ jobs:
       # If GLDAS / GRACE mascons need NASA Earthdata auth, add a ~/.netrc step here
       # using EARTHDATA_USER / EARTHDATA_PASS secrets before the run.
       - name: Run weekly pipeline
+        # IMD stays dormant until these exist: IMD_API_KEY as a repository
+        # secret, IMD_AUTH (how the key travels) and IMD_PUBLISH as variables.
+        env:
+          IMD_API_KEY: ${{ secrets.IMD_API_KEY }}
+          IMD_AUTH: ${{ vars.IMD_AUTH }}
+          IMD_PUBLISH: ${{ vars.IMD_PUBLISH }}
         run: python phase3_levels/fetch_weekly.py
       - name: Run Python integrity suite
         run: python -m pytest -q
@@ -67,6 +74,9 @@ jobs:
             app/data/ap_district_geometry.json \
             app/data/ap_mandal_heat.json \
             app/data/monsoon_watch.json \
+            app/data/water_context.json \
+            app/data/water_context_summary.json \
+            app/data/water_context_mandals.json \
             app/data/nasa_provenance.json \
             app/data/satellite_station_samples.json \
             app/public/water-crystal-3d.html

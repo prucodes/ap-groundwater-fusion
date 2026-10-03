@@ -1,0 +1,10 @@
+{
+  "product": "CHIRPS v3.0",
+  "source": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global",
+  "resolutionDeg": 0.05,
+  "reduction": "mean of the 0.05-degree cells whose centres fall inside the mandal polygon; the cells it touches, for a polygon too small to contain a centre",
+  "firstMonth": "1981-01",
+  "lastMonth": "2026-08",
+  "months": 548,
+  "rebuiltAt": "2026-10-02T19:38:29+00:00"
+}

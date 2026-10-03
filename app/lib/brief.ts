@@ -1,4 +1,31 @@
 import { districtGeometry, districtRollups, formatNumber, titleCase } from "./data";
+import { waterForDistrict, waterSummary } from "./waterSummary";
+
+const signedPct = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(0)}%`;
+const RAIN_WORD: Record<string, string> = { excess: "excess", normal: "normal", deficient: "deficient", scanty: "scanty", noRain: "no rain" };
+
+/** This water year in the district, in one sentence, from the state's own gauges,
+ *  the NRSC soil model and reservoir telemetry. Context only: it does not move the
+ *  district's review category. */
+function seasonSentence(district: string): { sentence: string; signals: BriefSignal[] } {
+  const w = waterForDistrict(district);
+  if (!w) return { sentence: "", signals: [] };
+  const parts: string[] = [];
+  const signals: BriefSignal[] = [];
+  if (w.rain && waterSummary.rain) {
+    parts.push(`its rain gauges recorded ${formatNumber(w.rain.actualMm)} mm against a normal of ${formatNumber(w.rain.normalMm)} mm since 1 June (${signedPct(w.rain.deviationPct)}, ${RAIN_WORD[w.rain.category ?? ""] ?? "uncategorised"})`);
+    signals.push({ label: "Gauge rain (season)", value: `${signedPct(w.rain.deviationPct)} · ${RAIN_WORD[w.rain.category ?? ""] ?? "—"}`, tone: w.rain.deviationPct <= -20 ? "bad" : w.rain.deviationPct >= 20 ? "good" : "neutral" });
+  }
+  if (w.soil && waterSummary.soil) {
+    parts.push(`modelled soil moisture at ${waterSummary.soil.depthCm} cm sits below its usual level for the date in ${w.soil.belowOwnMedian} of ${w.soil.withBaseline} mandals`);
+    signals.push({ label: `Soil moisture ${waterSummary.soil.depthCm} cm`, value: `${formatNumber(w.soil.medianPct)}% median · ${w.soil.belowOwnMedian}/${w.soil.withBaseline} below usual`, tone: w.soil.belowOwnMedian > w.soil.withBaseline / 2 ? "warn" : "neutral" });
+  }
+  if (w.reservoirs && w.reservoirs.storagePct !== null) {
+    parts.push(`its ${w.reservoirs.count} reservoir${w.reservoirs.count === 1 ? "" : "s"} hold ${formatNumber(w.reservoirs.storagePct)}% of capacity against ${formatNumber(w.reservoirs.lastYearPct)}% a year ago`);
+    signals.push({ label: "Reservoir storage", value: `${formatNumber(w.reservoirs.storagePct)}% · ${formatNumber(w.reservoirs.lastYearPct)}% last year`, tone: (w.reservoirs.storagePct ?? 0) < (w.reservoirs.lastYearPct ?? 0) - 10 ? "warn" : "neutral" });
+  }
+  return { sentence: parts.length ? ` This water year, ${parts.join("; ")}.` : "", signals };
+}
 
 /* Deterministic, data-driven district situation brief (no LLM).
    Reads the fused district signals and composes an auditable narrative.
@@ -63,14 +90,17 @@ export function generateDistrictBrief(districtName: string): DistrictBrief | nul
       : `${name} — water surplus; routine monitoring.`;
 
   const mandalCount = d.mandal_count; // real total mandals in the district (satellite-wide)
+  const season = seasonSentence(d.d);
   const paragraph =
     `Across ${mandalCount} mandals, the NASA groundwater percentile averages ${formatNumber(gw)} (${wet} at regional scale), ` +
     `with ${bal}.` +
-    verifyText;
+    verifyText +
+    season.sentence;
 
   const signals: BriefSignal[] = [
     { label: "NASA GW %ile", value: formatNumber(gw), tone: "neutral" },
-    { label: "Rainfall (CHIRPS)", value: `${formatNumber(d.rainfall_mm)} mm`, tone: "neutral" },
+    { label: "Rainfall (CHIRPS, month)", value: `${formatNumber(d.rainfall_mm)} mm`, tone: "neutral" },
+    ...season.signals,
     {
       label: "Water balance",
       value: `${(d.water_balance_mm ?? 0) > 0 ? "+" : ""}${formatNumber(d.water_balance_mm)} mm · ${d.water_balance_status}`,
@@ -86,7 +116,9 @@ export function generateDistrictBrief(districtName: string): DistrictBrief | nul
       ? "Field-verify flagged mandals and reconcile against official APWRIMS data."
       : "Continue routine monitoring and confirm with official APWRIMS data.";
 
-  const plain = `${name} situation brief\n${headline}\n\n${paragraph}\n\nRecommended: ${action}\n\n(Prototype — TerraClimate ${districtGeometry.balance_year} balance + NASA GRACE-DA + CHIRPS. Not official.)`;
+  const sources = [`TerraClimate ${districtGeometry.balance_year} balance`, "NASA GRACE-DA", "CHIRPS v3"];
+  if (season.signals.length) sources.push(`APWRIMS gauges, NRSC soil model and reservoir telemetry (to ${waterSummary.rain?.end ?? waterSummary.soil?.asOf ?? "date unconfirmed"})`);
+  const plain = `${name} situation brief\n${headline}\n\n${paragraph}\n\nRecommended: ${action}\n\n(Prototype — ${sources.join(" + ")}. Not official.)`;
 
   return { district: name, headline, paragraph, signals, action, plain };
 }

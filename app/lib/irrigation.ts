@@ -1,3 +1,4 @@
+import { waterForDistrict, waterSummary } from "./waterSummary";
 import {
   datasetManifest,
   districtGeometry,
@@ -81,6 +82,16 @@ export type DistrictAdvisory = {
   rechargeFlagged: number | null;
   rechargeCompared: number | null;
   stateMedianTrend: number;
+  /** This water year's context from APWRIMS. Displayed beside the tier; never
+   *  part of it, for the same reason rainfall is kept out of the tier above. */
+  season: {
+    rainDeviationPct: number | null;
+    rainCategory: string | null;
+    soilBelowUsual: number | null;
+    soilWithBaseline: number | null;
+    reservoirStoragePct: number | null;
+    reservoirLastYearPct: number | null;
+  } | null;
 };
 
 export const ACTION_META: Record<IrrigationAction, { color: string; label: string; gloss: string }> = {
@@ -119,6 +130,19 @@ function stateNorms() {
   const compared = recharge.reduce((sum, r) => sum + r.compared, 0);
   const shortShare = compared ? recharge.reduce((sum, r) => sum + r.flagged, 0) / compared : 0;
   return { stressShare, medianTrend, shortShare };
+}
+
+function seasonContext(district: string): DistrictAdvisory["season"] {
+  const w = waterForDistrict(district);
+  if (!w) return null;
+  return {
+    rainDeviationPct: w.rain?.deviationPct ?? null,
+    rainCategory: w.rain?.category ?? null,
+    soilBelowUsual: w.soil?.belowOwnMedian ?? null,
+    soilWithBaseline: w.soil?.withBaseline ?? null,
+    reservoirStoragePct: w.reservoirs?.storagePct ?? null,
+    reservoirLastYearPct: w.reservoirs?.lastYearPct ?? null,
+  };
 }
 
 export function districtAdvisories(): DistrictAdvisory[] {
@@ -209,6 +233,7 @@ export function districtAdvisories(): DistrictAdvisory[] {
         rechargeFlagged: season ? season.flagged : null,
         rechargeCompared: season ? season.compared : null,
         stateMedianTrend: Math.round(norms.medianTrend * 100) / 100,
+        season: seasonContext(d.d),
       } as DistrictAdvisory;
     })
     .sort((a, b) => {
@@ -240,6 +265,16 @@ export type AwareAdvisoryRecord = {
   source: string;
   as_of: string;
   balance_reference_year: string;
+  /* Season context (APWRIMS). Context fields only: none of them moves the advisory. */
+  gauge_rain_departure_pct: number | null;
+  gauge_rain_category: string | null;
+  gauge_rain_window: string | null;
+  soil_below_usual_mandals: number | null;
+  soil_mandals_compared: number | null;
+  soil_moisture_date: string | null;
+  reservoir_storage_pct: number | null;
+  reservoir_storage_last_year_pct: number | null;
+  reservoir_reading_at: string | null;
   operational_use: false;
   method_status: "seasonal_baseline_review_pending";
 };
@@ -259,11 +294,20 @@ export function awarePayload(): AwareAdvisoryRecord[] {
     stress_share: a.stressShare,
     recharge_short_share: a.rechargeShortShare,
     data_basis: a.hasSensor ? "groundwater_history+context" : "context_only",
-    source: "AP Groundwater Intelligence (unreleased AWARE preview; official schema and field verification required)",
+    source: "AP Water Intelligence (unreleased AWARE preview; official schema and field verification required)",
     // Advisory freshness = latest sensor month; the annual water balance it draws on
     // is a completed-year figure (TerraClimate), kept separate so neither looks stale.
     as_of: datasetManifest.periods.latestObservationPeriod || districtGeometry.balance_year,
     balance_reference_year: districtGeometry.balance_year,
+    gauge_rain_departure_pct: a.season?.rainDeviationPct ?? null,
+    gauge_rain_category: a.season?.rainCategory ?? null,
+    gauge_rain_window: waterSummary.rain ? `${waterSummary.rain.start}/${waterSummary.rain.end}` : null,
+    soil_below_usual_mandals: a.season?.soilBelowUsual ?? null,
+    soil_mandals_compared: a.season?.soilWithBaseline ?? null,
+    soil_moisture_date: waterSummary.soil?.asOf ?? null,
+    reservoir_storage_pct: a.season?.reservoirStoragePct ?? null,
+    reservoir_storage_last_year_pct: a.season?.reservoirLastYearPct ?? null,
+    reservoir_reading_at: waterSummary.reservoirs?.asOf ?? null,
     operational_use: false,
     method_status: "seasonal_baseline_review_pending",
   }));
@@ -281,4 +325,7 @@ export const AWARE_FIELD_MAP: { ours: string; aware: string; note: string }[] = 
   { ours: "data_basis", aware: "confidence_basis", note: "Groundwater-history coverage versus context-only" },
   { ours: "as_of", aware: "valid_for", note: "Latest observation period" },
   { ours: "balance_reference_year", aware: "balance_year", note: "Completed year of the annual water-balance input (TerraClimate)" },
+  { ours: "gauge_rain_departure_pct", aware: "rain_departure", note: "Gauge rainfall against the department's normal, water year to date (AP DES gauges via APWRIMS; measured; context only)" },
+  { ours: "soil_below_usual_mandals", aware: "soil_moisture_stress", note: "Mandals whose modelled 30 cm soil moisture is below its usual level for the date (NRSC VIC via APWRIMS; context only)" },
+  { ours: "reservoir_storage_pct", aware: "storage_level", note: "District reservoirs' storage, % of capacity, with last year's beside it (measured at the dam; not a delivery to farms)" },
 ];

@@ -24,7 +24,7 @@
 .sectionNav a span { font: 600 12px var(--font-sans); color: var(--ink); }
 .sectionNav a:hover span { color: var(--ag-green); }
 .snapshot { margin-left: auto; font-size: 10px; color: var(--muted); }
-.metrics { display: grid; grid-template-columns: repeat(4, 1fr); padding: 20px 0; border-bottom: 1px solid var(--line); }
+.metrics { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 20px 0; border-bottom: 1px solid var(--line); }
 .metrics > div { padding: 0 20px; min-width: 0; border-right: 1px solid var(--line); }
 .metrics > div:first-child { padding-left: 0; }
 .metrics > div:last-child { border: 0; }
@@ -111,11 +111,32 @@
 .method summary { cursor: pointer; color: var(--ink-soft); font-weight: 500; width: fit-content; }
 .method p { max-width: 950px; margin-top: 10px; }
 .method a { color: var(--ag-green); }
-.contextBand { display: flex; align-items: center; gap: 14px; padding: 13px 16px; background: color-mix(in srgb, #2789af 7%, var(--card)); border-left: 2px solid #2789af; }
-.contextBand > svg { width: 25px; height: 25px; flex-shrink: 0; color: #2789af; }
-.contextBand strong { display: block; font-size: 11px; margin-bottom: 5px; }
-.contextBand span { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
-.contextBand p { margin-left: auto; max-width: 260px; font-size: 10px; line-height: 1.6; color: var(--muted); }
+.contextCaption { margin: 7px 0 0; font-size: 9px; line-height: 1.6; color: var(--muted); }
+.agreement { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; vertical-align: middle; }
+.agreement i { display: block; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--muted); box-sizing: border-box; }
+.agreement i[data-state="stress"] { background: var(--ag-red); border-color: var(--ag-red); }
+.agreement i[data-state="clear"] { border-color: var(--ag-green); }
+.agreement i[data-state="unknown"] { border-style: dashed; opacity: .7; }
+.agreement b { margin-left: 4px; font-size: 10px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.agreement b small { font-size: 9px; font-weight: 400; color: var(--muted); }
+.agreementKey { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 0 0 8px; font-size: 9px; line-height: 1.6; color: var(--muted); }
+.agreementKey span { text-decoration: underline dotted; text-underline-offset: 3px; cursor: help; }
+.metrics .agreeTile strong { color: #a37121; }
+.metrics .agreeTile .textButton { display: inline-block; margin-top: 4px; }
+.contextFacts { border-top: 1px solid var(--line); padding-top: 8px; }
+.contextFacts dd small { display: block; font-size: 8px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+/* The agreement count reads as one figure, "2/3", not a number over a stray fraction. */
+.contextFacts dd .agreement b small { display: inline; font-size: 9px; margin-top: 0; }
+.contextFacts dd[data-tone="short"] { color: var(--ag-red); }
+.tooltipContext { border-top: 1px solid var(--line); padding-top: 6px; margin-top: 6px; }
+.readinessSteps > div > span.partial { color: #a37121; }
+.sourceChecklist { list-style: none; margin: 12px 0 16px; padding: 0; display: grid; gap: 6px; }
+.sourceChecklist li { position: relative; padding-left: 17px; font-size: 10px; line-height: 1.45; color: var(--ink-soft); }
+.sourceChecklist li small { display: block; font-size: 9px; color: var(--muted); }
+.sourceChecklist li::before { position: absolute; left: 0; top: 0; font-size: 11px; line-height: 1.3; }
+.sourceChecklist li[data-state="on"]::before { content: "\2713"; color: var(--ag-green); }
+.sourceChecklist li[data-state="pending"]::before { content: "\25D0"; color: #a37121; }
+.sourceChecklist li[data-state="off"]::before { content: "\25CB"; color: var(--muted); }
 .filters { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(145px, .7fr) minmax(140px, .6fr) auto; gap: 9px; padding: 16px 0; }
 .search { display: flex; align-items: center; gap: 8px; padding: 0 10px; border: 1px solid var(--line-strong); background: var(--card); border-radius: 4px; }
 .search svg { width: 15px; height: 15px; flex-shrink: 0; color: var(--muted); }
@@ -242,7 +263,6 @@
   .fieldCells button { width: 11px; height: 15px; }
   .metrics > div { padding: 0 12px; }
   .viewToolbar { align-items: flex-start; flex-direction: column; }
-  .contextBand p { max-width: 200px; }
   .sectionHead h2 { font-size: 18px; }
 }
 @media (max-width: 980px) {
@@ -251,8 +271,9 @@
   .sectionHead h2 { max-width: 440px; }
   .scenarioBadge, .observedBadge { font-size: 9px; }
   .metrics { grid-template-columns: repeat(2, 1fr); row-gap: 20px; }
-  .metrics > div:nth-child(2) { border-right: 0; }
-  .metrics > div:nth-child(3) { padding-left: 0; }
+  .metrics > div:nth-child(2), .metrics > div:nth-child(4) { border-right: 0; }
+  .metrics > div:nth-child(3), .metrics > div:nth-child(5) { padding-left: 0; }
+  .metrics > div:nth-child(5) { grid-column: 1 / -1; border-top: 1px solid var(--line); padding-top: 14px; }
   .lab { grid-template-columns: 1fr; }
   .labVisual { border-right: 0; }
   .labControls { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; border-top: 1px solid var(--line); }
@@ -323,9 +344,7 @@
   .sliderControl > span { font-size: 11px; }
   .formula { margin-top: 20px; }
   .method { font-size: 10px; }
-  .contextBand { flex-wrap: wrap; gap: 10px; padding: 12px; }
-  .contextBand span { font-size: 11px; }
-  .contextBand p { max-width: none; margin-left: 35px; font-size: 9px; }
+  .sourceChecklist li { font-size: 9px; }
   .filters { gap: 8px; }
   .filters .search { grid-column: 1 / -1; }
   .exportButton { grid-column: 1 / -1; }

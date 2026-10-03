@@ -1,8 +1,8 @@
 {
-  "checkedAt": "2026-09-30T15:30:47+00:00",
-  "onlineCheckedAt": "2026-09-30T15:29:10+00:00",
+  "checkedAt": "2026-10-02T19:53:48+00:00",
+  "onlineCheckedAt": "2026-10-02T19:53:48+00:00",
   "snapshotPeriod": "2026-08",
-  "snapshotHash": "7ff15f9134589df34b3cdba9ecd2d82a4f20c561e9b897308ba29d8af5ab025a",
+  "snapshotHash": "409f634c6424d547af1ca624fb85e274b3fc45cece0b334372f7eea367ddc9ca",
   "historyHash": "b5d60daf9305e1e0aca519b1c7f5c9f06a3fa59263f2084efd940075bbe9fdbb",
   "localReconciliation": {
     "checkedSeries": 593,
@@ -3013,7 +3013,7 @@
     },
     "rainfall": {
       "status": "availability_checked",
-      "source": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs/",
+      "source": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global/tifs/",
       "latest": "2026.08",
       "snapshotMonthAvailable": true,
       "scope": "Publisher file listing checked; historical raster pixel values not re-downloaded in this audit."
@@ -3027,33 +3027,33 @@
           "district": "Kurnool",
           "sourceSeriesId": "68df28d1-3804-46ae-a2c5-e65dff531969",
           "status": "checked",
-          "latestPeriod": "2026-08",
+          "latestPeriod": "2026-09",
           "portalDepthM": 28.967,
           "snapshotDepthM": 28.97,
           "snapshotMatches": true,
-          "responseSha256": "4a5b58fbaaf72fbafa1167d56ece11e851b24773a3eaf900c8feefb5343f0e61"
+          "responseSha256": "52c02ecbc48a5730501c9946dcbd4fece59022542eb861ae02757f7cd464e422"
         },
         {
           "mandal": "Rentachintala",
           "district": "Palnadu",
           "sourceSeriesId": "0766db38-2384-4607-954c-1dfbc6c8637b",
           "status": "checked",
-          "latestPeriod": "2026-08",
+          "latestPeriod": "2026-09",
           "portalDepthM": 8.77,
           "snapshotDepthM": 8.77,
           "snapshotMatches": true,
-          "responseSha256": "5d3fcd19f5d0be6535c800fe397baa7b59b223b27a9f393f9fa2a8522e368f06"
+          "responseSha256": "d9c3321b16dd2b3098892e02a0eae76f3bb95cc86266655e41021d97ad728818"
         },
         {
           "mandal": "Sirvel",
           "district": "Nandyal",
           "sourceSeriesId": "c4b43404-f1b5-4a8a-95d4-215cfa9442fc",
           "status": "checked",
-          "latestPeriod": "2026-08",
+          "latestPeriod": "2026-09",
           "portalDepthM": 13.95,
           "snapshotDepthM": 13.95,
           "snapshotMatches": true,
-          "responseSha256": "aaa9d48a3b578f7a1e78c961f58aaa8e40646bc334041ebd92d9560d1714f2e0"
+          "responseSha256": "f2fc43167f66bdf4ef582f3c411aafa5017e6f34efd03dd4e6d28e05ae0fd0bb"
         }
       ]
     }
@@ -3061,7 +3061,7 @@
   "baselineCaveat": "The published seasonal baseline reuses the model-eligible observation frame (location and lag-1/lag-12 availability). This omits otherwise valid source observations. Recomputed values match that implementation, not an independently approved hydrological baseline. Rebuilding on unfiltered observations requires a versioned data and film update.",
   "limitations": [
     "No real-time feed or field certification.",
-    "Crop inputs are illustrative; crop booking and supply are not connected.",
+    "Crop inputs are illustrative; crop booking and canal delivery to fields are not connected. Gauge rainfall, modelled soil moisture and reservoir storage are dated APWRIMS context, not verified here.",
     "Public prototype boundaries and source-use authorization require departmental approval."
   ]
 }

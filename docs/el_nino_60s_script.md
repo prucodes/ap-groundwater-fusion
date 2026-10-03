@@ -30,7 +30,7 @@ line runs faster than 171.
 | 4 | 0:22–0:29 | The rain does not disappear. It moves. And when it moves off Asia, it takes the Indian monsoon with it. | *the rain moves* | Pull back to the globe. The rain band shifts away from South Asia. |
 | 5 | 0:29–0:39 | In 1877 the strongest El Niño ever recorded did exactly this. The monsoon failed. Across the Madras Presidency and the Deccan, famine killed more than eight million people. | **1877** · *Madras Presidency* | Archive map of the Madras Presidency. Hold. No imagery of famine victims. |
 | 6 | 0:39–0:46 | An El Niño is running now. It is the warmest June to August in the record since 1950. | **+1.80 °C** *· NOAA, JJA 2026* | Cut to the live site: the ocean-state card and its two-year index line. |
-| 7 | 0:46–0:53 | Across forty-five years an El Niño costs Andhra Pradesh fifteen percent of its monsoon rain. This year, twenty-eight. | **−15.2% usually · −28.4% this year** | The 46-column rainfall chart, El Niño years in red, this year outlined. |
+| 7 | 0:46–0:53 | Across forty-five years an El Niño costs Andhra Pradesh thirteen percent of its monsoon rain. This year, forty-two. | **−13.0% usually · −41.5% this year** | The 46-column rainfall chart, El Niño years in red, this year outlined. |
 | 8 | 0:53–1:00 | Today the water table is lower than it was in May across sixty-three percent of mandals. That has never happened. | **62.7% of mandals** *· 8,013 million m³ short* | The recharge map fills in, mandal by mandal. Hold on the red. |
 
 ---
@@ -49,8 +49,8 @@ Anything a reviewer will ask about.
 | 5 | "more than eight million" | Great Famine of 1876–78: excess mortality estimated 5.6–9.6 m, careful recent demographic estimate 8.2 m. **Say "more than eight million", not a precise figure, and not the "3% of the world" the reference reel uses** — that is a contested global total across India, China and Brazil |
 | 5 | Region | The famine covered ~670,000 km² and 58.5 m people across the Madras and Bombay Presidencies, Mysore, Hyderabad and the Deccan — which includes what is now Rayalaseema. Do not claim a district-level ranking; it is not sourced here |
 | 6 | +1.80 °C, warmest JJA since 1950 | NOAA CPC Oceanic Niño Index, fetched weekly by `phase3_levels/fetch_enso_index.py` |
-| 7 | −15.2% across 45 years | CHIRPS 1981–2025, 7 El Niño monsoons, below normal in 6 of 7; Spearman −0.51, p = 0.0003 |
-| 7 | −28.4% this year | CHIRPS June–August 2026, 2nd driest of 46 |
+| 7 | −13.0% across 45 years | CHIRPS v3 1981–2025, 7 El Niño monsoons, below normal in 5 of 7; Spearman ρ −0.47 against the June–August ONI, p = 0.001 (CHIRPS v2 read −15.2%, 6 of 7, ρ −0.51) |
+| 7 | −41.5% this year | CHIRPS v3 June–August 2026, driest of 46 (v2 read −28.4%, 2nd driest). The state's own rain gauges (AP DES, via APWRIMS) read −50% for the same months, so the satellite figure is, if anything, conservative |
 | 8 | 63% of mandals, 8,013 million m³ | APWRIMS monthly readings, May → August 2026, each mandal against its own ten-year normal |
 
 ---

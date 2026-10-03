@@ -47,7 +47,7 @@ fewer than `MIN_CALIBRATION_ROWS` rows borrows the aquifer-wide offset rather
 than taking a quantile from too little evidence. Accuracy scales with depth, so
 read `depthBands` in the model card rather than the statewide average alone.
 **The 3-month horizon is released; no other horizon is.** Under rolling-origin
-validation it is 1.78 m against 2.23 m for assuming no change and 2.33 m for a
+validation it is 1.80 m against 2.22 m for assuming no change and 2.32 m for a
 year-ago lookup, and it improves in every aquifer and every depth band. The
 6-month horizon is not released, because at that range a year-ago lookup is
 already as good as the model. Publishing is a decision, not a consequence:
@@ -86,6 +86,52 @@ is written once, and `mandal_rain_history_chirps.csv` holds 2014 onward and is
 the only half the weekly refresh rewrites. A single file would have committed
 two megabytes of unchanged 1981 rainfall every Monday. The model reads the 2014
 half alone, because the depth history it is fitted against starts in 2014.
+
+**Since 2026-10 the record is CHIRPS v3, rebuilt from 1981.** The Climate
+Hazards Center stops producing v2 after December 2026, and v3 is not a
+continuation of it: it corrects gauges for wind undercatch and draws on about
+four times the station sources. Over Andhra Pradesh the annual total barely
+moves (+0.6%), but rain shifts between seasons (June-September -3.5%,
+October-December +6.7%) and between places (per mandal, -11% to +17% at the
+10th and 90th percentiles). June-August 2026 reads 254.6 mm on v3 against
+324.6 mm on v2. AP's own rain gauges recorded about 198 mm across mandals for
+those months, so v3 is the closer of the two. `mandal_rain_history_chirps_manifest.json`
+records which product built the history, and an incremental run refuses to
+append to a history built from another; `--rebuild` must start at 1981. Each
+month is read from the publisher's cloud-optimised GeoTIFF for the state's
+window alone. Fed v2's raster, that reader reproduces all 670 stored v2
+values exactly. The switch cost the released 3-month forecast 1.3%
+(1.774 -> 1.797 m MAE), still well clear of its gate. Nowcast accuracy did not
+move (1.007 -> 1.010 m).
+
+**Soil moisture, gauge rainfall and reservoir storage also come from APWRIMS**
+(`phase3_levels/fetch_apwrims_context.py` -> `app/data/water_context.json`). The
+portal that serves the groundwater history also serves three more things:
+- soil moisture per mandal from the NRSC VIC model, at 5, 30, 100 and 150 cm,
+  from 2014 onward, so each mandal is set against the same calendar day in
+  earlier years;
+- rainfall from the AP DES mandal rain gauges, against the department's own
+  normal for the water year to date;
+- storage at every major and medium reservoir, with the release into each
+  canal at the headworks.
+
+It takes about twenty requests a week and has the same research-pending status
+as the groundwater pull. Three details matter:
+- The portal answers dates after its latest soil-model run with that run's
+  values, so the true as-of date is found by stepping back until they change.
+- The statewide rainfall table ends with a TOTAL row. It is a check, not a
+  mandal.
+- The portal's own rainfall headline divides a mandal-average actual by a
+  district-average normal. The page reports the area-weighted figure instead.
+
+Releases are not deliveries. Which mandals a canal reaches needs the canal
+command-area map, which is not public. The same portal has crop-sown and
+crop-stress dashboards behind a login; read access to their mandal-by-crop
+aggregates is the specific thing to ask the state for. The Agriculture page counts, per mandal,
+how many of three stated tests point to stress: a flagged groundwater shortfall,
+gauge rain 20% or more below normal, and 30 cm soil moisture among the driest
+quarter of years for the date. It is a count, not a score, and the soil model is
+driven by rainfall, so those two are not independent.
 
 **Three lists need a person, not the pipeline.**
 `phase3_levels/data/mandal_boundary_unresolved.csv` holds the 61 mandals whose
@@ -437,7 +483,7 @@ The Districts page now shows a **data-driven Situation Brief** per district (`ap
 
 Forwardable docs (themed, print-to-PDF) live in `docs/`: `aware_integration_note.html` (PoC → Production → AWARE) and `data_request_note.html` (the exact APWRIMS data ask).
 
-Roadmap: GRACE depletion trend + real time-series, SMAP soil moisture (NASA Earthdata login), and Sentinel-1 InSAR land subsidence (alluvial-belt pilot) are the next sources.
+Roadmap: GRACE depletion trend + real time-series, and Sentinel-1 InSAR land subsidence (alluvial-belt pilot) are the next sources. Soil moisture now comes from APWRIMS (the NRSC model, per mandal; see above). ISRO's EOS-04 500 m soil moisture is open data, but it revisits each place about every 17 days, measures the surface only, and its Bhoonidhi API works only from a whitelisted static IP, which GitHub's runners do not have. IMD's forecast, warning and agromet APIs answer 401 without a key, and their terms restrict redistribution, which matters for a pipeline that commits its data to a public repository. `phase3_levels/fetch_imd_context.py` is wired into the weekly run but stays dormant: without an `IMD_API_KEY` repository secret it fetches nothing and writes nothing. With a key it writes a git-ignored cache (`data/private/imd_context.json`) of AP's district forecasts, warnings, district rainfall and river-basin precipitation forecasts. It writes `app/data/imd_context.json` for the site only when the repository variable `IMD_PUBLISH` is `1`, which should be set only once IMD's usage rules are confirmed to allow it. The repository variable `IMD_AUTH` says how the key is sent (`header:Authorization:Bearer` by default, `header:<Name>` or `query:<param>`), as the IMD account dashboard specifies.
 
 ## Visit counting
 

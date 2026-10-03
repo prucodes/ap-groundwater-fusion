@@ -10,7 +10,10 @@ const labels = [
   { code: "measured_public", text: "Public measured groundwater (e.g. NWIC). Labeled public, never official_apwrims." },
   { code: "official_apwrims", text: "Official APWRIMS / AP government export. Pending — required for official results." },
   { code: "satellite-model", text: "NASA/NDMC GRACE-DA percentiles (0–100). Real signal, not groundwater depth." },
-  { code: "satellite-gauge-rainfall", text: "CHIRPS monthly rainfall (mm). Climate context; not groundwater depth or direct measured recharge." },
+  { code: "satellite-gauge-rainfall", text: "CHIRPS v3 monthly rainfall (mm), rebuilt from 1981. Climate context; not groundwater depth or direct measured recharge." },
+  { code: "measured-gauge-rainfall", text: "AP DES mandal rain gauges via APWRIMS (mm), against the department's normal for the water year to date. Measured; not recharge or crop loss." },
+  { code: "model-soil-moisture", text: "NRSC VIC land-surface model via APWRIMS: plant-available soil water at 5, 30, 100 and 150 cm, % of capacity. Modelled and rainfall-driven; not a field probe." },
+  { code: "measured-reservoir-storage", text: "Reservoir telemetry via APWRIMS (TMC; releases in cusecs). Measured at the dam; a canal release is not water delivered to a mandal." },
   { code: "model-water-balance", text: "TerraClimate rainfall minus actual ET (mm). A climatic water-balance indicator, not measured recharge." },
   { code: "derived", text: "Nowcast, model P10–P90 range, qualitative completeness class and neutral monitoring status." },
   { code: "public_prototype", text: "Public prototype boundaries. official_flag = false until official polygons arrive." },
@@ -30,10 +33,28 @@ const signals = [
     tone: "var(--cyan)",
   },
   {
-    name: "CHIRPS rainfall (satellite-gauge)",
+    name: "CHIRPS v3 rainfall (satellite-gauge)",
     can: "Shows rainfall timing and anomalies that can support hydrologic interpretation.",
     cant: "Does not see groundwater or measured recharge and cannot establish a cause.",
     tone: "var(--sig-surface)",
+  },
+  {
+    name: "AP DES rain gauges (measured, via APWRIMS)",
+    can: "Measure this water year's rainfall per mandal against the department's own normal, updated daily.",
+    cant: "Gauge density varies by mandal; a deficit does not measure recharge, crop stress or loss.",
+    tone: "var(--sig-surface)",
+  },
+  {
+    name: "NRSC VIC soil moisture (model, via APWRIMS)",
+    can: "Shows how much plant-available water the soil holds at four depths, against the same calendar day in earlier years.",
+    cant: "Modelled from rainfall and weather, so not independent of the gauges; not a field probe or a crop-water instruction.",
+    tone: "var(--green)",
+  },
+  {
+    name: "Reservoir storage and releases (measured, via APWRIMS)",
+    can: "Gives storage against capacity and last year, and the release into each canal at the headworks.",
+    cant: "Cannot say which mandals a canal reaches or how much arrives: the command-area map and delivery records are not public.",
+    tone: "var(--cyan)",
   },
   {
     name: "TerraClimate ET & water balance (model)",
@@ -164,12 +185,43 @@ export default function MethodologyPage() {
           <p>
             Rainfall context is CHIRPS at 0.05° averaged over each mandal polygon, walked back to <strong>1981</strong>
             &nbsp;— 45 years and thirteen El Niño events, which is what makes the rainfall composite worth reporting at
-            all. The ocean state is NOAA&rsquo;s Oceanic Niño Index.
+            all. Since October 2026 the whole record is <strong>CHIRPS v3</strong>, rebuilt from 1981 rather than
+            spliced: v2 production ends after December 2026, and v3 corrects gauges for wind undercatch and uses about
+            four times the station sources, so the same month reads differently. The state&rsquo;s own rain gauges
+            are shown beside it for the current water year; for June to August 2026 they read drier still. The ocean
+            state is NOAA&rsquo;s Oceanic Niño Index.
           </p>
           <p>
             <strong>ONI groups rainfall-history composites; it does not generate local groundwater predictions.</strong> Adding it to the three-month forecast was tested
             on rolling origin and made the forecast worse — 1.776 m to 1.850 m mean error, and worse in every aquifer.
             The groundwater forecast experiment remains research-only. Historical ENSO associations do not establish a local forecast or causation.
+          </p>
+        </div>
+      </section>
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon">
+              <IconDroplet />
+            </span>
+            Agriculture water watch — when the sources agree
+          </div>
+          <span className="cardSub">a count of stated tests / not a score</span>
+        </div>
+        <div className="methodSteps">
+          <p>
+            For each prototype mandal the water watch asks three questions and counts the yes answers. Is its groundwater
+            flagged short of its own seasonal normal (the Monsoon Watch rule above, from measured wells)? Is its gauge
+            rainfall for the water year <strong>20% or more below the department&rsquo;s normal</strong> (measured)? Is
+            its soil moisture at 30 cm among the <strong>driest quarter of years</strong> for the same calendar day
+            (modelled)? A source with no usable value for the mandal is left out of the count, never counted as a yes.
+          </p>
+          <p>
+            Three yeses mean three sources point the same way, which is a reason to check that mandal first. It is not a
+            drought declaration, a crop-loss estimate or a ranking of need. The soil model is driven by rainfall, so the
+            rain and soil answers are not independent; groundwater is. Each source is joined to its boundary only when the
+            join is unique: a boundary two source rows claim gets no value rather than the first or the worst.
           </p>
         </div>
       </section>

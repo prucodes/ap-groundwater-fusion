@@ -4899,9 +4899,10 @@ pre.jsonBody {
 
 .monsoonHeadline {
   display: grid;
-  /* Five stats now. At 190px only four tracks fit this card, which left the
-     fifth alone on a second row -- the same orphan the KPI rows had. */
-  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  /* Seven stats: the four groundwater ones fill the first row and the three
+     water ones (satellite rain, gauges, reservoirs) the second. An auto-fit
+     track count left one stat alone on a row, the orphan the KPI rows had. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 .monsoonStat {
@@ -5296,15 +5297,12 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 .rechargeToggle button.on { color: var(--ink); background: var(--card); box-shadow: var(--shadow-sm, 0 1px 3px rgba(7,29,53,0.1)); }
 .monsoonStat > strong small { font-size: 15px; font-weight: 600; margin-left: 2px; color: var(--muted); }
 
-/* Five stats orphan a lone card at four columns. Below the width where all five
-   fit, three (3 + 2) reads better than four (4 + 1); below that, two. These sit
-   after the base rule because source order decides between single-class
-   selectors -- the mistake that once collapsed the recharge map to nothing. */
-@media (max-width: 1200px) {
-  .monsoonHeadline { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
+/* Two columns on a phone, the odd last stat spanning both rather than standing
+   alone. These sit after the base rule because source order decides between
+   single-class selectors -- the mistake that once collapsed the recharge map. */
 @media (max-width: 760px) {
   .monsoonHeadline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .monsoonHeadline > .monsoonStat:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 @media (max-width: 460px) {
   .monsoonHeadline { grid-template-columns: minmax(0, 1fr); }
@@ -5496,3 +5494,9 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 @media(max-width:720px) {
   .overviewEvaluation > summary > span:last-child { display: block; margin: 7px 0 0 18px; }
 }
+
+/* Five map views no longer fit beside the card title: give them their own row
+   rather than squeezing labels onto two lines. */
+.overviewMapLead .cardHead { flex-wrap: wrap; }
+.overviewMapLead .segmented { max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.overviewMapLead .segBtn { white-space: nowrap; flex: 0 0 auto; }

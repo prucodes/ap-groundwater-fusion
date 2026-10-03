@@ -2,14 +2,17 @@ import { expect, test } from "@playwright/test";
 import { agricultureCsv, buildAgricultureEvidence, cropWaterBudget, DEFAULT_BUDGET } from "../lib/agriculture";
 import watchJson from "../data/monsoon_watch.json";
 import recordsJson from "../data/mandal_groundwater_records_v2.json";
+import waterJson from "../data/water_context.json";
 import geometry from "../data/ap_map_geometry.json";
-import type { MonsoonWatch } from "../lib/data";
+import type { MonsoonWatch, WaterContext } from "../lib/data";
 import type { MandalGroundwaterRecordV2 } from "../lib/types";
 
 const watch = watchJson as MonsoonWatch;
 const records = recordsJson.records as MandalGroundwaterRecordV2[];
+const water = waterJson as unknown as WaterContext;
 const features = geometry.mandals.map(feature => ({ d: feature.d, m: feature.m, path: "M0 0Z" }));
 const evidence = buildAgricultureEvidence(watch, records, features);
+const withWater = buildAgricultureEvidence(watch, records, features, water);
 
 test("one result per boundary, reconciled denominators and no invented crop exposure", () => {
   expect(evidence.mandals).toHaveLength(features.length);
@@ -83,6 +86,84 @@ test("export retains caveats, filtered rows, empty crop area and formula safety"
   expect(csv).toContain("PROTOTYPE"); expect(csv).toContain("not a crop-loss estimate");
   expect(csv).toContain("\"'=CMD()\"");
   expect(csv).toContain("Seasonal baseline review pending");
-  expect(csv.trim().split("\n")).toHaveLength(6);
+  expect(csv.trim().split("\n")).toHaveLength(9);
   expect(csv.trim().endsWith(',""')).toBe(true);
+});
+
+test("soil and gauge rain join by boundary and leave the groundwater classification alone", () => {
+  const groundwater = ({ boundaries, compared, flagged, severe, unresolved, unmappedSeries, ambiguousBoundaries }: typeof evidence.counts) =>
+    ({ boundaries, compared, flagged, severe, unresolved, unmappedSeries, ambiguousBoundaries });
+  expect(groundwater(withWater.counts)).toEqual(groundwater(evidence.counts));
+  expect(withWater.mandals.map(row => row.signal)).toEqual(evidence.mandals.map(row => row.signal));
+  const orvakal = withWater.mandals.find(row => row.mandal === "ORVAKAL")!;
+  const soil = water.soilMoisture!.mandals.find(row => row.boundaryIndex === orvakal.index)!;
+  const rain = water.rainfall!.mandals.find(row => row.boundaryIndex === orvakal.index)!;
+  expect(orvakal.soil?.pct).toBe(soil.pct[water.soilMoisture!.depthsCm.indexOf(water.soilMoisture!.headlineDepthCm)]);
+  expect(orvakal.rain?.deviationPct).toBe(rain.deviationPct);
+  expect(withWater.mandals.filter(row => row.soil).length).toBeGreaterThan(550);
+  expect(evidence.mandals.every(row => row.soil === null && row.rain === null)).toBe(true);
+});
+
+test("a boundary claimed by two soil or rain rows shows neither", () => {
+  const orvakal = withWater.mandals.find(row => row.mandal === "ORVAKAL")!;
+  const soil = water.soilMoisture!.mandals.find(row => row.boundaryIndex === orvakal.index)!;
+  const doubled = { ...water, soilMoisture: { ...water.soilMoisture!, mandals: [...water.soilMoisture!.mandals, { ...soil, uuid: "other", pct: soil.pct.map(() => 1) }] } };
+  const updated = buildAgricultureEvidence(watch, records, features, doubled);
+  expect(updated.mandals[orvakal.index].soil).toBeNull();
+  expect(updated.mandals[orvakal.index].rain).toEqual(orvakal.rain);
+});
+
+test("missing water sections stay missing instead of becoming zeros", () => {
+  const updated = buildAgricultureEvidence(watch, records, features, { ...water, soilMoisture: null, rainfall: null, reservoirs: null });
+  expect(updated.water).toEqual({ soil: null, rain: null, reservoirs: null });
+  expect(updated.mandals.every(row => row.soil === null && row.rain === null)).toBe(true);
+});
+
+test("canal releases are listed, never summed into a supply total", () => {
+  const releases = withWater.water.reservoirs!.topCanalReleases;
+  expect(releases.length).toBeGreaterThan(0);
+  expect(releases.length).toBeLessThanOrEqual(6);
+  for (let i = 1; i < releases.length; i++) expect(releases[i - 1].cusecs).toBeGreaterThanOrEqual(releases[i].cusecs);
+  expect(Object.keys(withWater.water.reservoirs!)).not.toContain("canalReleaseCusecs");
+});
+
+test("export carries soil and gauge columns with their own caveats", () => {
+  const orvakal = withWater.mandals.find(row => row.mandal === "ORVAKAL")!;
+  const csv = agricultureCsv([orvakal], withWater);
+  expect(csv).toContain("modelled, not measured");
+  expect(csv).toContain("soil_moisture_pct");
+  expect(csv).toContain("gauge_rain_departure_pct");
+  expect(csv).toContain(`"${orvakal.rain!.deviationPct}"`);
+  expect(csv).toContain("signals_pointing_to_stress");
+  expect(csv).toContain("not a score");
+});
+
+test("agreement counts stated tests and never treats a missing source as agreeing", () => {
+  for (const row of withWater.mandals) {
+    const a = row.agreement;
+    expect(a.stressed).toBe([a.groundwater, a.rain, a.soil].filter(value => value === true).length);
+    expect(a.known).toBe([a.groundwater, a.rain, a.soil].filter(value => value !== null).length);
+    expect(a.groundwater).toBe(row.signal === "unavailable" ? null : row.signal === "short" || row.signal === "severe");
+    if (!row.rain) expect(a.rain).toBeNull();
+    if (!row.soil?.rankDriest) expect(a.soil).toBeNull();
+  }
+  expect(withWater.counts.agreeAll).toBe(withWater.mandals.filter(row => row.agreement.stressed === 3).length);
+  expect(withWater.counts.agreeAll).toBeGreaterThan(0);
+  expect(withWater.counts.agreeAll).toBeLessThanOrEqual(withWater.counts.flagged);
+  expect(withWater.districts.reduce((n, district) => n + district.agreeAll, 0)).toBe(withWater.counts.agreeAll);
+  expect(evidence.counts.agreeAll).toBe(0);
+  expect(evidence.counts.allKnown).toBe(0);
+});
+
+test("the soil test is the driest quarter of years for that date, nothing looser", () => {
+  const orvakal = withWater.mandals.find(row => row.mandal === "ORVAKAL")!;
+  const soil = water.soilMoisture!.mandals.find(row => row.boundaryIndex === orvakal.index)!;
+  const soilTest = (rankDriest: number) => buildAgricultureEvidence(watch, records, features, {
+    ...water,
+    soilMoisture: { ...water.soilMoisture!, mandals: water.soilMoisture!.mandals.map(row => row === soil ? { ...row, baseline: { ...row.baseline!, rankDriest, ofYears: 13 } } : row) },
+  }).mandals[orvakal.index].agreement.soil;
+  expect(soilTest(1)).toBe(true);
+  expect(soilTest(3)).toBe(true);
+  expect(soilTest(4)).toBe(false);
+  expect(soilTest(13)).toBe(false);
 });

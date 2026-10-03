@@ -38,9 +38,10 @@
 .dossierHead { display: grid; grid-template-columns: 1fr minmax(100px, 44%); align-items: center; gap: 9px; }
 .dossierHead > select { min-width: 0; width: 100%; color: var(--ink-soft); font-size: 10px; padding: 5px; background: var(--card); border: 1px solid var(--line); border-radius: 3px; }
 .dossierHead h3 { grid-column: 1 / -1; font-size: 24px; font-weight: 600; overflow-wrap: anywhere; }
-.figures { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px 0; margin: 0 0 13px; border-bottom: 1px solid var(--line); }
-.figures strong { display: block; font: 500 30px var(--font-mono); color: var(--ag-red); }
-.figures > div:last-child strong { color: var(--ag-green); }
+.figures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; padding: 15px 0; margin: 0 0 13px; border-bottom: 1px solid var(--line); }
+.figures strong { display: block; font: 500 26px var(--font-mono); color: var(--ag-red); }
+.figures > div:nth-child(2) strong { color: var(--ag-green); }
+.figures > div:nth-child(3) strong { color: #a37121; }
 .figures span { display: block; font-size: 10px; margin-top: 3px; color: var(--ink-soft); }
 .figures small { display: block; font-size: 9px; margin-top: 4px; color: var(--muted); }
 .records > span { font-size: 10px; color: var(--muted); }

@@ -33,10 +33,25 @@ for (const width of [1440, 390]) {
     await page.screenshot({ path: testInfo.outputPath(`lab-${width}.png`), fullPage: true, animations: "disabled" });
     const watch = page.getByRole("region", { name: "Where does the water story need a closer look?" });
     await watch.scrollIntoViewIfNeeded();
+    const context = page.getByRole("group", { name: "Rainfall, soil moisture and reservoir context" });
+    await expect(context.getByTestId("context-rainfall")).toContainText(/Gauge rainfall\s*Measured/);
+    await expect(context.getByTestId("context-rainfall")).toContainText("against normal");
+    await expect(context.getByTestId("context-soil")).toContainText(/Modelled/);
+    await expect(context.getByTestId("context-soil")).toContainText("not measured in a field");
+    await expect(context.getByTestId("context-reservoirs")).toContainText("of capacity");
+    await context.getByText("Largest canal releases now").click();
+    await expect(context.getByTestId("context-reservoirs")).toContainText("command-area map, which is not public");
+    await context.screenshot({ path: testInfo.outputPath(`water-context-${width}.png`) });
     await page.getByRole("combobox", { name: "District filter" }).selectOption("KURNOOL");
     await page.getByRole("searchbox", { name: "Search mandals or districts" }).fill("orvakal");
-    await expect(page.getByRole("complementary", { name: "Selected mandal evidence" }).getByRole("heading", { name: "Orvakal", exact: true })).toBeVisible();
+    const rail = page.getByRole("complementary", { name: "Selected mandal evidence" });
+    await expect(rail.getByRole("heading", { name: "Orvakal", exact: true })).toBeVisible();
     await expect(page.getByText("28.97", { exact: false }).first()).toBeVisible();
+    const season = rail.getByRole("definition").filter({ hasText: /vs normal/ });
+    await expect(season).toHaveCount(1);
+    await expect(rail).toContainText(/Soil moisture 30 cm/);
+    await expect(rail).toContainText(/of 1\d years/);
+    await expect(rail.locator("dl").last()).toContainText("Canal delivery to this mandalNot connected");
     await page.getByRole("button", { name: "AP map", exact: true }).click();
     await expect(page.getByRole("group", { name: "AP groundwater water-watch map" }).locator("path")).toHaveCount(670);
     const download = page.waitForEvent("download");
@@ -53,11 +68,37 @@ for (const width of [1440, 390]) {
     await page.getByRole("button", { name: "District fieldbook", exact: true }).click();
     await page.getByRole("button", { name: "Next review page" }).click();
     await expect(page.getByText("11-20 of 670", { exact: true })).toBeVisible();
+    const readiness = page.getByRole("region", { name: "The missing links matter." });
+    await expect(readiness).toContainText("Partly connected");
+    const sources = readiness.getByRole("list", { name: "Supply and weather sources" }).getByRole("listitem");
+    await expect(sources).toHaveCount(5);
+    await expect(sources.filter({ hasText: "IMD forecasts and warnings" })).toHaveAttribute("data-state", "pending");
+    await expect(sources.filter({ hasText: "Canal delivery to mandals" })).toHaveAttribute("data-state", "off");
+    await expect(sources.filter({ hasText: "Gauge rainfall" })).toHaveAttribute("data-state", "on");
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
     expect(errors).toEqual([]);
     await page.screenshot({ path: testInfo.outputPath(`agriculture-${width}.png`), fullPage: true });
   });
 }
+
+test("three-signal agreement narrows the map to corroborated mandals", async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/agriculture/");
+  await expect(page.locator("main > div")).toHaveCSS("opacity", "1");
+  const tile = page.getByTestId("agreement-tile");
+  const count = Number((await tile.locator("strong").innerText()).split("/")[0].trim());
+  expect(count).toBeGreaterThan(0);
+  await tile.getByRole("button", { name: "Show them on the map" }).click();
+  await expect(page.getByRole("combobox", { name: "Water signal filter" })).toHaveValue("agree3");
+  await expect(page.getByText(`${count} boundary units`, { exact: true })).toBeVisible();
+  const map = page.getByRole("group", { name: "AP groundwater water-watch map" });
+  await expect(map.locator('path[aria-disabled="false"]')).toHaveCount(count);
+  const rail = page.getByRole("complementary", { name: "Selected mandal evidence" });
+  await expect(rail.getByRole("img", { name: /^3 of 3 usable signals point to stress/ })).toBeVisible();
+  await page.getByRole("combobox", { name: "Water signal filter" }).selectOption("agree2");
+  expect(Number((await page.getByText(/^\d+ boundary units$/).innerText()).split(" ")[0])).toBeGreaterThan(count);
+  await page.screenshot({ path: testInfo.outputPath("agreement-map.png") });
+});
 
 test("agriculture respects reduced motion and stays readable in dark mode", async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });

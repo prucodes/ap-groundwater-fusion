@@ -1,6 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
-import { datasetManifest, mandals, districtRollups, modelCard, titleCase } from "../../../lib/data";
+import { datasetManifest, mandals, districtRollups, modelCard, monsoonWatch, titleCase } from "../../../lib/data";
+import { agricultureEvidence } from "../../../lib/agricultureServer";
+import { waterForDistrict, waterSummary } from "../../../lib/waterSummary";
 import type { MandalGroundwaterView } from "../../../lib/types";
 
 export const runtime = "nodejs";
@@ -32,8 +34,37 @@ function statewideContext(): string {
     `Rolling temporal holdout (${temporal.eligibleCohort}, ${temporal.evaluationPeriod.start}–${temporal.evaluationPeriod.end}, n=${temporal.sampleCount}): MAE ${f(temporal.model.maeM)} m, R² ${f(temporal.model.r2)}.`,
     `Whole-mandal spatial holdout (${spatial.validation}, ${spatial.mandalCount} mandals): MAE ${f(spatial.reportedMetric.maeM)} m.`,
     `Same-month CGWB/APWRIMS cross-network comparison (n=${cross.sampleCount}): MAE ${f(cross.maeM)} m, correlation ${f(cross.correlation)}. This is network comparability, not model accuracy.`,
-    `Forecast release: ${modelCard.forecastRelease.status}; released horizons: none.`,
+    `Forecast release: ${modelCard.forecastRelease.status}; released horizons (months): ${modelCard.forecastRelease.releasedHorizons.join(", ") || "none"}.`,
+    ...seasonContext(),
   ].join("\n");
+}
+
+/* ---- this water year, beside the groundwater: dated, sourced, and kept apart from it ---- */
+function seasonContext(): string[] {
+  const lines: string[] = [];
+  const { rain, soil, reservoirs } = waterSummary;
+  const chirps = monsoonWatch.rainfall;
+  if (rain) {
+    const short = rain.categories.deficient + rain.categories.scanty + rain.categories.noRain;
+    lines.push(`SEASON - gauge rainfall (AP DES rain gauges via APWRIMS; MEASURED), ${rain.start} to ${rain.end}: ${f(rain.deviationPct)}% against the department's normal, area-weighted; ${short} of ${rain.mandals} mandals deficient or worse.`);
+  }
+  if (chirps) lines.push(`Satellite rainfall (${chirps.product.split(" monthly")[0]}; satellite-gauge estimate), months ${chirps.months} of ${monsoonWatch.season.year}: ${f(chirps.anomalyPct)}% against its ${chirps.firstYear}-${monsoonWatch.season.year - 1} normal; rank ${chirps.rankDriest} driest of ${chirps.ofYears}.`);
+  if (soil) lines.push(`Soil moisture (NRSC VIC land-surface model via APWRIMS; MODELLED, driven by rainfall) at ${soil.depthCm} cm on ${soil.asOf ?? "an unconfirmed date"}: below its usual level for the date in ${soil.belowOwnMedian} of ${soil.withBaseline} mandals; ${soil.driestOnRecord} at their driest for the date since ${soil.firstYear}.`);
+  if (reservoirs) lines.push(`Reservoir storage (Water Resources telemetry via APWRIMS; MEASURED at the dam), ${reservoirs.count} major and medium reservoirs at ${reservoirs.asOf}: ${f(reservoirs.storagePct)}% of capacity against ${f(reservoirs.lastYearPct)}% a year ago. Canal releases are not deliveries to any mandal.`);
+  const { counts } = agricultureEvidence();
+  lines.push(`Agreement count: ${counts.agreeAll} mandals (of ${counts.allKnown} with all three usable) where a groundwater shortfall flag, gauge rain 20%+ below normal and soil moisture in the driest quarter of years for the date coincide. A count of stated tests, not a score.`);
+  if (monsoonWatch.enso) lines.push(`Ocean state (NOAA ONI): ${monsoonWatch.enso.season} ${monsoonWatch.enso.asOf.slice(0, 4)} ${f(monsoonWatch.enso.oniC)} C, ${monsoonWatch.enso.state.replace("_", " ")} (${monsoonWatch.enso.strength}). Context only; no model on this site uses it.`);
+  return lines;
+}
+
+function districtSeason(name: string): string[] {
+  const w = waterForDistrict(name);
+  if (!w) return [];
+  return [
+    w.rain ? `District gauge rainfall (measured) since ${waterSummary.rain?.start}: ${f(w.rain.actualMm)} mm against ${f(w.rain.normalMm)} mm normal (${f(w.rain.deviationPct)}%, ${w.rain.category ?? "uncategorised"}).` : "",
+    w.soil ? `District soil moisture (modelled): below its usual level for the date in ${w.soil.belowOwnMedian} of ${w.soil.withBaseline} mandals; median ${f(w.soil.medianPct)}% of capacity.` : "",
+    w.reservoirs ? `District reservoirs (measured): ${w.reservoirs.count}, holding ${f(w.reservoirs.storagePct)}% of capacity against ${f(w.reservoirs.lastYearPct)}% a year ago.` : "",
+  ].filter(Boolean);
 }
 
 function districtContext(name: string): string | null {
@@ -44,6 +75,7 @@ function districtContext(name: string): string | null {
     `DISTRICT FOCUS — ${titleCase(r.district_name)}:`,
     `${r.mandal_count} mandals; ${r.stress_count} in stress; avg estimated level ${f(r.avg_estimate_mbgl)} m; avg YoY ${f(r.avg_trend_m_per_yr)} m/yr; avg water balance ${f(r.avg_water_balance_mm)} mm (${r.deficit_count} in deficit).`,
     `Deepest mandals: ${top.map((m) => `${titleCase(m.mandal_name)} ${f(m.estimate_mbgl)}m (${m.status})`).join("; ")}.`,
+    ...districtSeason(r.district_name),
   ].join("\n");
 }
 
@@ -83,6 +115,7 @@ Rules:
 - Temporal-nowcast error applies only to the stated lag-eligible holdout cohort. Never generalize it to sensorless mandals.
 - GRACE-DA is regional model-assimilated context, not direct mandal groundwater depth.
 - Rainfall minus actual ET is climate context, not direct measured recharge.
+- Gauge rainfall and reservoir storage are measured; soil moisture is modelled and driven by rainfall; a canal release is not a delivery to a mandal; the agreement count is a count of stated tests, not a score.
 - Context agreement categories are patterns to investigate, never causal attributions.
 - Only the three-month horizon is released. Quote it only with its interval and its target month, and invent no other future value.
 - Do not recommend permits, pumping restrictions or field orders. Suggest monitoring, history review or field verification.

@@ -27,6 +27,14 @@ def speech_text(text):
     return text.replace("El Nino", "El Neen-yo").replace("El Niño", "El Neen-yo")
 
 
+def narrated_figures(data):
+    """The measurements a fixed edition of the film speaks aloud."""
+    rain, history = data["rain"], data["history"]
+    return {"rainProduct": rain.get("product", "CHIRPS").split(" monthly")[0], "rainMonths": rain["months"],
+            "rainAnomalyPct": rain["anomalyPct"], "elNinoBelowNormal": history["elNinoBelowNormal"],
+            "elNinoYears": history["elNinoYears"], "fallingPct": data["recharge"]["fallingPct"]}
+
+
 def snapshot(watch, geometry, pacific):
     r, rain = watch["recharge"], watch["rainfall"]
     candidates = [m for m in watch["mandals"] if m["boundaryIndex"] is not None and m["thisSeasonM"] > 0]
@@ -56,7 +64,7 @@ def snapshot(watch, geometry, pacific):
         dict(id="ap-history", chapter="Andhra Pradesh / 45 years of rain", title="A tendency.\nNot a certainty.",
              voice=f"In the project's {history['years']} year Andhra Pradesh record, {history['elNinoBelowNormal']} of {history['elNinoYears']} El Nino summer monsoons had below average rain. Individual years varied widely.", source=f"CHIRPS project analysis | June-September, {history['firstYear']}-{history['lastYear']} | Historical association", minSeconds=10),
         dict(id="rain", chapter="Andhra Pradesh / rainfall", title="What fell\nover Andhra Pradesh?",
-             voice=f"In this project's {rain_window} {yr} snapshot, Andhra Pradesh rainfall was {pct} percent {rain_direction} its historical average.", source=f"Project CHIRPS v2.0 summary | {rain_window} {yr} | Baseline {rain['firstYear']}-{yr}", minSeconds=8),
+             voice=f"In this project's {rain_window} {yr} snapshot, Andhra Pradesh rainfall was {pct} percent {rain_direction} its historical average.", source=f"Project {rain.get('product', 'CHIRPS').split(' monthly')[0]} summary | {rain_window} {yr} | Baseline {rain['firstYear']}-{yr}", minSeconds=8),
         dict(id="recharge", chapter="From rain to groundwater", title="The journey\nbelow the surface.",
              voice="Some rain seeps through soil and rock, replenishing groundwater. Pumping and geology change how much water remains.", source="AI-generated geological illustration | Flow is schematic; not a surveyed site", minSeconds=8),
         dict(id="mandals", chapter="Andhra Pradesh / well readings", title="The wells tell\nthe local story.",
@@ -196,6 +204,9 @@ def main():
     vtt(data)
     (OUT/"manifest.json").write_text(json.dumps(data,separators=(",",":")))
     metadata={"title":data["title"],"snapshot":data["snapshot"],"sourceHash":data["sourceHash"],"duration":data["duration"],
+              # The figures the narration speaks, so the page can say where the
+              # live record has since moved away from this fixed edition.
+              "narrated":narrated_figures(data),
               "chapters":[{"id":s["id"],"title":s["chapter"],"start":s["start"],"text":s["voice"]} for s in data["scenes"]],"sources":data["sources"]}
     (ROOT/"app/data/monsoon_film.json").write_text(json.dumps(metadata,indent=2))
     print(f"Prepared {data['duration']:.1f}s film for snapshot {data['snapshot']}")

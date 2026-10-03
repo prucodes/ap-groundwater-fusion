@@ -65,6 +65,16 @@ STEPS = [
     # reused, exactly like a failed raster fetch.
     ("fetch APWRIMS sensor history",
      [PY, os.path.join(HERE, "fetch_apwrims_history.py")], False, 5400),
+    # The same portal's other public dashboards: NRSC-model soil moisture, DES
+    # gauge rainfall, and reservoir storage with the release into each canal.
+    # About twenty requests. Optional: a feed that fails keeps its previous
+    # section, which carries its own as-of date, so the page shows its age.
+    ("fetch APWRIMS water context",
+     [PY, os.path.join(HERE, "fetch_apwrims_context.py")], False, 900),
+    # IMD district forecasts and warnings. Dormant until the IMD_API_KEY secret
+    # exists (it skips and writes nothing), and private until IMD_PUBLISH=1.
+    ("fetch IMD forecasts (needs IMD_API_KEY)",
+     [PY, os.path.join(HERE, "fetch_imd_context.py")], False, 300),
     # The fetch steps above only land rasters on disk. These two resample them
     # into the per-district / per-mandal context the publisher actually reads —
     # without them the new rasters are downloaded and then ignored.

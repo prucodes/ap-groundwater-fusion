@@ -15,6 +15,7 @@ import {
   titleCase,
 } from "../lib/data";
 import type { MandalHeatLayerKey } from "../lib/types";
+import { isWaterLayer, WATER_LAYER_META, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
 
 type HoverState = { d: string; m: string; id?: string };
 
@@ -28,7 +29,7 @@ export function MandalStatusMap({
 }: {
   selectedId?: string;
   onSelect: (id: string) => void;
-  layer?: MandalHeatLayerKey | null;
+  layer?: MandalHeatLayerKey | WaterMandalLayer | null;
   /** Cap height (px); omit to fill the container width and scale by aspect. */
   maxHeight?: number;
 }) {
@@ -53,7 +54,7 @@ export function MandalStatusMap({
         {mapGeometry.mandals.map((m, i) => {
           const rec = mandalByMapKey(m.d, m.m);
           const fill = layer
-            ? mandalHeatColor(layer, m.d, m.m)
+            ? isWaterLayer(layer) ? waterLayerColor(layer, m.d, m.m) : mandalHeatColor(layer, m.d, m.m)
             : rec?.status_bucket
               ? statusMeta(rec.status_bucket).color
               : "var(--field)";
@@ -97,7 +98,12 @@ export function MandalStatusMap({
         <div className="estHoverCard" style={{ borderLeft: `3px solid ${hoverRec ? statusMeta(hoverRec.status_bucket).color : "var(--muted)"}` }} aria-live="polite">
           <div className="estHoverTitle">{titleCase(hover.m)}</div>
           <div className="estHoverSub">{titleCase(hover.d)} District</div>
-          {layer ? (
+          {layer && isWaterLayer(layer) ? (
+            <div className="estHoverRow">
+              <span>{WATER_LAYER_META[layer].label}</span>
+              <strong>{waterLayerText(layer, hover.d, hover.m) ?? "No unique record"}</strong>
+            </div>
+          ) : layer ? (
             <div className="estHoverRow">
               <span>{layer === "rainfall_mm" ? "Rainfall" : "Water balance"}</span>
               <strong>{formatNumber(mandalHeatValue(hover.d, hover.m, layer))} mm</strong>

@@ -4,13 +4,40 @@ import { useEffect, useRef, useState } from "react";
 import { countEvent } from "../lib/visit-counter";
 import film from "../data/monsoon_film.json";
 import { basePath } from "../lib/data";
+import { monthSpan } from "./agriculture/waterContextFormat";
 import styles from "./MonsoonFilm.module.css";
 
 function clock(seconds: number) {
   return `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
 }
 
-export function MonsoonFilm() {
+/** The live figures the film narrates, passed in by the server page so the
+ * client bundle does not carry the whole Monsoon Watch file. */
+export type FilmLiveFigures = {
+  rainProduct: string; rainMonths: string; rainAnomalyPct: number; year: number;
+  elNinoBelowNormal: number; elNinoYears: number; fallingPct: number;
+} | null;
+
+const pct = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(1)}%`;
+
+/** Where the live record has moved away from what this fixed edition says aloud. */
+export function sinceThisEdition(live: FilmLiveFigures, said: typeof film.narrated) {
+  if (!live || !said) return [];
+  const changes: string[] = [];
+  if (live.rainAnomalyPct !== said.rainAnomalyPct || live.rainProduct !== said.rainProduct) {
+    changes.push(`rainfall for ${monthSpan(live.rainMonths)} ${live.year} now reads ${pct(live.rainAnomalyPct)} against its normal on ${live.rainProduct} (the film says ${pct(said.rainAnomalyPct)}, from ${said.rainProduct})`);
+  }
+  if (live.elNinoBelowNormal !== said.elNinoBelowNormal || live.elNinoYears !== said.elNinoYears) {
+    changes.push(`${live.elNinoBelowNormal} of ${live.elNinoYears} El Niño monsoons were below normal (the film says ${said.elNinoBelowNormal} of ${said.elNinoYears})`);
+  }
+  if (live.fallingPct !== said.fallingPct) {
+    changes.push(`${live.fallingPct}% of compared mandals are deeper than in May (the film says ${said.fallingPct}%)`);
+  }
+  return changes;
+}
+
+export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
+  const since = sinceThisEdition(live, film.narrated);
   const ref = useRef<HTMLVideoElement>(null);
   const [active, setActive] = useState(0);
   const [failed, setFailed] = useState(false);
@@ -91,7 +118,8 @@ export function MonsoonFilm() {
         <p>Snapshot: {film.snapshot}. NOAA ocean reconstruction, CHIRPS rainfall and project APWRIMS well series.
           Circulation is schematic; the aquifer, village and city scenes are AI-generated illustrations, not site imagery.
           Prototype boundaries. Synthetic narration. Local outcomes are conditional, not forecasts.
-          The film is a fixed research edition, not a live update; its seasonal baseline is under review.</p>
+          The film is a fixed research edition, not a live update; its seasonal baseline is under review.
+          {since.length ? <span className={styles.since} data-testid="film-since"><strong>Since this edition:</strong> {since.join("; ")}. The figures elsewhere on this page are current.</span> : null}</p>
         <div className={styles.downloads}>
           <a href={`${assets}/pacific-to-ap-landscape.mp4`} download onClick={() => countEvent("monsoon/film-download", "Monsoon film: downloaded")}>Download film</a>
           <a href={`${assets}/pacific-to-ap-portrait.mp4`} download onClick={() => countEvent("monsoon/film-share", "Monsoon film: took the vertical cut to share")}>Vertical / WhatsApp</a>

@@ -30,6 +30,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { AlertsBell } from "./AlertsBell";
 import { CommandPalette } from "./CommandPalette";
 import { datasetManifest, formatPeriod } from "../lib/data";
+import { waterSummary } from "../lib/waterSummary";
 import { PageTransition } from "./PageTransition";
 
 // Primary workflow — the day-to-day screens. `desc` is the one-line explainer.
@@ -133,7 +134,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <span className="mobileBrandMark">
             <IconDroplet style={{ color: "#fff", width: 16, height: 16 }} />
           </span>
-          <strong>AP Groundwater</strong>
+          <strong>AP Water Intelligence</strong>
         </Link>
       </header>
 
@@ -159,7 +160,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <IconDroplet style={{ color: "#fff" }} />
           </div>
           <div className="brandText">
-            <strong>AP Groundwater</strong>
+            <strong>AP Water</strong>
             <span>Intelligence</span>
           </div>
         </div>
@@ -223,8 +224,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="feedDot" /> NASA GRACE-DA · {formatDay(periods.graceFetchDate)}
           </div>
           <div className="statusFeed">
-            <span className="feedDot" /> Rainfall · {formatPeriod(periods.rainfallValidPeriod)}
+            <span className="feedDot" /> CHIRPS rainfall · {formatPeriod(periods.rainfallValidPeriod)}
           </div>
+          {waterSummary.rain ? (
+            <div className="statusFeed">
+              <span className="feedDot" /> Rain gauges · to {formatDay(waterSummary.rain.end)}
+            </div>
+          ) : null}
+          {waterSummary.soil ? (
+            <div className="statusFeed">
+              <span className="feedDot" /> Soil moisture · {formatDay(waterSummary.soil.asOf)}
+            </div>
+          ) : null}
+          {waterSummary.reservoirs ? (
+            <div className="statusFeed">
+              <span className="feedDot" /> Reservoirs · {formatDay(waterSummary.reservoirs.asOf)}
+            </div>
+          ) : null}
           <OrbitGlobe3D />
         </div>
 
