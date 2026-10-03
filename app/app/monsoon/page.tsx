@@ -15,6 +15,7 @@ import { ExportMonsoonWatchButton } from "../../components/ExportButtons";
 import { ElNinoChain, EnsoTrail, RainfallHistory, RechargeMap, RechargeTrajectory } from "../../components/MonsoonVisuals";
 import { PacificEnso } from "../../components/PacificEnso";
 import { MonsoonFilm } from "../../components/MonsoonFilm";
+import { EnsoOutlook } from "../../components/monsoon/EnsoOutlook";
 import { TemperatureRecord } from "../../components/TemperatureRecord";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { CountedReach } from "../../components/CountedReach";
@@ -94,7 +95,7 @@ export default function MonsoonPage() {
       </div>
 
       <WatchEvidenceStatus />
-      <nav className={styles.nav} aria-label="Monsoon sections"><a href="#season-evidence">Season evidence</a><a href="#monsoon-film-title">Film brief</a><a href="#pacific-evidence">Pacific record</a><a href="#monsoon-map">Groundwater map</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
+      <nav className={styles.nav} aria-label="Monsoon sections"><a href="#season-evidence">Season evidence</a><a href="#monsoon-film-title">Film brief</a><a href="#enso-outlook">El Niño outlook</a><a href="#pacific-evidence">Pacific record</a><a href="#monsoon-map">Groundwater map</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
 
       <section className={styles.season} id="season-evidence" aria-label="Season evidence">
         <div className="cardHead">
@@ -171,6 +172,8 @@ export default function MonsoonPage() {
         elNinoBelowNormal: monsoonWatch.elNinoRainfall.swMonsoon.elNinoBelowNormal, elNinoYears: monsoonWatch.elNinoRainfall.swMonsoon.elNinoYears,
         fallingPct: monsoonWatch.recharge.fallingPct,
       } : null} />
+
+      <EnsoOutlook />
 
       <section className="card pacificEvidenceSection" id="pacific-evidence">
         <div className="cardHead">

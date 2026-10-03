@@ -9,6 +9,7 @@ import {
   IconChevrons,
   IconCloudRain,
   IconSun,
+  IconCalendar,
   IconCompass,
   IconDatabase,
   IconDroplet,
@@ -37,6 +38,7 @@ import { PageTransition } from "./PageTransition";
 // Primary workflow — the day-to-day screens. `desc` is the one-line explainer.
 const primaryNav = [
   { href: "/", label: "Overview", Icon: IconLayers, desc: "Executive cockpit: status map, priority mandals, source readiness and selected-area evidence." },
+  { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "What moved since the last weekly refresh: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its date." },
   { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
   { href: "/mandals", label: "Mandal Insights", Icon: IconCompass, desc: "Per-mandal deep dive: readings, satellite context, trend and agreement." },
   { href: "/watchlist", label: "Verify / Watchlist", Icon: IconActivity, desc: "Mandals where evidence needs field review or source verification." },

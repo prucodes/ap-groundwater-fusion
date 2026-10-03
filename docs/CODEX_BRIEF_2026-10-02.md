@@ -10,6 +10,32 @@ The site is reviewed by the Chief Minister's office, the CMO and IAS officers
 (including RTGS). The bar is high, and so is the cost of a wrong or overclaimed
 figure. Polish how things look; never change what they say without asking.
 
+## 0. Update, 3 October 2026: Drought Watch, El Niño outlook, This Week
+
+All three have shipped to `main` (PR #34 and the PR after it). In Task 4 (visual
+polish), treat them like any other screen, under these rules:
+
+- **Drought Watch (`/drought`)**: components in `app/components/drought/`, styles in
+  `Drought.module.css`, data from `phase3_levels/build_drought_watch.py`. Each mandal is
+  read through the national *Manual for Drought Management 2020* (Table 3.11 Trigger 1,
+  Tables 3.1/3.4/3.6/3.8/3.9, the Step 2 severity rule). **Do not change the rules, the
+  thresholds, the "interpretations" list or any wording that says "not a declaration".**
+  You may polish layout, colour, motion and phone layout. Tests:
+  `app/e2e/governance-drought.spec.ts`.
+- **El Niño outlook on `/monsoon` (`#enso-outlook`)**: `app/components/monsoon/EnsoOutlook.tsx`
+  and its CSS module, data `app/data/enso_outlook.json` from `phase3_levels/fetch_enso_outlook.py`
+  (NOAA CPC). The synopsis is quoted word for word: never paraphrase it. The forecast half
+  (dark) and the state's own record (light) must stay visibly separate. No `<title>`
+  inside SVGs (desktop-layout test).
+- **This Week (`/changes`)**: `app/app/changes/`, data `app/data/weekly_changes.json` from
+  `phase3_levels/build_weekly_changes.py`. Every value is read from a published file and
+  keeps its own date.
+- **Guards (do not touch)**: `check_not_shrinking` in `fetch_apwrims_context.py` and
+  `check_past_weeks` in `build_drought_watch.py`. On 3 Oct 2026 the APWRIMS portal dropped
+  September for all 28 districts; these guards stop that being published.
+- The weekly workflow now opens a GitHub issue when a refresh fails or keeps a feed
+  (`phase3_levels/refresh_health.py`).
+
 ## 1. What was built
 
 ### New data, refreshed every Monday

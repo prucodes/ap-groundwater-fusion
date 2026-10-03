@@ -200,14 +200,14 @@ def build(fetch=get):
         "kind": "forecast",
         "licence": "US Government work, public domain; the synopsis is quoted verbatim",
         "urls": {"discussion": DISCUSSION, "probabilities": PROBABILITIES, "strengths": STRENGTHS, "outlook": OUTLOOK},
-        "index": "RONI: CPC's relative Nino-3.4 index, 3-month means, 1991-2020 base",
+        "index": "RONI: CPC's relative Niño 3.4 index, three-month means, 1991–2020 base",
         "strengthBands": {"weak": 0.5, "moderate": 1.0, "strong": 1.5, "veryStrong": 2.0},
         **discussion,
         "probabilities": probabilities,
         "strengths": strengths,
         "outlook": outlook,
         "peak": peak(outlook),
-        "caveat": "An El Nino forecast is a forecast for the tropical Pacific, not a rainfall forecast for Andhra Pradesh.",
+        "caveat": "An El Niño forecast is a forecast for the tropical Pacific, not a rainfall forecast for Andhra Pradesh.",
     }
 
 
