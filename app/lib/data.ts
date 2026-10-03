@@ -207,6 +207,7 @@ export type MonsoonWatch = {
   elNinoRainfall: {
     swMonsoon: MonsoonComposite | null;
     neMonsoon: MonsoonComposite | null;
+    afterElNino?: AfterElNino | null;
   };
   districts: Array<{
     district: string;
@@ -250,7 +251,28 @@ export type MonsoonComposite = {
   allYears: number;
   elNinoRangePct: [number, number] | null;
   elNinoYearDetail: Array<{ year: number; mm: number; anomalyPct: number }>;
-  byDistrict: Array<{ district: string; elNinoAnomalyPct: number; elNinoYears: number; meanMm: number }>;
+  byDistrict: Array<{
+    district: string;
+    elNinoAnomalyPct: number;
+    elNinoYears: number;
+    meanMm: number;
+    elNinoBelowNormal?: number;
+    /** This season's share of the district's annual normal rain. */
+    shareOfAnnualPct?: number;
+  }>;
+};
+
+/** The southwest monsoon in the year after an El Niño winter, statewide. */
+export type AfterElNino = {
+  rule: string;
+  meanMm: number;
+  firstYear: number;
+  lastYear: number;
+  allYears: number;
+  allYearsBelowNormal: number;
+  all: { years: number; belowNormal: number; meanAnomalyPct: number };
+  veryStrong: { years: number; belowNormal: number; meanAnomalyPct: number; thresholdC: number };
+  detail: Array<{ year: number; afterWinter: number; oniOndC: number; mm: number; anomalyPct: number }>;
 };
 
 export const monsoonWatch = monsoonWatchJson as unknown as MonsoonWatch;

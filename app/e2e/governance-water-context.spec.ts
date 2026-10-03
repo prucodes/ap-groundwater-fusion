@@ -73,7 +73,7 @@ test("methodology and readiness document the new sources and their limits", asyn
     await expect(page.locator("main")).toContainText(text);
   }
   await page.goto("/readiness/");
-  await expect(page.getByRole("heading", { name: "Seven sources. Different clocks." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Eight sources. Different clocks." })).toBeVisible();
   await expect(page.locator("main")).toContainText("APWRIMS already holds crop-sown and crop-stress dashboards behind a login");
 });
 

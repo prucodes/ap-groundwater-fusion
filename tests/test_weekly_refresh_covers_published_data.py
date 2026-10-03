@@ -87,6 +87,30 @@ def test_the_water_context_is_both_fetched_and_committed():
         assert name in imported_data_files()
 
 
+def test_the_drought_watch_is_both_built_and_committed():
+    weekly = open(os.path.join(ROOT, "phase3_levels", "fetch_weekly.py")).read()
+    assert "build_drought_watch.py" in weekly
+    for name in ("drought_watch.json", "drought_watch_summary.json"):
+        assert name in committed_data_files()
+        assert name in imported_data_files()
+
+
+def test_the_full_drought_watch_stays_out_of_client_components():
+    """Every mandal's indicators and weekly series: the Drought Watch page and mandal
+    pages render it on the server; client code gets the summary."""
+    offenders = []
+    for base in SOURCE_DIRS:
+        for folder, _, names in os.walk(base):
+            for name in names:
+                if not name.endswith((".ts", ".tsx")):
+                    continue
+                source = open(os.path.join(folder, name)).read()
+                client = source.lstrip().startswith(('"use client"', "'use client'"))
+                if client and ("lib/droughtWatch" in source or "drought_watch.json" in source or "MandalDroughtCheck" in source):
+                    offenders.append(os.path.relpath(os.path.join(folder, name), ROOT))
+    assert not offenders, f"client components import the full drought watch: {offenders}"
+
+
 def test_the_full_water_context_stays_out_of_client_components():
     """At half a megabyte it would ride along to every visitor of a client page."""
     offenders = []

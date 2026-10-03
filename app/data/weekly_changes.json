@@ -1,0 +1,301 @@
+{
+ "contractVersion": "1.0.0",
+ "generatedAt": "2026-10-03T11:34:16+00:00",
+ "comparedWith": {
+  "label": "the data the site was showing before this refresh",
+  "commit": "cc86184",
+  "committedAt": "2026-10-02T22:56:40-04:00"
+ },
+ "items": [
+  {
+   "key": "rain",
+   "label": "Gauge rain against normal, water year to date",
+   "unit": "%",
+   "better": "higher",
+   "href": "/climate/",
+   "before": -33.2,
+   "after": -33.2,
+   "beforeAsOf": "2026-10-01",
+   "afterAsOf": "2026-10-01",
+   "change": 0.0,
+   "direction": "same",
+   "refreshed": false
+  },
+  {
+   "key": "soilBelow",
+   "label": "Mandals with soil drier than their usual for the date",
+   "unit": "mandals",
+   "better": "lower",
+   "href": "/agriculture/",
+   "before": 530,
+   "after": 530,
+   "beforeAsOf": "2026-10-01",
+   "afterAsOf": "2026-10-01",
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
+  },
+  {
+   "key": "soilDriest",
+   "label": "Mandals at their driest on record for the date",
+   "unit": "mandals",
+   "better": "lower",
+   "href": "/agriculture/",
+   "before": 12,
+   "after": 12,
+   "beforeAsOf": "2026-10-01",
+   "afterAsOf": "2026-10-01",
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
+  },
+  {
+   "key": "reservoirs",
+   "label": "Reservoir storage, share of capacity",
+   "unit": "%",
+   "better": "higher",
+   "href": "/agriculture/",
+   "before": 50.5,
+   "after": 50.5,
+   "beforeAsOf": "2026-10-02T15:03+05:30",
+   "afterAsOf": "2026-10-02T15:03+05:30",
+   "change": 0.0,
+   "direction": "same",
+   "refreshed": false
+  },
+  {
+   "key": "trigger1",
+   "label": "Mandals meeting the drought manual's Trigger 1",
+   "unit": "mandals",
+   "better": "lower",
+   "href": "/drought/",
+   "before": null,
+   "after": 465,
+   "beforeAsOf": null,
+   "afterAsOf": "2026-10-01",
+   "change": null,
+   "direction": null,
+   "refreshed": null
+  },
+  {
+   "key": "droughtSevere",
+   "label": "Mandals reading severe on the manual's indicators",
+   "unit": "mandals",
+   "better": "lower",
+   "href": "/drought/",
+   "before": null,
+   "after": 26,
+   "beforeAsOf": null,
+   "afterAsOf": "2026-10-01",
+   "change": null,
+   "direction": null,
+   "refreshed": null
+  },
+  {
+   "key": "droughtModerate",
+   "label": "Mandals reading moderate",
+   "unit": "mandals",
+   "better": "lower",
+   "href": "/drought/",
+   "before": null,
+   "after": 313,
+   "beforeAsOf": null,
+   "afterAsOf": "2026-10-01",
+   "change": null,
+   "direction": null,
+   "refreshed": null
+  },
+  {
+   "key": "gwStress",
+   "label": "Mandals whose groundwater reads stress",
+   "unit": "mandals",
+   "better": "lower",
+   "href": "/map/",
+   "before": 382,
+   "after": 382,
+   "beforeAsOf": "2026-08",
+   "afterAsOf": "2026-08",
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
+  },
+  {
+   "key": "ensoPeak",
+   "label": "NOAA's expected El Niño peak (median, °C above normal)",
+   "unit": "°C",
+   "better": "context",
+   "href": "/monsoon/",
+   "before": null,
+   "after": 2.67,
+   "beforeAsOf": null,
+   "afterAsOf": "2026-09-10",
+   "change": null,
+   "direction": null,
+   "refreshed": null,
+   "note": "El Niño Advisory"
+  }
+ ],
+ "groundwater": {
+  "worse": 0,
+  "better": 0,
+  "moved": [],
+  "truncated": false,
+  "latestMonth": {
+   "before": "2026-08",
+   "after": "2026-08"
+  }
+ },
+ "drought": {
+  "worse": [
+   {
+    "i": 61,
+    "d": "VIZIANAGARAM",
+    "m": "GANTYADA",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 91,
+    "d": "ANAKAPALLI",
+    "m": "K.KOTAPADU",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 95,
+    "d": "VISAKHAPATNAM",
+    "m": "PADMANABHAM",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 112,
+    "d": "ANAKAPALLI",
+    "m": "PAYAKARAOPETA",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 127,
+    "d": "KAKINADA",
+    "m": "SANKHAVARAM",
+    "from": "normal|moderate",
+    "to": "moderate"
+   },
+   {
+    "i": 200,
+    "d": "ELURU",
+    "m": "BHIMADOLE",
+    "from": "normal|moderate",
+    "to": "moderate|severe"
+   },
+   {
+    "i": 238,
+    "d": "ELURU",
+    "m": "CHATRAI",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 261,
+    "d": "KRISHNA",
+    "m": "PENAMALURU",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 293,
+    "d": "GUNTUR",
+    "m": "TADIKONDA",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 489,
+    "d": "KURNOOL",
+    "m": "KOWTHALAM",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 602,
+    "d": "SRI SATHYA SAI",
+    "m": "LEPAKSHI",
+    "from": "normal",
+    "to": "moderate"
+   }
+  ],
+  "better": [
+   {
+    "i": 85,
+    "d": "ANAKAPALLI",
+    "m": "NARSIPATNAM",
+    "from": "severe",
+    "to": "moderate"
+   },
+   {
+    "i": 142,
+    "d": "EAST GODAVARI",
+    "m": "RAJAHMUNDRY RURAL",
+    "from": "moderate|severe",
+    "to": "normal|moderate"
+   },
+   {
+    "i": 175,
+    "d": "KONASEEMA",
+    "m": "ALLAVARAM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 176,
+    "d": "KONASEEMA",
+    "m": "AMALAPURAM",
+    "from": "moderate|severe",
+    "to": "moderate"
+   },
+   {
+    "i": 309,
+    "d": "GUNTUR",
+    "m": "PHIRANGIPURAM",
+    "from": "severe",
+    "to": "moderate"
+   },
+   {
+    "i": 329,
+    "d": "BAPATLA",
+    "m": "KARLAPALEM",
+    "from": "severe",
+    "to": "moderate"
+   },
+   {
+    "i": 361,
+    "d": "BAPATLA",
+    "m": "VETAPALEM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 466,
+    "d": "Y.S.R KADAPA",
+    "m": "SIDHOUT",
+    "from": "moderate",
+    "to": "noTrigger"
+   },
+   {
+    "i": 593,
+    "d": "SRI SATHYA SAI",
+    "m": "PENUKONDA",
+    "from": "moderate",
+    "to": "noTrigger"
+   }
+  ],
+  "basis": "each mandal's manual reading now against the same reading one week of rain earlier"
+ },
+ "counts": {
+  "better": 0,
+  "worse": 0,
+  "same": 5,
+  "unknown": 4
+ }
+}

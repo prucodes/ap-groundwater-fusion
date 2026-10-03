@@ -26,6 +26,7 @@ import {
 import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat, mandals, modelCard, monsoonWatch, selectedMandal, titleCase, verifyMandals, wetnessLabel } from "../lib/data";
 import type { MandalHeatLayerKey } from "../lib/types";
 import { waterSummary } from "../lib/waterSummary";
+import { droughtSummary } from "../lib/droughtSummary";
 import { WATER_LAYER_META, isWaterLayer, waterLayerGradient, type WaterMandalLayer } from "../lib/waterMandals";
 
 /** Counts the server works out from the full water context, which never reaches the browser. */
@@ -282,6 +283,14 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
               <em>mandals where groundwater, gauge rain and soil all point to stress</em>
             </div>
           ) : null}
+          <div className="monsoonStripCell">
+            <span>Drought manual, step 1</span>
+            <strong>{droughtSummary.state.trigger1}</strong>
+            <em>
+              mandals with a dry spell · {droughtSummary.state.counts.severe} severe, {droughtSummary.state.counts.moderate} moderate on impact ·{" "}
+              <Link href="/drought">Drought Watch</Link>
+            </em>
+          </div>
           <Link className="validationLink" href="/agriculture#agriculture-watch">
             Open the water watch <IconArrowRight />
           </Link>
