@@ -25,3 +25,11 @@ test("this week lists every headline with its dates and is reachable from the si
   await expect(page.getByRole("region", { name: "Drought manual readings that moved" })).toBeVisible();
   await expect(page.getByRole("region", { name: "Groundwater status that moved" })).toBeVisible();
 });
+
+test("each released forecast says how such forecasts have fared", async ({ page }) => {
+  await page.goto("/");
+  const trust = page.getByTestId("forecast-trust").first();
+  await expect(trust).toContainText(/Lower confidence|Backed by its record/);
+  await expect(trust).toContainText("Forecasts made in");
+  await expect(trust).toContainText("average error over");
+});

@@ -200,7 +200,7 @@ export default function MethodologyPage() {
             The groundwater forecast experiment remains research-only. Historical ENSO associations do not establish a local forecast or causation.
           </p>
           <p>
-            <strong>When the three-month forecast can and cannot be trusted in a dry year.</strong> Retrained every quarter since
+            <strong>When the three-month forecast can and cannot be trusted in a dry year.</strong>{" "}Retrained every quarter since
             2018 and scored on what followed, forecasts whose three months turned out at least 25% drier than normal during the
             monsoon expected about 1 m more recharge than happened (2.15 m mean error against 1.79 m for assuming no change).
             That happens when the forecast is made before the season fails, as from June for September: nothing measured then
@@ -208,6 +208,16 @@ export default function MethodologyPage() {
             0.2 m) and the forecast beats no change. Shrinking toward no change and correcting by past bias were both tested;
             neither improved every period, so the released forecast is unchanged. The model was also re-run on the State&rsquo;s
             official mandal outlines: error moved by under 0.3% (1.797 m against 1.800 m), so its inputs are unchanged.
+          </p>
+          <p>
+            <strong>Each released forecast says how such forecasts have fared.</strong>{" "}The same backtest, split by the month a
+            forecast is made and by whether the rain over the three months before it ran short, near normal or above, shows where
+            the forecast earns its place: made in June it beat assuming no change by 14&ndash;25% whatever the rain; made in July,
+            only after a dry spell (19%); made in August it did about as well as no change, and in September worse. Every forecast carries the verdict of its own cell, with the error behind it,
+            and &ldquo;lower confidence&rdquo; where it has not beaten no change. A rule built on El Ni&ntilde;o at the forecast
+            date was tested first and rejected: forecasts made while the Pacific was already warm beat no change as often as any
+            others. In October 2026 the rainfall record was rebuilt from 1981 so that mandals drawn in more than one part average
+            rain over every part (seven mandals moved by 1.8&ndash;3.1%); retrained on it, the forecast&rsquo;s error is 1.794 m.
           </p>
         </div>
       </section>
@@ -252,7 +262,7 @@ export default function MethodologyPage() {
         <div className="methodSteps">
           <p>
             The Drought Watch follows the <strong>Manual for Drought Management (2020)</strong>, the procedure a State must use to
-            declare drought. Step 1, Trigger 1 (Table 3.11): a <strong>dry spell</strong> of four weeks in a row with under half the
+            declare drought. Step 1, Trigger 1 (Table 3.11): a <strong>dry spell</strong>{" "}of four weeks in a row with under half the
             week&rsquo;s normal rain sets it; without one, only <strong>large-deficient</strong> rainfall (60% or more below normal)
             does. Weekly totals come from the AP DES gauges via APWRIMS; SPI from CHIRPS v3 since 1981 is reported as the second
             rainfall route.
@@ -282,7 +292,7 @@ export default function MethodologyPage() {
         </div>
         <div className="methodSteps">
           <p>
-            <strong>Boundaries.</strong> The State&rsquo;s mandal geography gives every boundary vertex with the official area, LGD codes,
+            <strong>Boundaries.</strong>{" "}The State&rsquo;s mandal geography gives every boundary vertex with the official area, LGD codes,
             revenue division and assembly and parliamentary constituency, but not the order the vertices run in. The outline is
             rebuilt as the shortest closed path through them (or, failing that, a concave hull tuned to the official area) and is
             drawn only where it lands within 3% of the official area, does not lie over its official neighbours, and touches the
@@ -295,7 +305,7 @@ export default function MethodologyPage() {
             their coarseness explains). The model still computes its inputs on the prototype outlines until it is re-tested on these.
           </p>
           <p>
-            <strong>Constituencies.</strong> Each mandal is counted in the one assembly constituency its State record names, or,
+            <strong>Constituencies.</strong>{" "}Each mandal is counted in the one assembly constituency its State record names, or,
             without one, the constituency its centre falls in; a constituency&rsquo;s figures are its mandals&rsquo; counts and
             medians. Its outline is the State&rsquo;s own, rebuilt the same way and kept within 3% of the official area, else the
             union of its mandals.

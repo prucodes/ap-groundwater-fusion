@@ -1,0 +1,94 @@
+/* A constituency brief: a document, not a dashboard. One A4 page in print. */
+.brief {
+  --drought-empty: #d8dee8;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 34px 30px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow: var(--shadow-card);
+  color: var(--ink);
+}
+.brief, .brief * { letter-spacing: 0; }
+
+.head { display: flex; justify-content: space-between; gap: 24px; padding-bottom: 18px; border-bottom: 2px solid var(--ink); }
+.kicker { font: 600 10.5px var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); }
+.head h1 { margin: 6px 0 4px; font: 600 32px/1.15 var(--font-display); color: var(--ink); }
+.head h1 small { margin-left: 8px; font: 500 14px var(--font-mono); color: var(--muted); }
+.head p { margin: 0; font-size: 13px; color: var(--ink-soft); }
+.headSide { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex: none; font-size: 11.5px; color: var(--muted); }
+.print {
+  display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border: 0; border-radius: 999px;
+  background: var(--navy); color: #fff; font-size: 12.5px; font-weight: 600; cursor: pointer;
+}
+.print svg { width: 15px; height: 15px; }
+:global(:root[data-theme="dark"]) .print { background: var(--teal); }
+.back { font-size: 12px; color: var(--teal); }
+
+.tiles { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 18px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.tiles > div { padding: 14px 16px; border-left: 1px solid var(--line); min-width: 0; }
+.tiles > div:first-child { border-left: 0; }
+.tiles span { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.tiles strong { display: block; margin: 6px 0 2px; font: 600 26px/1.1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.tiles em { font-style: normal; font-size: 11.5px; color: var(--muted); }
+
+.body { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(220px, 1fr); gap: 24px; margin-top: 20px; align-items: start; }
+.reading h2 { margin: 0 0 8px; font: 600 15px var(--font-display); color: var(--ink); }
+.reading p { margin: 0 0 8px; font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); }
+.map { margin: 0; }
+.map svg { display: block; width: 100%; max-height: 260px; border-radius: 10px; background: var(--field); }
+.mandal { stroke: var(--card); stroke-width: 0.6; opacity: 0.9; }
+.outline { fill: none; stroke: var(--ink); stroke-width: 1.4; vector-effect: non-scaling-stroke; }
+.map figcaption { margin-top: 6px; font-size: 11px; color: var(--muted); }
+
+.table { width: 100%; margin-top: 18px; border-collapse: collapse; font-size: 12.5px; }
+.table th { padding: 8px 10px; border-bottom: 1.5px solid var(--ink); text-align: left; font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-soft); }
+.table td { padding: 8px 10px; border-bottom: 1px solid var(--hairline); vertical-align: top; color: var(--ink); font-variant-numeric: tabular-nums; }
+.table td small { display: block; margin-top: 1px; font-size: 10.5px; color: var(--muted); }
+.table td strong a { color: var(--ink); text-decoration: none; }
+.table td strong a:hover { color: var(--teal); }
+.chip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.chip i { width: 9px; height: 9px; border-radius: 2px; }
+
+.foot { margin-top: 18px; padding-top: 12px; border-top: 1px solid var(--line); }
+.foot p { margin: 0 0 6px; font-size: 10.5px; line-height: 1.55; color: var(--muted); }
+.foot strong { color: var(--ink-soft); }
+
+@media (max-width: 860px) {
+  .brief { padding: 20px 16px; }
+  .head { flex-direction: column; }
+  .headSide { align-items: flex-start; }
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tiles > div { border-top: 1px solid var(--line); }
+  .body { grid-template-columns: 1fr; }
+  .table { display: block; overflow-x: auto; }
+}
+
+/* Print keeps the desk layout whatever the paper width, sized for one A4 sheet. */
+@media print {
+  @page { size: A4; margin: 10mm; }
+  .brief { max-width: none; padding: 0; border: 0; box-shadow: none; background: #fff; color: #000; }
+  .print, .back { display: none; }
+  .head { flex-direction: row; padding-bottom: 10px; }
+  .headSide { align-items: flex-end; }
+  .head h1 { font-size: 22px; margin: 4px 0 2px; }
+  .head p { font-size: 11px; }
+  .tiles { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 10px; }
+  .tiles > div { padding: 7px 9px; border-top: 0; }
+  .tiles span { font-size: 8px; }
+  .tiles strong { font-size: 16px; margin: 3px 0 1px; }
+  .tiles em { font-size: 8.5px; }
+  .body { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 14px; margin-top: 10px; }
+  .reading h2 { font-size: 12px; margin-bottom: 4px; }
+  .reading p { font-size: 10px; line-height: 1.45; margin-bottom: 3px; }
+  .map svg { max-height: 150px; }
+  .map figcaption { font-size: 8px; }
+  .table { display: table; font-size: 9px; margin-top: 8px; }
+  .table th { font-size: 7.5px; }
+  .table td, .table th { padding: 3px 5px; }
+  .table td small { font-size: 7.5px; }
+  .table tr { break-inside: avoid; }
+  .foot { margin-top: 8px; padding-top: 6px; }
+  .foot p { font-size: 7.5px; line-height: 1.4; margin-bottom: 3px; }
+}

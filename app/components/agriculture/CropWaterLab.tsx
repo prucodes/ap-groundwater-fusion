@@ -1,42 +1,38 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { CROP_REFERENCE, CROP_REFERENCE_URL, CROP_STAGES, DEFAULT_BUDGET, cropWaterBudget, type CropKey } from "../../lib/agriculture";
+import { stateSummary } from "../../lib/stateSummary";
 import { IconCloudRain, IconDroplet, IconLeaf, IconPause, IconPlay, IconSun, IconTarget, IconSearch } from "../icons";
-import { SceneErrorBoundary } from "../living-water-table/SceneErrorBoundary";
-import type { FieldFocus } from "./NaturalCropScene";
-import { ATLAS_HEIGHT, CROP_FRAMES } from "./cropArtwork";
+import { FieldSection, StageGlyph, type FieldFocus } from "./FieldSection";
 import styles from "./AgricultureWorkspace.module.css";
 import field from "./CropField.module.css";
 
-const CropFieldScene = dynamic(() => import("./NaturalCropScene"), { ssr: false });
-
-const assetRoot = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/assets`;
 const fmt = (value: number) => value.toFixed(1);
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** The water table under the section: the State network's latest statewide average. */
+const waterTable = (() => {
+  const depth = stateSummary.state?.currentM;
+  const day = stateSummary.readingDates.mostCommon ?? stateSummary.readingDates.last;
+  if (depth === null || depth === undefined) return null;
+  const when = day ? `${Number(day.slice(8, 10))} ${MONTHS[Number(day.slice(5, 7)) - 1]} ${day.slice(0, 4)}` : "latest reading";
+  return { depthM: depth, label: `State wells, statewide average, ${when}` };
+})();
 
 export function CropWaterLab() {
   const [input, setInput] = useState({ ...DEFAULT_BUDGET });
   const [moving, setMoving] = useState(true);
   const [focus, setFocus] = useState<FieldFocus>("roots");
-  const [resetCamera, setResetCamera] = useState(0);
   const [lens, setLens] = useState(false);
   const [ready, setReady] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const [nearby, setNearby] = useState(false);
-  const [visible, setVisible] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const scene = useRef<HTMLDivElement>(null);
-  const onReady = useCallback(() => setReady(true), []);
-  const onFailure = useCallback(() => setFailed(true), []);
   useEffect(() => {
     const media = matchMedia("(prefers-reduced-motion: reduce)");
     const update = () => setReducedMotion(media.matches);
     update(); media.addEventListener("change", update);
-    const preload = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) setNearby(true); }, { rootMargin: "200px" });
-    const observe = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting));
-    if (scene.current) { preload.observe(scene.current); observe.observe(scene.current); }
-    return () => { media.removeEventListener("change", update); preload.disconnect(); observe.disconnect(); };
+    setReady(true);
+    return () => media.removeEventListener("change", update);
   }, []);
   const budget = cropWaterBudget(input);
   const profile = CROP_REFERENCE[input.crop];
@@ -60,24 +56,15 @@ export function CropWaterLab() {
             <button type="button" aria-pressed={focus === "crop"} onClick={() => setFocus("crop")}><IconLeaf />Crop ET</button>
           </div>
           <div className={field.tools}>
-            <button className={styles.iconButton} type="button" aria-label="Inspect crop and soil detail" title="Inspect crop and soil detail" aria-pressed={lens} onClick={() => setLens(value => !value)}><IconSearch /></button>
-            <button className={styles.iconButton} type="button" aria-label="Reset field view" title="Reset field view" onClick={() => setResetCamera(value => value + 1)}><IconTarget /></button>
+            <button className={styles.iconButton} type="button" aria-label="Inspect crop and soil detail" title="Name the soil layers" aria-pressed={lens} onClick={() => setLens(value => !value)}><IconSearch /></button>
+            <button className={styles.iconButton} type="button" aria-label="Reset field view" title="Reset field view" onClick={() => { setFocus("roots"); setLens(false); }}><IconTarget /></button>
             <button className={styles.iconButton} type="button" aria-label={moving ? "Pause water animation" : "Play water animation"} title={reducedMotion ? "Motion is disabled by your device preference" : moving ? "Pause water animation" : "Play water animation"} onClick={() => setMoving(!moving)}>{moving ? <IconPause /> : <IconPlay />}</button>
           </div>
         </div>
-        <div ref={scene} className={field.scene} data-testid="crop-field" data-ready={ready && !failed} data-moving={moving && !reducedMotion} data-crop={input.crop} data-stage={input.stage} data-focus={focus}>
+        <div className={field.scene} data-testid="crop-field" data-ready={ready} data-moving={moving && !reducedMotion} data-crop={input.crop} data-stage={input.stage} data-focus={focus}>
+          <FieldSection crop={input.crop} stage={input.stage} rain={input.rain} reserve={input.reserve} eto={input.eto} kc={budget.kc}
+            demand={budget.demand} gap={budget.gap} focus={focus} moving={moving && !reducedMotion} detail={lens} waterTable={waterTable} />
           <div className={field.sceneTitle}><span>THE CROP / {String(input.stage + 1).padStart(2, "0")}</span><strong>{profile.name}<small>{CROP_STAGES[input.stage]}</small></strong></div>
-          <div className={field.stageCoefficient}><span>REFERENCE Kc</span><strong>{budget.kc.toFixed(2)}</strong></div>
-          {(!ready || failed) && <div className={field.fallback}><img src={`${assetRoot}/agriculture-root-zone.webp`} alt="Illustrated crop canopy and roots in a soil cross-section; generic plants, not a surveyed field" width="1774" height="887" /><span role="status">{failed ? "Stage artwork unavailable. Scenario controls remain active." : "Preparing the crop cutaway"}</span></div>}
-          {nearby && !failed && <SceneErrorBoundary onError={onFailure} fallback={() => null}>
-            <CropFieldScene {...input} demand={budget.demand} moving={moving && !reducedMotion} visible={visible} focus={focus} resetCamera={resetCamera} lens={lens} onReady={onReady} onFailure={onFailure} />
-          </SceneErrorBoundary>}
-          <div className={field.processCaption} data-focus={focus}>
-            <span>{focus === "roots" ? "01 / ROOT-ZONE RESERVE" : focus === "rain" ? "01 / EFFECTIVE RAIN" : "01 / CROP DEMAND"}</span>
-            <strong>{focus === "roots" ? fmt(input.reserve) : focus === "rain" ? fmt(input.rain) : fmt(budget.demand)} <small>mm{focus === "roots" ? " at start" : " / 7 days"}</small></strong>
-            <small>{focus === "roots" ? "Assumed available soil water" : focus === "rain" ? "Assumed rain after losses" : "Reference ET × crop coefficient"}</small>
-          </div>
-          <span className={field.sceneCredit}>AI illustration · schematic flow · not field imagery</span>
         </div>
         <div className={field.sceneReadouts}>
             <button type="button" aria-label="Inspect effective rain" aria-pressed={focus === "rain"} onClick={() => setFocus("rain")}><IconCloudRain /><span>Effective rain<strong>{fmt(input.rain)} <small>mm</small></strong></span></button>
@@ -91,9 +78,8 @@ export function CropWaterLab() {
             {CROP_STAGES.map((stage, index) => {
               const result = cropWaterBudget({ ...input, stage: index });
               const maxDemand = Math.max(1, ...profile.kc.map(kc => input.eto * kc * 7));
-              const [atlasY, atlasH] = CROP_FRAMES[input.crop][index];
               return <button type="button" key={stage} aria-label={`${stage} Kc ${profile.kc[index].toFixed(2)}`} aria-pressed={input.stage === index} onClick={() => setInput({ ...input, stage: index })}>
-                <span className={field.stagePreview} aria-hidden="true" style={{ backgroundImage: `url(${assetRoot}/agriculture-${input.crop}-stages.webp)`, backgroundSize: `100% ${ATLAS_HEIGHT[input.crop] / atlasH * 100}%`, backgroundPosition: `center ${atlasY / (ATLAS_HEIGHT[input.crop] - atlasH) * 100}%` }} />
+                <StageGlyph crop={input.crop} stage={index} />
                 <span className={field.stageName}><i>{String(index + 1).padStart(2, "0")}</i><strong>{stage}</strong></span>
                 <span className={field.stageDemand}>{fmt(result.demand)} <small>mm</small><em>Kc {profile.kc[index].toFixed(2)}</em></span>
                 <span className={field.stageTrack} aria-hidden="true"><i style={{ width: `${result.rainUsed / maxDemand * 100}%`, background: "#2789af" }} /><i style={{ width: `${result.reserveUsed / maxDemand * 100}%`, background: "#448b64" }} /><i style={{ width: `${result.gap / maxDemand * 100}%`, background: "#b64c42" }} /></span>
@@ -127,6 +113,6 @@ export function CropWaterLab() {
         <div className={field.balanceSummary}><span>SCENARIO COVERAGE</span><strong>{budget.demand ? Math.round((budget.rainUsed + budget.reserveUsed) / budget.demand * 100) : 0}<small>%</small></strong><p>{budget.demand ? "Of estimated crop ET covered by effective rain and the assumed usable soil reserve." : "No crop ET in this input scenario."}</p><small>Not crop health, yield or irrigation advice.</small></div>
       </div>
     </div>
-    <details className={styles.method}><summary>Scenario assumptions and reference</summary><p>Plant shapes, root lengths and particle flows are illustrative, not measured dimensions or a calibrated growth or water-transport model. No irrigation or capillary rise is included. All effective rain and usable reserve are assumed available within the seven-day window; timing and soil capacity are not simulated. Rain not allocated to crop ET is not an estimate of groundwater recharge. A zero gap is not proof of a healthy crop. This is not a watering schedule, drought forecast or crop recommendation.</p><p>{profile.note} Crop varieties, wetting frequency, local climate and field conditions require agronomic calibration. Paddy is not represented because flooding and percolation require additional accounting. <a href={CROP_REFERENCE_URL} target="_blank" rel="noreferrer">FAO-56, Chapter 6, Table 12</a>.</p></details>
+    <details className={styles.method}><summary>Scenario assumptions and reference</summary><p>The section is drawn to scale for soil depth (0–1.8 m). Root depths are FAO-56 Table 22 ranges for the crop (about 0.15–0.20 m at sowing); plant heights follow FAO-56 Table 12 at half scale. Rain streaks, seepage marks and rising vapour are drawn in proportion to the inputs, not simulated. Soil layers are generic, not a surveyed profile. The water table is the State network&rsquo;s latest statewide average, for scale only. No irrigation or capillary rise is included. All effective rain and usable reserve are assumed available within the seven-day window; timing and soil capacity are not simulated. Rain not allocated to crop ET is not an estimate of groundwater recharge. A zero gap is not proof of a healthy crop. This is not a watering schedule, drought forecast or crop recommendation.</p><p>{profile.note} Crop varieties, wetting frequency, local climate and field conditions require agronomic calibration. Paddy is not represented because flooding and percolation require additional accounting. <a href={CROP_REFERENCE_URL} target="_blank" rel="noreferrer">FAO-56, Chapter 6, Table 12</a>.</p></details>
   </section>;
 }

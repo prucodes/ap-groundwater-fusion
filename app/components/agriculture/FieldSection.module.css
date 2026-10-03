@@ -1,0 +1,121 @@
+/* Field cross-section: survey-drawing restraint, earth tones, one blue for water. */
+.frame {
+  --fs-air-top: #e9f0f3;
+  --fs-air-bottom: #f6f8f6;
+  --fs-a: #8c735c;
+  --fs-b: #a88e70;
+  --fs-c: #c0aa8b;
+  --fs-grain: rgba(52, 36, 22, 0.16);
+  --fs-gravel: rgba(70, 56, 40, 0.22);
+  --fs-root: #3f2f22;
+  --fs-leaf: #55743f;
+  --fs-leaf-dry: #a8955f;
+  --fs-stalk: #4d6838;
+  --fs-water: #2a7bb0;
+  --fs-ink: #17242e;
+  --fs-muted: #5c6b76;
+  --fs-on-soil: #fbf6ee;
+  --fs-on-soil-muted: #efe4d4;
+  --fs-paper: var(--card);
+  position: absolute;
+  inset: 0;
+}
+:global(:root[data-theme="dark"]) .frame {
+  --fs-air-top: #0e1a23;
+  --fs-air-bottom: #15242d;
+  --fs-a: #4f3f31;
+  --fs-b: #5f4c3b;
+  --fs-c: #6d5a46;
+  --fs-grain: rgba(255, 240, 220, 0.08);
+  --fs-gravel: rgba(255, 240, 220, 0.1);
+  --fs-root: #e2cfb5;
+  --fs-leaf: #7ea865;
+  --fs-leaf-dry: #b8a26a;
+  --fs-stalk: #6f9152;
+  --fs-water: #5fb0e0;
+  --fs-ink: #e8f0f5;
+  --fs-muted: #9fb2c0;
+}
+.svg { display: block; width: 100%; height: 100%; font-family: var(--font-sans); }
+
+.airTop { stop-color: var(--fs-air-top); }
+.airBottom { stop-color: var(--fs-air-bottom); }
+.horizonA { fill: var(--fs-a); }
+.horizonB { fill: var(--fs-b); }
+.horizonC { fill: var(--fs-c); }
+.grain { fill: var(--fs-grain); }
+.gravel { fill: var(--fs-gravel); }
+.surface { stroke: #3d2e22; stroke-width: 1.4; }
+
+.moisture { fill: var(--fs-water); transition: opacity 0.4s var(--ease); }
+.rootBand { fill: var(--fs-water); opacity: 0.07; }
+.rootLine { stroke: var(--fs-on-soil); stroke-width: 1; stroke-dasharray: 5 5; opacity: 0.75; }
+.root { fill: none; stroke: var(--fs-root); stroke-linecap: round; opacity: 0.7; }
+
+.stalk { fill: var(--fs-stalk); }
+.leaf { fill: var(--fs-leaf); stroke: color-mix(in srgb, var(--fs-leaf) 70%, #000); stroke-width: 0.4; }
+.tassel { fill: none; stroke: #b39a5a; stroke-width: 1.2; stroke-linecap: round; }
+.ear { fill: #c9b27a; stroke: #8e7a46; stroke-width: 0.6; }
+.stem { fill: none; stroke: var(--fs-stalk); stroke-width: 1.3; stroke-linecap: round; }
+.leaflet { fill: var(--fs-leaf); }
+.peg { stroke: #6e5a3e; stroke-width: 0.8; }
+.pod { fill: #d9c39b; stroke: #8f7650; stroke-width: 0.6; }
+.senescent .leaf, .senescent .leaflet { fill: var(--fs-leaf-dry); stroke: color-mix(in srgb, var(--fs-leaf-dry) 70%, #000); }
+.senescent .stalk, .senescent .stem { fill: #8c7d50; stroke: #8c7d50; }
+
+.drop { stroke: var(--fs-water); stroke-width: 1.4; stroke-linecap: round; opacity: 0.55; animation: fall 1.4s linear infinite; }
+.seep { fill: none; stroke: var(--fs-water); stroke-width: 1.4; stroke-linecap: round; opacity: 0.8; animation: sink 2.4s ease-in infinite; }
+.wisp { fill: none; stroke: #b08a3e; stroke-width: 1.3; stroke-linecap: round; opacity: 0.5; animation: rise 3s ease-out infinite; }
+@keyframes fall { from { transform: translate(4px, -30px); opacity: 0; } 20% { opacity: 0.6; } to { transform: translate(-4px, 34px); opacity: 0; } }
+@keyframes sink { from { transform: translateY(-6px); opacity: 0; } 30% { opacity: 0.85; } to { transform: translateY(22px); opacity: 0; } }
+@keyframes rise { from { transform: translateY(8px); opacity: 0; } 30% { opacity: 0.55; } to { transform: translateY(-34px); opacity: 0; } }
+.frame[data-moving="false"] .drop,
+.frame[data-moving="false"] .seep,
+.frame[data-moving="false"] .wisp { animation-play-state: paused; }
+
+.label { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; fill: var(--fs-muted); }
+.big { font: 600 24px var(--font-display); fill: var(--fs-ink); font-variant-numeric: tabular-nums; }
+.unit { font: 500 12px var(--font-sans); fill: var(--fs-muted); }
+.value { font: 600 15px var(--font-display); fill: var(--fs-on-soil); }
+.note { font-size: 11px; fill: var(--fs-muted); }
+.layerRoots .label { fill: var(--fs-on-soil-muted); }
+.layerRoots .note { fill: var(--fs-on-soil-muted); }
+.gap { font-size: 12px; font-weight: 600; fill: #b64c42; }
+:global(:root[data-theme="dark"]) .gap { fill: #f09a86; }
+
+.gaugeFrame { fill: rgba(255, 255, 255, 0.14); stroke: var(--fs-on-soil); stroke-width: 1; opacity: 0.9; }
+.gaugeFill { fill: var(--fs-water); transition: y 0.4s var(--ease), height 0.4s var(--ease); }
+.labelOnSoil { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; fill: var(--fs-on-soil-muted); }
+.bigOnSoil { font: 600 22px var(--font-display); fill: var(--fs-on-soil); }
+.unitOnSoil { font: 500 12px var(--font-sans); fill: var(--fs-on-soil-muted); }
+.noteOnSoil { font-size: 11px; fill: var(--fs-on-soil-muted); }
+
+.axis line { stroke: var(--fs-on-soil); stroke-width: 1; opacity: 0.85; }
+.axis text { font: 500 11px var(--font-mono); fill: var(--fs-on-soil); }
+.horizonNames text { font-size: 10.5px; font-style: italic; fill: var(--fs-on-soil-muted); opacity: 0; transition: opacity 0.3s var(--ease); }
+.frame[data-detail="true"] .horizonNames text { opacity: 0.95; }
+
+.break { fill: var(--fs-paper); }
+.waterTop { stop-color: #1f5f86; }
+.waterBottom { stop-color: #143f5c; }
+.waterText { font: 600 13px var(--font-sans); fill: #eaf5fb; }
+.waterNote { font-weight: 400; fill: #b9d6e6; }
+.scaleNote { font-size: 10.5px; fill: var(--fs-muted); }
+
+/* Focus: the chosen flow's marks stay bright, the others' marks step back; labels never fade. */
+.marks { transition: opacity 0.3s var(--ease); }
+.frame[data-focus="rain"] .layerEt .marks, .frame[data-focus="rain"] .layerRoots .marks { opacity: 0.35; }
+.frame[data-focus="crop"] .layerRain .marks, .frame[data-focus="crop"] .layerRoots .marks { opacity: 0.35; }
+.frame[data-focus="roots"] .layerRain .marks, .frame[data-focus="roots"] .layerEt .marks { opacity: 0.4; }
+
+.glyph { display: block; width: 100%; aspect-ratio: 1.8; margin-bottom: 12px; border-radius: 4px; background: linear-gradient(180deg, var(--fs-air-top, #e9f0f3), var(--fs-air-bottom, #f6f8f6)); }
+.glyphSoil { fill: #a88e70; }
+:global(:root[data-theme="dark"]) .glyph { background: linear-gradient(180deg, #0e1a23, #15242d); }
+:global(:root[data-theme="dark"]) .glyphSoil { fill: #5f4c3b; }
+
+.glyph { --fs-leaf: #55743f; --fs-leaf-dry: #a8955f; --fs-stalk: #4d6838; --fs-root: #3f2f22; }
+:global(:root[data-theme="dark"]) .glyph { --fs-leaf: #7ea865; --fs-leaf-dry: #b8a26a; --fs-stalk: #6f9152; }
+
+@media (prefers-reduced-motion: reduce) {
+  .drop, .seep, .wisp { animation: none; }
+}

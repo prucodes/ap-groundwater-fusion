@@ -99,3 +99,6 @@ th.serial { padding: 9px 10px; font: 600 11px var(--font-mono); text-transform: 
 @media (max-width: 640px) { .command { padding: 20px 16px; } .command h2 { font-size: 20px; } }
 @media (prefers-reduced-motion: reduce) { .ac { transition: none; } }
 :global(:root[data-theme="dark"]) .chipOn { background: var(--teal); border-color: var(--teal); }
+.briefLink { display: inline-flex; margin-top: 12px; padding: 7px 13px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 12px; font-weight: 600; text-decoration: none; }
+.briefLink:hover { background: var(--deep-navy); }
+:global(:root[data-theme="dark"]) .briefLink { background: var(--teal); }

@@ -1,10 +1,10 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-10-03T03:48:16+00:00",
+ "generatedAt": "2026-10-03T23:11:25+00:00",
  "season": {
   "name": "Kharif 2026",
   "start": "2026-06-01",
-  "asOf": "2026-10-01",
+  "asOf": "2026-10-02",
   "declareBy": "2026-10-31",
   "earlyFrom": "2026-08-01",
   "weeks": [
@@ -242,13 +242,6 @@
      "to": "normal|moderate"
     },
     {
-     "i": 175,
-     "d": "KONASEEMA",
-     "m": "ALLAVARAM",
-     "from": "moderate",
-     "to": "normal"
-    },
-    {
      "i": 176,
      "d": "KONASEEMA",
      "m": "AMALAPURAM",
@@ -268,6 +261,13 @@
      "m": "KARLAPALEM",
      "from": "severe",
      "to": "moderate"
+    },
+    {
+     "i": 331,
+     "d": "BAPATLA",
+     "m": "NIZAMPATNAM",
+     "from": "moderate",
+     "to": "normal"
     },
     {
      "i": 361,
@@ -377,9 +377,9 @@
    "counts": {
     "severe": 2,
     "moderate|severe": 2,
-    "moderate": 12,
+    "moderate": 11,
     "normal|moderate": 1,
-    "normal": 1,
+    "normal": 2,
     "noTrigger": 2,
     "insufficient": 3
    }
@@ -503,9 +503,9 @@
    "counts": {
     "severe": 0,
     "moderate|severe": 2,
-    "moderate": 6,
+    "moderate": 7,
     "normal|moderate": 0,
-    "normal": 3,
+    "normal": 2,
     "noTrigger": 6,
     "insufficient": 2
    }
@@ -869,7 +869,7 @@
   "moderate",
   "noTrigger",
   "moderate",
-  "normal",
+  "moderate",
   "moderate",
   "noTrigger",
   "noTrigger",
@@ -1025,7 +1025,7 @@
   "moderate",
   "moderate",
   "moderate",
-  "moderate",
+  "normal",
   "severe",
   "severe",
   "moderate",

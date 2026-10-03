@@ -91,7 +91,7 @@ export default function EstimatesPage() {
           <>
             Calculated mandal groundwater depth <strong>in metres below ground</strong>, modelled by fusing each mandal&apos;s APWRIMS sensor
             history with climate and terrain features for <strong>current-period temporal nowcasts</strong>.{" "}
-            Measured values remain separate, and no forecast horizon is released.{" "}
+            Measured values remain separate; only the three-month forecast is released, each with how such forecasts have fared.{" "}
             <strong>Modelled nowcasts for lag-eligible mandals — not official APWRIMS data.</strong>
           </>
         }
@@ -241,7 +241,7 @@ export default function EstimatesPage() {
               <li><IconInfo /> Best where a mandal has some history (nowcast/gap-fill). Hard-rock Rayalaseema is the weakest.</li>
               <li><IconInfo /> Temporal nowcast performance does not describe whole-mandal or no-history estimation.</li>
               <li><IconInfo /> The displayed interval is a <strong>model P10–P90 quantile range</strong>, not a guaranteed 80% confidence interval.</li>
-              <li><IconInfo /> No future horizon is released; direct forecast experiments remain research-only.</li>
+              <li><IconInfo /> Only the three-month horizon is released; 1, 6 and 12 months did not clear the release gate. Each forecast says how forecasts made in the same month after similar rain fared.</li>
             </ul>
           </div>
         </aside>

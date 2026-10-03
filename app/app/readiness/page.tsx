@@ -50,7 +50,7 @@ export default function ReadinessPage() {
         <span style={{ flex: c.modelledRecordCount, background: "var(--teal)" }} /><span style={{ flex: c.measuredOnlyCount, background: "var(--amber)" }} /><span style={{ flex: c.boundaryOnlyCount + c.noDataCount, background: "var(--muted-2)" }} />
       </div>
       <div className={styles.legend}><span><i style={{ background: "var(--teal)" }} />Modelled</span><span><i style={{ background: "var(--amber)" }} />Measured only</span><span><i style={{ background: "var(--muted-2)" }} />Groundwater gap</span></div>
-      <p className={styles.note}>Model targets span {formatPeriod(p.modelTargetPeriodRange.start)} to {formatPeriod(p.modelTargetPeriodRange.end)}; {p.modelTargetPeriodRange.latestTargetCount} target the latest month. No future forecast horizon is released.</p>
+      <p className={styles.note}>Model targets span {formatPeriod(p.modelTargetPeriodRange.start)} to {formatPeriod(p.modelTargetPeriodRange.end)}; {p.modelTargetPeriodRange.latestTargetCount} target the latest month. Only the three-month forecast is released beyond them.</p>
     </section>
     <WatchEvidenceStatus />
     <section className={styles.section} aria-labelledby="ledger-title">

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { METRICS, metricColor, metricLegend, metricText, type ConstituencyRow, type MetricKey } from "../../lib/constituencies";
 import styles from "./Constituencies.module.css";
@@ -115,6 +116,7 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
                 {`${row.outline === "official" ? `Outline: the State's own${row.officialKm2 ? `, ${row.officialKm2} km²` : ""}` : row.outline === "mandals" ? "Outline: the union of its mandals" : "No outline"}`}
                 {row.placedByLocation ? ` · placed by location: ${row.placedByLocation}` : ""}
               </p>
+              {row.code ? <Link className={styles.briefLink} href={`/constituencies/${row.code}`}>Open the one-page brief →</Link> : null}
             </>
           ) : (
             <>

@@ -35,7 +35,7 @@ import rasterio
 from rasterio.io import MemoryFile
 from rasterio.mask import mask
 from rasterio.windows import from_bounds
-from shapely.geometry import Polygon, mapping, shape
+from shapely.geometry import MultiPolygon, Polygon, mapping, shape
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -90,17 +90,24 @@ def zonal_mean(dataset, geom):
     return None
 
 
+def mandal_shape(feature):
+    """Every part of a mandal, not just the first: a mandal split in two (a town
+    half, an island) once averaged rain over one part only."""
+    parts = [Polygon(ring) for ring in feature.get("rings", []) if len(ring) >= 4]
+    parts = [part if part.is_valid else part.buffer(0) for part in parts]
+    pieces = [piece for part in parts for piece in getattr(part, "geoms", [part]) if not piece.is_empty]
+    if not pieces:
+        return None
+    return pieces[0] if len(pieces) == 1 else MultiPolygon(pieces)
+
+
 def mandal_shapes():
     geo = json.load(open(os.path.join(APP, "ap_map_geometry.json")))
     shapes = []
     for index, feature in enumerate(geo["mandals"]):
-        rings = [ring for ring in feature.get("rings", []) if len(ring) >= 4]
-        if not rings:
-            continue
-        polygon = Polygon(rings[0])
-        if not polygon.is_valid:
-            polygon = polygon.buffer(0)
-        shapes.append((index, feature["d"], feature["m"], mapping(polygon)))
+        geometry = mandal_shape(feature)
+        if geometry is not None:
+            shapes.append((index, feature["d"], feature["m"], mapping(geometry)))
     return shapes
 
 
