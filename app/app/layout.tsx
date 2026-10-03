@@ -25,9 +25,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Mandal Groundwater Fusion Layer — AP Prototype",
+  title: "AP Water Intelligence — Groundwater, Monsoon & Agriculture (Prototype)",
   description:
-    "Static Phase 2A prototype for the Andhra Pradesh mandal-level groundwater fusion layer. Real APWRIMS readings (2014-2026) with real NASA/NDMC GRACE-DA satellite-model signals. Not official results.",
+    "Research prototype for Andhra Pradesh: measured APWRIMS groundwater (2014-2026), this water year's rain gauges, soil moisture and reservoirs, CHIRPS v3 rainfall since 1981, El Niño context and NASA/NDMC GRACE-DA signals. Not official results.",
 };
 
 export const viewport: Viewport = {

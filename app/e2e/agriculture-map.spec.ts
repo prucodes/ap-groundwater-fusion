@@ -54,6 +54,10 @@ for (const width of [1440, 390]) {
     await expect(tooltip).toContainText(nextName);
     await page.keyboard.press("Enter");
     await expect(rail.getByRole("heading", { name: nextName, exact: true })).toBeVisible();
+    // Park the pointer off the map: the selection change resizes the rail, the
+    // page reflows by a few pixels, and a pointer left over the map would then
+    // genuinely hover whichever newly enabled neighbour slid under it.
+    await page.mouse.move(1, 1);
     await page.getByRole("combobox", { name: "Water signal filter" }).selectOption("unavailable");
     await expect(tooltip).toHaveCount(0);
     await map.scrollIntoViewIfNeeded();

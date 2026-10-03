@@ -70,7 +70,7 @@ test("watchlist completeness uses current classes and removes stale details on e
 
 test("readiness reports unknown dates and pending release gates, not live percentages", async ({ page }) => {
   await page.goto("/readiness");
-  await expect(page.getByRole("heading", { name: "Four sources. Different clocks." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Seven sources. Different clocks." })).toBeVisible();
   await expect(page.getByText("Valid period not supplied", { exact: true })).toBeVisible();
   await expect(page.getByText("Pending acceptance", { exact: true })).toHaveCount(6);
   expect(await page.locator("main").innerText()).not.toMatch(/sources live|% prototype-ready/);

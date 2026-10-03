@@ -1,7 +1,7 @@
 {
   "manifestVersion": "2.0.0",
   "dataContractVersion": "2.0.0",
-  "generatedAt": "2026-09-28T08:44:15+00:00",
+  "generatedAt": "2026-10-02T20:43:51+00:00",
   "generator": "phase3_levels/build_phase0_foundation.py",
   "generatorVersion": "phase0-publisher-2.0.0",
   "officialAdministrativeUnitCount": null,
@@ -36,8 +36,8 @@
     "graceFetchDate": "2026-09-28",
     "rainfallValidPeriod": "2026.08",
     "etValidPeriod": "2025",
-    "modelBuildTimestamp": "2026-09-28T08:35:26+00:00",
-    "uiGenerationTimestamp": "2026-09-28T08:44:15+00:00"
+    "modelBuildTimestamp": "2026-10-02T19:45:15+00:00",
+    "uiGenerationTimestamp": "2026-10-02T20:43:51+00:00"
   },
   "joinDiagnostics": {
     "joinIdentity": "normalized district plus normalized mandal",
@@ -56,12 +56,12 @@
       "fetchDate": null
     },
     "graceDa": {
-      "status": "refreshed",
+      "status": "retained_local_input",
       "fetchDate": "2026-09-28"
     },
     "rainfall": {
       "status": "refreshed",
-      "fetchDate": "2026-09-28"
+      "fetchDate": "2026-10-02"
     },
     "evapotranspiration": {
       "status": "retained_local_input",
@@ -70,29 +70,29 @@
   },
   "inputHashes": {
     "apwrimsHistory": "b5d60daf9305e1e0aca519b1c7f5c9f06a3fa59263f2084efd940075bbe9fdbb",
-    "nowcasts": "4b11e4f3769e054aae8072b75e4826e39bf22ab9b98a38314fcdef4c10af8d80",
+    "nowcasts": "0a7f2bb8f0d5821823de06f1780ad120ca9dfbd5c323b376f773a74c0d4492e4",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
     "districtSignals": "00735127f5771e24f782aa477405952fe0c023e4830a3cfd3920338204edca73",
-    "climateContext": "9e082f287c165332f625bc1a7dee84c594ef39878571eb1aa5654e6945953ad4",
+    "climateContext": "7aaf277a786e4a035898de3c3bae98ac5188308dd6729be0b767332422c595fd",
     "graceProvenance": "8ffa09b89483aa4f95ce6fe82c1c729bb07edfe319a088950ec07fe67d4de55b",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "afbb95d5f261b6bdad4bcd61a2793bfeeb345ee698b58aa3e4b7787953cec7f9"
+    "evaluations": "94102ea88dbebf6a5dacc9d29a64077b5c66e4ebf3b144322e2e2898acf5d596"
   },
   "files": [
     {
       "file": "mandal_groundwater_records_v2.json",
-      "bytes": 4298265,
-      "sha256": "8795241b5314e512e4b7d616947a61a347d7504660a87e4ee9fb2d846ee39046"
+      "bytes": 4480432,
+      "sha256": "38cec53a6a78aa55b4038e67559f70875b5619e3b88aaec90b588c7de927ca73"
     },
     {
       "file": "mandal_observation_series_v2.json",
       "bytes": 6906015,
-      "sha256": "3cbfc291fe2c88b4503bfb6bf335252b45b5e11dca5097437fff949fa726bcf4"
+      "sha256": "741ff215500aba710f7de2948a70fa31d5dedca5269df25cc1193749d676a146"
     },
     {
       "file": "model_card.json",
-      "bytes": 21491,
-      "sha256": "4a2ca145a1514c561880353b8956212f6c012a7cae25eb8daf5df18464bab690"
+      "bytes": 21501,
+      "sha256": "c36684c9655d82f8fd657f56cf46414c611bc03e2e785488266f282842e0f15e"
     },
     {
       "file": "ap_map_geometry.json",
@@ -106,8 +106,8 @@
     },
     {
       "file": "ap_mandal_heat.json",
-      "bytes": 68332,
-      "sha256": "9e082f287c165332f625bc1a7dee84c594ef39878571eb1aa5654e6945953ad4"
+      "bytes": 68257,
+      "sha256": "7aaf277a786e4a035898de3c3bae98ac5188308dd6729be0b767332422c595fd"
     },
     {
       "file": "nasa_provenance.json",
@@ -121,8 +121,8 @@
     },
     {
       "file": "source_readiness.json",
-      "bytes": 1003,
-      "sha256": "d973fd120e287c65d4fc6e9eddd8b02e61e7481bdd4b787a24684aa8e9beb334"
+      "bytes": 2022,
+      "sha256": "36e5674fab3c34d27f2bd357b9f193193c413538ea0fd718c1a950a433477d7a"
     },
     {
       "file": "satellite_station_samples.json",
@@ -136,22 +136,22 @@
         "file": "app/data/mandal_groundwater_records_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 4298265,
-        "sha256": "8795241b5314e512e4b7d616947a61a347d7504660a87e4ee9fb2d846ee39046"
+        "bytes": 4480432,
+        "sha256": "38cec53a6a78aa55b4038e67559f70875b5619e3b88aaec90b588c7de927ca73"
       },
       {
         "file": "app/data/mandal_observation_series_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
         "bytes": 6906015,
-        "sha256": "3cbfc291fe2c88b4503bfb6bf335252b45b5e11dca5097437fff949fa726bcf4"
+        "sha256": "741ff215500aba710f7de2948a70fa31d5dedca5269df25cc1193749d676a146"
       },
       {
         "file": "app/data/model_card.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 21491,
-        "sha256": "4a2ca145a1514c561880353b8956212f6c012a7cae25eb8daf5df18464bab690"
+        "bytes": 21501,
+        "sha256": "c36684c9655d82f8fd657f56cf46414c611bc03e2e785488266f282842e0f15e"
       },
       {
         "file": "app/data/ap_map_geometry.json",
@@ -171,8 +171,8 @@
         "file": "app/data/ap_mandal_heat.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 68332,
-        "sha256": "9e082f287c165332f625bc1a7dee84c594ef39878571eb1aa5654e6945953ad4"
+        "bytes": 68257,
+        "sha256": "7aaf277a786e4a035898de3c3bae98ac5188308dd6729be0b767332422c595fd"
       },
       {
         "file": "app/data/nasa_provenance.json",
@@ -192,8 +192,8 @@
         "file": "app/data/source_readiness.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 1003,
-        "sha256": "d973fd120e287c65d4fc6e9eddd8b02e61e7481bdd4b787a24684aa8e9beb334"
+        "bytes": 2022,
+        "sha256": "36e5674fab3c34d27f2bd357b9f193193c413538ea0fd718c1a950a433477d7a"
       },
       {
         "file": "app/data/satellite_station_samples.json",
@@ -206,15 +206,15 @@
         "file": "phase3_levels/outputs/mandal_nowcasts_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 328299,
-        "sha256": "4b11e4f3769e054aae8072b75e4826e39bf22ab9b98a38314fcdef4c10af8d80"
+        "bytes": 328397,
+        "sha256": "0a7f2bb8f0d5821823de06f1780ad120ca9dfbd5c323b376f773a74c0d4492e4"
       },
       {
         "file": "phase3_levels/outputs/phase0_evaluations.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 14876,
-        "sha256": "afbb95d5f261b6bdad4bcd61a2793bfeeb345ee698b58aa3e4b7787953cec7f9"
+        "bytes": 14886,
+        "sha256": "94102ea88dbebf6a5dacc9d29a64077b5c66e4ebf3b144322e2e2898acf5d596"
       }
     ],
     "legacy": [

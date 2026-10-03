@@ -1,4 +1,5 @@
 import { datasetManifest, formatPeriod } from "../lib/data";
+import { waterSummary } from "../lib/waterSummary";
 
 export function DataProvenanceDates({ compact = false }: { compact?: boolean }) {
   const periods = datasetManifest.periods;
@@ -7,8 +8,11 @@ export function DataProvenanceDates({ compact = false }: { compact?: boolean }) 
     ["Model target", formatPeriod(periods.modelTargetPeriodRange.end) || "not supplied"],
     ["GRACE-DA fetch", periods.graceFetchDate || "not supplied"],
     ["GRACE-DA valid month", formatPeriod(periods.graceValidPeriod) || "not supplied"],
-    ["Rainfall valid period", formatPeriod(periods.rainfallValidPeriod) || "not supplied"],
+    ["CHIRPS v3 rainfall period", formatPeriod(periods.rainfallValidPeriod) || "not supplied"],
     ["ET reference period", formatPeriod(periods.etValidPeriod) || "not supplied"],
+    ["Gauge rainfall to", waterSummary.rain?.end ?? "not supplied"],
+    ["Soil moisture date", waterSummary.soil?.asOf ?? "not supplied"],
+    ["Reservoir reading", waterSummary.reservoirs?.asOf?.slice(0, 16).replace("T", " ") ?? "not supplied"],
   ];
   if (compact) {
     return (

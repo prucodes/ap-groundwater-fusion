@@ -12,11 +12,16 @@ import {
   formatNumber,
   graceDistrictCount,
   mandals,
+  monsoonWatch,
   prototypeNotice,
   titleCase,
   verifyMandals,
   wetnessLabel,
 } from "../../lib/data";
+import { waterSummary } from "../../lib/waterSummary";
+
+const pct = (value: number | null | undefined) =>
+  value === null || value === undefined ? "n/a" : `${value > 0 ? "+" : value < 0 ? "\u2212" : ""}${Math.abs(value).toFixed(1)}%`;
 
 export default function SnapshotPage() {
   const s = dashboardSummary.summary;
@@ -43,6 +48,19 @@ export default function SnapshotPage() {
           `${s.deficit_mandals} prototype units carry the low climate-balance category (TerraClimate ${s.balance_year}); this is not measured aquifer depletion.`,
         ]
       : []),
+    // This water year, beside the groundwater: dated, sourced, and context only.
+    ...(waterSummary.rain
+      ? [`Rain gauges, ${waterSummary.rain.start} to ${waterSummary.rain.end}: ${pct(waterSummary.rain.deviationPct)} against the department's normal (area-weighted); ${waterSummary.rain.categories.deficient + waterSummary.rain.categories.scanty + waterSummary.rain.categories.noRain} of ${waterSummary.rain.mandals} mandals deficient or worse.`]
+      : []),
+    ...(monsoonWatch.rainfall
+      ? [`Satellite rainfall (${monsoonWatch.rainfall.product.split(" monthly")[0]}), months ${monsoonWatch.rainfall.months} of ${monsoonWatch.season.year}: ${pct(monsoonWatch.rainfall.anomalyPct)} against normal, rank ${monsoonWatch.rainfall.rankDriest} driest of ${monsoonWatch.rainfall.ofYears} years.`]
+      : []),
+    ...(waterSummary.soil
+      ? [`Modelled soil moisture at ${waterSummary.soil.depthCm} cm sits below its usual level for ${waterSummary.soil.asOf ?? "the date"} in ${waterSummary.soil.belowOwnMedian} of ${waterSummary.soil.withBaseline} mandals (NRSC model via APWRIMS).`]
+      : []),
+    ...(waterSummary.reservoirs
+      ? [`Reservoirs hold ${formatNumber(waterSummary.reservoirs.storagePct)}% of capacity against ${formatNumber(waterSummary.reservoirs.lastYearPct)}% a year ago (${waterSummary.reservoirs.count} major and medium; measured at the dam, not deliveries).`]
+      : []),
     ...(yoyMedian !== null
       ? [
           `${yoyDeeper} of ${yoy.length} mandals (${Math.round((100 * yoyDeeper) / yoy.length)}%) read deeper than the same month a year earlier — median change ${yoyMedian > 0 ? "+" : ""}${formatNumber(yoyMedian)} m.`,
@@ -68,7 +86,7 @@ export default function SnapshotPage() {
         <div className="snapHeader">
           <div>
             <div className="snapTitle">Andhra Pradesh Groundwater &amp; Soil-Moisture Intelligence</div>
-            <div className="snapSub">Executive Snapshot · GRACE-DA / NASA percentile signals + real APWRIMS readings (2014-2026)</div>
+            <div className="snapSub">Executive Snapshot · real APWRIMS readings (2014-2026) + GRACE-DA / NASA percentile signals + this water year's gauges, soil moisture and reservoirs</div>
           </div>
           <div className="snapBadge">
             <IconShield />

@@ -14,7 +14,7 @@ export default function ReportsPage() {
       <div className={styles.links}>
         <Link className={styles.link} href="/snapshot"><IconArrowRight /><strong>State review</strong><p>Printable groundwater summary, source periods and a complete mandal register.</p></Link>
         <Link className={styles.link} href="/agriculture#agriculture-brief"><IconArrowRight /><strong>Agriculture review</strong><p>District evidence, unresolved coverage and proposed verification steps. Crop and supply feeds remain pending.</p></Link>
-        <Link className={styles.link} href="/monsoon"><IconArrowRight /><strong>Seasonal review</strong><p>Rainfall, observed groundwater change and ENSO context. Seasonal flags remain provisional.</p></Link>
+        <Link className={styles.link} href="/monsoon"><IconArrowRight /><strong>Seasonal review</strong><p>Satellite and gauge rainfall, reservoir storage, observed groundwater change and ENSO context. Seasonal flags remain provisional.</p></Link>
       </div>
     </section>
     <section className={styles.section} aria-labelledby="downloads-title">

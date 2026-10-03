@@ -653,6 +653,11 @@ def main():
         "rainfallHistory": os.path.join(HERE, "data", "mandal_rain_history.csv"),
         "geometry": os.path.join(APP, "ap_map_geometry.json"),
     }
+    # CHIRPS is the rainfall the model actually reads (POWER only fills gaps),
+    # so a change of CHIRPS product has to show up in the provenance too.
+    chirps = os.path.join(HERE, "data", "mandal_rain_history_chirps.csv")
+    if os.path.exists(chirps):
+        inputs["chirpsRainfallHistory"] = chirps
     specific_yield = os.path.join(HERE, "data", "mandal_specific_yield.csv")
     if os.path.exists(specific_yield):
         inputs["specificYield"] = specific_yield

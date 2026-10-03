@@ -6,6 +6,8 @@ import { HeaderHero } from "../../components/HeaderHero";
 import { DistrictMap } from "../../components/DistrictMap";
 import { IconArrowRight, IconCloudRain, IconDroplet, IconInfo } from "../../components/icons";
 import { balanceMeta, balanceStatusFor, districtGeometry, formatNumber, monsoonWatch, titleCase } from "../../lib/data";
+import { waterSummary } from "../../lib/waterSummary";
+import { monthSpan } from "../../components/agriculture/waterContextFormat";
 
 type Row = {
   d: string;
@@ -33,7 +35,7 @@ function presets() {
       label: `${enso?.state === "el_nino" ? "El Niño" : "This monsoon"} ${monsoonWatch.season.year}`,
       sub:
         rain && measured !== null
-          ? `CHIRPS ${rain.months} · ${measured}% anomaly`
+          ? `${rain.product.split(" monthly")[0]} ${monthSpan(rain.months)} · ${measured}% anomaly`
           : "measured so far",
       delta: measured,
       tone: "#d79b2e",
@@ -151,8 +153,9 @@ export default function ScenarioPage() {
           <span>
             {monsoonWatch.enso?.state === "el_nino" && monsoonWatch.rainfall ? (
               <>
-                The published ONI indicates {monsoonWatch.enso.strength} El Niño conditions. CHIRPS {monsoonWatch.rainfall.months} rainfall was{" "}
-                <strong>{Math.abs(monsoonWatch.rainfall.anomalyPct)}% {monsoonWatch.rainfall.anomalyPct < 0 ? "below" : "above"}</strong> its historical mean.
+                The published ONI indicates {monsoonWatch.enso.strength} El Niño conditions. {monsoonWatch.rainfall.product.split(" monthly")[0]} rainfall for {monthSpan(monsoonWatch.rainfall.months)} was{" "}
+                <strong>{Math.abs(monsoonWatch.rainfall.anomalyPct)}% {monsoonWatch.rainfall.anomalyPct < 0 ? "below" : "above"}</strong> its historical mean
+                {waterSummary.rain?.deviationPct !== null && waterSummary.rain?.deviationPct !== undefined ? <>; the state&rsquo;s rain gauges read {Math.abs(waterSummary.rain.deviationPct)}% {waterSummary.rain.deviationPct < 0 ? "below" : "above"} normal from 1 June to {waterSummary.rain.end}</> : null}.
                 Reusing that seasonal anomaly to scale a whole reference year is an illustrative assumption, not an ENSO forecast.{" "}
               </>
             ) : null}

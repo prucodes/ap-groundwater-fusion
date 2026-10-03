@@ -6,7 +6,7 @@
   "official_flag": false
  },
  {
-  "label": "Real CHIRPS rainfall (recharge)",
+  "label": "Real CHIRPS v3 rainfall (recharge context)",
   "status": "available",
   "data_label": "satellite-gauge-rainfall",
   "official_flag": false
@@ -18,9 +18,27 @@
   "official_flag": false
  },
  {
-  "label": "APWRIMS readings (session sample \u00b7 authorization pending)",
+  "label": "APWRIMS readings (session sample · authorization pending)",
   "status": "available",
   "data_label": "measured_session_pending",
+  "official_flag": false
+ },
+ {
+  "label": "AP DES rain gauges via APWRIMS (measured · authorization pending)",
+  "status": "available",
+  "data_label": "measured-gauge-rainfall",
+  "official_flag": false
+ },
+ {
+  "label": "NRSC soil moisture via APWRIMS (modelled)",
+  "status": "available",
+  "data_label": "model-soil-moisture",
+  "official_flag": false
+ },
+ {
+  "label": "Reservoir storage & canal releases via APWRIMS (measured at the dam)",
+  "status": "available",
+  "data_label": "measured-reservoir-storage",
   "official_flag": false
  },
  {
@@ -39,6 +57,24 @@
   "label": "APWRIMS admin IDs",
   "status": "pending",
   "data_label": "official_admin_ids",
+  "official_flag": false
+ },
+ {
+  "label": "Crop-sown aggregates (e-Panta / APAIMS; APWRIMS dashboards behind a login)",
+  "status": "pending",
+  "data_label": "official_crop_aggregates",
+  "official_flag": false
+ },
+ {
+  "label": "Canal command-area map & delivery records",
+  "status": "pending",
+  "data_label": "official_canal_command",
+  "official_flag": false
+ },
+ {
+  "label": "IMD forecasts, warnings & agromet advisories (API key)",
+  "status": "pending",
+  "data_label": "imd_api",
   "official_flag": false
  }
 ]

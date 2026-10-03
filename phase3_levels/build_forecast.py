@@ -204,6 +204,7 @@ def main():
         "inputHashes": {
             "apwrimsHistory": sha256(os.path.join(HERE, "apwrims", "apwrims_gw_history.csv")),
             "rainfallHistory": sha256(os.path.join(HERE, "data", "mandal_rain_history.csv")),
+            "chirpsRainfallHistory": sha256(os.path.join(HERE, "data", "mandal_rain_history_chirps.csv")),
         },
         "forecasts": records,
     }

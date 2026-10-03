@@ -57,6 +57,7 @@ export default function IrrigationPage() {
         <span className="srcLabel">Derived from</span>
         <span className="srcChip"><span className="srcDot" style={{ background: "#12b5cb" }} /> NASA GRACE-DA · storage %ile</span>
         <span className="srcChip"><span className="srcDot" style={{ background: "#5e9b6b" }} /> TerraClimate · water balance</span>
+        <span className="srcChip"><span className="srcDot" style={{ background: "#2789af" }} /> AP DES gauges · APWRIMS soil &amp; reservoirs · context only</span>
         <span className="srcChip"><span className="srcDot" style={{ background: "#d79b2e" }} /> APWRIMS-format observations</span>
         <span className="srcChip muted">Rule-based triage · prototype</span>
       </div>
@@ -121,7 +122,7 @@ export default function IrrigationPage() {
         <div className="tableWrap">
           <table className="dataTable">
             <thead>
-              <tr><th>District</th><th>Advisory</th><th title="How far above the statewide norm on stressed mandals, deepening trend and this season's recharge">Priority</th><th title="Measured year-on-year direction. Every district is deepening at present; the figure beside it is this district's median mandal.">Outlook</th><th>Basis</th><th>GW %ile</th><th>Balance</th><th>Why</th></tr>
+              <tr><th>District</th><th>Advisory</th><th title="How far above the statewide norm on stressed mandals, deepening trend and this season's recharge">Priority</th><th title="Measured year-on-year direction. Every district is deepening at present; the figure beside it is this district's median mandal.">Outlook</th><th>Basis</th><th>GW %ile</th><th>Balance</th><th title="AP DES gauge rain against normal since 1 June, and district reservoir storage against a year ago (APWRIMS). Context only: it does not move the category.">This season</th><th>Why</th></tr>
             </thead>
             <tbody>
               {advisories.map((a) => {
@@ -158,6 +159,14 @@ export default function IrrigationPage() {
                     <td className="cellPct">{a.gw ?? "—"}</td>
                     <td className="cellPct" style={{ color: a.balanceStatus === "Deficit" ? "#c65a46" : "var(--text)" }}>
                       {a.balance !== null ? `${a.balance > 0 ? "+" : ""}${formatNumber(a.balance)} mm` : "—"}
+                    </td>
+                    <td className="cellPct" style={{ whiteSpace: "nowrap" }}>
+                      {a.season?.rainDeviationPct !== null && a.season?.rainDeviationPct !== undefined
+                        ? <span style={{ color: a.season.rainDeviationPct <= -20 ? "#c65a46" : "var(--text)" }}>{a.season.rainDeviationPct > 0 ? "+" : ""}{formatNumber(a.season.rainDeviationPct)}% rain</span>
+                        : "—"}
+                      {a.season?.reservoirStoragePct !== null && a.season?.reservoirStoragePct !== undefined
+                        ? <small style={{ display: "block", opacity: 0.75 }}>dams {formatNumber(a.season.reservoirStoragePct)}% · {formatNumber(a.season.reservoirLastYearPct)}% last yr</small>
+                        : null}
                     </td>
                     <td className="cellMuted">
                       <span className="advisoryWhy" title={a.reason}>

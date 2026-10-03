@@ -8,9 +8,14 @@ official APWRIMS claim. No login is required.
 
 The script walks backward from the current month to the most recent month that
 exists on the server (CHIRPS monthly has a few weeks of latency), downloads the
-gzipped GeoTIFF, decompresses it, and records a download manifest. On a network
-failure it writes ``fetch_status=manual_required`` and exits 0 so the rest of
-the pipeline can continue gracefully.
+GeoTIFF and records a download manifest. On a network failure it writes
+``fetch_status=manual_required`` and exits 0 so the rest of the pipeline can
+continue gracefully.
+
+CHIRPS v3 since 2026-10, the same product as the per-mandal history in
+phase3_levels/fetch_chirps_history.py: v2 production ends after December 2026,
+and a heat map from one product beside a history from another would compare
+two different rainfall estimates as if they were one.
 """
 
 from __future__ import annotations
@@ -31,7 +36,8 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "data/raw/chirps/current"
 DEFAULT_MANIFEST = DEFAULT_OUTPUT_DIR / "download_manifest.csv"
 SOURCE_MANIFEST = REPO_ROOT / "data/source_manifest.csv"
-BASE_URL = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs"
+BASE_URL = "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global/tifs"
+PRODUCT = "CHIRPS v3.0"
 TARGET_TIF = "chirps_monthly_latest.tif"
 
 MANIFEST_COLUMNS = [
@@ -127,7 +133,7 @@ def append_source_manifest(period: str, url: str) -> None:
             "downloaded_or_created_date": str(date.today()),
             "data_label": "satellite-gauge-rainfall",
             "official_flag": "False",
-            "notes": f"monthly rainfall mm; recharge context only; data period {period}; not groundwater depth",
+            "notes": f"{PRODUCT} monthly rainfall mm; recharge context only; data period {period}; not groundwater depth",
         }
     )
     with SOURCE_MANIFEST.open("w", encoding="utf-8", newline="") as handle:
@@ -152,19 +158,15 @@ def main() -> int:
 
     for year, month in candidate_months(args.max_months_back):
         period = f"{year}.{month:02d}"
-        url = f"{BASE_URL}/chirps-v2.0.{period}.tif.gz"
+        url = f"{BASE_URL}/chirps-v3.0.{period}.tif"
         print(f"Trying CHIRPS {period} ...")
         payload = try_download(url, context)
         if payload is None:
             continue
 
         tif_path = args.output_dir / TARGET_TIF
-        try:
-            decompressed = gzip.decompress(payload)
-        except OSError:
-            # Some mirrors serve an uncompressed tif at the .gz path; fall back.
-            decompressed = payload
-        tif_path.write_bytes(decompressed)
+        # v3 publishes plain (internally compressed) GeoTIFFs; v2 gzipped them.
+        tif_path.write_bytes(gzip.decompress(payload) if url.endswith(".gz") else payload)
 
         write_manifest(
             manifest_path,
@@ -179,7 +181,7 @@ def main() -> int:
                 "fetch_status": "ok",
                 "data_label": "satellite-gauge-rainfall",
                 "official_flag": "False",
-                "notes": "CHIRPS monthly rainfall mm; recharge context; not groundwater depth",
+                "notes": f"{PRODUCT} monthly rainfall mm; recharge context; not groundwater depth",
             },
         )
         append_source_manifest(period, url)

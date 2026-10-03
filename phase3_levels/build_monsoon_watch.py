@@ -40,7 +40,7 @@ sys.path.insert(0, HERE)
 from build_levels_engine import (aquifer_of, build_frame, identity_norm,  # noqa: E402
                                  resolve_locations)
 from shapely.geometry import Polygon  # noqa: E402
-from fetch_chirps_history import history_paths  # noqa: E402
+from fetch_chirps_history import history_manifest, history_paths, history_product  # noqa: E402
 
 APP = os.path.join(HERE, "..", "app", "data")
 OUT = os.path.join(APP, "monsoon_watch.json")
@@ -69,7 +69,9 @@ LA_NINA = -0.5
 SW_MONSOON = (6, 7, 8, 9)
 NE_MONSOON = (10, 11, 12)
 ONI_SOURCE = "https://psl.noaa.gov/data/correlation/oni.data"
-CHIRPS_SOURCE = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs"
+# The rainfall label is read from the manifest that records which product built
+# the history, so the page can never name one product while showing another.
+CHIRPS_V2_SOURCE = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs"
 
 
 # Andhra Pradesh's mid-latitude, for turning degrees into kilometres. Across one
@@ -444,8 +446,8 @@ def build():
                     "rankDriest": int((yearly <= yearly[year]).sum()),
                     "ofYears": int(len(yearly)),
                     "firstYear": int(yearly.index.min()),
-                    "source": CHIRPS_SOURCE,
-                    "product": "CHIRPS v2.0 monthly, 0.05 degrees, mandal mean",
+                    "source": history_manifest().get("source") or CHIRPS_V2_SOURCE,
+                    "product": f"{history_product()} monthly, 0.05 degrees, mandal mean",
                 }
         # index 6 is the JJA season of ONI, 10 is OND: the seasons that drive
         # the south-west and north-east monsoons respectively.

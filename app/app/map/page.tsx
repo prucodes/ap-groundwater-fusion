@@ -23,6 +23,7 @@ import {
   titleCase,
 } from "../../lib/data";
 import type { DistrictLayerKey, MandalHeatLayerKey } from "../../lib/types";
+import { isWaterLayer, WATER_LAYER_META, waterLayerGradient, waterMandals, type WaterMandalLayer } from "../../lib/waterMandals";
 
 const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "water_balance_mm", label: "Water Balance" },
@@ -30,11 +31,13 @@ const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "rainfall_mm", label: "Rainfall" },
 ];
 
-type MandalView = "status" | MandalHeatLayerKey;
+type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer;
 const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "status", label: "Fusion status" },
   { key: "water_balance_mm", label: "Water Balance" },
-  { key: "rainfall_mm", label: "Rainfall" },
+  { key: "rainfall_mm", label: "Rainfall (CHIRPS)" },
+  { key: "gauge_rain_dev", label: "Gauge rain vs normal" },
+  { key: "soil_pct", label: "Soil moisture" },
 ];
 
 function legendGradient(layer: string) {
@@ -160,6 +163,26 @@ export default function MapPage() {
                       series yet (shown grey).
                     </div>
                   </>
+                ) : isWaterLayer(mandalView) ? (
+                  <div className="choroLegend">
+                    <div className="choroHead">
+                      <span>
+                        {WATER_LAYER_META[mandalView].label} <span className="choroUnit">({WATER_LAYER_META[mandalView].unit})</span>
+                      </span>
+                      <span className="choroPeriod">
+                        {WATER_LAYER_META[mandalView].period} · {Object.values(waterMandals.values).filter((row) => row[mandalView === "gauge_rain_dev" ? 0 : 1] !== null).length} mandals
+                      </span>
+                    </div>
+                    <div className="choroBar" style={{ background: waterLayerGradient(mandalView) }} />
+                    <div className="choroScale">
+                      <span>{WATER_LAYER_META[mandalView].low} · {WATER_LAYER_META[mandalView].min}{mandalView === "gauge_rain_dev" ? "% or below" : "%"}</span>
+                      <span>{WATER_LAYER_META[mandalView].high} · {mandalView === "gauge_rain_dev" ? "+" : ""}{WATER_LAYER_META[mandalView].max}{mandalView === "gauge_rain_dev" ? "% or above" : "%"}</span>
+                    </div>
+                    <div className="mapHint">
+                      <IconInfo style={{ width: 13, height: 13 }} /> {WATER_LAYER_META[mandalView].note} Grey: no unique record for the
+                      prototype boundary. Context only; it does not change any groundwater status.
+                    </div>
+                  </div>
                 ) : (
                   <div className="choroLegend">
                     <div className="choroHead">

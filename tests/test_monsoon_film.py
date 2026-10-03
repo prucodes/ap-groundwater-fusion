@@ -93,12 +93,36 @@ def test_narrated_locations_have_speech_derived_cues():
 
 
 def test_published_movie_snapshot_and_timeline_are_consistent():
+    """The film is a fixed edition: it must say what its own snapshot recorded.
+
+    It cannot be required to equal the live Monsoon Watch, which the weekly
+    refresh rewrites every Monday; that would fail every refresh until someone
+    re-narrated and re-rendered the film. Where the live record has moved, the
+    page says so beside the film (test below).
+    """
     manifest = json.loads((ROOT / "app/public/films/monsoon/manifest.json").read_text())
-    expected = film.snapshot(*inputs())
-    assert manifest["sourceHash"] == expected["sourceHash"]
-    assert [s["voice"] for s in manifest["scenes"]] == [s["voice"] for s in expected["scenes"]]
+    metadata = json.loads((ROOT / "app/data/monsoon_film.json").read_text())
+    assert metadata["sourceHash"] == manifest["sourceHash"]
+    assert metadata["snapshot"] == manifest["snapshot"]
+    assert metadata["narrated"] == film.narrated_figures(manifest)
+    assert [c["text"] for c in metadata["chapters"]] == [s["voice"] for s in manifest["scenes"]]
+    said, scenes = metadata["narrated"], {s["id"]: s["voice"] for s in manifest["scenes"]}
+    direction = "below" if said["rainAnomalyPct"] < 0 else "above"
+    assert f"{abs(said['rainAnomalyPct'])} percent {direction}" in scenes["rain"]
+    assert f"{said['elNinoBelowNormal']} of {said['elNinoYears']} El Nino" in scenes["ap-history"]
+    assert f"{said['fallingPct']} percent" in scenes["mandals"]
     for current, following in zip(manifest["scenes"], manifest["scenes"][1:]):
         assert abs(current["start"] + current["duration"] - following["start"]) < .003
         assert current["speechDuration"] + .35 <= current["duration"]
     last = manifest["scenes"][-1]
     assert abs(last["start"] + last["duration"] - manifest["duration"]) < .003
+
+
+def test_the_page_says_where_the_live_record_has_moved_from_the_film():
+    """A fixed edition is honest only if the page names what has changed since."""
+    page = (ROOT / "app/app/monsoon/page.tsx").read_text()
+    component = (ROOT / "app/components/MonsoonFilm.tsx").read_text()
+    assert "<MonsoonFilm live=" in page, "the page must hand the film today's figures"
+    assert "Since this edition:" in component
+    for figure in ("rainAnomalyPct", "rainProduct", "elNinoBelowNormal", "fallingPct"):
+        assert figure in component, f"a change in {figure} would go unmentioned"

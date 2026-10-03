@@ -11,6 +11,10 @@ import re
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_TS = os.path.join(ROOT, "app", "lib", "data.ts")
 WORKFLOW = os.path.join(ROOT, ".github", "workflows", "phase3_weekly_levels.yml")
+# Every directory the site's source lives in. Data files are not only imported
+# by data.ts: a large file belongs in its own module so client bundles do not
+# carry it, and a component may read its own file.
+SOURCE_DIRS = [os.path.join(ROOT, "app", name) for name in ("lib", "components", "app")]
 
 # Files the pipeline deliberately never regenerates. Each needs a reason, because
 # "it is static" is exactly what was believed about the files that went stale.
@@ -29,12 +33,23 @@ STATIC_BY_DESIGN = {
         "from a 159 MB source that gains one month at a time, so it is run deliberately "
         "rather than weekly, like the boundary alias table"
     ),
+    "monsoon_film.json": (
+        "the narrated film's chapters and the figures it speaks; a fixed edition, rebuilt "
+        "only when the film is re-narrated and re-rendered (scripts/prepare_monsoon_film.py), "
+        "and the Monsoon page names any live figure that has moved since"
+    ),
 }
 
 
 def imported_data_files():
-    source = open(DATA_TS).read()
-    return set(re.findall(r'from "\.\./data/([A-Za-z0-9_]+\.json)"', source))
+    found = set()
+    for base in SOURCE_DIRS:
+        for folder, _, names in os.walk(base):
+            for name in names:
+                if name.endswith((".ts", ".tsx")):
+                    source = open(os.path.join(folder, name)).read()
+                    found |= set(re.findall(r'from "(?:\.\./)+data/([A-Za-z0-9_]+\.json)"', source))
+    return found
 
 
 def committed_data_files():
@@ -62,3 +77,29 @@ def test_the_monsoon_watch_is_both_built_and_committed():
     assert "build_monsoon_watch.py" in weekly
     assert "fetch_enso_index.py" in weekly
     assert "monsoon_watch.json" in committed_data_files()
+
+
+def test_the_water_context_is_both_fetched_and_committed():
+    weekly = open(os.path.join(ROOT, "phase3_levels", "fetch_weekly.py")).read()
+    assert "fetch_apwrims_context.py" in weekly
+    for name in ("water_context.json", "water_context_summary.json", "water_context_mandals.json"):
+        assert name in committed_data_files()
+        assert name in imported_data_files()
+
+
+def test_the_full_water_context_stays_out_of_client_components():
+    """At half a megabyte it would ride along to every visitor of a client page."""
+    offenders = []
+    for base in SOURCE_DIRS:
+        for folder, _, names in os.walk(base):
+            for name in names:
+                if not name.endswith((".ts", ".tsx")):
+                    continue
+                source = open(os.path.join(folder, name)).read()
+                client = source.lstrip().startswith(('"use client"', "'use client'"))
+                if client and ("lib/waterContext" in source or "water_context.json" in source):
+                    offenders.append(os.path.relpath(os.path.join(folder, name), ROOT))
+    data_ts = open(DATA_TS).read()
+    assert "water_context" not in "".join(re.findall(r'^import .*$', data_ts, re.M)), \
+        "data.ts reaches client bundles; it must not import the water-context files"
+    assert not offenders, f"client components import the full water context: {offenders}"

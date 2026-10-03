@@ -20,7 +20,8 @@ sys.path.insert(0, str(ROOT / "phase3_levels"))
 from fetch_enso_index import parse as parse_oni, URL as ONI_URL
 from fetch_apwrims_history import _tls_context, series_rows, AP_STATE_UUID
 
-CHIRPS_URL = "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs/"
+# The product that builds the published rainfall history (CHIRPS v3 since 2026-10).
+CHIRPS_URL = "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global/tifs/"
 AP_URL = "https://apwrims.ap.gov.in/api/v2/gwlevels/chart"
 
 
@@ -92,7 +93,7 @@ def online_checks(watch, history):
     try:
         listing = get(CHIRPS_URL).decode()
         import re
-        months = sorted(set(re.findall(r"chirps-v2\.0\.(\d{4}\.\d{2})\.tif\.gz", listing)))
+        months = sorted(set(re.findall(r"chirps-v3\.0\.(\d{4}\.\d{2})\.tif\b", listing)))
         checks["rainfall"] = {"status": "availability_checked", "source": CHIRPS_URL, "latest": months[-1] if months else None,
                               "snapshotMonthAvailable": watch["season"]["latestMonth"].replace("-", ".") in months,
                               "scope": "Publisher file listing checked; historical raster pixel values not re-downloaded in this audit."}
@@ -163,7 +164,8 @@ def main():
               "snapshotPeriod": watch["season"]["latestMonth"], "snapshotHash": sha(watch_path), "historyHash": sha(history_path),
               "localReconciliation": baseline_check, "unfilteredHistoryComparison": raw_check, "online": online,
               "baselineCaveat": "The published seasonal baseline reuses the model-eligible observation frame (location and lag-1/lag-12 availability). This omits otherwise valid source observations. Recomputed values match that implementation, not an independently approved hydrological baseline. Rebuilding on unfiltered observations requires a versioned data and film update.",
-              "limitations": ["No real-time feed or field certification.", "Crop inputs are illustrative; crop booking and supply are not connected.",
+              "limitations": ["No real-time feed or field certification.",
+                              "Crop inputs are illustrative; crop booking and canal delivery to fields are not connected. Gauge rainfall, modelled soil moisture and reservoir storage are dated APWRIMS context, not verified here.",
                               "Public prototype boundaries and source-use authorization require departmental approval."]}
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2) + "\n")

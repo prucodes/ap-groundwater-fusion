@@ -1,4 +1,4 @@
-import type { MonsoonWatch } from "./data";
+import type { MonsoonWatch, RainCategory, ReservoirTotals, WaterContext } from "./data";
 import type { MandalGroundwaterRecordV2 } from "./types";
 
 export type WaterSignal = "severe" | "short" | "normal" | "unavailable";
@@ -23,6 +23,46 @@ export type AgricultureMandal = {
   shortfallM: number | null;
   comparableYears: number | null;
   sourceStatus: string;
+  /** Modelled available soil moisture at the headline depth, set against the same day in earlier years. */
+  soil: { pct: number; weekAgoPct: number | null; median: number | null; rankDriest: number | null; ofYears: number | null } | null;
+  /** Measured gauge rainfall, water year to date, against the department's normal. */
+  rain: { actualMm: number; normalMm: number; deviationPct: number; category: RainCategory | null; gauges: number | null } | null;
+  /** Whether each source points to water stress here: true, false, or null when that source has no usable value. */
+  agreement: Agreement;
+};
+
+/** A count of sources that point the same way, not a score: each test is stated in AGREEMENT_RULES. */
+export type Agreement = { groundwater: boolean | null; rain: boolean | null; soil: boolean | null; stressed: number; known: number };
+export const AGREEMENT_RULES = {
+  groundwater: "Seasonal groundwater shortfall flagged (measured APWRIMS wells, against the mandal's own past seasons)",
+  rain: "Gauge rainfall deficient or worse: 20% or more below the department's normal, water year to date (measured)",
+  soil: "Soil moisture at 30 cm among the driest quarter of years for this date (modelled; the model is driven by rainfall, so it is not independent of it)",
+} as const;
+const RAIN_SHORT = new Set<RainCategory>(["deficient", "scanty", "noRain"]);
+
+function agreementOf(signal: WaterSignal, soil: AgricultureMandal["soil"], rain: AgricultureMandal["rain"]): Agreement {
+  const groundwater = signal === "unavailable" ? null : signal === "short" || signal === "severe";
+  const rainShort = rain?.category ? RAIN_SHORT.has(rain.category) : null;
+  const soilDry = soil?.rankDriest && soil.ofYears ? soil.rankDriest <= Math.max(1, Math.floor(soil.ofYears / 4)) : null;
+  const tests = [groundwater, rainShort, soilDry];
+  return { groundwater, rain: rainShort, soil: soilDry, stressed: tests.filter(test => test === true).length, known: tests.filter(test => test !== null).length };
+}
+
+export type AgricultureWater = {
+  soil: {
+    asOf: string | null; asOfNote: string | null; weekAgo: string; depthCm: number; medianPct: number | null;
+    driestOnRecord: number; belowOwnMedian: number; withBaseline: number; mandals: number;
+    baselineYears: [number, number] | null; source: string; url: string;
+  } | null;
+  rain: {
+    start: string; end: string; deviationPct: number | null; gauges: number; mandals: number;
+    categories: Record<RainCategory, number>; source: string; url: string;
+  } | null;
+  reservoirs: {
+    asOf: string | null; state: ReservoirTotals; byBasin: Array<ReservoirTotals & { basin: string }>; staleCount: number;
+    topCanalReleases: Array<{ reservoir: string; outlet: string; cusecs: number }>; releasingToCanals: number;
+    releaseNote: string; source: string; url: string;
+  } | null;
 };
 
 export type AgricultureDistrict = {
@@ -32,6 +72,8 @@ export type AgricultureDistrict = {
   flagged: number;
   severe: number;
   medianShortfallM: number | null;
+  /** Boundary units where groundwater, gauge rain and soil all point to stress. */
+  agreeAll: number;
 };
 
 export type AgricultureEvidence = {
@@ -40,8 +82,13 @@ export type AgricultureEvidence = {
   generatedAt: string;
   mandals: AgricultureMandal[];
   districts: AgricultureDistrict[];
-  counts: { boundaries: number; compared: number; flagged: number; severe: number; unresolved: number; unmappedSeries: number; ambiguousBoundaries: number };
+  counts: {
+    boundaries: number; compared: number; flagged: number; severe: number; unresolved: number; unmappedSeries: number; ambiguousBoundaries: number;
+    /** All three sources usable / all three pointing to stress / exactly two pointing to stress. */
+    allKnown: number; agreeAll: number; agreeTwo: number;
+  };
   rainfall: MonsoonWatch["rainfall"];
+  water: AgricultureWater;
   cropExposureHa: null;
   cropReadiness: "not_connected";
 };
@@ -56,13 +103,54 @@ function median(values: number[]): number | null {
   return round(sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2);
 }
 
+/** At most one row per boundary. A boundary claimed by two rows maps to null:
+ * ambiguous, so neither value is shown. */
+function uniqueByBoundary<T extends { boundaryIndex: number | null }>(rows: T[] | undefined, size: number) {
+  const out = new Map<number, T | null>();
+  for (const row of rows ?? []) {
+    const index = row.boundaryIndex;
+    if (index === null || !Number.isInteger(index) || index < 0 || index >= size) continue;
+    out.set(index, out.has(index) ? null : row);
+  }
+  return out;
+}
+
+function summarizeWater(water: WaterContext | null | undefined): AgricultureWater {
+  const soil = water?.soilMoisture, rain = water?.rainfall, store = water?.reservoirs;
+  const canal = (store?.reservoirs ?? []).flatMap(r => r.releases.filter(o => o.kind === "canal" && o.cusecs > 0).map(o => ({ reservoir: r.name, outlet: o.outlet, cusecs: o.cusecs })));
+  return {
+    soil: soil ? {
+      asOf: soil.asOf, asOfNote: soil.asOfNote, weekAgo: soil.weekAgo, depthCm: soil.headlineDepthCm, medianPct: soil.summary.medianPct,
+      driestOnRecord: soil.summary.driestOnRecord, belowOwnMedian: soil.summary.belowOwnMedian, withBaseline: soil.summary.withBaseline,
+      mandals: soil.summary.mandals, baselineYears: soil.baseline.firstYear !== null && soil.baseline.lastYear !== null ? [soil.baseline.firstYear, soil.baseline.lastYear] : null,
+      source: soil.source, url: soil.url,
+    } : null,
+    rain: rain ? {
+      start: rain.window.start, end: rain.window.end, deviationPct: rain.state.deviationPct, gauges: rain.state.gauges,
+      mandals: rain.summary.mandals, categories: rain.categories, source: rain.source, url: rain.url,
+    } : null,
+    reservoirs: store ? {
+      asOf: store.asOf, state: store.state, byBasin: store.byBasin, staleCount: store.staleCount,
+      // Releases are not summed: a balancing reservoir fed by one canal releases
+      // the same water again into the next, so a total would count it twice.
+      topCanalReleases: canal.sort((a, b) => b.cusecs - a.cusecs).slice(0, 6),
+      releasingToCanals: new Set(canal.map(release => release.reservoir)).size,
+      releaseNote: store.releaseNote, source: store.source, url: store.url,
+    } : null,
+  };
+}
+
 /** One result per prototype boundary, never one per raw source series.
  * Ambiguous joins remain missing rather than selecting the first or worst row. */
 export function buildAgricultureEvidence(
   watch: MonsoonWatch,
   records: MandalGroundwaterRecordV2[],
   features: Array<{ d: string; m: string; path: string }>,
+  water?: WaterContext | null,
 ): AgricultureEvidence {
+  const soilRows = uniqueByBoundary(water?.soilMoisture?.mandals, features.length);
+  const rainRows = uniqueByBoundary(water?.rainfall?.mandals, features.length);
+  const depth = water?.soilMoisture ? water.soilMoisture.depthsCm.indexOf(water.soilMoisture.headlineDepthCm) : -1;
   const recordsByPlace = new Map<string, MandalGroundwaterRecordV2[]>();
   for (const record of records) {
     const name = key(record.identity.districtName, record.identity.mandalName);
@@ -91,13 +179,21 @@ export function buildAgricultureEvidence(
     else if (!record || !record.identity.joinedSourceSeriesIds.includes(row.mandalUuid)) reason = "Seasonal source identity does not match the groundwater record. Verification required.";
     else if (![row.latestDepthM, row.thisSeasonM, row.typicalM, row.shortfallM, row.comparableYears].every(finite) || row.comparableYears < 7) reason = "Insufficient valid measurements or comparable seasons.";
     const usable = row !== null && reason === null;
+    const soilRow = soilRows.get(index), rainRow = rainRows.get(index);
+    const signal: WaterSignal = usable ? row.status : "unavailable";
+    const soil: AgricultureMandal["soil"] = soilRow && depth >= 0 && finite(soilRow.pct[depth]) ? {
+      pct: soilRow.pct[depth], weekAgoPct: soilRow.weekAgoPct, median: soilRow.baseline?.median ?? null,
+      rankDriest: soilRow.baseline?.rankDriest ?? null, ofYears: soilRow.baseline?.ofYears ?? null,
+    } : null;
+    const rain: AgricultureMandal["rain"] = rainRow ? { actualMm: rainRow.actualMm, normalMm: rainRow.normalMm, deviationPct: rainRow.deviationPct, category: rainRow.category, gauges: rainRow.gauges } : null;
     return {
       index, id: record?.identity.mandalId ?? null, district: feature.d, mandal: feature.m, path: feature.path,
-      signal: usable ? row.status : "unavailable", reason,
+      signal, reason,
       depthM: usable ? row.latestDepthM : null, changeM: usable ? row.thisSeasonM : null,
       typicalM: usable ? row.typicalM : null, shortfallM: usable ? row.shortfallM : null,
       comparableYears: usable ? row.comparableYears : null,
       sourceStatus: record?.observation?.authorizationStatus === "authorized" ? "Authorized source" : "Research sample; authorization pending",
+      soil, rain, agreement: agreementOf(signal, soil, rain),
     };
   });
   const names = [...new Set(mandals.map(row => row.district))].sort();
@@ -109,6 +205,7 @@ export function buildAgricultureEvidence(
       flagged: rows.filter(row => row.signal === "short" || row.signal === "severe").length,
       severe: rows.filter(row => row.signal === "severe").length,
       medianShortfallM: median(compared.map(row => row.shortfallM!)),
+      agreeAll: rows.filter(row => row.agreement.stressed === 3).length,
     };
   }).sort((a, b) => b.flagged - a.flagged || a.name.localeCompare(b.name));
   const compared = mandals.filter(row => row.signal !== "unavailable").length;
@@ -120,8 +217,11 @@ export function buildAgricultureEvidence(
       flagged: mandals.filter(row => row.signal === "short" || row.signal === "severe").length,
       severe: mandals.filter(row => row.signal === "severe").length,
       unresolved: mandals.length - compared, unmappedSeries, ambiguousBoundaries,
+      allKnown: mandals.filter(row => row.agreement.known === 3).length,
+      agreeAll: mandals.filter(row => row.agreement.stressed === 3).length,
+      agreeTwo: mandals.filter(row => row.agreement.stressed === 2).length,
     },
-    rainfall: watch.rainfall, cropExposureHa: null, cropReadiness: "not_connected",
+    rainfall: watch.rainfall, water: summarizeWater(water), cropExposureHa: null, cropReadiness: "not_connected",
   };
 }
 
@@ -155,18 +255,28 @@ export function cropWaterBudget(input: { crop: CropKey; stage: number; eto: numb
   };
 }
 
-export function agricultureCsv(rows: AgricultureMandal[], evidence: Pick<AgricultureEvidence, "period" | "startPeriod">) {
+export function agricultureCsv(rows: AgricultureMandal[], evidence: Pick<AgricultureEvidence, "period" | "startPeriod"> & Partial<Pick<AgricultureEvidence, "water">>) {
   const cell = (value: unknown) => {
     let text = value == null ? "" : String(value);
     if (/^[=+@-]/.test(text) && typeof value !== "number") text = `'${text}`;
     return `"${text.replaceAll('"', '""')}"`;
   };
+  const soil = evidence.water?.soil, rain = evidence.water?.rain;
   return [
     "# Agriculture water watch - PROTOTYPE; not a crop-loss estimate or irrigation instruction.",
     `# Period: ${evidence.startPeriod} to ${evidence.period}. One row per prototype boundary; unresolved joins retained.`,
-    "# Positive change means deeper groundwater. Crop area, crop stage and supply records are not connected.",
+    "# Positive change means deeper groundwater. Crop area, crop stage and canal delivery records are not connected.",
+    soil ? `# Soil moisture: APWRIMS copy of the NRSC VIC model (modelled, not measured), ${soil.depthCm} cm, as of ${soil.asOf ?? "unconfirmed date"}; rank 1 = driest for that date since ${soil.baselineYears?.[0] ?? "record start"}.` : "# Soil moisture: not available in this build.",
+    rain ? `# Gauge rainfall: APWRIMS / AP DES mandal rain gauges, ${rain.start} to ${rain.end}, against the department's normal for the same window.` : "# Gauge rainfall: not available in this build.",
+    `# Signals pointing to stress (0-3), each a stated test, not a score: ${AGREEMENT_RULES.groundwater}; ${AGREEMENT_RULES.rain}; ${AGREEMENT_RULES.soil}.`,
     "# Seasonal baseline review pending. Flags are provisional; not approved operational advisories.",
-    ["district", "mandal", "mandal_id", "water_signal", "depth_mbgl", "season_change_m", "typical_change_m", "shortfall_m", "comparable_years", "source_status", "missing_reason", "crop_exposure_ha"].join(","),
-    ...rows.map(row => [row.district, row.mandal, row.id, row.signal, row.depthM, row.changeM, row.typicalM, row.shortfallM, row.comparableYears, row.sourceStatus, row.reason, null].map(cell).join(",")),
+    ["district", "mandal", "mandal_id", "water_signal", "depth_mbgl", "season_change_m", "typical_change_m", "shortfall_m", "comparable_years", "source_status", "missing_reason",
+      "soil_moisture_pct", "soil_moisture_week_ago_pct", "soil_moisture_same_date_median_pct", "soil_moisture_rank_driest", "soil_moisture_of_years",
+      "gauge_rain_mm", "gauge_rain_normal_mm", "gauge_rain_departure_pct", "gauge_rain_category",
+      "signals_pointing_to_stress", "signals_known", "crop_exposure_ha"].join(","),
+    ...rows.map(row => [row.district, row.mandal, row.id, row.signal, row.depthM, row.changeM, row.typicalM, row.shortfallM, row.comparableYears, row.sourceStatus, row.reason,
+      row.soil?.pct, row.soil?.weekAgoPct, row.soil?.median, row.soil?.rankDriest, row.soil?.ofYears,
+      row.rain?.actualMm, row.rain?.normalMm, row.rain?.deviationPct, row.rain?.category,
+      row.agreement.stressed, row.agreement.known, null].map(cell).join(",")),
   ].join("\n");
 }

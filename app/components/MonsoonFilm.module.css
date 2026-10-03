@@ -21,3 +21,5 @@
 .transcript summary { cursor:pointer; color:#687d87; }
 .transcript p { max-width:850px; }
 @media(max-width:760px) { .heading { align-items:flex-start; flex-direction:column; gap:6px; } .heading h2{font-size:20px}.chapters{display:none}.chapterSelect{display:block;width:100%;min-height:44px;margin-top:12px;border:1px solid #95acb552;border-radius:4px;background:#fff;color:#17333e;padding:9px;font:inherit;font-size:12px}.meta{flex-direction:column;gap:12px}.downloads{flex-wrap:wrap}.film{padding-top:12px} }
+.since { display:block; margin-top:8px; padding:7px 10px; border-left:2px solid #c39746; background:color-mix(in srgb, #c39746 9%, transparent); color:var(--ink-soft, #44606b); }
+.since strong { font-weight:600; color:var(--ink, #17333e); }

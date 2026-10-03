@@ -255,6 +255,133 @@ export type MonsoonComposite = {
 
 export const monsoonWatch = monsoonWatchJson as unknown as MonsoonWatch;
 
+/** Context beside the groundwater, from APWRIMS's other public dashboards.
+ * Each section carries its own as-of date and may be null if never fetched. */
+export type RainCategory = "excess" | "normal" | "deficient" | "scanty" | "noRain";
+export type ReleaseKind = "canal" | "spill" | "river" | "losses" | "drinking" | "industry" | "power";
+type ContextIdentity = { uuid: string; district: string | null; mandal: string; boundaryIndex: number | null; boundaryMatch: string | null };
+export type SoilMoistureMandal = ContextIdentity & {
+  /** Available soil moisture, % of capacity, aligned to soilMoisture.depthsCm. */
+  pct: number[];
+  weekAgoPct: number | null;
+  baseline: { years: number; median: number; min: number; max: number; rankDriest: number; ofYears: number } | null;
+};
+export type GaugeRainMandal = ContextIdentity & {
+  lgdCode: string | null;
+  actualMm: number;
+  normalMm: number;
+  deviationPct: number;
+  category: RainCategory | null;
+  rainyDays: number | null;
+  gauges: number | null;
+  lastMonth: { actualMm: number | null; normalMm: number | null };
+};
+export type ReservoirTotals = {
+  count: number;
+  capacityTmc: number;
+  storageTmc: number;
+  storagePct: number | null;
+  lastYearStorageTmc: number;
+  lastYearPct: number | null;
+  monsoonStartStorageTmc: number;
+};
+export type Reservoir = {
+  name: string;
+  type: "major" | "medium" | "outside_ap";
+  district: string | null;
+  basin: string;
+  capacityTmc: number | null;
+  storageTmc: number | null;
+  storagePct: number | null;
+  lastYearStorageTmc: number | null;
+  lastYearPct: number | null;
+  monsoonStartStorageTmc: number | null;
+  inflowCusecs: number | null;
+  outflowCusecs: number | null;
+  observedAt: string | null;
+  stale: boolean;
+  releases: Array<{ outlet: string; kind: ReleaseKind; cusecs: number }>;
+};
+type ContextSource = { source: string; url: string };
+export type WaterContext = {
+  contractVersion: string;
+  generatedAt: string;
+  portal: string;
+  authorizationStatus: string;
+  note: string;
+  soilMoisture: (ContextSource & {
+    kind: "modelled";
+    measure: string;
+    asOf: string | null;
+    asOfNote: string | null;
+    weekAgo: string;
+    depthsCm: number[];
+    headlineDepthCm: number;
+    baseline: { rule: string; firstYear: number | null; lastYear: number | null; minYears: number; yearsSkippedEmpty: number[]; yearsDroppedAsDuplicates: number[] };
+    summary: { mandals: number; mapped: number; withBaseline: number; medianPct: number | null; driestOnRecord: number; belowOwnMedian: number };
+    mandals: SoilMoistureMandal[];
+  }) | null;
+  rainfall: (ContextSource & {
+    kind: "measured";
+    window: { start: string; end: string; label: string; lastMonth: string };
+    normalBasis: string;
+    categoryRule: string;
+    state: { actualTmc: number; normalTmc: number; deviationPct: number | null; basis: string; gauges: number };
+    categories: Record<RainCategory, number>;
+    summary: { mandals: number; mapped: number };
+    mandals: GaugeRainMandal[];
+  }) | null;
+  reservoirs: (ContextSource & {
+    kind: "measured";
+    asOf: string | null;
+    oldestObservation: string | null;
+    units: { storage: string; flow: string };
+    releaseNote: string;
+    staleAfterDays: number;
+    staleCount: number;
+    state: ReservoirTotals;
+    byType: Array<ReservoirTotals & { type: string }>;
+    byBasin: Array<ReservoirTotals & { basin: string }>;
+    reservoirs: Reservoir[];
+    upstreamOutsideAp: Reservoir[];
+  }) | null;
+};
+
+/* The water-context data itself lives in its own modules, never in this one:
+   this file reaches client bundles, and the bundler keeps every JSON it imports
+   whether or not a page uses it. lib/waterContext.ts holds the full file
+   (server-rendered code only, ~0.5 MB); lib/waterSummary.ts the state and
+   district digest (a few KB, safe anywhere); lib/waterMandals.ts the per-mandal
+   map values (maps only). */
+
+/** The browser-safe digest of the water context, built by
+ * phase3_levels/fetch_apwrims_context.py from the same payload. */
+export type WaterDistrictContext = {
+  district: string;
+  key: string;
+  rain?: { actualMm: number; normalMm: number; deviationPct: number; category: RainCategory | null };
+  soil?: { mandals: number; medianPct: number; withBaseline: number; belowOwnMedian: number; driestOnRecord: number };
+  reservoirs?: { count: number; capacityTmc: number; storageTmc: number; storagePct: number | null; lastYearPct: number | null };
+};
+export type WaterSummary = {
+  contractVersion: string;
+  generatedAt: string;
+  authorizationStatus: string;
+  rain: { start: string; end: string; deviationPct: number | null; gauges: number; mandals: number; categories: Record<RainCategory, number>; url: string } | null;
+  soil: { asOf: string | null; weekAgo: string; depthCm: number; firstYear: number | null; lastYear: number | null; url: string;
+    mandals: number; medianPct: number | null; belowOwnMedian: number; withBaseline: number; driestOnRecord: number } | null;
+  reservoirs: { asOf: string | null; staleCount: number; url: string; count: number; capacityTmc: number; storageTmc: number;
+    storagePct: number | null; lastYearPct: number | null; byBasin: Array<{ basin: string; capacityTmc: number; storagePct: number | null; lastYearPct: number | null }> } | null;
+  districts: WaterDistrictContext[];
+};
+/** "DISTRICT|MANDAL" (geometry names) -> [gauge-rain departure %, soil % at the headline depth, soil rank (1 = driest), years ranked]. */
+export type WaterMandalValues = {
+  fields: ["rainDeviationPct", "soilPct", "soilRankDriest", "soilOfYears"];
+  rain: { start: string; end: string } | null;
+  soil: { asOf: string | null; depthCm: number } | null;
+  values: Record<string, [number | null, number | null, number | null, number | null]>;
+};
+
 export type PacificEnsoData = {
   contractVersion: string;
   window: { lon0: number; lon1: number; lat0: number; lat1: number };

@@ -18,6 +18,11 @@ import {
   formatPeriod,
   titleCase,
 } from "../../lib/data";
+import { waterSummary } from "../../lib/waterSummary";
+import { day, signed } from "../../components/agriculture/waterContextFormat";
+
+const RAIN_LABEL: Record<string, string> = { excess: "Excess", normal: "Normal", deficient: "Deficient", scanty: "Scanty", noRain: "No rain" };
+const RAIN_COLOR: Record<string, string> = { excess: "#2789af", normal: "#5e9c89", deficient: "#ce982b", scanty: "#b64c42", noRain: "#7a2e27" };
 
 export default function ClimatePage() {
   const withBal = districtGeometry.districts.filter(
@@ -46,7 +51,11 @@ export default function ClimatePage() {
       />
 
       <div className="provRibbon">
-        <span className="provRibbonItem"><IconCloudRain /> CHIRPS rainfall · UCSB · ~5 km</span>
+        <span className="provRibbonItem"><IconCloudRain /> CHIRPS v3 rainfall · UCSB · ~5 km</span>
+        <span className="provRibbonDot" />
+        <span className="provRibbonItem"><IconCloudRain /> AP DES rain gauges · measured</span>
+        <span className="provRibbonDot" />
+        <span className="provRibbonItem"><IconDroplet /> NRSC soil moisture · modelled</span>
         <span className="provRibbonDot" />
         <span className="provRibbonItem"><IconLeaf /> TerraClimate ET · U. Idaho · ~4 km</span>
         <span className="provRibbonDot" />
@@ -94,6 +103,57 @@ export default function ClimatePage() {
         </div>
       </section>
 
+      {/* This water year, measured: the state's own gauges and reservoirs, with the NRSC soil model beside them. */}
+      {waterSummary.rain || waterSummary.soil ? (
+        <section className="card" aria-labelledby="season-districts-title">
+          <div className="cardHead">
+            <div className="cardTitle" id="season-districts-title"><span className="titleIcon"><IconCloudRain /></span>This water year by district — driest first</div>
+            <span className="cardSub">
+              {waterSummary.rain ? `gauges ${day(waterSummary.rain.start, false)} to ${day(waterSummary.rain.end)}` : ""}
+              {waterSummary.soil ? ` · soil ${day(waterSummary.soil.asOf)}` : ""}
+              {waterSummary.reservoirs ? ` · reservoirs ${day(waterSummary.reservoirs.asOf)}` : ""}
+            </span>
+          </div>
+          <div className="budgetMeta">
+            {waterSummary.rain ? <span>Statewide gauge rain <b>{signed(waterSummary.rain.deviationPct)}</b> against normal (area-weighted, {waterSummary.rain.gauges.toLocaleString("en-IN")} gauges)</span> : null}
+            {waterSummary.soil ? <><span className="dotsep" /><span>Soil below its usual level for the date in <b>{waterSummary.soil.belowOwnMedian}</b> of {waterSummary.soil.withBaseline} mandals</span></> : null}
+            {waterSummary.reservoirs ? <><span className="dotsep" /><span>Reservoirs <b>{formatNumber(waterSummary.reservoirs.storagePct)}%</b> full against {formatNumber(waterSummary.reservoirs.lastYearPct)}% a year ago</span></> : null}
+          </div>
+          <div className="tableWrap">
+            <table className="dataTable">
+              <thead>
+                <tr><th>District</th><th>Gauge rain</th><th>Normal</th><th>Departure</th><th>Soil moisture 30 cm</th><th>Reservoirs</th></tr>
+              </thead>
+              <tbody>
+                {waterSummary.districts.filter((d) => d.rain || d.soil)
+                  .sort((a, b) => (a.rain?.deviationPct ?? 999) - (b.rain?.deviationPct ?? 999))
+                  .map((d) => (
+                    <tr key={d.key}>
+                      <td className="cellStrong">{titleCase(d.district)}</td>
+                      <td>{d.rain ? `${formatNumber(d.rain.actualMm)} mm` : "—"}</td>
+                      <td>{d.rain ? `${formatNumber(d.rain.normalMm)} mm` : "—"}</td>
+                      <td className="cellPct" style={{ color: d.rain?.category ? RAIN_COLOR[d.rain.category] : undefined }}>
+                        {d.rain ? <>{signed(d.rain.deviationPct, 0)} <span className="wetTag" style={{ color: RAIN_COLOR[d.rain.category ?? "normal"], background: `${RAIN_COLOR[d.rain.category ?? "normal"]}1f` }}>{RAIN_LABEL[d.rain.category ?? ""] ?? "—"}</span></> : "—"}
+                      </td>
+                      <td>{d.soil ? `${formatNumber(d.soil.medianPct)}% median · ${d.soil.belowOwnMedian}/${d.soil.withBaseline} below usual` : "—"}</td>
+                      <td>{d.reservoirs ? `${d.reservoirs.count} · ${formatNumber(d.reservoirs.storagePct)}% (${formatNumber(d.reservoirs.lastYearPct)}% last year)` : "—"}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="fusionNote" style={{ marginTop: 14 }}>
+            <IconInfo />
+            <span>
+              Gauge rain is the AP Directorate of Economics and Statistics network against the department&rsquo;s own normal for the
+              water year to date (measured). Soil moisture is the NRSC VIC land-surface model (modelled, driven by rainfall);
+              &ldquo;usual&rdquo; is the same calendar day in earlier years since {waterSummary.soil?.firstYear ?? "the record began"}.
+              Reservoir storage is measured at the dam; a release is not water delivered to a mandal. All via APWRIMS, research use.
+            </span>
+          </div>
+        </section>
+      ) : null}
+
       {/* Balance map */}
       <section className="card mapCard">
         <div className="cardHead">
@@ -124,7 +184,7 @@ export default function ClimatePage() {
           <div className="provCard">
             <div className="provCardHead">
               <span className="provCardIcon"><IconCloudRain /></span>
-              <div><strong>CHIRPS rainfall</strong><code className="provFile">chirps monthly</code></div>
+              <div><strong>CHIRPS v3 rainfall</strong><code className="provFile">chirps v3 monthly</code></div>
             </div>
             <dl className="provMeta">
               <div><dt>Provider</dt><dd>UCSB Climate Hazards Center</dd></div>
