@@ -262,3 +262,5 @@
 .facts small { font-size: 11px; line-height: 1.45; color: var(--ink-soft); }
 .barRowWide { grid-template-columns: 170px minmax(0, 1fr) 128px; }
 @media (max-width: 760px) { .barRowWide { grid-template-columns: 104px minmax(0, 1fr) 108px; } }
+/* The matrix panel runs much longer than the map: the map stays in view while it is read. */
+@media (min-width: 1081px) { .workspace > .mapCard { position: sticky; top: 16px; } }

@@ -70,6 +70,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
   const meta = statusMeta(mandal.status_bucket);
   const sample = sampleForMandal(mandal);
   const depthPct = Math.min(100, ((mandal.median_groundwater_mbgl ?? 0) / MAX_DEPTH) * 100);
+  const outline = geometryForMandal(mandal.id);
 
   const realDepth = (observationSeries[mandal.id]?.observations ?? []).map(
     ({ period, value }) => [period, value] as [string, number],
@@ -418,12 +419,16 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
                 </div>
               )}
               <div className="readinessItem">
-                <span className="readyIcon pending">
+                <span className={`readyIcon ${outline?.src === "official" ? "partial" : "pending"}`}>
                   <IconMap />
                 </span>
                 <div className="readyBody">
                   <div className="readyLabel">Boundary Source</div>
-                  <div className="readyMeta">public_prototype · official APWRIMS boundary pending</div>
+                  <div className="readyMeta">
+                    {outline?.src === "official"
+                      ? `The State's outline (AWARE), rebuilt from its points${outline.officialKm2 ? ` · ${outline.officialKm2} km²` : ""}`
+                      : "Public prototype outline · the State's own outline is not drawn for this mandal"}
+                  </div>
                 </div>
               </div>
             </div>

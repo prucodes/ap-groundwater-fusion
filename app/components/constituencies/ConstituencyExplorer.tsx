@@ -40,6 +40,19 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
   }, [rows, sort]);
 
   const meta = METRICS[metric];
+  // With nothing selected the panel is the statewide picture for the chosen
+  // measure: how the seats spread over its bands, and the most affected seats.
+  const statewide = useMemo(() => {
+    const valued = rows.filter(r => r[metric] !== null);
+    const severity = (r: ConstituencyRow) => (metric === "rainPct" ? -(r.rainPct as number) : (r[metric] as number));
+    const bins = metricLegend(metric).map(item => ({ ...item, count: valued.filter(r => metricColor(metric, r[metric]) === item.color).length }));
+    return {
+      bins,
+      most: Math.max(1, ...bins.map(b => b.count)),
+      top: [...valued].sort((a, b) => severity(b) - severity(a)).slice(0, 6),
+      missing: rows.length - valued.length,
+    };
+  }, [rows, metric]);
   return (
     <div className={styles.explorer}>
       <div className={styles.toolbar} role="group" aria-label="Map measure">
@@ -79,6 +92,9 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
         <aside className={styles.panel} aria-live="polite" data-testid="constituency-panel">
           {row ? (
             <>
+              {selected ? (
+                <button type="button" className={styles.back} onClick={() => setSelected(null)}>← Statewide</button>
+              ) : null}
               <span className={styles.panelKicker}>{row.pc} parliamentary constituency</span>
               <h3>{row.ac}</h3>
               <p className={styles.panelDistricts}>{row.districts}</p>
@@ -101,7 +117,32 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
               </p>
             </>
           ) : (
-            <p className={styles.panelEmpty}>Point at or select a constituency to see its mandals and figures.</p>
+            <>
+              <span className={styles.panelKicker}>{`Statewide · ${rows.length} constituencies`}</span>
+              <h3>{meta.label}</h3>
+              <p className={styles.panelDistricts}>{meta.unit}</p>
+              <ul className={styles.dist} aria-label="Constituencies in each band">
+                {statewide.bins.map(b => (
+                  <li key={b.label}>
+                    <span>{b.label}</span>
+                    <span className={styles.distTrack}><i style={{ width: `${(100 * b.count) / statewide.most}%`, background: b.color }} /></span>
+                    <b>{b.count}</b>
+                  </li>
+                ))}
+              </ul>
+              {statewide.missing ? <p className={styles.panelNote}>{`${statewide.missing} without data for this measure.`}</p> : null}
+              <span className={`${styles.panelKicker} ${styles.topKicker}`}>Most affected</span>
+              <ol className={styles.top}>
+                {statewide.top.map((r, i) => (
+                  <li key={r.ac}>
+                    <button type="button" onClick={() => setSelected(r.ac)}>
+                      <span>{i + 1}</span><strong>{r.ac}</strong><em>{metricText(metric, r[metric])}</em>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+              <p className={styles.panelEmpty}>Point at or select a constituency to see its mandals and figures.</p>
+            </>
           )}
         </aside>
       </div>

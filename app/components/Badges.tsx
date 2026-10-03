@@ -16,6 +16,24 @@ export function ConfidenceBadge({ label }: { label: string }) {
   return <span className={`badge ${cls}`}>{display}</span>;
 }
 
+/* The full agreement wording runs to five lines in a narrow column. The pill
+   says it in three words; the full sentence stays on hover and for readers. */
+const SHORT_SIGNAL: Record<string, string> = {
+  strong: "Falls despite surplus",
+  partial: "Falls, no surplus",
+  agree: "Stable / recovering",
+  unknown: "Context unknown",
+};
+
+export function SignalPill({ value }: { value: string }) {
+  const meta = agreementMeta(value);
+  return (
+    <span className={`signalPill ${meta.className}`} title={meta.label} aria-label={meta.label}>
+      {SHORT_SIGNAL[meta.className] ?? meta.label}
+    </span>
+  );
+}
+
 export function AgreementTag({ value }: { value: string }) {
   const meta = agreementMeta(value);
   return (

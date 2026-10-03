@@ -35,6 +35,11 @@ function coverage(dataLabel: string): string | null {
   return null;
 }
 
+/** A pending or partial source in a few words; the full label stays on hover. */
+function compactLabel(label: string) {
+  return label.replace(/\s*\([^)]*\)/g, "").replace(/:.*$/, "").replace(/ via APWRIMS.*$/, "").replace(/\s+/g, " ").trim();
+}
+
 /** Connected sources as short names: in the compact panel they become tags. */
 function shortName(label: string) {
   return label.replace(/^Real /, "").replace(/\s*\(.*$/, "").replace(/ via APWRIMS.*$/, "").trim();
@@ -68,12 +73,16 @@ export function SourceReadinessPanel({ compact = false }: { compact?: boolean })
           <div className="readinessItem" key={item.label}>
             <span className={`readyIcon ${t}`}>{toneIcon(t)}</span>
             <div className="readyBody">
-              <div className="readyLabel">{item.label}</div>
-              <div className="readyMeta">
-                {reach ? <><strong>{reach}</strong> · </> : null}
-                <code style={{ fontSize: 10.5 }}>{item.data_label}</code> · official_flag:{" "}
-                {String(item.official_flag)}
-              </div>
+              <div className="readyLabel" title={compact ? item.label : undefined}>{compact ? compactLabel(item.label) : item.label}</div>
+              {compact ? (
+                reach ? <div className="readyMeta"><strong>{reach}</strong></div> : null
+              ) : (
+                <div className="readyMeta">
+                  {reach ? <><strong>{reach}</strong> · </> : null}
+                  <code style={{ fontSize: 10.5 }}>{item.data_label}</code> · official_flag:{" "}
+                  {String(item.official_flag)}
+                </div>
+              )}
             </div>
             <span className={`readyTag ${t}`}>{statusText(item.status)}</span>
           </div>

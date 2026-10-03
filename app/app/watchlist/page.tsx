@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
-import { AgreementTag, ConfidenceBadge } from "../../components/Badges";
+import { ConfidenceBadge, SignalPill } from "../../components/Badges";
 import { SelectedMandalPanel } from "../../components/SelectedMandalPanel";
 import { PercentileBar } from "../../components/Signals";
 import { ExportCsvButton } from "../../components/ExportButtons";
@@ -247,13 +247,13 @@ export default function WatchlistPage() {
                         )}
                       </td>
                       <td>
-                        <AgreementTag value={m.sensor_satellite_agreement} />
+                        <SignalPill value={m.sensor_satellite_agreement} />
                       </td>
                       <td>
                         <ConfidenceBadge label={m.confidence_label} />
                       </td>
-                      <td style={{ maxWidth: 170, color: "var(--muted)" }}>{reasonFor(m)}</td>
-                      <td style={{ maxWidth: 200 }}>{m.recommended_action}</td>
+                      <td className="watchText" style={{ color: "var(--muted)" }}>{reasonFor(m)}</td>
+                      <td className="watchText">{m.recommended_action}</td>
                     </tr>
                   );
                 })}

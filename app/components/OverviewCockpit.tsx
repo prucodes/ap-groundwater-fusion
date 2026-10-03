@@ -474,7 +474,7 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
               View full watchlist <IconArrowRight />
             </Link>
           </div>
-          <MandalTable rows={verifyMandals()} limit={16} selectedId={selectedId} onSelect={setSelectedId} />
+          <MandalTable rows={verifyMandals()} limit={30} selectedId={selectedId} onSelect={setSelectedId} />
         </section>
 
         <div className="contentGrid">

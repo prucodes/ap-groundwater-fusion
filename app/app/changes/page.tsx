@@ -93,17 +93,16 @@ export default function ChangesPage() {
         {items.map(item => (
           <Link href={item.href} className={styles.card} key={item.key} data-direction={item.direction ?? "new"}>
             <span className={styles.cardLabel}>{item.label}</span>
-            <span className={styles.values}>
-              <span className={styles.before}>{format(item.before, item.unit)}</span>
-              <span className={styles.arrow} aria-hidden="true">→</span>
-              <strong>{format(item.after, item.unit)}</strong>
-            </span>
-            <span className={styles.badge}>
-              {item.direction ? DIRECTION_TEXT[item.direction] : "First reading"}
-              {delta(item) && item.direction !== "same" ? ` · ${delta(item)}` : ""}
+            <strong className={styles.value}>{format(item.after, item.unit)}</strong>
+            <span className={styles.status}>
+              <span className={styles.badge}>
+                {item.direction ? DIRECTION_TEXT[item.direction] : "First reading"}
+                {delta(item) && item.direction !== "same" ? ` · ${delta(item)}` : ""}
+              </span>
+              {item.before !== null && item.direction !== "same" ? <span className={styles.was}>was {format(item.before, item.unit)}</span> : null}
             </span>
             <span className={styles.dates}>
-              {asOf(item.beforeAsOf)} → {asOf(item.afterAsOf)}
+              {item.beforeAsOf && item.beforeAsOf !== item.afterAsOf ? `${asOf(item.beforeAsOf)} → ${asOf(item.afterAsOf)}` : `As of ${asOf(item.afterAsOf)}`}
               {item.refreshed === false ? " · source has not updated" : ""}
             </span>
             {item.note ? <span className={styles.note}>{item.note}</span> : null}
