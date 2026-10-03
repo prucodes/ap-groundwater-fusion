@@ -11,8 +11,12 @@ test("every constituency is on the map and in the table, and a click explains it
   const drawn = constituencies.constituencies.filter(c => c.rings && c.rings.length).length;
   await expect(page.getByTestId("constituency-map").locator("path[role=\"button\"]")).toHaveCount(drawn);
   await expect(page.getByTestId("constituency-table").locator("tbody tr")).toHaveCount(constituencies.constituencies.length);
-  const first = page.getByTestId("constituency-table").locator("tbody tr").first();
-  const name = (await first.locator("td").first().innerText()).trim();
+  const rows = page.getByTestId("constituency-table").locator("tbody tr");
+  // Serial numbers run 1..N in the table's current order.
+  await expect(rows.first().locator("td").first()).toHaveText("1");
+  await expect(rows.last().locator("td").first()).toHaveText(String(constituencies.constituencies.length));
+  const first = rows.first();
+  const name = (await first.locator("td").nth(1).innerText()).trim();
   await first.click();
   await expect(page.getByTestId("constituency-panel")).toContainText(name);
   await expect(page.getByTestId("constituency-panel")).toContainText("mandals:");

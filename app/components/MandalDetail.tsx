@@ -61,8 +61,8 @@ function actionItems(m: MandalGroundwaterView) {
   return [
     "Collect an additional field observation before interpretation",
     "Review the APWRIMS-format observation history",
-    "Reassess after official APWRIMS export and boundaries arrive",
-    "Do not treat as official until APWRIMS/APSAC/RTGS boundaries supplied",
+    "Reassess once the authorised APWRIMS export arrives",
+    "Do not treat as official until the APWRIMS export is authorised",
   ];
 }
 
@@ -469,7 +469,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
         <span className="dotsep" />
         APWRIMS reading + real NASA satellite-model percentile
         <span className="dotsep" />
-        Not official until APWRIMS export &amp; official boundaries
+        {`Not official until the APWRIMS export is authorised · ${boundaryLabel(geometryForMandal(mandal.id))}`}
         <Link className="linkAction" href="/watchlist" style={{ marginLeft: "auto" }}>
           Go to watchlist <IconArrowRight />
         </Link>

@@ -18,7 +18,8 @@ const labels = [
   { code: "measured-reservoir-storage", text: "Reservoir telemetry via APWRIMS (TMC; releases in cusecs). Measured at the dam; a canal release is not water delivered to a mandal." },
   { code: "model-water-balance", text: "TerraClimate rainfall minus actual ET (mm). A climatic water-balance indicator, not measured recharge." },
   { code: "derived", text: "Nowcast, model P10–P90 range, qualitative completeness class and neutral monitoring status." },
-  { code: "public_prototype", text: "Public prototype boundaries. official_flag = false until official polygons arrive." },
+  { code: "official_rebuilt", text: "Official outline rebuilt from the State's AWARE boundary points, kept only within 3% of the official area. official_flag stays false: rebuilt, not an official export." },
+  { code: "public_prototype", text: "Public prototype outline, used where no official outline passed its checks." },
 ];
 
 const signals = [
@@ -69,7 +70,7 @@ const signals = [
 const caveats = [
   "NASA GRACE-DA values are percentiles (0–100), not groundwater depth (mbgl). They must never be converted to depth.",
   "Level estimates are modelled (calibrated to APWRIMS) and must not be treated as official APWRIMS results.",
-  "Boundaries are public prototype polygons; official APWRIMS/APSAC/RTGS boundaries are required for government-grade results.",
+  "Most mandal outlines are rebuilt from the State's official boundary points (AWARE); the rest are public prototypes. An official boundary export from APSAC/RTGS would remove the rebuild step.",
   "Outputs are prototype review signals, not official mandal-level groundwater determinations.",
   modelCard.disclosures.spatial,
   modelCard.disclosures.crossNetwork,
@@ -197,6 +198,16 @@ export default function MethodologyPage() {
             <strong>ONI groups rainfall-history composites; it does not generate local groundwater predictions.</strong> Adding it to the three-month forecast was tested
             on rolling origin and made the forecast worse — 1.776 m to 1.850 m mean error, and worse in every aquifer.
             The groundwater forecast experiment remains research-only. Historical ENSO associations do not establish a local forecast or causation.
+          </p>
+          <p>
+            <strong>When the three-month forecast can and cannot be trusted in a dry year.</strong> Retrained every quarter since
+            2018 and scored on what followed, forecasts whose three months turned out at least 25% drier than normal during the
+            monsoon expected about 1 m more recharge than happened (2.15 m mean error against 1.79 m for assuming no change).
+            That happens when the forecast is made before the season fails, as from June for September: nothing measured then
+            says the monsoon will fail. Once the season&rsquo;s deficit is measured, from August on, the bias is small (about
+            0.2 m) and the forecast beats no change. Shrinking toward no change and correcting by past bias were both tested;
+            neither improved every period, so the released forecast is unchanged. The model was also re-run on the State&rsquo;s
+            official mandal outlines: error moved by under 0.3% (1.797 m against 1.800 m), so its inputs are unchanged.
           </p>
         </div>
       </section>

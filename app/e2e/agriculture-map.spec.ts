@@ -32,6 +32,7 @@ for (const width of [1440, 390]) {
     await expect(tooltip).toContainText("Aug 2026");
     await expect(tooltip).toContainText("Shortfall vs own normal");
     await expect(tooltip).toContainText("crop records not connected");
+    await expect(tooltip).toContainText(/(Official|Public prototype) boundary/);
     await expect(tooltip).toHaveAttribute("data-signal", "severe");
     const frame = (await map.boundingBox())!, card = (await tooltip.boundingBox())!;
     expect(card.x).toBeGreaterThanOrEqual(frame.x);

@@ -34,6 +34,7 @@ import { AlertsBell } from "./AlertsBell";
 import { CommandPalette } from "./CommandPalette";
 import { datasetManifest, formatPeriod } from "../lib/data";
 import { waterSummary } from "../lib/waterSummary";
+import { stateSummary } from "../lib/stateSummary";
 import { PageTransition } from "./PageTransition";
 
 // Primary workflow — the day-to-day screens. `desc` is the one-line explainer.
@@ -245,6 +246,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {waterSummary.reservoirs ? (
             <div className="statusFeed">
               <span className="feedDot" /> Reservoirs · {formatDay(waterSummary.reservoirs.asOf)}
+            </div>
+          ) : null}
+          {stateSummary.readingDates.last ? (
+            <div className="statusFeed">
+              <span className="feedDot" /> State wells · {formatDay(stateSummary.readingDates.last)}
             </div>
           ) : null}
           <OrbitGlobe3D />

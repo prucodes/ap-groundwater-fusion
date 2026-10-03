@@ -12,6 +12,6 @@ export const metadata: Metadata = {
 
 export default function AgriculturePage() {
   const evidence = buildAgricultureEvidence(monsoonWatch, groundwaterRecords,
-    mapGeometry.mandals.map(feature => ({ d: feature.d, m: feature.m, path: mandalToPath(feature.rings) })), waterContext);
+    mapGeometry.mandals.map(feature => ({ d: feature.d, m: feature.m, src: feature.src, path: mandalToPath(feature.rings) })), waterContext);
   return <AgricultureWorkspace evidence={evidence} mapView={{ width: MAP_VIEW.width, height: MAP_VIEW.height }} sourceStatus={<WatchEvidenceStatus />} />;
 }

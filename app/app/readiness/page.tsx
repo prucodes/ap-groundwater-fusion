@@ -2,7 +2,7 @@ import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { IconClock } from "../../components/icons";
-import { datasetManifest, formatPeriod } from "../../lib/data";
+import { datasetManifest, formatPeriod, mapGeometry } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
 import { droughtWatch } from "../../lib/droughtWatch";
 import { stateSummary } from "../../lib/stateSummary";
@@ -44,7 +44,7 @@ export default function ReadinessPage() {
         <div className={styles.metric}><strong>{c.modelledRecordCount}</strong><span>Modelled units</span><small>Nowcast, not a field reading</small></div>
         <div className={styles.metric}><strong>{c.measuredOnlyCount}</strong><span>Measured-only units</span><small>No released nowcast</small></div>
         <div className={styles.metric}><strong>{c.boundaryOnlyCount + c.noDataCount}</strong><span>Groundwater gaps</span><small>Not classified as healthy</small></div>
-        <div className={styles.metric}><strong>{c.boundaryFeatureCount}</strong><span>Prototype boundaries</span><small>Official crosswalk pending</small></div>
+        <div className={styles.metric}><strong>{`${mapGeometry.official_summary?.outlines ?? 0}/${mapGeometry.mandals.length}`}</strong><span>Official mandal outlines</span><small>{`${mapGeometry.mandals.length - (mapGeometry.official_summary?.outlines ?? 0)} still prototype`}</small></div>
       </div>
       <div className={styles.coverage} aria-label={`${c.modelledRecordCount} modelled, ${c.measuredOnlyCount} measured only, ${c.boundaryOnlyCount + c.noDataCount} gaps`}>
         <span style={{ flex: c.modelledRecordCount, background: "var(--teal)" }} /><span style={{ flex: c.measuredOnlyCount, background: "var(--amber)" }} /><span style={{ flex: c.boundaryOnlyCount + c.noDataCount, background: "var(--muted-2)" }} />

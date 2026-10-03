@@ -52,3 +52,8 @@ data/private/
 
 # AI Living Labs data lake extracts: fetched locally, never committed
 data/raw/datalake/
+
+# Experiment working files (per-row backtest predictions; reproducible by the experiment scripts)
+data/raw/experiments/
+# CHIRPS Andhra Pradesh window cache for the outline experiment
+data/raw/chirps/ap_window/

@@ -88,7 +88,7 @@ export function SelectedMandalPanel({
         </div>
       ) : (
         <div className={styles.noDataCallout}>
-          No measured groundwater value is available for this prototype boundary.
+          No measured groundwater value is available for this boundary.
         </div>
       )}
 
@@ -168,7 +168,7 @@ export function SelectedMandalPanel({
       </div>
 
       <p className={styles.prototypeNote}>
-        Prototype boundary and research data. This view does not replace
+        Research data. This view does not replace
         official field measurements or APWRIMS outputs.
       </p>
 

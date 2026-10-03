@@ -108,7 +108,7 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
       <div className={styles.tableWrap}>
         <table className={styles.table} data-testid="constituency-table">
           <thead>
-            <tr>{COLUMNS.map(c => (
+            <tr><th scope="col" className={styles.serial}>S.No.</th>{COLUMNS.map(c => (
               <th key={c.key} aria-sort={sort.key === c.key ? (sort.desc ? "descending" : "ascending") : "none"}>
                 <button type="button" onClick={() => setSort(s => ({ key: c.key, desc: s.key === c.key ? !s.desc : c.key !== "ac" && c.key !== "pc" }))}>
                   {c.label}{sort.key === c.key ? (sort.desc ? " ▼" : " ▲") : ""}
@@ -117,8 +117,10 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
             ))}</tr>
           </thead>
           <tbody>
-            {sorted.map(r => (
+            {sorted.map((r, position) => (
               <tr key={r.ac} className={r.ac === selected ? styles.rowOn : undefined} onClick={() => setSelected(r.ac)}>
+                {/* Serial number in the current sort order. */}
+                <td className={styles.serial}>{position + 1}</td>
                 <td><strong>{r.ac}</strong></td>
                 <td>{r.pc}</td>
                 <td>{r.mandals}</td>

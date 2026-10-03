@@ -32,7 +32,7 @@ export function GovernanceBrief({ evidence, onInspect }: { evidence: Agriculture
       `Observation window: ${evidence.startPeriod} to ${evidence.period}. Snapshot built: ${evidence.generatedAt}.`,
       "Research prototype. Not live telemetry. Not an issued advisory or assigned action.",
       "",
-      `Coverage: ${row.compared}/${row.total} prototype boundary units compared; ${row.total - row.compared} unresolved.`,
+      `Coverage: ${row.compared}/${row.total} boundary units compared; ${row.total - row.compared} unresolved.`,
       `Provisional seasonal flags: ${row.flagged}/${row.compared} compared units; ${row.severe} larger shortfalls.`,
       `Groundwater, gauge rain and soil all point to stress in ${row.agreeAll} units: ${AGREEMENT_RULES.groundwater}; ${AGREEMENT_RULES.rain}; ${AGREEMENT_RULES.soil}.`,
       "Groundwater flags are not planted area, crop loss, drought declarations or water available for allocation.",
@@ -71,13 +71,13 @@ export function GovernanceBrief({ evidence, onInspect }: { evidence: Agriculture
       <div className={styles.comparison}>
         <div className={styles.toolbar}><div role="group" aria-label="District review lens"><button type="button" aria-pressed={mode === "flagged"} onClick={() => { setMode("flagged"); setSelected(null); }}>Shortfall flags</button><button type="button" aria-pressed={mode === "unavailable"} onClick={() => { setMode("unavailable"); setSelected(null); }}>Coverage gaps</button></div><span>Top 6 by count</span></div>
         <div className={styles.legend}><span><i style={{ background: WATER_SIGNALS.severe.color }} />Larger shortfall</span><span><i style={{ background: WATER_SIGNALS.short.color }} />Flagged</span><span><i style={{ background: WATER_SIGNALS.normal.color }} />Not flagged</span><span><i className={styles.missing} />Unresolved</span></div>
-        <div className={styles.axis}><span>Share of prototype boundaries</span><span>100%</span></div>
+        <div className={styles.axis}><span>Share of boundary units</span><span>100%</span></div>
         <div className={styles.rows}>
           {visible.map((row, index) => <button type="button" key={row.name} aria-label={`Review ${name(row.name)}`} aria-pressed={row.name === district.name} className={styles.row} onClick={() => setSelected(row.name)}>
             <span className={styles.rank}>{String(index + 1).padStart(2, "0")}</span><span className={styles.rowMain}><span className={styles.rowLabel}><strong>{name(row.name)}</strong><small>{mode === "flagged" ? `${row.flagged} / ${row.compared} compared` : `${row.total - row.compared} / ${row.total} unresolved`}</small></span><span className={styles.track} aria-hidden="true"><i style={{ width: `${row.severe / row.total * 100}%`, background: WATER_SIGNALS.severe.color }} /><i style={{ width: `${(row.flagged - row.severe) / row.total * 100}%`, background: WATER_SIGNALS.short.color }} /><i style={{ width: `${(row.compared - row.flagged) / row.total * 100}%`, background: WATER_SIGNALS.normal.color }} /><i className={styles.missing} style={{ width: `${(row.total - row.compared) / row.total * 100}%` }} /></span></span><IconArrowRight />
           </button>)}
         </div>
-        <p className={styles.chartNote}>Counts use unique, reconciled prototype boundaries. Bar width is not land area. Unresolved units remain outside the compared denominator.</p>
+        <p className={styles.chartNote}>Counts use unique, reconciled boundary units. Bar width is not land area. Unresolved units remain outside the compared denominator.</p>
       </div>
       <div className={styles.dossier} aria-label="District review evidence" aria-live="polite">
         <div className={styles.dossierHead}><span className={styles.eyebrow}>District / {evidence.period}</span><select aria-label="Brief district" value={district.name} onChange={event => setSelected(event.target.value)}>{evidence.districts.slice().sort((a, b) => a.name.localeCompare(b.name)).map(row => <option value={row.name} key={row.name}>{name(row.name)}</option>)}</select><h3>{name(district.name)}</h3></div>
