@@ -107,6 +107,10 @@ STEPS = [
     # silent failure would leave last week's forward numbers on screen.
     ("build released 3-month forecast", [PY, os.path.join(HERE, "build_forecast.py")], True),
     ("publish V2 app data",  [PY, os.path.join(HERE, "build_real_app_data.py")], True),
+    # Each released forecast set against how forecasts made in the same month
+    # after similar rain fared in the backtest. Optional: a failure keeps last
+    # week's notes, which name the month they describe.
+    ("build forecast reliability", [PY, os.path.join(HERE, "build_forecast_reliability.py")], False),
     # The Crystal 3D view embeds its own dataset, rebuilt here from the measured
     # series just published. Optional: a failure keeps last week's view, and the
     # test suite blocks publication if a new pre-monsoon year went missing.

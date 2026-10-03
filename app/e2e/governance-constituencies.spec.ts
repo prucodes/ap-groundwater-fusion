@@ -39,3 +39,22 @@ test("the overview and monsoon page carry the State wells line", async ({ page }
   await page.goto("/monsoon/");
   await expect(page.getByTestId("state-network-stat")).toContainText(`of ${summary.summary.withChange} mandals deeper than in May`);
 });
+
+test("each constituency has a one-page brief that prints on its own", async ({ page }) => {
+  const seat = constituencies.constituencies.find(c => c.code === "120")!;
+  await page.goto("/constituencies/");
+  await page.getByTestId("constituency-table").getByText(seat.ac, { exact: true }).click();
+  await page.getByRole("link", { name: "Open the one-page brief →" }).click();
+  await expect(page).toHaveURL(/\/constituencies\/120\/?$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(seat.ac);
+  await expect(page.getByRole("region", { name: "Headline figures" })).toContainText("Groundwater in stress");
+  await expect(page.getByRole("region", { name: "What the figures say" })).toContainText("assessed mandal");
+  await expect(page.locator("article table tbody tr")).toHaveCount(seat.mandals.length);
+  await expect(page.getByRole("button", { name: "Print or save as PDF" })).toBeVisible();
+  await expect(page.locator("article footer")).toContainText("not a declaration");
+  await page.emulateMedia({ media: "print" });
+  await expect(page.locator(".sidebar")).toBeHidden();
+  await expect(page.getByRole("button", { name: "Print or save as PDF" })).toBeHidden();
+  await expect(page.locator("article h1")).toBeVisible();
+  await expect(page.locator(".mobileBar")).toBeHidden();
+});

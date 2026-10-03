@@ -6,10 +6,12 @@ import { AgreementTag } from "./Badges";
 import { IconActivity, IconArrowRight, IconDroplet, IconFlask, IconSatellite, IconTarget } from "./icons";
 import { Hydrograph } from "./Hydrograph";
 import { ExtractionBadge } from "./ExtractionBadge";
+import { reliabilityFor } from "../lib/forecastReliability";
 
 export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView }) {
   const meta = statusMeta(mandal.status_bucket);
   const history = depthSeriesFor(mandal);
+  const trust = mandal.forecast_mbgl !== null && mandal.forecast_mbgl !== undefined ? reliabilityFor(mandal.id) : null;
   const sample = sampleForMandal(mandal);
 
   return (
@@ -115,6 +117,15 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
             </span>
           </div>
         )}
+        {trust ? (
+          <div className={`forecastTrust ${trust.tone}`} data-testid="forecast-trust">
+            <strong>{trust.headline}</strong>
+            <span>
+              {trust.detail}
+              {trust.rainPct !== null ? ` Rain here over the three months to the forecast: ${trust.rainPct > 0 ? "+" : ""}${trust.rainPct}% against normal.` : ""}
+            </span>
+          </div>
+        ) : null}
         {mandal.obs_outside_band ? (
           <div className="sideCaveat" style={{ color: "var(--rust)", fontWeight: 600 }}>
             ⚠ The latest measured aggregate sits {formatNumber(mandal.obs_band_excess_m)} m outside the model&rsquo;s own

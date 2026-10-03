@@ -1,7 +1,7 @@
 {
   "manifestVersion": "2.0.0",
   "dataContractVersion": "2.0.0",
-  "generatedAt": "2026-10-03T17:57:26+00:00",
+  "generatedAt": "2026-10-03T23:06:05+00:00",
   "generator": "phase3_levels/build_phase0_foundation.py",
   "generatorVersion": "phase0-publisher-2.0.0",
   "officialAdministrativeUnitCount": null,
@@ -36,8 +36,8 @@
     "graceFetchDate": "2026-09-28",
     "rainfallValidPeriod": "2026.08",
     "etValidPeriod": "2025",
-    "modelBuildTimestamp": "2026-10-02T19:45:15+00:00",
-    "uiGenerationTimestamp": "2026-10-03T17:57:26+00:00"
+    "modelBuildTimestamp": "2026-10-03T23:00:43+00:00",
+    "uiGenerationTimestamp": "2026-10-03T23:06:05+00:00"
   },
   "joinDiagnostics": {
     "joinIdentity": "normalized district plus normalized mandal",
@@ -70,29 +70,29 @@
   },
   "inputHashes": {
     "apwrimsHistory": "b5d60daf9305e1e0aca519b1c7f5c9f06a3fa59263f2084efd940075bbe9fdbb",
-    "nowcasts": "0a7f2bb8f0d5821823de06f1780ad120ca9dfbd5c323b376f773a74c0d4492e4",
+    "nowcasts": "c663d18497c27ba66857ff24fe32c4338ca3401b1f8fa8540082274e76b6a38c",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
     "districtSignals": "00735127f5771e24f782aa477405952fe0c023e4830a3cfd3920338204edca73",
     "climateContext": "7aaf277a786e4a035898de3c3bae98ac5188308dd6729be0b767332422c595fd",
     "graceProvenance": "8ffa09b89483aa4f95ce6fe82c1c729bb07edfe319a088950ec07fe67d4de55b",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "94102ea88dbebf6a5dacc9d29a64077b5c66e4ebf3b144322e2e2898acf5d596"
+    "evaluations": "365e14768eaf8eea2ee9d12e140f4f7ee436116cf7188d1912ab0acf6ee62bf7"
   },
   "files": [
     {
       "file": "mandal_groundwater_records_v2.json",
-      "bytes": 4480432,
-      "sha256": "4733f58043fcc5df293b2f4131bfcc7b3d2c34a38f2ddad31e997441deeef960"
+      "bytes": 4480374,
+      "sha256": "077116c57dd02c88567a58ad3150bd7c42009fc7001de79d71193552710b09c5"
     },
     {
       "file": "mandal_observation_series_v2.json",
       "bytes": 6906015,
-      "sha256": "e659876658db90679baa1b717cdb299968cf25735af8088e72a6cc25c157e169"
+      "sha256": "c1074a6ad271ea3fd978bf3f287a8c6acfa616d2687467157b0eb68e714c1b78"
     },
     {
       "file": "model_card.json",
-      "bytes": 21501,
-      "sha256": "567005dd83702cf7ef78231dd6cc603d01cf329f74de01cab422cbffe43d6b71"
+      "bytes": 21490,
+      "sha256": "40a76a9de5914d28a34c12e78707e649fd87522edad0906aad413ba23cfe0d56"
     },
     {
       "file": "ap_map_geometry.json",
@@ -136,22 +136,22 @@
         "file": "app/data/mandal_groundwater_records_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 4480432,
-        "sha256": "4733f58043fcc5df293b2f4131bfcc7b3d2c34a38f2ddad31e997441deeef960"
+        "bytes": 4480374,
+        "sha256": "077116c57dd02c88567a58ad3150bd7c42009fc7001de79d71193552710b09c5"
       },
       {
         "file": "app/data/mandal_observation_series_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
         "bytes": 6906015,
-        "sha256": "e659876658db90679baa1b717cdb299968cf25735af8088e72a6cc25c157e169"
+        "sha256": "c1074a6ad271ea3fd978bf3f287a8c6acfa616d2687467157b0eb68e714c1b78"
       },
       {
         "file": "app/data/model_card.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 21501,
-        "sha256": "567005dd83702cf7ef78231dd6cc603d01cf329f74de01cab422cbffe43d6b71"
+        "bytes": 21490,
+        "sha256": "40a76a9de5914d28a34c12e78707e649fd87522edad0906aad413ba23cfe0d56"
       },
       {
         "file": "app/data/ap_map_geometry.json",
@@ -206,15 +206,15 @@
         "file": "phase3_levels/outputs/mandal_nowcasts_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 328397,
-        "sha256": "0a7f2bb8f0d5821823de06f1780ad120ca9dfbd5c323b376f773a74c0d4492e4"
+        "bytes": 328368,
+        "sha256": "c663d18497c27ba66857ff24fe32c4338ca3401b1f8fa8540082274e76b6a38c"
       },
       {
         "file": "phase3_levels/outputs/phase0_evaluations.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 14886,
-        "sha256": "94102ea88dbebf6a5dacc9d29a64077b5c66e4ebf3b144322e2e2898acf5d596"
+        "bytes": 14875,
+        "sha256": "365e14768eaf8eea2ee9d12e140f4f7ee436116cf7188d1912ab0acf6ee62bf7"
       }
     ],
     "legacy": [

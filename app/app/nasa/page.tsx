@@ -120,7 +120,7 @@ export default function NasaSignalsPage() {
         <div className="fusionNote" style={{ marginTop: 16 }}>
           <IconInfo />
           <span>
-            {signalRead} A <strong>percentile</strong> describes relative wetness against the product&apos;s reference history,
+            {signalRead} A <strong>percentile</strong>{" "}describes relative wetness against the product&apos;s reference history,
             not a water-table depth or a trend from a single sample. Valid period: {datasetManifest.periods.graceValidPeriod || "not supplied in the published manifest"}.
           </span>
         </div>

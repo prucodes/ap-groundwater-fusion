@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-10-03T03:48:16+00:00",
- "asOf": "2026-10-01",
+ "generatedAt": "2026-10-03T23:11:25+00:00",
+ "asOf": "2026-10-02",
  "state": {
   "severe": 26,
   "moderate|severe": 39,
@@ -15,5 +15,5 @@
  "pasm": 605,
  "gwdi": 584,
  "spi": 670,
- "reservoirs": 96
+ "reservoirs": 95
 }

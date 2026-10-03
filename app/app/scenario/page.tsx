@@ -326,7 +326,7 @@ export default function ScenarioPage() {
         <div className="fusionNote" style={{ marginTop: 16 }}>
           <IconInfo />
           <span>
-            <strong>Simplified scenario:</strong> annual rainfall is scaled by the monsoon dial and actual ET is held
+            <strong>Simplified scenario:</strong>{" "}annual rainfall is scaled by the monsoon dial and actual ET is held
             constant; balance = scaled rainfall − ET, re-tiered (Surplus ≥ 250, Balanced ≥ 50, Deficit &lt; 50 mm/yr). A
             sensitivity test over TerraClimate data, not a calibrated forecast. The legacy "Deficit" label means below 50 mm,
             including some positive balances; it does not necessarily mean ET exceeds rainfall or establish groundwater depletion.

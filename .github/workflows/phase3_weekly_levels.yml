@@ -83,6 +83,7 @@ jobs:
             app/data/enso_outlook.json \
             app/data/constituencies.json \
             app/data/weekly_changes.json \
+            app/data/forecast_reliability.json \
             app/data/nasa_provenance.json \
             app/data/satellite_station_samples.json \
             app/public/water-crystal-3d.html
