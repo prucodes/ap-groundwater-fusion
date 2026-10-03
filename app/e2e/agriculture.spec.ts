@@ -84,7 +84,8 @@ for (const width of [1440, 390]) {
 test("three-signal agreement narrows the map to corroborated mandals", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/agriculture/");
-  await expect(page.locator("main > div")).toHaveCSS("opacity", "1");
+  // The page fades in; under a full parallel run that can outlast the default wait.
+  await expect(page.locator("main > div")).toHaveCSS("opacity", "1", { timeout: 15000 });
   const tile = page.getByTestId("agreement-tile");
   const count = Number((await tile.locator("strong").innerText()).split("/")[0].trim());
   expect(count).toBeGreaterThan(0);

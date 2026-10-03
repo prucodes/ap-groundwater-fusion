@@ -41,6 +41,7 @@ API = "https://datalakes.ailivinglabs.ap.gov.in/api/v1"
 CLIENT = "data-lake-cli"
 PURPOSE = "RESEARCH_ANONYMISED"
 WORKERS = 6
+ASSEMBLY_CODES = (120, 294)   # Andhra Pradesh assembly seats in the data lake's numbering
 SMALL = ["groundwater_aggregatedreadings_api", "ground_water_category", "ground_water_datasources_api",
          "gw_modulecounts_api", "aware_flood_warning_child_location_api"]
 
@@ -168,6 +169,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--villages", action="store_true", help="also fetch village boundaries (thousands of requests)")
     parser.add_argument("--workers", type=int, default=WORKERS, help=f"requests at once (default {WORKERS}); lower it when the data lake answers 502")
+    parser.add_argument("--only", choices=("mandals", "districts", "assemblies"),
+                        help="fetch just one kind of boundary (small tables are always checked)")
     parser.add_argument("--purpose", default=PURPOSE,
                         help="the purpose declared to the data lake with every request (it is recorded upstream); "
                              f"default {PURPOSE}. The platform allows only certain purposes per dataset.")
@@ -194,21 +197,26 @@ def main():
         except (OSError, KeyError, ValueError):
             pass
         mandal_names = set().union(*(name_variants(n) for n in mandals))
-        fetch_by_name(session, "aware_mandal_geo_api", "mandal", mandal_names, "mandal_geo", "mandal boundaries")
-        fetch_by_name(session, "aware_district_geo_api", "district", set().union(*(name_variants(n) for n in districts)),
-                      "district_geo", "district boundaries")
+        if args.only in (None, "mandals"):
+            fetch_by_name(session, "aware_mandal_geo_api", "mandal", mandal_names, "mandal_geo", "mandal boundaries")
+        if args.only in (None, "districts"):
+            fetch_by_name(session, "aware_district_geo_api", "district", set().union(*(name_variants(n) for n in districts)),
+                          "district_geo", "district boundaries")
+        if args.only not in (None, "assemblies"):
+            return 0
 
-        assemblies, codes = set(), set()
+        # assembly_c is the constituency code: asked by name, every request
+        # fails upstream (3 Oct 2026); asked by code, every one answers.
+        codes = set()
         for name in os.listdir(os.path.join(OUT, "mandal_geo")):
             if name.endswith(".json") and not name.startswith("_"):
                 for row in load(os.path.join(OUT, "mandal_geo", name)):
-                    assemblies.add(row.get("assembly") or "")
                     codes.add(str(row.get("assemcode") or ""))
-        assemblies.discard("")
         codes.discard("")
-        found = fetch_by_name(session, "aware_assembly_geo_api", "assembly_c", assemblies, "assembly_geo", "assembly boundaries (by name)")
-        if not any(found.values()):
-            fetch_by_name(session, "aware_assembly_geo_api", "assembly_c", codes, "assembly_geo", "assembly boundaries (by code)")
+        # The State's 175 seats carry codes 120-294 (the undivided state's
+        # numbering); asking for the whole range finds seats no fetched mandal names.
+        codes |= {str(code) for code in range(ASSEMBLY_CODES[0], ASSEMBLY_CODES[1] + 1)}
+        fetch_by_name(session, "aware_assembly_geo_api", "assembly_c", codes, "assembly_geo", "assembly boundaries (by code)")
 
         if args.villages:
             print("  village boundaries: not yet scripted; ask before running thousands of requests")

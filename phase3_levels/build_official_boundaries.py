@@ -42,6 +42,11 @@ PROTOTYPE_OK_IOU = 0.85   # ... and overlapping it this much counts as already r
 WRONG_AREA = 0.15         # a prototype more than 15% off in area is the wrong shape
 WRONG_IOU_MARGIN = 0.05   # or one overlapping 0.05 less than coarseness alone explains
 NEIGHBOUR_OVERLAP = 0.05  # a rebuilt outline lying over official neighbours by more than this is withheld
+SPIKE_M = 150             # slivers thinner than 300 m are removed from rebuilt outlines
+CRUMB_SHARE = 0.02        # a detached part under 2% of the outline ...
+CRUMB_M2 = 2e6            # ... or under 2 km² (whichever is smaller) is a crumb, not an island
+DOUBT_IOU = 0.05          # an official outline that does not touch our prototype ...
+DOUBT_KM = 10             # ... and sits this far from it is a doubtful join (two mandals, one name)
 
 
 def norm(text):
@@ -152,6 +157,53 @@ def rebuild(points_xy, official_area):
     return best
 
 
+def despike(polygon, metres=None):
+    """Drop slivers thinner than twice `metres`: a rebuilt ring that doubles
+    back along itself leaves a zero-width spike the area check cannot see, and
+    on a map it draws a stray line. Anything that thin is below the display
+    resolution anyway."""
+    metres = SPIKE_M if metres is None else metres
+    opened = polygon.buffer(-metres).buffer(metres)
+    if opened.is_empty:
+        return polygon
+    # A ring that crosses itself also leaves crumbs beside the outline: keep a
+    # part only if it is a real share of the whole (islands are; crumbs are not).
+    parts = list(getattr(opened, "geoms", [opened]))
+    keep = [p for p in parts if p.area >= min(CRUMB_SHARE * opened.area, CRUMB_M2) or p.area == max(q.area for q in parts)]
+    return shapely.unary_union(keep)
+
+
+def withhold_overlaps(items, limit=None):
+    """Indexes of the outlines to keep. Real neighbours do not overlap, so an
+    outline lying over its kept neighbours by more than `limit` of its own area
+    is withheld (its row's verdict says so). Overlap is mutual, so the worst
+    offender goes first and its neighbours are measured again: a sound outline
+    is not lost to a broken one beside it. items: [(row dict, polygon in metres)]."""
+    limit = NEIGHBOUR_OVERLAP if limit is None else limit
+    tree = shapely.STRtree([hull for _, hull in items])
+    kept = set(range(len(items)))
+
+    def share(i):
+        hull = items[i][1]
+        others = [j for j in tree.query(hull) if j != i and j in kept]
+        return shapely.unary_union([items[j][1] for j in others]).intersection(hull).area / hull.area if others else 0.0
+
+    shares = {i: share(i) for i in kept}
+    while True:
+        worst = max(kept, key=lambda i: shares[i], default=None)
+        if worst is None or shares[worst] <= limit:
+            break
+        items[worst][0]["neighbourOverlap"] = round(shares[worst], 4)
+        items[worst][0]["verdict"] = "overlaps neighbours: withheld"
+        kept.discard(worst)
+        for j in tree.query(items[worst][1]):
+            if j in kept:
+                shares[j] = share(j)
+    for i in kept:
+        items[i][0]["neighbourOverlap"] = round(shares[i], 4)
+    return sorted(kept)
+
+
 def equal_area(lat0):
     """Local equal-area projection for comparing prototype and official shapes."""
     return Transformer.from_crs("EPSG:4326", f"+proj=laea +lat_0={lat0} +lon_0=80 +datum=WGS84 +units=m", always_xy=True)
@@ -173,7 +225,8 @@ def publish(results, features, crs):
             outlines[feature["properties"]["boundaryIndex"]].append(shape(feature["geometry"]))
     by_index = collections.defaultdict(list)
     for row in results:
-        if row.get("boundaryIndex") is not None:
+        # A doubtful join carries another mandal's codes: attach nothing.
+        if row.get("boundaryIndex") is not None and row["verdict"] != "join doubtful: withheld":
             by_index[row["boundaryIndex"]].append(row)
     base = json.load(open(GEOMETRY))
     display, official_count = [], 0
@@ -269,6 +322,7 @@ def main():
                "revenueDivision": a.get("redivision"), "officialKm2": round(official / 1e6, 2), "vertices": len(pts),
                "boundaryIndex": g["index"], "joinedBy": g["joinedBy"]}
         hull = rebuild(pts, official) if len(pts) >= 4 and official > 0 else None
+        hull = despike(hull) if hull is not None else None
         if hull is None:
             row["verdict"] = "cannot rebuild"
             results.append(row)
@@ -296,7 +350,13 @@ def main():
                 coarse = ll.simplify(tol)
             row["coarsenessIou"] = round(ll.intersection(coarse).area / ll.union(coarse).area, 3)
         good = abs(row["rebuildError"]) <= REBUILD_GOOD
-        if not good:
+        doubtful = g["proto"] is not None and (row.get("iou") or 0) < DOUBT_IOU and (row.get("centroidOffsetKm") or 0) > DOUBT_KM
+        if doubtful:
+            # Two mandals share a name and the State's record joined to the
+            # other one: neither its outline nor its codes belong here.
+            row["verdict"] = "join doubtful: withheld"
+            good = False
+        elif not good:
             row["verdict"] = "rebuild not reliable"
         elif g["proto"] is None:
             row["verdict"] = "new (no prototype to compare)"
@@ -314,30 +374,8 @@ def main():
     # cuts across a narrow neck can keep the area and still be wrong. Real
     # neighbours do not overlap, so an outline that lies over other official
     # outlines by more than NEIGHBOUR_OVERLAP of its area is withheld.
-    # Overlap is mutual, so a sound outline can be lapped by a broken neighbour:
-    # withhold the worst offender first, then measure its neighbours again.
-    tree = shapely.STRtree([hull for _, hull, _ in candidates])
-    kept = set(range(len(candidates)))
-
-    def overlap_share(i):
-        hull = candidates[i][1]
-        others = [j for j in tree.query(hull) if j != i and j in kept]
-        return shapely.unary_union([candidates[j][1] for j in others]).intersection(hull).area / hull.area if others else 0.0
-
-    shares = {i: overlap_share(i) for i in kept}
-    while True:
-        worst = max(kept, key=lambda i: shares[i], default=None)
-        if worst is None or shares[worst] <= NEIGHBOUR_OVERLAP:
-            break
-        candidates[worst][0]["neighbourOverlap"] = round(shares[worst], 4)
-        candidates[worst][0]["verdict"] = "overlaps neighbours: withheld"
-        kept.discard(worst)
-        for j in tree.query(candidates[worst][1]):
-            if j in kept:
-                shares[j] = overlap_share(j)
-    for i in sorted(kept):
+    for i in withhold_overlaps([(row, hull) for row, hull, _ in candidates]):
         row, hull, ll = candidates[i]
-        row["neighbourOverlap"] = round(shares[i], 4)
         features.append({"type": "Feature", "properties": row,
                          "geometry": mapping(shapely.set_precision(ll.simplify(0.0005), 1e-5))})
 

@@ -77,6 +77,22 @@ def test_the_display_geometry_keeps_every_boundary_in_order():
         assert all(len(ring) >= 4 and ring[0] == ring[-1] for ring in m["rings"])
 
 
+def test_no_official_outline_is_drawn_far_from_the_mandal_it_replaces():
+    """Two mandals can share a name; an outline joined to the wrong one sits far
+    from the prototype it replaces and does not touch it. None may be drawn."""
+    from shapely.geometry import Polygon
+    import shapely
+    pipeline = load("ap_map_geometry.json")["mandals"]
+    for mine, theirs in zip(pipeline, load("ap_map_display.json")["mandals"]):
+        if theirs["src"] != "official":
+            continue
+        a = shapely.unary_union([Polygon(r).buffer(0) for r in mine["rings"]])
+        b = shapely.unary_union([Polygon(r).buffer(0) for r in theirs["rings"]])
+        apart_km = a.centroid.distance(b.centroid) * 108
+        touching = a.intersection(b).area / a.union(b).area
+        assert apart_km <= 10 or touching >= 0.05, f'{theirs["m"]} drawn {apart_km:.0f} km from its prototype'
+
+
 def test_the_state_snapshot_matches_real_boundaries_and_agrees_with_our_may():
     data = load("gw_state_snapshot.json")
     keys = {f'{m["d"]}|{m["m"]}' for m in load("ap_map_geometry.json")["mandals"]}
@@ -95,13 +111,32 @@ def test_the_state_snapshot_matches_real_boundaries_and_agrees_with_our_may():
 def test_every_constituency_mandal_is_counted_once_and_figures_add_up():
     data = load("constituencies.json")
     display = load("ap_map_display.json")["mandals"]
+    s = data["summary"]
     placed = [m for c in data["constituencies"] for m in c["mandals"]]
-    assert len(placed) == data["summary"]["mandals"] == sum(1 for m in display if m.get("ac"))
+    assert len(placed) == s["mandals"] == s["placedByRecord"] + s["placedByLocation"]
+    assert s["placedByRecord"] == sum(1 for m in display if m.get("acCode"))
+    assert s["mandals"] + s["mandalsWithoutConstituency"] == len(display)
+    by_location = [m for c in data["constituencies"] for m in c["placedByLocation"]]
+    assert len(by_location) == s["placedByLocation"] and set(by_location) <= set(placed)
+    assert s["constituencies"] <= s["stateAssembly"] and s["parliamentary"] <= s["stateParliament"]
     for c in data["constituencies"]:
         g = c["groundwater"]
         assert g["stress"] + g["watch"] + g["stable"] == g["assessed"] <= len(c["mandals"])
         assert c["drought"]["severe"] <= c["drought"]["active"] <= c["drought"]["assessed"] <= len(c["mandals"])
     assert {p["pc"] for p in data["parliament"]} == {c["pc"] for c in data["constituencies"]}
+
+
+def test_region_outlines_are_published_only_when_they_pass_their_checks():
+    regions = load("official_regions.json")
+    for row in regions["assemblies"]:
+        if row["rings"]:
+            assert row["verdict"] == "official" and abs(row["rebuildError"]) <= 0.03
+            assert row["neighbourOverlap"] <= 0.05
+        else:
+            assert row["verdict"] != "official" or row.get("neighbourOverlap", 0) > 0.05
+    for row in regions["districts"]:
+        if row["rings"]:
+            assert abs(row["areaVsMandals"]) <= 0.05 and row["holdsMandals"] >= 0.95
 
 
 def test_constituencies_rebuild_from_the_published_inputs():
