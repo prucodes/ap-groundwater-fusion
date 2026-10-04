@@ -224,6 +224,8 @@ def test_the_committed_record_is_internally_consistent():
             assert set(within["seasons"]) <= {str(y) for y in record["seasons"]}
             # Each mandal-season is one comparison, so the same-season count is the seasons' counts added.
             assert within["sameSeason"]["mandals"] == sum(s["mandals"] for s in within["seasons"].values()), (key, reading)
+        if "sentinel" in entry:
+            assert entry["sentinel"]["verdict"] == rec.sentinel_verdict(entry["sentinel"]["within"]), (key, "sentinel")
         # Rainfed mandals are a subset, so they can never hold more comparisons than all cropland.
         assert entry["rainfed"]["within"]["sameSeason"]["mandals"] <= entry["allCropland"]["within"]["sameSeason"]["mandals"], key
 
@@ -283,3 +285,46 @@ def test_the_scorecard_compares_each_mandal_with_itself_on_rainfed_fields():
     # Mandal 0 alone had both kinds of call: 40 after "short" against 55 after "comfortable"; 2 is not rainfed.
     assert out["maize-1"]["within"]["sameSeason"] == {"mandals": 1, "changeGap": -15.0, "afterGap": -15.0, "worsePct": 100.0}
     assert out["maize-1"]["verdict"] == "untested"
+
+
+# --- the field-scale reading (Sentinel-2) ----------------------------------------------
+
+def test_sentinel_pixels_pair_only_where_both_weeks_are_clear():
+    import numpy as np
+    import build_sentinel_outcomes as s2
+    labels = np.full((s2.GRID_PX, s2.GRID_PX), -1, dtype="int16")
+    rainfed = np.zeros((s2.GRID_PX, s2.GRID_PX), dtype=bool)
+    rainfed[0, :30] = True
+    labels[0, :30] = 1
+    before = np.full(30, 0.5, dtype="float32")
+    after = np.full(30, 0.4, dtype="float32")
+    after[:5] = np.nan          # cloud in the later week: those five pixels are not compared
+    rows = s2.outcomes({"T": before}, {"T": after}, {"T": (labels, rainfed)}, count=2)
+    assert rows[0] is None
+    assert rows[1] == [-0.1, 0.4, 25]
+    # Fewer clear pixels than MIN_PIXELS gives no reading rather than a noisy one.
+    after[:15] = np.nan
+    assert s2.outcomes({"T": before}, {"T": after}, {"T": (labels, rainfed)}, count=2)[1] is None
+
+
+def test_sentinel_verdicts_follow_their_stated_rules():
+    import build_crop_water_record as rec
+    cell = lambda mandals, gap: {"mandals": mandals, "changeGap": gap}  # noqa: E731
+    judge = lambda same, seasons: rec.sentinel_verdict({"sameSeason": same, "acrossSeasons": cell(0, None), "seasons": seasons})  # noqa: E731
+    assert judge(cell(300, -0.025), {"2024": cell(120, -0.02), "2025": cell(180, -0.03)}) == "backed"
+    assert judge(cell(300, -0.025), {"2025": cell(300, -0.025)}) == "weak"           # one season is not a record
+    assert judge(cell(300, -0.006), {"2024": cell(150, -0.006), "2025": cell(150, -0.006)}) == "weak"
+    assert judge(cell(300, -0.004), {"2024": cell(300, -0.004)}) == "not borne out"
+    assert judge(cell(80, -0.05), {}) == "untested"
+
+
+def test_sentinel_outcomes_take_out_the_states_greening_that_week(tmp_path, monkeypatch):
+    import build_crop_water_record as rec
+    path = tmp_path / "sentinel.json"
+    rows = [[0.10 + i * 0.001, 0.6, 40] for i in range(40)] + [None]
+    path.write_text(json.dumps({"weeks": [{"year": 2025, "week": 30, "mandals": rows}]}))
+    monkeypatch.setattr(rec, "SENTINEL", str(path))
+    out, _ = rec.sentinel_outcomes()
+    values = out[(2025, 30)]
+    # The State's median change that week (0.12) is taken out of every mandal's change.
+    assert values[0][0] == pytest.approx(0.10 - 0.12) and values[-1] is None

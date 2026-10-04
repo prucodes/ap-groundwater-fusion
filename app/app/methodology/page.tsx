@@ -7,6 +7,7 @@ import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconLeaf, Ic
 import { mapGeometry, modelCard } from "../../lib/data";
 import { stateSummary } from "../../lib/stateSummary";
 import { checkRecord } from "../../lib/cropWaterRecord";
+import { summerOutlook as summer } from "../../lib/summer";
 
 const labels = [
   { code: "APWRIMS (AP-GWD)", text: "Recorded mandal depth history. Modelled nowcasts are separate derived values; neither is presented as a certified official output." },
@@ -83,6 +84,7 @@ export default function MethodologyPage() {
   const tallyOf = (pick: (entry: (typeof record.record)[string]) => string) =>
     Object.values(record.record).reduce<Record<string, number>>((tally, entry) => ({ ...tally, [pick(entry)]: (tally[pick(entry)] ?? 0) + 1 }), {});
   const verdicts = tallyOf(entry => entry.rainfed.verdict), allCropland = tallyOf(entry => entry.allCropland.verdict);
+  const fieldTally = tallyOf(entry => entry.sentinel?.verdict ?? "untested");
   const seasonSpan = `${record.seasons[0]}–${String(record.seasons[record.seasons.length - 1]).slice(2)}`;
   return (
     <div className="pageWrap">
@@ -255,6 +257,37 @@ export default function MethodologyPage() {
         </div>
       </section>
 
+      <section className="card" aria-labelledby="method-summer" data-testid="method-summer">
+        <div className="cardHead">
+          <div className="cardTitle" id="method-summer">
+            <span className="titleIcon">
+              <IconDroplet />
+            </span>
+            Summer water outlook: next May against each mandal&rsquo;s own record
+          </div>
+          <span className="cardSub">APWRIMS monthly levels / own past winters / leave-one-year-out record</span>
+        </div>
+        <div className="methodSteps">
+          <p>
+            <strong>The projection.</strong>{" "}For each mandal with at least four past winters in the APWRIMS monthly series ({summer.firstYear} on),
+            the May depth is its latest reading plus its own drawdown from the same month to May: the median of its past winters for a
+            typical winter, and the largest for a dry one. Set against the deepest May the same series has recorded, a mandal is
+            &ldquo;beyond its record&rdquo; when the typical projection is deeper, &ldquo;in a dry winter&rdquo; when only the dry one is.
+            Against its own record, because the depth at which a well fails depends on how deep it was drilled, which no public record
+            gives; beside it, whether the May depth would be more than {summer.deepM} m down, a class boundary on CGWB&rsquo;s
+            depth-to-water maps, since a delta mandal can break its own record with water three metres down.
+          </p>
+          {summer.backtest ? <p>
+            <strong>How it has fared.</strong>{" "}Each past year was projected from the other years&rsquo; winters alone, from its{" "}
+            {summer.backtest.anchorMonth} reading ({summer.backtest.comparisons.toLocaleString("en-IN")} mandal-years). The typical projection was
+            off by a median {summer.backtest.typicalErrorM.toFixed(1)} m, against {summer.backtest.persistenceErrorM.toFixed(1)} m for assuming no
+            change. Mandals called beyond their record went past it in {summer.backtest.pastRecordPct.beyond?.toFixed(0)}% of years, against{" "}
+            {summer.backtest.baseRatePct.toFixed(0)}% of all mandal-years and {summer.backtest.pastRecordPct.within?.toFixed(0)}% of those called
+            within it. A ranking of where to look first, not a forecast of this winter&rsquo;s rain.
+          </p> : null}
+        </div>
+      </section>
+
       <section className="card" aria-labelledby="method-field-week">
         <div className="cardHead">
           <div className="cardTitle" id="method-field-week">
@@ -321,6 +354,19 @@ export default function MethodologyPage() {
             growing, not the chosen crop, so this tests whether the check finds real water shortage, not whether a particular crop
             suffered.
           </p>
+          {record.sentinel ? <p data-testid="method-sentinel">
+            <strong>At field scale.</strong>{" "}The 4 km index is one value for some 1,600 hectares, irrigated and rainfed, crop and
+            scrub. Sentinel-2 (ESA) sees the same ground at 10 m every two to three days; the record reads it at {record.sentinel.resolutionM} m
+            over rainfed cropland pixels only (WorldCover cropland that WorldCereal does not map as irrigated), takes the greenest clear
+            view of each week, and compares the three-week change in NDVI, less the State&rsquo;s change that week, inside the same
+            mandal and season. The bars were set before the outcomes were read: &ldquo;backed&rdquo; at {record.sentinel.rules.backedNdvi} less NDVI
+            change after &ldquo;short&rdquo;, in every season of at least two; &ldquo;weak&rdquo; at {record.sentinel.rules.notedNdvi}. Kharif is
+            cloudy: {record.sentinel.coverage.readPct}% of rainfed mandal-weeks had a clear view in both weeks. A greenest-view composite can
+            read a little lower in a week with fewer clear passes; taking out the State&rsquo;s change that week removes most of that, not
+            all. On {seasonSpan}:{" "}
+            {fieldTally.backed ?? 0} backed, {fieldTally.weak ?? 0} weak, {fieldTally["not borne out"] ?? 0} not borne out and{" "}
+            {fieldTally.untested ?? 0} untested.
+          </p> : null}
           <p>
             <strong>Where field teams would learn most.</strong>{" "}This Week lists the mandals where four or more of six published signals
             point to stress at once: groundwater short of its seasonal normal, gauge rain 20% or more below normal, soil among the driest

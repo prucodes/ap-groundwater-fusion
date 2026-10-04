@@ -101,6 +101,9 @@ test("the check carries its track record for the crop and stage chosen, with eve
     const shown = Object.values(entry.within.seasons).filter(season => season.mandals > 0 && season.afterGap !== null).length;
     await expect(panel.locator('figure > div[data-kind="season"]')).toHaveCount(shown);
     await expect(panel.locator('figure > div[data-kind="total"]')).toContainText(`${same.mandals} mandal-seasons`);
+    // The field-scale reading (Sentinel-2) carries its own verdict beside the 4 km one.
+    const field = record.record[key].sentinel;
+    if (field && record.sentinel) await expect(panel.getByTestId("field-week-sentinel")).toHaveAttribute("data-verdict", field.verdict);
     // All cropland, irrigated fields included, is drawn beneath for reference.
     const reference = record.record[key].allCropland.within.sameSeason.afterGap!;
     await expect(panel.locator('figure > div[data-kind="reference"]')).toContainText(Math.abs(reference).toFixed(1));

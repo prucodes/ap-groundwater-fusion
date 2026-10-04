@@ -38,6 +38,7 @@ const PAGES: Item[] = [
   { label: "Districts", sub: "Roll-ups + AI situation brief", href: "/districts", kind: "page" },
   { label: "Agriculture & Water", sub: "Crop-water lab, fieldbook and seasonal evidence", href: "/agriculture", kind: "page" },
   { label: "Rabi Outlook", sub: "Reservoirs, rainfed seedbed, northeast monsoon", href: "/rabi", kind: "page" },
+  { label: "Summer Water Outlook", sub: "May water table against each mandal's record", href: "/summer", kind: "page" },
   { label: "Modelled Groundwater Levels β", sub: "Calculated mandal depth in metres + model bands", href: "/estimates", kind: "page" },
   { label: "NASA Signals", sub: "Raw GRACE-DA context + provenance", href: "/nasa", kind: "page" },
   { label: "Climate & Balance", sub: "Rainfall vs ET — the water budget", href: "/climate", kind: "page" },
