@@ -143,7 +143,13 @@ export type CheckRecord = {
   rules: { backedPoints: number; notedPoints: number; minMandals: number; text: string };
   /** The headline reading is over rainfed fields: mostly rainfed mandals, vegetation weighted to rainfed cropland. */
   rainfed: { mandals: number; of: number; belowPct: number; stateIrrigatedPct: number; text: string };
-  record: Record<string, { rainfed: RecordReading; allCropland: RecordReading }>;
+  record: Record<string, { rainfed: RecordReading; allCropland: RecordReading; sentinel?: RecordReading }>;
+  /** The field-scale reading: Sentinel-2 NDVI at 160 m over rainfed cropland (phase3_levels/build_sentinel_outcomes.py). */
+  sentinel?: {
+    source: string; resolutionM: number; minPixels: number; outcome: string;
+    rules: { backedNdvi: number; notedNdvi: number; text: string };
+    coverage: { rainfedMandalWeeks: number; read: number; readPct: number | null };
+  } | null;
   /** The live scorecard (phase3_levels/score_field_calls.py): each week's real calls, frozen, scored three weeks on. */
   live?: { frozen: number; scored: number; firstFrozen: string | null; nextDue: string | null; record: Record<string, RecordReading> } | null;
 };

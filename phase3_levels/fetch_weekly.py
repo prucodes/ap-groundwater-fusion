@@ -138,6 +138,10 @@ STEPS = [
     # field signals, whose forecast and soil moisture the calls are made from.
     # Optional: a week that fails is frozen or scored on the next run.
     ("score field calls", [PY, os.path.join(HERE, "score_field_calls.py")], False, 900),
+    # The summer drinking-water outlook: May depth projected from each mandal's latest
+    # APWRIMS reading and its own past winters, with its leave-one-year-out record.
+    # After the APWRIMS history and context (its boundary links). Optional.
+    ("build summer outlook", [PY, os.path.join(HERE, "build_summer_outlook.py")], False, 300),
     # Last of the builders: this week's headlines beside the ones the site was
     # showing (the files at HEAD), each with its own date. Optional.
     # Every figure by assembly constituency, from this week's groundwater,

@@ -79,6 +79,10 @@ CACHE = os.path.join(ROOT, "data", "private", "crop_water_record")
 CAPACITY = os.path.join(HERE, "data", "mandal_soil_water_capacity.json")
 IRRIGATED_GRID = os.path.join(HERE, "data", "vhp_irrigated_fraction.json")
 IRRIGATED_SHARE = os.path.join(HERE, "data", "mandal_irrigated_share.json")
+SENTINEL = os.path.join(HERE, "data", "sentinel_outcomes.json")
+# Sentinel-2's field-scale reading (build_sentinel_outcomes.py). Set before the outcomes were read:
+SENTINEL_BACKED = 0.02        # NDVI: at least this much less three-week change after "short", same mandal and season
+SENTINEL_NOTED = 0.005        # less than this is no difference worth the name
 
 SEASONS = (2024, 2025, 2026)
 WEEKS = range(27, 37)          # VHP weeks beginning about 2 July to 3 September
@@ -194,7 +198,7 @@ def season_vegetation(year, weeks, count):
     return out, out_rainfed
 
 
-def within_mandal(mandals):
+def within_mandal(mandals, digits=1):
     """Inside each mandal with both kinds of call: vegetation after "short" (now or within 7 days) against after "comfortable"."""
     diffs_change, diffs_after = [], []
     for sides in mandals.values():
@@ -205,8 +209,8 @@ def within_mandal(mandals):
     if not diffs_change:
         return {"mandals": 0, "changeGap": None, "afterGap": None, "worsePct": None}
     return {"mandals": len(diffs_change),
-            "changeGap": round(sum(diffs_change) / len(diffs_change), 1),
-            "afterGap": round(sum(diffs_after) / len(diffs_after), 1),
+            "changeGap": round(sum(diffs_change) / len(diffs_change), digits),
+            "afterGap": round(sum(diffs_after) / len(diffs_after), digits),
             "worsePct": round(100 * sum(d < 0 for d in diffs_change) / len(diffs_change), 1)}
 
 
@@ -223,12 +227,43 @@ def verdict(inside):
     return "not borne out"
 
 
-def comparisons(pots):
+def sentinel_verdict(inside):
+    """The field-scale reading's verdict, on the change over three weeks (NDVI, relative to the State that week)."""
+    same = inside["sameSeason"]
+    if same["mandals"] < MIN_MANDALS:
+        return "untested"
+    seasons = [x for x in inside["seasons"].values() if x["mandals"] >= MIN_SEASON_MANDALS]
+    if same["changeGap"] <= -SENTINEL_BACKED and len(seasons) >= MIN_BACKED_SEASONS and all(x["changeGap"] < 0 for x in seasons):
+        return "backed"
+    if same["changeGap"] <= -SENTINEL_NOTED:
+        return "weak"
+    return "not borne out"
+
+
+def sentinel_outcomes():
+    """{(year, week): [(relative change, relative level, pixels) or None per mandal]}: each mandal's NDVI change
+    over the three weeks less the State's median change that week, so the season's common greening drops out."""
+    if not os.path.exists(SENTINEL):
+        return {}, None
+    payload = json.load(open(SENTINEL))
+    out = {}
+    for entry in payload["weeks"]:
+        rows = entry["mandals"]
+        known = [r for r in rows if r]
+        if len(known) < 30:
+            continue
+        mid_change = sorted(r[0] for r in known)[len(known) // 2]
+        mid_after = sorted(r[1] for r in known)[len(known) // 2]
+        out[(entry["year"], entry["week"])] = [None if r is None else (r[0] - mid_change, r[1] - mid_after, r[2]) for r in rows]
+    return out, payload
+
+
+def comparisons(pots, digits=1):
     """Every mandal-season with both kinds of call is one comparison ("mandals" counts mandal-seasons in sameSeason)."""
     by_season = pots["seasons"]
-    return {"sameSeason": within_mandal({(year, i): sides for year, pot in by_season.items() for i, sides in pot.items()}),
-            "acrossSeasons": within_mandal(pots["across"]),
-            "seasons": {year: within_mandal(pot) for year, pot in sorted(by_season.items())}}
+    return {"sameSeason": within_mandal({(year, i): sides for year, pot in by_season.items() for i, sides in pot.items()}, digits),
+            "acrossSeasons": within_mandal(pots["across"], digits),
+            "seasons": {year: within_mandal(pot, digits) for year, pot in sorted(by_season.items())}}
 
 
 def tally():
@@ -253,6 +288,9 @@ def main():
     # compared with itself, not with a wet one (the index is already relative to its own past).
     within = {key: {"across": {}, "seasons": {}} for key in results}
     within_rainfed = {key: {"across": {}, "seasons": {}} for key in results}
+    within_sentinel = {key: {"across": {}, "seasons": {}} for key in results}
+    sentinel, sentinel_meta = sentinel_outcomes()
+    sentinel_pairs = sentinel_read = 0
     irrigated = json.load(open(IRRIGATED_SHARE))
     rainfed_mandals = {i for i, share in enumerate(irrigated["share"]) if share is not None and share < irrigated["mostlyRainfedBelowPct"]}
     weeks_used = []
@@ -283,6 +321,10 @@ def main():
                 change = after - before
                 r_before, r_after = veg_rainfed[week][i], veg_rainfed[week + LEAD_WEEKS][i]
                 rainfed_ok = i in rainfed_mandals and r_before is not None and r_after is not None
+                field = (sentinel.get((year, week)) or [None] * count)[i]
+                if i in rainfed_mandals:
+                    sentinel_pairs += 1
+                    sentinel_read += field is not None
                 for crop in crop_water.CROPS:
                     for stage in range(3):
                         result = crop_water.check(pct, cap, eto, rain, 0, 1, crop, stage)
@@ -297,6 +339,13 @@ def main():
                             side["n"] += 1
                             side["change"] += change
                             side["after"] += after
+                        if field is not None:
+                            pots_s = within_sentinel[f"{crop}-{stage}"]
+                            for pot in (pots_s["across"], pots_s["seasons"].setdefault(str(year), {})):
+                                side = pot.setdefault(i, {"short": tally(), "ok": tally()})[sided]
+                                side["n"] += 1
+                                side["change"] += field[0]
+                                side["after"] += field[1]
                         if rainfed_ok:
                             pots_r = within_rainfed[f"{crop}-{stage}"]
                             for pot in (pots_r["across"], pots_r["seasons"].setdefault(str(year), {})):
@@ -315,7 +364,9 @@ def main():
         overall = {k: summarise(v) for k, v in entry["all"].items()}
         seasons = {year: {k: summarise(v) for k, v in s.items()} for year, s in entry["seasons"].items()}
         inside, inside_rainfed = comparisons(within[key]), comparisons(within_rainfed[key])
+        inside_sentinel = comparisons(within_sentinel[key], digits=4)   # NDVI, not index points
         record[key] = {"rainfed": {"within": inside_rainfed, "verdict": verdict(inside_rainfed)},
+                       **({"sentinel": {"within": inside_sentinel, "verdict": sentinel_verdict(inside_sentinel)}} if sentinel else {}),
                        "allCropland": {"within": inside, "verdict": verdict(inside)},
                        "across": {**overall, "seasons": seasons}}
     payload = {
@@ -326,6 +377,15 @@ def main():
         "weather": "ERA5 reanalysis (Copernicus / ECMWF) via Open-Meteo's archive: the weather that happened, not the forecast. 'Within 7 days' is therefore tested as if the forecast were perfect.",
         "soil": "APWRIMS / NRSC VIC soil moisture on each check date; SoilGrids 2.0 water-holding capacity.",
         "headline": "rainfed",
+        **({"sentinel": {
+            "source": sentinel_meta["source"], "pixels": sentinel_meta["pixels"], "composite": sentinel_meta["composite"],
+            "resolutionM": 160, "minPixels": sentinel_meta["minPixels"],
+            "outcome": "NDVI change over the three weeks on rainfed cropland pixels clear in both weeks, less the State's median change that week; compared inside the same mandal and season.",
+            "rules": {"backedNdvi": SENTINEL_BACKED, "notedNdvi": SENTINEL_NOTED,
+                      "text": "Backed: at least 0.02 less NDVI change after 'short' than after 'comfortable', same mandal and season, overall and in every season, with at least two seasons of 30 mandals or more. Weak: at least 0.005 less. Not borne out: less than that. Untested: fewer than 100 mandal-seasons with both kinds of call. Set before the outcomes were read."},
+            "coverage": {"rainfedMandalWeeks": sentinel_pairs, "read": sentinel_read,
+                         "readPct": round(100 * sentinel_read / sentinel_pairs, 1) if sentinel_pairs else None},
+        }} if sentinel else {}),
         "rainfed": {"mandals": len(rainfed_mandals), "of": count, "belowPct": irrigated["mostlyRainfedBelowPct"],
                     "stateIrrigatedPct": irrigated["summary"]["stateIrrigatedPct"],
                     "text": "Mandals where less than half the cropland was mapped irrigated (ESA WorldCereal, rabi 2020-21), with the vegetation index weighted to rainfed cropland only."},
@@ -340,6 +400,12 @@ def main():
     with open(OUT, "w") as handle:
         json.dump(payload, handle, indent=1)
         handle.write("\n")
+    if sentinel:
+        print(f"Sentinel-2: {sentinel_read} of {sentinel_pairs} rainfed mandal-weeks had a clear pair")
+        for key, r in record.items():
+            w = r["sentinel"]["within"]
+            print(f"  {key:<14} sentinel same season {w['sameSeason']['changeGap']} ({w['sameSeason']['mandals']}) "
+                  f"{[(y, x['changeGap'], x['mandals']) for y, x in w['seasons'].items()]} -> {r['sentinel']['verdict']}")
     for key, r in record.items():
         a, f = r["allCropland"], r["rainfed"]
         print(f"  {key:<14} rainfed {f['within']['sameSeason']['afterGap']} ({f['within']['sameSeason']['mandals']}) "

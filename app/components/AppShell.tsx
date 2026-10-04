@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   IconActivity,
+  IconArrowDown,
   IconAlert,
   IconChevrons,
   IconCloudRain,
@@ -49,6 +50,7 @@ const primaryNav = [
   { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
   { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
   { href: "/agriculture", label: "Agriculture & Water", Icon: IconLeaf, desc: "Crop-water planning lab and observed groundwater evidence. Not a field irrigation advisory." },
+  { href: "/summer", label: "Summer Outlook", Icon: IconArrowDown, desc: "Where the water table may stand by May, mandal by mandal, against each mandal's own deepest May on record." },
   { href: "/rabi", label: "Rabi Outlook", Icon: IconClock, desc: "What the rabi season starts with: reservoir storage, rainfed soil moisture and the northeast monsoon under El Niño." },
   { href: "/constituencies", label: "Constituencies", Icon: IconTarget, desc: "Groundwater, the State's latest well readings, the drought manual and rain, by assembly and parliamentary constituency." },
   { href: "/districts", label: "Districts", Icon: IconGrid, desc: "District roll-ups with an auto + AI situation brief per district." },

@@ -11,10 +11,10 @@ type Scorecard = { frozen: number; scored: number; firstFrozen: string | null; n
 export function checkRecord(): CheckRecord {
   const raw = recordJson as unknown as CheckRecord;
   const live = scorecardJson as unknown as Scorecard;
-  const record = Object.fromEntries(Object.entries(raw.record).map(([key, entry]) => [key, { rainfed: entry.rainfed, allCropland: entry.allCropland }]));
+  const record = Object.fromEntries(Object.entries(raw.record).map(([key, entry]) => [key, { rainfed: entry.rainfed, allCropland: entry.allCropland, ...(entry.sentinel ? { sentinel: entry.sentinel } : {}) }]));
   return {
     generatedAt: raw.generatedAt, question: raw.question, outcome: raw.outcome, acrossCaveat: raw.acrossCaveat,
-    weather: raw.weather, seasons: raw.seasons, checks: raw.checks, rules: raw.rules, rainfed: raw.rainfed, record,
+    weather: raw.weather, seasons: raw.seasons, checks: raw.checks, rules: raw.rules, rainfed: raw.rainfed, sentinel: raw.sentinel ?? null, record,
     live: { frozen: live.frozen, scored: live.scored, firstFrozen: live.firstFrozen, nextDue: live.nextDue, record: live.scored ? live.record : {} },
   };
 }

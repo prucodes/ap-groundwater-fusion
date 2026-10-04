@@ -1,7 +1,7 @@
 # Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026)
 
 Written by Claude Code for Codex. This replaces the 2 October brief at the same path.
-Everything below is on `main` (through PR #46) and live on GitHub Pages.
+Everything below is on `main` (through PR #47) and live on GitHub Pages.
 
 Ground rules:
 - Start every task on a fresh branch off `main`.
@@ -26,6 +26,7 @@ things look, but never change what they say without asking.
 | #43 | **Seven reference crops in the crop-water lab**, each drawn by its habit; this brief. |
 | #45 | **The crop water check's track record and the new signals where officials look.** Re-run on past kharif weeks (2024, 2025, 2026) against what cropland vegetation did next, with a verdict per crop and stage on the Agriculture page. The verdict compares each mandal with itself in the same season (pooling mandals or seasons misleads, and both are disclosed): none backed, seven weak (mid-season maize, cotton and jowar; end-season groundnut, red gram, Bengal gram and jowar; 1–4 points lower), twelve not borne out (every initial stage, chilli), two untested. This Week lists "where field teams would learn most" (four or more of six signals). Constituency briefs gain crops short of water, crop vegetation and the groundwater category, still one A4 page for the largest seat. Two weekly cards (crop vegetation, crops short) begin with the next Monday refresh. |
 | #46 | **Rainfed fields, the rabi season, a live scorecard, the Monday digest and field reports.** ESA WorldCereal's 10 m irrigation map (rabi 2020–21, taken out of the 17 GB global zip by range requests) marks 437 of 670 mandals mostly rainfed (23.9% of cropland irrigated). The track record's headline is now over rainfed fields (none backed, five weak, twelve not borne out, four untested; "backed" needs two qualifying seasons), and the live check hatches mostly irrigated mandals. Each Monday the real forecast calls are frozen (`phase3_levels/data/field_calls/`) and scored three weeks later. New pages: `/rabi/` (reservoirs by basin, rainfed seedbed against its own past, northeast monsoon under El Niño), `/digest/` (one A4 sheet, printed to PDF by each deploy) and `/field-report/` (written on the phone, shared as text, read back by a collector; no server). |
+| #47 | **Summer Water Outlook and the crop check at field scale.** `/summer/` projects each mandal's May depth from its latest APWRIMS reading and its own past winters (typical = median drawdown, dry = largest), against its own deepest May on record, with a 10 m CGWB class boundary beside it so a shallow delta record does not read as a drinking-water emergency. Leave-one-year-out record on every past year: "beyond its record" calls went past the record about one year in three against one in eight overall. The crop check's record gains a field-scale reading: Sentinel-2 NDVI at 160 m over rainfed cropland pixels, weekly greenest clear view, three-week change less the State's that week. At field scale none is backed; eight are weak, consistently lower in every season for mid-season groundnut, chilli and Bengal gram; maize, cotton and jowar show nothing (36% of rainfed mandal-weeks had a clear view). |
 | #44 | **This week in the fields** (Agriculture section 02): an FAO-56 crop water check for every mandal, for a chosen crop and stage, on this week's soil moisture and ECMWF's forecast. Also crop vegetation (NOAA VCI weighted to cropland) and the official CGWB groundwater category, on the Agriculture map, the Map page and every mandal page. The Map page's title and date now follow the view. |
 
 Taken off the to-do list as done: per-constituency briefs, the sidebar State wells date,
@@ -79,6 +80,8 @@ Steps:
 - `app/app/digest/`, `app/components/DigestActions.tsx` and `app/scripts/print-digest.mjs` (both deploy workflows print `out/digest/ap-water-weekly-digest.pdf`; `serve-static.mjs` gained `--base`);
 - `app/app/field-report/` and `app/components/FieldReport.tsx`: reports travel as text ending in one `#APWR1:` line; keep that tag and the v1 shape readable;
 - `app/e2e/agriculture-rabi.spec.ts` and `governance-digest.spec.ts`;
+- `phase3_levels/build_summer_outlook.py` (weekly, after the APWRIMS history), `app/data/summer_outlook.json`, `app/lib/summer.ts` (server only), `app/app/summer/`, `tests/test_summer_outlook.py` and `app/e2e/governance-summer.spec.ts`;
+- `phase3_levels/build_sentinel_outcomes.py` (by hand, ~40 min of open Sentinel-2 reads; cache in `data/private/sentinel/`) and `phase3_levels/data/sentinel_outcomes.json`; `build_crop_water_record.py` reads it as the `sentinel` reading with its own verdict (`sentinel_verdict`, NDVI thresholds set before the outcomes were read);
 - `app/app/constituencies/[code]/page.tsx`;
 - `app/components/constituencies/PrintBrief.tsx` and `ConstituencyBrief.module.css`;
 - `app/components/agriculture/FieldSection.tsx` and `FieldSection.module.css`;

@@ -9,6 +9,7 @@ import { fieldSignals } from "../../lib/fieldSignalsServer";
 import { checkRecord } from "../../lib/cropWaterRecord";
 import { rabiView } from "../../lib/rabi";
 import { stateSummary } from "../../lib/stateSummary";
+import { summerOutlook } from "../../lib/summer";
 import styles from "./Digest.module.css";
 
 /* The Monday digest: one A4 sheet for the CMO, RTGS and the collectors, built
@@ -51,9 +52,12 @@ export default function DigestPage() {
   const record = checkRecord();
   const weak = Object.values(record.record).filter(e => e.rainfed.verdict === "weak").length;
   const backed = Object.values(record.record).filter(e => e.rainfed.verdict === "backed").length;
+  const fieldWeak = Object.values(record.record).filter(e => e.sentinel?.verdict === "weak").length;
+  const fieldBacked = Object.values(record.record).filter(e => e.sentinel?.verdict === "backed").length;
   const hardest = res ? [...res.basins].filter(b => b.storagePct !== null && b.lastYearPct !== null).sort((a, b) => (a.storagePct! - a.lastYearPct!) - (b.storagePct! - b.lastYearPct!))[0] : null;
   const moves = changes.items.filter(item => item.change !== null && item.direction && item.direction !== "same");
   const first = !moves.length;
+  const summerTarget = new Date(`${summerOutlook.targetMay}-01T00:00:00`).toLocaleDateString("en-IN", { month: "long", year: "numeric" });
 
   return (
     <div className={styles.page}>
@@ -104,8 +108,9 @@ export default function DigestPage() {
               )}
             </section>
             <section aria-labelledby="digest-rabi">
-              <h2 id="digest-rabi">Rabi starting position</h2>
+              <h2 id="digest-rabi">The season ahead</h2>
               <ul className={styles.notes}>
+                <li>By {summerTarget}, the water table in <b>{summerOutlook.summary.beyond} mandals</b> is projected past its deepest May on record on a typical winter, {summerOutlook.summary.beyondDeep} of them more than 10 m down; {summerOutlook.summary.dry} more in a dry one.</li>
                 {hardest ? <li>The <b>{hardest.name}</b> reservoirs hold <b>{pct(hardest.storagePct)}</b>, against {pct(hardest.lastYearPct)} a year ago.</li> : null}
                 {soil ? <li>In <b>{soil.record + soil.below} of {soil.read}</b> mostly rainfed mandals the topsoil is drier than in its median year; {soil.record} are the driest on record.</li> : null}
                 {rabi.sowing.issued ? <li>A {rabi.sowing.crop} crop sown now would run short within a week in <b>{rabi.sowing.stressed + rabi.sowing.soon}</b> of {rabi.sowing.stressed + rabi.sowing.soon + rabi.sowing.ok} rainfed mandals.</li> : null}
@@ -114,7 +119,7 @@ export default function DigestPage() {
             </section>
             <section aria-labelledby="digest-check">
               <h2 id="digest-check">How far to trust the crop check</h2>
-              <p className={styles.sub}>Re-run on {record.checks} past kharif weeks over rainfed fields: {backed} crop-stages backed, {weak} weak. Read it as where crops need water now, not as a forecast.{record.live?.frozen ? ` Live scorecard: ${record.live.scored} of ${record.live.frozen} frozen weeks scored.` : ""}</p>
+              <p className={styles.sub}>Re-run on {record.checks} past kharif weeks over rainfed fields. 4 km satellite index: {backed} crop-stages backed, {weak} weak{record.sentinel ? `; field scale (Sentinel-2): ${fieldBacked} backed, ${fieldWeak} weak` : ""}. Read it as where crops need water now, not as a forecast.{record.live?.frozen ? ` Live scorecard: ${record.live.scored} of ${record.live.frozen} frozen weeks scored.` : ""}</p>
             </section>
           </aside>
         </div>

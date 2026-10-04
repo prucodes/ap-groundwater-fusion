@@ -121,6 +121,14 @@ function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropK
   const pooledNote = pooled.afterGap !== null && pooled.afterGap < gap - 1
     ? `Pooled across seasons the same mandal reads ${points(pooled.afterGap)} lower after \u201cshort\u201d, but most of that is drier seasons against wetter ones: the check tells a dry season from a wet one, as rainfall alone would.`
     : "";
+  // The field-scale reading: Sentinel-2 NDVI at 160 m on rainfed cropland pixels, its own units and its own verdict.
+  const field = entry.sentinel && record.sentinel ? entry.sentinel : null;
+  const fieldVerdict = field ? RECORD_VERDICTS[field.verdict] : null;
+  const fieldSame = field?.within.sameSeason ?? null;
+  const fieldSeasons = field ? Object.entries(field.within.seasons).filter(([, s]) => s.mandals >= 30 && s.changeGap !== null) : [];
+  const fieldSentence = !field || !fieldSame ? null : field.verdict === "untested"
+    ? `At field scale (Sentinel-2, ${record.sentinel!.resolutionM} m, rainfed cropland only) too few mandal-seasons had a clear view in both weeks to judge (${fieldSame.mandals}).`
+    : `At field scale (Sentinel-2, ${record.sentinel!.resolutionM} m, rainfed cropland only), in ${fieldSame.mandals} mandal-seasons with a clear view both weeks: the three-week change in greenness (NDVI) was ${Math.abs(fieldSame.changeGap ?? 0).toFixed(3)} ${(fieldSame.changeGap ?? 0) <= 0 ? "lower" : "higher"} after a \u201cshort\u201d call than after a \u201ccomfortable\u201d one${fieldSeasons.length ? `, ${fieldSeasons.every(([, x]) => (x.changeGap ?? 0) < 0) ? "lower in every season" : `lower in ${fieldSeasons.filter(([, x]) => (x.changeGap ?? 0) < 0).length} of ${fieldSeasons.length} seasons`}` : ""}.`;
   type Row = { label: string; value: number; count: string; kind: "season" | "total" | "reference" };
   const rows: Row[] = [
     ...seasons.map(([year, s]): Row => ({ label: year, value: s.afterGap ?? 0, count: `${s.mandals} mandals`, kind: "season" })),
@@ -132,8 +140,12 @@ function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropK
   const bar = 50 - (record.rules.backedPoints / scale) * 50;
   return <div className={styles.record} data-testid="field-week-record" data-verdict={cell.verdict}>
     <div className={styles.recordText}>
-      <span className={styles.recordVerdict} style={{ "--tone": verdict.tone } as CSSProperties}><i />{verdict.label}<em>rainfed fields</em></span>
+      <div className={styles.recordVerdicts}>
+        <span className={styles.recordVerdict} style={{ "--tone": verdict.tone } as CSSProperties}><i />{verdict.label}<em>4 km index, rainfed fields</em></span>
+        {fieldVerdict && field ? <span className={styles.recordVerdict} style={{ "--tone": fieldVerdict.tone } as CSSProperties} data-testid="field-week-sentinel" data-verdict={field.verdict}><i />{fieldVerdict.label}<em>field scale, Sentinel-2</em></span> : null}
+      </div>
       <p>{sentence} {reading}</p>
+      {fieldSentence ? <p className={styles.recordField}>{fieldSentence}</p> : null}
       {pooledNote ? <p className={styles.recordPooled}>{pooledNote}</p> : null}
       {record.live && record.live.frozen ? (() => {
         const live = record.live, score = live.record[`${crop}-${stage}`]?.within.sameSeason;
