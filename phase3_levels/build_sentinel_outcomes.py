@@ -23,8 +23,9 @@ keeps only rainfed cropland, so the outcome is the fields the check speaks for.
 Kharif is the cloudy season, so many mandal-weeks have no clear pair: the
 record says how many it could read.
 
-Cached in data/private/sentinel/ (git-ignored): the tile grid and masks, and
-per week the composite NDVI at each tile's rainfed pixels. Output, committed:
+The tile grid and masks are kept in phase3_levels/data/sentinel_masks/
+(committed, ~1.3 MB); the weekly composites in data/private/sentinel/
+(git-ignored). Output, committed:
 phase3_levels/data/sentinel_outcomes.json (per check week, per mandal).
 Run by hand after build_irrigated_fraction.py; build_crop_water_record.py
 reads the output.
@@ -57,6 +58,9 @@ from fetch_nasa_power_rainfall import _tls_context  # noqa: E402
 
 ROOT = os.path.join(HERE, "..")
 CACHE = os.path.join(ROOT, "data", "private", "sentinel")
+# The tile grid and the rainfed-cropland masks are static and small (~1.3 MB), so they are committed:
+# the weekly scorecard reads Sentinel-2 on GitHub's runner without WorldCover or WorldCereal.
+MASKS = os.path.join(HERE, "data", "sentinel_masks")
 WORLDCEREAL = os.path.join(ROOT, "data", "private", "worldcereal")
 OUT = os.path.join(HERE, "data", "sentinel_outcomes.json")
 STAC = "https://earth-search.aws.element84.com/v1/search"
@@ -102,12 +106,12 @@ def tile_name(item):
     return f"{p.get('mgrs:utm_zone')}{p.get('mgrs:latitude_band')}{p.get('mgrs:grid_square')}"
 
 
-def cached_json(name, build):
-    path = os.path.join(CACHE, name)
+def cached_json(name, build, folder=CACHE):
+    path = os.path.join(folder, name)
     if os.path.exists(path):
         return json.load(open(path))
     value = build()
-    os.makedirs(CACHE, exist_ok=True)
+    os.makedirs(folder, exist_ok=True)
     json.dump(value, open(path + ".tmp", "w"))
     os.replace(path + ".tmp", path)
     return value
@@ -133,7 +137,7 @@ def tiles(shapes):
                 transform = source.transform * rasterio.Affine.scale(scale, scale)
                 out[name] = {"crs": source.crs.to_string(), "transform": list(transform)[:6]}
         return out
-    return cached_json("tiles.json", build)
+    return cached_json("tiles.json", build, folder=MASKS)
 
 
 def worldcover_names(bounds):
@@ -152,7 +156,8 @@ def to_grid(source_array, source_transform, crs, transform):
 
 def tile_masks(name, grid, shapes):
     """Mandal labels and the rainfed-cropland mask on the tile's 160 m grid (cached)."""
-    path = os.path.join(CACHE, f"mask_{name}.npz")
+    path = os.path.join(MASKS, f"mask_{name}.npz")
+    os.makedirs(MASKS, exist_ok=True)
     if os.path.exists(path):
         saved = np.load(path)
         return saved["labels"], saved["rainfed"]
@@ -189,6 +194,31 @@ def tile_masks(name, grid, shapes):
     return labels.astype("int16"), rainfed
 
 
+def stored_offset(item):
+    """The reflectance offset still in the stored values, in stored units.
+
+    Processing baseline 04.00 (January 2022) adds 1000 to every L2A value. Element 84's archive
+    removes it again and says so ("earthsearch:boa_offset_applied": true), while its raster:bands
+    still describe the original offset. Subtracting it a second time drives red to zero and every
+    pixel's NDVI to 1; the first build of the field-scale record (4 October 2026) did exactly that.
+    """
+    if item["properties"].get("earthsearch:boa_offset_applied"):
+        return 0
+    band = (item["assets"]["red"].get("raster:bands") or [{}])[0]
+    return int(round(-(band.get("offset") or 0) / (band.get("scale") or 0.0001)))
+
+
+def check_composite(year, week, best):
+    """Refuse a composite whose cropland NDVI is not plausible: a wrong offset or a broken band shows here."""
+    values = np.concatenate([v[np.isfinite(v)] for v in best.values()]) if best else np.array([])
+    if len(values) < 1000:
+        return
+    median = float(np.median(values))
+    if not 0.1 <= median <= 0.9 or float(np.mean(values > 0.98)) > 0.05:
+        raise RuntimeError(f"{year} week {week}: implausible cropland NDVI (median {median:.3f}, "
+                           f"{100 * float(np.mean(values > 0.98)):.0f}% above 0.98); check the reflectance offset")
+
+
 def scene_ndvi(base, offset_dn):
     """NDVI of one scene at 160 m, NaN where the scene classification is not clear ground.
     offset_dn: the reflectance offset in stored units, from the item's raster:bands (1000 since
@@ -213,13 +243,13 @@ def week_composite(year, week, tile_grids, masks, ap_bounds):
     start = week_start(year, week)
     items = search(start.isoformat(), (start + datetime.timedelta(days=6)).isoformat(), list(ap_bounds),
                    fields={"include": ["id", "properties.mgrs:utm_zone", "properties.mgrs:latitude_band", "properties.mgrs:grid_square",
-                                       "properties.eo:cloud_cover", "assets.red.href", "assets.red.raster:bands"], "exclude": ["geometry", "links"]})
+                                       "properties.eo:cloud_cover", "properties.earthsearch:boa_offset_applied",
+                                       "assets.red.href", "assets.red.raster:bands"], "exclude": ["geometry", "links"]})
     jobs = []
     for item in items:
         name = tile_name(item)
         if name in tile_grids and (item["properties"].get("eo:cloud_cover") or 0) < MAX_CLOUD:
-            band = (item["assets"]["red"].get("raster:bands") or [{}])[0]
-            offset_dn = int(round(-(band.get("offset") or 0) / (band.get("scale") or 0.0001)))
+            offset_dn = stored_offset(item)
             href = item["assets"]["red"]["href"]
             if href.startswith("s3://"):   # some items list the bucket path; the same file is served over https
                 bucket, key = href[5:].split("/", 1)
@@ -236,6 +266,7 @@ def week_composite(year, week, tile_grids, masks, ap_bounds):
                 print(f"    [skip] {name}: {str(error)[:120]}", flush=True)
                 continue
             best[name] = np.fmax(best[name], values)
+    check_composite(year, week, best)
     np.savez_compressed(path, **{name: values.astype("float16") for name, values in best.items()})
     print(f"  {year} week {week}: {len(jobs)} scenes over {len({job[0] for job in jobs})} tiles", flush=True)
     return best

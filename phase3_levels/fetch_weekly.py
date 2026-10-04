@@ -137,7 +137,7 @@ STEPS = [
     # the calls of three weeks ago scored against the vegetation index. After the
     # field signals, whose forecast and soil moisture the calls are made from.
     # Optional: a week that fails is frozen or scored on the next run.
-    ("score field calls", [PY, os.path.join(HERE, "score_field_calls.py")], False, 900),
+    ("score field calls", [PY, os.path.join(HERE, "score_field_calls.py")], False, 1800),
     # The summer drinking-water outlook: May depth projected from each mandal's latest
     # APWRIMS reading and its own past winters, with its leave-one-year-out record.
     # After the APWRIMS history and context (its boundary links). Optional.

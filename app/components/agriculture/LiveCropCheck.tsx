@@ -149,11 +149,14 @@ function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropK
       {pooledNote ? <p className={styles.recordPooled}>{pooledNote}</p> : null}
       {record.live && record.live.frozen ? (() => {
         const live = record.live, score = live.record[`${crop}-${stage}`]?.within.sameSeason;
+        const field = live.fieldRecord[`${crop}-${stage}`];
         return <p className={styles.recordLive} data-testid="field-week-scorecard">
           <span><i aria-hidden="true" />Live scorecard</span>
           {live.scored && score && score.afterGap !== null
-            ? <>On the real forecast calls since {day(live.firstFrozen, false)}, frozen as made: {points(score.afterGap)} {score.afterGap <= 0 ? "lower" : "higher"} after &ldquo;short&rdquo; ({score.mandals} mandal-seasons, {live.scored} week{live.scored === 1 ? "" : "s"} scored).</>
-            : <>Each week&rsquo;s calls on the real forecast are frozen as made and scored three weeks later against the same satellite index. {live.frozen} week{live.frozen === 1 ? "" : "s"} frozen since {day(live.firstFrozen, false)}{live.nextDue ? <>; the first score is due {day(live.nextDue, false)}</> : null}.</>}
+            ? <>On the real forecast calls since {day(live.firstFrozen, false)}, frozen as made: {points(score.afterGap)} {score.afterGap <= 0 ? "lower" : "higher"} on the 4 km index after &ldquo;short&rdquo; ({score.mandals} mandal-seasons, {live.scored} week{live.scored === 1 ? "" : "s"} scored)
+              {field && field.within.sameSeason.changeGap !== null
+                ? <>; at field scale, NDVI change {Math.abs(field.within.sameSeason.changeGap).toFixed(3)} {field.within.sameSeason.changeGap <= 0 ? "lower" : "higher"} ({field.within.sameSeason.mandals} mandal-seasons, {RECORD_VERDICTS[field.verdict].label.toLowerCase()})</> : null}.</>
+            : <>Each week&rsquo;s calls on the real forecast are frozen as made and scored three weeks later, against Sentinel-2 at field scale and the 4 km index; rabi&rsquo;s clear skies let the field-scale test read most mandals. {live.frozen} week{live.frozen === 1 ? "" : "s"} frozen since {day(live.firstFrozen, false)}{live.nextDue ? <>; the first score is due {day(live.nextDue, false)}</> : null}.</>}
         </p>;
       })() : null}
       <small>{record.rainfed.text} {record.acrossCaveat} Weather as it happened (ERA5), not the forecast; vegetation from the satellite index, which the soil model does not use.</small>

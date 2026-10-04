@@ -10,21 +10,31 @@ import { fieldSignals } from "./fieldSignalsServer";
 export type SummerTier = "beyond" | "dry" | "within";
 type Projection = {
   anchor: number; typical: number; dry: number; deepestMay: number; winters: number; medianDrawdown: number; maxDrawdown: number;
-  tier: SummerTier; anchorMonth: string; district: string; mandal: string;
+  tier: SummerTier; anchorMonth: string; district: string; mandal: string; people?: number | null;
 };
 type Outlook = {
   generatedAt: string; source: string; anchor: string; targetMay: string; firstYear: number; method: string; deepM: number;
-  summary: { mandals: number; beyond: number; dry: number; within: number; beyondDeep: number; dryDeep: number; boundaries: number };
+  summary: { mandals: number; beyond: number; dry: number; within: number; beyondDeep: number; dryDeep: number; series: number; boundaries: number };
+  people: { source: string; year: number; beyond: number; beyondDeep: number; dry: number; dryDeep: number } | null;
   backtest: {
     anchorMonth: string; comparisons: number; years: number[]; typicalErrorM: number; persistenceErrorM: number; withinDryPct: number;
     pastRecordPct: Record<SummerTier, number | null>; tierCounts: Record<SummerTier, number>; baseRatePct: number; recordsFlaggedPct: number | null;
     byYear: Array<{ may: number; comparisons: number; medianErrorM: number }>;
   } | null;
-  districts: Array<{ district: string; beyond: number; dry: number; within: number; deep: number; mandals: number }>;
+  districts: Array<{ district: string; beyond: number; dry: number; within: number; deep: number; people: number; mandals: number }>;
   mandals: Array<Projection | null>;
 };
 
-export const summerOutlook = outlookJson as unknown as Outlook;
+const raw = outlookJson as unknown as Outlook;
+/** District names arrive in the outlines' capitals; shown as the rest of the site shows them. */
+export const summerOutlook: Outlook = { ...raw, districts: raw.districts.map(d => ({ ...d, district: /[a-z]/.test(d.district) ? d.district : titleCase(d.district) })) };
+
+/** People in Indian notation: 5.6 lakh, 1.3 crore. */
+export function lakhs(n: number) {
+  if (n >= 1e7) return `${(n / 1e7).toFixed(n >= 1e8 ? 0 : 1)} crore`;
+  if (n >= 1e5) return `${(n / 1e5).toFixed(n >= 1e6 ? 0 : 1)} lakh`;
+  return Math.round(n).toLocaleString("en-IN");
+}
 
 export const SUMMER_TIERS: Record<SummerTier, { label: string; short: string; color: string; key: string }> = {
   beyond: { label: "Deeper than any May on record, in a typical winter", short: "Beyond its record", color: "#a33b2c", key: "x" },

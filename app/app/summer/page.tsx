@@ -4,7 +4,7 @@ import { HeaderHero } from "../../components/HeaderHero";
 import { StateOutlineMap } from "../../components/StateOutlineMap";
 import { IconArrowRight, IconDroplet, IconMap, IconShield, IconSun } from "../../components/icons";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
-import { SHALLOW_BEYOND, SUMMER_TIERS, summerOutlook, summerRows, type SummerTier } from "../../lib/summer";
+import { lakhs, SHALLOW_BEYOND, SUMMER_TIERS, summerOutlook, summerRows, type SummerTier } from "../../lib/summer";
 import { rabiView } from "../../lib/rabi";
 import shared from "../rabi/Rabi.module.css";
 import styles from "./Summer.module.css";
@@ -20,7 +20,7 @@ const m = (value: number) => `${value.toFixed(1)} m`;
 const ORDER: SummerTier[] = ["beyond", "dry", "within"];
 
 export default function SummerPage() {
-  const o = summerOutlook, s = o.summary, bt = o.backtest;
+  const o = summerOutlook, s = o.summary, bt = o.backtest, people = o.people;
   const rows = summerRows();
   const target = month(o.targetMay);
   const top = rows.filter((r): r is NonNullable<typeof r> => r !== null && r.tier === "beyond" && r.deep).sort((a, b) => b.margin - a.margin).slice(0, 12);
@@ -49,11 +49,15 @@ export default function SummerPage() {
           <h2 id="summer-summary">
             By {target}, the water table in <b>{s.beyond} mandals</b> is projected to sit deeper than in any May since {o.firstYear + 1} on a typical
             winter, {s.beyondDeep} of them more than {o.deepM} m down, and in <b>{s.dry} more</b> if the winter is as dry as their driest.
+            {people ? <>{" "}About <b>{lakhs(people.beyondDeep)} people</b> live in those {s.beyondDeep}.</> : null}
           </h2>
           <p>Each mandal against its own record: the depth at which a well fails depends on how deep it was drilled, which no public record gives.</p>
         </div>
         <ul className={shared.tiles}>
-          {ORDER.map(tier => <li key={tier}><span>{SUMMER_TIERS[tier].short}</span><b data-tone={tier === "beyond" ? "bad" : undefined}>{s[tier]}</b><em>{tier === "beyond" ? `typical winter · ${s.beyondDeep} more than ${o.deepM} m down` : tier === "dry" ? `only in a winter as dry as their driest · ${s.dryDeep} more than ${o.deepM} m down` : `either way · of ${s.mandals} mandals`}</em></li>)}
+          {ORDER.map(tier => <li key={tier}><span>{SUMMER_TIERS[tier].short}</span><b data-tone={tier === "beyond" ? "bad" : undefined}>{s[tier]}<small> mandals</small></b><em>{tier === "beyond"
+            ? `typical winter · ${s.beyondDeep} more than ${o.deepM} m down${people ? `, home to ${lakhs(people.beyondDeep)}` : ""}`
+            : tier === "dry" ? `only in a winter as dry as their driest · ${s.dryDeep} more than ${o.deepM} m down${people ? `, home to ${lakhs(people.dryDeep)}` : ""}`
+              : `either way · of ${s.mandals} mandals on the map`}</em></li>)}
           {bt ? <li><span>Track record</span><b>1 in {Math.round(100 / (bt.pastRecordPct.beyond ?? 100))}</b><em>&ldquo;Beyond&rdquo; calls that set a new record, against 1 in {Math.round(100 / bt.baseRatePct)} overall ({bt.years[0]}–{String(bt.years[bt.years.length - 1]).slice(2)})</em></li> : null}
         </ul>
       </section>
@@ -81,7 +85,7 @@ export default function SummerPage() {
               <h3>Districts with the most mandals at risk, more than {o.deepM} m down</h3>
               <ol>
                 {o.districts.slice(0, 9).map(d => <li key={d.district}>
-                  <span><b>{d.district}</b><small>{d.beyond} beyond its record · {d.dry} in a dry winter</small></span>
+                  <span><b>{d.district}</b><small>{d.people ? `${lakhs(d.people)} people live in them · ` : ""}{d.beyond} beyond its record, {d.dry} in a dry winter</small></span>
                   <span className={styles.stack} aria-hidden="true">
                     <i style={{ width: `${(100 * d.beyond) / d.mandals}%`, background: SUMMER_TIERS.beyond.color }} />
                     <i style={{ width: `${(100 * d.dry) / d.mandals}%`, background: SUMMER_TIERS.dry.color }} />
@@ -110,7 +114,7 @@ export default function SummerPage() {
         </div>
         <ol className={styles.ranges}>
           {top.map(r => <li key={r.index} data-testid="summer-row">
-            <span className={styles.who}><b>{r.mandal}</b><small>{r.district}{r.categoryLabel ? ` · ${r.categoryLabel.toLowerCase()}` : ""}</small></span>
+            <span className={styles.who}><b>{r.mandal}</b><small>{r.district}{r.people ? ` · ${lakhs(r.people)} people` : ""}{r.categoryLabel ? ` · ${r.categoryLabel.toLowerCase()}` : ""}</small></span>
             <span className={styles.track} role="img" aria-label={`${r.mandal}: ${m(r.anchor)} now, ${m(r.typical)} to ${m(r.dry)} by May; deepest May on record ${m(r.deepestMay)}`}>
               <span className={styles.band} style={{ left: x(r.typical, r.deepestMay), width: `calc(${x(r.dry, r.deepestMay)} - ${x(r.typical, r.deepestMay)})` }} data-runs-off={r.dry - r.deepestMay > hi ? "" : undefined} />
               <span className={styles.now} style={{ left: x(r.anchor, r.deepestMay) }} />
@@ -160,7 +164,7 @@ export default function SummerPage() {
       </section> : null}
 
       <p className={shared.foot}>
-        Source: {o.source}, {o.firstYear} to {month(o.anchor)}. A mandal is projected when it has at least four past winters with readings in both months. APWRIMS reports a mandal&rsquo;s average across its piezometers; one village&rsquo;s wells can sit well above or below it. Rain this winter, recharge structures and new pumping all move the answer; the outlook is refreshed as each month&rsquo;s readings arrive. <Link href="/methodology/">Methodology <IconArrowRight /></Link>
+        Source: {o.source}, {o.firstYear} to {month(o.anchor)}.{people ? ` People: ${people.source} (CC BY 4.0), a modelled estimate for ${people.year} that counts everyone in the mandal, towns included, not only those on wells.` : ""} A mandal is projected when it has at least four past winters with readings in both months. APWRIMS reports a mandal&rsquo;s average across its piezometers; one village&rsquo;s wells can sit well above or below it. Rain this winter, recharge structures and new pumping all move the answer; the outlook is refreshed as each month&rsquo;s readings arrive. <Link href="/methodology/">Methodology <IconArrowRight /></Link>
       </p>
     </div>
   );

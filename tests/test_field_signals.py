@@ -287,6 +287,21 @@ def test_the_scorecard_compares_each_mandal_with_itself_on_rainfed_fields():
     assert out["maize-1"]["verdict"] == "untested"
 
 
+def test_the_live_scorecard_scores_frozen_calls_at_field_scale(tmp_path):
+    import score_field_calls as score
+    n = len(score.KEYS)
+    frozen = [{"issued": "2026-10-04", "states": ["s" * n] + ["o" * n] * 40},
+              {"issued": "2026-10-11", "states": ["o" * n] + ["o" * n] * 40}]
+    # Field-scale rows [change, after, pixels]: mandal 0 greens 0.05 less than the State in the week it was called short.
+    fields = {"2026-10-04": [[0.0, 0.5, 50]] + [[0.05, 0.6, 50]] * 40, "2026-10-11": [[0.04, 0.6, 50]] + [[0.04, 0.6, 50]] * 40}
+    out = score.summarise_field(frozen, fields)
+    assert out["maize-1"]["within"]["sameSeason"] == {"mandals": 1, "changeGap": -0.05, "afterGap": -0.1, "worsePct": 100.0}
+    # A week is read once and kept beside the calls.
+    rows = score.field_outcome({"issued": "2026-10-04", "vhpWeek": [2026, 40]}, calls_dir=str(tmp_path), compute=lambda calls: [[0.01, 0.5, 30]])
+    assert rows == [[0.01, 0.5, 30]] and (tmp_path / "s2_2026-10-04.json").exists()
+    assert score.field_outcome({"issued": "2026-10-04", "vhpWeek": [2026, 40]}, calls_dir=str(tmp_path), compute=lambda calls: 1 / 0) == rows
+
+
 # --- the field-scale reading (Sentinel-2) ----------------------------------------------
 
 def test_sentinel_pixels_pair_only_where_both_weeks_are_clear():
@@ -305,6 +320,32 @@ def test_sentinel_pixels_pair_only_where_both_weeks_are_clear():
     # Fewer clear pixels than MIN_PIXELS gives no reading rather than a noisy one.
     after[:15] = np.nan
     assert s2.outcomes({"T": before}, {"T": after}, {"T": (labels, rainfed)}, count=2)[1] is None
+
+
+def test_the_reflectance_offset_is_taken_off_once_only():
+    import numpy as np
+    import build_sentinel_outcomes as s2
+    bands = {"red": {"raster:bands": [{"scale": 0.0001, "offset": -0.1}]}}
+    # The archive has already removed the baseline-04.00 offset and says so: nothing more to take off.
+    assert s2.stored_offset({"properties": {"earthsearch:boa_offset_applied": True}, "assets": bands}) == 0
+    assert s2.stored_offset({"properties": {}, "assets": bands}) == 1000
+    # Taken off twice, red goes to zero and NDVI to 1 everywhere: the guard refuses such a week.
+    saturated = {"T": np.full(5000, 0.999, dtype="float32")}
+    with pytest.raises(RuntimeError, match="implausible"):
+        s2.check_composite(2026, 36, saturated)
+    s2.check_composite(2026, 36, {"T": np.linspace(0.2, 0.8, 5000, dtype="float32")})
+
+
+def test_the_committed_field_scale_outcomes_are_plausible():
+    path = os.path.join(ROOT, "phase3_levels", "data", "sentinel_outcomes.json")
+    if not os.path.exists(path):
+        pytest.skip("no field-scale outcomes built")
+    weeks = json.load(open(path))["weeks"]
+    after = sorted(row[1] for week in weeks for row in week["mandals"] if row)
+    assert len(after) > 1000
+    # Rainfed cropland three weeks on: neither bare nor saturated. The first build read ~1.0 throughout.
+    assert 0.2 < after[len(after) // 2] < 0.85
+    assert sum(a > 0.98 for a in after) < 0.01 * len(after)
 
 
 def test_sentinel_verdicts_follow_their_stated_rules():

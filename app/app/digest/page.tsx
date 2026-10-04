@@ -9,7 +9,7 @@ import { fieldSignals } from "../../lib/fieldSignalsServer";
 import { checkRecord } from "../../lib/cropWaterRecord";
 import { rabiView } from "../../lib/rabi";
 import { stateSummary } from "../../lib/stateSummary";
-import { summerOutlook } from "../../lib/summer";
+import { lakhs, summerOutlook } from "../../lib/summer";
 import styles from "./Digest.module.css";
 
 /* The Monday digest: one A4 sheet for the CMO, RTGS and the collectors, built
@@ -110,7 +110,7 @@ export default function DigestPage() {
             <section aria-labelledby="digest-rabi">
               <h2 id="digest-rabi">The season ahead</h2>
               <ul className={styles.notes}>
-                <li>By {summerTarget}, the water table in <b>{summerOutlook.summary.beyond} mandals</b> is projected past its deepest May on record on a typical winter, {summerOutlook.summary.beyondDeep} of them more than 10 m down; {summerOutlook.summary.dry} more in a dry one.</li>
+                <li>By {summerTarget}, the water table in <b>{summerOutlook.summary.beyond} mandals</b> is projected past its deepest May on record on a typical winter, {summerOutlook.summary.beyondDeep} of them more than 10 m down{summerOutlook.people ? `, home to about ${lakhs(summerOutlook.people.beyondDeep)} people` : ""}; {summerOutlook.summary.dry} more in a dry one.</li>
                 {hardest ? <li>The <b>{hardest.name}</b> reservoirs hold <b>{pct(hardest.storagePct)}</b>, against {pct(hardest.lastYearPct)} a year ago.</li> : null}
                 {soil ? <li>In <b>{soil.record + soil.below} of {soil.read}</b> mostly rainfed mandals the topsoil is drier than in its median year; {soil.record} are the driest on record.</li> : null}
                 {rabi.sowing.issued ? <li>A {rabi.sowing.crop} crop sown now would run short within a week in <b>{rabi.sowing.stressed + rabi.sowing.soon}</b> of {rabi.sowing.stressed + rabi.sowing.soon + rabi.sowing.ok} rainfed mandals.</li> : null}

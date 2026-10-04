@@ -151,7 +151,11 @@ export type CheckRecord = {
     coverage: { rainfedMandalWeeks: number; read: number; readPct: number | null };
   } | null;
   /** The live scorecard (phase3_levels/score_field_calls.py): each week's real calls, frozen, scored three weeks on. */
-  live?: { frozen: number; scored: number; firstFrozen: string | null; nextDue: string | null; record: Record<string, RecordReading> } | null;
+  live?: {
+    frozen: number; scored: number; firstFrozen: string | null; nextDue: string | null; record: Record<string, RecordReading>;
+    /** The same calls against Sentinel-2 at 160 m over rainfed cropland. */
+    fieldScored: number; fieldRecord: Record<string, RecordReading>;
+  } | null;
 };
 export const RECORD_VERDICTS: Record<RecordVerdict, { label: string; tone: string }> = {
   backed: { label: "Backed by its record", tone: "#27745d" },
