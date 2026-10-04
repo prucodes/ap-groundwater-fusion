@@ -8,6 +8,7 @@ import { lakhs, SHALLOW_BEYOND, SUMMER_TIERS, summerOutlook, summerRows, type Su
 import { rabiView } from "../../lib/rabi";
 import shared from "../rabi/Rabi.module.css";
 import styles from "./Summer.module.css";
+import { brief } from "../../lib/pageBriefs";
 
 export const metadata: Metadata = {
   title: "Summer Water Outlook | AP Water Intelligence",
@@ -38,19 +39,14 @@ export default function SummerPage() {
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
         title="Summer Water Outlook"
-        subtitle={<>Where the water table may stand by {target}, mandal by mandal, against each mandal&rsquo;s own deepest May on record. For planning bore wells, hand pumps and tankers early; a projection from past winters, not a forecast of rain.</>}
+        brief={brief("/summer", people ? <><b>{s.beyondDeep} mandals</b>, home to about <b>{lakhs(people.beyondDeep)} people</b>, are heading past their deepest May on record and more than {o.deepM} m down.</> : <><b>{s.beyondDeep} mandals</b> are heading past their deepest May on record and more than {o.deepM} m down.</>)}
         showChips={false}
         variant="compact"
       />
 
-      <section className={`${shared.hero} ${styles.hero}`} aria-labelledby="summer-summary" data-testid="summer-summary">
+      <section className={`${shared.hero} ${styles.hero}`} aria-label="Summer outlook in figures" data-testid="summer-summary">
         <div className={shared.heroText}>
           <span className={shared.kicker}>Summer {o.targetMay.slice(0, 4)} · from the {month(o.anchor)} readings</span>
-          <h2 id="summer-summary">
-            By {target}, the water table in <b>{s.beyond} mandals</b> is projected to sit deeper than in any May since {o.firstYear + 1} on a typical
-            winter, {s.beyondDeep} of them more than {o.deepM} m down, and in <b>{s.dry} more</b> if the winter is as dry as their driest.
-            {people ? <>{" "}About <b>{lakhs(people.beyondDeep)} people</b> live in those {s.beyondDeep}.</> : null}
-          </h2>
           <p>Each mandal against its own record: the depth at which a well fails depends on how deep it was drilled, which no public record gives.</p>
         </div>
         <ul className={shared.tiles}>

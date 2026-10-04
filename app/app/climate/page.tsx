@@ -20,6 +20,7 @@ import {
 } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
 import { day, signed } from "../../components/agriculture/waterContextFormat";
+import { brief } from "../../lib/pageBriefs";
 
 const RAIN_LABEL: Record<string, string> = { excess: "Excess", normal: "Normal", deficient: "Deficient", scanty: "Scanty", noRain: "No rain" };
 const RAIN_COLOR: Record<string, string> = { excess: "#2789af", normal: "#5e9c89", deficient: "#ce982b", scanty: "#b64c42", noRain: "#7a2e27" };
@@ -41,11 +42,7 @@ export default function ClimatePage() {
     <div className="pageWrap">
       <HeaderHero
         title="Climate & Water Balance"
-        subtitle={
-          <>
-            <strong>Climate context</strong> for groundwater review. Annual balance uses TerraClimate rainfall minus actual evapotranspiration; CHIRPS monthly rainfall is shown separately. Neither measures recharge or pumping.
-          </>
-        }
+        brief={brief("/climate", <><b>{dashboardSummary.summary.deficit_mandals} mandals</b> ran a water-balance deficit in {dashboardSummary.summary.balance_year}.</>)}
         showChips={false}
         variant="compact"
       />

@@ -7,6 +7,7 @@ import { GEC_CATEGORIES, type GecCategory } from "../../lib/agriculture";
 import { fieldPriority, PRIORITY_SIGNALS, standsOut } from "../../lib/fieldPriority";
 import { fieldSignals } from "../../lib/fieldSignalsServer";
 import styles from "./Changes.module.css";
+import { brief } from "../../lib/pageBriefs";
 
 export const metadata: Metadata = {
   title: "This Week | AP Water Intelligence",
@@ -69,7 +70,7 @@ export default function ChangesPage() {
     <div className={`pageWrap ${styles.page}`}>
       <HeaderHero
         title="This Week"
-        subtitle={<>What moved since the data the site was showing before this refresh. Each figure keeps its own date, because the sources run on different clocks. Nothing here is recomputed; every number is read from a published file.</>}
+        brief={brief("/changes", first ? <>The first week-on-week comparison lands with the next Monday refresh; <b>{fieldPriority().rows.filter(r => r.lit >= 4).length} mandals</b> have four or more stress signals at once.</> : <>{changes.counts.worse} headlines worse and {changes.counts.better} better since last week; <b>{fieldPriority().rows.filter(r => r.lit >= 4).length} mandals</b> have four or more stress signals at once.</>)}
         showChips={false}
         variant="compact"
       />
@@ -77,11 +78,6 @@ export default function ChangesPage() {
       <section className={styles.summary} aria-label="Week at a glance">
         <div className={styles.summaryText}>
           <span className={styles.kicker}>Refresh of {shortDate(changes.generatedAt, true)}</span>
-          <h2>
-            {first
-              ? "Every figure below is this week's reading. The first week-on-week comparison lands with the next Monday refresh."
-              : `${changes.counts.worse} headline${changes.counts.worse === 1 ? "" : "s"} worse, ${changes.counts.better} better, ${changes.counts.same} unchanged.`}
-          </h2>
           <p>Compared with {changes.comparedWith.label}{changes.comparedWith.commit ? ` (commit ${changes.comparedWith.commit}${changes.comparedWith.committedAt ? `, ${shortDate(changes.comparedWith.committedAt, true)}` : ""})` : ""}.</p>
           <Link href="/digest/" className={styles.digestLink} data-testid="digest-link">This week on one A4 page: the digest →</Link>
         </div>

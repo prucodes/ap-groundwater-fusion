@@ -8,6 +8,7 @@ import type { ConstituencyData, ConstituencyRow } from "../../lib/constituencies
 import { MAP_VIEW, districtGeometry, mandalToPath, titleCase } from "../../lib/data";
 import { shortDate } from "../../lib/drought";
 import { stateSummary } from "../../lib/stateSummary";
+import { brief } from "../../lib/pageBriefs";
 
 export const metadata: Metadata = {
   title: "Constituencies | AP Water Intelligence",
@@ -84,7 +85,7 @@ export default function ConstituenciesPage() {
     <div className={`pageWrap ${styles.page}`}>
       <HeaderHero
         title="Constituencies"
-        subtitle={<>Groundwater, the State&rsquo;s latest well readings, the drought manual and gauge rain, rolled up by the assembly constituency each mandal belongs to in the State&rsquo;s own records.</>}
+        brief={brief("/constituencies", <>{data.constituencies.length} assembly constituencies, each with a one-page brief that prints on one A4 sheet and refreshes every Monday.</>)}
         showChips={false}
         variant="compact"
       />

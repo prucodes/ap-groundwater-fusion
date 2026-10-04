@@ -12,6 +12,8 @@ import { DroughtMethod, ReservoirPanel, SowingPanel, StateActions } from "../../
 import { daysUntil, place, shortDate, todayInIndia } from "../../lib/drought";
 import { droughtWatch } from "../../lib/droughtWatch";
 import styles from "../../components/drought/Drought.module.css";
+import { brief } from "../../lib/pageBriefs";
+import { droughtNow } from "../../lib/pageNow";
 
 export const metadata: Metadata = {
   title: "Drought Watch | AP Water Intelligence",
@@ -75,10 +77,7 @@ export default function DroughtPage() {
     <div className={`pageWrap ${styles.page}`}>
       <HeaderHero
         title={`Drought Watch — ${d.season.name}`}
-        subtitle={<>
-          Every mandal read against India&rsquo;s <strong>Manual for Drought Management (2020)</strong>, the procedure a State follows to declare drought:
-          the rainfall trigger, then three impact indicators, each with the manual&rsquo;s own thresholds. Field verification and the notification remain the State&rsquo;s.
-        </>}
+        brief={brief("/drought", droughtNow())}
         showChips={false}
         variant="compact"
       />

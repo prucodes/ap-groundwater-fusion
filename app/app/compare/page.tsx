@@ -10,6 +10,7 @@ import { LiveMap } from "../../components/LiveMap";
 import { IconArrowRight, IconColumns } from "../../components/icons";
 import { balanceMeta, formatNumber, mandals, titleCase, wetnessLabel } from "../../lib/data";
 import type { MandalGroundwaterView } from "../../lib/types";
+import { brief } from "../../lib/pageBriefs";
 
 function BalanceCell({ m }: { m: MandalGroundwaterView }) {
   if (m.water_balance_mm === null || m.water_balance_mm === undefined) return <>—</>;
@@ -88,7 +89,7 @@ export default function ComparePage() {
     <div className="pageWrap">
       <HeaderHero
         title="Compare Mandals"
-        subtitle={<>Side-by-side fusion comparison of any two mandals — APWRIMS readings vs NASA satellite-model signals.</>}
+        brief={brief("/compare")}
         showChips={false}
         variant="compact"
       />

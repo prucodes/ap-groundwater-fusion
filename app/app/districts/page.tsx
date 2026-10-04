@@ -13,6 +13,8 @@ import { DistrictMap } from "../../components/DistrictMap";
 import { DistrictTrendGrid } from "../../components/DistrictTrendGrid";
 import { DistrictProfile } from "../../components/governance/DistrictProfile";
 import styles from "../../components/governance/Governance.module.css";
+import { brief } from "../../lib/pageBriefs";
+import { districtsNow } from "../../lib/pageNow";
 
 export default function DistrictsPage() {
   const router = useRouter();
@@ -32,9 +34,7 @@ export default function DistrictsPage() {
     <div className="pageWrap">
       <HeaderHero
         title="Districts — Groundwater Levels & Stress"
-        subtitle={
-          <>{rollups.length} district groups in the prototype dataset. Compare <strong>modelled depth</strong> with measured year-on-year change, then inspect the mandals behind each signal.</>
-        }
+        brief={brief("/districts", districtsNow())}
         showChips={false}
         variant="compact"
       />

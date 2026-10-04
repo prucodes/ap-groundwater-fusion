@@ -9,6 +9,7 @@ import { rabiView, SOIL_CLASSES, type SoilClass } from "../../lib/rabi";
 import { StateOutlineMap } from "../../components/StateOutlineMap";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
 import styles from "./Rabi.module.css";
+import { brief } from "../../lib/pageBriefs";
 
 export const metadata: Metadata = {
   title: "Rabi Outlook | AP Water Intelligence",
@@ -40,19 +41,14 @@ export default function RabiPage() {
     <div className={`pageWrap ${styles.page}`}>
       <HeaderHero
         title="Rabi Outlook"
-        subtitle={<>What the rabi season starts with: water in the reservoirs for irrigated rabi, moisture in the soil for rainfed rabi, and the northeast monsoon that decides the rest. Readings, not a crop plan.</>}
+        brief={brief("/rabi", res && soil ? <>Reservoirs hold <b>{pct(res.state.storagePct)}</b> against {pct(res.state.lastYearPct)} a year ago; the topsoil is drier than usual in <b>{dry} of {soil.read}</b> rainfed mandals.</> : undefined)}
         showChips={false}
         variant="compact"
       />
 
-      <section className={styles.hero} aria-labelledby="rabi-summary" data-testid="rabi-summary">
+      <section className={styles.hero} aria-label="Rabi starting position in figures" data-testid="rabi-summary">
         <div className={styles.heroText}>
           <span className={styles.kicker}>Rabi 2026–27 · the starting position</span>
-          <h2 id="rabi-summary">
-            {res ? <>Rabi begins with the reservoirs at <b>{pct(res.state.storagePct)}</b> of capacity, against {pct(res.state.lastYearPct)} a year ago</> : <>Rabi begins</>}
-            {rain?.deviationPct !== null && rain?.deviationPct !== undefined ? <>, after a monsoon <b>{Math.abs(Math.round(rain.deviationPct))}% {rain.deviationPct < 0 ? "short of" : "above"}</b> normal</> : null}
-            {enso.alert.includes("El Niño") ? <>, with a {strong}El Niño over the Pacific</> : null}.
-          </h2>
           <p>Each figure carries its own date. The site recommends no crop, release or sowing date; it shows the water these decisions start from.</p>
         </div>
         <ul className={styles.tiles}>

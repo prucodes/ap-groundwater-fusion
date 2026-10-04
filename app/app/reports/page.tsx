@@ -4,10 +4,11 @@ import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { IconArrowRight } from "../../components/icons";
 import { ReportDownloads } from "../../components/ReportDownloads";
 import styles from "../../components/governance/Governance.module.css";
+import { brief } from "../../lib/pageBriefs";
 
 export default function ReportsPage() {
   return <div className="pageWrap">
-    <HeaderHero title="Briefings & Evidence Packs" subtitle="Dated, traceable material for review meetings. Screen views and downloads are research outputs, not signed advisories or live feeds." showChips={false} variant="compact" />
+    <HeaderHero title="Briefings & Evidence Packs" brief={brief("/reports", <Link href="/digest/">Open this week&rsquo;s digest →</Link>)} showChips={false} variant="compact" />
     <DataProvenanceDates />
     <section className={styles.section}>
       <div className={styles.heading}><div><span className={styles.eyebrow}>Choose the decision</span><h2>From a question to its evidence.</h2></div></div>

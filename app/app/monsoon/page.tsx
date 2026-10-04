@@ -24,6 +24,7 @@ import { waterSummary } from "../../lib/waterSummary";
 import { stateSummary } from "../../lib/stateSummary";
 import { day } from "../../components/agriculture/waterContextFormat";
 import styles from "./MonsoonPage.module.css";
+import { brief } from "../../lib/pageBriefs";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -65,20 +66,7 @@ export default function MonsoonPage() {
     <div className={`pageWrap ${styles.page}`}>
       <HeaderHero
         title={enso?.state === "el_nino" ? "Monsoon Watch — El Niño" : "Monsoon Watch"}
-        subtitle={
-          <>
-            {enso?.state === "el_nino" ? (
-              <>
-                The retained Pacific index indicates <strong>{enso.strength} El Niño conditions</strong> at{" "}
-                {enso.oniC > 0 ? "+" : ""}
-                {enso.oniC.toFixed(2)} °C for {enso.season} {enso.asOf.slice(0, 4)}.
-                Andhra Pradesh rainfall and groundwater changes are shown alongside that climate context.{" "}
-              </>
-            ) : null}
-            Compare each mandal&rsquo;s measured groundwater change with its own past seasons.
-            Water-volume shortfalls are derived estimates. The index is context; no model on this site uses it.
-          </>
-        }
+        brief={brief("/monsoon", <>{rain ? <>June–August rain was <b>{Math.abs(Math.round(rain.anomalyPct))}% {rain.anomalyPct < 0 ? "below" : "above"} normal</b>{rain.rankDriest === 1 ? `, the driest of ${rain.ofYears} years` : ""}; </> : null}{formatNumber(r.fallingPct)}% of mandal series sit lower than in May.</>)}
         showChips={false}
         variant="compact"
       />

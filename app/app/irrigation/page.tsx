@@ -24,6 +24,7 @@ import {
   districtAdvisories,
   type IrrigationAction,
 } from "../../lib/irrigation";
+import { brief } from "../../lib/pageBriefs";
 
 export default function IrrigationPage() {
   const advisories = districtAdvisories();
@@ -40,12 +41,7 @@ export default function IrrigationPage() {
     <div className="pageWrap">
       <HeaderHero
         title="Groundwater Monitoring & AWARE Preview"
-        subtitle={
-          <>
-            Prototype district monitoring categories and an unreleased <strong>AWARE</strong> payload preview. No category
-            authorizes pumping, restrictions or field orders.
-          </>
-        }
+        brief={brief("/irrigation", <>{counts["Field verify"]} districts flagged to verify in the field and {counts.Review} for review; none of it authorizes pumping, restrictions or orders.</>)}
         showChips={false}
         variant="compact"
       />

@@ -8,6 +8,7 @@ import { mapGeometry, modelCard } from "../../lib/data";
 import { stateSummary } from "../../lib/stateSummary";
 import { checkRecord } from "../../lib/cropWaterRecord";
 import { summerOutlook as summer } from "../../lib/summer";
+import { brief } from "../../lib/pageBriefs";
 
 const labels = [
   { code: "APWRIMS (AP-GWD)", text: "Recorded mandal depth history. Modelled nowcasts are separate derived values; neither is presented as a certified official output." },
@@ -90,12 +91,7 @@ export default function MethodologyPage() {
     <div className="pageWrap">
       <HeaderHero
         title="Methodology"
-        subtitle={
-          <>
-            How APWRIMS readings and <strong>real NASA satellite-model signals</strong> become a prototype mandal review
-            layer — and where the boundaries of that claim lie.
-          </>
-        }
+        brief={brief("/methodology")}
         showChips={false}
         variant="compact"
       />

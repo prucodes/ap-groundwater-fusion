@@ -8,6 +8,8 @@ import { IconArrowRight, IconCloudRain, IconDroplet, IconInfo } from "../../comp
 import { balanceMeta, balanceStatusFor, districtGeometry, formatNumber, monsoonWatch, titleCase } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
 import { monthSpan } from "../../components/agriculture/waterContextFormat";
+import { brief } from "../../lib/pageBriefs";
+import { rainNow } from "../../lib/pageNow";
 
 type Row = {
   d: string;
@@ -108,12 +110,7 @@ export default function ScenarioPage() {
     <div className="pageWrap">
       <HeaderHero
         title="Scenario Planner"
-        subtitle={
-          <>
-            Stress-test the statewide water balance: drag the monsoon dial to see <strong>which districts tip into
-            deficit</strong>. Real TerraClimate {districtGeometry.balance_year} balance, simplified scenario.
-          </>
-        }
+        brief={brief("/scenario", <>Starts from this season: {rainNow()}</>)}
         showChips={false}
         variant="compact"
       />

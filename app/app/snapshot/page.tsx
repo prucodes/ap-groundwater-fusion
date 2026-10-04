@@ -19,6 +19,9 @@ import {
   wetnessLabel,
 } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
+import { PageBriefBand } from "../../components/PageBrief";
+import { brief } from "../../lib/pageBriefs";
+import Link from "next/link";
 
 const pct = (value: number | null | undefined) =>
   value === null || value === undefined ? "n/a" : `${value > 0 ? "+" : value < 0 ? "\u2212" : ""}${Math.abs(value).toFixed(1)}%`;
@@ -70,6 +73,7 @@ export default function SnapshotPage() {
 
   return (
     <div className="pageWrap snapshot">
+      <div className="printHide"><PageBriefBand brief={brief("/snapshot", <Link href="/digest/">Open this week&rsquo;s digest →</Link>)} /></div>
       <div className="snapToolbar printHide">
         <div>
           <span className="eyebrow">Executive Snapshot</span>

@@ -15,6 +15,8 @@ import {
 } from "../../components/icons";
 import { balanceMeta, districts, formatNumber, mandals, titleCase, watchlistMandals } from "../../lib/data";
 import type { MandalGroundwaterView } from "../../lib/types";
+import { brief } from "../../lib/pageBriefs";
+import Link from "next/link";
 
 const MAX_DEPTH = 25;
 
@@ -121,12 +123,7 @@ export default function WatchlistPage() {
     <div className="pageWrap">
       <HeaderHero
         title="Groundwater Monitoring Watchlist"
-        subtitle={
-          <>
-            Mandals ranked for review using measured depth/trend and explicit data coverage. Climate-balance categories
-            are contextual patterns to investigate, not causal attribution or pumping instructions.
-          </>
-        }
+        brief={brief("/watchlist", <Link href="/changes/#field-teams">Open the field-teams list →</Link>)}
         showChips={false}
         variant="compact"
       />
