@@ -1,7 +1,7 @@
 # Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026)
 
 Written by Claude Code for Codex. This replaces the 2 October brief at the same path.
-Everything below is on `main` (through PR #44) and live on GitHub Pages.
+Everything below is on `main` (through PR #45) and live on GitHub Pages.
 
 Ground rules:
 - Start every task on a fresh branch off `main`.
@@ -24,6 +24,7 @@ things look, but never change what they say without asking.
 | #42 | **The CHIRPS v3 record rebuilt** with every part of a split mandal (1981-01 to 2026-08), and the model retrained on it. |
 | #42 | **A measured cross-section in the crop-water lab**, replacing the AI artwork. A rendering fix restored spaces lost after `</strong>`. |
 | #43 | **Seven reference crops in the crop-water lab**, each drawn by its habit; this brief. |
+| #45 | **The crop water check's track record and the new signals where officials look.** Re-run on past kharif weeks (2024, 2025, 2026) against what cropland vegetation did next, with a verdict per crop and stage on the Agriculture page. The verdict compares each mandal with itself in the same season (pooling mandals or seasons misleads, and both are disclosed): none backed, seven weak (mid-season maize, cotton and jowar; end-season groundnut, red gram, Bengal gram and jowar; 1–4 points lower), twelve not borne out (every initial stage, chilli), two untested. This Week lists "where field teams would learn most" (four or more of six signals). Constituency briefs gain crops short of water, crop vegetation and the groundwater category, still one A4 page for the largest seat. Two weekly cards (crop vegetation, crops short) begin with the next Monday refresh. |
 | #44 | **This week in the fields** (Agriculture section 02): an FAO-56 crop water check for every mandal, for a chosen crop and stage, on this week's soil moisture and ECMWF's forecast. Also crop vegetation (NOAA VCI weighted to cropland) and the official CGWB groundwater category, on the Agriculture map, the Map page and every mandal page. The Map page's title and date now follow the view. |
 
 Taken off the to-do list as done: per-constituency briefs, the sidebar State wells date,
@@ -69,6 +70,8 @@ Steps:
 - `phase3_levels/fetch_field_signals.py` (weekly), `crop_water.py`, and the static builders `build_soil_water_capacity.py` and `build_cropland_fraction.py`;
 - `app/data/field_signals.json` (server only) and `field_signals_mandals.json` (client-safe);
 - `tests/test_field_signals.py` and `app/e2e/agriculture-live.spec.ts`;
+- `app/lib/fieldPriority.ts` (server only: the six-signal list and crop water by crop), `phase3_levels/build_crop_water_record.py` (by hand, about an hour of paced reanalysis downloads) and `app/data/crop_water_record.json`;
+- `app/e2e/governance-field-teams.spec.ts`;
 - `app/app/constituencies/[code]/page.tsx`;
 - `app/components/constituencies/PrintBrief.tsx` and `ConstituencyBrief.module.css`;
 - `app/components/agriculture/FieldSection.tsx` and `FieldSection.module.css`;
@@ -91,7 +94,7 @@ Steps:
 - **Field signals:** client code imports only `lib/fieldSignals.ts` (the map layers). `field_signals.json` and `lib/fieldSignalsServer.ts` stay on the server; the Agriculture page gets slim rows (`fieldEvidenceInput({ slim: true })`) and draws its live map after load, so the page stays near 1.5 MB.
 - **Constituency pages:** `/constituencies/[code]` uses `generateStaticParams` with `dynamicParams = false`.
 - **Text after an inline tag:** a line of text that follows `</strong>` or `</em>` on the next source line loses its leading space in this build. Write `{" "}`; `governance-text.spec.ts` reads the rendered text.
-- **Print:** the print rules hide `.mobileBar`, force `main > div` to full opacity and keep the desktop grid. Without them the brief prints blank or on two pages.
+- **Print:** the print rules hide `.mobileBar`, force `main > div` to full opacity and keep the desktop grid. Without them the brief prints blank or on two pages. The brief now has ten table columns and a field band; AC 172 (11 mandals) fits one A4 page with about 80 px to spare, and `governance-constituencies.spec.ts` prints it to PDF and counts the pages. Re-measure before adding anything to the brief.
 - **Weekly refresh:** "build forecast reliability" runs after "publish V2 app data", and `app/data/forecast_reliability.json` is in the workflow's commit list.
 
 Then wire `main`'s data into your redesigned pages (atlas `EvidencePanel`,

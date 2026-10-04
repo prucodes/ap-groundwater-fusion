@@ -1,13 +1,12 @@
 {
-  "checkedAt": "2026-10-04T11:27:12+00:00",
+  "checkedAt": "2026-10-04T12:13:41+00:00",
   "status": "refreshed",
   "sections": {
     "weather": {
       "status": "kept"
     },
     "vegetation": {
-      "status": "refreshed",
-      "seconds": 8.4
+      "status": "kept"
     },
     "assessment": {
       "status": "kept"
@@ -21,5 +20,5 @@
     "2026-09-24"
   ],
   "assessmentYear": "2025-2026",
-  "outputSha256": "913f4524c81c6a285a0af24c74759ad68400911679075786c41fddda7ab6ef8c"
+  "outputSha256": "fb284f8d38588dda53a0b9d80c166e6242e55733b81dcda8c82abbf3b50aee7f"
 }

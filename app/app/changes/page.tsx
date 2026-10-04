@@ -3,6 +3,9 @@ import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
 import changesJson from "../../data/weekly_changes.json";
 import { CATEGORY_META, place, shortDate } from "../../lib/drought";
+import { GEC_CATEGORIES, type GecCategory } from "../../lib/agriculture";
+import { fieldPriority, PRIORITY_SIGNALS, type PriorityRow } from "../../lib/fieldPriority";
+import { fieldSignals } from "../../lib/fieldSignalsServer";
 import styles from "./Changes.module.css";
 
 export const metadata: Metadata = {
@@ -55,6 +58,15 @@ const STATUS_TEXT: Record<string, string> = { stable: "Stable", watch: "Watch", 
 
 function categoryLabel(key: string) {
   return (CATEGORY_META as Record<string, { label: string }>)[key]?.label ?? key;
+}
+
+/** The figures behind a row's signals, in a phrase. */
+function standsOut(row: PriorityRow) {
+  const parts: string[] = [];
+  if (row.cropsShort !== null) parts.push(`${row.cropsShort} of ${row.cropsKnown} crops short of water`);
+  if (row.vci !== null) parts.push(`vegetation index ${row.vci.toFixed(0)}`);
+  if (row.category && row.category !== "safe") parts.push(`${GEC_CATEGORIES[row.category as GecCategory].label.toLowerCase()}${row.stagePct !== null ? ` (${row.stagePct.toFixed(0)}% drawn)` : ""}`);
+  return parts.join(" · ");
 }
 
 export default function ChangesPage() {
@@ -110,6 +122,8 @@ export default function ChangesPage() {
         ))}
       </section>
 
+      <FieldTeams />
+
       <div className={styles.lists}>
         <section className={styles.list} aria-label="Drought manual readings that moved">
           <div className={styles.listHead}>
@@ -163,5 +177,61 @@ export default function ChangesPage() {
         of the national drought manual, not a declaration. Groundwater: APWRIMS monthly series. El Niño: NOAA CPC.
       </p>
     </div>
+  );
+}
+
+/** Where several published signals point the same way: a list for field verification visits. */
+function FieldTeams() {
+  const { rows, soilAsOf, window } = fieldPriority();
+  const shown = rows.filter(row => row.lit >= 4).slice(0, 15);
+  const tally = [6, 5, 4].map(n => ({ n, count: rows.filter(row => row.lit === n).length }));
+  const veg = fieldSignals.vegetation, gw = fieldSignals.assessment;
+  if (!shown.length) return null;
+  return (
+    <section className={styles.teams} id="field-teams" aria-labelledby="field-teams-title" data-testid="field-teams">
+      <div className={styles.teamsHead}>
+        <div>
+          <span className={styles.kicker}>Where field teams would learn most this week</span>
+          <h2 id="field-teams-title">Mandals where most signals point to water stress at once</h2>
+          <p>Six published signals, each a stated test on a figure this site already shows. Where four or more agree, a visit can confirm or rule out stress quickly. A list for verification visits: not a ranking of need, an allocation or a declaration. The signals are not all independent: soil moisture is modelled from rain, and the crop check starts from the soil moisture.</p>
+        </div>
+        <ul className={styles.teamsTally} aria-label="Mandals by how many signals agree">
+          {tally.map(t => <li key={t.n}><b>{t.count}</b>{t.n === 6 ? "all six" : `${t.n} of 6`}</li>)}
+        </ul>
+      </div>
+      <div className={styles.matrixWrap}>
+        <table className={styles.matrix}>
+          <thead>
+            <tr>
+              <th scope="col">Mandal</th>
+              {PRIORITY_SIGNALS.map(signal => <th scope="col" key={signal.key} title={signal.label}><span>{signal.short}</span></th>)}
+              <th scope="col">Agree</th>
+              <th scope="col">What stands out</th>
+            </tr>
+          </thead>
+          <tbody>
+            {shown.map((row, rank) => (
+              <tr key={row.index}>
+                <th scope="row"><span className={styles.rank}>{rank + 1}</span>{row.id ? <Link href={`/mandals/${row.id}`}>{place(row.mandal)}</Link> : place(row.mandal)}<small>{place(row.district)}</small></th>
+                {PRIORITY_SIGNALS.map(signal => {
+                  const value = row.signals[signal.key];
+                  return <td key={signal.key} data-state={value === null ? "unknown" : value ? "yes" : "no"} aria-label={`${signal.short}: ${value === null ? "no usable value" : value ? "points to stress" : "does not"}`}><i /></td>;
+                })}
+                <td className={styles.agree}><b>{row.lit}</b><small>/{row.known}</small></td>
+                <td className={styles.stands}>{standsOut(row)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ol className={styles.signalKey}>
+        {PRIORITY_SIGNALS.map(signal => <li key={signal.key}><b>{signal.short}.</b> {signal.label}</li>)}
+      </ol>
+      <p className={styles.teamsFoot}>
+        Filled: points to stress. Open: does not. Faint: no usable value. Crop water: soil moisture of {soilAsOf ? shortDate(soilAsOf, true) : "this week"} and ECMWF&rsquo;s forecast{window ? ` (${shortDate(window.slice(0, 10), true)} to ${shortDate(window.slice(-10), true)})` : ""}, the seven reference crops taken at mid-season.
+        {veg ? ` Vegetation: NOAA VCI over cropland, ${shortDate(veg.averaged[0].approxStart, true)} to ${shortDate(veg.averaged[veg.averaged.length - 1].approxEnd, true)}.` : ""}
+        {gw ? ` Extraction: CGWB / State GWD assessment ${gw.year}.` : ""} <Link href="/agriculture/#field-week">Check any of them crop by crop →</Link>
+      </p>
+    </section>
   );
 }

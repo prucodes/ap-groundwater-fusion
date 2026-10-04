@@ -58,3 +58,15 @@ test("each constituency has a one-page brief that prints on its own", async ({ p
   await expect(page.locator("article h1")).toBeVisible();
   await expect(page.locator(".mobileBar")).toBeHidden();
 });
+
+test("the largest seat's brief carries this week in the fields and still prints on one A4 sheet", async ({ page }) => {
+  await page.goto("/constituencies/172/");
+  await expect(page.getByTestId("brief-field")).toContainText("Crops short of water now");
+  await expect(page.getByTestId("brief-field")).toContainText("Groundwater category");
+  await expect(page.locator("article table thead")).toContainText("Crop vegetation");
+  await expect(page.locator("article table thead")).toContainText("GW category");
+  await expect(page.locator("article footer")).toContainText("crop and stage assumed, not observed");
+  await page.emulateMedia({ media: "print" });
+  const pdf = await page.pdf({ format: "A4", printBackground: true });
+  expect(pdf.toString("latin1").match(/\/Type\s*\/Page[^s]/g)?.length).toBe(1);
+});

@@ -6,6 +6,7 @@ import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconLeaf, IconSatellite } from "../../components/icons";
 import { mapGeometry, modelCard } from "../../lib/data";
 import { stateSummary } from "../../lib/stateSummary";
+import { checkRecord } from "../../lib/cropWaterRecord";
 
 const labels = [
   { code: "APWRIMS (AP-GWD)", text: "Recorded mandal depth history. Modelled nowcasts are separate derived values; neither is presented as a certified official output." },
@@ -78,6 +79,9 @@ const caveats = [
 ];
 
 export default function MethodologyPage() {
+  const record = checkRecord();
+  const verdicts = Object.values(record.record).reduce<Record<string, number>>((tally, entry) => ({ ...tally, [entry.verdict]: (tally[entry.verdict] ?? 0) + 1 }), {});
+  const seasonSpan = `${record.seasons[0]}–${String(record.seasons[record.seasons.length - 1]).slice(2)}`;
   return (
     <div className="pageWrap">
       <HeaderHero
@@ -292,6 +296,31 @@ export default function MethodologyPage() {
             name, then by the district a boundary&rsquo;s neighbours give it (the prototype map labels some same-named mandals with
             another district), then by spelling; city wards assessed separately stay unmatched, and every match records how it was
             made. The statewide stage is INGRES&rsquo;s own figure, not a sum we recompute.
+          </p>
+          <p>
+            <strong>How the crop water check has fared.</strong>{" "}The check is re-run on every week from early July to early September of
+            each kharif season from {record.seasons[0]}, with the soil moisture APWRIMS held on each date and the weather that actually
+            followed (ERA5 reanalysis, so &ldquo;within seven days&rdquo; is tested as if the forecast were perfect). The outcome is crop
+            vegetation three weeks later: the satellite index over cropland, which the soil model does not use. Two comparisons were run
+            first and are kept on record, because each misleads for a reason that is not the check. Pooled across mandals, the calls do
+            not separate vegetation at all: the places called short most often are the chronically dry ones, the index compares each
+            place with its own past, and irrigated fields stay green whatever the soil model says. Inside one mandal but pooled across
+            seasons, the gap is large, mostly because &ldquo;short&rdquo; calls come in drier seasons: the check tells a dry season from a
+            wet one, as rainfall alone would. The verdict holds both fixed: the same mandal in the same season, vegetation after a
+            &ldquo;short&rdquo; call against after a &ldquo;comfortable&rdquo; one. &ldquo;Backed by its record&rdquo; needs it at least
+            {" "}{record.rules.backedPoints} index points lower, overall and in every season; &ldquo;weak&rdquo; at least {record.rules.notedPoints}
+            {" "}point lower; &ldquo;not borne out&rdquo; otherwise. On {seasonSpan}, of {Object.keys(record.record).length} crop-stage
+            pairs, {verdicts.backed ?? 0} {(verdicts.backed ?? 0) === 1 ? "is" : "are"} backed, {verdicts.weak ?? 0} weak,{" "}
+            {verdicts["not borne out"] ?? 0} not borne out and {verdicts.untested ?? 0} untested: the check is a reading of where crops
+            need water now, not a forecast of what the satellite will see. The index covers whatever is growing, not the chosen crop,
+            so this tests whether the check finds real water shortage, not whether a particular crop suffered.
+          </p>
+          <p>
+            <strong>Where field teams would learn most.</strong>{" "}This Week lists the mandals where four or more of six published signals
+            point to stress at once: groundwater short of its seasonal normal, gauge rain 20% or more below normal, soil among the driest
+            quarter of years, four or more of the seven reference crops short of water at mid-season, crop vegetation severely below
+            normal, and a semi-critical or worse official category. It is a count of stated tests, shown signal by signal, to direct
+            verification visits: not a ranking of need, an allocation or a declaration. The signals are not all independent.
           </p>
         </div>
       </section>

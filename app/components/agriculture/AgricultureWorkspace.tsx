@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { agricultureCsv, AGREEMENT_RULES, GEC_CATEGORIES, outlineLabel, VCI_CLASSES, WATER_SIGNALS, type Agreement, type AgricultureEvidence, type AgricultureMandal, type WaterSignal } from "../../lib/agriculture";
-import type { LiveField } from "../../lib/cropWater";
+import type { CheckRecord, LiveField } from "../../lib/cropWater";
 import { IconArrowRight, IconChevronLeft, IconChevronRight, IconDownload, IconGrid, IconInfo, IconLeaf, IconMap, IconSearch, IconShield } from "../icons";
 import { CropWaterLab } from "./CropWaterLab";
 import { FieldSignalsStrip } from "./FieldSignalsStrip";
@@ -183,7 +183,7 @@ function MandalMap({ evidence, rows, active, mapView, onSelect, colorBy }: { evi
   </div>;
 }
 
-export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = null }: { evidence: AgricultureEvidence; mapView: { width: number; height: number }; sourceStatus?: ReactNode; live?: LiveField | null }) {
+export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = null, record = null }: { evidence: AgricultureEvidence; mapView: { width: number; height: number }; sourceStatus?: ReactNode; live?: LiveField | null; record?: CheckRecord | null }) {
   const [labPreset, setLabPreset] = useState<LabPreset | null>(null);
   const [colorBy, setColorBy] = useState<ColorBy>("groundwater");
   function openLab(preset: LabPreset) {
@@ -255,7 +255,7 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
         heading?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
       });
     }} />
-    <LiveCropCheck live={live} evidence={evidence} mapView={mapView} onOpenLab={openLab} />
+    <LiveCropCheck live={live} evidence={evidence} mapView={mapView} onOpenLab={openLab} record={record} />
     <CropWaterLab preset={labPreset} onClearPreset={() => setLabPreset(null)} />
 
     <section id="agriculture-watch" className={styles.section} aria-labelledby="agriculture-watch-title">

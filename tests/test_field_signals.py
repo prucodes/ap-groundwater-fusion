@@ -163,3 +163,57 @@ def test_the_assessment_is_matched_and_carries_its_own_state_figure(field):
     for row in gw["mandals"]:
         if row:
             assert row["cat"] in ffs.CATEGORIES and row["match"] in ffs.STEP_RANK
+
+
+def test_the_weekly_page_compares_crop_vegetation_and_crop_water():
+    import build_weekly_changes as weekly
+    before = {"vegetation": {"summary": {"severe": 200}, "averaged": [{"approxEnd": "2026-09-23"}]}, "crossCheck": {"mostCropsShortMid": 50, "issued": "2026-09-27"}}
+    after = {"vegetation": {"summary": {"severe": 246}, "averaged": [{"approxEnd": "2026-09-30"}]}, "crossCheck": {"mostCropsShortMid": 41, "issued": "2026-10-04"}}
+    veg, crops = weekly.field_items(before, after)
+    assert (veg["before"], veg["after"], veg["direction"], veg["afterAsOf"]) == (200, 246, "worse", "2026-09-30")
+    assert (crops["before"], crops["after"], crops["direction"], crops["refreshed"]) == (50, 41, "better", True)
+    assert weekly.field_items(None, after)[0]["direction"] is None
+
+
+# --- the crop water check's track record ----------------------------------------------
+
+def test_record_verdicts_follow_their_stated_rules():
+    import build_crop_water_record as rec
+    cell = lambda mandals, gap: {"mandals": mandals, "afterGap": gap}  # noqa: E731
+    judge = lambda same, seasons, pooled=-20.0: rec.verdict({"sameSeason": same, "acrossSeasons": cell(300, pooled), "seasons": seasons})  # noqa: E731
+    assert judge(cell(450, -6.0), {"2024": cell(200, -4.0), "2025": cell(250, -8.0)}) == "backed"
+    assert judge(cell(450, -6.0), {"2024": cell(200, 1.0), "2025": cell(250, -9.0)}) == "weak"
+    # A small season below 30 mandals does not veto "backed".
+    assert judge(cell(450, -6.0), {"2024": cell(20, 1.0), "2025": cell(430, -6.4)}) == "backed"
+    assert judge(cell(300, -2.0), {"2024": cell(300, -2.0)}) == "weak"
+    assert judge(cell(300, -0.9), {"2024": cell(300, -0.9)}) == "not borne out"
+    assert judge(cell(300, 0.5), {"2024": cell(300, 0.5)}) == "not borne out"
+    assert judge(cell(99, -9.0), {}) == "untested"
+    # Pooling a mandal's seasons never decides it: drier seasons, not the check, make that gap.
+    assert judge(cell(300, 0.5), {"2024": cell(300, 0.5)}, pooled=-12.0) == "not borne out"
+
+
+def test_within_mandal_compares_each_mandal_with_itself():
+    import build_crop_water_record as rec
+    side = lambda n, change, after: {"n": n, "change": change * n, "after": after * n}  # noqa: E731
+    out = rec.within_mandal({
+        0: {"short": side(2, -6, 40), "ok": side(3, 2, 60)},   # worse after short: -8 change, -20 level
+        1: {"short": side(1, 1, 70), "ok": side(1, -1, 72)},    # slightly better change, -2 level
+        2: {"short": side(0, 0, 0), "ok": side(4, 0, 50)},      # no short calls: left out
+    })
+    assert out == {"mandals": 2, "changeGap": -3.0, "afterGap": -11.0, "worsePct": 50.0}
+
+
+def test_the_committed_record_is_internally_consistent():
+    import build_crop_water_record as rec
+    path = os.path.join(APP, "data", "crop_water_record.json")
+    if not os.path.exists(path):
+        pytest.skip("no record built yet")
+    record = json.load(open(path))
+    assert set(record["record"]) == {f"{c}-{s}" for c in crop_water.CROPS for s in range(3)}
+    for key, entry in record["record"].items():
+        within = entry["within"]
+        assert entry["verdict"] == rec.verdict(within), key
+        assert set(within["seasons"]) <= {str(y) for y in record["seasons"]}
+        # Each mandal-season is one comparison, so the same-season count is the seasons' counts added.
+        assert within["sameSeason"]["mandals"] == sum(s["mandals"] for s in within["seasons"].values()), key

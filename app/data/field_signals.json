@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-10-04T11:27:12+00:00",
+ "generatedAt": "2026-10-04T12:13:41+00:00",
  "note": "Public sources fetched for research: a weather forecast (model values), a satellite vegetation index and the official groundwater assessment. Not crop advice or a declaration.",
  "weather": {
   "source": "ECMWF IFS open-data forecast, via Open-Meteo",
@@ -6834,6 +6834,7 @@
     "ok": 585,
     "unknown": 64
    }
-  }
+  },
+  "mostCropsShortMid": 76
  }
 }

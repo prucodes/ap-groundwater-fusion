@@ -1,0 +1,3105 @@
+{
+ "generatedAt": "2026-10-04T16:59:33+00:00",
+ "question": "Three weeks after the check called a mandal's crop short of water, was the vegetation on its cropland worse than three weeks after it called the same mandal comfortable in the same season?",
+ "outcome": "Crop vegetation (NOAA STAR VCI, weighted to cropland) 3 weeks after the check week. 'within': inside each mandal with both kinds of call, mean VCI after 'short' (now or within 7 days) minus after 'comfortable' (afterGap), the same for the change over the three weeks (changeGap), and the share where it changed for the worse (worsePct); 'sameSeason' counts mandal-seasons and drives the verdict, 'acrossSeasons' pools a mandal's seasons, 'seasons' is each season alone. 'across': all calls pooled over mandals, for reference: severePct = VCI under 40, fellPct = down 5 points or more.",
+ "acrossCaveat": "Two comparisons were run first and are kept on record. Pooled across mandals the check does not separate vegetation: the places called short most often are the chronically dry ones, VCI compares each place with its own past, and irrigated fields stay green whatever the soil model says. Inside one mandal but pooled across seasons the gap is large, mostly because \u201cshort\u201d calls come in the drier seasons. The verdict holds both the place and the season fixed.",
+ "weather": "ERA5 reanalysis (Copernicus / ECMWF) via Open-Meteo's archive: the weather that happened, not the forecast. 'Within 7 days' is therefore tested as if the forecast were perfect.",
+ "soil": "APWRIMS / NRSC VIC soil moisture on each check date; SoilGrids 2.0 water-holding capacity.",
+ "rules": {
+  "backedPoints": 5.0,
+  "notedPoints": 1.0,
+  "minMandals": 100,
+  "text": "Backed by its record: inside the same mandal and season, crop vegetation three weeks after a 'short' call reads at least 5 index points lower than after a 'comfortable' call, overall and in every season. Weak record: at least 1 point lower, short of that. Not borne out: less than 1 point lower, or higher. Untested: fewer than 100 mandal-seasons with both kinds of call."
+ },
+ "seasons": [
+  2024,
+  2025,
+  2026
+ ],
+ "checks": 30,
+ "weeks": [
+  {
+   "year": 2024,
+   "week": 27,
+   "checkDay": "2024-07-04",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 30,
+    "approxStart": "2024-07-22",
+    "approxEnd": "2024-07-28"
+   }
+  },
+  {
+   "year": 2024,
+   "week": 28,
+   "checkDay": "2024-07-11",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 31,
+    "approxStart": "2024-07-29",
+    "approxEnd": "2024-08-04"
+   }
+  },
+  {
+   "year": 2024,
+   "week": 29,
+   "checkDay": "2024-07-18",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 32,
+    "approxStart": "2024-08-05",
+    "approxEnd": "2024-08-11"
+   }
+  },
+  {
+   "year": 2024,
+   "week": 30,
+   "checkDay": "2024-07-25",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 33,
+    "approxStart": "2024-08-12",
+    "approxEnd": "2024-08-18"
+   }
+  },
+  {
+   "year": 2024,
+   "week": 31,
+   "checkDay": "2024-08-01",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 34,
+    "approxStart": "2024-08-19",
+    "approxEnd": "2024-08-25"
+   }
+  },
+  {
+   "year": 2024,
+   "week": 32,
+   "checkDay": "2024-08-08",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 35,
+    "approxStart": "2024-08-26",
+    "approxEnd": "2024-09-01"
+   }
+  },
+  {
+   "year": 2024,
+   "week": 33,
+   "checkDay": "2024-08-15",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 36,
+    "approxStart": "2024-09-02",
+    "approxEnd": "2024-09-08"
+   }
+  },
+  {
+   "year": 2024,
+   "week": 34,
+   "checkDay": "2024-08-22",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 37,
+    "approxStart": "2024-09-09",
+    "approxEnd": "2024-09-15"
+   }
+  },
+  {
+   "year": 2024,
+   "week": 35,
+   "checkDay": "2024-08-29",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 38,
+    "approxStart": "2024-09-16",
+    "approxEnd": "2024-09-22"
+   }
+  },
+  {
+   "year": 2024,
+   "week": 36,
+   "checkDay": "2024-09-05",
+   "outcomeWeek": {
+    "year": 2024,
+    "week": 39,
+    "approxStart": "2024-09-23",
+    "approxEnd": "2024-09-29"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 27,
+   "checkDay": "2025-07-05",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 30,
+    "approxStart": "2025-07-23",
+    "approxEnd": "2025-07-29"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 28,
+   "checkDay": "2025-07-12",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 31,
+    "approxStart": "2025-07-30",
+    "approxEnd": "2025-08-05"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 29,
+   "checkDay": "2025-07-19",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 32,
+    "approxStart": "2025-08-06",
+    "approxEnd": "2025-08-12"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 30,
+   "checkDay": "2025-07-26",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 33,
+    "approxStart": "2025-08-13",
+    "approxEnd": "2025-08-19"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 31,
+   "checkDay": "2025-08-02",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 34,
+    "approxStart": "2025-08-20",
+    "approxEnd": "2025-08-26"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 32,
+   "checkDay": "2025-08-09",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 35,
+    "approxStart": "2025-08-27",
+    "approxEnd": "2025-09-02"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 33,
+   "checkDay": "2025-08-16",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 36,
+    "approxStart": "2025-09-03",
+    "approxEnd": "2025-09-09"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 34,
+   "checkDay": "2025-08-23",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 37,
+    "approxStart": "2025-09-10",
+    "approxEnd": "2025-09-16"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 35,
+   "checkDay": "2025-08-30",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 38,
+    "approxStart": "2025-09-17",
+    "approxEnd": "2025-09-23"
+   }
+  },
+  {
+   "year": 2025,
+   "week": 36,
+   "checkDay": "2025-09-06",
+   "outcomeWeek": {
+    "year": 2025,
+    "week": 39,
+    "approxStart": "2025-09-24",
+    "approxEnd": "2025-09-30"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 27,
+   "checkDay": "2026-07-05",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 30,
+    "approxStart": "2026-07-23",
+    "approxEnd": "2026-07-29"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 28,
+   "checkDay": "2026-07-12",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 31,
+    "approxStart": "2026-07-30",
+    "approxEnd": "2026-08-05"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 29,
+   "checkDay": "2026-07-19",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 32,
+    "approxStart": "2026-08-06",
+    "approxEnd": "2026-08-12"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 30,
+   "checkDay": "2026-07-26",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 33,
+    "approxStart": "2026-08-13",
+    "approxEnd": "2026-08-19"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 31,
+   "checkDay": "2026-08-02",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 34,
+    "approxStart": "2026-08-20",
+    "approxEnd": "2026-08-26"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 32,
+   "checkDay": "2026-08-09",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 35,
+    "approxStart": "2026-08-27",
+    "approxEnd": "2026-09-02"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 33,
+   "checkDay": "2026-08-16",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 36,
+    "approxStart": "2026-09-03",
+    "approxEnd": "2026-09-09"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 34,
+   "checkDay": "2026-08-23",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 37,
+    "approxStart": "2026-09-10",
+    "approxEnd": "2026-09-16"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 35,
+   "checkDay": "2026-08-30",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 38,
+    "approxStart": "2026-09-17",
+    "approxEnd": "2026-09-23"
+   }
+  },
+  {
+   "year": 2026,
+   "week": 36,
+   "checkDay": "2026-09-06",
+   "outcomeWeek": {
+    "year": 2026,
+    "week": 39,
+    "approxStart": "2026-09-24",
+    "approxEnd": "2026-09-30"
+   }
+  }
+ ],
+ "record": {
+  "maize-0": {
+   "across": {
+    "stressed": {
+     "n": 5498,
+     "severePct": 24.8,
+     "fellPct": 39.9,
+     "meanAfter": 53.1,
+     "meanChange": -2.4
+    },
+    "soon": {
+     "n": 2194,
+     "severePct": 17.1,
+     "fellPct": 34.5,
+     "meanAfter": 58.5,
+     "meanChange": -0.5
+    },
+    "ok": {
+     "n": 10468,
+     "severePct": 22.2,
+     "fellPct": 27.5,
+     "meanAfter": 55.6,
+     "meanChange": 1.5
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 870,
+       "severePct": 6.9,
+       "fellPct": 27.7,
+       "meanAfter": 62.1,
+       "meanChange": -0.1
+      },
+      "soon": {
+       "n": 322,
+       "severePct": 8.1,
+       "fellPct": 34.8,
+       "meanAfter": 62.1,
+       "meanChange": -0.3
+      },
+      "ok": {
+       "n": 4858,
+       "severePct": 22.5,
+       "fellPct": 24.4,
+       "meanAfter": 56.0,
+       "meanChange": 2.8
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 256,
+       "severePct": 12.1,
+       "fellPct": 22.3,
+       "meanAfter": 61.4,
+       "meanChange": 1.7
+      },
+      "soon": {
+       "n": 1181,
+       "severePct": 11.6,
+       "fellPct": 33.3,
+       "meanAfter": 62.8,
+       "meanChange": -0.7
+      },
+      "ok": {
+       "n": 4613,
+       "severePct": 18.8,
+       "fellPct": 30.2,
+       "meanAfter": 57.0,
+       "meanChange": 0.2
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 4372,
+       "severePct": 29.1,
+       "fellPct": 43.3,
+       "meanAfter": 50.8,
+       "meanChange": -3.1
+      },
+      "soon": {
+       "n": 691,
+       "severePct": 30.8,
+       "fellPct": 36.5,
+       "meanAfter": 49.5,
+       "meanChange": -0.3
+      },
+      "ok": {
+       "n": 997,
+       "severePct": 36.8,
+       "fellPct": 30.1,
+       "meanAfter": 47.0,
+       "meanChange": 1.3
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 948,
+     "changeGap": -1.2,
+     "afterGap": 0.4,
+     "worsePct": 56.5
+    },
+    "acrossSeasons": {
+     "mandals": 601,
+     "changeGap": -2.2,
+     "afterGap": -3.5,
+     "worsePct": 69.1
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 282,
+      "changeGap": -0.7,
+      "afterGap": -1.0,
+      "worsePct": 52.8
+     },
+     "2025": {
+      "mandals": 379,
+      "changeGap": -2.4,
+      "afterGap": -0.1,
+      "worsePct": 63.1
+     },
+     "2026": {
+      "mandals": 287,
+      "changeGap": -0.1,
+      "afterGap": 2.4,
+      "worsePct": 51.6
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "maize-1": {
+   "across": {
+    "stressed": {
+     "n": 1204,
+     "severePct": 29.7,
+     "fellPct": 38.0,
+     "meanAfter": 52.5,
+     "meanChange": -0.9
+    },
+    "soon": {
+     "n": 3068,
+     "severePct": 25.8,
+     "fellPct": 44.0,
+     "meanAfter": 52.4,
+     "meanChange": -3.6
+    },
+    "ok": {
+     "n": 13888,
+     "severePct": 21.0,
+     "fellPct": 29.0,
+     "meanAfter": 56.0,
+     "meanChange": 1.0
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 166,
+       "severePct": 9.6,
+       "fellPct": 13.3,
+       "meanAfter": 63.6,
+       "meanChange": 4.8
+      },
+      "soon": {
+       "n": 256,
+       "severePct": 6.6,
+       "fellPct": 30.9,
+       "meanAfter": 60.4,
+       "meanChange": -0.0
+      },
+      "ok": {
+       "n": 5628,
+       "severePct": 20.4,
+       "fellPct": 25.6,
+       "meanAfter": 56.8,
+       "meanChange": 2.2
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 144,
+       "severePct": 22.2,
+       "fellPct": 20.1,
+       "meanAfter": 65.6,
+       "meanChange": 3.3
+      },
+      "soon": {
+       "n": 456,
+       "severePct": 8.6,
+       "fellPct": 25.4,
+       "meanAfter": 64.4,
+       "meanChange": 1.5
+      },
+      "ok": {
+       "n": 5450,
+       "severePct": 17.7,
+       "fellPct": 31.1,
+       "meanAfter": 57.6,
+       "meanChange": -0.1
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 894,
+       "severePct": 34.7,
+       "fellPct": 45.5,
+       "meanAfter": 48.4,
+       "meanChange": -2.7
+      },
+      "soon": {
+       "n": 2356,
+       "severePct": 31.3,
+       "fellPct": 49.0,
+       "meanAfter": 49.2,
+       "meanChange": -5.0
+      },
+      "ok": {
+       "n": 2810,
+       "severePct": 28.7,
+       "fellPct": 31.5,
+       "meanAfter": 51.3,
+       "meanChange": 0.7
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 735,
+     "changeGap": -0.5,
+     "afterGap": -1.1,
+     "worsePct": 51.0
+    },
+    "acrossSeasons": {
+     "mandals": 492,
+     "changeGap": -3.5,
+     "afterGap": -7.5,
+     "worsePct": 75.6
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 127,
+      "changeGap": -0.8,
+      "afterGap": -1.8,
+      "worsePct": 52.0
+     },
+     "2025": {
+      "mandals": 201,
+      "changeGap": 0.1,
+      "afterGap": -0.7,
+      "worsePct": 49.3
+     },
+     "2026": {
+      "mandals": 407,
+      "changeGap": -0.8,
+      "afterGap": -1.1,
+      "worsePct": 51.6
+     }
+    }
+   },
+   "verdict": "weak"
+  },
+  "maize-2": {
+   "across": {
+    "stressed": {
+     "n": 332,
+     "severePct": 25.0,
+     "fellPct": 38.3,
+     "meanAfter": 52.9,
+     "meanChange": -0.7
+    },
+    "soon": {
+     "n": 101,
+     "severePct": 42.6,
+     "fellPct": 53.5,
+     "meanAfter": 48.0,
+     "meanChange": -3.3
+    },
+    "ok": {
+     "n": 17727,
+     "severePct": 22.2,
+     "fellPct": 31.9,
+     "meanAfter": 55.3,
+     "meanChange": 0.1
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 35,
+       "severePct": 8.6,
+       "fellPct": 0.0,
+       "meanAfter": 64.6,
+       "meanChange": 11.5
+      },
+      "soon": {
+       "n": 4,
+       "severePct": 25.0,
+       "fellPct": 0.0,
+       "meanAfter": 61.1,
+       "meanChange": 12.0
+      },
+      "ok": {
+       "n": 6011,
+       "severePct": 19.6,
+       "fellPct": 25.6,
+       "meanAfter": 57.1,
+       "meanChange": 2.1
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 21,
+       "severePct": 4.8,
+       "fellPct": 0.0,
+       "meanAfter": 77.3,
+       "meanChange": 3.8
+      },
+      "soon": {
+       "n": 8,
+       "severePct": 37.5,
+       "fellPct": 12.5,
+       "meanAfter": 62.8,
+       "meanChange": 0.7
+      },
+      "ok": {
+       "n": 6021,
+       "severePct": 17.1,
+       "fellPct": 30.6,
+       "meanAfter": 58.2,
+       "meanChange": 0.1
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 276,
+       "severePct": 28.6,
+       "fellPct": 46.0,
+       "meanAfter": 49.6,
+       "meanChange": -2.6
+      },
+      "soon": {
+       "n": 89,
+       "severePct": 43.8,
+       "fellPct": 59.6,
+       "meanAfter": 46.0,
+       "meanChange": -4.3
+      },
+      "ok": {
+       "n": 5695,
+       "severePct": 30.5,
+       "fellPct": 39.8,
+       "meanAfter": 50.1,
+       "meanChange": -2.0
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 71,
+     "changeGap": -2.0,
+     "afterGap": -2.9,
+     "worsePct": 59.2
+    },
+    "acrossSeasons": {
+     "mandals": 72,
+     "changeGap": -4.9,
+     "afterGap": -9.6,
+     "worsePct": 76.4
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 8,
+      "changeGap": 4.1,
+      "afterGap": -4.2,
+      "worsePct": 37.5
+     },
+     "2025": {
+      "mandals": 5,
+      "changeGap": -3.4,
+      "afterGap": -7.5,
+      "worsePct": 40.0
+     },
+     "2026": {
+      "mandals": 58,
+      "changeGap": -2.7,
+      "afterGap": -2.3,
+      "worsePct": 63.8
+     }
+    }
+   },
+   "verdict": "untested"
+  },
+  "groundnut-0": {
+   "across": {
+    "stressed": {
+     "n": 6627,
+     "severePct": 23.4,
+     "fellPct": 38.2,
+     "meanAfter": 53.8,
+     "meanChange": -1.9
+    },
+    "soon": {
+     "n": 2844,
+     "severePct": 19.1,
+     "fellPct": 35.8,
+     "meanAfter": 57.6,
+     "meanChange": -1.1
+    },
+    "ok": {
+     "n": 8689,
+     "severePct": 22.7,
+     "fellPct": 26.2,
+     "meanAfter": 55.4,
+     "meanChange": 2.0
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 1180,
+       "severePct": 6.2,
+       "fellPct": 28.8,
+       "meanAfter": 62.7,
+       "meanChange": -0.1
+      },
+      "soon": {
+       "n": 524,
+       "severePct": 16.2,
+       "fellPct": 38.0,
+       "meanAfter": 59.7,
+       "meanChange": -1.4
+      },
+      "ok": {
+       "n": 4346,
+       "severePct": 23.5,
+       "fellPct": 23.0,
+       "meanAfter": 55.4,
+       "meanChange": 3.3
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 562,
+       "severePct": 13.5,
+       "fellPct": 24.6,
+       "meanAfter": 60.2,
+       "meanChange": 1.2
+      },
+      "soon": {
+       "n": 1737,
+       "severePct": 13.8,
+       "fellPct": 35.2,
+       "meanAfter": 61.0,
+       "meanChange": -1.3
+      },
+      "ok": {
+       "n": 3751,
+       "severePct": 19.2,
+       "fellPct": 29.1,
+       "meanAfter": 56.8,
+       "meanChange": 0.6
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 4885,
+       "severePct": 28.7,
+       "fellPct": 42.0,
+       "meanAfter": 51.0,
+       "meanChange": -2.6
+      },
+      "soon": {
+       "n": 583,
+       "severePct": 37.6,
+       "fellPct": 35.5,
+       "meanAfter": 45.5,
+       "meanChange": -0.2
+      },
+      "ok": {
+       "n": 592,
+       "severePct": 39.4,
+       "fellPct": 31.4,
+       "meanAfter": 46.8,
+       "meanChange": 1.1
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 1060,
+     "changeGap": -1.4,
+     "afterGap": 0.4,
+     "worsePct": 55.9
+    },
+    "acrossSeasons": {
+     "mandals": 603,
+     "changeGap": -2.4,
+     "afterGap": -3.2,
+     "worsePct": 72.5
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 340,
+      "changeGap": -1.2,
+      "afterGap": -1.7,
+      "worsePct": 57.4
+     },
+     "2025": {
+      "mandals": 494,
+      "changeGap": -2.4,
+      "afterGap": 0.4,
+      "worsePct": 60.3
+     },
+     "2026": {
+      "mandals": 226,
+      "changeGap": 0.6,
+      "afterGap": 3.5,
+      "worsePct": 44.2
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "groundnut-1": {
+   "across": {
+    "stressed": {
+     "n": 3306,
+     "severePct": 30.9,
+     "fellPct": 41.7,
+     "meanAfter": 50.3,
+     "meanChange": -2.8
+    },
+    "soon": {
+     "n": 4779,
+     "severePct": 18.1,
+     "fellPct": 36.8,
+     "meanAfter": 57.7,
+     "meanChange": -1.5
+    },
+    "ok": {
+     "n": 10075,
+     "severePct": 21.6,
+     "fellPct": 26.7,
+     "meanAfter": 55.6,
+     "meanChange": 1.8
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 381,
+       "severePct": 10.0,
+       "fellPct": 18.1,
+       "meanAfter": 60.8,
+       "meanChange": 2.7
+      },
+      "soon": {
+       "n": 1029,
+       "severePct": 7.6,
+       "fellPct": 35.0,
+       "meanAfter": 62.7,
+       "meanChange": -1.1
+      },
+      "ok": {
+       "n": 4640,
+       "severePct": 23.0,
+       "fellPct": 23.9,
+       "meanAfter": 55.7,
+       "meanChange": 2.9
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 233,
+       "severePct": 19.7,
+       "fellPct": 18.9,
+       "meanAfter": 62.4,
+       "meanChange": 3.1
+      },
+      "soon": {
+       "n": 1485,
+       "severePct": 11.0,
+       "fellPct": 34.0,
+       "meanAfter": 62.8,
+       "meanChange": -0.9
+      },
+      "ok": {
+       "n": 4332,
+       "severePct": 19.1,
+       "fellPct": 29.8,
+       "meanAfter": 56.6,
+       "meanChange": 0.3
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 2692,
+       "severePct": 34.9,
+       "fellPct": 47.1,
+       "meanAfter": 47.7,
+       "meanChange": -4.1
+      },
+      "soon": {
+       "n": 2265,
+       "severePct": 27.5,
+       "fellPct": 39.5,
+       "meanAfter": 52.0,
+       "meanChange": -2.0
+      },
+      "ok": {
+       "n": 1103,
+       "severePct": 26.3,
+       "fellPct": 25.9,
+       "meanAfter": 51.6,
+       "meanChange": 2.9
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 1063,
+     "changeGap": -1.6,
+     "afterGap": 0.5,
+     "worsePct": 58.4
+    },
+    "acrossSeasons": {
+     "mandals": 599,
+     "changeGap": -2.9,
+     "afterGap": -3.3,
+     "worsePct": 74.0
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 289,
+      "changeGap": -0.8,
+      "afterGap": -1.3,
+      "worsePct": 56.7
+     },
+     "2025": {
+      "mandals": 453,
+      "changeGap": -2.3,
+      "afterGap": 1.0,
+      "worsePct": 61.1
+     },
+     "2026": {
+      "mandals": 321,
+      "changeGap": -1.6,
+      "afterGap": 1.5,
+      "worsePct": 56.1
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "groundnut-2": {
+   "across": {
+    "stressed": {
+     "n": 1297,
+     "severePct": 32.2,
+     "fellPct": 38.3,
+     "meanAfter": 50.2,
+     "meanChange": -1.3
+    },
+    "soon": {
+     "n": 2164,
+     "severePct": 27.0,
+     "fellPct": 48.5,
+     "meanAfter": 51.5,
+     "meanChange": -4.7
+    },
+    "ok": {
+     "n": 14699,
+     "severePct": 20.9,
+     "fellPct": 29.1,
+     "meanAfter": 56.2,
+     "meanChange": 0.9
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 144,
+       "severePct": 7.6,
+       "fellPct": 8.3,
+       "meanAfter": 63.0,
+       "meanChange": 5.8
+      },
+      "soon": {
+       "n": 149,
+       "severePct": 7.4,
+       "fellPct": 23.5,
+       "meanAfter": 60.1,
+       "meanChange": 1.0
+      },
+      "ok": {
+       "n": 5757,
+       "severePct": 20.1,
+       "fellPct": 25.9,
+       "meanAfter": 57.0,
+       "meanChange": 2.1
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 50,
+       "severePct": 28.0,
+       "fellPct": 12.0,
+       "meanAfter": 60.3,
+       "meanChange": 3.6
+      },
+      "soon": {
+       "n": 175,
+       "severePct": 10.3,
+       "fellPct": 20.6,
+       "meanAfter": 65.8,
+       "meanChange": 3.7
+      },
+      "ok": {
+       "n": 5825,
+       "severePct": 17.2,
+       "fellPct": 30.9,
+       "meanAfter": 58.1,
+       "meanChange": -0.0
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 1103,
+       "severePct": 35.5,
+       "fellPct": 43.4,
+       "meanAfter": 48.0,
+       "meanChange": -2.5
+      },
+      "soon": {
+       "n": 1840,
+       "severePct": 30.2,
+       "fellPct": 53.2,
+       "meanAfter": 49.5,
+       "meanChange": -5.9
+      },
+      "ok": {
+       "n": 3117,
+       "severePct": 29.0,
+       "fellPct": 31.8,
+       "meanAfter": 51.1,
+       "meanChange": 0.4
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 606,
+     "changeGap": -0.7,
+     "afterGap": -1.4,
+     "worsePct": 49.0
+    },
+    "acrossSeasons": {
+     "mandals": 496,
+     "changeGap": -4.0,
+     "afterGap": -8.2,
+     "worsePct": 74.4
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 96,
+      "changeGap": 1.2,
+      "afterGap": -1.5,
+      "worsePct": 40.6
+     },
+     "2025": {
+      "mandals": 72,
+      "changeGap": 1.1,
+      "afterGap": -1.3,
+      "worsePct": 44.4
+     },
+     "2026": {
+      "mandals": 438,
+      "changeGap": -1.4,
+      "afterGap": -1.4,
+      "worsePct": 51.6
+     }
+    }
+   },
+   "verdict": "weak"
+  },
+  "cotton-0": {
+   "across": {
+    "stressed": {
+     "n": 4009,
+     "severePct": 26.8,
+     "fellPct": 42.8,
+     "meanAfter": 52.0,
+     "meanChange": -3.1
+    },
+    "soon": {
+     "n": 2757,
+     "severePct": 18.7,
+     "fellPct": 35.5,
+     "meanAfter": 57.1,
+     "meanChange": -1.0
+    },
+    "ok": {
+     "n": 11394,
+     "severePct": 21.8,
+     "fellPct": 27.5,
+     "meanAfter": 55.8,
+     "meanChange": 1.5
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 465,
+       "severePct": 6.5,
+       "fellPct": 25.4,
+       "meanAfter": 61.5,
+       "meanChange": -0.1
+      },
+      "soon": {
+       "n": 428,
+       "severePct": 7.9,
+       "fellPct": 32.5,
+       "meanAfter": 61.7,
+       "meanChange": 0.3
+      },
+      "ok": {
+       "n": 5157,
+       "severePct": 21.7,
+       "fellPct": 24.9,
+       "meanAfter": 56.4,
+       "meanChange": 2.6
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 73,
+       "severePct": 8.2,
+       "fellPct": 19.2,
+       "meanAfter": 65.2,
+       "meanChange": 2.3
+      },
+      "soon": {
+       "n": 1104,
+       "severePct": 10.3,
+       "fellPct": 32.0,
+       "meanAfter": 63.2,
+       "meanChange": -0.5
+      },
+      "ok": {
+       "n": 4873,
+       "severePct": 18.8,
+       "fellPct": 30.3,
+       "meanAfter": 57.1,
+       "meanChange": 0.2
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 3471,
+       "severePct": 29.9,
+       "fellPct": 45.6,
+       "meanAfter": 50.5,
+       "meanChange": -3.6
+      },
+      "soon": {
+       "n": 1225,
+       "severePct": 30.0,
+       "fellPct": 39.8,
+       "meanAfter": 49.9,
+       "meanChange": -2.0
+      },
+      "ok": {
+       "n": 1364,
+       "severePct": 32.8,
+       "fellPct": 27.6,
+       "meanAfter": 49.1,
+       "meanChange": 2.0
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 979,
+     "changeGap": -1.4,
+     "afterGap": 0.2,
+     "worsePct": 55.0
+    },
+    "acrossSeasons": {
+     "mandals": 597,
+     "changeGap": -2.5,
+     "afterGap": -3.7,
+     "worsePct": 71.2
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 253,
+      "changeGap": -0.0,
+      "afterGap": -0.6,
+      "worsePct": 48.2
+     },
+     "2025": {
+      "mandals": 353,
+      "changeGap": -2.4,
+      "afterGap": -0.2,
+      "worsePct": 61.2
+     },
+     "2026": {
+      "mandals": 373,
+      "changeGap": -1.4,
+      "afterGap": 1.2,
+      "worsePct": 53.6
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "cotton-1": {
+   "across": {
+    "stressed": {
+     "n": 493,
+     "severePct": 31.4,
+     "fellPct": 41.8,
+     "meanAfter": 51.3,
+     "meanChange": -1.6
+    },
+    "soon": {
+     "n": 1672,
+     "severePct": 33.1,
+     "fellPct": 46.7,
+     "meanAfter": 49.1,
+     "meanChange": -4.1
+    },
+    "ok": {
+     "n": 15995,
+     "severePct": 21.0,
+     "fellPct": 30.3,
+     "meanAfter": 55.9,
+     "meanChange": 0.6
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 48,
+       "severePct": 12.5,
+       "fellPct": 6.2,
+       "meanAfter": 63.2,
+       "meanChange": 8.9
+      },
+      "soon": {
+       "n": 101,
+       "severePct": 7.9,
+       "fellPct": 21.8,
+       "meanAfter": 62.1,
+       "meanChange": 2.3
+      },
+      "ok": {
+       "n": 5901,
+       "severePct": 19.8,
+       "fellPct": 25.7,
+       "meanAfter": 57.0,
+       "meanChange": 2.1
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 35,
+       "severePct": 20.0,
+       "fellPct": 11.4,
+       "meanAfter": 69.8,
+       "meanChange": 3.0
+      },
+      "soon": {
+       "n": 165,
+       "severePct": 12.7,
+       "fellPct": 22.4,
+       "meanAfter": 64.4,
+       "meanChange": 3.7
+      },
+      "ok": {
+       "n": 5850,
+       "severePct": 17.2,
+       "fellPct": 30.8,
+       "meanAfter": 58.1,
+       "meanChange": -0.0
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 410,
+       "severePct": 34.6,
+       "fellPct": 48.5,
+       "meanAfter": 48.3,
+       "meanChange": -3.3
+      },
+      "soon": {
+       "n": 1406,
+       "severePct": 37.3,
+       "fellPct": 51.3,
+       "meanAfter": 46.4,
+       "meanChange": -5.5
+      },
+      "ok": {
+       "n": 4244,
+       "severePct": 28.0,
+       "fellPct": 36.0,
+       "meanAfter": 51.4,
+       "meanChange": -0.7
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 446,
+     "changeGap": 0.1,
+     "afterGap": -3.0,
+     "worsePct": 50.0
+    },
+    "acrossSeasons": {
+     "mandals": 363,
+     "changeGap": -3.6,
+     "afterGap": -11.6,
+     "worsePct": 74.9
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 41,
+      "changeGap": 0.5,
+      "afterGap": -3.2,
+      "worsePct": 51.2
+     },
+     "2025": {
+      "mandals": 77,
+      "changeGap": 0.4,
+      "afterGap": -2.7,
+      "worsePct": 48.1
+     },
+     "2026": {
+      "mandals": 328,
+      "changeGap": 0.0,
+      "afterGap": -3.1,
+      "worsePct": 50.3
+     }
+    }
+   },
+   "verdict": "weak"
+  },
+  "cotton-2": {
+   "across": {
+    "stressed": {
+     "n": 185,
+     "severePct": 21.1,
+     "fellPct": 44.3,
+     "meanAfter": 53.1,
+     "meanChange": -2.6
+    },
+    "soon": {
+     "n": 169,
+     "severePct": 44.4,
+     "fellPct": 52.1,
+     "meanAfter": 46.2,
+     "meanChange": -4.4
+    },
+    "ok": {
+     "n": 17806,
+     "severePct": 22.2,
+     "fellPct": 31.8,
+     "meanAfter": 55.3,
+     "meanChange": 0.2
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 14,
+       "severePct": 7.1,
+       "fellPct": 0.0,
+       "meanAfter": 66.8,
+       "meanChange": 10.4
+      },
+      "soon": {
+       "n": 6,
+       "severePct": 0.0,
+       "fellPct": 0.0,
+       "meanAfter": 58.8,
+       "meanChange": 17.2
+      },
+      "ok": {
+       "n": 6030,
+       "severePct": 19.6,
+       "fellPct": 25.5,
+       "meanAfter": 57.2,
+       "meanChange": 2.2
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 7,
+       "severePct": 0.0,
+       "fellPct": 0.0,
+       "meanAfter": 81.0,
+       "meanChange": 7.5
+      },
+      "soon": {
+       "n": 12,
+       "severePct": 16.7,
+       "fellPct": 0.0,
+       "meanAfter": 71.7,
+       "meanChange": 2.2
+      },
+      "ok": {
+       "n": 6031,
+       "severePct": 17.1,
+       "fellPct": 30.5,
+       "meanAfter": 58.3,
+       "meanChange": 0.1
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 164,
+       "severePct": 23.2,
+       "fellPct": 50.0,
+       "meanAfter": 50.8,
+       "meanChange": -4.1
+      },
+      "soon": {
+       "n": 151,
+       "severePct": 48.3,
+       "fellPct": 58.3,
+       "meanAfter": 43.7,
+       "meanChange": -5.7
+      },
+      "ok": {
+       "n": 5745,
+       "severePct": 30.3,
+       "fellPct": 39.6,
+       "meanAfter": 50.2,
+       "meanChange": -1.9
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 72,
+     "changeGap": -3.1,
+     "afterGap": -4.2,
+     "worsePct": 62.5
+    },
+    "acrossSeasons": {
+     "mandals": 69,
+     "changeGap": -6.3,
+     "afterGap": -11.2,
+     "worsePct": 87.0
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 6,
+      "changeGap": 2.6,
+      "afterGap": -5.1,
+      "worsePct": 50.0
+     },
+     "2025": {
+      "mandals": 6,
+      "changeGap": -1.9,
+      "afterGap": -3.6,
+      "worsePct": 50.0
+     },
+     "2026": {
+      "mandals": 60,
+      "changeGap": -3.8,
+      "afterGap": -4.2,
+      "worsePct": 65.0
+     }
+    }
+   },
+   "verdict": "untested"
+  },
+  "chilli-0": {
+   "across": {
+    "stressed": {
+     "n": 10849,
+     "severePct": 20.3,
+     "fellPct": 34.1,
+     "meanAfter": 56.2,
+     "meanChange": -0.8
+    },
+    "soon": {
+     "n": 2986,
+     "severePct": 25.9,
+     "fellPct": 36.3,
+     "meanAfter": 53.7,
+     "meanChange": -1.2
+    },
+    "ok": {
+     "n": 4325,
+     "severePct": 25.3,
+     "fellPct": 24.2,
+     "meanAfter": 53.6,
+     "meanChange": 3.1
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 2283,
+       "severePct": 8.5,
+       "fellPct": 28.9,
+       "meanAfter": 62.3,
+       "meanChange": 0.2
+      },
+      "soon": {
+       "n": 929,
+       "severePct": 24.9,
+       "fellPct": 32.2,
+       "meanAfter": 56.2,
+       "meanChange": -0.4
+      },
+      "ok": {
+       "n": 2838,
+       "severePct": 26.6,
+       "fellPct": 20.4,
+       "meanAfter": 53.3,
+       "meanChange": 4.6
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 2749,
+       "severePct": 9.6,
+       "fellPct": 25.4,
+       "meanAfter": 63.7,
+       "meanChange": 1.0
+      },
+      "soon": {
+       "n": 1881,
+       "severePct": 24.8,
+       "fellPct": 37.6,
+       "meanAfter": 53.3,
+       "meanChange": -1.4
+      },
+      "ok": {
+       "n": 1420,
+       "severePct": 21.4,
+       "fellPct": 30.8,
+       "meanAfter": 54.5,
+       "meanChange": 0.4
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 5817,
+       "severePct": 29.9,
+       "fellPct": 40.2,
+       "meanAfter": 50.3,
+       "meanChange": -2.0
+      },
+      "soon": {
+       "n": 176,
+       "severePct": 42.6,
+       "fellPct": 44.3,
+       "meanAfter": 45.6,
+       "meanChange": -3.2
+      },
+      "ok": {
+       "n": 67,
+       "severePct": 53.7,
+       "fellPct": 44.8,
+       "meanAfter": 42.4,
+       "meanChange": -1.7
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 885,
+     "changeGap": -0.8,
+     "afterGap": -0.2,
+     "worsePct": 54.0
+    },
+    "acrossSeasons": {
+     "mandals": 531,
+     "changeGap": -2.6,
+     "afterGap": -2.9,
+     "worsePct": 66.1
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 470,
+      "changeGap": -1.8,
+      "afterGap": -1.8,
+      "worsePct": 59.8
+     },
+     "2025": {
+      "mandals": 368,
+      "changeGap": -0.0,
+      "afterGap": 1.0,
+      "worsePct": 49.7
+     },
+     "2026": {
+      "mandals": 47,
+      "changeGap": 3.7,
+      "afterGap": 6.4,
+      "worsePct": 29.8
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "chilli-1": {
+   "across": {
+    "stressed": {
+     "n": 8391,
+     "severePct": 21.8,
+     "fellPct": 36.2,
+     "meanAfter": 55.2,
+     "meanChange": -1.2
+    },
+    "soon": {
+     "n": 3119,
+     "severePct": 20.6,
+     "fellPct": 37.1,
+     "meanAfter": 57.0,
+     "meanChange": -1.8
+    },
+    "ok": {
+     "n": 6650,
+     "severePct": 24.0,
+     "fellPct": 24.5,
+     "meanAfter": 54.2,
+     "meanChange": 2.6
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 1750,
+       "severePct": 7.1,
+       "fellPct": 29.4,
+       "meanAfter": 62.8,
+       "meanChange": 0.1
+      },
+      "soon": {
+       "n": 731,
+       "severePct": 15.9,
+       "fellPct": 37.6,
+       "meanAfter": 61.3,
+       "meanChange": -2.0
+      },
+      "ok": {
+       "n": 3569,
+       "severePct": 26.3,
+       "fellPct": 21.0,
+       "meanAfter": 53.6,
+       "meanChange": 4.1
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 1437,
+       "severePct": 13.3,
+       "fellPct": 24.3,
+       "meanAfter": 61.9,
+       "meanChange": 1.5
+      },
+      "soon": {
+       "n": 1824,
+       "severePct": 15.2,
+       "fellPct": 37.5,
+       "meanAfter": 59.7,
+       "meanChange": -2.0
+      },
+      "ok": {
+       "n": 2789,
+       "severePct": 20.3,
+       "fellPct": 29.0,
+       "meanAfter": 55.5,
+       "meanChange": 0.8
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 5204,
+       "severePct": 29.0,
+       "fellPct": 41.8,
+       "meanAfter": 50.9,
+       "meanChange": -2.4
+      },
+      "soon": {
+       "n": 564,
+       "severePct": 44.1,
+       "fellPct": 35.1,
+       "meanAfter": 42.7,
+       "meanChange": -1.0
+      },
+      "ok": {
+       "n": 292,
+       "severePct": 31.8,
+       "fellPct": 24.7,
+       "meanAfter": 49.6,
+       "meanChange": 2.5
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 1000,
+     "changeGap": -2.3,
+     "afterGap": -0.0,
+     "worsePct": 58.9
+    },
+    "acrossSeasons": {
+     "mandals": 572,
+     "changeGap": -3.2,
+     "afterGap": -2.9,
+     "worsePct": 74.7
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 357,
+      "changeGap": -2.6,
+      "afterGap": -1.9,
+      "worsePct": 61.3
+     },
+     "2025": {
+      "mandals": 491,
+      "changeGap": -2.5,
+      "afterGap": 0.5,
+      "worsePct": 60.7
+     },
+     "2026": {
+      "mandals": 152,
+      "changeGap": -0.7,
+      "afterGap": 2.9,
+      "worsePct": 47.4
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "chilli-2": {
+   "across": {
+    "stressed": {
+     "n": 7690,
+     "severePct": 22.1,
+     "fellPct": 36.9,
+     "meanAfter": 54.9,
+     "meanChange": -1.4
+    },
+    "soon": {
+     "n": 2860,
+     "severePct": 19.8,
+     "fellPct": 36.6,
+     "meanAfter": 57.6,
+     "meanChange": -1.6
+    },
+    "ok": {
+     "n": 7610,
+     "severePct": 23.7,
+     "fellPct": 25.5,
+     "meanAfter": 54.6,
+     "meanChange": 2.2
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 1577,
+       "severePct": 7.4,
+       "fellPct": 29.0,
+       "meanAfter": 62.5,
+       "meanChange": 0.2
+      },
+      "soon": {
+       "n": 573,
+       "severePct": 11.7,
+       "fellPct": 38.9,
+       "meanAfter": 62.5,
+       "meanChange": -2.4
+      },
+      "ok": {
+       "n": 3900,
+       "severePct": 25.6,
+       "fellPct": 22.0,
+       "meanAfter": 54.3,
+       "meanChange": 3.7
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 1143,
+       "severePct": 13.5,
+       "fellPct": 24.0,
+       "meanAfter": 61.5,
+       "meanChange": 1.6
+      },
+      "soon": {
+       "n": 1636,
+       "severePct": 13.9,
+       "fellPct": 37.2,
+       "meanAfter": 61.2,
+       "meanChange": -2.0
+      },
+      "ok": {
+       "n": 3271,
+       "severePct": 20.0,
+       "fellPct": 29.3,
+       "meanAfter": 55.8,
+       "meanChange": 0.7
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 4970,
+       "severePct": 28.8,
+       "fellPct": 42.4,
+       "meanAfter": 51.0,
+       "meanChange": -2.6
+      },
+      "soon": {
+       "n": 651,
+       "severePct": 41.8,
+       "fellPct": 33.0,
+       "meanAfter": 44.1,
+       "meanChange": 0.1
+      },
+      "ok": {
+       "n": 439,
+       "severePct": 34.4,
+       "fellPct": 28.7,
+       "meanAfter": 48.3,
+       "meanChange": 1.4
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 975,
+     "changeGap": -2.2,
+     "afterGap": 0.1,
+     "worsePct": 58.5
+    },
+    "acrossSeasons": {
+     "mandals": 576,
+     "changeGap": -3.0,
+     "afterGap": -2.9,
+     "worsePct": 74.5
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 312,
+      "changeGap": -2.6,
+      "afterGap": -2.6,
+      "worsePct": 61.5
+     },
+     "2025": {
+      "mandals": 478,
+      "changeGap": -2.7,
+      "afterGap": 0.9,
+      "worsePct": 61.7
+     },
+     "2026": {
+      "mandals": 185,
+      "changeGap": -0.0,
+      "afterGap": 2.6,
+      "worsePct": 44.9
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "redgram-0": {
+   "across": {
+    "stressed": {
+     "n": 7462,
+     "severePct": 22.7,
+     "fellPct": 37.3,
+     "meanAfter": 54.3,
+     "meanChange": -1.6
+    },
+    "soon": {
+     "n": 2769,
+     "severePct": 19.2,
+     "fellPct": 36.2,
+     "meanAfter": 57.7,
+     "meanChange": -1.4
+    },
+    "ok": {
+     "n": 7929,
+     "severePct": 23.2,
+     "fellPct": 25.7,
+     "meanAfter": 55.2,
+     "meanChange": 2.2
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 1418,
+       "severePct": 6.8,
+       "fellPct": 29.7,
+       "meanAfter": 62.6,
+       "meanChange": -0.2
+      },
+      "soon": {
+       "n": 527,
+       "severePct": 17.6,
+       "fellPct": 36.8,
+       "meanAfter": 59.4,
+       "meanChange": -1.5
+      },
+      "ok": {
+       "n": 4105,
+       "severePct": 24.1,
+       "fellPct": 22.5,
+       "meanAfter": 55.0,
+       "meanChange": 3.5
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 874,
+       "severePct": 12.2,
+       "fellPct": 26.1,
+       "meanAfter": 61.1,
+       "meanChange": 0.7
+      },
+      "soon": {
+       "n": 1783,
+       "severePct": 14.6,
+       "fellPct": 35.9,
+       "meanAfter": 60.5,
+       "meanChange": -1.5
+      },
+      "ok": {
+       "n": 3393,
+       "severePct": 19.7,
+       "fellPct": 28.7,
+       "meanAfter": 56.5,
+       "meanChange": 0.8
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 5170,
+       "severePct": 28.9,
+       "fellPct": 41.4,
+       "meanAfter": 50.9,
+       "meanChange": -2.4
+      },
+      "soon": {
+       "n": 459,
+       "severePct": 39.2,
+       "fellPct": 36.4,
+       "meanAfter": 44.7,
+       "meanChange": -0.7
+      },
+      "ok": {
+       "n": 431,
+       "severePct": 42.0,
+       "fellPct": 32.9,
+       "meanAfter": 46.0,
+       "meanChange": 0.7
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 1011,
+     "changeGap": -1.6,
+     "afterGap": 0.2,
+     "worsePct": 57.5
+    },
+    "acrossSeasons": {
+     "mandals": 601,
+     "changeGap": -2.6,
+     "afterGap": -3.3,
+     "worsePct": 72.9
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 357,
+      "changeGap": -1.2,
+      "afterGap": -1.9,
+      "worsePct": 58.3
+     },
+     "2025": {
+      "mandals": 472,
+      "changeGap": -2.9,
+      "afterGap": 0.3,
+      "worsePct": 62.1
+     },
+     "2026": {
+      "mandals": 182,
+      "changeGap": 1.1,
+      "afterGap": 4.2,
+      "worsePct": 44.0
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "redgram-1": {
+   "across": {
+    "stressed": {
+     "n": 2311,
+     "severePct": 30.1,
+     "fellPct": 37.1,
+     "meanAfter": 51.9,
+     "meanChange": -1.1
+    },
+    "soon": {
+     "n": 3861,
+     "severePct": 21.4,
+     "fellPct": 42.1,
+     "meanAfter": 54.9,
+     "meanChange": -3.0
+    },
+    "ok": {
+     "n": 11988,
+     "severePct": 21.2,
+     "fellPct": 27.9,
+     "meanAfter": 55.9,
+     "meanChange": 1.3
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 337,
+       "severePct": 10.1,
+       "fellPct": 19.3,
+       "meanAfter": 62.2,
+       "meanChange": 2.9
+      },
+      "soon": {
+       "n": 554,
+       "severePct": 8.5,
+       "fellPct": 34.1,
+       "meanAfter": 61.2,
+       "meanChange": -0.5
+      },
+      "ok": {
+       "n": 5159,
+       "severePct": 21.3,
+       "fellPct": 24.9,
+       "meanAfter": 56.4,
+       "meanChange": 2.4
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 311,
+       "severePct": 17.7,
+       "fellPct": 22.8,
+       "meanAfter": 64.4,
+       "meanChange": 2.1
+      },
+      "soon": {
+       "n": 786,
+       "severePct": 7.6,
+       "fellPct": 29.5,
+       "meanAfter": 63.9,
+       "meanChange": 0.3
+      },
+      "ok": {
+       "n": 4953,
+       "severePct": 18.6,
+       "fellPct": 31.1,
+       "meanAfter": 57.0,
+       "meanChange": -0.0
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 1663,
+       "severePct": 36.5,
+       "fellPct": 43.4,
+       "meanAfter": 47.5,
+       "meanChange": -2.5
+      },
+      "soon": {
+       "n": 2521,
+       "severePct": 28.6,
+       "fellPct": 47.8,
+       "meanAfter": 50.8,
+       "meanChange": -4.5
+      },
+      "ok": {
+       "n": 1876,
+       "severePct": 28.0,
+       "fellPct": 27.8,
+       "meanAfter": 51.4,
+       "meanChange": 1.8
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 874,
+     "changeGap": -1.1,
+     "afterGap": -0.1,
+     "worsePct": 54.1
+    },
+    "acrossSeasons": {
+     "mandals": 569,
+     "changeGap": -3.1,
+     "afterGap": -4.3,
+     "worsePct": 71.9
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 203,
+      "changeGap": -0.3,
+      "afterGap": -1.2,
+      "worsePct": 48.8
+     },
+     "2025": {
+      "mandals": 283,
+      "changeGap": -1.1,
+      "afterGap": 0.0,
+      "worsePct": 53.4
+     },
+     "2026": {
+      "mandals": 388,
+      "changeGap": -1.6,
+      "afterGap": 0.5,
+      "worsePct": 57.5
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "redgram-2": {
+   "across": {
+    "stressed": {
+     "n": 787,
+     "severePct": 27.6,
+     "fellPct": 35.8,
+     "meanAfter": 53.6,
+     "meanChange": -0.1
+    },
+    "soon": {
+     "n": 221,
+     "severePct": 35.7,
+     "fellPct": 43.9,
+     "meanAfter": 51.2,
+     "meanChange": -2.7
+    },
+    "ok": {
+     "n": 17152,
+     "severePct": 22.0,
+     "fellPct": 31.8,
+     "meanAfter": 55.3,
+     "meanChange": 0.1
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 131,
+       "severePct": 11.5,
+       "fellPct": 13.0,
+       "meanAfter": 63.5,
+       "meanChange": 5.0
+      },
+      "soon": {
+       "n": 15,
+       "severePct": 20.0,
+       "fellPct": 13.3,
+       "meanAfter": 59.1,
+       "meanChange": 4.9
+      },
+      "ok": {
+       "n": 5904,
+       "severePct": 19.7,
+       "fellPct": 25.7,
+       "meanAfter": 57.0,
+       "meanChange": 2.1
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 85,
+       "severePct": 20.0,
+       "fellPct": 23.5,
+       "meanAfter": 65.5,
+       "meanChange": 1.6
+      },
+      "soon": {
+       "n": 38,
+       "severePct": 31.6,
+       "fellPct": 21.1,
+       "meanAfter": 63.1,
+       "meanChange": 5.8
+      },
+      "ok": {
+       "n": 5927,
+       "severePct": 17.0,
+       "fellPct": 30.6,
+       "meanAfter": 58.2,
+       "meanChange": 0.1
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 571,
+       "severePct": 32.4,
+       "fellPct": 42.9,
+       "meanAfter": 49.6,
+       "meanChange": -1.5
+      },
+      "soon": {
+       "n": 168,
+       "severePct": 38.1,
+       "fellPct": 51.8,
+       "meanAfter": 47.8,
+       "meanChange": -5.4
+      },
+      "ok": {
+       "n": 5321,
+       "severePct": 30.1,
+       "fellPct": 39.7,
+       "meanAfter": 50.2,
+       "meanChange": -2.0
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 142,
+     "changeGap": -0.2,
+     "afterGap": -1.9,
+     "worsePct": 47.9
+    },
+    "acrossSeasons": {
+     "mandals": 129,
+     "changeGap": -3.5,
+     "afterGap": -7.5,
+     "worsePct": 72.1
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 25,
+      "changeGap": 0.9,
+      "afterGap": -4.4,
+      "worsePct": 36.0
+     },
+     "2025": {
+      "mandals": 13,
+      "changeGap": 2.0,
+      "afterGap": -1.9,
+      "worsePct": 38.5
+     },
+     "2026": {
+      "mandals": 104,
+      "changeGap": -0.7,
+      "afterGap": -1.3,
+      "worsePct": 51.9
+     }
+    }
+   },
+   "verdict": "weak"
+  },
+  "bengalgram-0": {
+   "across": {
+    "stressed": {
+     "n": 6627,
+     "severePct": 23.4,
+     "fellPct": 38.2,
+     "meanAfter": 53.8,
+     "meanChange": -1.9
+    },
+    "soon": {
+     "n": 2844,
+     "severePct": 19.1,
+     "fellPct": 35.8,
+     "meanAfter": 57.6,
+     "meanChange": -1.1
+    },
+    "ok": {
+     "n": 8689,
+     "severePct": 22.7,
+     "fellPct": 26.2,
+     "meanAfter": 55.4,
+     "meanChange": 2.0
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 1180,
+       "severePct": 6.2,
+       "fellPct": 28.8,
+       "meanAfter": 62.7,
+       "meanChange": -0.1
+      },
+      "soon": {
+       "n": 524,
+       "severePct": 16.2,
+       "fellPct": 38.0,
+       "meanAfter": 59.7,
+       "meanChange": -1.4
+      },
+      "ok": {
+       "n": 4346,
+       "severePct": 23.5,
+       "fellPct": 23.0,
+       "meanAfter": 55.4,
+       "meanChange": 3.3
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 562,
+       "severePct": 13.5,
+       "fellPct": 24.6,
+       "meanAfter": 60.2,
+       "meanChange": 1.2
+      },
+      "soon": {
+       "n": 1737,
+       "severePct": 13.8,
+       "fellPct": 35.2,
+       "meanAfter": 61.0,
+       "meanChange": -1.3
+      },
+      "ok": {
+       "n": 3751,
+       "severePct": 19.2,
+       "fellPct": 29.1,
+       "meanAfter": 56.8,
+       "meanChange": 0.6
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 4885,
+       "severePct": 28.7,
+       "fellPct": 42.0,
+       "meanAfter": 51.0,
+       "meanChange": -2.6
+      },
+      "soon": {
+       "n": 583,
+       "severePct": 37.6,
+       "fellPct": 35.5,
+       "meanAfter": 45.5,
+       "meanChange": -0.2
+      },
+      "ok": {
+       "n": 592,
+       "severePct": 39.4,
+       "fellPct": 31.4,
+       "meanAfter": 46.8,
+       "meanChange": 1.1
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 1060,
+     "changeGap": -1.4,
+     "afterGap": 0.4,
+     "worsePct": 55.9
+    },
+    "acrossSeasons": {
+     "mandals": 603,
+     "changeGap": -2.4,
+     "afterGap": -3.2,
+     "worsePct": 72.5
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 340,
+      "changeGap": -1.2,
+      "afterGap": -1.7,
+      "worsePct": 57.4
+     },
+     "2025": {
+      "mandals": 494,
+      "changeGap": -2.4,
+      "afterGap": 0.4,
+      "worsePct": 60.3
+     },
+     "2026": {
+      "mandals": 226,
+      "changeGap": 0.6,
+      "afterGap": 3.5,
+      "worsePct": 44.2
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "bengalgram-1": {
+   "across": {
+    "stressed": {
+     "n": 2636,
+     "severePct": 33.2,
+     "fellPct": 41.5,
+     "meanAfter": 49.4,
+     "meanChange": -2.6
+    },
+    "soon": {
+     "n": 4322,
+     "severePct": 18.1,
+     "fellPct": 38.0,
+     "meanAfter": 57.1,
+     "meanChange": -1.8
+    },
+    "ok": {
+     "n": 11202,
+     "severePct": 21.5,
+     "fellPct": 27.6,
+     "meanAfter": 55.8,
+     "meanChange": 1.5
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 293,
+       "severePct": 7.5,
+       "fellPct": 17.7,
+       "meanAfter": 61.8,
+       "meanChange": 3.0
+      },
+      "soon": {
+       "n": 812,
+       "severePct": 7.4,
+       "fellPct": 33.1,
+       "meanAfter": 62.4,
+       "meanChange": -0.7
+      },
+      "ok": {
+       "n": 4945,
+       "severePct": 22.2,
+       "fellPct": 24.6,
+       "meanAfter": 56.1,
+       "meanChange": 2.6
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 157,
+       "severePct": 26.1,
+       "fellPct": 19.1,
+       "meanAfter": 60.5,
+       "meanChange": 3.0
+      },
+      "soon": {
+       "n": 1064,
+       "severePct": 8.1,
+       "fellPct": 30.3,
+       "meanAfter": 64.4,
+       "meanChange": 0.0
+      },
+      "ok": {
+       "n": 4829,
+       "severePct": 18.8,
+       "fellPct": 30.9,
+       "meanAfter": 56.9,
+       "meanChange": 0.0
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 2186,
+       "severePct": 37.2,
+       "fellPct": 46.3,
+       "meanAfter": 47.0,
+       "meanChange": -3.7
+      },
+      "soon": {
+       "n": 2446,
+       "severePct": 26.0,
+       "fellPct": 42.9,
+       "meanAfter": 52.2,
+       "meanChange": -3.0
+      },
+      "ok": {
+       "n": 1428,
+       "severePct": 28.4,
+       "fellPct": 26.9,
+       "meanAfter": 51.0,
+       "meanChange": 2.3
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 963,
+     "changeGap": -1.2,
+     "afterGap": 0.4,
+     "worsePct": 57.1
+    },
+    "acrossSeasons": {
+     "mandals": 593,
+     "changeGap": -2.9,
+     "afterGap": -3.7,
+     "worsePct": 73.4
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 260,
+      "changeGap": -0.1,
+      "afterGap": -0.9,
+      "worsePct": 50.4
+     },
+     "2025": {
+      "mandals": 345,
+      "changeGap": -1.5,
+      "afterGap": 0.6,
+      "worsePct": 59.7
+     },
+     "2026": {
+      "mandals": 358,
+      "changeGap": -1.8,
+      "afterGap": 1.1,
+      "worsePct": 59.5
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "bengalgram-2": {
+   "across": {
+    "stressed": {
+     "n": 803,
+     "severePct": 30.3,
+     "fellPct": 40.0,
+     "meanAfter": 51.5,
+     "meanChange": -1.3
+    },
+    "soon": {
+     "n": 729,
+     "severePct": 43.1,
+     "fellPct": 47.1,
+     "meanAfter": 43.8,
+     "meanChange": -4.6
+    },
+    "ok": {
+     "n": 16628,
+     "severePct": 21.1,
+     "fellPct": 31.1,
+     "meanAfter": 55.9,
+     "meanChange": 0.4
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 93,
+       "severePct": 8.6,
+       "fellPct": 8.6,
+       "meanAfter": 63.8,
+       "meanChange": 5.9
+      },
+      "soon": {
+       "n": 22,
+       "severePct": 4.5,
+       "fellPct": 13.6,
+       "meanAfter": 58.2,
+       "meanChange": 3.8
+      },
+      "ok": {
+       "n": 5935,
+       "severePct": 19.7,
+       "fellPct": 25.7,
+       "meanAfter": 57.1,
+       "meanChange": 2.1
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 19,
+       "severePct": 5.3,
+       "fellPct": 5.3,
+       "meanAfter": 77.8,
+       "meanChange": 3.5
+      },
+      "soon": {
+       "n": 35,
+       "severePct": 25.7,
+       "fellPct": 11.4,
+       "meanAfter": 58.0,
+       "meanChange": 5.1
+      },
+      "ok": {
+       "n": 5996,
+       "severePct": 17.1,
+       "fellPct": 30.6,
+       "meanAfter": 58.3,
+       "meanChange": 0.1
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 691,
+       "severePct": 33.9,
+       "fellPct": 45.2,
+       "meanAfter": 49.2,
+       "meanChange": -2.4
+      },
+      "soon": {
+       "n": 672,
+       "severePct": 45.2,
+       "fellPct": 50.0,
+       "meanAfter": 42.6,
+       "meanChange": -5.4
+      },
+      "ok": {
+       "n": 4697,
+       "severePct": 28.0,
+       "fellPct": 38.3,
+       "meanAfter": 51.2,
+       "meanChange": -1.5
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 302,
+     "changeGap": 1.1,
+     "afterGap": -4.3,
+     "worsePct": 44.7
+    },
+    "acrossSeasons": {
+     "mandals": 289,
+     "changeGap": -3.5,
+     "afterGap": -13.2,
+     "worsePct": 70.6
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 30,
+      "changeGap": 3.1,
+      "afterGap": -0.7,
+      "worsePct": 33.3
+     },
+     "2025": {
+      "mandals": 13,
+      "changeGap": 1.1,
+      "afterGap": 1.7,
+      "worsePct": 53.8
+     },
+     "2026": {
+      "mandals": 259,
+      "changeGap": 0.8,
+      "afterGap": -5.0,
+      "worsePct": 45.6
+     }
+    }
+   },
+   "verdict": "weak"
+  },
+  "jowar-0": {
+   "across": {
+    "stressed": {
+     "n": 5498,
+     "severePct": 24.8,
+     "fellPct": 39.9,
+     "meanAfter": 53.1,
+     "meanChange": -2.4
+    },
+    "soon": {
+     "n": 2194,
+     "severePct": 17.1,
+     "fellPct": 34.5,
+     "meanAfter": 58.5,
+     "meanChange": -0.5
+    },
+    "ok": {
+     "n": 10468,
+     "severePct": 22.2,
+     "fellPct": 27.5,
+     "meanAfter": 55.6,
+     "meanChange": 1.5
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 870,
+       "severePct": 6.9,
+       "fellPct": 27.7,
+       "meanAfter": 62.1,
+       "meanChange": -0.1
+      },
+      "soon": {
+       "n": 322,
+       "severePct": 8.1,
+       "fellPct": 34.8,
+       "meanAfter": 62.1,
+       "meanChange": -0.3
+      },
+      "ok": {
+       "n": 4858,
+       "severePct": 22.5,
+       "fellPct": 24.4,
+       "meanAfter": 56.0,
+       "meanChange": 2.8
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 256,
+       "severePct": 12.1,
+       "fellPct": 22.3,
+       "meanAfter": 61.4,
+       "meanChange": 1.7
+      },
+      "soon": {
+       "n": 1181,
+       "severePct": 11.6,
+       "fellPct": 33.3,
+       "meanAfter": 62.8,
+       "meanChange": -0.7
+      },
+      "ok": {
+       "n": 4613,
+       "severePct": 18.8,
+       "fellPct": 30.2,
+       "meanAfter": 57.0,
+       "meanChange": 0.2
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 4372,
+       "severePct": 29.1,
+       "fellPct": 43.3,
+       "meanAfter": 50.8,
+       "meanChange": -3.1
+      },
+      "soon": {
+       "n": 691,
+       "severePct": 30.8,
+       "fellPct": 36.5,
+       "meanAfter": 49.5,
+       "meanChange": -0.3
+      },
+      "ok": {
+       "n": 997,
+       "severePct": 36.8,
+       "fellPct": 30.1,
+       "meanAfter": 47.0,
+       "meanChange": 1.3
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 948,
+     "changeGap": -1.2,
+     "afterGap": 0.4,
+     "worsePct": 56.5
+    },
+    "acrossSeasons": {
+     "mandals": 601,
+     "changeGap": -2.2,
+     "afterGap": -3.5,
+     "worsePct": 69.1
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 282,
+      "changeGap": -0.7,
+      "afterGap": -1.0,
+      "worsePct": 52.8
+     },
+     "2025": {
+      "mandals": 379,
+      "changeGap": -2.4,
+      "afterGap": -0.1,
+      "worsePct": 63.1
+     },
+     "2026": {
+      "mandals": 287,
+      "changeGap": -0.1,
+      "afterGap": 2.4,
+      "worsePct": 51.6
+     }
+    }
+   },
+   "verdict": "not borne out"
+  },
+  "jowar-1": {
+   "across": {
+    "stressed": {
+     "n": 962,
+     "severePct": 29.9,
+     "fellPct": 37.8,
+     "meanAfter": 52.8,
+     "meanChange": -0.7
+    },
+    "soon": {
+     "n": 2187,
+     "severePct": 29.5,
+     "fellPct": 46.4,
+     "meanAfter": 50.5,
+     "meanChange": -4.1
+    },
+    "ok": {
+     "n": 15011,
+     "severePct": 20.9,
+     "fellPct": 29.6,
+     "meanAfter": 56.0,
+     "meanChange": 0.8
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 137,
+       "severePct": 10.2,
+       "fellPct": 12.4,
+       "meanAfter": 64.1,
+       "meanChange": 5.2
+      },
+      "soon": {
+       "n": 131,
+       "severePct": 8.4,
+       "fellPct": 23.7,
+       "meanAfter": 60.9,
+       "meanChange": 1.4
+      },
+      "ok": {
+       "n": 5782,
+       "severePct": 20.0,
+       "fellPct": 25.8,
+       "meanAfter": 56.9,
+       "meanChange": 2.1
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 106,
+       "severePct": 27.4,
+       "fellPct": 21.7,
+       "meanAfter": 63.0,
+       "meanChange": 3.6
+      },
+      "soon": {
+       "n": 250,
+       "severePct": 5.2,
+       "fellPct": 22.0,
+       "meanAfter": 66.4,
+       "meanChange": 2.7
+      },
+      "ok": {
+       "n": 5694,
+       "severePct": 17.4,
+       "fellPct": 31.0,
+       "meanAfter": 57.9,
+       "meanChange": -0.1
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 719,
+       "severePct": 34.1,
+       "fellPct": 45.1,
+       "meanAfter": 49.2,
+       "meanChange": -2.5
+      },
+      "soon": {
+       "n": 1806,
+       "severePct": 34.4,
+       "fellPct": 51.4,
+       "meanAfter": 47.6,
+       "meanChange": -5.5
+      },
+      "ok": {
+       "n": 3535,
+       "severePct": 27.9,
+       "fellPct": 33.8,
+       "meanAfter": 51.5,
+       "meanChange": -0.2
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 552,
+     "changeGap": 0.1,
+     "afterGap": -2.5,
+     "worsePct": 50.7
+    },
+    "acrossSeasons": {
+     "mandals": 429,
+     "changeGap": -3.6,
+     "afterGap": -10.0,
+     "worsePct": 77.6
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 65,
+      "changeGap": 0.5,
+      "afterGap": -2.5,
+      "worsePct": 44.6
+     },
+     "2025": {
+      "mandals": 115,
+      "changeGap": 1.7,
+      "afterGap": -1.6,
+      "worsePct": 47.8
+     },
+     "2026": {
+      "mandals": 372,
+      "changeGap": -0.5,
+      "afterGap": -2.8,
+      "worsePct": 52.7
+     }
+    }
+   },
+   "verdict": "weak"
+  },
+  "jowar-2": {
+   "across": {
+    "stressed": {
+     "n": 446,
+     "severePct": 26.2,
+     "fellPct": 39.7,
+     "meanAfter": 53.2,
+     "meanChange": -0.8
+    },
+    "soon": {
+     "n": 290,
+     "severePct": 36.9,
+     "fellPct": 44.1,
+     "meanAfter": 50.4,
+     "meanChange": -3.0
+    },
+    "ok": {
+     "n": 17424,
+     "severePct": 22.1,
+     "fellPct": 31.7,
+     "meanAfter": 55.3,
+     "meanChange": 0.2
+    },
+    "seasons": {
+     "2024": {
+      "stressed": {
+       "n": 49,
+       "severePct": 8.2,
+       "fellPct": 2.0,
+       "meanAfter": 66.0,
+       "meanChange": 9.5
+      },
+      "soon": {
+       "n": 24,
+       "severePct": 8.3,
+       "fellPct": 16.7,
+       "meanAfter": 64.8,
+       "meanChange": 2.8
+      },
+      "ok": {
+       "n": 5977,
+       "severePct": 19.7,
+       "fellPct": 25.7,
+       "meanAfter": 57.1,
+       "meanChange": 2.1
+      }
+     },
+     "2025": {
+      "stressed": {
+       "n": 33,
+       "severePct": 15.2,
+       "fellPct": 18.2,
+       "meanAfter": 73.8,
+       "meanChange": 1.0
+      },
+      "soon": {
+       "n": 38,
+       "severePct": 28.9,
+       "fellPct": 21.1,
+       "meanAfter": 58.5,
+       "meanChange": 4.9
+      },
+      "ok": {
+       "n": 5979,
+       "severePct": 17.0,
+       "fellPct": 30.6,
+       "meanAfter": 58.2,
+       "meanChange": 0.1
+      }
+     },
+     "2026": {
+      "stressed": {
+       "n": 364,
+       "severePct": 29.7,
+       "fellPct": 46.7,
+       "meanAfter": 49.7,
+       "meanChange": -2.3
+      },
+      "soon": {
+       "n": 228,
+       "severePct": 41.2,
+       "fellPct": 50.9,
+       "meanAfter": 47.5,
+       "meanChange": -4.9
+      },
+      "ok": {
+       "n": 5468,
+       "severePct": 30.2,
+       "fellPct": 39.5,
+       "meanAfter": 50.2,
+       "meanChange": -1.9
+      }
+     }
+    }
+   },
+   "within": {
+    "sameSeason": {
+     "mandals": 127,
+     "changeGap": -0.4,
+     "afterGap": -1.4,
+     "worsePct": 47.2
+    },
+    "acrossSeasons": {
+     "mandals": 112,
+     "changeGap": -3.7,
+     "afterGap": -8.3,
+     "worsePct": 74.1
+    },
+    "seasons": {
+     "2024": {
+      "mandals": 17,
+      "changeGap": 0.9,
+      "afterGap": -3.2,
+      "worsePct": 29.4
+     },
+     "2025": {
+      "mandals": 16,
+      "changeGap": 1.3,
+      "afterGap": -1.1,
+      "worsePct": 56.2
+     },
+     "2026": {
+      "mandals": 94,
+      "changeGap": -0.9,
+      "afterGap": -1.2,
+      "worsePct": 48.9
+     }
+    }
+   },
+   "verdict": "weak"
+  }
+ }
+}
