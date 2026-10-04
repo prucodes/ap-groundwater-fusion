@@ -29,6 +29,7 @@ import {
   titleCase,
   type MandalLevelEstimate,
 } from "../../lib/data";
+import { brief } from "../../lib/pageBriefs";
 
 /** Match the python norm() so map-geometry names join to estimate mkeys. */
 function norm(name: string): string {
@@ -87,14 +88,7 @@ export default function EstimatesPage() {
     <div className="pageWrap">
       <HeaderHero
         title="Modelled Groundwater Levels (β)"
-        subtitle={
-          <>
-            Calculated mandal groundwater depth <strong>in metres below ground</strong>, modelled by fusing each mandal&apos;s APWRIMS sensor
-            history with climate and terrain features for <strong>current-period temporal nowcasts</strong>.{" "}
-            Measured values remain separate; only the three-month forecast is released, each with how such forecasts have fared.{" "}
-            <strong>Modelled nowcasts for lag-eligible mandals — not official APWRIMS data.</strong>
-          </>
-        }
+        brief={brief("/estimates")}
         showChips={false}
         variant="compact"
       />

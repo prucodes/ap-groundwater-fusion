@@ -23,6 +23,7 @@ import {
   wetnessTier,
 } from "../../lib/data";
 import type { NasaRaster } from "../../lib/data";
+import { brief } from "../../lib/pageBriefs";
 
 const SIGNAL_ICON: Record<string, React.ReactNode> = {
   GW: <IconDroplet />,
@@ -82,13 +83,7 @@ export default function NasaSignalsPage() {
     <div className="pageWrap">
       <HeaderHero
         title="NASA GRACE-DA — Raw Signal & Provenance"
-        subtitle={
-          <>
-            <strong>Satellite-model context</strong>: NASA/NDMC GRACE-DA groundwater, root-zone and surface percentiles,
-            with extraction provenance. These assimilated-model indicators are not direct well measurements or
-            groundwater depth. A fetch date does not establish the valid observation period.
-          </>
-        }
+        brief={brief("/nasa", <>Values as fetched on {datasetManifest.periods.graceFetchDate ?? "the last refresh"}; a fetch date is not the period the values describe.</>)}
         showChips={false}
         variant="compact"
       />

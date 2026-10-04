@@ -5676,3 +5676,37 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 .categoryLegend li { display: inline-flex; align-items: center; gap: 6px; }
 .categoryLegend i { width: 11px; height: 11px; border-radius: 2px; flex-shrink: 0; }
 .categoryLegend b { font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums; margin-left: 2px; }
+
+/* ============================================================
+   Page brief: what the screen is, what it says now, what to do with it.
+   Replaces the hero subtitle; the middle line is written from the data.
+   ============================================================ */
+.heroBrief {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px;
+  margin: 12px 0 0; padding: 12px 0 0; border-top: 1px solid rgba(170, 198, 224, 0.18); max-width: 1080px;
+}
+.heroCompact .heroLeft:has(.heroBrief) { max-width: 1080px; }
+.heroBrief div { min-width: 0; }
+.heroBrief dt { font: 600 9.5px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #6fb5d4; margin-bottom: 4px; }
+.heroBrief dd { margin: 0; font-size: 12.5px; line-height: 1.5; color: #b9d0e6; text-wrap: pretty; }
+.heroBrief .heroBriefNow dt { color: #f2c46d; }
+.heroBrief .heroBriefNow dd { font-size: 13.5px; font-weight: 500; color: #ffffff; }
+.heroBrief .heroBriefNow dd b, .heroBrief .heroBriefNow dd strong { color: #ffd38a; font-weight: 650; }
+@media (max-width: 900px) {
+  .heroBrief { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .heroBrief .heroBriefNow { order: -1; }
+}
+
+/* Sidebar groups: a small label over each group; the evidence group folds. */
+.navGroup + .navGroup .navGroupLabel { margin-top: 2px; }
+.navGroupToggle { display: flex; align-items: center; justify-content: space-between; width: 100%; border: 0; background: transparent; cursor: pointer; text-align: left; font: inherit; }
+.navGroupToggle svg { width: 13px; height: 13px; opacity: .7; transition: transform .2s var(--ease); }
+.navGroupToggle svg.navChevronOpen { transform: rotate(90deg); }
+
+/* The brief as a band, for pages whose own hero has no room for it. */
+.pageBriefBand { margin: 14px 0 0; padding: 16px 22px; border-radius: var(--radius-lg); background: linear-gradient(135deg, #061a30 0%, #0b2a4d 60%, #123b66 100%); box-shadow: var(--shadow-card); }
+.pageBriefBand .heroBrief { margin: 0; padding: 0; border: 0; max-width: none; }
+
+/* Grouped sidebar: tighter group labels, and a fade where the list continues below. */
+.sidebarNav .navGroupLabel { padding: 9px 12px 4px; margin-top: 2px; }
+.sidebarNav { mask-image: linear-gradient(180deg, #000 calc(100% - 28px), transparent); padding-bottom: 22px; }

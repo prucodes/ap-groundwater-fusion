@@ -17,9 +17,8 @@ export default function CrystalWaterTablePage() {
           sits above the frame in normal flow rather than floating over it —
           as an overlay it covered the 3D view's own heading on a phone. */}
       <p className="crystalNotice">
-        Prototype — cinematic view of <strong>recorded May depth-to-water</strong>.
-        Missing May readings are interpolated and marked in the view. Not official
-        APWRIMS results; height and motion are presentational, not aquifer geometry.
+        <strong>May depth to water, mandal by mandal, in 3D</strong>: where the water table sits deepest. Prototype: missing
+        readings are interpolated and marked; height is presentational.
       </p>
       <iframe
         // Next rewrites next/image and <Link> for basePath, but not a raw

@@ -11,7 +11,8 @@ const irrigation = (fieldJson as unknown as { irrigation: { summary: { mostlyIrr
 
 test("the rabi page states its starting position and draws the seedbed over rainfed mandals only", async ({ page }) => {
   await page.goto("/rabi/");
-  await expect(page.getByTestId("rabi-summary")).toContainText(`${Math.round(reservoirs.state.storagePct)}% of capacity`);
+  await expect(page.getByTestId("page-brief")).toContainText(`Reservoirs hold ${Math.round(reservoirs.state.storagePct)}%`);
+  await expect(page.getByTestId("rabi-summary")).toContainText(`${Math.round(reservoirs.state.storagePct)}%`);
   await expect(page.getByTestId("rabi-basin")).toHaveCount(reservoirs.byBasin.length);
   const map = page.getByTestId("rabi-map");
   await expect(map).toHaveAttribute("data-ready", "true");

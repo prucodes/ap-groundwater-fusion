@@ -7,6 +7,7 @@ import {
   IconActivity,
   IconArrowDown,
   IconAlert,
+  IconChevronRight,
   IconChevrons,
   IconCloudRain,
   IconSun,
@@ -39,38 +40,47 @@ import { waterSummary } from "../lib/waterSummary";
 import { stateSummary } from "../lib/stateSummary";
 import { PageTransition } from "./PageTransition";
 
-// Primary workflow — the day-to-day screens. `desc` is the one-line explainer.
-const primaryNav = [
-  { href: "/", label: "Overview", Icon: IconLayers, desc: "Executive cockpit: status map, priority mandals, source readiness and selected-area evidence." },
-  { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "What moved since the last weekly refresh: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its date." },
-  { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
-  { href: "/mandals", label: "Mandal Insights", Icon: IconCompass, desc: "Per-mandal deep dive: readings, satellite context, trend and agreement." },
-  { href: "/watchlist", label: "Verify / Watchlist", Icon: IconActivity, desc: "Mandals where evidence needs field review or source verification." },
-  { href: "/alerts", label: "Review Queue", Icon: IconAlert, desc: "Prototype review priorities, separate from missing evidence. Not an official early warning." },
-  { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
-  { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
-  { href: "/agriculture", label: "Agriculture & Water", Icon: IconLeaf, desc: "Crop-water planning lab and observed groundwater evidence. Not a field irrigation advisory." },
-  { href: "/summer", label: "Summer Outlook", Icon: IconArrowDown, desc: "Where the water table may stand by May, mandal by mandal, against each mandal's own deepest May on record." },
-  { href: "/rabi", label: "Rabi Outlook", Icon: IconClock, desc: "What the rabi season starts with: reservoir storage, rainfed soil moisture and the northeast monsoon under El Niño." },
-  { href: "/constituencies", label: "Constituencies", Icon: IconTarget, desc: "Groundwater, the State's latest well readings, the drought manual and rain, by assembly and parliamentary constituency." },
-  { href: "/districts", label: "Districts", Icon: IconGrid, desc: "District roll-ups with an auto + AI situation brief per district." },
-  { href: "/crystal", label: "Water Depth 3D", Icon: IconWaves, desc: "Recorded May depth by mandal and district; optional schematic relief." },
+type NavItem = { href: string; label: string; Icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactNode; desc: string };
+
+// The menu, grouped by the question an official brings to it. `desc` is the one-line explainer.
+// Review Queue, Verify / Watchlist, Executive Snapshot and Reports are no longer listed: the
+// field-teams list on This Week and the weekly digest do their jobs. Their pages still open.
+const navGroups: Array<{ label: string; items: NavItem[] }> = [
+  { label: "This week", items: [
+      { href: "/", label: "Overview", Icon: IconLayers, desc: "Executive cockpit: status map, priority mandals, source readiness and selected-area evidence." },
+      { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "What moved since the last weekly refresh: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its date." },
+  ] },
+  { label: "Water now", items: [
+      { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
+      { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
+      { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
+      { href: "/crystal", label: "Water Depth 3D", Icon: IconWaves, desc: "Recorded May depth by mandal and district; optional schematic relief." },
+  ] },
+  { label: "Season ahead", items: [
+      { href: "/summer", label: "Summer Outlook", Icon: IconArrowDown, desc: "Where the water table may stand by May, mandal by mandal, against each mandal's own deepest May on record." },
+      { href: "/rabi", label: "Rabi Outlook", Icon: IconClock, desc: "What the rabi season starts with: reservoir storage, rainfed soil moisture and the northeast monsoon under El Niño." },
+  ] },
+  { label: "Farms", items: [
+      { href: "/agriculture", label: "Agriculture & Water", Icon: IconLeaf, desc: "Crop-water planning lab and observed groundwater evidence. Not a field irrigation advisory." },
+  ] },
+  { label: "Places", items: [
+      { href: "/districts", label: "Districts", Icon: IconGrid, desc: "District roll-ups with an auto + AI situation brief per district." },
+      { href: "/constituencies", label: "Constituencies", Icon: IconTarget, desc: "Groundwater, the State's latest well readings, the drought manual and rain, by assembly and parliamentary constituency." },
+      { href: "/mandals", label: "Mandal Insights", Icon: IconCompass, desc: "Per-mandal deep dive: readings, satellite context, trend and agreement." },
+      { href: "/compare", label: "Compare", Icon: IconColumns, desc: "Side-by-side comparison of any two mandals or districts." },
+  ] },
 ];
 
-// Secondary — evidence, exports, and lab-style views. Kept reachable without
-// making every prototype capability compete with the operational workflow.
-const moreNav = [
-  { href: "/estimates", label: "Modelled Levels β", Icon: IconDroplet, desc: "Calculated mandal groundwater depth in metres with model bands." },
-  { href: "/nasa", label: "NASA Signals", Icon: IconSatellite, desc: "Raw, unfused GRACE-DA satellite-model context with provenance." },
-  { href: "/climate", label: "Climate & Balance", Icon: IconWaves, desc: "Rainfall in vs ET out — the water budget behind groundwater." },
-  { href: "/readiness", label: "Data Readiness", Icon: IconDatabase, desc: "Source periods, coverage and operational release gates." },
-  { href: "/methodology", label: "Methodology", Icon: IconFlow, desc: "How fusion works and what each signal means." },
-  { href: "/reports", label: "Reports", Icon: IconFile, desc: "Generated and exportable reports." },
-  { href: "/snapshot", label: "Executive Snapshot", Icon: IconFile, desc: "One-page printable summary for officials." },
-  { href: "/compare", label: "Compare", Icon: IconColumns, desc: "Side-by-side comparison of any two mandals or districts." },
-  { href: "/scenario", label: "Scenario Lab", Icon: IconCloudRain, desc: "Monsoon what-if: dial rainfall up/down and watch who tips into deficit." },
-  { href: "/irrigation", label: "AWARE Preview", Icon: IconLeaf, desc: "Monitor, review and field-verify preview + the AWARE export bridge." },
-  { href: "/settings", label: "Workspace", Icon: IconSettings, desc: "Appearance, dataset edition and data policy." },
+// Evidence and tools: how the figures are made and the specialist views. Folded unless one is open.
+const evidenceNav: NavItem[] = [
+      { href: "/methodology", label: "Methodology", Icon: IconFlow, desc: "How fusion works and what each signal means." },
+      { href: "/readiness", label: "Data Readiness", Icon: IconDatabase, desc: "Source periods, coverage and operational release gates." },
+      { href: "/estimates", label: "Modelled Levels β", Icon: IconDroplet, desc: "Calculated mandal groundwater depth in metres with model bands." },
+      { href: "/nasa", label: "NASA Signals", Icon: IconSatellite, desc: "Raw, unfused GRACE-DA satellite-model context with provenance." },
+      { href: "/climate", label: "Climate & Balance", Icon: IconWaves, desc: "Rainfall in vs ET out — the water budget behind groundwater." },
+      { href: "/scenario", label: "Scenario Lab", Icon: IconCloudRain, desc: "Monsoon what-if: dial rainfall up/down and watch who tips into deficit." },
+      { href: "/irrigation", label: "AWARE Preview", Icon: IconLeaf, desc: "Monitor, review and field-verify preview + the AWARE export bridge." },
+      { href: "/settings", label: "Workspace", Icon: IconSettings, desc: "Appearance, dataset edition and data policy." },
 ];
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -84,15 +94,34 @@ function formatDay(iso: string | null | undefined) {
 const REFRESH_OVERDUE_MS = 9 * 24 * 60 * 60 * 1000;
 const { periods } = datasetManifest;
 
+function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
+  const { href, label, Icon, desc } = item;
+  const active = href === "/" ? pathname === href : pathname.startsWith(href);
+  return (
+    <Link className={`navItem ${active ? "active" : ""}`} href={href} title={`${label} — ${desc}`} aria-current={active ? "page" : undefined}>
+      <span className="navIcon" aria-hidden="true">
+        <Icon />
+      </span>
+      <span className="navLabel">{label}</span>
+    </Link>
+  );
+}
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [overdue, setOverdue] = useState(false);
+  const onEvidencePage = evidenceNav.some(item => pathname.startsWith(item.href));
+  const [evidenceOpen, setEvidenceOpen] = useState(false);
+  const evidenceShown = evidenceOpen || onEvidencePage;
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("ap-groundwater-sidebar");
-    if (stored) setCollapsed(stored === "collapsed");
+    try {
+      const stored = window.localStorage.getItem("ap-groundwater-sidebar");
+      if (stored) setCollapsed(stored === "collapsed");
+      setEvidenceOpen(window.localStorage.getItem("ap-groundwater-evidence") === "open");
+    } catch { /* storage unavailable: the defaults stand */ }
     // Checked against the viewer's clock after mount: the static page cannot know
     // how long ago it was built, and a missed refresh should be visible, not silent.
     setOverdue(Date.now() - Date.parse(periods.uiGenerationTimestamp) > REFRESH_OVERDUE_MS);
@@ -117,6 +146,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       window.removeEventListener("keydown", onKey);
     };
   }, [navOpen]);
+
+  function toggleEvidence() {
+    setEvidenceOpen(current => {
+      const next = !(current || onEvidencePage);
+      try { window.localStorage.setItem("ap-groundwater-evidence", next ? "open" : "closed"); } catch { /* storage unavailable */ }
+      return next;
+    });
+  }
 
   function toggleSidebar() {
     setCollapsed((current) => {
@@ -193,31 +230,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
 
         <nav className="sidebarNav" aria-label="Primary">
-          {primaryNav.map(({ href, label, Icon, desc }) => {
-            const active = href === "/" ? pathname === href : pathname.startsWith(href);
-            return (
-              <Link className={`navItem ${active ? "active" : ""}`} href={href} key={href} title={`${label} — ${desc}`}>
-                <span className="navIcon" aria-hidden="true">
-                  <Icon />
-                </span>
-                <span className="navLabel">{label}</span>
-              </Link>
-            );
-          })}
+          {navGroups.map(group => (
+            <div className="navGroup" key={group.label}>
+              <div className="navGroupLabel"><span>{group.label}</span></div>
+              {group.items.map(item => <NavLink key={item.href} item={item} pathname={pathname} />)}
+            </div>
+          ))}
 
-          <div className="navGroupLabel"><span>Evidence &amp; Labs</span></div>
-
-          {moreNav.map(({ href, label, Icon, desc }) => {
-            const active = pathname.startsWith(href);
-            return (
-              <Link className={`navItem ${active ? "active" : ""}`} href={href} key={href} title={`${label} — ${desc}`}>
-                <span className="navIcon" aria-hidden="true">
-                  <Icon />
-                </span>
-                <span className="navLabel">{label}</span>
-              </Link>
-            );
-          })}
+          <button type="button" className="navGroupLabel navGroupToggle" aria-expanded={evidenceShown} onClick={toggleEvidence}>
+            <span>Evidence &amp; tools</span>
+            <IconChevronRight className={evidenceShown ? "navChevronOpen" : undefined} />
+          </button>
+          {evidenceShown ? evidenceNav.map(item => <NavLink key={item.href} item={item} pathname={pathname} />) : null}
         </nav>
 
         <div className="sidebarSpacer" />

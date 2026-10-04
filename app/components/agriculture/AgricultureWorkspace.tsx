@@ -12,6 +12,8 @@ import { GovernanceBrief } from "./GovernanceBrief";
 import { mandalContext, WaterContextStrip } from "./WaterContextStrip";
 import { day } from "./waterContextFormat";
 import styles from "./AgricultureWorkspace.module.css";
+import { PageBriefBand } from "../PageBrief";
+import type { PageBrief } from "../../lib/pageBriefs";
 
 const assetRoot = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/assets`;
 function label(value: string) {
@@ -183,7 +185,7 @@ function MandalMap({ evidence, rows, active, mapView, onSelect, colorBy }: { evi
   </div>;
 }
 
-export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = null, record = null }: { evidence: AgricultureEvidence; mapView: { width: number; height: number }; sourceStatus?: ReactNode; live?: LiveField | null; record?: CheckRecord | null }) {
+export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = null, record = null, brief = null }: { evidence: AgricultureEvidence; mapView: { width: number; height: number }; sourceStatus?: ReactNode; live?: LiveField | null; record?: CheckRecord | null; brief?: PageBrief | null }) {
   const [labPreset, setLabPreset] = useState<LabPreset | null>(null);
   const [colorBy, setColorBy] = useState<ColorBy>("groundwater");
   function openLab(preset: LabPreset) {
@@ -235,6 +237,7 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
       <div className={styles.heroCopy}><span className={styles.heroEyebrow}><IconLeaf />Andhra Pradesh / Agriculture</span><h1>Agriculture &amp;<br />Water Intelligence</h1><p>Water evidence. Crop context. Better questions for the field.</p></div>
       <span className={styles.heroCredit}>AI landscape illustration</span>
     </header>
+    {brief ? <PageBriefBand brief={brief} /> : null}
     <div className={styles.notice}><IconInfo /><p><strong>Prototype planning workspace.</strong> Groundwater evidence and illustrative crop scenarios are separate. Gauge rainfall, modelled soil moisture and reservoir storage come from APWRIMS; reference evapotranspiration and rain from ECMWF&rsquo;s open forecast; crop vegetation from NOAA&rsquo;s satellite index; the groundwater category from the official assessment on INGRES. Each is dated. Crop booking and canal delivery to fields are not connected. No field watering instruction or crop-loss prediction.</p></div>
     {sourceStatus}
     <nav className={styles.sectionNav} aria-label="Agriculture sections"><a href="#agriculture-brief">01 <span>District brief</span></a><a href="#field-week">02 <span>This week in the fields</span></a><a href="#crop-water-lab">03 <span>Crop-water lab</span></a><a href="#agriculture-watch">04 <span>Water watch</span></a><a href="#agriculture-readiness">05 <span>Evidence readiness</span></a><Link href="/drought">06 <span>Drought manual →</span></Link><span className={styles.snapshot}>Observed window: {period(evidence.startPeriod)} to {period(evidence.period)}</span></nav>

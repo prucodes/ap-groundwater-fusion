@@ -25,6 +25,8 @@ import {
 import type { DistrictLayerKey, MandalHeatLayerKey } from "../../lib/types";
 import { isWaterLayer, WATER_LAYER_META, waterLayerGradient, waterMandals, type WaterMandalLayer } from "../../lib/waterMandals";
 import { FIELD_LAYER_META, fieldLegend, isFieldLayer, type FieldLayer } from "../../lib/fieldSignals";
+import { brief } from "../../lib/pageBriefs";
+import { groundwaterStressNow } from "../../lib/pageNow";
 
 const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "water_balance_mm", label: "Water Balance" },
@@ -91,12 +93,7 @@ export default function MapPage() {
     <div className="pageWrap">
       <HeaderHero
         title="Groundwater Status Map"
-        subtitle={
-          <>
-            <strong>Mandal monitoring status</strong> from recorded depth and modelled estimates, alongside
-            satellite-model and climate context. Sources have different periods and spatial support.
-          </>
-        }
+        brief={brief("/map", groundwaterStressNow())}
         showChips={false}
         variant="compact"
       />

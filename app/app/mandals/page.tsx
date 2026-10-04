@@ -1,6 +1,8 @@
 import { HeaderHero } from "../../components/HeaderHero";
 import { MandalDetail } from "../../components/MandalDetail";
 import { mandals } from "../../lib/data";
+import { brief } from "../../lib/pageBriefs";
+import { wellsNow } from "../../lib/pageNow";
 
 export default function MandalInsightsPage() {
   const first = mandals[0];
@@ -8,12 +10,7 @@ export default function MandalInsightsPage() {
     <div className="pageWrap">
       <HeaderHero
         title="Mandal Insights"
-        subtitle={
-          <>
-            Per-mandal fusion of <strong>real APWRIMS readings (2014-2026)</strong> and{" "}
-            <strong>NASA/NDMC GRACE-DA satellite-model signals</strong>. Select a mandal to inspect.
-          </>
-        }
+        brief={brief("/mandals", wellsNow())}
         showChips={false}
         variant="compact"
       />

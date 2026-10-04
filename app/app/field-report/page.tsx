@@ -4,6 +4,7 @@ import { FieldReport, type SiteCall } from "../../components/FieldReport";
 import { titleCase } from "../../lib/data";
 import { fieldPriority } from "../../lib/fieldPriority";
 import { fieldSignals } from "../../lib/fieldSignalsServer";
+import { brief } from "../../lib/pageBriefs";
 
 export const metadata: Metadata = {
   title: "Field Report | AP Water Intelligence",
@@ -27,7 +28,7 @@ export default function FieldReportPage() {
     <div className="pageWrap">
       <HeaderHero
         title="Field Report"
-        subtitle={<>For teams sent to the mandals on This Week&rsquo;s list. Record what the fields and the wells show, see it beside what the site called, and share it. The report stays on this phone until you share it; it asks for no names or phone numbers.</>}
+        brief={brief("/field-report", <><b>{rows.filter(r => r.lit >= 4).length} mandals</b> are on this week&rsquo;s field-teams list; a report stays on the phone until it is shared.</>)}
         showChips={false}
         variant="compact"
       />

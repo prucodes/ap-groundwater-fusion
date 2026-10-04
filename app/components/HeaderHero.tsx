@@ -1,6 +1,8 @@
 import { prototypeNotice } from "../lib/data";
+import type { PageBrief } from "../lib/pageBriefs";
 import { DataProvenanceDates } from "./DataProvenanceDates";
 import { IconInfo } from "./icons";
+import { PageBriefList } from "./PageBrief";
 
 const STATUS_CHIPS = [
   { label: "NASA Signal", value: "Active", dot: "live" },
@@ -12,13 +14,16 @@ const STATUS_CHIPS = [
 export function HeaderHero({
   title = "Mandal-Level Groundwater Fusion Layer",
   subtitle,
-  showChips = true,
+  brief,
+  showChips,
   showBanner = true,
   variant = "standard",
   actions,
 }: {
   title?: string;
   subtitle?: React.ReactNode;
+  /** What the screen is, what it says now and what to do with it (lib/pageBriefs.ts): replaces the subtitle. */
+  brief?: PageBrief;
   showChips?: boolean;
   showBanner?: boolean;
   variant?: "standard" | "compact";
@@ -34,12 +39,16 @@ export function HeaderHero({
           <div className="heroLeft">
             <span className="heroEyebrow">Andhra Pradesh Groundwater Assessment</span>
             <h1>{title}</h1>
-            <p className="heroSub">
-              {subtitle ?? (
-                <>APWRIMS-format readings fused with NASA/NDMC GRACE-DA satellite-model signals.</>
-              )}
-            </p>
-            {showChips && (
+            {brief ? (
+              <PageBriefList brief={brief} />
+            ) : (
+              <p className="heroSub">
+                {subtitle ?? (
+                  <>APWRIMS-format readings fused with NASA/NDMC GRACE-DA satellite-model signals.</>
+                )}
+              </p>
+            )}
+            {(showChips ?? !brief) && (
               <div className="heroStatus">
                 {STATUS_CHIPS.map((chip) => (
                   <span className="statChip" key={chip.label}>

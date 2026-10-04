@@ -9,6 +9,7 @@ import { IconChevronLeft, IconChevronRight } from "../../components/icons";
 import { computeAlerts, MAX_ALERT_SCORE, severityCounts, type Severity } from "../../lib/alerts";
 import { districts, formatNumber, formatPeriod, groundwaterRecords, titleCase } from "../../lib/data";
 import styles from "../../components/governance/Governance.module.css";
+import { brief } from "../../lib/pageBriefs";
 
 type Filter = Severity | "unscored" | "all";
 const alerts = computeAlerts();
@@ -34,7 +35,7 @@ export default function AlertsPage() {
   const start = page * PAGE_SIZE;
   const rows = filtered.slice(start, start + PAGE_SIZE);
   return <div className="pageWrap">
-    <HeaderHero title="Groundwater Review Queue" subtitle="A transparent order for evidence review, not an official early warning. Depth and measured trend determine the score; missing data is kept outside the ranking." showChips={false} variant="compact" />
+    <HeaderHero title="Groundwater Review Queue" brief={brief("/alerts", <Link href="/changes/#field-teams">Open the field-teams list →</Link>)} showChips={false} variant="compact" />
     <DataProvenanceDates />
     <section className={styles.section} aria-label="Review priorities">
       <div className={styles.heading}><div><span className={styles.eyebrow}>Triage / not a drought declaration</span><h2>Where should verification start?</h2><p>Prototype thresholds. Review the period, model uncertainty and source history before field action.</p></div><Link href="/readiness" className="linkAction">Release gates</Link></div>

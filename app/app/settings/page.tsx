@@ -4,10 +4,11 @@ import { ThemeToggle } from "../../components/ThemeToggle";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { datasetManifest } from "../../lib/data";
 import styles from "../../components/governance/Governance.module.css";
+import { brief } from "../../lib/pageBriefs";
 
 export default function SettingsPage() {
   return <div className="pageWrap">
-    <HeaderHero title="Workspace & Data Policy" subtitle="Local display preferences and the operating limits of this research workspace." showChips={false} variant="compact" />
+    <HeaderHero title="Workspace & Data Policy" brief={brief("/settings")} showChips={false} variant="compact" />
     <section className={styles.section}><div className={styles.heading}><div><span className={styles.eyebrow}>This browser</span><h2>Appearance</h2><p>Display preference is stored locally. Source data and assessments are unchanged.</p></div><ThemeToggle /></div></section>
     <section className={styles.section}><div className={styles.heading}><div><span className={styles.eyebrow}>Published dataset</span><h2>Snapshot, not streaming telemetry.</h2><p>Build {datasetManifest.generatedAt.slice(0, 10)} / contract {datasetManifest.dataContractVersion}. Source refreshes are published by the pipeline, not by reloading a page.</p></div></div><DataProvenanceDates /></section>
     <div className={styles.gates}>

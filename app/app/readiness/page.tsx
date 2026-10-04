@@ -7,6 +7,7 @@ import { waterSummary } from "../../lib/waterSummary";
 import { droughtWatch } from "../../lib/droughtWatch";
 import { stateSummary } from "../../lib/stateSummary";
 import styles from "../../components/governance/Governance.module.css";
+import { brief } from "../../lib/pageBriefs";
 
 const gates = [
   ["01 / Authority", "Authorized source access", "Written source-use approval, a verified ingestion contract and retained refresh receipts. Public portal access alone does not confer operational authority."],
@@ -37,7 +38,7 @@ export default function ReadinessPage() {
     { name: "TerraClimate", type: "Modelled climate / mm", period: formatPeriod(p.etValidPeriod), fetch: r?.evapotranspiration.fetchDate, link: "https://www.climatologylab.org/terraclimate.html", detail: "Annual reference context, not current telemetry. Rain minus actual ET excludes pumping and does not establish aquifer recharge." },
   ];
   return <div className="pageWrap">
-    <HeaderHero title="Evidence & Release Readiness" subtitle="A dated research dataset, not a live government service. Available evidence and operational approval are separate questions." showChips={false} variant="compact" />
+    <HeaderHero title="Evidence & Release Readiness" brief={brief("/readiness")} showChips={false} variant="compact" />
     <section className={styles.section} aria-labelledby="coverage-title">
       <div className={styles.heading}><div><span className={styles.eyebrow}>Published evidence / {datasetManifest.generatedAt.slice(0, 10)}</span><h2 id="coverage-title">Coverage without false certainty.</h2><p>Counts refer to this prototype geography, not a certified census of AP administrative units.</p></div><Link className="linkAction" href="/reports">Export evidence pack</Link></div>
       <div className={styles.metrics}>

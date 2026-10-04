@@ -13,8 +13,10 @@ const onMap = (tier: string) => outlook.mandals.filter(r => r?.tier === tier).le
 
 test("the summer outlook states its counts, maps the same tiers and shows its record", async ({ page }) => {
   await page.goto("/summer/");
+  // The brief states the headline; the band beneath carries the figures.
+  await expect(page.getByTestId("page-brief")).toContainText(`${outlook.summary.beyondDeep} mandals`);
   await expect(page.getByTestId("summer-summary")).toContainText(`${outlook.summary.beyond} mandals`);
-  await expect(page.getByTestId("summer-summary")).toContainText(`${outlook.summary.dry} more`);
+  await expect(page.getByTestId("summer-summary")).toContainText(`${outlook.summary.dry} mandals`);
   const map = page.getByTestId("summer-map");
   await expect(map).toHaveAttribute("data-ready", "true");
   // Beyond its record: dark when it would also be 10 m or more down, light when shallower.

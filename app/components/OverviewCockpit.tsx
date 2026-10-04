@@ -30,6 +30,8 @@ import { droughtSummary } from "../lib/droughtSummary";
 import { stateSummary } from "../lib/stateSummary";
 import { officialStatusLine } from "../lib/data";
 import { WATER_LAYER_META, isWaterLayer, waterLayerGradient, type WaterMandalLayer } from "../lib/waterMandals";
+import { brief } from "../lib/pageBriefs";
+import { groundwaterStressNow } from "../lib/pageNow";
 
 /** Counts the server works out from the full water context, which never reaches the browser. */
 export type OverviewAgreement = { agreeAll: number; allKnown: number; agreeTwo: number };
@@ -86,12 +88,7 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
     <div className="pageWrap">
       <HeaderHero
         title="AP Groundwater Verification Cockpit"
-        subtitle={
-          <>
-            Find the mandals that need review first, inspect why they were flagged, and trace every displayed signal to
-            APWRIMS-format readings, GRACE-DA context, climate balance, and boundary coverage.
-          </>
-        }
+        brief={brief("/", groundwaterStressNow())}
         showBanner={false}
         showChips={false}
         variant="compact"
