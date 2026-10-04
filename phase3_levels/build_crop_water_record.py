@@ -37,9 +37,16 @@ The verdict holds both fixed: inside the same mandal and the same season,
 vegetation three weeks after a "short" call (now or within seven days) against
 three weeks after a "comfortable" one.
 
+The check is a rainfed water balance, so the headline reading is over rainfed
+fields: mandals where less than half the cropland is irrigated (ESA WorldCereal,
+build_irrigated_fraction.py), with the vegetation index weighted to rainfed
+cropland only. The same comparison over all cropland, irrigated fields
+included, is kept beside it.
+
 Verdict for each crop and stage, as the forecast notes do:
 - backed by its record: at least 5 index points lower after "short", overall
-  and in every season;
+  and in every season, with at least two seasons of 30 mandals or more (one
+  season is not a record);
 - weak record: at least 1 point lower, short of that;
 - not borne out: less than 1 point lower, or higher;
 - untested: fewer than 100 mandal-seasons with both kinds of call.
@@ -55,6 +62,8 @@ import sys
 import time
 import urllib.parse
 
+import numpy as np
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import crop_water  # noqa: E402
@@ -68,6 +77,8 @@ ROOT = os.path.join(HERE, "..")
 OUT = os.path.join(ROOT, "app", "data", "crop_water_record.json")
 CACHE = os.path.join(ROOT, "data", "private", "crop_water_record")
 CAPACITY = os.path.join(HERE, "data", "mandal_soil_water_capacity.json")
+IRRIGATED_GRID = os.path.join(HERE, "data", "vhp_irrigated_fraction.json")
+IRRIGATED_SHARE = os.path.join(HERE, "data", "mandal_irrigated_share.json")
 
 SEASONS = (2024, 2025, 2026)
 WEEKS = range(27, 37)          # VHP weeks beginning about 2 July to 3 September
@@ -78,6 +89,7 @@ BACKED_POINTS = 5.0            # VCI points lower after "short" than after "comf
 NOTED_POINTS = 1.0             # less than this is no difference worth the name
 MIN_MANDALS = 100              # mandal-seasons with both kinds of call
 MIN_SEASON_MANDALS = 30
+MIN_BACKED_SEASONS = 2         # a single season, however clear, is not a track record
 ARCHIVE = "https://archive-api.open-meteo.com/v1/archive"
 ARCHIVE_PAUSE_S = 5            # one location-season (~6 calls) every 5 s stays under 5,000 calls an hour
 
@@ -146,22 +158,40 @@ def season_soil(year, weeks, tree, boundaries, count):
     return out
 
 
+def rainfed_grid():
+    payload = json.load(open(IRRIGATED_GRID))
+    share = np.array(payload["rainfed"], dtype="float64")
+    return np.where(share >= 0, share / 100.0, 0.0)
+
+
 def season_vegetation(year, weeks, count):
-    """Cropland-weighted VCI per mandal for every week needed, as the live page computes it."""
+    """VCI per mandal for every week needed: weighted to cropland as the live page computes it, and to
+    rainfed cropland only (None where a mandal has too little of it to read)."""
     shapes = mandal_shapes()
     meta, weights = cropland_grid()
+    rainfed = rainfed_grid()
     labels = extra = None
-    out = {}
+    out, out_rainfed = {}, {}
     for week in sorted({w for w in weeks} | {w + LEAD_WEEKS for w in weeks}):
-        def build(week=week):
+        window = {}
+
+        def read(week=week):
             nonlocal labels, extra
-            data, transform = vhp_window(year, week)
-            if labels is None:
-                labels, extra = cell_labels(shapes, data.shape, transform)
-            means = weighted_means(data, weights, labels, extra, count)
+            if "data" not in window:
+                window["data"], transform = vhp_window(year, week)
+                if labels is None:
+                    labels, extra = cell_labels(shapes, window["data"].shape, transform)
+            return window["data"]
+
+        def build(week=week):
+            means = weighted_means(read(), weights, labels, extra, count)
             return [crop if crop is not None else full for crop, full, _ in means]
+
+        def build_rainfed(week=week):
+            return [crop for crop, _, _ in weighted_means(read(), rainfed, labels, extra, count)]
         out[week] = cached(f"vci_{year}_{week:03d}.json", build)
-    return out
+        out_rainfed[week] = cached(f"vcir_{year}_{week:03d}.json", build_rainfed)
+    return out, out_rainfed
 
 
 def within_mandal(mandals):
@@ -186,11 +216,19 @@ def verdict(inside):
     if same["mandals"] < MIN_MANDALS:
         return "untested"
     seasons = [s for s in inside["seasons"].values() if s["mandals"] >= MIN_SEASON_MANDALS]
-    if same["afterGap"] <= -BACKED_POINTS and seasons and all(s["afterGap"] < 0 for s in seasons):
+    if same["afterGap"] <= -BACKED_POINTS and len(seasons) >= MIN_BACKED_SEASONS and all(s["afterGap"] < 0 for s in seasons):
         return "backed"
     if same["afterGap"] <= -NOTED_POINTS:
         return "weak"
     return "not borne out"
+
+
+def comparisons(pots):
+    """Every mandal-season with both kinds of call is one comparison ("mandals" counts mandal-seasons in sameSeason)."""
+    by_season = pots["seasons"]
+    return {"sameSeason": within_mandal({(year, i): sides for year, pot in by_season.items() for i, sides in pot.items()}),
+            "acrossSeasons": within_mandal(pots["across"]),
+            "seasons": {year: within_mandal(pot) for year, pot in sorted(by_season.items())}}
 
 
 def tally():
@@ -214,6 +252,9 @@ def main():
     # Per mandal: the same comparisons inside one mandal, so a chronically dry place is
     # compared with itself, not with a wet one (the index is already relative to its own past).
     within = {key: {"across": {}, "seasons": {}} for key in results}
+    within_rainfed = {key: {"across": {}, "seasons": {}} for key in results}
+    irrigated = json.load(open(IRRIGATED_SHARE))
+    rainfed_mandals = {i for i, share in enumerate(irrigated["share"]) if share is not None and share < irrigated["mostlyRainfedBelowPct"]}
     weeks_used = []
     today = datetime.date.today()
     for year in SEASONS:
@@ -223,7 +264,7 @@ def main():
         print(f"{year}: weeks {weeks[0]}-{weeks[-1]}", flush=True)
         weather = season_weather(year, cells, weeks)
         soil = season_soil(year, weeks, tree, boundaries, count)
-        veg = season_vegetation(year, weeks, count)
+        veg, veg_rainfed = season_vegetation(year, weeks, count)
         for week in weeks:
             day = check_day(year, week)
             weeks_used.append({"year": year, "week": week, "checkDay": day.isoformat(), "outcomeWeek": vhp_week_label(year, week + LEAD_WEEKS)})
@@ -240,6 +281,8 @@ def main():
                 if len(eto) < 1 + crop_water.OUTLOOK_DAYS + 1 or any(v is None for v in eto + rain):
                     continue
                 change = after - before
+                r_before, r_after = veg_rainfed[week][i], veg_rainfed[week + LEAD_WEEKS][i]
+                rainfed_ok = i in rainfed_mandals and r_before is not None and r_after is not None
                 for crop in crop_water.CROPS:
                     for stage in range(3):
                         result = crop_water.check(pct, cap, eto, rain, 0, 1, crop, stage)
@@ -248,11 +291,19 @@ def main():
                         entry = results[f"{crop}-{stage}"]
                         season = entry["seasons"].setdefault(str(year), {k: tally() for k in ("stressed", "soon", "ok")})
                         pots = within[f"{crop}-{stage}"]
+                        sided = "ok" if result["state"] == "ok" else "short"
                         for pot in (pots["across"], pots["seasons"].setdefault(str(year), {})):
-                            side = pot.setdefault(i, {"short": tally(), "ok": tally()})["ok" if result["state"] == "ok" else "short"]
+                            side = pot.setdefault(i, {"short": tally(), "ok": tally()})[sided]
                             side["n"] += 1
                             side["change"] += change
                             side["after"] += after
+                        if rainfed_ok:
+                            pots_r = within_rainfed[f"{crop}-{stage}"]
+                            for pot in (pots_r["across"], pots_r["seasons"].setdefault(str(year), {})):
+                                side = pot.setdefault(i, {"short": tally(), "ok": tally()})[sided]
+                                side["n"] += 1
+                                side["change"] += r_after - r_before
+                                side["after"] += r_after
                         for bucket in (entry["all"][result["state"]], season[result["state"]]):
                             bucket["n"] += 1
                             bucket["fell"] += 1 if change <= FALL else 0
@@ -263,12 +314,10 @@ def main():
     for key, entry in results.items():
         overall = {k: summarise(v) for k, v in entry["all"].items()}
         seasons = {year: {k: summarise(v) for k, v in s.items()} for year, s in entry["seasons"].items()}
-        by_season = within[key]["seasons"]
-        # Every mandal-season with both kinds of call is one comparison ("mandals" counts mandal-seasons here).
-        inside = {"sameSeason": within_mandal({(year, i): sides for year, pot in by_season.items() for i, sides in pot.items()}),
-                  "acrossSeasons": within_mandal(within[key]["across"]),
-                  "seasons": {year: within_mandal(pot) for year, pot in sorted(by_season.items())}}
-        record[key] = {"across": {**overall, "seasons": seasons}, "within": inside, "verdict": verdict(inside)}
+        inside, inside_rainfed = comparisons(within[key]), comparisons(within_rainfed[key])
+        record[key] = {"rainfed": {"within": inside_rainfed, "verdict": verdict(inside_rainfed)},
+                       "allCropland": {"within": inside, "verdict": verdict(inside)},
+                       "across": {**overall, "seasons": seasons}}
     payload = {
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
         "question": "Three weeks after the check called a mandal's crop short of water, was the vegetation on its cropland worse than three weeks after it called the same mandal comfortable in the same season?",
@@ -276,8 +325,13 @@ def main():
         "acrossCaveat": "Two comparisons were run first and are kept on record. Pooled across mandals the check does not separate vegetation: the places called short most often are the chronically dry ones, VCI compares each place with its own past, and irrigated fields stay green whatever the soil model says. Inside one mandal but pooled across seasons the gap is large, mostly because “short” calls come in the drier seasons. The verdict holds both the place and the season fixed.",
         "weather": "ERA5 reanalysis (Copernicus / ECMWF) via Open-Meteo's archive: the weather that happened, not the forecast. 'Within 7 days' is therefore tested as if the forecast were perfect.",
         "soil": "APWRIMS / NRSC VIC soil moisture on each check date; SoilGrids 2.0 water-holding capacity.",
+        "headline": "rainfed",
+        "rainfed": {"mandals": len(rainfed_mandals), "of": count, "belowPct": irrigated["mostlyRainfedBelowPct"],
+                    "stateIrrigatedPct": irrigated["summary"]["stateIrrigatedPct"],
+                    "text": "Mandals where less than half the cropland was mapped irrigated (ESA WorldCereal, rabi 2020-21), with the vegetation index weighted to rainfed cropland only."},
         "rules": {"backedPoints": BACKED_POINTS, "notedPoints": NOTED_POINTS, "minMandals": MIN_MANDALS,
-                  "text": "Backed by its record: inside the same mandal and season, crop vegetation three weeks after a 'short' call reads at least 5 index points lower than after a 'comfortable' call, overall and in every season. Weak record: at least 1 point lower, short of that. Not borne out: less than 1 point lower, or higher. Untested: fewer than 100 mandal-seasons with both kinds of call."},
+                  "minSeasonMandals": MIN_SEASON_MANDALS, "minBackedSeasons": MIN_BACKED_SEASONS,
+                  "text": "Backed by its record: inside the same mandal and season, crop vegetation three weeks after a 'short' call reads at least 5 index points lower than after a 'comfortable' call, overall and in every season, with at least two seasons of 30 mandals or more. Weak record: at least 1 point lower, short of that. Not borne out: less than 1 point lower, or higher. Untested: fewer than 100 mandal-seasons with both kinds of call."},
         "seasons": sorted({w["year"] for w in weeks_used}),
         "checks": len(weeks_used),
         "weeks": weeks_used,
@@ -287,9 +341,10 @@ def main():
         json.dump(payload, handle, indent=1)
         handle.write("\n")
     for key, r in record.items():
-        w = r["within"]
-        print(f"  {key:<14} same season {w['sameSeason']['afterGap']} ({w['sameSeason']['mandals']}) | across seasons {w['acrossSeasons']['afterGap']} "
-              f"| {[(y, s['afterGap'], s['mandals']) for y, s in w['seasons'].items()]} -> {r['verdict']}")
+        a, f = r["allCropland"], r["rainfed"]
+        print(f"  {key:<14} rainfed {f['within']['sameSeason']['afterGap']} ({f['within']['sameSeason']['mandals']}) "
+              f"{[(y, s['afterGap'], s['mandals']) for y, s in f['within']['seasons'].items()]} -> {f['verdict']:<14} "
+              f"| all cropland {a['within']['sameSeason']['afterGap']} ({a['within']['sameSeason']['mandals']}) -> {a['verdict']}")
     print(f"Wrote {OUT}: {len(weeks_used)} check weeks in {payload['seasons']}")
 
 

@@ -48,6 +48,17 @@ jobs:
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
         run: npm run build:static
+      - name: Print the weekly digest to PDF
+        # /digest/ printed to out/digest/ap-water-weekly-digest.pdf, so the page's
+        # "Download PDF" serves this build's sheet. A failure here never blocks
+        # the site: the page itself still prints from the browser.
+        working-directory: app
+        continue-on-error: true
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: |
+          npx playwright install --with-deps chromium
+          node scripts/print-digest.mjs --directory out --base "$PAGES_BASE_PATH"
       - name: Disable Jekyll processing
         # Without this, Pages' Jekyll step ignores files/dirs beginning with "_",
         # which would drop Next's _next/ asset directory and break every page.

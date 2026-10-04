@@ -32,6 +32,8 @@ export type LiveField = {
   capacity: { source: string; url: string; licence: string };
   /** The Python water balance's statewide counts, for every crop and stage. */
   crossCheck: Record<string, CropWaterCounts> | null;
+  /** % of each boundary's cropland mapped irrigated (ESA WorldCereal, rabi 2020-21); the check is a rainfed balance. */
+  irrigation: { pct: Array<number | null>; belowPct: number; source: string; url: string } | null;
 };
 
 export type CropWaterState = "stressed" | "soon" | "ok" | "unknown";
@@ -134,11 +136,16 @@ export const SEVERE_COLOR = "#8c2f29";
 /** How the check has fared on past kharif weeks (phase3_levels/build_crop_water_record.py). */
 export type WithinCell = { mandals: number; changeGap: number | null; afterGap: number | null; worsePct: number | null };
 export type RecordVerdict = "backed" | "weak" | "not borne out" | "untested";
+/** sameSeason counts mandal-seasons and drives the verdict; acrossSeasons pools a mandal's seasons, for reference. */
+export type RecordReading = { within: { sameSeason: WithinCell; acrossSeasons: WithinCell; seasons: Record<string, WithinCell> }; verdict: RecordVerdict };
 export type CheckRecord = {
   generatedAt: string; question: string; outcome: string; acrossCaveat: string; weather: string; seasons: number[]; checks: number;
   rules: { backedPoints: number; notedPoints: number; minMandals: number; text: string };
-  /** sameSeason counts mandal-seasons and drives the verdict; acrossSeasons pools a mandal's seasons, for reference. */
-  record: Record<string, { within: { sameSeason: WithinCell; acrossSeasons: WithinCell; seasons: Record<string, WithinCell> }; verdict: RecordVerdict }>;
+  /** The headline reading is over rainfed fields: mostly rainfed mandals, vegetation weighted to rainfed cropland. */
+  rainfed: { mandals: number; of: number; belowPct: number; stateIrrigatedPct: number; text: string };
+  record: Record<string, { rainfed: RecordReading; allCropland: RecordReading }>;
+  /** The live scorecard (phase3_levels/score_field_calls.py): each week's real calls, frozen, scored three weeks on. */
+  live?: { frozen: number; scored: number; firstFrozen: string | null; nextDue: string | null; record: Record<string, RecordReading> } | null;
 };
 export const RECORD_VERDICTS: Record<RecordVerdict, { label: string; tone: string }> = {
   backed: { label: "Backed by its record", tone: "#27745d" },

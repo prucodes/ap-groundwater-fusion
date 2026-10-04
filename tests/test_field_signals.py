@@ -1,5 +1,6 @@
 """This week in the fields: the crop water check, the cropland-weighted vegetation
 index and the official groundwater assessment (phase3_levels/fetch_field_signals.py)."""
+import datetime
 import json
 import os
 import re
@@ -119,7 +120,9 @@ def test_map_values_are_keyed_and_coded_like_the_water_layers():
     payload = {"generatedAt": "x", "vegetation": {"averaged": [], "mandals": [{"v": 33.2, "cls": "severe"}, None]},
                "assessment": {"year": "2025-2026", "mandals": [None, {"cat": "over_exploited", "stage": 104.0}]}}
     out = ffs.mandal_values(payload, features)
-    assert out["values"] == {"KURNOOL|ORVAKAL": [33.2, 2, None, None], "KURNOOL|KALLUR": [None, None, 3, 104.0]}
+    assert out["values"] == {"KURNOOL|ORVAKAL": [33.2, 2, None, None, None], "KURNOOL|KALLUR": [None, None, 3, 104.0, None]}
+    payload["irrigation"] = {"source": "x", "caveat": "y", "mostlyRainfedBelowPct": 50.0, "share": [12.5, None]}
+    assert ffs.mandal_values(payload, features)["values"]["KURNOOL|ORVAKAL"] == [33.2, 2, None, None, 12.5]
 
 
 # --- the committed file -------------------------------------------------------------
@@ -183,8 +186,10 @@ def test_record_verdicts_follow_their_stated_rules():
     judge = lambda same, seasons, pooled=-20.0: rec.verdict({"sameSeason": same, "acrossSeasons": cell(300, pooled), "seasons": seasons})  # noqa: E731
     assert judge(cell(450, -6.0), {"2024": cell(200, -4.0), "2025": cell(250, -8.0)}) == "backed"
     assert judge(cell(450, -6.0), {"2024": cell(200, 1.0), "2025": cell(250, -9.0)}) == "weak"
-    # A small season below 30 mandals does not veto "backed".
-    assert judge(cell(450, -6.0), {"2024": cell(20, 1.0), "2025": cell(430, -6.4)}) == "backed"
+    # A small season below 30 mandals does not veto "backed"...
+    assert judge(cell(470, -6.0), {"2024": cell(20, 1.0), "2025": cell(230, -6.4), "2026": cell(220, -5.5)}) == "backed"
+    # ...but one qualifying season, however clear, is not a track record.
+    assert judge(cell(450, -6.0), {"2024": cell(20, 1.0), "2025": cell(430, -6.4)}) == "weak"
     assert judge(cell(300, -2.0), {"2024": cell(300, -2.0)}) == "weak"
     assert judge(cell(300, -0.9), {"2024": cell(300, -0.9)}) == "not borne out"
     assert judge(cell(300, 0.5), {"2024": cell(300, 0.5)}) == "not borne out"
@@ -211,9 +216,70 @@ def test_the_committed_record_is_internally_consistent():
         pytest.skip("no record built yet")
     record = json.load(open(path))
     assert set(record["record"]) == {f"{c}-{s}" for c in crop_water.CROPS for s in range(3)}
+    assert record["headline"] == "rainfed" and 0 < record["rainfed"]["mandals"] < record["rainfed"]["of"]
     for key, entry in record["record"].items():
-        within = entry["within"]
-        assert entry["verdict"] == rec.verdict(within), key
-        assert set(within["seasons"]) <= {str(y) for y in record["seasons"]}
-        # Each mandal-season is one comparison, so the same-season count is the seasons' counts added.
-        assert within["sameSeason"]["mandals"] == sum(s["mandals"] for s in within["seasons"].values()), key
+        for reading in ("rainfed", "allCropland"):
+            within = entry[reading]["within"]
+            assert entry[reading]["verdict"] == rec.verdict(within), (key, reading)
+            assert set(within["seasons"]) <= {str(y) for y in record["seasons"]}
+            # Each mandal-season is one comparison, so the same-season count is the seasons' counts added.
+            assert within["sameSeason"]["mandals"] == sum(s["mandals"] for s in within["seasons"].values()), (key, reading)
+        # Rainfed mandals are a subset, so they can never hold more comparisons than all cropland.
+        assert entry["rainfed"]["within"]["sameSeason"]["mandals"] <= entry["allCropland"]["within"]["sameSeason"]["mandals"], key
+
+
+def test_irrigated_shares_are_percentages_of_cropland_per_boundary():
+    shares = json.load(open(os.path.join(ROOT, "phase3_levels", "data", "mandal_irrigated_share.json")))
+    assert len(shares["share"]) == len(ffs.geometry())
+    known = [s for s in shares["share"] if s is not None]
+    assert len(known) >= 600 and all(0 <= s <= 100 for s in known)
+    summary = shares["summary"]
+    assert summary["mostlyRainfed"] + summary["mostlyIrrigated"] == summary["mandals"] == len(known)
+    assert summary["mostlyRainfed"] == sum(s < shares["mostlyRainfedBelowPct"] for s in known)
+    grid = json.load(open(os.path.join(ROOT, "phase3_levels", "data", "vhp_irrigated_fraction.json")))
+    crop = json.load(open(os.path.join(ROOT, "phase3_levels", "data", "vhp_cropland_fraction.json")))
+    assert grid["grid"] == crop["grid"]
+    # Rainfed and irrigated cropland never add to more than the cropland in the cell (rounding aside).
+    for irr_row, rain_row, crop_row in zip(grid["irrigated"], grid["rainfed"], crop["share"]):
+        for irr, rain, c in zip(irr_row, rain_row, crop_row):
+            assert (irr < 0) == (rain < 0) == (c < 0)
+            if c >= 0:
+                assert irr + rain <= c + 1
+
+
+# --- the live scorecard ---------------------------------------------------------------
+
+def test_frozen_calls_are_the_calls_the_page_counted():
+    import score_field_calls as score
+    field = json.load(open(FIELD))
+    path = os.path.join(ROOT, "phase3_levels", "data", "field_calls", f"{field['weather']['issued']}.json")
+    if not os.path.exists(path) or field["crossCheck"].get("issued") != field["weather"]["issued"]:
+        pytest.skip("this week's calls are not frozen yet")
+    calls = json.load(open(path))
+    assert calls["keys"] == score.KEYS
+    for k, key in enumerate(score.KEYS):
+        codes = [row[k] for row in calls["states"] if row]
+        counts = field["crossCheck"]["counts"][key]
+        assert (codes.count("s"), codes.count("w"), codes.count("o")) == (counts["stressed"], counts["soon"], counts["ok"]), key
+
+
+def test_outcomes_fall_due_three_weeks_on_and_cross_the_year():
+    import score_field_calls as score
+    assert score.outcome_due(datetime.date(2026, 10, 4)) == (2026, 43, datetime.date(2026, 10, 31))
+    assert score.plus_weeks(2026, 51, 3) == (2027, 2)
+    assert score.season_of(datetime.date(2026, 7, 9)) == "2026 kharif"
+    assert score.season_of(datetime.date(2026, 11, 2)) == "2026-27 rabi"
+    assert score.season_of(datetime.date(2027, 2, 1)) == "2026-27 rabi"
+
+
+def test_the_scorecard_compares_each_mandal_with_itself_on_rainfed_fields():
+    import score_field_calls as score
+    n = len(score.KEYS)
+    short, ok = "s" * n, "o" * n
+    frozen = [{"issued": "2026-10-04", "states": [short, ok, short]}, {"issued": "2026-10-11", "states": [ok, ok, short]}]
+    veg = lambda values: {"rainfed": values}  # noqa: E731
+    outcomes = {"2026-10-04": (veg([50, 50, 50]), veg([40, 60, 30])), "2026-10-11": (veg([50, 50, 50]), veg([55, 50, 30]))}
+    out = score.summarise(frozen, outcomes, rainfed_mandals={0, 1})
+    # Mandal 0 alone had both kinds of call: 40 after "short" against 55 after "comfortable"; 2 is not rainfed.
+    assert out["maize-1"]["within"]["sameSeason"] == {"mandals": 1, "changeGap": -15.0, "afterGap": -15.0, "worsePct": 100.0}
+    assert out["maize-1"]["verdict"] == "untested"

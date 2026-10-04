@@ -1,0 +1,93 @@
+.page, .page * { letter-spacing: 0; }
+.page { padding: 18px 16px 40px; }
+
+/* On screen: the A4 sheet on the desk, with its controls above it. */
+.actions { display: flex; align-items: center; gap: 10px; max-width: 210mm; margin: 0 auto 14px; }
+.spacer { flex: 1; }
+.back { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 500; color: var(--ink-soft); text-decoration: none; }
+.back svg, .primary svg, .secondary svg { width: 15px; height: 15px; }
+.primary, .secondary { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; text-decoration: none; cursor: pointer; }
+.primary { background: var(--navy); color: #fff; border: 1px solid var(--navy); }
+.secondary { background: var(--card); color: var(--ink); border: 1px solid var(--line-strong); }
+.primary:hover, .secondary:hover { box-shadow: var(--shadow-card); }
+
+.sheet {
+  box-sizing: border-box; width: 210mm; min-height: 297mm; max-width: 100%; margin: 0 auto; padding: 14mm 13mm 11mm;
+  display: flex; flex-direction: column; gap: 6mm;
+  background: #fff; color: #0d2138; border-radius: 6px; box-shadow: 0 2px 6px rgba(13, 33, 56, .06), 0 18px 48px rgba(13, 33, 56, .12);
+  font-size: 10.5px; line-height: 1.45;
+}
+
+.head { display: grid; grid-template-columns: minmax(0, 1fr) 62mm; gap: 8mm; align-items: end; padding-bottom: 4mm; border-bottom: 2px solid #0b2a4d; }
+.kicker { font: 600 8.5px var(--font-mono); letter-spacing: .14em; text-transform: uppercase; color: #1f8a8a; }
+.head h1 { margin: 2px 0 0; font: 600 24px/1.15 var(--font-display); color: #071d35; }
+.head p { margin: 0; font-size: 9px; line-height: 1.5; color: #556479; text-align: right; }
+
+.figures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3mm; }
+.figures div { display: grid; gap: 1px; padding: 3mm 3.5mm; border-radius: 6px; background: #f3f6fa; border: 1px solid #e4e9f0; }
+.figures span { font: 600 7.5px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: #667085; }
+.figures b { font: 600 22px/1.15 var(--font-display); color: #071d35; font-variant-numeric: tabular-nums; }
+.figures b small { font-size: 11px; font-weight: 500; color: #556479; }
+.figures b[data-tone="bad"] { color: #b4462f; }
+.figures em { font-style: normal; font-size: 8.5px; line-height: 1.4; color: #556479; }
+
+.columns { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 7mm; align-items: start; }
+.columns h2 { margin: 0 0 1.5mm; font: 600 12.5px var(--font-display); color: #071d35; }
+.sub { margin: 0 0 2.5mm; font-size: 9px; line-height: 1.5; color: #556479; }
+.teams table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.teams th { padding: 0 0 1.5mm; font: 600 7px var(--font-mono); letter-spacing: .04em; text-transform: uppercase; color: #8392a5; text-align: center; border-bottom: 1px solid #d4dce8; }
+.teams th:first-child { width: 28%; text-align: left; }
+.teams th:last-child { width: 36%; text-align: left; }
+.teams td { padding: 1.6mm 0; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+.teams td b { display: block; font-size: 10px; font-weight: 600; color: #0d2138; }
+.teams td small { font-size: 8px; color: #8392a5; }
+.dot { text-align: center; }
+.dot::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; border: 1.3px solid #c65a46; }
+.dot[data-state="on"]::before { background: #c65a46; }
+.dot[data-state="none"]::before { border-color: #d4dce8; border-style: dashed; }
+.why { font-size: 8.5px; line-height: 1.4; color: #33455c; padding-left: 2mm !important; }
+
+.side { display: grid; gap: 5mm; }
+.moves, .notes { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5mm; }
+.moves li { display: flex; justify-content: space-between; gap: 3mm; padding-bottom: 1.5mm; border-bottom: 1px solid #eef2f7; font-size: 9px; color: #33455c; }
+.moves li b { white-space: nowrap; font-variant-numeric: tabular-nums; color: #0d2138; }
+.moves li[data-direction="worse"] b { color: #b4462f; }
+.moves li[data-direction="better"] b { color: #1f7a5f; }
+.notes li { position: relative; padding-left: 3.5mm; font-size: 9.5px; line-height: 1.5; color: #33455c; }
+.notes li::before { content: ""; position: absolute; left: 0; top: 1.6mm; width: 1.6mm; height: 1.6mm; border-radius: 50%; background: #d79b2e; }
+.notes b { color: #071d35; }
+
+.key { margin: 2mm 0 0; font-size: 7.5px; line-height: 1.5; color: #8392a5; }
+.lower { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7mm; padding-top: 4mm; border-top: 1px solid #e4e9f0; }
+.lower h2 { margin: 0 0 2mm; font: 600 12.5px var(--font-display); color: #071d35; }
+.bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.8mm; }
+.bars li { display: grid; grid-template-columns: 26mm minmax(0, 1fr) 13mm 21mm; align-items: center; gap: 2.5mm; font-size: 9px; color: #33455c; }
+.bars b { font: 600 10.5px var(--font-display); color: #071d35; text-align: right; font-variant-numeric: tabular-nums; }
+.bars small { font-size: 7.5px; color: #8392a5; }
+.bar { position: relative; height: 2.4mm; border-radius: 2mm; background: #eef2f7; }
+.bar i { position: absolute; inset: 0 auto 0 0; border-radius: 2mm; background: #1b8fae; }
+.bar[data-tone="dry"] i { background: #d08a3c; }
+.bar s { position: absolute; top: -.8mm; bottom: -.8mm; width: .5mm; background: #071d35; opacity: .55; text-decoration: none; }
+.foot { margin-top: auto; padding-top: 3mm; border-top: 1px solid #d4dce8; font-size: 7.5px; line-height: 1.5; color: #8392a5; }
+
+@media (max-width: 860px) {
+  .sheet { width: 100%; min-height: 0; padding: 18px 16px; }
+  .head, .columns, .lower { grid-template-columns: minmax(0, 1fr); }
+  .head p { text-align: left; }
+  .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .teams { overflow-x: auto; }
+  .teams table { min-width: 520px; }
+}
+
+@media print {
+  @page { size: A4; margin: 0; }
+  .actions { display: none; }
+  .page { padding: 0; }
+  .sheet { width: 210mm; height: 297mm; min-height: 0; padding: 13mm 12mm 10mm; border-radius: 0; box-shadow: none; overflow: hidden; }
+  .head { grid-template-columns: minmax(0, 1fr) 62mm; }
+  .head p { text-align: right; }
+  .figures { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .columns { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+  .lower { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .teams table { min-width: 0; }
+}

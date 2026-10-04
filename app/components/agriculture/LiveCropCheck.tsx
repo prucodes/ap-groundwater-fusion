@@ -96,11 +96,13 @@ function RootZoneChart({ result, dates, today }: { result: CropWaterResult; date
   );
 }
 
-/** How the check has fared for this crop and stage: re-run on past kharif weeks, each mandal compared
- * with itself in the same season, vegetation three weeks after a "short" call against after a "comfortable" one. */
+/** How the check has fared for this crop and stage: re-run on past kharif weeks over rainfed fields, each
+ * mandal compared with itself in the same season, vegetation three weeks after a "short" call against after a
+ * "comfortable" one. The same reading over all cropland, irrigated fields included, sits beneath for reference. */
 function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropKey; stage: number }) {
-  const cell = record.record[`${crop}-${stage}`];
-  if (!cell) return null;
+  const entry = record.record[`${crop}-${stage}`];
+  if (!entry) return null;
+  const cell = entry.rainfed, reference = entry.allCropland;
   const verdict = RECORD_VERDICTS[cell.verdict];
   const same = cell.within.sameSeason, pooled = cell.within.acrossSeasons;
   const seasons = Object.entries(cell.within.seasons).filter(([, s]) => s.mandals > 0 && s.afterGap !== null);
@@ -111,39 +113,51 @@ function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropK
   const points = (value: number) => `${Math.abs(value).toFixed(1)} index point${Math.abs(value).toFixed(1) === "1.0" ? "" : "s"}`;
   const everySeason = seasons.every(([, s]) => s.mandals < 30 || (s.afterGap ?? 0) < 0);
   const sentence = cell.verdict === "untested"
-    ? `Too few mandals had both kinds of call in one season for ${name} at the ${stageName} stage to judge (${same.mandals} mandal-seasons).`
-    : `Re-run on ${record.checks} past kharif weeks (${span}): in the same mandal and season, crop vegetation three weeks after the check called ${name} at the ${stageName} stage short of water read ${points(gap)} ${gap <= 0 ? "lower" : "higher"} than after it called it comfortable (${same.mandals} mandal-seasons).`;
+    ? `Too few rainfed mandals had both kinds of call in one season for ${name} at the ${stageName} stage to judge (${same.mandals} mandal-seasons).`
+    : `Re-run on ${record.checks} past kharif weeks (${span}) in the ${record.rainfed.mandals} mostly rainfed mandals: in the same mandal and season, vegetation on rainfed fields three weeks after the check called ${name} at the ${stageName} stage short of water read ${points(gap)} ${gap <= 0 ? "lower" : "higher"} than after it called it comfortable (${same.mandals} mandal-seasons).`;
   const reading = cell.verdict === "backed" ? "A difference large enough to see from space, in every season."
     : cell.verdict === "weak" ? `Real but small${everySeason ? ", and the same way in every season" : ""}: read the check as where crops need water now, not as a forecast of what the vegetation will do.`
       : cell.verdict === "not borne out" ? `Within a season, vegetation read no worse after its calls than after \u201ccomfortable\u201d ones: here the check is arithmetic on its inputs, not yet evidence.${stage === 0 ? " At the initial stage the young crop covers little ground, so the satellite index mostly sees something else." : ""}` : "";
   const pooledNote = pooled.afterGap !== null && pooled.afterGap < gap - 1
     ? `Pooled across seasons the same mandal reads ${points(pooled.afterGap)} lower after \u201cshort\u201d, but most of that is drier seasons against wetter ones: the check tells a dry season from a wet one, as rainfall alone would.`
     : "";
-  const rows: [string, number, string][] = [
-    ...seasons.map(([year, s]): [string, number, string] => [year, s.afterGap ?? 0, `${s.mandals} mandals`]),
-    ...(same.afterGap !== null ? [["All", same.afterGap, `${same.mandals} mandal-seasons`] as [string, number, string]] : []),
+  type Row = { label: string; value: number; count: string; kind: "season" | "total" | "reference" };
+  const rows: Row[] = [
+    ...seasons.map(([year, s]): Row => ({ label: year, value: s.afterGap ?? 0, count: `${s.mandals} mandals`, kind: "season" })),
+    ...(same.afterGap !== null ? [{ label: "Rainfed", value: same.afterGap, count: `${same.mandals} mandal-seasons`, kind: "total" } as Row] : []),
+    ...(reference.within.sameSeason.afterGap !== null
+      ? [{ label: "All cropland", value: reference.within.sameSeason.afterGap, count: `${RECORD_VERDICTS[reference.verdict].label.toLowerCase()}`, kind: "reference" } as Row] : []),
   ];
-  const scale = Math.max(record.rules.backedPoints + 2, ...rows.map(([, value]) => Math.abs(value)));
+  const scale = Math.max(record.rules.backedPoints + 2, ...rows.map(row => Math.abs(row.value)));
   const bar = 50 - (record.rules.backedPoints / scale) * 50;
   return <div className={styles.record} data-testid="field-week-record" data-verdict={cell.verdict}>
     <div className={styles.recordText}>
-      <span className={styles.recordVerdict} style={{ "--tone": verdict.tone } as CSSProperties}><i />{verdict.label}</span>
+      <span className={styles.recordVerdict} style={{ "--tone": verdict.tone } as CSSProperties}><i />{verdict.label}<em>rainfed fields</em></span>
       <p>{sentence} {reading}</p>
       {pooledNote ? <p className={styles.recordPooled}>{pooledNote}</p> : null}
-      <small>{record.acrossCaveat} Weather as it happened (ERA5), not the forecast; vegetation from the satellite index over cropland, which the soil model does not use.</small>
+      {record.live && record.live.frozen ? (() => {
+        const live = record.live, score = live.record[`${crop}-${stage}`]?.within.sameSeason;
+        return <p className={styles.recordLive} data-testid="field-week-scorecard">
+          <span><i aria-hidden="true" />Live scorecard</span>
+          {live.scored && score && score.afterGap !== null
+            ? <>On the real forecast calls since {day(live.firstFrozen, false)}, frozen as made: {points(score.afterGap)} {score.afterGap <= 0 ? "lower" : "higher"} after &ldquo;short&rdquo; ({score.mandals} mandal-seasons, {live.scored} week{live.scored === 1 ? "" : "s"} scored).</>
+            : <>Each week&rsquo;s calls on the real forecast are frozen as made and scored three weeks later against the same satellite index. {live.frozen} week{live.frozen === 1 ? "" : "s"} frozen since {day(live.firstFrozen, false)}{live.nextDue ? <>; the first score is due {day(live.nextDue, false)}</> : null}.</>}
+        </p>;
+      })() : null}
+      <small>{record.rainfed.text} {record.acrossCaveat} Weather as it happened (ERA5), not the forecast; vegetation from the satellite index, which the soil model does not use.</small>
     </div>
-    <figure className={styles.recordSeasons} aria-label={rows.map(([label, value, count]) => `${label}: ${value} points, ${count}`).join("; ")}>
+    <figure className={styles.recordSeasons} aria-label={rows.map(row => `${row.label}: ${row.value} points, ${row.count}`).join("; ")}>
       <figcaption>Vegetation after &ldquo;short&rdquo;, against after &ldquo;comfortable&rdquo; <span>Index points, same mandal and season. Dashed: the {record.rules.backedPoints}-point bar for &ldquo;backed&rdquo;.</span></figcaption>
-      {rows.map(([label, value, count]) => {
-        const width = (Math.abs(value) / scale) * 50;
-        return <div key={label} className={styles.seasonRow} data-total={label === "All" ? "" : undefined}>
-          <span>{label}</span>
+      {rows.map(row => {
+        const width = (Math.abs(row.value) / scale) * 50;
+        return <div key={row.label} className={styles.seasonRow} data-kind={row.kind}>
+          <span>{row.label}</span>
           <span className={styles.seasonTrack}>
-            <i style={{ left: value < 0 ? `${50 - width}%` : "50%", width: `${width}%` }} data-dir={value < 0 ? "lower" : "higher"} />
+            <i style={{ left: row.value < 0 ? `${50 - width}%` : "50%", width: `${width}%` }} data-dir={row.value < 0 ? "lower" : "higher"} />
             <b aria-hidden="true" />
             <u aria-hidden="true" style={{ left: `${bar}%` }} />
           </span>
-          <em>{value > 0 ? "+" : value < 0 ? "\u2212" : ""}{Math.abs(value).toFixed(1)}<small>{count}</small></em>
+          <em>{row.value > 0 ? "+" : row.value < 0 ? "\u2212" : ""}{Math.abs(row.value).toFixed(1)}<small>{row.count}</small></em>
         </div>;
       })}
       <div className={styles.seasonAxis} aria-hidden="true"><span>&larr; lower after &ldquo;short&rdquo;<small>, as the check expects</small></span><span>against it &rarr;</span></div>
@@ -211,6 +225,10 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
   const activeRow = evidence.mandals[selected];
   const place = activeRow ? placeName(activeRow.mandal) : "this mandal";
   const choices = evidence.mandals.map((row, index) => ({ index, label: `${placeName(row.mandal)} · ${placeName(row.district)}` })).sort((a, b) => a.label.localeCompare(b.label));
+  const irrigation = live.irrigation;
+  const irrigatedAt = (index: number) => irrigation?.pct[index] ?? null;
+  const mostlyIrrigated = (index: number) => { const pct = irrigatedAt(index); return pct !== null && irrigation !== null && pct >= irrigation.belowPct; };
+  const shortRainfed = irrigation ? results.filter((result, index) => result?.state === "stressed" && irrigatedAt(index) !== null && !mostlyIrrigated(index)).length : null;
   const lede = counts.stressed
     ? <><strong>{counts.stressed}</strong> mandals where {profile.name.toLowerCase()} at the {CROP_STAGES[stage].toLowerCase()} stage is already short of water{counts.soon ? <>, and <strong>{counts.soon}</strong> more within seven days on the forecast</> : null}.</>
     : counts.soon ? <>No mandal is short of water yet for {profile.name.toLowerCase()} at the {CROP_STAGES[stage].toLowerCase()} stage; <strong>{counts.soon}</strong> would be within seven days on the forecast.</>
@@ -237,7 +255,8 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
       </div>
     </div>
 
-    <p className={styles.lede} data-testid="field-week-lede">{lede}</p>
+    <p className={styles.lede} data-testid="field-week-lede">{lede}{irrigation && counts.stressed && shortRainfed !== null
+      ? <span className={styles.ledeNote} data-testid="field-week-rainfed"> <strong>{shortRainfed}</strong> of the {counts.stressed} are mostly rainfed, where a rainfed water balance applies; mostly irrigated mandals are hatched.</span> : null}</p>
 
     <div className={styles.tiles} role="group" aria-label="Mandals by crop water state; select one to pick it out on the map">
       {STATE_ORDER.map(key => <button key={key} type="button" className={styles.tile} data-state={key} aria-pressed={emphasis === key} data-testid={`field-week-${key}`}
@@ -253,6 +272,11 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
     <div className={styles.grid}>
       <div ref={figure} className={styles.mapFigure} data-testid="field-week-map" data-crop={crop} data-stage={stage} data-agrees={agrees === null ? undefined : String(agrees)} onPointerLeave={() => setHover(null)}>
         <svg viewBox={`0 0 ${mapView.width} ${mapView.height}`} role="group" aria-label={`Crop water state by mandal: ${profile.name}, ${CROP_STAGES[stage]}`}>
+          <defs>
+            <pattern id="field-week-irrigated" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="5" stroke="#ffffff" strokeWidth="1.6" strokeOpacity="0.85" />
+            </pattern>
+          </defs>
           {mounted ? evidence.mandals.map((row, index) => {
             const result = results[index] ?? null;
             const state = stateOf(result);
@@ -264,10 +288,14 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
               onClick={() => setSelected(index)}
               onKeyDown={event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); setSelected(index); } }} />;
           }) : null}
+          {mounted && irrigation ? <g className={styles.irrigatedLayer} aria-hidden="true" data-testid="field-week-irrigated">
+            {evidence.mandals.map((row, index) => mostlyIrrigated(index) ? <path key={index} d={row.path} fill="url(#field-week-irrigated)" /> : null)}
+          </g> : null}
         </svg>
         <div className={styles.mapKey} aria-hidden="true">
           {STATE_ORDER.map(key => <span key={key}><i style={{ background: CROP_WATER_STATES[key].color }} />{CROP_WATER_STATES[key].short}</span>)}
           <span><i style={{ background: SEVERE_COLOR }} />Severe</span>
+          {irrigation ? <span><i className={styles.hatchSwatch} />Mostly irrigated</span> : null}
         </div>
         {hover && evidence.mandals[hover.index] ? (() => {
           const row = evidence.mandals[hover.index], result = results[hover.index] ?? null;
@@ -279,6 +307,7 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
               <div><dt>Easily usable water</dt><dd>{mm(result.reserve)}</dd></div>
               <div><dt>Water use / day</dt><dd>{(result.kc * result.etoMean).toFixed(1)} mm</dd></div>
               <div><dt>Useful rain, 7 days</dt><dd>{mm(result.rainUsed)}</dd></div>
+              {irrigatedAt(hover.index) !== null ? <div><dt>Cropland irrigated</dt><dd>{Math.round(irrigatedAt(hover.index)!)}%</dd></div> : null}
             </dl> : <p>No unique soil-moisture value for this boundary.</p>}
           </div>;
         })() : null}
@@ -299,6 +328,10 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
             <div><dt><IconCloudRain />Useful rain, 7 days</dt><dd>{mm(active.rainUsed)}<small>forecast; daily rain under 0.2 ETo left out</small></dd></div>
             <div><dt><IconLeaf />Water use now</dt><dd>{Math.round(active.ksNow * 100)}%<small>of the unstressed rate (FAO-56 Ks)</small></dd></div>
           </dl>
+          {irrigatedAt(selected) !== null ? <p className={styles.irrigatedNote} data-testid="field-week-irrigated-share">
+            <b>{Math.round(irrigatedAt(selected)!)}%</b> of {place}&rsquo;s cropland was mapped irrigated in rabi 2020&ndash;21 ({irrigation!.source}).{" "}
+            {mostlyIrrigated(selected) ? "Most fields here have a canal or a well, so read the check for the rainfed ones." : "Mostly rainfed: the check reads these fields as they are."}
+          </p> : null}
           <div className={styles.actions}>
             <button type="button" className={styles.primary} onClick={openLab} data-testid="open-in-lab">Work it through in the crop-water lab <IconArrowRight /></button>
             {activeRow?.id ? <Link href={`/mandals/${activeRow.id}`} className={styles.secondary}>Mandal record <IconArrowRight /></Link> : null}
@@ -327,7 +360,7 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
       <summary>How the check works, and what it is not</summary>
       <p><strong>An FAO-56 root-zone water balance, mandal by mandal.</strong> It starts from the soil moisture APWRIMS publishes for {day(live.soilAsOf)} (NRSC&rsquo;s VIC model: plant-available water in the top 5, 30, 100 and 150 cm as a share of what the soil holds) and steps the root zone forward one day at a time to {day(lastDay)}: rain counts in full unless it is under a fifth of the day&rsquo;s reference evapotranspiration (FAO-56 treats that as evaporated), and the crop uses Ks × Kc × ETo. Stress begins when the crop has used the share p of the root zone&rsquo;s available water that FAO-56 Table 22 gives it, adjusted for this week&rsquo;s rate of use; below that, its water use falls in proportion (Eq. 84). &ldquo;Short now&rdquo; means the crop is below that line today; &ldquo;severely&rdquo; means at half its unstressed rate or less.</p>
       <p><strong>Inputs.</strong> Reference evapotranspiration (FAO-56 Penman-Monteith) and rain: {live.weather.source} (<a href={live.weather.url} target="_blank" rel="noreferrer">model {live.weather.model}</a>, {live.weather.licence}), at a point inside each mandal; days before today are the model&rsquo;s recent runs, not station readings. How much water the soil holds: <a href={live.capacity.url} target="_blank" rel="noreferrer">ISRIC SoilGrids 2.0</a> (field capacity minus wilting point, by depth; predicted from soil profiles, {live.capacity.licence}). Crop coefficient, root depth and p: <a href={CROP_REFERENCE_URL} target="_blank" rel="noreferrer">FAO-56 Table 12</a> and <a href={ROOT_REFERENCE_URL} target="_blank" rel="noreferrer">Table 22</a>, the larger root depth that footnote gives for rainfed crops, capped at {MAX_ROOT_M} m (the deepest the soil model reports); 0.2 m at the initial stage. Chilli and red gram use the nearest FAO-56 rows, as in the lab.</p>
-      <p><strong>What it is not.</strong> The crop and stage are chosen here, not observed: crop-sown records are not connected, so a mandal is checked whether or not the crop grows there. No irrigation, runoff from heavy rain or capillary rise is modelled. It is a screening view for where to look, not a watering instruction, a crop-loss estimate or a drought declaration.{agrees ? " The counts on this page are reproduced independently by the pipeline's own copy of the calculation." : ""}</p>
+      <p><strong>What it is not.</strong> The crop and stage are chosen here, not observed: crop-sown records are not connected, so a mandal is checked whether or not the crop grows there. No irrigation, runoff from heavy rain or capillary rise is modelled{irrigation ? <>; mandals where half or more of the cropland was mapped irrigated in rabi 2020&ndash;21 (<a href={irrigation.url} target="_blank" rel="noreferrer">ESA WorldCereal</a>, 10 m, CC BY 4.0) are hatched, since the balance speaks for their rainfed fields only</> : null}. It is a screening view for where to look, not a watering instruction, a crop-loss estimate or a drought declaration.{agrees ? " The counts on this page are reproduced independently by the pipeline's own copy of the calculation." : ""}</p>
     </details>
   </section>;
 }

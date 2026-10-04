@@ -28,6 +28,8 @@ const flag = (name, fallback) => {
 const port = Number(flag("port", 3100));
 const host = flag("bind", "127.0.0.1");
 const root = resolve(flag("directory", "out"));
+// --base /repo-name: serve a build made with that PAGES_BASE_PATH (the digest printer uses it).
+const base = flag("base", "").replace(/\/$/, "");
 
 const TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -113,7 +115,9 @@ const server = createServer(async (request, response) => {
     response.writeHead(405, { allow: "GET, HEAD" }).end();
     return;
   }
-  const file = await resolveFile(request.url ?? "/");
+  // A build made for a Pages project site has every URL under the repository name.
+  const url = request.url ?? "/";
+  const file = await resolveFile(base && url.startsWith(base) ? url.slice(base.length) || "/" : url);
   if (!file) {
     response.writeHead(404, { "content-type": "text/plain; charset=utf-8" });
     response.end(request.method === "HEAD" ? undefined : "Not found");
