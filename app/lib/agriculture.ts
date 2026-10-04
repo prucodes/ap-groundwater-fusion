@@ -234,15 +234,48 @@ export function buildAgricultureEvidence(
   };
 }
 
-// FAO-56 Table 12 standard-condition coefficients. These are reference
-// endpoints, not AP-calibrated calendars or crop-specific watering advice.
+// FAO-56 standard-condition references: crop coefficients and maximum heights
+// from Table 12, maximum effective rooting depths from Table 22. They are
+// reference endpoints, not AP-calibrated calendars or crop-specific watering
+// advice. Where FAO-56 has no row for the crop, the nearest row is used and
+// the note says so. `form` picks how the field section draws the plant.
+type CropProfile = {
+  name: string;
+  kc: readonly [number, number, number];
+  rootM: { min: number; max: number };
+  heightM: number;
+  rootBasis: string;
+  form: "cereal" | "groundnut" | "bush";
+  note: string;
+  /** Shown beside the crop picker when FAO-56 has no row for the crop. */
+  standIn?: string;
+};
+
 export const CROP_REFERENCE = {
-  maize: { name: "Maize", kc: [0.3, 1.2, 0.35], note: "Grain maize; end coefficient assumes field-dried grain." },
-  groundnut: { name: "Groundnut", kc: [0.4, 1.15, 0.6], note: "Groundnut; standard-condition reference coefficients." },
-} as const;
+  maize: { name: "Maize", kc: [0.3, 1.2, 0.35], rootM: { min: 1.0, max: 1.7 }, heightM: 2.0, rootBasis: "FAO-56 Table 22", form: "cereal",
+    note: "Grain maize; end coefficient assumes field-dried grain." },
+  groundnut: { name: "Groundnut", kc: [0.4, 1.15, 0.6], rootM: { min: 0.5, max: 1.0 }, heightM: 0.4, rootBasis: "FAO-56 Table 22", form: "groundnut",
+    note: "Groundnut; standard-condition reference coefficients." },
+  cotton: { name: "Cotton", kc: [0.35, 1.15, 0.6], rootM: { min: 1.0, max: 1.7 }, heightM: 1.4, rootBasis: "FAO-56 Table 22", form: "bush",
+    note: "Cotton; Table 12 gives 1.15–1.20 at mid-season and 0.70–0.50 at the end; 1.15 and the middle of the end range are used. Drawn at 1.4 m (Table 12: 1.2–1.5 m)." },
+  chilli: { name: "Chilli", kc: [0.6, 1.05, 0.9], rootM: { min: 0.5, max: 1.0 }, heightM: 0.7, rootBasis: "FAO-56, sweet pepper", form: "bush",
+    note: "Chilli; FAO-56 lists only sweet (bell) pepper, whose row is used here. Its end coefficient (0.90) assumes fresh harvest; chilli left to dry on the plant would use less late in the season.",
+    standIn: "Sweet-pepper values: FAO-56 has no chilli row." },
+  redgram: { name: "Red gram", kc: [0.4, 1.15, 0.35], rootM: { min: 0.6, max: 2.0 }, heightM: 1.5, rootBasis: "FAO-56 pulses · ICRISAT", form: "bush",
+    note: "Red gram (pigeon pea); FAO-56 has no pigeon-pea row, so its coefficients are the general 'beans, dry and pulses' row. Roots from that row's 0.6 m to the 2 m ICRISAT gives for the taproot; drawn at 1.5 m (ICRISAT: 1–4 m by variety). A long-duration crop: the three stages span longer than for the others.",
+    standIn: "Pulses values, with ICRISAT's rooting depth and height: FAO-56 has no pigeon-pea row." },
+  bengalgram: { name: "Bengal gram", kc: [0.4, 1.0, 0.35], rootM: { min: 0.6, max: 1.0 }, heightM: 0.4, rootBasis: "FAO-56 Table 22", form: "bush",
+    note: "Bengal gram (chick pea); a rabi crop in Andhra Pradesh, largely grown on the moisture the soil holds after the monsoon." },
+  jowar: { name: "Jowar", kc: [0.3, 1.05, 0.55], rootM: { min: 1.0, max: 2.0 }, heightM: 1.5, rootBasis: "FAO-56 Table 22", form: "cereal",
+    note: "Jowar (grain sorghum); Table 12 gives 1.00–1.10 at mid-season, and the middle is used. Drawn at 1.5 m (Table 12: 1–2 m)." },
+} as const satisfies Record<string, CropProfile>;
+/** ICRISAT's botanical description of pigeonpea, for the red gram rooting depth and height. */
+export const PIGEONPEA_REFERENCE_URL = "https://oar.icrisat.org/10485/";
 export type CropKey = keyof typeof CROP_REFERENCE;
 export const CROP_STAGES = ["Initial", "Mid-season", "End-season"] as const;
 export const CROP_REFERENCE_URL = "https://www.fao.org/4/x0490e/x0490e0b.htm";
+/** FAO-56 Chapter 8, Table 22: maximum effective rooting depths. */
+export const ROOT_REFERENCE_URL = "https://www.fao.org/4/x0490e/x0490e0e.htm";
 export const DEFAULT_BUDGET = { crop: "maize" as CropKey, stage: 1, eto: 4, rain: 8, reserve: 14 };
 
 /** Illustrative seven-day total only. Effective rain is already net of losses;

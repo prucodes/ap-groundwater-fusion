@@ -59,6 +59,40 @@ for (const width of [1440, 390]) {
     await expect(scene).toHaveAttribute("data-crop", "groundnut");
     await expect(section).toContainText("0.50–1.0 m");
     await expect(page.getByRole("group", { name: "Crop growth stage" }).locator("svg")).toHaveCount(3);
+    await expect(page.getByTestId("crop-stand-in")).toHaveCount(0);
+
+    // The other reference crops: roots, coefficients, and the source for each;
+    // where FAO-56 has no row for the crop, the stand-in is named beside the picker.
+    const crops = [
+      { key: "cotton", roots: "1.0–1.7 m", basis: "FAO-56 Table 22", kc: ["0.35", "1.15", "0.60"], standIn: null },
+      { key: "chilli", roots: "0.50–1.0 m", basis: "FAO-56, sweet pepper", kc: ["0.60", "1.05", "0.90"], standIn: "no chilli row" },
+      { key: "redgram", roots: "0.60–2.0 m", basis: "FAO-56 pulses · ICRISAT", kc: ["0.40", "1.15", "0.35"], standIn: "no pigeon-pea row" },
+      { key: "bengalgram", roots: "0.60–1.0 m", basis: "FAO-56 Table 22", kc: ["0.40", "1.00", "0.35"], standIn: null },
+      { key: "jowar", roots: "1.0–2.0 m", basis: "FAO-56 Table 22", kc: ["0.30", "1.05", "0.55"], standIn: null },
+    ];
+    for (const crop of crops) {
+      await page.getByRole("combobox", { name: "Reference crop" }).selectOption(crop.key);
+      await expect(scene).toHaveAttribute("data-crop", crop.key);
+      await expect(section).toContainText(crop.roots);
+      await expect(section).toContainText(crop.basis);
+      for (const [i, stage] of ["Initial", "Mid-season", "End-season"].entries()) {
+        await expect(page.getByRole("button", { name: `${stage} Kc ${crop.kc[i]}`, exact: true })).toBeVisible();
+      }
+      if (crop.standIn) await expect(page.getByTestId("crop-stand-in")).toContainText(crop.standIn);
+      else await expect(page.getByTestId("crop-stand-in")).toHaveCount(0);
+    }
+    await expect(page.locator(`a[href="https://oar.icrisat.org/10485/"]`)).toHaveCount(0);
+    await page.getByRole("combobox", { name: "Reference crop" }).selectOption("redgram");
+    await expect(page.locator(`a[href="https://oar.icrisat.org/10485/"]`)).toHaveCount(1);
+
+    // Each crop is drawn by its habit: open bolls, red pods, a grain head.
+    await page.getByRole("button", { name: "End-season Kc 0.35", exact: true }).click();
+    await page.getByRole("combobox", { name: "Reference crop" }).selectOption("cotton");
+    await expect(section.locator('circle[class*="lint"]').first()).toBeVisible();
+    await page.getByRole("combobox", { name: "Reference crop" }).selectOption("chilli");
+    await expect(section.locator('path[class*="podRed"]').first()).toBeVisible();
+    await page.getByRole("combobox", { name: "Reference crop" }).selectOption("jowar");
+    await expect(section.locator('ellipse[class*="headRipe"]').first()).toBeVisible();
 
     await scene.screenshot({ path: testInfo.outputPath(`field-section-${width}.png`) });
     expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
