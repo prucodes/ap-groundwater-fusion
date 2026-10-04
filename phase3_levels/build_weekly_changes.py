@@ -26,6 +26,7 @@ FILES = {
     "groundwater": "mandal_groundwater_records_v2.json",
     "monsoon": "monsoon_watch.json",
     "enso": "enso_outlook.json",
+    "field": "field_signals.json",
 }
 STATUS_RANK = {"stable": 0, "watch": 1, "stress": 2}
 
@@ -153,12 +154,23 @@ def enso_items(old, new):
                  note=dig(new, "alert"))]
 
 
+def field_items(old, new):
+    veg_as = lambda d: ((dig(d, "vegetation", "averaged") or [{}])[-1] or {}).get("approxEnd")  # noqa: E731
+    return [
+        item("vegSevere", "Mandals whose crop vegetation is severely below normal", "mandals", "lower", "/agriculture/",
+             dig(old, "vegetation", "summary", "severe"), dig(new, "vegetation", "summary", "severe"), veg_as(old), veg_as(new)),
+        item("cropsShort", "Mandals where most field crops are short of water (4 of 7 at mid-season)", "mandals", "lower",
+             "/agriculture/#field-week", dig(old, "crossCheck", "mostCropsShortMid"), dig(new, "crossCheck", "mostCropsShortMid"),
+             dig(old, "crossCheck", "issued"), dig(new, "crossCheck", "issued")),
+    ]
+
+
 def build(load_before=published, load_after=current):
     old = {key: load_before(name) for key, name in FILES.items()}
     new = {key: load_after(name) for key, name in FILES.items()}
     gw_items, gw_summary = groundwater_items(old["groundwater"], new["groundwater"])
     items = (water_items(old["water"], new["water"]) + drought_items(old["drought"], new["drought"])
-             + gw_items + enso_items(old["enso"], new["enso"]))
+             + gw_items + field_items(old["field"], new["field"]) + enso_items(old["enso"], new["enso"]))
     drought_changes = dig(new["drought"], "state", "changes") or {"worse": [], "better": []}
     return {
         "contractVersion": CONTRACT_VERSION,

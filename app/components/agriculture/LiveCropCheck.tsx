@@ -9,7 +9,7 @@
 import Link from "next/link";
 import { useEffect, useId, useMemo, useRef, useState, type CSSProperties } from "react";
 import { CROP_REFERENCE, CROP_REFERENCE_URL, CROP_STAGES, DEFAULT_BUDGET, ROOT_REFERENCE_URL, type AgricultureEvidence, type CropKey } from "../../lib/agriculture";
-import { CROP_WATER_STATES, MAX_ROOT_M, OUTLOOK_DAYS, SEVERE_COLOR, cropWaterCheck, cropWaterCounts, type CropWaterResult, type CropWaterState, type LiveField } from "../../lib/cropWater";
+import { CROP_WATER_STATES, MAX_ROOT_M, OUTLOOK_DAYS, RECORD_VERDICTS, SEVERE_COLOR, cropWaterCheck, cropWaterCounts, type CheckRecord, type CropWaterResult, type CropWaterState, type LiveField } from "../../lib/cropWater";
 import { IconArrowRight, IconCloudRain, IconDroplet, IconLeaf, IconSun } from "../icons";
 import { day, placeName } from "./waterContextFormat";
 import styles from "./LiveCropCheck.module.css";
@@ -96,8 +96,64 @@ function RootZoneChart({ result, dates, today }: { result: CropWaterResult; date
   );
 }
 
-export function LiveCropCheck({ live, evidence, mapView, onOpenLab }: {
+/** How the check has fared for this crop and stage: re-run on past kharif weeks, each mandal compared
+ * with itself in the same season, vegetation three weeks after a "short" call against after a "comfortable" one. */
+function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropKey; stage: number }) {
+  const cell = record.record[`${crop}-${stage}`];
+  if (!cell) return null;
+  const verdict = RECORD_VERDICTS[cell.verdict];
+  const same = cell.within.sameSeason, pooled = cell.within.acrossSeasons;
+  const seasons = Object.entries(cell.within.seasons).filter(([, s]) => s.mandals > 0 && s.afterGap !== null);
+  const first = record.seasons[0], last = record.seasons[record.seasons.length - 1];
+  const span = !record.seasons.length ? "" : first === last ? String(first) : `${first}–${String(last).slice(2)}`;
+  const name = CROP_REFERENCE[crop].name.toLowerCase(), stageName = CROP_STAGES[stage].toLowerCase();
+  const gap = same.afterGap ?? 0;
+  const points = (value: number) => `${Math.abs(value).toFixed(1)} index point${Math.abs(value).toFixed(1) === "1.0" ? "" : "s"}`;
+  const everySeason = seasons.every(([, s]) => s.mandals < 30 || (s.afterGap ?? 0) < 0);
+  const sentence = cell.verdict === "untested"
+    ? `Too few mandals had both kinds of call in one season for ${name} at the ${stageName} stage to judge (${same.mandals} mandal-seasons).`
+    : `Re-run on ${record.checks} past kharif weeks (${span}): in the same mandal and season, crop vegetation three weeks after the check called ${name} at the ${stageName} stage short of water read ${points(gap)} ${gap <= 0 ? "lower" : "higher"} than after it called it comfortable (${same.mandals} mandal-seasons).`;
+  const reading = cell.verdict === "backed" ? "A difference large enough to see from space, in every season."
+    : cell.verdict === "weak" ? `Real but small${everySeason ? ", and the same way in every season" : ""}: read the check as where crops need water now, not as a forecast of what the vegetation will do.`
+      : cell.verdict === "not borne out" ? `Within a season, vegetation read no worse after its calls than after \u201ccomfortable\u201d ones: here the check is arithmetic on its inputs, not yet evidence.${stage === 0 ? " At the initial stage the young crop covers little ground, so the satellite index mostly sees something else." : ""}` : "";
+  const pooledNote = pooled.afterGap !== null && pooled.afterGap < gap - 1
+    ? `Pooled across seasons the same mandal reads ${points(pooled.afterGap)} lower after \u201cshort\u201d, but most of that is drier seasons against wetter ones: the check tells a dry season from a wet one, as rainfall alone would.`
+    : "";
+  const rows: [string, number, string][] = [
+    ...seasons.map(([year, s]): [string, number, string] => [year, s.afterGap ?? 0, `${s.mandals} mandals`]),
+    ...(same.afterGap !== null ? [["All", same.afterGap, `${same.mandals} mandal-seasons`] as [string, number, string]] : []),
+  ];
+  const scale = Math.max(record.rules.backedPoints + 2, ...rows.map(([, value]) => Math.abs(value)));
+  const bar = 50 - (record.rules.backedPoints / scale) * 50;
+  return <div className={styles.record} data-testid="field-week-record" data-verdict={cell.verdict}>
+    <div className={styles.recordText}>
+      <span className={styles.recordVerdict} style={{ "--tone": verdict.tone } as CSSProperties}><i />{verdict.label}</span>
+      <p>{sentence} {reading}</p>
+      {pooledNote ? <p className={styles.recordPooled}>{pooledNote}</p> : null}
+      <small>{record.acrossCaveat} Weather as it happened (ERA5), not the forecast; vegetation from the satellite index over cropland, which the soil model does not use.</small>
+    </div>
+    <figure className={styles.recordSeasons} aria-label={rows.map(([label, value, count]) => `${label}: ${value} points, ${count}`).join("; ")}>
+      <figcaption>Vegetation after &ldquo;short&rdquo;, against after &ldquo;comfortable&rdquo; <span>Index points, same mandal and season. Dashed: the {record.rules.backedPoints}-point bar for &ldquo;backed&rdquo;.</span></figcaption>
+      {rows.map(([label, value, count]) => {
+        const width = (Math.abs(value) / scale) * 50;
+        return <div key={label} className={styles.seasonRow} data-total={label === "All" ? "" : undefined}>
+          <span>{label}</span>
+          <span className={styles.seasonTrack}>
+            <i style={{ left: value < 0 ? `${50 - width}%` : "50%", width: `${width}%` }} data-dir={value < 0 ? "lower" : "higher"} />
+            <b aria-hidden="true" />
+            <u aria-hidden="true" style={{ left: `${bar}%` }} />
+          </span>
+          <em>{value > 0 ? "+" : value < 0 ? "\u2212" : ""}{Math.abs(value).toFixed(1)}<small>{count}</small></em>
+        </div>;
+      })}
+      <div className={styles.seasonAxis} aria-hidden="true"><span>&larr; lower after &ldquo;short&rdquo;<small>, as the check expects</small></span><span>against it &rarr;</span></div>
+    </figure>
+  </div>;
+}
+
+export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = null }: {
   live: LiveField | null; evidence: AgricultureEvidence; mapView: { width: number; height: number }; onOpenLab: (preset: LabPreset) => void;
+  record?: CheckRecord | null;
 }) {
   const [crop, setCrop] = useState<CropKey>(DEFAULT_BUDGET.crop);
   const [stage, setStage] = useState(DEFAULT_BUDGET.stage);
@@ -191,6 +247,8 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab }: {
         <em>{key === "unknown" ? "kept visible, never counted as safe" : `${known ? Math.round((counts[key] / known) * 100) : 0}% of ${known} with a soil value`}{key === "stressed" && counts.severe ? ` · ${counts.severe} severely` : ""}</em>
       </button>)}
     </div>
+
+    {record ? <RecordPanel record={record} crop={crop} stage={stage} /> : null}
 
     <div className={styles.grid}>
       <div ref={figure} className={styles.mapFigure} data-testid="field-week-map" data-crop={crop} data-stage={stage} data-agrees={agrees === null ? undefined : String(agrees)} onPointerLeave={() => setHover(null)}>

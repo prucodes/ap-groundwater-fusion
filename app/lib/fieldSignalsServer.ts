@@ -77,7 +77,15 @@ function soilByBoundary(count: number) {
 /** What the crop water check needs, sliced to the days it uses: from the soil-moisture
  * date to the last outlook day. Null when the soil-moisture date falls outside the
  * forecast window (one of the two feeds has not refreshed). */
+let liveCache: LiveField | null | undefined;
+
 export function liveField(): LiveField | null {
+  if (liveCache !== undefined) return liveCache;
+  liveCache = buildLiveField();
+  return liveCache;
+}
+
+function buildLiveField(): LiveField | null {
   const weather = fieldSignals.weather, soil = waterContext?.soilMoisture, capacity = fieldSignals.soilCapacity;
   if (!weather || !soil?.asOf) return null;
   const start = weather.dates.indexOf(soil.asOf), issued = weather.dates.indexOf(weather.issued);

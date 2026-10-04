@@ -130,3 +130,19 @@ export const CROP_WATER_STATES: Record<CropWaterState, { label: string; short: s
   unknown: { label: "No soil-moisture value", short: "No value", color: "#d3d9dc" },
 };
 export const SEVERE_COLOR = "#8c2f29";
+
+/** How the check has fared on past kharif weeks (phase3_levels/build_crop_water_record.py). */
+export type WithinCell = { mandals: number; changeGap: number | null; afterGap: number | null; worsePct: number | null };
+export type RecordVerdict = "backed" | "weak" | "not borne out" | "untested";
+export type CheckRecord = {
+  generatedAt: string; question: string; outcome: string; acrossCaveat: string; weather: string; seasons: number[]; checks: number;
+  rules: { backedPoints: number; notedPoints: number; minMandals: number; text: string };
+  /** sameSeason counts mandal-seasons and drives the verdict; acrossSeasons pools a mandal's seasons, for reference. */
+  record: Record<string, { within: { sameSeason: WithinCell; acrossSeasons: WithinCell; seasons: Record<string, WithinCell> }; verdict: RecordVerdict }>;
+};
+export const RECORD_VERDICTS: Record<RecordVerdict, { label: string; tone: string }> = {
+  backed: { label: "Backed by its record", tone: "#27745d" },
+  weak: { label: "Weak record", tone: "#b17a17" },
+  "not borne out": { label: "Not borne out", tone: "#b64c42" },
+  untested: { label: "Untested", tone: "#6b7780" },
+};

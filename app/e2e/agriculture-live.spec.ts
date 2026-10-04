@@ -1,5 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import fieldJson from "../data/field_signals.json";
+import recordJson from "../data/crop_water_record.json";
+import type { CheckRecord } from "../lib/cropWater";
 
 /* This week in the fields. The crop water check runs in the browser; the
    pipeline runs its own copy of the same FAO-56 water balance for every crop
@@ -8,6 +10,7 @@ import fieldJson from "../data/field_signals.json";
 type Counts = { stressed: number; severe: number; soon: number; ok: number; unknown: number };
 const check = (fieldJson as unknown as { crossCheck: { counts: Record<string, Counts> } }).crossCheck.counts;
 const assessment = (fieldJson as unknown as { assessment: { year: string; state: { stagePct: number } } }).assessment;
+const record = recordJson as unknown as CheckRecord;
 
 async function pick(page: Page, crop: string, stage: string) {
   const section = page.getByTestId("field-week");
@@ -78,6 +81,26 @@ test("the water watch colours by vegetation or the official category, with its o
   await colour.getByRole("button", { name: "Groundwater category" }).click();
   await expect(page.getByTestId("watch-legend")).toContainText("Over-exploited");
   await expect(page.getByTestId("agriculture-map").locator('path[aria-label*="Groundwater category"]').first()).toBeVisible();
+});
+
+test("the check carries its track record for the crop and stage chosen, with every season shown", async ({ page }) => {
+  await page.goto("/agriculture/");
+  await page.getByTestId("field-week").scrollIntoViewIfNeeded();
+  for (const [crop, stage, key] of [["Maize", "Mid-season", "maize-1"], ["Chilli", "Initial", "chilli-0"]] as const) {
+    await pick(page, crop, stage);
+    const panel = page.getByTestId("field-week-record");
+    const entry = record.record[key];
+    await expect(panel).toHaveAttribute("data-verdict", entry.verdict);
+    // The verdict and its sentence use the same mandal in the same season, never the pooled seasons.
+    const same = entry.within.sameSeason;
+    if (entry.verdict !== "untested") {
+      await expect(panel.locator("p").first()).toContainText(`(${same.mandals} mandal-seasons)`);
+      await expect(panel.locator("p").first()).toContainText(`${Math.abs(same.afterGap!).toFixed(1)} index point`);
+    }
+    const shown = Object.values(entry.within.seasons).filter(season => season.mandals > 0 && season.afterGap !== null).length;
+    await expect(panel.locator("figure > div").filter({ hasText: /mandals$/ })).toHaveCount(shown);
+    await expect(panel.locator("figure > div[data-total]")).toContainText(`${same.mandals} mandal-seasons`);
+  }
 });
 
 test("the field week fits a phone", async ({ page }) => {

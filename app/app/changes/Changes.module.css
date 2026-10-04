@@ -65,3 +65,41 @@
   .lists { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
+
+/* Where field teams would learn most: an evidence matrix, one dot per signal. */
+.teams { margin-top: 18px; border: 1px solid var(--line); background: var(--card); padding: 18px 20px 14px; }
+.teamsHead { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; }
+.teamsHead h2 { font-size: 18px; line-height: 1.35; font-weight: 600; margin: 4px 0 6px; }
+.teamsHead p { font-size: 12px; line-height: 1.6; color: var(--ink-soft); max-width: 760px; }
+.teamsTally { list-style: none; margin: 0; padding: 0; display: flex; gap: 0; border: 1px solid var(--line); flex-shrink: 0; }
+.teamsTally li { display: grid; justify-items: center; gap: 2px; padding: 8px 14px; font-size: 10.5px; color: var(--muted); border-right: 1px solid var(--line); white-space: nowrap; }
+.teamsTally li:last-child { border-right: 0; }
+.teamsTally b { font: 600 22px/1.1 var(--font-display); color: #b64c42; font-variant-numeric: tabular-nums; }
+.matrixWrap { overflow-x: auto; margin-top: 14px; }
+.matrix { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 760px; }
+.matrix thead th { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; text-align: center; padding: 6px 4px 8px; border-bottom: 1px solid var(--line-strong); white-space: nowrap; }
+.matrix thead th:first-child, .matrix thead th:last-child { text-align: left; }
+.matrix tbody th { text-align: left; font-weight: 600; padding: 8px 10px 8px 0; white-space: nowrap; }
+.matrix tbody th a { color: var(--ink); text-decoration: none; }
+.matrix tbody th a:hover { color: var(--accent, #27745d); text-decoration: underline; text-underline-offset: 3px; }
+.matrix tbody th small { display: block; font-size: 10.5px; font-weight: 400; color: var(--muted); margin-left: 26px; }
+.rank { display: inline-grid; place-items: center; width: 18px; height: 18px; margin-right: 8px; border-radius: 50%; background: var(--field); font: 600 9.5px var(--font-mono); color: var(--ink-soft); }
+.matrix tbody tr { border-bottom: 1px solid var(--line); }
+.matrix tbody tr:hover { background: color-mix(in srgb, #b64c42 4%, var(--card)); }
+.matrix td { text-align: center; padding: 6px 4px; }
+.matrix td i { display: inline-block; width: 13px; height: 13px; border-radius: 50%; }
+.matrix td[data-state="yes"] i { background: #b64c42; box-shadow: 0 0 0 3px color-mix(in srgb, #b64c42 16%, transparent); }
+.matrix td[data-state="no"] i { border: 1.5px solid var(--line-strong); }
+.matrix td[data-state="unknown"] i { border: 1.5px dashed var(--line); opacity: .7; }
+.agree b { font: 600 15px var(--font-display); font-variant-numeric: tabular-nums; }
+.agree small { color: var(--muted); }
+.stands { text-align: left !important; font-size: 11px; color: var(--ink-soft); line-height: 1.5; min-width: 220px; }
+.signalKey { list-style: none; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3px 24px; font-size: 10.5px; line-height: 1.5; color: var(--ink-soft); }
+.signalKey b { color: var(--ink); font-weight: 600; }
+.teamsFoot { font-size: 10.5px; line-height: 1.6; color: var(--muted); margin-top: 10px; }
+.teamsFoot a { color: var(--accent, #27745d); }
+@media (max-width: 760px) {
+  .teams { padding: 14px 12px; }
+  .teamsHead { flex-direction: column; gap: 12px; }
+  .signalKey { grid-template-columns: minmax(0, 1fr); }
+}

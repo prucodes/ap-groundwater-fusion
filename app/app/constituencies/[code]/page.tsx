@@ -9,6 +9,10 @@ import { MAP_VIEW, datasetManifest, formatPeriod, mapGeometry, mandalByMapKey, s
 import { CATEGORY_META, shortDate, signedPct } from "../../../lib/drought";
 import { droughtForMandal, droughtWatch } from "../../../lib/droughtWatch";
 import { reliabilityFor } from "../../../lib/forecastReliability";
+import { GEC_CATEGORIES, VCI_CLASSES, type GecCategory, type VciClass } from "../../../lib/agriculture";
+import { agricultureEvidence } from "../../../lib/agricultureServer";
+import { cropsShortNow, cropWaterByCrop } from "../../../lib/fieldPriority";
+import { fieldSignals, liveField } from "../../../lib/fieldSignalsServer";
 import { stateReadingFor } from "../../../lib/stateSnapshot";
 import { stateSummary } from "../../../lib/stateSummary";
 
@@ -77,8 +81,17 @@ export default async function ConstituencyBriefPage({ params }: { params: Promis
     const state = stateReadingFor(district, mandal);
     const drought = droughtForMandal(district, mandal);
     const trust = view && view.forecast_mbgl !== null && view.forecast_mbgl !== undefined ? reliabilityFor(view.id) : null;
-    return { mandal, district, feature, view, state, drought, trust };
+    const index = feature ? mapGeometry.mandals.indexOf(feature) : -1;
+    const field = index >= 0 ? agricultureEvidence().mandals[index] ?? null : null;
+    const crops = index >= 0 ? cropsShortNow(index) : { short: null, known: 0 };
+    return { mandal, district, feature, view, state, drought, trust, index, vegetation: field?.vegetation ?? null, assessment: field?.assessment ?? null, crops };
   });
+  const live = liveField(), veg = fieldSignals.vegetation, gwYear = fieldSignals.assessment?.year ?? null;
+  const byCrop = cropWaterByCrop(rows.map(r => r.index).filter(i => i >= 0)).filter(c => c.known).sort((a, b) => b.short - a.short || a.name.localeCompare(b.name));
+  const vegCounts = (["severe", "moderate", "normal"] as VciClass[]).map(cls => ({ cls, n: rows.filter(r => r.vegetation?.cls === cls).length }));
+  const gwCounts = (["over_exploited", "critical", "semi_critical", "safe", "salinity"] as GecCategory[]).map(cat => ({ cat, n: rows.filter(r => r.assessment?.cat === cat).length })).filter(x => x.n);
+  const pressured = rows.filter(r => r.assessment && ["semi_critical", "critical", "over_exploited"].includes(r.assessment.cat));
+  const vegKnown = rows.filter(r => r.vegetation).length;
   const gw = c.groundwater, sr = c.stateReading, dr = c.drought;
   const stressShare = gw.assessed ? Math.round((100 * gw.stress) / gw.assessed) : null;
   const severe = rows.filter(r => r.drought?.category === "severe").map(r => name(r.mandal));
@@ -104,6 +117,24 @@ export default async function ConstituencyBriefPage({ params }: { params: Promis
   }
   if (c.rain.medianDeparturePct !== null) {
     sentences.push(`Gauge rain since 1 June is ${signedPct(c.rain.medianDeparturePct)} against normal (median of the mandals).`);
+  }
+  // The field sentences repeat the band above them; on paper the band says it in less space.
+  const printSkip = new Set<string>();
+  const shortCrops = byCrop.filter(c => c.short);
+  if (byCrop.length) {
+    sentences.push(shortCrops.length
+      ? `On this week's soil moisture and forecast, crops at mid-season would already be short of water here: ${shortCrops.slice(0, 3).map(c => `${c.name.toLowerCase()} in ${c.short} of ${c.known} mandal${c.known === 1 ? "" : "s"}`).join(", ")}${shortCrops.length > 3 ? `, and ${shortCrops.length - 3} more crop${shortCrops.length - 3 === 1 ? "" : "s"}` : ""}.`
+      : `On this week's soil moisture, no reference crop at mid-season is short of water in any mandal here.`);
+  }
+  if (vegKnown) {
+    const severeVeg = vegCounts[0].n;
+    sentences.push(severeVeg
+      ? `Satellite crop vegetation is severely below normal in ${severeVeg} of ${vegKnown} mandal${vegKnown === 1 ? "" : "s"} over the last four weeks.`
+      : `Satellite crop vegetation is not severely below normal in any mandal here.`);
+  }
+  sentences.slice(-2).forEach(sentence => { if (/mid-season|crop vegetation/i.test(sentence)) printSkip.add(sentence); });
+  if (pressured.length) {
+    sentences.push(`The official groundwater assessment (${gwYear}) rates ${pressured.map(r => `${name(r.mandal)} ${GEC_CATEGORIES[r.assessment!.cat].label.toLowerCase()}`).join(", ")}: a structural pressure on wells, beyond this season's rain.`);
   }
   if (forecasts) {
     sentences.push(lowerConfidence
@@ -134,10 +165,25 @@ export default async function ConstituencyBriefPage({ params }: { params: Promis
         <div><span>Gauge rain</span><strong>{c.rain.medianDeparturePct === null ? "—" : signedPct(c.rain.medianDeparturePct)}</strong><em>against normal since 1 June</em></div>
       </section>
 
+      {byCrop.length || vegKnown || gwCounts.length ? <section className={styles.field} aria-label="This week in the fields" data-testid="brief-field">
+        <div>
+          <span>Crops short of water now <small>mid-season{live ? ` · soil ${shortDate(live.soilAsOf, true)}` : ""}</small></span>
+          <p>{byCrop.map(c => <b key={c.crop} data-zero={c.short === 0}>{c.name} <em>{c.short}/{c.known}</em></b>)}</p>
+        </div>
+        <div>
+          <span>Crop vegetation <small>{veg ? `${shortDate(veg.averaged[0].approxStart)} to ${shortDate(veg.averaged[veg.averaged.length - 1].approxEnd)}` : ""}</small></span>
+          <p>{vegCounts.map(v => <b key={v.cls}><i style={{ background: VCI_CLASSES[v.cls].color }} />{VCI_CLASSES[v.cls].short} <em>{v.n}</em></b>)}</p>
+        </div>
+        <div>
+          <span>Groundwater category <small>{gwYear ? `assessment ${gwYear}` : ""}</small></span>
+          <p>{gwCounts.length ? gwCounts.map(g => <b key={g.cat}><i style={{ background: GEC_CATEGORIES[g.cat].color }} />{GEC_CATEGORIES[g.cat].label} <em>{g.n}</em></b>) : "Not matched"}</p>
+        </div>
+      </section> : null}
+
       <div className={styles.body}>
         <section className={styles.reading} aria-label="What the figures say">
           <h2>What the figures say</h2>
-          {sentences.length ? sentences.map(s => <p key={s}>{s}</p>) : <p>No mandal of this constituency has its own boundary on this map; the city is counted in the seat its centre falls in.</p>}
+          {sentences.length ? sentences.map(s => <p key={s} className={printSkip.has(s) ? styles.screenOnly : undefined}>{s}</p>) : <p>No mandal of this constituency has its own boundary on this map; the city is counted in the seat its centre falls in.</p>}
         </section>
         {viewBox ? (
           <figure className={styles.map}>
@@ -155,7 +201,7 @@ export default async function ConstituencyBriefPage({ params }: { params: Promis
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Mandal</th><th>Groundwater</th><th>Depth</th><th>State wells since May</th><th>Drought manual</th><th>Gauge rain</th><th>3-month outlook</th>
+            <th>Mandal</th><th>Groundwater</th><th>Depth</th><th>State wells since May</th><th>Drought manual</th><th>Gauge rain</th><th>3-month outlook</th><th>Crops short <small>mid-season</small></th><th>Crop vegetation</th><th>GW category</th>
           </tr>
         </thead>
         <tbody>
@@ -173,6 +219,9 @@ export default async function ConstituencyBriefPage({ params }: { params: Promis
                 <td>{r.view?.forecast_mbgl !== null && r.view?.forecast_mbgl !== undefined
                   ? <>{metres(r.view.forecast_mbgl, 2)}<small>{`${formatPeriod(r.view.forecast_target_period)}${r.trust && r.trust.verdict !== "beats" ? " · lower confidence" : ""}`}</small></>
                   : "—"}</td>
+                <td>{r.crops.short !== null ? `${r.crops.short} of ${r.crops.known}` : "—"}</td>
+                <td>{r.vegetation ? <span className={styles.chip}><i style={{ background: VCI_CLASSES[r.vegetation.cls].color }} />{r.vegetation.vci.toFixed(0)}<small>{VCI_CLASSES[r.vegetation.cls].short}</small></span> : "—"}</td>
+                <td>{r.assessment ? <><span className={styles.chip}><i style={{ background: GEC_CATEGORIES[r.assessment.cat].color }} />{GEC_CATEGORIES[r.assessment.cat].label}</span>{r.assessment.stagePct !== null ? <small>{`${r.assessment.stagePct.toFixed(0)}% drawn`}</small> : null}</> : "—"}</td>
               </tr>
             );
           })}
@@ -185,7 +234,9 @@ export default async function ConstituencyBriefPage({ params }: { params: Promis
           measured monthly aggregate). State wells: AP AWARE groundwater feed via the AI Living Labs data lake, one reading{stateSummary.readingDates.mostCommon ? ` (${shortDate(stateSummary.readingDates.mostCommon, true)})` : ""}{" "}against May.
           Drought: this site&rsquo;s reading of the national Manual for Drought Management (2020){rainDate ? `, rain to ${shortDate(rainDate, true)}` : ""}.
           Gauge rain: AP DES gauges via APWRIMS. Outlook: the released three-month forecast; &ldquo;lower confidence&rdquo; where forecasts made in the same
-          month after similar rain have not beaten assuming no change.
+          month after similar rain have not beaten assuming no change. Crops short: this week&rsquo;s FAO-56 crop water check for the seven reference crops at mid-season
+          (APWRIMS soil moisture, ECMWF forecast, SoilGrids), crop and stage assumed, not observed. Crop vegetation: NOAA VCI over cropland (ESA WorldCover), last four weeks.
+          GW category: CGWB and State GWD assessment{gwYear ? ` ${gwYear}` : ""} via INGRES.
         </p>
         <p>
           <strong>Prototype.</strong>{" "}A research result, not an official one: not official until the APWRIMS export is authorised. A drought

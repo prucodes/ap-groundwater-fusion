@@ -42,6 +42,11 @@ STATIC_BY_DESIGN = {
         "from a 159 MB source that gains one month at a time, so it is run deliberately "
         "rather than weekly, like the boundary alias table"
     ),
+    "crop_water_record.json": (
+        "the crop water check's track record over past kharif seasons; built by hand with "
+        "phase3_levels/build_crop_water_record.py when a season ends (about an hour of paced "
+        "ERA5 downloads, cached), and dated in the file"
+    ),
     "monsoon_film.json": (
         "the narrated film's chapters and the figures it speaks; a fixed edition, rebuilt "
         "only when the film is re-narrated and re-rendered (scripts/prepare_monsoon_film.py), "

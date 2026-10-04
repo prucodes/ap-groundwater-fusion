@@ -570,6 +570,8 @@ def build_assessment(today, post=ingres_post):
 
 # --- soil capacity and the cross-check -------------------------------------------
 
+MOST_CROPS = 4
+
 def soil_capacity():
     payload = json.load(open(CAPACITY))
     return {k: payload[k] for k in ("source", "url", "licence", "method", "unit", "depthsCm", "builtAt")} | {"values": payload["values"]}
@@ -598,11 +600,20 @@ def cross_check(weather, capacity, context):
         return {"soilAsOf": soil["asOf"], "note": "soil-moisture date outside the weather window"}
     start, today = dates.index(soil["asOf"]), dates.index(weather["issued"])
     out = {"soilAsOf": soil["asOf"], "issued": weather["issued"], "counts": {}}
+    short_mid, known_mid = [0] * count, [0] * count
     for crop in crop_water.CROPS:
         for stage in range(3):
             results = [crop_water.check(pct[i], capacity["values"][i], weather["eto"][i] or [], weather["rain"][i] or [],
                                         start, today, crop, stage) if weather["eto"][i] else None for i in range(count)]
             out["counts"][f"{crop}-{stage}"] = crop_water.counts(results)
+            if stage == 1:
+                for i, result in enumerate(results):
+                    if result:
+                        known_mid[i] += 1
+                        short_mid[i] += result["state"] == "stressed"
+    # Mandals where most field crops are short of water now: 4 or more of the 7 at
+    # mid-season (the "Crop water" signal of the field-teams list on This Week).
+    out["mostCropsShortMid"] = sum(1 for i in range(count) if known_mid[i] and short_mid[i] >= MOST_CROPS)
     return out
 
 
