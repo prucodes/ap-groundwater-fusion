@@ -377,3 +377,13 @@
   .lab, .watchLayout { break-inside: avoid; }
   .workspace * { animation: none !important; }
 }
+
+/* Colour the water-watch map by one of three views. */
+.colorBy { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 2px 0 10px; }
+.colorBy > span { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-right: 4px; }
+.colorBy button { min-height: 30px; padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink-soft); font-size: 11px; }
+.colorBy button:hover:not(:disabled) { border-color: var(--ag-green); color: var(--ag-green); }
+.colorBy button[aria-pressed="true"] { border-color: var(--ag-green); background: color-mix(in srgb, var(--ag-green) 10%, var(--card)); color: var(--ag-green); font-weight: 600; }
+.colorBy button:disabled { opacity: .45; cursor: not-allowed; }
+.contextFacts dd[data-tone="short"] { color: var(--ag-red); }
+.contextFacts dd small { display: block; font-size: 9px; font-weight: 400; color: var(--muted); }

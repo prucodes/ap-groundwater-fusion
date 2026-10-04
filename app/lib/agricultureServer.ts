@@ -1,5 +1,6 @@
 import { buildAgricultureEvidence, type AgricultureEvidence } from "./agriculture";
 import { groundwaterRecords, mapGeometry, monsoonWatch } from "./data";
+import { fieldEvidenceInput } from "./fieldSignalsServer";
 import { waterContext } from "./waterContext";
 
 let cached: AgricultureEvidence | null = null;
@@ -10,6 +11,6 @@ let cached: AgricultureEvidence | null = null;
  * Server code only: it reads the full water context. */
 export function agricultureEvidence(): AgricultureEvidence {
   cached ??= buildAgricultureEvidence(monsoonWatch, groundwaterRecords,
-    mapGeometry.mandals.map(feature => ({ d: feature.d, m: feature.m, src: feature.src, path: "" })), waterContext);
+    mapGeometry.mandals.map(feature => ({ d: feature.d, m: feature.m, src: feature.src, path: "" })), waterContext, fieldEvidenceInput());
   return cached;
 }

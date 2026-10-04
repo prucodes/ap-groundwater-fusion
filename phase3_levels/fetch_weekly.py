@@ -126,6 +126,13 @@ STEPS = [
     # the app data, because the groundwater index reads the published series.
     # Optional: a failure keeps last week's file, which carries its own date.
     ("build drought watch", [PY, os.path.join(HERE, "build_drought_watch.py")], False, 1800),
+    # This week in the fields: ECMWF's open forecast of reference ET and rain
+    # (via Open-Meteo), NOAA's vegetation index weighted to cropland, and the
+    # official groundwater assessment from INGRES; with the soil moisture just
+    # fetched, they drive the Agriculture page's crop water check. After the
+    # APWRIMS context, whose soil-moisture date the cross-check starts from.
+    # Optional: a source that fails keeps last week's section, with its date.
+    ("fetch field signals", [PY, os.path.join(HERE, "fetch_field_signals.py")], False, 1200),
     # Last of the builders: this week's headlines beside the ones the site was
     # showing (the files at HEAD), each with its own date. Optional.
     # Every figure by assembly constituency, from this week's groundwater,

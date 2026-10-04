@@ -86,7 +86,9 @@ test("export retains caveats, filtered rows, empty crop area and formula safety"
   expect(csv).toContain("PROTOTYPE"); expect(csv).toContain("not a crop-loss estimate");
   expect(csv).toContain("\"'=CMD()\"");
   expect(csv).toContain("Seasonal baseline review pending");
-  expect(csv.trim().split("\n")).toHaveLength(9);
+  // Nine header lines (two name the crop vegetation and groundwater-assessment columns), the column row, one mandal.
+  expect(csv.trim().split("\n")).toHaveLength(11);
+  expect(csv).toContain("vci_cropland_4wk,vci_class,cropland_pct,gec_unit,gec_category,gec_stage_of_extraction_pct,gec_previous_category,crop_exposure_ha");
   expect(csv.trim().endsWith(',""')).toBe(true);
 });
 

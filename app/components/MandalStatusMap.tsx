@@ -17,6 +17,7 @@ import {
 } from "../lib/data";
 import type { MandalHeatLayerKey } from "../lib/types";
 import { isWaterLayer, WATER_LAYER_META, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
+import { FIELD_LAYER_META, fieldLayerColor, fieldLayerText, isFieldLayer, type FieldLayer } from "../lib/fieldSignals";
 
 type HoverState = { d: string; m: string; id?: string };
 
@@ -30,7 +31,7 @@ export function MandalStatusMap({
 }: {
   selectedId?: string;
   onSelect: (id: string) => void;
-  layer?: MandalHeatLayerKey | WaterMandalLayer | null;
+  layer?: MandalHeatLayerKey | WaterMandalLayer | FieldLayer | null;
   /** Cap height (px); omit to fill the container width and scale by aspect. */
   maxHeight?: number;
 }) {
@@ -55,7 +56,7 @@ export function MandalStatusMap({
         {mapGeometry.mandals.map((m, i) => {
           const rec = mandalByMapKey(m.d, m.m);
           const fill = layer
-            ? isWaterLayer(layer) ? waterLayerColor(layer, m.d, m.m) : mandalHeatColor(layer, m.d, m.m)
+            ? isWaterLayer(layer) ? waterLayerColor(layer, m.d, m.m) : isFieldLayer(layer) ? fieldLayerColor(layer, m.d, m.m) : mandalHeatColor(layer, m.d, m.m)
             : rec?.status_bucket
               ? statusMeta(rec.status_bucket).color
               : "var(--field)";
@@ -103,6 +104,11 @@ export function MandalStatusMap({
             <div className="estHoverRow">
               <span>{WATER_LAYER_META[layer].label}</span>
               <strong>{waterLayerText(layer, hover.d, hover.m) ?? "No unique record"}</strong>
+            </div>
+          ) : layer && isFieldLayer(layer) ? (
+            <div className="estHoverRow">
+              <span>{FIELD_LAYER_META[layer].label}</span>
+              <strong>{fieldLayerText(layer, hover.d, hover.m) ?? (layer === "vci" ? "No value" : "Not matched")}</strong>
             </div>
           ) : layer ? (
             <div className="estHoverRow">

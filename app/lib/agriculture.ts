@@ -31,6 +31,40 @@ export type AgricultureMandal = {
   rain: { actualMm: number; normalMm: number; deviationPct: number; category: RainCategory | null; gauges: number | null } | null;
   /** Whether each source points to water stress here: true, false, or null when that source has no usable value. */
   agreement: Agreement;
+  /** NOAA VHP vegetation condition, weighted to cropland, averaged over the last four weeks (satellite index). */
+  vegetation: MandalVegetation | null;
+  /** The official Dynamic Ground Water Resources assessment of the mandal's assessment unit. */
+  assessment: MandalAssessment | null;
+};
+
+export type VciClass = "normal" | "moderate" | "severe";
+export type GecCategory = "safe" | "semi_critical" | "critical" | "over_exploited" | "salinity";
+/** The weekly series and the volumes are left out where a client page carries all 670 mandals. */
+export type MandalVegetation = { vci: number; cls: VciClass; allVci: number | null; croplandPct: number | null; fewFields: boolean; weeks?: Array<number | null> };
+export type MandalAssessment = {
+  unit: string; cat: GecCategory; stagePct: number | null; resourceHam?: number | null; extractionHam?: number | null;
+  irrigationHam?: number | null; domesticHam?: number | null; industryHam?: number | null; futureHam?: number | null;
+  prev: { cat: GecCategory; stagePct: number | null } | null; match: string; others?: Array<{ unit: string; cat: GecCategory; stagePct: number | null }>;
+};
+/** What buildAgricultureEvidence needs from the field signals, by boundary index. */
+export type FieldEvidenceInput = {
+  vegetation: Array<MandalVegetation | null>;
+  assessment: Array<MandalAssessment | null>;
+  summary: AgricultureEvidence["field"];
+};
+/** Drought manual Table 3.4 classes, in the site's stress palette. */
+export const VCI_CLASSES: Record<VciClass, { label: string; short: string; color: string; range: string }> = {
+  normal: { label: "Normal", short: "Normal", color: "#5e9c89", range: "60–100" },
+  moderate: { label: "Moderately below normal", short: "Moderate", color: "#ce982b", range: "40–60" },
+  severe: { label: "Severely below normal", short: "Severe", color: "#b64c42", range: "0–40" },
+};
+/** GEC-2015 categories, as INGRES publishes them. */
+export const GEC_CATEGORIES: Record<GecCategory, { label: string; color: string; range: string }> = {
+  safe: { label: "Safe", color: "#5e9c89", range: "up to 70%" },
+  semi_critical: { label: "Semi-critical", color: "#ce982b", range: "70–90%" },
+  critical: { label: "Critical", color: "#c4683a", range: "90–100%" },
+  over_exploited: { label: "Over-exploited", color: "#8c2f29", range: "above 100%" },
+  salinity: { label: "Saline", color: "#6d7fa6", range: "groundwater too saline to use" },
 };
 
 /** A count of sources that point the same way, not a score: each test is stated in AGREEMENT_RULES. */
@@ -91,6 +125,19 @@ export type AgricultureEvidence = {
   };
   rainfall: MonsoonWatch["rainfall"];
   water: AgricultureWater;
+  /** The satellite vegetation index and the official groundwater assessment, statewide. */
+  field: {
+    vegetation: {
+      product: string; url: string; weighting: string; classes: string; croplandSource: string; croplandUrl: string; croplandCaveat: string;
+      weeks: Array<{ approxStart: string; approxEnd: string }>; averaged: Array<{ approxStart: string; approxEnd: string }>;
+      byWeek: Array<Record<VciClass, number>>; summary: { mandals: number; normal: number; moderate: number; severe: number; fewFields: number; medianVci: number | null };
+    } | null;
+    assessment: {
+      source: string; url: string; year: string; previousYear: string | null; unitNote: string;
+      state: { units: number; categories: Record<GecCategory, number>; previousCategories: Record<GecCategory, number> | null; stagePct: number | null; previousStagePct: number | null;
+        extractionMcm: number | null; resourceMcm: number | null; irrigationMcm: number | null; matched: number; unmatchedUnits: string[]; movedWorse: number; movedBetter: number };
+    } | null;
+  } | null;
   cropExposureHa: null;
   cropReadiness: "not_connected";
 };
@@ -155,6 +202,7 @@ export function buildAgricultureEvidence(
   records: MandalGroundwaterRecordV2[],
   features: Array<{ d: string; m: string; path: string; src?: string }>,
   water?: WaterContext | null,
+  field?: FieldEvidenceInput | null,
 ): AgricultureEvidence {
   const soilRows = uniqueByBoundary(water?.soilMoisture?.mandals, features.length);
   const rainRows = uniqueByBoundary(water?.rainfall?.mandals, features.length);
@@ -203,6 +251,7 @@ export function buildAgricultureEvidence(
       comparableYears: usable ? row.comparableYears : null,
       sourceStatus: record?.observation?.authorizationStatus === "authorized" ? "Authorized source" : "Research sample; authorization pending",
       soil, rain, agreement: agreementOf(signal, soil, rain),
+      vegetation: field?.vegetation[index] ?? null, assessment: field?.assessment[index] ?? null,
     };
   });
   const names = [...new Set(mandals.map(row => row.district))].sort();
@@ -230,7 +279,7 @@ export function buildAgricultureEvidence(
       agreeAll: mandals.filter(row => row.agreement.stressed === 3).length,
       agreeTwo: mandals.filter(row => row.agreement.stressed === 2).length,
     },
-    rainfall: watch.rainfall, water: summarizeWater(water), cropExposureHa: null, cropReadiness: "not_connected",
+    rainfall: watch.rainfall, water: summarizeWater(water), field: field?.summary ?? null, cropExposureHa: null, cropReadiness: "not_connected",
   };
 }
 
@@ -243,6 +292,8 @@ type CropProfile = {
   name: string;
   kc: readonly [number, number, number];
   rootM: { min: number; max: number };
+  /** FAO-56 Table 22: the share of the root zone's available water the crop can use before it is stressed (at ETc about 5 mm/day). */
+  p: number;
   heightM: number;
   rootBasis: string;
   form: "cereal" | "groundnut" | "bush";
@@ -252,21 +303,21 @@ type CropProfile = {
 };
 
 export const CROP_REFERENCE = {
-  maize: { name: "Maize", kc: [0.3, 1.2, 0.35], rootM: { min: 1.0, max: 1.7 }, heightM: 2.0, rootBasis: "FAO-56 Table 22", form: "cereal",
+  maize: { name: "Maize", kc: [0.3, 1.2, 0.35], rootM: { min: 1.0, max: 1.7 }, p: 0.55, heightM: 2.0, rootBasis: "FAO-56 Table 22", form: "cereal",
     note: "Grain maize; end coefficient assumes field-dried grain." },
-  groundnut: { name: "Groundnut", kc: [0.4, 1.15, 0.6], rootM: { min: 0.5, max: 1.0 }, heightM: 0.4, rootBasis: "FAO-56 Table 22", form: "groundnut",
+  groundnut: { name: "Groundnut", kc: [0.4, 1.15, 0.6], rootM: { min: 0.5, max: 1.0 }, p: 0.5, heightM: 0.4, rootBasis: "FAO-56 Table 22", form: "groundnut",
     note: "Groundnut; standard-condition reference coefficients." },
-  cotton: { name: "Cotton", kc: [0.35, 1.15, 0.6], rootM: { min: 1.0, max: 1.7 }, heightM: 1.4, rootBasis: "FAO-56 Table 22", form: "bush",
+  cotton: { name: "Cotton", kc: [0.35, 1.15, 0.6], rootM: { min: 1.0, max: 1.7 }, p: 0.65, heightM: 1.4, rootBasis: "FAO-56 Table 22", form: "bush",
     note: "Cotton; Table 12 gives 1.15–1.20 at mid-season and 0.70–0.50 at the end; 1.15 and the middle of the end range are used. Drawn at 1.4 m (Table 12: 1.2–1.5 m)." },
-  chilli: { name: "Chilli", kc: [0.6, 1.05, 0.9], rootM: { min: 0.5, max: 1.0 }, heightM: 0.7, rootBasis: "FAO-56, sweet pepper", form: "bush",
+  chilli: { name: "Chilli", kc: [0.6, 1.05, 0.9], rootM: { min: 0.5, max: 1.0 }, p: 0.3, heightM: 0.7, rootBasis: "FAO-56, sweet pepper", form: "bush",
     note: "Chilli; FAO-56 lists only sweet (bell) pepper, whose row is used here. Its end coefficient (0.90) assumes fresh harvest; chilli left to dry on the plant would use less late in the season.",
     standIn: "Sweet-pepper values: FAO-56 has no chilli row." },
-  redgram: { name: "Red gram", kc: [0.4, 1.15, 0.35], rootM: { min: 0.6, max: 2.0 }, heightM: 1.5, rootBasis: "FAO-56 pulses · ICRISAT", form: "bush",
+  redgram: { name: "Red gram", kc: [0.4, 1.15, 0.35], rootM: { min: 0.6, max: 2.0 }, p: 0.45, heightM: 1.5, rootBasis: "FAO-56 pulses · ICRISAT", form: "bush",
     note: "Red gram (pigeon pea); FAO-56 has no pigeon-pea row, so its coefficients are the general 'beans, dry and pulses' row. Roots from that row's 0.6 m to the 2 m ICRISAT gives for the taproot; drawn at 1.5 m (ICRISAT: 1–4 m by variety). A long-duration crop: the three stages span longer than for the others.",
     standIn: "Pulses values, with ICRISAT's rooting depth and height: FAO-56 has no pigeon-pea row." },
-  bengalgram: { name: "Bengal gram", kc: [0.4, 1.0, 0.35], rootM: { min: 0.6, max: 1.0 }, heightM: 0.4, rootBasis: "FAO-56 Table 22", form: "bush",
+  bengalgram: { name: "Bengal gram", kc: [0.4, 1.0, 0.35], rootM: { min: 0.6, max: 1.0 }, p: 0.5, heightM: 0.4, rootBasis: "FAO-56 Table 22", form: "bush",
     note: "Bengal gram (chick pea); a rabi crop in Andhra Pradesh, largely grown on the moisture the soil holds after the monsoon." },
-  jowar: { name: "Jowar", kc: [0.3, 1.05, 0.55], rootM: { min: 1.0, max: 2.0 }, heightM: 1.5, rootBasis: "FAO-56 Table 22", form: "cereal",
+  jowar: { name: "Jowar", kc: [0.3, 1.05, 0.55], rootM: { min: 1.0, max: 2.0 }, p: 0.55, heightM: 1.5, rootBasis: "FAO-56 Table 22", form: "cereal",
     note: "Jowar (grain sorghum); Table 12 gives 1.00–1.10 at mid-season, and the middle is used. Drawn at 1.5 m (Table 12: 1–2 m)." },
 } as const satisfies Record<string, CropProfile>;
 /** ICRISAT's botanical description of pigeonpea, for the red gram rooting depth and height. */
@@ -297,7 +348,7 @@ export function cropWaterBudget(input: { crop: CropKey; stage: number; eto: numb
   };
 }
 
-export function agricultureCsv(rows: AgricultureMandal[], evidence: Pick<AgricultureEvidence, "period" | "startPeriod"> & Partial<Pick<AgricultureEvidence, "water">>) {
+export function agricultureCsv(rows: AgricultureMandal[], evidence: Pick<AgricultureEvidence, "period" | "startPeriod"> & Partial<Pick<AgricultureEvidence, "water" | "field">>) {
   const cell = (value: unknown) => {
     let text = value == null ? "" : String(value);
     if (/^[=+@-]/.test(text) && typeof value !== "number") text = `'${text}`;
@@ -312,13 +363,17 @@ export function agricultureCsv(rows: AgricultureMandal[], evidence: Pick<Agricul
     rain ? `# Gauge rainfall: APWRIMS / AP DES mandal rain gauges, ${rain.start} to ${rain.end}, against the department's normal for the same window.` : "# Gauge rainfall: not available in this build.",
     `# Signals pointing to stress (0-3), each a stated test, not a score: ${AGREEMENT_RULES.groundwater}; ${AGREEMENT_RULES.rain}; ${AGREEMENT_RULES.soil}.`,
     "# Seasonal baseline review pending. Flags are provisional; not approved operational advisories.",
+    evidence.field?.vegetation ? `# Crop vegetation: ${evidence.field.vegetation.product}, weighted to cropland (ESA WorldCover 2021), mean of ${evidence.field.vegetation.averaged[0]?.approxStart} to ${evidence.field.vegetation.averaged.at(-1)?.approxEnd}; classes per the drought manual Table 3.4. A satellite index, not crop yield.` : "# Crop vegetation: not available in this build.",
+    evidence.field?.assessment ? `# Groundwater assessment: ${evidence.field.assessment.source}, ${evidence.field.assessment.year}; stage of extraction = annual extraction / annual extractable resource.` : "# Groundwater assessment: not available in this build.",
     ["district", "mandal", "mandal_id", "water_signal", "depth_mbgl", "season_change_m", "typical_change_m", "shortfall_m", "comparable_years", "source_status", "outline", "missing_reason",
       "soil_moisture_pct", "soil_moisture_week_ago_pct", "soil_moisture_same_date_median_pct", "soil_moisture_rank_driest", "soil_moisture_of_years",
       "gauge_rain_mm", "gauge_rain_normal_mm", "gauge_rain_departure_pct", "gauge_rain_category",
-      "signals_pointing_to_stress", "signals_known", "crop_exposure_ha"].join(","),
+      "signals_pointing_to_stress", "signals_known",
+      "vci_cropland_4wk", "vci_class", "cropland_pct", "gec_unit", "gec_category", "gec_stage_of_extraction_pct", "gec_previous_category", "crop_exposure_ha"].join(","),
     ...rows.map(row => [row.district, row.mandal, row.id, row.signal, row.depthM, row.changeM, row.typicalM, row.shortfallM, row.comparableYears, row.sourceStatus, row.officialOutline ? "official" : "prototype", row.reason,
       row.soil?.pct, row.soil?.weekAgoPct, row.soil?.median, row.soil?.rankDriest, row.soil?.ofYears,
       row.rain?.actualMm, row.rain?.normalMm, row.rain?.deviationPct, row.rain?.category,
-      row.agreement.stressed, row.agreement.known, null].map(cell).join(",")),
+      row.agreement.stressed, row.agreement.known,
+      row.vegetation?.vci, row.vegetation?.cls, row.vegetation?.croplandPct, row.assessment?.unit, row.assessment?.cat, row.assessment?.stagePct, row.assessment?.prev?.cat, null].map(cell).join(",")),
   ].join("\n");
 }

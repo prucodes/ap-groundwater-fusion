@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AGREEMENT_RULES } from "../lib/agriculture";
+import { AGREEMENT_RULES, GEC_CATEGORIES, VCI_CLASSES } from "../lib/agriculture";
 import { agricultureEvidence } from "../lib/agricultureServer";
 import { waterContext } from "../lib/waterContext";
 import { day, driest, placeName, signed } from "./agriculture/waterContextFormat";
@@ -7,6 +7,24 @@ import { IconArrowRight, IconCloudRain } from "./icons";
 import styles from "./MandalSeasonContext.module.css";
 
 const CATEGORY: Record<string, string> = { excess: "Excess", normal: "Normal", deficient: "Deficient", scanty: "Scanty", noRain: "No rain" };
+
+/** The weekly vegetation index as a small line, with the drought manual's 40 and 60 lines. */
+function VciSparkline({ weeks }: { weeks: Array<number | null> }) {
+  const W = 220, H = 52, n = weeks.length;
+  const x = (i: number) => 4 + (i * (W - 8)) / Math.max(1, n - 1);
+  const y = (v: number) => H - 4 - (v / 100) * (H - 8);
+  const segments: string[][] = [[]];
+  weeks.forEach((value, i) => { if (value === null) segments.push([]); else segments[segments.length - 1].push(`${x(i).toFixed(1)},${y(value).toFixed(1)}`); });
+  const last = [...weeks].reverse().find(v => v !== null) ?? null;
+  return <svg viewBox={`0 0 ${W} ${H}`} className={styles.spark} role="img" aria-label={`Weekly vegetation index over ${n} weeks, latest ${last ?? "unknown"}.`}>
+    <rect x={4} y={y(40)} width={W - 8} height={y(0) - y(40)} fill="#b64c42" opacity=".08" />
+    <rect x={4} y={y(60)} width={W - 8} height={y(40) - y(60)} fill="#ce982b" opacity=".08" />
+    <line x1={4} x2={W - 4} y1={y(40)} y2={y(40)} stroke="#b64c42" strokeDasharray="3 3" opacity=".5" />
+    <line x1={4} x2={W - 4} y1={y(60)} y2={y(60)} stroke="#5e9c89" strokeDasharray="3 3" opacity=".5" />
+    {segments.filter(seg => seg.length > 1).map((seg, i) => <polyline key={i} points={seg.join(" ")} fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />)}
+    {last !== null ? <circle cx={x(weeks.lastIndexOf(last))} cy={y(last)} r="3" fill="currentColor" /> : null}
+  </svg>;
+}
 
 /** This season beside the groundwater record: the same per-mandal gauge rain,
  * soil moisture and three-source agreement the Agriculture page shows. Server
@@ -61,6 +79,22 @@ export function MandalSeasonContext({ mandalId }: { mandalId: string }) {
         </ul>
         <p className={styles.source} title={`${AGREEMENT_RULES.groundwater}. ${AGREEMENT_RULES.rain}. ${AGREEMENT_RULES.soil}.`}>A count of stated tests, not a score. The soil model is driven by rainfall, so those two are not independent.</p>
       </div>
+      {row.vegetation && evidence.field?.vegetation ? <div className={styles.block} data-testid="mandal-vegetation">
+        <span className={styles.label}>Crop vegetation, {day(evidence.field.vegetation.averaged[0]?.approxStart, false)} to {day(evidence.field.vegetation.averaged[evidence.field.vegetation.averaged.length - 1]?.approxEnd)}</span>
+        <strong className={styles.figure} data-tone={row.vegetation.cls === "severe" ? "short" : undefined}>{row.vegetation.vci.toFixed(0)}<small> · {VCI_CLASSES[row.vegetation.cls].label.toLowerCase()}</small></strong>
+        {row.vegetation.weeks?.length ? <div className={styles.sparkWrap} style={{ color: VCI_CLASSES[row.vegetation.cls].color }}><VciSparkline weeks={row.vegetation.weeks} /></div> : null}
+        <p className={styles.note}>Weekly since {day(evidence.field.vegetation.weeks[0]?.approxStart, false)}; dashed lines at 40 and 60, the drought manual&rsquo;s class limits.{row.vegetation.croplandPct !== null ? ` Cropland is about ${row.vegetation.croplandPct}% of this mandal's land.` : ""}{row.vegetation.fewFields ? " Few fields here, so the plain all-vegetation value is shown." : ""}</p>
+        <p className={styles.source}>Satellite index: NOAA STAR VHP, 4 km weekly, weighted to cropland (ESA WorldCover 2021). Plant vigour against the same weeks in other years, not yield.</p>
+      </div> : null}
+      {row.assessment && evidence.field?.assessment ? <div className={styles.block} data-testid="mandal-assessment">
+        <span className={styles.label}>Groundwater assessment {evidence.field.assessment.year}</span>
+        <strong className={styles.figure} data-tone={["critical", "over_exploited"].includes(row.assessment.cat) ? "short" : undefined} style={{ color: GEC_CATEGORIES[row.assessment.cat].color }}>{GEC_CATEGORIES[row.assessment.cat].label}<small> · {row.assessment.stagePct?.toFixed(0) ?? "?"}% of the extractable groundwater drawn</small></strong>
+        {row.assessment.extractionHam != null && row.assessment.resourceHam != null ? <ul className={styles.depths} aria-label="Groundwater drawn by use">
+          {([["Irrigation", row.assessment.irrigationHam], ["Domestic", row.assessment.domesticHam], ["Industry", row.assessment.industryHam]] as Array<[string, number | null]>).filter(([, value]) => value).map(([name, value]) => <li key={name}><span>{name}</span><span className={styles.track}><i style={{ width: `${Math.min(100, ((value ?? 0) / row.assessment!.resourceHam!) * 100)}%` }} /></span><b>{(value ?? 0) / 100 < 0.05 ? "<0.1" : ((value ?? 0) / 100).toFixed(1)}</b></li>)}
+        </ul> : null}
+        <p className={styles.note}>{row.assessment.extractionHam != null && row.assessment.resourceHam != null ? `${(row.assessment.extractionHam / 100).toFixed(1)} of ${(row.assessment.resourceHam / 100).toFixed(1)} million m³ a year (bars: share of the extractable resource, figures in million m³).` : ""}{row.assessment.prev ? ` ${evidence.field.assessment.previousYear}: ${GEC_CATEGORIES[row.assessment.prev.cat].label}, ${row.assessment.prev.stagePct?.toFixed(0) ?? "?"}%.` : ""}{row.assessment.others?.length ? ` Also assessed here: ${row.assessment.others.map(o => `${placeName(o.unit)} (${GEC_CATEGORIES[o.cat].label})`).join(", ")}.` : ""}</p>
+        <p className={styles.source}>Official: CGWB and the AP State Ground Water Department, GEC-2015 method, via INGRES; unit {placeName(row.assessment.unit)}.</p>
+      </div> : null}
       {reservoirs.length ? <div className={`${styles.block} ${styles.wide}`}>
         <span className={styles.label}>Reservoirs in {placeName(row.district)}{store?.asOf ? `, ${day(store.asOf)}` : ""}</span>
         <ul className={styles.reservoirs}>

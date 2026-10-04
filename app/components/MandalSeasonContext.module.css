@@ -33,3 +33,5 @@
   .block:last-child { border-bottom: 0; }
   .wide { border-top: 0; }
 }
+.sparkWrap { margin: 4px 0 2px; }
+.spark { display: block; width: 100%; max-width: 260px; height: auto; }
