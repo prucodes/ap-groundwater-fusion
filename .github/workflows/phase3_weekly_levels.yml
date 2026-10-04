@@ -82,6 +82,7 @@ jobs:
             app/data/drought_watch_summary.json \
             app/data/field_signals.json \
             app/data/field_signals_mandals.json \
+            app/data/crop_water_scorecard.json \
             app/data/enso_outlook.json \
             app/data/constituencies.json \
             app/data/weekly_changes.json \
@@ -95,6 +96,15 @@ jobs:
           git commit -m "chore(phase3): weekly levels refresh" || echo "no changes"
           git push
 
+      - name: Print the weekly digest to PDF
+        # This Monday's one-page digest, beside the page that shows it. Never blocks the publish.
+        working-directory: app
+        continue-on-error: true
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: |
+          npx playwright install --with-deps chromium
+          node scripts/print-digest.mjs --directory out --base "$PAGES_BASE_PATH"
       - name: Disable Jekyll processing
         run: touch app/out/.nojekyll
       - uses: actions/configure-pages@v5

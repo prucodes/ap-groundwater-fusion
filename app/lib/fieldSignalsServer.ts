@@ -29,6 +29,10 @@ type FieldSignals = {
   } | null;
   soilCapacity: { source: string; url: string; licence: string; values: Array<number[] | null> };
   crossCheck: { soilAsOf: string; issued?: string; counts?: Record<string, { stressed: number; severe: number; soon: number; ok: number; unknown: number }> } | null;
+  irrigation?: {
+    source: string; url: string; doi: string; licence: string; caveat: string; mostlyRainfedBelowPct: number;
+    summary: { mandals: number; mostlyRainfed: number; mostlyIrrigated: number; stateIrrigatedPct: number }; share: Array<number | null>;
+  } | null;
 };
 
 export const fieldSignals = fieldJson as unknown as FieldSignals;
@@ -105,5 +109,9 @@ function buildLiveField(): LiveField | null {
     soil: { source: soil.source, url: soil.url },
     capacity: { source: capacity.source, url: capacity.url, licence: capacity.licence },
     crossCheck: check?.counts && check.soilAsOf === soil.asOf && check.issued === weather.issued ? check.counts : null,
+    irrigation: fieldSignals.irrigation ? {
+      pct: fieldSignals.irrigation.share, belowPct: fieldSignals.irrigation.mostlyRainfedBelowPct,
+      source: "ESA WorldCereal 2021, 10 m", url: fieldSignals.irrigation.url,
+    } : null,
   };
 }

@@ -1,7 +1,7 @@
 # Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026)
 
 Written by Claude Code for Codex. This replaces the 2 October brief at the same path.
-Everything below is on `main` (through PR #45) and live on GitHub Pages.
+Everything below is on `main` (through PR #46) and live on GitHub Pages.
 
 Ground rules:
 - Start every task on a fresh branch off `main`.
@@ -25,6 +25,7 @@ things look, but never change what they say without asking.
 | #42 | **A measured cross-section in the crop-water lab**, replacing the AI artwork. A rendering fix restored spaces lost after `</strong>`. |
 | #43 | **Seven reference crops in the crop-water lab**, each drawn by its habit; this brief. |
 | #45 | **The crop water check's track record and the new signals where officials look.** Re-run on past kharif weeks (2024, 2025, 2026) against what cropland vegetation did next, with a verdict per crop and stage on the Agriculture page. The verdict compares each mandal with itself in the same season (pooling mandals or seasons misleads, and both are disclosed): none backed, seven weak (mid-season maize, cotton and jowar; end-season groundnut, red gram, Bengal gram and jowar; 1–4 points lower), twelve not borne out (every initial stage, chilli), two untested. This Week lists "where field teams would learn most" (four or more of six signals). Constituency briefs gain crops short of water, crop vegetation and the groundwater category, still one A4 page for the largest seat. Two weekly cards (crop vegetation, crops short) begin with the next Monday refresh. |
+| #46 | **Rainfed fields, the rabi season, a live scorecard, the Monday digest and field reports.** ESA WorldCereal's 10 m irrigation map (rabi 2020–21, taken out of the 17 GB global zip by range requests) marks 437 of 670 mandals mostly rainfed (23.9% of cropland irrigated). The track record's headline is now over rainfed fields (none backed, five weak, twelve not borne out, four untested; "backed" needs two qualifying seasons), and the live check hatches mostly irrigated mandals. Each Monday the real forecast calls are frozen (`phase3_levels/data/field_calls/`) and scored three weeks later. New pages: `/rabi/` (reservoirs by basin, rainfed seedbed against its own past, northeast monsoon under El Niño), `/digest/` (one A4 sheet, printed to PDF by each deploy) and `/field-report/` (written on the phone, shared as text, read back by a collector; no server). |
 | #44 | **This week in the fields** (Agriculture section 02): an FAO-56 crop water check for every mandal, for a chosen crop and stage, on this week's soil moisture and ECMWF's forecast. Also crop vegetation (NOAA VCI weighted to cropland) and the official CGWB groundwater category, on the Agriculture map, the Map page and every mandal page. The Map page's title and date now follow the view. |
 
 Taken off the to-do list as done: per-constituency briefs, the sidebar State wells date,
@@ -72,6 +73,12 @@ Steps:
 - `tests/test_field_signals.py` and `app/e2e/agriculture-live.spec.ts`;
 - `app/lib/fieldPriority.ts` (server only: the six-signal list and crop water by crop), `phase3_levels/build_crop_water_record.py` (by hand, about an hour of paced reanalysis downloads) and `app/data/crop_water_record.json`;
 - `app/e2e/governance-field-teams.spec.ts`;
+- `phase3_levels/build_irrigated_fraction.py` + `remote_zip.py` (static, by hand), `phase3_levels/data/vhp_irrigated_fraction.json` and `mandal_irrigated_share.json`; `fetch_field_signals.py` carries the shares as `irrigation`;
+- `phase3_levels/score_field_calls.py` (weekly, after the field signals), `phase3_levels/data/field_calls/` (frozen calls and the vegetation they are scored on) and `app/data/crop_water_scorecard.json`;
+- `app/app/rabi/`, `app/lib/rabi.ts` (server only), `app/lib/staticMap.ts`, `app/app/geo/mandal-outlines.json/route.ts` (a static file at build) and `app/components/StateOutlineMap.tsx`: a whole-State map whose outlines load once, cached, instead of riding in each page's HTML;
+- `app/app/digest/`, `app/components/DigestActions.tsx` and `app/scripts/print-digest.mjs` (both deploy workflows print `out/digest/ap-water-weekly-digest.pdf`; `serve-static.mjs` gained `--base`);
+- `app/app/field-report/` and `app/components/FieldReport.tsx`: reports travel as text ending in one `#APWR1:` line; keep that tag and the v1 shape readable;
+- `app/e2e/agriculture-rabi.spec.ts` and `governance-digest.spec.ts`;
 - `app/app/constituencies/[code]/page.tsx`;
 - `app/components/constituencies/PrintBrief.tsx` and `ConstituencyBrief.module.css`;
 - `app/components/agriculture/FieldSection.tsx` and `FieldSection.module.css`;
@@ -86,6 +93,7 @@ Steps:
 - six `app/public/assets/agriculture-*-stages` and `agriculture-root-zone` images.
 
 **Contracts the merge must keep:**
+- **Digest:** one A4 sheet. `print-digest.mjs` and `governance-digest.spec.ts` both fail on a second page; shorten before adding.
 - **Maps:** they draw `mapGeometry` from `lib/data.ts`, which is `ap_map_display.json`. The pipeline and model read `ap_map_geometry.json`. Never cross them.
 - **Agriculture:** `officialOutline` on each agriculture row, `outlineLabel()` in tooltips, and the `outline` CSV column.
 - **Forecasts:** `reliabilityFor(id)` drives the `forecast-trust` note in the mandal panel.

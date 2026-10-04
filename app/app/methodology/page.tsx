@@ -80,7 +80,9 @@ const caveats = [
 
 export default function MethodologyPage() {
   const record = checkRecord();
-  const verdicts = Object.values(record.record).reduce<Record<string, number>>((tally, entry) => ({ ...tally, [entry.verdict]: (tally[entry.verdict] ?? 0) + 1 }), {});
+  const tallyOf = (pick: (entry: (typeof record.record)[string]) => string) =>
+    Object.values(record.record).reduce<Record<string, number>>((tally, entry) => ({ ...tally, [pick(entry)]: (tally[pick(entry)] ?? 0) + 1 }), {});
+  const verdicts = tallyOf(entry => entry.rainfed.verdict), allCropland = tallyOf(entry => entry.allCropland.verdict);
   const seasonSpan = `${record.seasons[0]}–${String(record.seasons[record.seasons.length - 1]).slice(2)}`;
   return (
     <div className="pageWrap">
@@ -307,13 +309,17 @@ export default function MethodologyPage() {
             place with its own past, and irrigated fields stay green whatever the soil model says. Inside one mandal but pooled across
             seasons, the gap is large, mostly because &ldquo;short&rdquo; calls come in drier seasons: the check tells a dry season from a
             wet one, as rainfall alone would. The verdict holds both fixed: the same mandal in the same season, vegetation after a
-            &ldquo;short&rdquo; call against after a &ldquo;comfortable&rdquo; one. &ldquo;Backed by its record&rdquo; needs it at least
-            {" "}{record.rules.backedPoints} index points lower, overall and in every season; &ldquo;weak&rdquo; at least {record.rules.notedPoints}
-            {" "}point lower; &ldquo;not borne out&rdquo; otherwise. On {seasonSpan}, of {Object.keys(record.record).length} crop-stage
-            pairs, {verdicts.backed ?? 0} {(verdicts.backed ?? 0) === 1 ? "is" : "are"} backed, {verdicts.weak ?? 0} weak,{" "}
-            {verdicts["not borne out"] ?? 0} not borne out and {verdicts.untested ?? 0} untested: the check is a reading of where crops
-            need water now, not a forecast of what the satellite will see. The index covers whatever is growing, not the chosen crop,
-            so this tests whether the check finds real water shortage, not whether a particular crop suffered.
+            &ldquo;short&rdquo; call against after a &ldquo;comfortable&rdquo; one. And because the check is a rainfed water balance, it
+            is read over rainfed fields: the {record.rainfed.mandals} mandals where less than {record.rainfed.belowPct}% of the cropland
+            was mapped irrigated (ESA WorldCereal), with the vegetation index weighted to rainfed cropland only. &ldquo;Backed by its
+            record&rdquo; needs it at least {record.rules.backedPoints} index points lower, overall and in every season;
+            &ldquo;weak&rdquo; at least {record.rules.notedPoints} point lower; &ldquo;not borne out&rdquo; otherwise. On {seasonSpan},
+            of {Object.keys(record.record).length} crop-stage pairs, {verdicts.backed ?? 0} {(verdicts.backed ?? 0) === 1 ? "is" : "are"}{" "}
+            backed, {verdicts.weak ?? 0} weak, {verdicts["not borne out"] ?? 0} not borne out and {verdicts.untested ?? 0} untested over
+            rainfed fields (over all cropland, irrigated fields included: {allCropland.backed ?? 0} backed, {allCropland.weak ?? 0} weak,{" "}
+            {allCropland["not borne out"] ?? 0} not borne out, {allCropland.untested ?? 0} untested). The index covers whatever is
+            growing, not the chosen crop, so this tests whether the check finds real water shortage, not whether a particular crop
+            suffered.
           </p>
           <p>
             <strong>Where field teams would learn most.</strong>{" "}This Week lists the mandals where four or more of six published signals
@@ -321,6 +327,27 @@ export default function MethodologyPage() {
             quarter of years, four or more of the seven reference crops short of water at mid-season, crop vegetation severely below
             normal, and a semi-critical or worse official category. It is a count of stated tests, shown signal by signal, to direct
             verification visits: not a ranking of need, an allocation or a declaration. The signals are not all independent.
+          </p>
+          <p>
+            <strong>The live scorecard.</strong>{" "}The track record re-runs the check with the weather that happened. The stricter test
+            is the calls the page actually made: each Monday the refresh writes down every mandal&rsquo;s call for every crop and stage,
+            on that week&rsquo;s ECMWF forecast, and never changes it (phase3_levels/data/field_calls). Three weeks on, when NOAA has
+            published that week&rsquo;s vegetation index, the calls are scored the way the track record scores them, over rainfed fields.
+            {record.live?.frozen ? ` ${record.live.frozen} week${record.live.frozen === 1 ? "" : "s"} frozen so far, ${record.live.scored} scored.` : ""}
+          </p>
+          <p>
+            <strong>Rainfed or irrigated.</strong>{" "}ESA WorldCereal maps actively irrigated cropland at 10 m from Sentinel-1 and -2; over
+            Andhra Pradesh its season is rabi 2020&ndash;21. Counted per 4 km vegetation cell and per mandal against ESA WorldCover&rsquo;s
+            cropland, it marks {record.rainfed.mandals} of {record.rainfed.of} mandals as mostly rainfed ({record.rainfed.stateIrrigatedPct}%
+            of the State&rsquo;s cropland mapped irrigated). It is one season&rsquo;s satellite detection, not the irrigation census, and
+            it cannot say which crop is grown: no open map does for groundnut, cotton, chilli or the pulses.
+          </p>
+          <p>
+            <strong>Rabi Outlook, the digest and field reports.</strong>{" "}The Rabi Outlook puts reservoir storage by basin beside soil
+            moisture against its own past in the mostly rainfed mandals, and the northeast monsoon beside what past El Niño years brought;
+            it recommends no crop, release or sowing date. The weekly digest is the same figures on one A4 sheet, printed to PDF by each
+            deploy. Field reports are written on the phone and shared as text; nothing is sent anywhere until a person shares it, and a
+            collector&rsquo;s page reads the shared messages back into a table beside what the site called that week.
           </p>
         </div>
       </section>

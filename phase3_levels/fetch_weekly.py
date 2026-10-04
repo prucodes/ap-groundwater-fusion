@@ -133,6 +133,11 @@ STEPS = [
     # APWRIMS context, whose soil-moisture date the cross-check starts from.
     # Optional: a source that fails keeps last week's section, with its date.
     ("fetch field signals", [PY, os.path.join(HERE, "fetch_field_signals.py")], False, 1200),
+    # The crop water check's live scorecard: this week's calls frozen as made, and
+    # the calls of three weeks ago scored against the vegetation index. After the
+    # field signals, whose forecast and soil moisture the calls are made from.
+    # Optional: a week that fails is frozen or scored on the next run.
+    ("score field calls", [PY, os.path.join(HERE, "score_field_calls.py")], False, 900),
     # Last of the builders: this week's headlines beside the ones the site was
     # showing (the files at HEAD), each with its own date. Optional.
     # Every figure by assembly constituency, from this week's groundwater,

@@ -1,4 +1,4 @@
-import { CROP_REFERENCE, type AgricultureMandal, type CropKey } from "./agriculture";
+import { CROP_REFERENCE, GEC_CATEGORIES, type AgricultureMandal, type CropKey, type GecCategory } from "./agriculture";
 import { agricultureEvidence } from "./agricultureServer";
 import { cropWaterCheck } from "./cropWater";
 import { liveField } from "./fieldSignalsServer";
@@ -92,4 +92,13 @@ export function cropWaterByCrop(indexes: number[]) {
     }
     return { crop, name: CROP_REFERENCE[crop].name, short, known };
   });
+}
+
+/** The figures behind a row's signals, in a phrase. */
+export function standsOut(row: PriorityRow) {
+  const parts: string[] = [];
+  if (row.cropsShort !== null) parts.push(`${row.cropsShort} of ${row.cropsKnown} crops short of water`);
+  if (row.vci !== null) parts.push(`vegetation index ${row.vci.toFixed(0)}`);
+  if (row.category && row.category !== "safe") parts.push(`${GEC_CATEGORIES[row.category as GecCategory].label.toLowerCase()}${row.stagePct !== null ? ` (${row.stagePct.toFixed(0)}% drawn)` : ""}`);
+  return parts.join(" · ");
 }

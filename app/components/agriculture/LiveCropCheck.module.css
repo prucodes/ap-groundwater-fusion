@@ -128,9 +128,14 @@
 .record[data-verdict="untested"] { border-left-color: var(--line-strong); background: var(--card); }
 .recordText { display: grid; gap: 6px; min-width: 0; }
 .recordVerdict { display: inline-flex; align-items: center; gap: 7px; width: fit-content; font-size: 12px; font-weight: 700; color: var(--tone); }
+.recordVerdict em { font-style: normal; font-weight: 500; color: var(--muted); }
+.recordVerdict em::before { content: "·"; margin-right: 6px; }
 .recordVerdict i { width: 8px; height: 8px; border-radius: 50%; background: var(--tone); box-shadow: 0 0 0 3px color-mix(in srgb, var(--tone) 18%, transparent); }
 .recordText p { font-size: 13px; line-height: 1.55; color: var(--ink); margin: 0; text-wrap: pretty; }
 .recordText p.recordPooled { font-size: 12px; color: var(--ink-soft); }
+.recordText p.recordLive { display: block; padding: 8px 12px; border-radius: var(--radius-sm); background: color-mix(in srgb, var(--card) 70%, transparent); border: 1px solid var(--line); font-size: 12px; color: var(--ink-soft); }
+.recordLive span { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; font: 600 10px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
+.recordLive span i { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 20%, transparent); }
 .recordText small { font-size: 10.5px; line-height: 1.5; color: var(--muted); }
 .recordSeasons { margin: 0; display: grid; gap: 7px; }
 .recordSeasons figcaption { font-size: 11px; font-weight: 600; color: var(--ink-soft); }
@@ -144,9 +149,11 @@
 .seasonTrack u { position: absolute; top: -4px; bottom: -4px; width: 0; margin-left: -0.5px; border-left: 1px dashed var(--ink-soft); opacity: .7; }
 .seasonRow em { font: 600 14px var(--font-display); font-style: normal; color: var(--ink); text-align: right; font-variant-numeric: tabular-nums; }
 .seasonRow em small { display: block; font: 400 9.5px var(--font-mono); color: var(--muted); white-space: nowrap; }
-.seasonRow[data-total] { padding-top: 7px; border-top: 1px solid var(--line); font-weight: 600; color: var(--ink); }
-.seasonRow[data-total] .seasonTrack i { opacity: 1; }
-.seasonRow:not([data-total]) .seasonTrack i { opacity: .62; }
+.seasonRow[data-kind="total"] { padding-top: 7px; border-top: 1px solid var(--line); font-weight: 600; color: var(--ink); }
+.seasonRow[data-kind="season"] .seasonTrack i { opacity: .62; }
+.seasonRow[data-kind="reference"] { color: var(--muted); }
+.seasonRow[data-kind="reference"] .seasonTrack i { background: color-mix(in srgb, var(--muted) 12%, transparent); border: 1.5px dashed color-mix(in srgb, var(--muted) 70%, transparent); }
+.seasonRow[data-kind="reference"] em { color: var(--ink-soft); font-size: 12.5px; }
 .seasonAxis { display: flex; justify-content: space-between; gap: 12px; padding: 0 118px 0 80px; font-size: 9.5px; color: var(--muted); }
 .seasonAxis small { font-size: inherit; }
 
@@ -176,3 +183,9 @@
 @media (prefers-reduced-motion: reduce) {
   .liveBadge i { animation: none; }
 }
+
+.ledeNote { color: var(--ink-soft); }
+.irrigatedLayer { pointer-events: none; }
+.hatchSwatch { background: repeating-linear-gradient(45deg, #9aa7b0 0 1.5px, #e9edf0 1.5px 4px) !important; }
+.irrigatedNote { margin: 0; padding: 9px 12px; border-radius: var(--radius-sm); background: var(--field); font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
+.irrigatedNote b { color: var(--ink); font-variant-numeric: tabular-nums; }

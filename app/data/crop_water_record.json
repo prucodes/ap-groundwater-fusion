@@ -1,15 +1,25 @@
 {
- "generatedAt": "2026-10-04T16:59:33+00:00",
+ "generatedAt": "2026-10-04T17:31:52+00:00",
  "question": "Three weeks after the check called a mandal's crop short of water, was the vegetation on its cropland worse than three weeks after it called the same mandal comfortable in the same season?",
  "outcome": "Crop vegetation (NOAA STAR VCI, weighted to cropland) 3 weeks after the check week. 'within': inside each mandal with both kinds of call, mean VCI after 'short' (now or within 7 days) minus after 'comfortable' (afterGap), the same for the change over the three weeks (changeGap), and the share where it changed for the worse (worsePct); 'sameSeason' counts mandal-seasons and drives the verdict, 'acrossSeasons' pools a mandal's seasons, 'seasons' is each season alone. 'across': all calls pooled over mandals, for reference: severePct = VCI under 40, fellPct = down 5 points or more.",
  "acrossCaveat": "Two comparisons were run first and are kept on record. Pooled across mandals the check does not separate vegetation: the places called short most often are the chronically dry ones, VCI compares each place with its own past, and irrigated fields stay green whatever the soil model says. Inside one mandal but pooled across seasons the gap is large, mostly because \u201cshort\u201d calls come in the drier seasons. The verdict holds both the place and the season fixed.",
  "weather": "ERA5 reanalysis (Copernicus / ECMWF) via Open-Meteo's archive: the weather that happened, not the forecast. 'Within 7 days' is therefore tested as if the forecast were perfect.",
  "soil": "APWRIMS / NRSC VIC soil moisture on each check date; SoilGrids 2.0 water-holding capacity.",
+ "headline": "rainfed",
+ "rainfed": {
+  "mandals": 437,
+  "of": 670,
+  "belowPct": 50.0,
+  "stateIrrigatedPct": 23.9,
+  "text": "Mandals where less than half the cropland was mapped irrigated (ESA WorldCereal, rabi 2020-21), with the vegetation index weighted to rainfed cropland only."
+ },
  "rules": {
   "backedPoints": 5.0,
   "notedPoints": 1.0,
   "minMandals": 100,
-  "text": "Backed by its record: inside the same mandal and season, crop vegetation three weeks after a 'short' call reads at least 5 index points lower than after a 'comfortable' call, overall and in every season. Weak record: at least 1 point lower, short of that. Not borne out: less than 1 point lower, or higher. Untested: fewer than 100 mandal-seasons with both kinds of call."
+  "minSeasonMandals": 30,
+  "minBackedSeasons": 2,
+  "text": "Backed by its record: inside the same mandal and season, crop vegetation three weeks after a 'short' call reads at least 5 index points lower than after a 'comfortable' call, overall and in every season, with at least two seasons of 30 mandals or more. Weak record: at least 1 point lower, short of that. Not borne out: less than 1 point lower, or higher. Untested: fewer than 100 mandal-seasons with both kinds of call."
  },
  "seasons": [
   2024,
@@ -351,6 +361,80 @@
  ],
  "record": {
   "maize-0": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 654,
+      "changeGap": -0.4,
+      "afterGap": 0.7,
+      "worsePct": 53.2
+     },
+     "acrossSeasons": {
+      "mandals": 394,
+      "changeGap": -2.8,
+      "afterGap": -7.9,
+      "worsePct": 75.4
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 237,
+       "changeGap": -0.7,
+       "afterGap": -1.1,
+       "worsePct": 51.5
+      },
+      "2025": {
+       "mandals": 266,
+       "changeGap": -1.5,
+       "afterGap": -0.1,
+       "worsePct": 57.9
+      },
+      "2026": {
+       "mandals": 151,
+       "changeGap": 2.1,
+       "afterGap": 4.8,
+       "worsePct": 47.7
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 948,
+      "changeGap": -1.2,
+      "afterGap": 0.4,
+      "worsePct": 56.5
+     },
+     "acrossSeasons": {
+      "mandals": 601,
+      "changeGap": -2.2,
+      "afterGap": -3.5,
+      "worsePct": 69.1
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 282,
+       "changeGap": -0.7,
+       "afterGap": -1.0,
+       "worsePct": 52.8
+      },
+      "2025": {
+       "mandals": 379,
+       "changeGap": -2.4,
+       "afterGap": -0.1,
+       "worsePct": 63.1
+      },
+      "2026": {
+       "mandals": 287,
+       "changeGap": -0.1,
+       "afterGap": 2.4,
+       "worsePct": 51.6
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 5498,
@@ -444,44 +528,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 948,
-     "changeGap": -1.2,
-     "afterGap": 0.4,
-     "worsePct": 56.5
-    },
-    "acrossSeasons": {
-     "mandals": 601,
-     "changeGap": -2.2,
-     "afterGap": -3.5,
-     "worsePct": 69.1
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 282,
-      "changeGap": -0.7,
-      "afterGap": -1.0,
-      "worsePct": 52.8
-     },
-     "2025": {
-      "mandals": 379,
-      "changeGap": -2.4,
-      "afterGap": -0.1,
-      "worsePct": 63.1
-     },
-     "2026": {
-      "mandals": 287,
-      "changeGap": -0.1,
-      "afterGap": 2.4,
-      "worsePct": 51.6
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "maize-1": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 569,
+      "changeGap": -0.4,
+      "afterGap": -1.5,
+      "worsePct": 51.5
+     },
+     "acrossSeasons": {
+      "mandals": 363,
+      "changeGap": -4.3,
+      "afterGap": -11.3,
+      "worsePct": 82.4
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 104,
+       "changeGap": -0.7,
+       "afterGap": -2.3,
+       "worsePct": 50.0
+      },
+      "2025": {
+       "mandals": 161,
+       "changeGap": 0.4,
+       "afterGap": -0.6,
+       "worsePct": 47.8
+      },
+      "2026": {
+       "mandals": 304,
+       "changeGap": -0.8,
+       "afterGap": -1.7,
+       "worsePct": 53.9
+      }
+     }
+    },
+    "verdict": "weak"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 735,
+      "changeGap": -0.5,
+      "afterGap": -1.1,
+      "worsePct": 51.0
+     },
+     "acrossSeasons": {
+      "mandals": 492,
+      "changeGap": -3.5,
+      "afterGap": -7.5,
+      "worsePct": 75.6
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 127,
+       "changeGap": -0.8,
+       "afterGap": -1.8,
+       "worsePct": 52.0
+      },
+      "2025": {
+       "mandals": 201,
+       "changeGap": 0.1,
+       "afterGap": -0.7,
+       "worsePct": 49.3
+      },
+      "2026": {
+       "mandals": 407,
+       "changeGap": -0.8,
+       "afterGap": -1.1,
+       "worsePct": 51.6
+      }
+     }
+    },
+    "verdict": "weak"
+   },
    "across": {
     "stressed": {
      "n": 1204,
@@ -575,44 +698,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 735,
-     "changeGap": -0.5,
-     "afterGap": -1.1,
-     "worsePct": 51.0
-    },
-    "acrossSeasons": {
-     "mandals": 492,
-     "changeGap": -3.5,
-     "afterGap": -7.5,
-     "worsePct": 75.6
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 127,
-      "changeGap": -0.8,
-      "afterGap": -1.8,
-      "worsePct": 52.0
-     },
-     "2025": {
-      "mandals": 201,
-      "changeGap": 0.1,
-      "afterGap": -0.7,
-      "worsePct": 49.3
-     },
-     "2026": {
-      "mandals": 407,
-      "changeGap": -0.8,
-      "afterGap": -1.1,
-      "worsePct": 51.6
-     }
-    }
-   },
-   "verdict": "weak"
+   }
   },
   "maize-2": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 44,
+      "changeGap": -0.4,
+      "afterGap": -1.0,
+      "worsePct": 56.8
+     },
+     "acrossSeasons": {
+      "mandals": 46,
+      "changeGap": -3.5,
+      "afterGap": -11.9,
+      "worsePct": 67.4
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 5,
+       "changeGap": 4.6,
+       "afterGap": -9.2,
+       "worsePct": 40.0
+      },
+      "2025": {
+       "mandals": 2,
+       "changeGap": 2.0,
+       "afterGap": -1.6,
+       "worsePct": 0.0
+      },
+      "2026": {
+       "mandals": 37,
+       "changeGap": -1.2,
+       "afterGap": 0.1,
+       "worsePct": 62.2
+      }
+     }
+    },
+    "verdict": "untested"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 71,
+      "changeGap": -2.0,
+      "afterGap": -2.9,
+      "worsePct": 59.2
+     },
+     "acrossSeasons": {
+      "mandals": 72,
+      "changeGap": -4.9,
+      "afterGap": -9.6,
+      "worsePct": 76.4
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 8,
+       "changeGap": 4.1,
+       "afterGap": -4.2,
+       "worsePct": 37.5
+      },
+      "2025": {
+       "mandals": 5,
+       "changeGap": -3.4,
+       "afterGap": -7.5,
+       "worsePct": 40.0
+      },
+      "2026": {
+       "mandals": 58,
+       "changeGap": -2.7,
+       "afterGap": -2.3,
+       "worsePct": 63.8
+      }
+     }
+    },
+    "verdict": "untested"
+   },
    "across": {
     "stressed": {
      "n": 332,
@@ -706,44 +868,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 71,
-     "changeGap": -2.0,
-     "afterGap": -2.9,
-     "worsePct": 59.2
-    },
-    "acrossSeasons": {
-     "mandals": 72,
-     "changeGap": -4.9,
-     "afterGap": -9.6,
-     "worsePct": 76.4
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 8,
-      "changeGap": 4.1,
-      "afterGap": -4.2,
-      "worsePct": 37.5
-     },
-     "2025": {
-      "mandals": 5,
-      "changeGap": -3.4,
-      "afterGap": -7.5,
-      "worsePct": 40.0
-     },
-     "2026": {
-      "mandals": 58,
-      "changeGap": -2.7,
-      "afterGap": -2.3,
-      "worsePct": 63.8
-     }
-    }
-   },
-   "verdict": "untested"
+   }
   },
   "groundnut-0": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 681,
+      "changeGap": -0.1,
+      "afterGap": 0.8,
+      "worsePct": 51.4
+     },
+     "acrossSeasons": {
+      "mandals": 393,
+      "changeGap": -2.6,
+      "afterGap": -7.3,
+      "worsePct": 73.5
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 270,
+       "changeGap": -0.9,
+       "afterGap": -1.5,
+       "worsePct": 55.6
+      },
+      "2025": {
+       "mandals": 297,
+       "changeGap": -0.7,
+       "afterGap": 0.4,
+       "worsePct": 52.9
+      },
+      "2026": {
+       "mandals": 114,
+       "changeGap": 3.4,
+       "afterGap": 7.6,
+       "worsePct": 37.7
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 1060,
+      "changeGap": -1.4,
+      "afterGap": 0.4,
+      "worsePct": 55.9
+     },
+     "acrossSeasons": {
+      "mandals": 603,
+      "changeGap": -2.4,
+      "afterGap": -3.2,
+      "worsePct": 72.5
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 340,
+       "changeGap": -1.2,
+       "afterGap": -1.7,
+       "worsePct": 57.4
+      },
+      "2025": {
+       "mandals": 494,
+       "changeGap": -2.4,
+       "afterGap": 0.4,
+       "worsePct": 60.3
+      },
+      "2026": {
+       "mandals": 226,
+       "changeGap": 0.6,
+       "afterGap": 3.5,
+       "worsePct": 44.2
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 6627,
@@ -837,44 +1038,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 1060,
-     "changeGap": -1.4,
-     "afterGap": 0.4,
-     "worsePct": 55.9
-    },
-    "acrossSeasons": {
-     "mandals": 603,
-     "changeGap": -2.4,
-     "afterGap": -3.2,
-     "worsePct": 72.5
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 340,
-      "changeGap": -1.2,
-      "afterGap": -1.7,
-      "worsePct": 57.4
-     },
-     "2025": {
-      "mandals": 494,
-      "changeGap": -2.4,
-      "afterGap": 0.4,
-      "worsePct": 60.3
-     },
-     "2026": {
-      "mandals": 226,
-      "changeGap": 0.6,
-      "afterGap": 3.5,
-      "worsePct": 44.2
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "groundnut-1": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 709,
+      "changeGap": -1.3,
+      "afterGap": 0.6,
+      "worsePct": 57.1
+     },
+     "acrossSeasons": {
+      "mandals": 395,
+      "changeGap": -3.9,
+      "afterGap": -7.5,
+      "worsePct": 84.1
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 241,
+       "changeGap": -0.6,
+       "afterGap": -1.2,
+       "worsePct": 56.0
+      },
+      "2025": {
+       "mandals": 303,
+       "changeGap": -1.3,
+       "afterGap": 0.8,
+       "worsePct": 55.8
+      },
+      "2026": {
+       "mandals": 165,
+       "changeGap": -2.3,
+       "afterGap": 2.7,
+       "worsePct": 61.2
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 1063,
+      "changeGap": -1.6,
+      "afterGap": 0.5,
+      "worsePct": 58.4
+     },
+     "acrossSeasons": {
+      "mandals": 599,
+      "changeGap": -2.9,
+      "afterGap": -3.3,
+      "worsePct": 74.0
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 289,
+       "changeGap": -0.8,
+       "afterGap": -1.3,
+       "worsePct": 56.7
+      },
+      "2025": {
+       "mandals": 453,
+       "changeGap": -2.3,
+       "afterGap": 1.0,
+       "worsePct": 61.1
+      },
+      "2026": {
+       "mandals": 321,
+       "changeGap": -1.6,
+       "afterGap": 1.5,
+       "worsePct": 56.1
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 3306,
@@ -968,44 +1208,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 1063,
-     "changeGap": -1.6,
-     "afterGap": 0.5,
-     "worsePct": 58.4
-    },
-    "acrossSeasons": {
-     "mandals": 599,
-     "changeGap": -2.9,
-     "afterGap": -3.3,
-     "worsePct": 74.0
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 289,
-      "changeGap": -0.8,
-      "afterGap": -1.3,
-      "worsePct": 56.7
-     },
-     "2025": {
-      "mandals": 453,
-      "changeGap": -2.3,
-      "afterGap": 1.0,
-      "worsePct": 61.1
-     },
-     "2026": {
-      "mandals": 321,
-      "changeGap": -1.6,
-      "afterGap": 1.5,
-      "worsePct": 56.1
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "groundnut-2": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 453,
+      "changeGap": -0.2,
+      "afterGap": -1.9,
+      "worsePct": 47.2
+     },
+     "acrossSeasons": {
+      "mandals": 363,
+      "changeGap": -4.6,
+      "afterGap": -12.5,
+      "worsePct": 78.0
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 81,
+       "changeGap": 1.3,
+       "afterGap": -1.7,
+       "worsePct": 39.5
+      },
+      "2025": {
+       "mandals": 49,
+       "changeGap": 1.1,
+       "afterGap": -1.6,
+       "worsePct": 38.8
+      },
+      "2026": {
+       "mandals": 323,
+       "changeGap": -0.8,
+       "afterGap": -1.9,
+       "worsePct": 50.5
+      }
+     }
+    },
+    "verdict": "weak"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 606,
+      "changeGap": -0.7,
+      "afterGap": -1.4,
+      "worsePct": 49.0
+     },
+     "acrossSeasons": {
+      "mandals": 496,
+      "changeGap": -4.0,
+      "afterGap": -8.2,
+      "worsePct": 74.4
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 96,
+       "changeGap": 1.2,
+       "afterGap": -1.5,
+       "worsePct": 40.6
+      },
+      "2025": {
+       "mandals": 72,
+       "changeGap": 1.1,
+       "afterGap": -1.3,
+       "worsePct": 44.4
+      },
+      "2026": {
+       "mandals": 438,
+       "changeGap": -1.4,
+       "afterGap": -1.4,
+       "worsePct": 51.6
+      }
+     }
+    },
+    "verdict": "weak"
+   },
    "across": {
     "stressed": {
      "n": 1297,
@@ -1099,44 +1378,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 606,
-     "changeGap": -0.7,
-     "afterGap": -1.4,
-     "worsePct": 49.0
-    },
-    "acrossSeasons": {
-     "mandals": 496,
-     "changeGap": -4.0,
-     "afterGap": -8.2,
-     "worsePct": 74.4
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 96,
-      "changeGap": 1.2,
-      "afterGap": -1.5,
-      "worsePct": 40.6
-     },
-     "2025": {
-      "mandals": 72,
-      "changeGap": 1.1,
-      "afterGap": -1.3,
-      "worsePct": 44.4
-     },
-     "2026": {
-      "mandals": 438,
-      "changeGap": -1.4,
-      "afterGap": -1.4,
-      "worsePct": 51.6
-     }
-    }
-   },
-   "verdict": "weak"
+   }
   },
   "cotton-0": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 678,
+      "changeGap": -0.8,
+      "afterGap": 0.4,
+      "worsePct": 53.1
+     },
+     "acrossSeasons": {
+      "mandals": 393,
+      "changeGap": -3.3,
+      "afterGap": -8.3,
+      "worsePct": 76.8
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 214,
+       "changeGap": -0.2,
+       "afterGap": -0.8,
+       "worsePct": 48.6
+      },
+      "2025": {
+       "mandals": 256,
+       "changeGap": -1.6,
+       "afterGap": -0.1,
+       "worsePct": 57.0
+      },
+      "2026": {
+       "mandals": 208,
+       "changeGap": -0.6,
+       "afterGap": 2.2,
+       "worsePct": 52.9
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 979,
+      "changeGap": -1.4,
+      "afterGap": 0.2,
+      "worsePct": 55.0
+     },
+     "acrossSeasons": {
+      "mandals": 597,
+      "changeGap": -2.5,
+      "afterGap": -3.7,
+      "worsePct": 71.2
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 253,
+       "changeGap": -0.0,
+       "afterGap": -0.6,
+       "worsePct": 48.2
+      },
+      "2025": {
+       "mandals": 353,
+       "changeGap": -2.4,
+       "afterGap": -0.2,
+       "worsePct": 61.2
+      },
+      "2026": {
+       "mandals": 373,
+       "changeGap": -1.4,
+       "afterGap": 1.2,
+       "worsePct": 53.6
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 4009,
@@ -1230,44 +1548,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 979,
-     "changeGap": -1.4,
-     "afterGap": 0.2,
-     "worsePct": 55.0
-    },
-    "acrossSeasons": {
-     "mandals": 597,
-     "changeGap": -2.5,
-     "afterGap": -3.7,
-     "worsePct": 71.2
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 253,
-      "changeGap": -0.0,
-      "afterGap": -0.6,
-      "worsePct": 48.2
-     },
-     "2025": {
-      "mandals": 353,
-      "changeGap": -2.4,
-      "afterGap": -0.2,
-      "worsePct": 61.2
-     },
-     "2026": {
-      "mandals": 373,
-      "changeGap": -1.4,
-      "afterGap": 1.2,
-      "worsePct": 53.6
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "cotton-1": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 349,
+      "changeGap": 0.4,
+      "afterGap": -3.4,
+      "worsePct": 48.1
+     },
+     "acrossSeasons": {
+      "mandals": 292,
+      "changeGap": -3.9,
+      "afterGap": -14.2,
+      "worsePct": 74.7
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 30,
+       "changeGap": 1.0,
+       "afterGap": -2.9,
+       "worsePct": 46.7
+      },
+      "2025": {
+       "mandals": 51,
+       "changeGap": 1.1,
+       "afterGap": -2.7,
+       "worsePct": 39.2
+      },
+      "2026": {
+       "mandals": 268,
+       "changeGap": 0.2,
+       "afterGap": -3.6,
+       "worsePct": 50.0
+      }
+     }
+    },
+    "verdict": "weak"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 446,
+      "changeGap": 0.1,
+      "afterGap": -3.0,
+      "worsePct": 50.0
+     },
+     "acrossSeasons": {
+      "mandals": 363,
+      "changeGap": -3.6,
+      "afterGap": -11.6,
+      "worsePct": 74.9
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 41,
+       "changeGap": 0.5,
+       "afterGap": -3.2,
+       "worsePct": 51.2
+      },
+      "2025": {
+       "mandals": 77,
+       "changeGap": 0.4,
+       "afterGap": -2.7,
+       "worsePct": 48.1
+      },
+      "2026": {
+       "mandals": 328,
+       "changeGap": 0.0,
+       "afterGap": -3.1,
+       "worsePct": 50.3
+      }
+     }
+    },
+    "verdict": "weak"
+   },
    "across": {
     "stressed": {
      "n": 493,
@@ -1361,44 +1718,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 446,
-     "changeGap": 0.1,
-     "afterGap": -3.0,
-     "worsePct": 50.0
-    },
-    "acrossSeasons": {
-     "mandals": 363,
-     "changeGap": -3.6,
-     "afterGap": -11.6,
-     "worsePct": 74.9
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 41,
-      "changeGap": 0.5,
-      "afterGap": -3.2,
-      "worsePct": 51.2
-     },
-     "2025": {
-      "mandals": 77,
-      "changeGap": 0.4,
-      "afterGap": -2.7,
-      "worsePct": 48.1
-     },
-     "2026": {
-      "mandals": 328,
-      "changeGap": 0.0,
-      "afterGap": -3.1,
-      "worsePct": 50.3
-     }
-    }
-   },
-   "verdict": "weak"
+   }
   },
   "cotton-2": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 48,
+      "changeGap": -2.1,
+      "afterGap": -2.6,
+      "worsePct": 58.3
+     },
+     "acrossSeasons": {
+      "mandals": 46,
+      "changeGap": -5.5,
+      "afterGap": -12.9,
+      "worsePct": 84.8
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 5,
+       "changeGap": 5.0,
+       "afterGap": -1.6,
+       "worsePct": 40.0
+      },
+      "2025": {
+       "mandals": 2,
+       "changeGap": 5.8,
+       "afterGap": 1.4,
+       "worsePct": 0.0
+      },
+      "2026": {
+       "mandals": 41,
+       "changeGap": -3.4,
+       "afterGap": -3.0,
+       "worsePct": 63.4
+      }
+     }
+    },
+    "verdict": "untested"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 72,
+      "changeGap": -3.1,
+      "afterGap": -4.2,
+      "worsePct": 62.5
+     },
+     "acrossSeasons": {
+      "mandals": 69,
+      "changeGap": -6.3,
+      "afterGap": -11.2,
+      "worsePct": 87.0
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 6,
+       "changeGap": 2.6,
+       "afterGap": -5.1,
+       "worsePct": 50.0
+      },
+      "2025": {
+       "mandals": 6,
+       "changeGap": -1.9,
+       "afterGap": -3.6,
+       "worsePct": 50.0
+      },
+      "2026": {
+       "mandals": 60,
+       "changeGap": -3.8,
+       "afterGap": -4.2,
+       "worsePct": 65.0
+      }
+     }
+    },
+    "verdict": "untested"
+   },
    "across": {
     "stressed": {
      "n": 185,
@@ -1492,44 +1888,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 72,
-     "changeGap": -3.1,
-     "afterGap": -4.2,
-     "worsePct": 62.5
-    },
-    "acrossSeasons": {
-     "mandals": 69,
-     "changeGap": -6.3,
-     "afterGap": -11.2,
-     "worsePct": 87.0
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 6,
-      "changeGap": 2.6,
-      "afterGap": -5.1,
-      "worsePct": 50.0
-     },
-     "2025": {
-      "mandals": 6,
-      "changeGap": -1.9,
-      "afterGap": -3.6,
-      "worsePct": 50.0
-     },
-     "2026": {
-      "mandals": 60,
-      "changeGap": -3.8,
-      "afterGap": -4.2,
-      "worsePct": 65.0
-     }
-    }
-   },
-   "verdict": "untested"
+   }
   },
   "chilli-0": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 529,
+      "changeGap": -0.4,
+      "afterGap": -0.5,
+      "worsePct": 51.0
+     },
+     "acrossSeasons": {
+      "mandals": 345,
+      "changeGap": -3.1,
+      "afterGap": -7.1,
+      "worsePct": 71.6
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 291,
+       "changeGap": -0.8,
+       "afterGap": -1.7,
+       "worsePct": 54.0
+      },
+      "2025": {
+       "mandals": 210,
+       "changeGap": -0.4,
+       "afterGap": -0.3,
+       "worsePct": 49.5
+      },
+      "2026": {
+       "mandals": 28,
+       "changeGap": 3.1,
+       "afterGap": 9.0,
+       "worsePct": 32.1
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 885,
+      "changeGap": -0.8,
+      "afterGap": -0.2,
+      "worsePct": 54.0
+     },
+     "acrossSeasons": {
+      "mandals": 531,
+      "changeGap": -2.6,
+      "afterGap": -2.9,
+      "worsePct": 66.1
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 470,
+       "changeGap": -1.8,
+       "afterGap": -1.8,
+       "worsePct": 59.8
+      },
+      "2025": {
+       "mandals": 368,
+       "changeGap": -0.0,
+       "afterGap": 1.0,
+       "worsePct": 49.7
+      },
+      "2026": {
+       "mandals": 47,
+       "changeGap": 3.7,
+       "afterGap": 6.4,
+       "worsePct": 29.8
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 10849,
@@ -1623,44 +2058,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 885,
-     "changeGap": -0.8,
-     "afterGap": -0.2,
-     "worsePct": 54.0
-    },
-    "acrossSeasons": {
-     "mandals": 531,
-     "changeGap": -2.6,
-     "afterGap": -2.9,
-     "worsePct": 66.1
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 470,
-      "changeGap": -1.8,
-      "afterGap": -1.8,
-      "worsePct": 59.8
-     },
-     "2025": {
-      "mandals": 368,
-      "changeGap": -0.0,
-      "afterGap": 1.0,
-      "worsePct": 49.7
-     },
-     "2026": {
-      "mandals": 47,
-      "changeGap": 3.7,
-      "afterGap": 6.4,
-      "worsePct": 29.8
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "chilli-1": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 647,
+      "changeGap": -1.5,
+      "afterGap": -0.1,
+      "worsePct": 54.3
+     },
+     "acrossSeasons": {
+      "mandals": 374,
+      "changeGap": -3.6,
+      "afterGap": -7.1,
+      "worsePct": 78.9
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 272,
+       "changeGap": -1.8,
+       "afterGap": -1.7,
+       "worsePct": 57.4
+      },
+      "2025": {
+       "mandals": 308,
+       "changeGap": -1.5,
+       "afterGap": -0.1,
+       "worsePct": 53.9
+      },
+      "2026": {
+       "mandals": 67,
+       "changeGap": 0.0,
+       "afterGap": 6.6,
+       "worsePct": 43.3
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 1000,
+      "changeGap": -2.3,
+      "afterGap": -0.0,
+      "worsePct": 58.9
+     },
+     "acrossSeasons": {
+      "mandals": 572,
+      "changeGap": -3.2,
+      "afterGap": -2.9,
+      "worsePct": 74.7
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 357,
+       "changeGap": -2.6,
+       "afterGap": -1.9,
+       "worsePct": 61.3
+      },
+      "2025": {
+       "mandals": 491,
+       "changeGap": -2.5,
+       "afterGap": 0.5,
+       "worsePct": 60.7
+      },
+      "2026": {
+       "mandals": 152,
+       "changeGap": -0.7,
+       "afterGap": 2.9,
+       "worsePct": 47.4
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 8391,
@@ -1754,44 +2228,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 1000,
-     "changeGap": -2.3,
-     "afterGap": -0.0,
-     "worsePct": 58.9
-    },
-    "acrossSeasons": {
-     "mandals": 572,
-     "changeGap": -3.2,
-     "afterGap": -2.9,
-     "worsePct": 74.7
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 357,
-      "changeGap": -2.6,
-      "afterGap": -1.9,
-      "worsePct": 61.3
-     },
-     "2025": {
-      "mandals": 491,
-      "changeGap": -2.5,
-      "afterGap": 0.5,
-      "worsePct": 60.7
-     },
-     "2026": {
-      "mandals": 152,
-      "changeGap": -0.7,
-      "afterGap": 2.9,
-      "worsePct": 47.4
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "chilli-2": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 634,
+      "changeGap": -1.4,
+      "afterGap": -0.1,
+      "worsePct": 55.0
+     },
+     "acrossSeasons": {
+      "mandals": 378,
+      "changeGap": -3.5,
+      "afterGap": -7.2,
+      "worsePct": 78.8
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 256,
+       "changeGap": -2.3,
+       "afterGap": -2.6,
+       "worsePct": 59.8
+      },
+      "2025": {
+       "mandals": 297,
+       "changeGap": -1.3,
+       "afterGap": 0.8,
+       "worsePct": 54.5
+      },
+      "2026": {
+       "mandals": 81,
+       "changeGap": 0.7,
+       "afterGap": 4.9,
+       "worsePct": 42.0
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 975,
+      "changeGap": -2.2,
+      "afterGap": 0.1,
+      "worsePct": 58.5
+     },
+     "acrossSeasons": {
+      "mandals": 576,
+      "changeGap": -3.0,
+      "afterGap": -2.9,
+      "worsePct": 74.5
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 312,
+       "changeGap": -2.6,
+       "afterGap": -2.6,
+       "worsePct": 61.5
+      },
+      "2025": {
+       "mandals": 478,
+       "changeGap": -2.7,
+       "afterGap": 0.9,
+       "worsePct": 61.7
+      },
+      "2026": {
+       "mandals": 185,
+       "changeGap": -0.0,
+       "afterGap": 2.6,
+       "worsePct": 44.9
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 7690,
@@ -1885,44 +2398,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 975,
-     "changeGap": -2.2,
-     "afterGap": 0.1,
-     "worsePct": 58.5
-    },
-    "acrossSeasons": {
-     "mandals": 576,
-     "changeGap": -3.0,
-     "afterGap": -2.9,
-     "worsePct": 74.5
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 312,
-      "changeGap": -2.6,
-      "afterGap": -2.6,
-      "worsePct": 61.5
-     },
-     "2025": {
-      "mandals": 478,
-      "changeGap": -2.7,
-      "afterGap": 0.9,
-      "worsePct": 61.7
-     },
-     "2026": {
-      "mandals": 185,
-      "changeGap": -0.0,
-      "afterGap": 2.6,
-      "worsePct": 44.9
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "redgram-0": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 656,
+      "changeGap": -0.3,
+      "afterGap": 0.7,
+      "worsePct": 53.4
+     },
+     "acrossSeasons": {
+      "mandals": 392,
+      "changeGap": -2.7,
+      "afterGap": -7.2,
+      "worsePct": 75.0
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 279,
+       "changeGap": -0.8,
+       "afterGap": -1.7,
+       "worsePct": 56.3
+      },
+      "2025": {
+       "mandals": 281,
+       "changeGap": -1.3,
+       "afterGap": 0.3,
+       "worsePct": 56.2
+      },
+      "2026": {
+       "mandals": 96,
+       "changeGap": 4.4,
+       "afterGap": 9.2,
+       "worsePct": 36.5
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 1011,
+      "changeGap": -1.6,
+      "afterGap": 0.2,
+      "worsePct": 57.5
+     },
+     "acrossSeasons": {
+      "mandals": 601,
+      "changeGap": -2.6,
+      "afterGap": -3.3,
+      "worsePct": 72.9
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 357,
+       "changeGap": -1.2,
+       "afterGap": -1.9,
+       "worsePct": 58.3
+      },
+      "2025": {
+       "mandals": 472,
+       "changeGap": -2.9,
+       "afterGap": 0.3,
+       "worsePct": 62.1
+      },
+      "2026": {
+       "mandals": 182,
+       "changeGap": 1.1,
+       "afterGap": 4.2,
+       "worsePct": 44.0
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 7462,
@@ -2016,44 +2568,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 1011,
-     "changeGap": -1.6,
-     "afterGap": 0.2,
-     "worsePct": 57.5
-    },
-    "acrossSeasons": {
-     "mandals": 601,
-     "changeGap": -2.6,
-     "afterGap": -3.3,
-     "worsePct": 72.9
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 357,
-      "changeGap": -1.2,
-      "afterGap": -1.9,
-      "worsePct": 58.3
-     },
-     "2025": {
-      "mandals": 472,
-      "changeGap": -2.9,
-      "afterGap": 0.3,
-      "worsePct": 62.1
-     },
-     "2026": {
-      "mandals": 182,
-      "changeGap": 1.1,
-      "afterGap": 4.2,
-      "worsePct": 44.0
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "redgram-1": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 635,
+      "changeGap": -1.2,
+      "afterGap": -0.5,
+      "worsePct": 55.3
+     },
+     "acrossSeasons": {
+      "mandals": 386,
+      "changeGap": -4.2,
+      "afterGap": -9.1,
+      "worsePct": 82.9
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 177,
+       "changeGap": -0.1,
+       "afterGap": -1.1,
+       "worsePct": 49.2
+      },
+      "2025": {
+       "mandals": 217,
+       "changeGap": -1.1,
+       "afterGap": -0.4,
+       "worsePct": 54.8
+      },
+      "2026": {
+       "mandals": 241,
+       "changeGap": -2.0,
+       "afterGap": -0.0,
+       "worsePct": 60.2
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 874,
+      "changeGap": -1.1,
+      "afterGap": -0.1,
+      "worsePct": 54.1
+     },
+     "acrossSeasons": {
+      "mandals": 569,
+      "changeGap": -3.1,
+      "afterGap": -4.3,
+      "worsePct": 71.9
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 203,
+       "changeGap": -0.3,
+       "afterGap": -1.2,
+       "worsePct": 48.8
+      },
+      "2025": {
+       "mandals": 283,
+       "changeGap": -1.1,
+       "afterGap": 0.0,
+       "worsePct": 53.4
+      },
+      "2026": {
+       "mandals": 388,
+       "changeGap": -1.6,
+       "afterGap": 0.5,
+       "worsePct": 57.5
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 2311,
@@ -2147,44 +2738,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 874,
-     "changeGap": -1.1,
-     "afterGap": -0.1,
-     "worsePct": 54.1
-    },
-    "acrossSeasons": {
-     "mandals": 569,
-     "changeGap": -3.1,
-     "afterGap": -4.3,
-     "worsePct": 71.9
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 203,
-      "changeGap": -0.3,
-      "afterGap": -1.2,
-      "worsePct": 48.8
-     },
-     "2025": {
-      "mandals": 283,
-      "changeGap": -1.1,
-      "afterGap": 0.0,
-      "worsePct": 53.4
-     },
-     "2026": {
-      "mandals": 388,
-      "changeGap": -1.6,
-      "afterGap": 0.5,
-      "worsePct": 57.5
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "redgram-2": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 96,
+      "changeGap": 0.4,
+      "afterGap": -1.9,
+      "worsePct": 47.9
+     },
+     "acrossSeasons": {
+      "mandals": 87,
+      "changeGap": -3.1,
+      "afterGap": -11.4,
+      "worsePct": 66.7
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 17,
+       "changeGap": 0.4,
+       "afterGap": -6.0,
+       "worsePct": 35.3
+      },
+      "2025": {
+       "mandals": 8,
+       "changeGap": 2.3,
+       "afterGap": -2.3,
+       "worsePct": 50.0
+      },
+      "2026": {
+       "mandals": 71,
+       "changeGap": 0.1,
+       "afterGap": -0.9,
+       "worsePct": 50.7
+      }
+     }
+    },
+    "verdict": "untested"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 142,
+      "changeGap": -0.2,
+      "afterGap": -1.9,
+      "worsePct": 47.9
+     },
+     "acrossSeasons": {
+      "mandals": 129,
+      "changeGap": -3.5,
+      "afterGap": -7.5,
+      "worsePct": 72.1
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 25,
+       "changeGap": 0.9,
+       "afterGap": -4.4,
+       "worsePct": 36.0
+      },
+      "2025": {
+       "mandals": 13,
+       "changeGap": 2.0,
+       "afterGap": -1.9,
+       "worsePct": 38.5
+      },
+      "2026": {
+       "mandals": 104,
+       "changeGap": -0.7,
+       "afterGap": -1.3,
+       "worsePct": 51.9
+      }
+     }
+    },
+    "verdict": "weak"
+   },
    "across": {
     "stressed": {
      "n": 787,
@@ -2278,44 +2908,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 142,
-     "changeGap": -0.2,
-     "afterGap": -1.9,
-     "worsePct": 47.9
-    },
-    "acrossSeasons": {
-     "mandals": 129,
-     "changeGap": -3.5,
-     "afterGap": -7.5,
-     "worsePct": 72.1
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 25,
-      "changeGap": 0.9,
-      "afterGap": -4.4,
-      "worsePct": 36.0
-     },
-     "2025": {
-      "mandals": 13,
-      "changeGap": 2.0,
-      "afterGap": -1.9,
-      "worsePct": 38.5
-     },
-     "2026": {
-      "mandals": 104,
-      "changeGap": -0.7,
-      "afterGap": -1.3,
-      "worsePct": 51.9
-     }
-    }
-   },
-   "verdict": "weak"
+   }
   },
   "bengalgram-0": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 681,
+      "changeGap": -0.1,
+      "afterGap": 0.8,
+      "worsePct": 51.4
+     },
+     "acrossSeasons": {
+      "mandals": 393,
+      "changeGap": -2.6,
+      "afterGap": -7.3,
+      "worsePct": 73.5
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 270,
+       "changeGap": -0.9,
+       "afterGap": -1.5,
+       "worsePct": 55.6
+      },
+      "2025": {
+       "mandals": 297,
+       "changeGap": -0.7,
+       "afterGap": 0.4,
+       "worsePct": 52.9
+      },
+      "2026": {
+       "mandals": 114,
+       "changeGap": 3.4,
+       "afterGap": 7.6,
+       "worsePct": 37.7
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 1060,
+      "changeGap": -1.4,
+      "afterGap": 0.4,
+      "worsePct": 55.9
+     },
+     "acrossSeasons": {
+      "mandals": 603,
+      "changeGap": -2.4,
+      "afterGap": -3.2,
+      "worsePct": 72.5
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 340,
+       "changeGap": -1.2,
+       "afterGap": -1.7,
+       "worsePct": 57.4
+      },
+      "2025": {
+       "mandals": 494,
+       "changeGap": -2.4,
+       "afterGap": 0.4,
+       "worsePct": 60.3
+      },
+      "2026": {
+       "mandals": 226,
+       "changeGap": 0.6,
+       "afterGap": 3.5,
+       "worsePct": 44.2
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 6627,
@@ -2409,44 +3078,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 1060,
-     "changeGap": -1.4,
-     "afterGap": 0.4,
-     "worsePct": 55.9
-    },
-    "acrossSeasons": {
-     "mandals": 603,
-     "changeGap": -2.4,
-     "afterGap": -3.2,
-     "worsePct": 72.5
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 340,
-      "changeGap": -1.2,
-      "afterGap": -1.7,
-      "worsePct": 57.4
-     },
-     "2025": {
-      "mandals": 494,
-      "changeGap": -2.4,
-      "afterGap": 0.4,
-      "worsePct": 60.3
-     },
-     "2026": {
-      "mandals": 226,
-      "changeGap": 0.6,
-      "afterGap": 3.5,
-      "worsePct": 44.2
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "bengalgram-1": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 679,
+      "changeGap": -1.3,
+      "afterGap": 0.2,
+      "worsePct": 56.8
+     },
+     "acrossSeasons": {
+      "mandals": 393,
+      "changeGap": -4.0,
+      "afterGap": -8.3,
+      "worsePct": 83.5
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 222,
+       "changeGap": -0.2,
+       "afterGap": -1.0,
+       "worsePct": 50.0
+      },
+      "2025": {
+       "mandals": 257,
+       "changeGap": -1.4,
+       "afterGap": 0.2,
+       "worsePct": 58.0
+      },
+      "2026": {
+       "mandals": 200,
+       "changeGap": -2.3,
+       "afterGap": 1.6,
+       "worsePct": 63.0
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 963,
+      "changeGap": -1.2,
+      "afterGap": 0.4,
+      "worsePct": 57.1
+     },
+     "acrossSeasons": {
+      "mandals": 593,
+      "changeGap": -2.9,
+      "afterGap": -3.7,
+      "worsePct": 73.4
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 260,
+       "changeGap": -0.1,
+       "afterGap": -0.9,
+       "worsePct": 50.4
+      },
+      "2025": {
+       "mandals": 345,
+       "changeGap": -1.5,
+       "afterGap": 0.6,
+       "worsePct": 59.7
+      },
+      "2026": {
+       "mandals": 358,
+       "changeGap": -1.8,
+       "afterGap": 1.1,
+       "worsePct": 59.5
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 2636,
@@ -2540,44 +3248,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 963,
-     "changeGap": -1.2,
-     "afterGap": 0.4,
-     "worsePct": 57.1
-    },
-    "acrossSeasons": {
-     "mandals": 593,
-     "changeGap": -2.9,
-     "afterGap": -3.7,
-     "worsePct": 73.4
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 260,
-      "changeGap": -0.1,
-      "afterGap": -0.9,
-      "worsePct": 50.4
-     },
-     "2025": {
-      "mandals": 345,
-      "changeGap": -1.5,
-      "afterGap": 0.6,
-      "worsePct": 59.7
-     },
-     "2026": {
-      "mandals": 358,
-      "changeGap": -1.8,
-      "afterGap": 1.1,
-      "worsePct": 59.5
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "bengalgram-2": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 233,
+      "changeGap": 1.9,
+      "afterGap": -5.6,
+      "worsePct": 39.1
+     },
+     "acrossSeasons": {
+      "mandals": 225,
+      "changeGap": -3.5,
+      "afterGap": -17.0,
+      "worsePct": 68.4
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 21,
+       "changeGap": 2.0,
+       "afterGap": -3.0,
+       "worsePct": 33.3
+      },
+      "2025": {
+       "mandals": 7,
+       "changeGap": 4.1,
+       "afterGap": 0.7,
+       "worsePct": 28.6
+      },
+      "2026": {
+       "mandals": 205,
+       "changeGap": 1.8,
+       "afterGap": -6.1,
+       "worsePct": 40.0
+      }
+     }
+    },
+    "verdict": "weak"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 302,
+      "changeGap": 1.1,
+      "afterGap": -4.3,
+      "worsePct": 44.7
+     },
+     "acrossSeasons": {
+      "mandals": 289,
+      "changeGap": -3.5,
+      "afterGap": -13.2,
+      "worsePct": 70.6
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 30,
+       "changeGap": 3.1,
+       "afterGap": -0.7,
+       "worsePct": 33.3
+      },
+      "2025": {
+       "mandals": 13,
+       "changeGap": 1.1,
+       "afterGap": 1.7,
+       "worsePct": 53.8
+      },
+      "2026": {
+       "mandals": 259,
+       "changeGap": 0.8,
+       "afterGap": -5.0,
+       "worsePct": 45.6
+      }
+     }
+    },
+    "verdict": "weak"
+   },
    "across": {
     "stressed": {
      "n": 803,
@@ -2671,44 +3418,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 302,
-     "changeGap": 1.1,
-     "afterGap": -4.3,
-     "worsePct": 44.7
-    },
-    "acrossSeasons": {
-     "mandals": 289,
-     "changeGap": -3.5,
-     "afterGap": -13.2,
-     "worsePct": 70.6
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 30,
-      "changeGap": 3.1,
-      "afterGap": -0.7,
-      "worsePct": 33.3
-     },
-     "2025": {
-      "mandals": 13,
-      "changeGap": 1.1,
-      "afterGap": 1.7,
-      "worsePct": 53.8
-     },
-     "2026": {
-      "mandals": 259,
-      "changeGap": 0.8,
-      "afterGap": -5.0,
-      "worsePct": 45.6
-     }
-    }
-   },
-   "verdict": "weak"
+   }
   },
   "jowar-0": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 654,
+      "changeGap": -0.4,
+      "afterGap": 0.7,
+      "worsePct": 53.2
+     },
+     "acrossSeasons": {
+      "mandals": 394,
+      "changeGap": -2.8,
+      "afterGap": -7.9,
+      "worsePct": 75.4
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 237,
+       "changeGap": -0.7,
+       "afterGap": -1.1,
+       "worsePct": 51.5
+      },
+      "2025": {
+       "mandals": 266,
+       "changeGap": -1.5,
+       "afterGap": -0.1,
+       "worsePct": 57.9
+      },
+      "2026": {
+       "mandals": 151,
+       "changeGap": 2.1,
+       "afterGap": 4.8,
+       "worsePct": 47.7
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 948,
+      "changeGap": -1.2,
+      "afterGap": 0.4,
+      "worsePct": 56.5
+     },
+     "acrossSeasons": {
+      "mandals": 601,
+      "changeGap": -2.2,
+      "afterGap": -3.5,
+      "worsePct": 69.1
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 282,
+       "changeGap": -0.7,
+       "afterGap": -1.0,
+       "worsePct": 52.8
+      },
+      "2025": {
+       "mandals": 379,
+       "changeGap": -2.4,
+       "afterGap": -0.1,
+       "worsePct": 63.1
+      },
+      "2026": {
+       "mandals": 287,
+       "changeGap": -0.1,
+       "afterGap": 2.4,
+       "worsePct": 51.6
+      }
+     }
+    },
+    "verdict": "not borne out"
+   },
    "across": {
     "stressed": {
      "n": 5498,
@@ -2802,44 +3588,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 948,
-     "changeGap": -1.2,
-     "afterGap": 0.4,
-     "worsePct": 56.5
-    },
-    "acrossSeasons": {
-     "mandals": 601,
-     "changeGap": -2.2,
-     "afterGap": -3.5,
-     "worsePct": 69.1
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 282,
-      "changeGap": -0.7,
-      "afterGap": -1.0,
-      "worsePct": 52.8
-     },
-     "2025": {
-      "mandals": 379,
-      "changeGap": -2.4,
-      "afterGap": -0.1,
-      "worsePct": 63.1
-     },
-     "2026": {
-      "mandals": 287,
-      "changeGap": -0.1,
-      "afterGap": 2.4,
-      "worsePct": 51.6
-     }
-    }
-   },
-   "verdict": "not borne out"
+   }
   },
   "jowar-1": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 431,
+      "changeGap": 0.1,
+      "afterGap": -2.8,
+      "worsePct": 49.7
+     },
+     "acrossSeasons": {
+      "mandals": 331,
+      "changeGap": -4.3,
+      "afterGap": -13.3,
+      "worsePct": 81.6
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 51,
+       "changeGap": 0.5,
+       "afterGap": -2.2,
+       "worsePct": 45.1
+      },
+      "2025": {
+       "mandals": 86,
+       "changeGap": 1.4,
+       "afterGap": -1.8,
+       "worsePct": 44.2
+      },
+      "2026": {
+       "mandals": 294,
+       "changeGap": -0.3,
+       "afterGap": -3.3,
+       "worsePct": 52.0
+      }
+     }
+    },
+    "verdict": "weak"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 552,
+      "changeGap": 0.1,
+      "afterGap": -2.5,
+      "worsePct": 50.7
+     },
+     "acrossSeasons": {
+      "mandals": 429,
+      "changeGap": -3.6,
+      "afterGap": -10.0,
+      "worsePct": 77.6
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 65,
+       "changeGap": 0.5,
+       "afterGap": -2.5,
+       "worsePct": 44.6
+      },
+      "2025": {
+       "mandals": 115,
+       "changeGap": 1.7,
+       "afterGap": -1.6,
+       "worsePct": 47.8
+      },
+      "2026": {
+       "mandals": 372,
+       "changeGap": -0.5,
+       "afterGap": -2.8,
+       "worsePct": 52.7
+      }
+     }
+    },
+    "verdict": "weak"
+   },
    "across": {
     "stressed": {
      "n": 962,
@@ -2933,44 +3758,83 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 552,
-     "changeGap": 0.1,
-     "afterGap": -2.5,
-     "worsePct": 50.7
-    },
-    "acrossSeasons": {
-     "mandals": 429,
-     "changeGap": -3.6,
-     "afterGap": -10.0,
-     "worsePct": 77.6
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 65,
-      "changeGap": 0.5,
-      "afterGap": -2.5,
-      "worsePct": 44.6
-     },
-     "2025": {
-      "mandals": 115,
-      "changeGap": 1.7,
-      "afterGap": -1.6,
-      "worsePct": 47.8
-     },
-     "2026": {
-      "mandals": 372,
-      "changeGap": -0.5,
-      "afterGap": -2.8,
-      "worsePct": 52.7
-     }
-    }
-   },
-   "verdict": "weak"
+   }
   },
   "jowar-2": {
+   "rainfed": {
+    "within": {
+     "sameSeason": {
+      "mandals": 87,
+      "changeGap": 0.1,
+      "afterGap": -1.3,
+      "worsePct": 44.8
+     },
+     "acrossSeasons": {
+      "mandals": 77,
+      "changeGap": -3.3,
+      "afterGap": -11.4,
+      "worsePct": 70.1
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 12,
+       "changeGap": 1.4,
+       "afterGap": -4.3,
+       "worsePct": 33.3
+      },
+      "2025": {
+       "mandals": 9,
+       "changeGap": 3.4,
+       "afterGap": -1.7,
+       "worsePct": 44.4
+      },
+      "2026": {
+       "mandals": 66,
+       "changeGap": -0.6,
+       "afterGap": -0.7,
+       "worsePct": 47.0
+      }
+     }
+    },
+    "verdict": "untested"
+   },
+   "allCropland": {
+    "within": {
+     "sameSeason": {
+      "mandals": 127,
+      "changeGap": -0.4,
+      "afterGap": -1.4,
+      "worsePct": 47.2
+     },
+     "acrossSeasons": {
+      "mandals": 112,
+      "changeGap": -3.7,
+      "afterGap": -8.3,
+      "worsePct": 74.1
+     },
+     "seasons": {
+      "2024": {
+       "mandals": 17,
+       "changeGap": 0.9,
+       "afterGap": -3.2,
+       "worsePct": 29.4
+      },
+      "2025": {
+       "mandals": 16,
+       "changeGap": 1.3,
+       "afterGap": -1.1,
+       "worsePct": 56.2
+      },
+      "2026": {
+       "mandals": 94,
+       "changeGap": -0.9,
+       "afterGap": -1.2,
+       "worsePct": 48.9
+      }
+     }
+    },
+    "verdict": "weak"
+   },
    "across": {
     "stressed": {
      "n": 446,
@@ -3064,42 +3928,7 @@
       }
      }
     }
-   },
-   "within": {
-    "sameSeason": {
-     "mandals": 127,
-     "changeGap": -0.4,
-     "afterGap": -1.4,
-     "worsePct": 47.2
-    },
-    "acrossSeasons": {
-     "mandals": 112,
-     "changeGap": -3.7,
-     "afterGap": -8.3,
-     "worsePct": 74.1
-    },
-    "seasons": {
-     "2024": {
-      "mandals": 17,
-      "changeGap": 0.9,
-      "afterGap": -3.2,
-      "worsePct": 29.4
-     },
-     "2025": {
-      "mandals": 16,
-      "changeGap": 1.3,
-      "afterGap": -1.1,
-      "worsePct": 56.2
-     },
-     "2026": {
-      "mandals": 94,
-      "changeGap": -0.9,
-      "afterGap": -1.2,
-      "worsePct": 48.9
-     }
-    }
-   },
-   "verdict": "weak"
+   }
   }
  }
 }

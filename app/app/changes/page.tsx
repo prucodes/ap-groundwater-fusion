@@ -4,7 +4,7 @@ import { HeaderHero } from "../../components/HeaderHero";
 import changesJson from "../../data/weekly_changes.json";
 import { CATEGORY_META, place, shortDate } from "../../lib/drought";
 import { GEC_CATEGORIES, type GecCategory } from "../../lib/agriculture";
-import { fieldPriority, PRIORITY_SIGNALS, type PriorityRow } from "../../lib/fieldPriority";
+import { fieldPriority, PRIORITY_SIGNALS, standsOut } from "../../lib/fieldPriority";
 import { fieldSignals } from "../../lib/fieldSignalsServer";
 import styles from "./Changes.module.css";
 
@@ -60,15 +60,6 @@ function categoryLabel(key: string) {
   return (CATEGORY_META as Record<string, { label: string }>)[key]?.label ?? key;
 }
 
-/** The figures behind a row's signals, in a phrase. */
-function standsOut(row: PriorityRow) {
-  const parts: string[] = [];
-  if (row.cropsShort !== null) parts.push(`${row.cropsShort} of ${row.cropsKnown} crops short of water`);
-  if (row.vci !== null) parts.push(`vegetation index ${row.vci.toFixed(0)}`);
-  if (row.category && row.category !== "safe") parts.push(`${GEC_CATEGORIES[row.category as GecCategory].label.toLowerCase()}${row.stagePct !== null ? ` (${row.stagePct.toFixed(0)}% drawn)` : ""}`);
-  return parts.join(" · ");
-}
-
 export default function ChangesPage() {
   const items = changes.items;
   const first = items.every(item => item.before === null || item.direction === "same");
@@ -92,6 +83,7 @@ export default function ChangesPage() {
               : `${changes.counts.worse} headline${changes.counts.worse === 1 ? "" : "s"} worse, ${changes.counts.better} better, ${changes.counts.same} unchanged.`}
           </h2>
           <p>Compared with {changes.comparedWith.label}{changes.comparedWith.commit ? ` (commit ${changes.comparedWith.commit}${changes.comparedWith.committedAt ? `, ${shortDate(changes.comparedWith.committedAt, true)}` : ""})` : ""}.</p>
+          <Link href="/digest/" className={styles.digestLink} data-testid="digest-link">This week on one A4 page: the digest →</Link>
         </div>
         <ul className={styles.tally}>
           <li data-tone="worse"><b>{changes.counts.worse}</b>worse</li>
@@ -207,6 +199,7 @@ function FieldTeams() {
               {PRIORITY_SIGNALS.map(signal => <th scope="col" key={signal.key} title={signal.label}><span>{signal.short}</span></th>)}
               <th scope="col">Agree</th>
               <th scope="col">What stands out</th>
+              <th scope="col"><span className={styles.srOnly}>Field report</span></th>
             </tr>
           </thead>
           <tbody>
@@ -219,6 +212,7 @@ function FieldTeams() {
                 })}
                 <td className={styles.agree}><b>{row.lit}</b><small>/{row.known}</small></td>
                 <td className={styles.stands}>{standsOut(row)}</td>
+                <td className={styles.report}><Link href={`/field-report/?m=${row.index}`} aria-label={`Write a field report for ${place(row.mandal)}`}>Report</Link></td>
               </tr>
             ))}
           </tbody>
@@ -230,7 +224,8 @@ function FieldTeams() {
       <p className={styles.teamsFoot}>
         Filled: points to stress. Open: does not. Faint: no usable value. Crop water: soil moisture of {soilAsOf ? shortDate(soilAsOf, true) : "this week"} and ECMWF&rsquo;s forecast{window ? ` (${shortDate(window.slice(0, 10), true)} to ${shortDate(window.slice(-10), true)})` : ""}, the seven reference crops taken at mid-season.
         {veg ? ` Vegetation: NOAA VCI over cropland, ${shortDate(veg.averaged[0].approxStart, true)} to ${shortDate(veg.averaged[veg.averaged.length - 1].approxEnd, true)}.` : ""}
-        {gw ? ` Extraction: CGWB / State GWD assessment ${gw.year}.` : ""} <Link href="/agriculture/#field-week">Check any of them crop by crop →</Link>
+        {gw ? ` Extraction: CGWB / State GWD assessment ${gw.year}.` : ""} <Link href="/agriculture/#field-week">Check any of them crop by crop →</Link>{" "}
+        <Link href="/field-report/">Teams: write and share a field report →</Link>
       </p>
     </section>
   );

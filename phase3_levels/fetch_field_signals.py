@@ -57,6 +57,7 @@ MANDALS_OUT = os.path.join(APP, "field_signals_mandals.json")
 GEOMETRY = os.path.join(APP, "ap_map_geometry.json")
 WATER_CONTEXT = os.path.join(APP, "water_context.json")
 CAPACITY = os.path.join(HERE, "data", "mandal_soil_water_capacity.json")
+IRRIGATION = os.path.join(HERE, "data", "mandal_irrigated_share.json")
 CROPLAND = os.path.join(HERE, "data", "vhp_cropland_fraction.json")
 RECEIPT = os.path.join(HERE, "..", "data", "refresh_receipts", "field_signals.json")
 CONTRACT_VERSION = "1.0.0"
@@ -577,6 +578,15 @@ def soil_capacity():
     return {k: payload[k] for k in ("source", "url", "licence", "method", "unit", "depthsCm", "builtAt")} | {"values": payload["values"]}
 
 
+def irrigation():
+    """The irrigated share of each mandal's cropland (build_irrigated_fraction.py, ESA WorldCereal): static."""
+    payload = load_json(IRRIGATION)
+    if not payload.get("share"):
+        return None
+    keep = ("source", "url", "doi", "licence", "caveat", "seasons", "unit", "builtAt", "mostlyRainfedBelowPct", "summary")
+    return {k: payload[k] for k in keep if k in payload} | {"share": payload["share"]}
+
+
 def soil_by_boundary(context, count):
     """APWRIMS soil moisture (4 depths) per boundary; a boundary claimed twice is ambiguous and left out."""
     rows = ((context or {}).get("soilMoisture") or {}).get("mandals") or []
@@ -624,24 +634,27 @@ CATEGORY_CODES = {c: i for i, c in enumerate(CATEGORIES)}
 
 
 def mandal_values(payload, features):
-    """Client-safe map layers, keyed like water_context_mandals.json: "DISTRICT|MANDAL" -> [vci, class, category, stage]."""
+    """Client-safe map layers, keyed like water_context_mandals.json: "DISTRICT|MANDAL" -> [vci, class, category, stage, irrigated %]."""
     veg = (payload.get("vegetation") or {}).get("mandals") or []
     gw = (payload.get("assessment") or {}).get("mandals") or []
+    irr = (payload.get("irrigation") or {}).get("share") or []
     values = {}
     for i, feature in enumerate(features):
         v = veg[i] if i < len(veg) else None
         g = gw[i] if i < len(gw) else None
-        if v or g:
+        r = irr[i] if i < len(irr) else None
+        if v or g or r is not None:
             values[f"{feature['d'].upper()}|{feature['m'].upper()}"] = [
                 v["v"] if v else None, VCI_CODES.get(v["cls"]) if v else None,
-                CATEGORY_CODES.get(g["cat"]) if g else None, g["stage"] if g else None]
+                CATEGORY_CODES.get(g["cat"]) if g else None, g["stage"] if g else None, r]
     veg_meta, gw_meta = payload.get("vegetation") or {}, payload.get("assessment") or {}
     return {
         "generatedAt": payload["generatedAt"],
         "vegetation": {"averaged": veg_meta.get("averaged"), "product": veg_meta.get("product"),
                        "classes": veg_meta.get("classes")} if veg_meta else None,
         "assessment": {"year": gw_meta.get("year"), "source": gw_meta.get("source"), "url": gw_meta.get("url")} if gw_meta else None,
-        "fields": ["vci", "vciClass", "category", "stagePct"],
+        "irrigation": {k: (payload.get("irrigation") or {}).get(k) for k in ("source", "caveat", "mostlyRainfedBelowPct")} if payload.get("irrigation") else None,
+        "fields": ["vci", "vciClass", "category", "stagePct", "irrigatedPct"],
         "codes": {"vciClass": list(VCI_CODES), "category": list(CATEGORIES)},
         "values": values,
     }
@@ -717,6 +730,7 @@ def main():
         "note": "Public sources fetched for research: a weather forecast (model values), a satellite vegetation index and the official groundwater assessment. Not crop advice or a declaration.",
         **sections,
         "soilCapacity": capacity,
+        "irrigation": irrigation(),
     }
     payload["crossCheck"] = cross_check(payload.get("weather"), capacity, context)
     text = render(payload)

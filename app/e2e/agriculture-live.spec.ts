@@ -89,17 +89,21 @@ test("the check carries its track record for the crop and stage chosen, with eve
   for (const [crop, stage, key] of [["Maize", "Mid-season", "maize-1"], ["Chilli", "Initial", "chilli-0"]] as const) {
     await pick(page, crop, stage);
     const panel = page.getByTestId("field-week-record");
-    const entry = record.record[key];
+    // The verdict is the rainfed reading: the same mandal in the same season, never the pooled seasons.
+    const entry = record.record[key].rainfed;
     await expect(panel).toHaveAttribute("data-verdict", entry.verdict);
-    // The verdict and its sentence use the same mandal in the same season, never the pooled seasons.
+    await expect(panel).toContainText("rainfed fields");
     const same = entry.within.sameSeason;
     if (entry.verdict !== "untested") {
       await expect(panel.locator("p").first()).toContainText(`(${same.mandals} mandal-seasons)`);
       await expect(panel.locator("p").first()).toContainText(`${Math.abs(same.afterGap!).toFixed(1)} index point`);
     }
     const shown = Object.values(entry.within.seasons).filter(season => season.mandals > 0 && season.afterGap !== null).length;
-    await expect(panel.locator("figure > div").filter({ hasText: /mandals$/ })).toHaveCount(shown);
-    await expect(panel.locator("figure > div[data-total]")).toContainText(`${same.mandals} mandal-seasons`);
+    await expect(panel.locator('figure > div[data-kind="season"]')).toHaveCount(shown);
+    await expect(panel.locator('figure > div[data-kind="total"]')).toContainText(`${same.mandals} mandal-seasons`);
+    // All cropland, irrigated fields included, is drawn beneath for reference.
+    const reference = record.record[key].allCropland.within.sameSeason.afterGap!;
+    await expect(panel.locator('figure > div[data-kind="reference"]')).toContainText(Math.abs(reference).toFixed(1));
   }
 });
 

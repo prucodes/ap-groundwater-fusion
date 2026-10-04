@@ -836,11 +836,13 @@ export function formatNumber(value: number | string | null | undefined, suffix =
 }
 
 export function titleCase(value: string) {
+  // Names written as initials in the State's own records. Declared here: titleCase runs while this module loads.
+  const keepCapitals = ["NTR"];
   return value
-    .toLowerCase()
     .split(/[\s_]+/)
     .filter(Boolean)
-    .map((part) => `${part.charAt(0).toUpperCase()}${part.slice(1)}`)
+    // Initials stay capitals: "Y.S.R KADAPA" reads "Y.S.R Kadapa", and the NTR district stays "NTR".
+    .map((part) => (/^([A-Za-z]\.)+[A-Za-z]?$/.test(part) || keepCapitals.includes(part.toUpperCase()) ? part.toUpperCase() : `${part.charAt(0).toUpperCase()}${part.slice(1).toLowerCase()}`))
     .join(" ");
 }
 

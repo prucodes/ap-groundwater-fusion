@@ -1,0 +1,401 @@
+{
+ "generatedAt": "2026-10-04T17:40:06+00:00",
+ "method": "Each week's calls, made on that week's ECMWF forecast and frozen the day they were made, compared three weeks later with the NOAA STAR vegetation index over rainfed cropland, inside the same mandal and season, as the track record compares them. Seasons: kharif June-September, rabi October-May.",
+ "rainfedMandals": 437,
+ "frozen": 1,
+ "scored": 0,
+ "firstFrozen": "2026-10-04",
+ "nextDue": "2026-10-31",
+ "weeks": [
+  {
+   "issued": "2026-10-04",
+   "season": "2026-27 rabi",
+   "outcomeWeek": [
+    2026,
+    43
+   ],
+   "due": "2026-10-31",
+   "scored": false
+  }
+ ],
+ "record": {
+  "maize-0": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "maize-1": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "maize-2": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "groundnut-0": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "groundnut-1": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "groundnut-2": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "cotton-0": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "cotton-1": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "cotton-2": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "chilli-0": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "chilli-1": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "chilli-2": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "redgram-0": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "redgram-1": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "redgram-2": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "bengalgram-0": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "bengalgram-1": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "bengalgram-2": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "jowar-0": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "jowar-1": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  },
+  "jowar-2": {
+   "within": {
+    "sameSeason": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "acrossSeasons": {
+     "mandals": 0,
+     "changeGap": null,
+     "afterGap": null,
+     "worsePct": null
+    },
+    "seasons": {}
+   },
+   "verdict": "untested"
+  }
+ }
+}
