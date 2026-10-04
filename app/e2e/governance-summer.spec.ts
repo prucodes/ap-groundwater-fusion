@@ -5,7 +5,7 @@ import outlookJson from "../data/summer_outlook.json";
    coloured from the same tiers, and the record it carries. */
 
 const outlook = outlookJson as unknown as {
-  summary: { beyond: number; dry: number; within: number };
+  summary: { beyond: number; dry: number; within: number; beyondDeep: number };
   mandals: Array<{ tier: "beyond" | "dry" | "within" } | null>;
   backtest: { typicalErrorM: number };
 };
