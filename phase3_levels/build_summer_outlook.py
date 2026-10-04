@@ -44,10 +44,18 @@ HISTORY = os.path.join(HERE, "apwrims", "apwrims_gw_history.csv")
 CONTEXT = os.path.join(ROOT, "app", "data", "water_context.json")
 GEOMETRY = os.path.join(ROOT, "app", "data", "ap_map_display.json")
 OUT = os.path.join(ROOT, "app", "data", "summer_outlook.json")
+POPULATION = os.path.join(HERE, "data", "mandal_population.json")
 TARGET_MONTH = 5
 MIN_WINTERS = 4          # past winters needed to project a mandal
 DEEP_M = 10.0            # a class boundary on CGWB's depth-to-water maps (5-10 m / 10-20 m)
 TIERS = ("beyond", "dry", "within")
+
+
+def load_json(path):
+    try:
+        return json.load(open(path))
+    except (OSError, ValueError):
+        return None
 
 
 def load_history(path=HISTORY):
@@ -181,13 +189,25 @@ def main():
         # Two APWRIMS mandals on one outline: keep the one closer to its record (the cautious reading).
         if held is None or (rank[result["tier"]], result["deepestMay"] - result["typical"]) < (rank[held["tier"]], held["deepestMay"] - held["typical"]):
             by_boundary[index] = {**result, "district": names[uuid][0], "mandal": names[uuid][1]}
-    tiers = collections.Counter(r["tier"] for r in per_uuid.values())
-    deep = collections.Counter(r["tier"] for r in per_uuid.values() if at_depth(r))
+    # Counted by outline, as the map draws them and as people are counted: one row per mandal on the map.
+    features = json.load(open(GEOMETRY))["mandals"]
+    people = (load_json(POPULATION) or {}).get("people") or [None] * count
+    rows = [(i, r) for i, r in enumerate(by_boundary) if r]
+    for i, r in rows:
+        r["people"] = people[i] if i < len(people) else None
+    tiers = collections.Counter(r["tier"] for _, r in rows)
+    deep = collections.Counter(r["tier"] for _, r in rows if at_depth(r))
+    lives = collections.Counter()
     districts = collections.defaultdict(lambda: collections.Counter())
-    for uuid, result in per_uuid.items():
-        districts[names[uuid][0]][result["tier"]] += 1
+    for i, result in rows:
+        place = features[i]["d"]
+        districts[place][result["tier"]] += 1
+        n = people[i] or 0
+        lives[result["tier"]] += n
         if result["tier"] != "within" and at_depth(result):
-            districts[names[uuid][0]]["deep"] += 1
+            districts[place]["deep"] += 1
+            districts[place]["people"] += n
+            lives[f"{result['tier']}Deep"] += n
     payload = {
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
         "source": "APWRIMS monthly groundwater level by mandal (Ground Water and Water Audit Department piezometers), metres below ground",
@@ -195,14 +215,18 @@ def main():
         "firstYear": int(min(min(s) for s in all_series.values())[:4]),
         "method": "May depth = latest reading plus the mandal's own past drawdowns from the same month to May: typical = median, dry winter = largest on record. Risk against the deepest May on record in the same series.",
         "deepM": DEEP_M,
-        "summary": {"mandals": len(per_uuid), **{tier: tiers.get(tier, 0) for tier in TIERS},
+        "summary": {"mandals": len(rows), **{tier: tiers.get(tier, 0) for tier in TIERS},
                     "beyondDeep": deep.get("beyond", 0), "dryDeep": deep.get("dry", 0),
-                    "boundaries": sum(r is not None for r in by_boundary)},
+                    "series": len(per_uuid), "boundaries": len(rows)},
+        # People living in those mandals (WorldPop 2020, build_mandal_population.py): who the outlook concerns.
+        "people": {"source": (load_json(POPULATION) or {}).get("source"), "year": (load_json(POPULATION) or {}).get("year"),
+                   "beyond": lives["beyond"], "beyondDeep": lives["beyondDeep"], "dry": lives["dry"], "dryDeep": lives["dryDeep"]}
+        if people and any(people) else None,
         "backtest": backtest(all_series),
         # Districts by their at-risk mandals that would also be deeper than DEEP_M.
-        "districts": sorted(({"district": d, **{t: c.get(t, 0) for t in TIERS}, "deep": c.get("deep", 0),
+        "districts": sorted(({"district": d, **{t: c.get(t, 0) for t in TIERS}, "deep": c.get("deep", 0), "people": c.get("people", 0),
                               "mandals": sum(c.get(t, 0) for t in TIERS)} for d, c in districts.items()),
-                            key=lambda r: (-r["deep"], -(r["beyond"] + r["dry"]), r["district"])),
+                            key=lambda r: (-r["deep"], -r["people"], r["district"])),
         "mandals": by_boundary,
     }
     with open(OUT, "w") as handle:

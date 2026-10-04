@@ -276,6 +276,9 @@ export default function MethodologyPage() {
             Against its own record, because the depth at which a well fails depends on how deep it was drilled, which no public record
             gives; beside it, whether the May depth would be more than {summer.deepM} m down, a class boundary on CGWB&rsquo;s
             depth-to-water maps, since a delta mandal can break its own record with water three metres down.
+            {summer.people ? <>{" "}How many people live in those mandals comes from WorldPop&rsquo;s {summer.people.year} population grid (1 km,
+            UN-adjusted, CC BY 4.0), summed over each outline: a modelled estimate that counts everyone in the mandal, towns with piped
+            supply included, not a census and not a count of people on wells.</> : null}
           </p>
           {summer.backtest ? <p>
             <strong>How it has fared.</strong>{" "}Each past year was projected from the other years&rsquo; winters alone, from its{" "}
@@ -363,7 +366,9 @@ export default function MethodologyPage() {
             change after &ldquo;short&rdquo;, in every season of at least two; &ldquo;weak&rdquo; at {record.sentinel.rules.notedNdvi}. Kharif is
             cloudy: {record.sentinel.coverage.readPct}% of rainfed mandal-weeks had a clear view in both weeks. A greenest-view composite can
             read a little lower in a week with fewer clear passes; taking out the State&rsquo;s change that week removes most of that, not
-            all. On {seasonSpan}:{" "}
+            all. Correction: the first build of this reading, published on 4 October 2026, took the archive&rsquo;s reflectance
+            offset off a second time, which pushed every pixel&rsquo;s NDVI towards 1; its verdicts are withdrawn, and the figures
+            here are rebuilt from the corrected reads. On {seasonSpan}:{" "}
             {fieldTally.backed ?? 0} backed, {fieldTally.weak ?? 0} weak, {fieldTally["not borne out"] ?? 0} not borne out and{" "}
             {fieldTally.untested ?? 0} untested.
           </p> : null}

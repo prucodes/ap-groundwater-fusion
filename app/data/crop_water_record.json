@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-04T22:02:27+00:00",
+ "generatedAt": "2026-10-04T22:41:13+00:00",
  "question": "Three weeks after the check called a mandal's crop short of water, was the vegetation on its cropland worse than three weeks after it called the same mandal comfortable in the same season?",
  "outcome": "Crop vegetation (NOAA STAR VCI, weighted to cropland) 3 weeks after the check week. 'within': inside each mandal with both kinds of call, mean VCI after 'short' (now or within 7 days) minus after 'comfortable' (afterGap), the same for the change over the three weeks (changeGap), and the share where it changed for the worse (worsePct); 'sameSeason' counts mandal-seasons and drives the verdict, 'acrossSeasons' pools a mandal's seasons, 'seasons' is each season alone. 'across': all calls pooled over mandals, for reference: severePct = VCI under 40, fellPct = down 5 points or more.",
  "acrossCaveat": "Two comparisons were run first and are kept on record. Pooled across mandals the check does not separate vegetation: the places called short most often are the chronically dry ones, VCI compares each place with its own past, and irrigated fields stay green whatever the soil model says. Inside one mandal but pooled across seasons the gap is large, mostly because \u201cshort\u201d calls come in the drier seasons. The verdict holds both the place and the season fixed.",
@@ -20,7 +20,7 @@
   },
   "coverage": {
    "rainfedMandalWeeks": 12000,
-   "read": 4267,
+   "read": 4269,
    "readPct": 35.6
   }
  },
@@ -420,34 +420,34 @@
     "within": {
      "sameSeason": {
       "mandals": 433,
-      "changeGap": 0.0044,
-      "afterGap": -0.0167,
-      "worsePct": 48.5
+      "changeGap": 0.0026,
+      "afterGap": -0.0156,
+      "worsePct": 47.8
      },
      "acrossSeasons": {
       "mandals": 542,
-      "changeGap": 0.002,
-      "afterGap": 0.0116,
-      "worsePct": 51.7
+      "changeGap": 0.0019,
+      "afterGap": 0.0088,
+      "worsePct": 52.0
      },
      "seasons": {
       "2024": {
        "mandals": 75,
-       "changeGap": 0.0319,
-       "afterGap": 0.0305,
-       "worsePct": 40.0
+       "changeGap": 0.027,
+       "afterGap": 0.0024,
+       "worsePct": 34.7
       },
       "2025": {
        "mandals": 229,
-       "changeGap": -0.0004,
-       "afterGap": -0.0419,
-       "worsePct": 50.2
+       "changeGap": -0.0091,
+       "afterGap": -0.0398,
+       "worsePct": 55.9
       },
       "2026": {
        "mandals": 129,
-       "changeGap": -0.0031,
-       "afterGap": 0.0006,
-       "worsePct": 50.4
+       "changeGap": 0.0092,
+       "afterGap": 0.0169,
+       "worsePct": 41.1
       }
      }
     },
@@ -627,34 +627,34 @@
     "within": {
      "sameSeason": {
       "mandals": 367,
-      "changeGap": 0.0044,
-      "afterGap": -0.0415,
-      "worsePct": 47.7
+      "changeGap": 0.0026,
+      "afterGap": -0.0091,
+      "worsePct": 49.6
      },
      "acrossSeasons": {
       "mandals": 404,
-      "changeGap": 0.0023,
-      "afterGap": -0.0075,
-      "worsePct": 52.5
+      "changeGap": 0.0028,
+      "afterGap": 0.009,
+      "worsePct": 51.0
      },
      "seasons": {
       "2024": {
        "mandals": 24,
-       "changeGap": -0.0191,
-       "afterGap": 0.0474,
+       "changeGap": -0.0075,
+       "afterGap": 0.023,
        "worsePct": 45.8
       },
       "2025": {
        "mandals": 89,
-       "changeGap": 0.0196,
-       "afterGap": -0.0442,
-       "worsePct": 41.6
+       "changeGap": 0.0161,
+       "afterGap": -0.0003,
+       "worsePct": 42.7
       },
       "2026": {
        "mandals": 254,
-       "changeGap": 0.0013,
-       "afterGap": -0.0489,
-       "worsePct": 50.0
+       "changeGap": -0.0012,
+       "afterGap": -0.0151,
+       "worsePct": 52.4
       }
      }
     },
@@ -834,21 +834,21 @@
     "within": {
      "sameSeason": {
       "mandals": 45,
-      "changeGap": 0.0093,
-      "afterGap": -0.0069,
-      "worsePct": 55.6
+      "changeGap": 0.0095,
+      "afterGap": 0.0108,
+      "worsePct": 40.0
      },
      "acrossSeasons": {
       "mandals": 60,
-      "changeGap": 0.0126,
-      "afterGap": 0.0373,
-      "worsePct": 51.7
+      "changeGap": 0.0063,
+      "afterGap": 0.0278,
+      "worsePct": 41.7
      },
      "seasons": {
       "2024": {
        "mandals": 4,
-       "changeGap": 0.0928,
-       "afterGap": 0.0676,
+       "changeGap": 0.0182,
+       "afterGap": 0.0056,
        "worsePct": 25.0
       },
       "2025": {
@@ -859,9 +859,9 @@
       },
       "2026": {
        "mandals": 41,
-       "changeGap": 0.0012,
-       "afterGap": -0.0142,
-       "worsePct": 58.5
+       "changeGap": 0.0086,
+       "afterGap": 0.0113,
+       "worsePct": 41.5
       }
      }
     },
@@ -1041,34 +1041,34 @@
     "within": {
      "sameSeason": {
       "mandals": 515,
-      "changeGap": -0.0104,
-      "afterGap": -0.0249,
-      "worsePct": 53.0
+      "changeGap": -0.0094,
+      "afterGap": -0.0164,
+      "worsePct": 53.6
      },
      "acrossSeasons": {
       "mandals": 529,
-      "changeGap": -0.0061,
-      "afterGap": 0.0062,
-      "worsePct": 52.0
+      "changeGap": -0.0032,
+      "afterGap": 0.0055,
+      "worsePct": 53.9
      },
      "seasons": {
       "2024": {
        "mandals": 82,
-       "changeGap": 0.0207,
-       "afterGap": 0.0079,
-       "worsePct": 43.9
+       "changeGap": 0.0165,
+       "afterGap": -0.0026,
+       "worsePct": 35.4
       },
       "2025": {
        "mandals": 346,
-       "changeGap": -0.0146,
-       "afterGap": -0.0313,
-       "worsePct": 54.9
+       "changeGap": -0.0179,
+       "afterGap": -0.0266,
+       "worsePct": 59.2
       },
       "2026": {
        "mandals": 87,
-       "changeGap": -0.0234,
-       "afterGap": -0.0304,
-       "worsePct": 54.0
+       "changeGap": -0.0004,
+       "afterGap": 0.0111,
+       "worsePct": 48.3
       }
      }
     },
@@ -1248,34 +1248,34 @@
     "within": {
      "sameSeason": {
       "mandals": 522,
-      "changeGap": -0.0183,
-      "afterGap": -0.0398,
-      "worsePct": 56.7
+      "changeGap": -0.0148,
+      "afterGap": -0.02,
+      "worsePct": 57.3
      },
      "acrossSeasons": {
       "mandals": 529,
-      "changeGap": -0.0103,
-      "afterGap": -0.0053,
-      "worsePct": 54.1
+      "changeGap": -0.0065,
+      "afterGap": 0.0031,
+      "worsePct": 55.8
      },
      "seasons": {
       "2024": {
        "mandals": 70,
-       "changeGap": -0.0076,
-       "afterGap": -0.0069,
-       "worsePct": 48.6
+       "changeGap": 0.0143,
+       "afterGap": -0.0061,
+       "worsePct": 42.9
       },
       "2025": {
        "mandals": 306,
-       "changeGap": -0.0154,
-       "afterGap": -0.053,
-       "worsePct": 56.5
+       "changeGap": -0.02,
+       "afterGap": -0.0388,
+       "worsePct": 61.1
       },
       "2026": {
        "mandals": 146,
-       "changeGap": -0.0295,
-       "afterGap": -0.028,
-       "worsePct": 61.0
+       "changeGap": -0.0177,
+       "afterGap": 0.0129,
+       "worsePct": 56.2
       }
      }
     },
@@ -1455,34 +1455,34 @@
     "within": {
      "sameSeason": {
       "mandals": 332,
-      "changeGap": 0.0122,
-      "afterGap": -0.0304,
-      "worsePct": 45.8
+      "changeGap": 0.0029,
+      "afterGap": -0.0072,
+      "worsePct": 49.4
      },
      "acrossSeasons": {
       "mandals": 410,
-      "changeGap": 0.0016,
-      "afterGap": 0.0025,
-      "worsePct": 52.4
+      "changeGap": 0.0024,
+      "afterGap": 0.014,
+      "worsePct": 51.0
      },
      "seasons": {
       "2024": {
        "mandals": 19,
-       "changeGap": 0.061,
-       "afterGap": 0.0765,
+       "changeGap": 0.0276,
+       "afterGap": 0.0144,
        "worsePct": 31.6
       },
       "2025": {
        "mandals": 29,
-       "changeGap": 0.0336,
-       "afterGap": -0.0699,
+       "changeGap": 0.0164,
+       "afterGap": -0.032,
        "worsePct": 34.5
       },
       "2026": {
        "mandals": 284,
-       "changeGap": 0.0068,
-       "afterGap": -0.0335,
-       "worsePct": 47.9
+       "changeGap": -0.0001,
+       "afterGap": -0.0062,
+       "worsePct": 52.1
       }
      }
     },
@@ -1662,34 +1662,34 @@
     "within": {
      "sameSeason": {
       "mandals": 470,
-      "changeGap": 0.0039,
-      "afterGap": -0.0242,
-      "worsePct": 49.6
+      "changeGap": 0.0036,
+      "afterGap": -0.0131,
+      "worsePct": 50.0
      },
      "acrossSeasons": {
       "mandals": 546,
-      "changeGap": -0.0008,
-      "afterGap": 0.0054,
-      "worsePct": 52.9
+      "changeGap": 0.002,
+      "afterGap": 0.0099,
+      "worsePct": 52.2
      },
      "seasons": {
       "2024": {
        "mandals": 67,
-       "changeGap": 0.0408,
-       "afterGap": 0.0345,
-       "worsePct": 37.3
+       "changeGap": 0.0363,
+       "afterGap": 0.0065,
+       "worsePct": 29.9
       },
       "2025": {
        "mandals": 214,
-       "changeGap": -0.0001,
-       "afterGap": -0.051,
-       "worsePct": 50.9
+       "changeGap": -0.0063,
+       "afterGap": -0.0432,
+       "worsePct": 56.1
       },
       "2026": {
        "mandals": 189,
-       "changeGap": -0.0046,
-       "afterGap": -0.0146,
-       "worsePct": 52.4
+       "changeGap": 0.0033,
+       "afterGap": 0.0141,
+       "worsePct": 50.3
       }
      }
     },
@@ -1869,34 +1869,34 @@
     "within": {
      "sameSeason": {
       "mandals": 263,
-      "changeGap": 0.011,
-      "afterGap": -0.017,
-      "worsePct": 43.7
+      "changeGap": 0.0045,
+      "afterGap": -0.0022,
+      "worsePct": 47.9
      },
      "acrossSeasons": {
       "mandals": 303,
       "changeGap": 0.0047,
-      "afterGap": -0.0002,
-      "worsePct": 49.5
+      "afterGap": 0.0096,
+      "worsePct": 50.2
      },
      "seasons": {
       "2024": {
        "mandals": 7,
-       "changeGap": 0.0098,
-       "afterGap": 0.0758,
-       "worsePct": 28.6
+       "changeGap": -0.0155,
+       "afterGap": 0.0318,
+       "worsePct": 42.9
       },
       "2025": {
        "mandals": 26,
-       "changeGap": 0.0534,
-       "afterGap": -0.0663,
-       "worsePct": 30.8
+       "changeGap": 0.049,
+       "afterGap": -0.0121,
+       "worsePct": 26.9
       },
       "2026": {
        "mandals": 230,
-       "changeGap": 0.0062,
-       "afterGap": -0.0142,
-       "worsePct": 45.7
+       "changeGap": 0.0001,
+       "afterGap": -0.0021,
+       "worsePct": 50.4
       }
      }
     },
@@ -2076,21 +2076,21 @@
     "within": {
      "sameSeason": {
       "mandals": 49,
-      "changeGap": -0.0195,
-      "afterGap": -0.0261,
-      "worsePct": 57.1
+      "changeGap": -0.0102,
+      "afterGap": -0.0065,
+      "worsePct": 51.0
      },
      "acrossSeasons": {
       "mandals": 57,
-      "changeGap": -0.0062,
-      "afterGap": 0.0134,
-      "worsePct": 56.1
+      "changeGap": -0.0055,
+      "afterGap": 0.008,
+      "worsePct": 52.6
      },
      "seasons": {
       "2024": {
        "mandals": 3,
-       "changeGap": 0.0947,
-       "afterGap": 0.0759,
+       "changeGap": 0.009,
+       "afterGap": -0.0186,
        "worsePct": 33.3
       },
       "2025": {
@@ -2101,9 +2101,9 @@
       },
       "2026": {
        "mandals": 46,
-       "changeGap": -0.0269,
-       "afterGap": -0.0328,
-       "worsePct": 58.7
+       "changeGap": -0.0114,
+       "afterGap": -0.0057,
+       "worsePct": 52.2
       }
      }
     },
@@ -2283,38 +2283,38 @@
     "within": {
      "sameSeason": {
       "mandals": 334,
-      "changeGap": -0.004,
-      "afterGap": 0.0379,
-      "worsePct": 52.7
+      "changeGap": -0.012,
+      "afterGap": 0.012,
+      "worsePct": 51.5
      },
      "acrossSeasons": {
       "mandals": 347,
-      "changeGap": 0.0008,
-      "afterGap": 0.0451,
-      "worsePct": 54.5
+      "changeGap": -0.0008,
+      "afterGap": 0.0262,
+      "worsePct": 49.9
      },
      "seasons": {
       "2024": {
        "mandals": 97,
-       "changeGap": 0.0128,
-       "afterGap": 0.0352,
-       "worsePct": 50.5
+       "changeGap": -0.0004,
+       "afterGap": 0.0106,
+       "worsePct": 43.3
       },
       "2025": {
        "mandals": 231,
-       "changeGap": -0.0149,
-       "afterGap": 0.0385,
-       "worsePct": 54.5
+       "changeGap": -0.0189,
+       "afterGap": 0.0124,
+       "worsePct": 55.8
       },
       "2026": {
        "mandals": 6,
-       "changeGap": 0.1424,
-       "afterGap": 0.0614,
+       "changeGap": 0.0626,
+       "afterGap": 0.0194,
        "worsePct": 16.7
       }
      }
     },
-    "verdict": "not borne out"
+    "verdict": "weak"
    },
    "allCropland": {
     "within": {
@@ -2490,34 +2490,34 @@
     "within": {
      "sameSeason": {
       "mandals": 475,
-      "changeGap": -0.0147,
-      "afterGap": -0.002,
-      "worsePct": 54.7
+      "changeGap": -0.0169,
+      "afterGap": -0.0084,
+      "worsePct": 56.6
      },
      "acrossSeasons": {
       "mandals": 452,
-      "changeGap": -0.0052,
-      "afterGap": 0.0169,
-      "worsePct": 55.5
+      "changeGap": -0.0053,
+      "afterGap": 0.0086,
+      "worsePct": 54.4
      },
      "seasons": {
       "2024": {
        "mandals": 78,
-       "changeGap": -0.013,
-       "afterGap": -0.0019,
-       "worsePct": 50.0
+       "changeGap": 0.0065,
+       "afterGap": 0.0023,
+       "worsePct": 42.3
       },
       "2025": {
        "mandals": 349,
-       "changeGap": -0.0122,
-       "afterGap": -0.0012,
-       "worsePct": 54.4
+       "changeGap": -0.0243,
+       "afterGap": -0.0156,
+       "worsePct": 60.5
       },
       "2026": {
        "mandals": 48,
-       "changeGap": -0.0361,
-       "afterGap": -0.008,
-       "worsePct": 64.6
+       "changeGap": -0.0015,
+       "afterGap": 0.0268,
+       "worsePct": 52.1
       }
      }
     },
@@ -2697,34 +2697,34 @@
     "within": {
      "sameSeason": {
       "mandals": 482,
-      "changeGap": -0.005,
-      "afterGap": -0.0122,
-      "worsePct": 51.2
+      "changeGap": -0.0068,
+      "afterGap": -0.0091,
+      "worsePct": 51.7
      },
      "acrossSeasons": {
       "mandals": 479,
-      "changeGap": -0.0028,
-      "afterGap": 0.0122,
-      "worsePct": 51.8
+      "changeGap": -0.0017,
+      "afterGap": 0.0089,
+      "worsePct": 50.3
      },
      "seasons": {
       "2024": {
        "mandals": 79,
-       "changeGap": 0.019,
-       "afterGap": 0.0249,
-       "worsePct": 39.2
+       "changeGap": 0.0258,
+       "afterGap": 0.016,
+       "worsePct": 32.9
       },
       "2025": {
        "mandals": 332,
-       "changeGap": -0.0077,
-       "afterGap": -0.0199,
-       "worsePct": 53.3
+       "changeGap": -0.0171,
+       "afterGap": -0.0225,
+       "worsePct": 57.8
       },
       "2026": {
        "mandals": 71,
-       "changeGap": -0.0194,
-       "afterGap": -0.0177,
-       "worsePct": 54.9
+       "changeGap": 0.0047,
+       "afterGap": 0.0261,
+       "worsePct": 43.7
       }
      }
     },
@@ -2904,34 +2904,34 @@
     "within": {
      "sameSeason": {
       "mandals": 460,
-      "changeGap": -0.0061,
-      "afterGap": -0.0167,
-      "worsePct": 53.3
+      "changeGap": -0.0081,
+      "afterGap": -0.0146,
+      "worsePct": 52.4
      },
      "acrossSeasons": {
       "mandals": 487,
-      "changeGap": -0.0048,
-      "afterGap": 0.0124,
-      "worsePct": 53.6
+      "changeGap": -0.0029,
+      "afterGap": 0.0084,
+      "worsePct": 52.8
      },
      "seasons": {
       "2024": {
        "mandals": 78,
-       "changeGap": 0.0403,
-       "afterGap": 0.0171,
-       "worsePct": 38.5
+       "changeGap": 0.029,
+       "afterGap": 0.0055,
+       "worsePct": 30.8
       },
       "2025": {
        "mandals": 328,
-       "changeGap": -0.0161,
-       "afterGap": -0.0233,
-       "worsePct": 58.2
+       "changeGap": -0.0196,
+       "afterGap": -0.0227,
+       "worsePct": 59.1
       },
       "2026": {
        "mandals": 54,
-       "changeGap": -0.0119,
-       "afterGap": -0.0255,
-       "worsePct": 44.4
+       "changeGap": 0.0074,
+       "afterGap": 0.005,
+       "worsePct": 42.6
       }
      }
     },
@@ -3111,38 +3111,38 @@
     "within": {
      "sameSeason": {
       "mandals": 400,
-      "changeGap": -0.005,
-      "afterGap": -0.0358,
-      "worsePct": 54.0
+      "changeGap": -0.0048,
+      "afterGap": -0.0158,
+      "worsePct": 55.0
      },
      "acrossSeasons": {
       "mandals": 459,
-      "changeGap": -0.0025,
-      "afterGap": -0.0036,
-      "worsePct": 52.9
+      "changeGap": -0.0013,
+      "afterGap": 0.0067,
+      "worsePct": 54.2
      },
      "seasons": {
       "2024": {
        "mandals": 47,
-       "changeGap": -0.0276,
-       "afterGap": 0.0191,
-       "worsePct": 51.1
+       "changeGap": 0.0044,
+       "afterGap": 0.001,
+       "worsePct": 46.8
       },
       "2025": {
        "mandals": 162,
-       "changeGap": 0.0028,
-       "afterGap": -0.0453,
-       "worsePct": 53.7
+       "changeGap": -0.0058,
+       "afterGap": -0.0235,
+       "worsePct": 57.4
       },
       "2026": {
        "mandals": 191,
-       "changeGap": -0.0061,
-       "afterGap": -0.0414,
+       "changeGap": -0.0062,
+       "afterGap": -0.0135,
        "worsePct": 55.0
       }
      }
     },
-    "verdict": "weak"
+    "verdict": "not borne out"
    },
    "allCropland": {
     "within": {
@@ -3318,34 +3318,34 @@
     "within": {
      "sameSeason": {
       "mandals": 65,
-      "changeGap": 0.0004,
-      "afterGap": -0.0535,
-      "worsePct": 52.3
+      "changeGap": 0.0032,
+      "afterGap": -0.0047,
+      "worsePct": 50.8
      },
      "acrossSeasons": {
       "mandals": 103,
-      "changeGap": 0.0077,
-      "afterGap": 0.0309,
-      "worsePct": 49.5
+      "changeGap": 0.0103,
+      "afterGap": 0.0324,
+      "worsePct": 42.7
      },
      "seasons": {
       "2024": {
        "mandals": 4,
-       "changeGap": 0.0281,
-       "afterGap": 0.105,
+       "changeGap": 0.015,
+       "afterGap": 0.046,
        "worsePct": 25.0
       },
       "2025": {
        "mandals": 5,
-       "changeGap": -0.0361,
-       "afterGap": -0.1779,
+       "changeGap": -0.0178,
+       "afterGap": -0.1036,
        "worsePct": 60.0
       },
       "2026": {
        "mandals": 56,
-       "changeGap": 0.0016,
-       "afterGap": -0.0537,
-       "worsePct": 53.6
+       "changeGap": 0.0042,
+       "afterGap": 0.0005,
+       "worsePct": 51.8
       }
      }
     },
@@ -3525,34 +3525,34 @@
     "within": {
      "sameSeason": {
       "mandals": 515,
-      "changeGap": -0.0104,
-      "afterGap": -0.0249,
-      "worsePct": 53.0
+      "changeGap": -0.0094,
+      "afterGap": -0.0164,
+      "worsePct": 53.6
      },
      "acrossSeasons": {
       "mandals": 529,
-      "changeGap": -0.0061,
-      "afterGap": 0.0062,
-      "worsePct": 52.0
+      "changeGap": -0.0032,
+      "afterGap": 0.0055,
+      "worsePct": 53.9
      },
      "seasons": {
       "2024": {
        "mandals": 82,
-       "changeGap": 0.0207,
-       "afterGap": 0.0079,
-       "worsePct": 43.9
+       "changeGap": 0.0165,
+       "afterGap": -0.0026,
+       "worsePct": 35.4
       },
       "2025": {
        "mandals": 346,
-       "changeGap": -0.0146,
-       "afterGap": -0.0313,
-       "worsePct": 54.9
+       "changeGap": -0.0179,
+       "afterGap": -0.0266,
+       "worsePct": 59.2
       },
       "2026": {
        "mandals": 87,
-       "changeGap": -0.0234,
-       "afterGap": -0.0304,
-       "worsePct": 54.0
+       "changeGap": -0.0004,
+       "afterGap": 0.0111,
+       "worsePct": 48.3
       }
      }
     },
@@ -3732,34 +3732,34 @@
     "within": {
      "sameSeason": {
       "mandals": 461,
-      "changeGap": -0.0182,
-      "afterGap": -0.0449,
-      "worsePct": 56.0
+      "changeGap": -0.0132,
+      "afterGap": -0.0223,
+      "worsePct": 57.3
      },
      "acrossSeasons": {
       "mandals": 520,
-      "changeGap": -0.0109,
-      "afterGap": -0.007,
-      "worsePct": 55.6
+      "changeGap": -0.006,
+      "afterGap": 0.0042,
+      "worsePct": 55.2
      },
      "seasons": {
       "2024": {
        "mandals": 71,
-       "changeGap": -0.0252,
-       "afterGap": -0.0092,
-       "worsePct": 50.7
+       "changeGap": 0.0021,
+       "afterGap": -0.0143,
+       "worsePct": 47.9
       },
       "2025": {
        "mandals": 216,
-       "changeGap": -0.0071,
-       "afterGap": -0.0632,
-       "worsePct": 53.7
+       "changeGap": -0.0126,
+       "afterGap": -0.0436,
+       "worsePct": 59.3
       },
       "2026": {
        "mandals": 174,
-       "changeGap": -0.0291,
-       "afterGap": -0.0367,
-       "worsePct": 60.9
+       "changeGap": -0.0202,
+       "afterGap": 0.0008,
+       "worsePct": 58.6
       }
      }
     },
@@ -3939,34 +3939,34 @@
     "within": {
      "sameSeason": {
       "mandals": 206,
-      "changeGap": 0.0113,
-      "afterGap": -0.0308,
-      "worsePct": 46.1
+      "changeGap": -0.0043,
+      "afterGap": -0.0062,
+      "worsePct": 55.3
      },
      "acrossSeasons": {
       "mandals": 260,
-      "changeGap": 0.001,
-      "afterGap": -0.005,
-      "worsePct": 50.8
+      "changeGap": -0.0026,
+      "afterGap": 0.0069,
+      "worsePct": 56.5
      },
      "seasons": {
       "2024": {
        "mandals": 7,
-       "changeGap": 0.0558,
-       "afterGap": 0.043,
+       "changeGap": 0.0156,
+       "afterGap": 0.0015,
        "worsePct": 28.6
       },
       "2025": {
        "mandals": 6,
-       "changeGap": -0.07,
-       "afterGap": -0.0366,
-       "worsePct": 50.0
+       "changeGap": 0.008,
+       "afterGap": -0.0335,
+       "worsePct": 33.3
       },
       "2026": {
        "mandals": 193,
-       "changeGap": 0.0123,
-       "afterGap": -0.0333,
-       "worsePct": 46.6
+       "changeGap": -0.0054,
+       "afterGap": -0.0056,
+       "worsePct": 57.0
       }
      }
     },
@@ -4146,34 +4146,34 @@
     "within": {
      "sameSeason": {
       "mandals": 433,
-      "changeGap": 0.0044,
-      "afterGap": -0.0167,
-      "worsePct": 48.5
+      "changeGap": 0.0026,
+      "afterGap": -0.0156,
+      "worsePct": 47.8
      },
      "acrossSeasons": {
       "mandals": 542,
-      "changeGap": 0.002,
-      "afterGap": 0.0116,
-      "worsePct": 51.7
+      "changeGap": 0.0019,
+      "afterGap": 0.0088,
+      "worsePct": 52.0
      },
      "seasons": {
       "2024": {
        "mandals": 75,
-       "changeGap": 0.0319,
-       "afterGap": 0.0305,
-       "worsePct": 40.0
+       "changeGap": 0.027,
+       "afterGap": 0.0024,
+       "worsePct": 34.7
       },
       "2025": {
        "mandals": 229,
-       "changeGap": -0.0004,
-       "afterGap": -0.0419,
-       "worsePct": 50.2
+       "changeGap": -0.0091,
+       "afterGap": -0.0398,
+       "worsePct": 55.9
       },
       "2026": {
        "mandals": 129,
-       "changeGap": -0.0031,
-       "afterGap": 0.0006,
-       "worsePct": 50.4
+       "changeGap": 0.0092,
+       "afterGap": 0.0169,
+       "worsePct": 41.1
       }
      }
     },
@@ -4353,34 +4353,34 @@
     "within": {
      "sameSeason": {
       "mandals": 313,
-      "changeGap": 0.0118,
-      "afterGap": -0.0264,
-      "worsePct": 44.7
+      "changeGap": 0.0056,
+      "afterGap": -0.0026,
+      "worsePct": 47.3
      },
      "acrossSeasons": {
       "mandals": 357,
-      "changeGap": 0.0023,
-      "afterGap": -0.0023,
-      "worsePct": 49.3
+      "changeGap": 0.005,
+      "afterGap": 0.0113,
+      "worsePct": 49.0
      },
      "seasons": {
       "2024": {
        "mandals": 9,
-       "changeGap": -0.0695,
-       "afterGap": 0.0787,
+       "changeGap": -0.0346,
+       "afterGap": 0.0448,
        "worsePct": 66.7
       },
       "2025": {
        "mandals": 48,
-       "changeGap": 0.0487,
-       "afterGap": -0.051,
-       "worsePct": 31.2
+       "changeGap": 0.0391,
+       "afterGap": -0.0007,
+       "worsePct": 25.0
       },
       "2026": {
        "mandals": 256,
-       "changeGap": 0.0077,
-       "afterGap": -0.0255,
-       "worsePct": 46.5
+       "changeGap": 0.0007,
+       "afterGap": -0.0046,
+       "worsePct": 50.8
       }
      }
     },
@@ -4560,34 +4560,34 @@
     "within": {
      "sameSeason": {
       "mandals": 66,
-      "changeGap": -0.0062,
-      "afterGap": -0.0464,
-      "worsePct": 51.5
+      "changeGap": -0.0058,
+      "afterGap": -0.0171,
+      "worsePct": 48.5
      },
      "acrossSeasons": {
       "mandals": 92,
-      "changeGap": 0.0054,
-      "afterGap": 0.0228,
-      "worsePct": 43.5
+      "changeGap": 0.0024,
+      "afterGap": 0.0186,
+      "worsePct": 46.7
      },
      "seasons": {
       "2024": {
        "mandals": 5,
-       "changeGap": -0.0385,
-       "afterGap": 0.0235,
+       "changeGap": -0.034,
+       "afterGap": 0.0036,
        "worsePct": 40.0
       },
       "2025": {
        "mandals": 3,
-       "changeGap": -0.0415,
-       "afterGap": 0.0291,
+       "changeGap": 0.0427,
+       "afterGap": -0.0027,
        "worsePct": 33.3
       },
       "2026": {
        "mandals": 58,
-       "changeGap": -0.0015,
-       "afterGap": -0.0563,
-       "worsePct": 53.4
+       "changeGap": -0.0059,
+       "afterGap": -0.0196,
+       "worsePct": 50.0
       }
      }
     },
