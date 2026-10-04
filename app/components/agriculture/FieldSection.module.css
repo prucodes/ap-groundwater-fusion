@@ -61,7 +61,42 @@
 .peg { stroke: #6e5a3e; stroke-width: 0.8; }
 .pod { fill: #d9c39b; stroke: #8f7650; stroke-width: 0.6; }
 .senescent .leaf, .senescent .leaflet { fill: var(--fs-leaf-dry); stroke: color-mix(in srgb, var(--fs-leaf-dry) 70%, #000); }
-.senescent .stalk, .senescent .stem { fill: #8c7d50; stroke: #8c7d50; }
+.senescent .stalk { fill: #8c7d50; }
+.senescent .stem, .senescent .twig { stroke: #8c7d50; }
+
+/* The other crops: each drawn by its habit, in the same restrained palette. */
+.twig { fill: none; stroke: var(--fs-stalk); stroke-width: 0.85; stroke-linecap: round; }
+.rachis { fill: none; stroke: var(--fs-stalk); stroke-width: 0.55; }
+.blade { fill: var(--fs-leaf); }
+.bladeDry { fill: var(--fs-leaf-dry); }
+.leafDry { fill: var(--fs-leaf-dry); stroke: color-mix(in srgb, var(--fs-leaf-dry) 70%, #000); stroke-width: 0.4; }
+.leafletFine { fill: none; stroke: var(--fs-leaf); stroke-width: 1.35; stroke-linecap: round; }
+.senescent .leafletFine { stroke: var(--fs-leaf-dry); }
+.senescent .rachis { stroke: #8c7d50; }
+.boll { fill: #6f8b3c; stroke: #48602a; stroke-width: 0.5; }
+.bur { fill: #6b4f33; }
+.lint { fill: #fdfcf8; stroke: #a59a82; stroke-width: 0.5; }
+.flowerCream { fill: #f2e7b9; stroke: #cbb46e; stroke-width: 0.5; }
+.flowerWhite { fill: #fbfaf5; stroke: #bdb9a6; stroke-width: 0.4; }
+.flowerYellow { fill: #e2b23a; }
+.flowerOrange { fill: #c8742c; }
+.flowerRose { fill: #a8507c; }
+.podGreen { fill: #6f9b34; stroke: #4b6d20; stroke-width: 0.4; }
+.podRed { fill: #b5332a; stroke: #7c1f18; stroke-width: 0.4; }
+.pigeonPodYoung { fill: #86a34a; stroke: #58702c; stroke-width: 0.4; }
+.pigeonPod { fill: #b98f55; stroke: #7a5b30; stroke-width: 0.45; }
+.chickPod { fill: #cfb67f; stroke: #8f7650; stroke-width: 0.5; }
+.head { fill: #cfc78f; stroke: #9d955a; stroke-width: 0.5; }
+.headRipe { fill: #b5793f; stroke: #7c4a22; stroke-width: 0.5; }
+.kernel { fill: #dcc25a; }
+.kernelRipe { fill: #874d24; }
+/* Red gram is woody: its stems stay brown-green even as the leaves turn. */
+.woody .stalk { fill: #66603d; }
+.woody .stem { stroke: #66603d; }
+:global(:root[data-theme="dark"]) .woody .stalk { fill: #a39a70; }
+:global(:root[data-theme="dark"]) .woody .stem { stroke: #a39a70; }
+:global(:root[data-theme="dark"]) .lint { fill: #ebe7dc; stroke: #8f887a; }
+:global(:root[data-theme="dark"]) .bur { fill: #a7865f; }
 
 .drop { stroke: var(--fs-water); stroke-width: 1.4; stroke-linecap: round; opacity: 0.55; animation: fall 1.4s linear infinite; }
 .seep { fill: none; stroke: var(--fs-water); stroke-width: 1.4; stroke-linecap: round; opacity: 0.8; animation: sink 2.4s ease-in infinite; }

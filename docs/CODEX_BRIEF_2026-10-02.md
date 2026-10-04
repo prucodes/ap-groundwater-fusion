@@ -1,255 +1,116 @@
-# Codex brief: what was built, film and video, redesign merge, visual polish (2026-10-02, updated 2026-10-03)
+# Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026)
 
-Written by Claude Code for Codex. Everything described here is on `main` (PRs #33–#38,
-last at `53c9452`) and live on GitHub Pages. Start every task on a fresh branch off
-`main`, and never edit inside the worktree `.claude/worktrees/agri-water-context`.
-Ask the user before committing, pushing or merging.
+Written by Claude Code for Codex. This replaces the 2 October brief at the same path.
+Everything below is on `main` (through PR #43) and live on GitHub Pages.
 
-The site is reviewed by the Chief Minister's office, the CMO and IAS officers
-(including RTGS). The bar is high, and so is the cost of a wrong or overclaimed
-figure. Polish how things look; never change what they say without asking.
+Ground rules:
+- Start every task on a fresh branch off `main`.
+- Never edit inside the worktree `.claude/worktrees/agri-water-context`.
+- Ask the user before committing, pushing or merging.
 
-## 0. Update, 3 October 2026: Drought Watch, El Niño outlook, This Week
+The site is reviewed by the Chief Minister's office, the CMO and IAS officers, including
+RTGS. The bar is high, and so is the cost of a wrong or overclaimed figure. Polish how
+things look, but never change what they say without asking.
 
-All three have shipped to `main` (PR #34 and the PR after it). In Task 4 (visual
-polish), treat them like any other screen, under these rules:
+## 0. Since the last brief (do not redo)
 
-- **Drought Watch (`/drought`)**: components in `app/components/drought/`, styles in
-  `Drought.module.css`, data from `phase3_levels/build_drought_watch.py`. Each mandal is
-  read through the national *Manual for Drought Management 2020* (Table 3.11 Trigger 1,
-  Tables 3.1/3.4/3.6/3.8/3.9, the Step 2 severity rule). **Do not change the rules, the
-  thresholds, the "interpretations" list or any wording that says "not a declaration".**
-  You may polish layout, colour, motion and phone layout. Tests:
-  `app/e2e/governance-drought.spec.ts`.
-- **El Niño outlook on `/monsoon` (`#enso-outlook`)**: `app/components/monsoon/EnsoOutlook.tsx`
-  and its CSS module, data `app/data/enso_outlook.json` from `phase3_levels/fetch_enso_outlook.py`
-  (NOAA CPC). The synopsis is quoted word for word: never paraphrase it. The forecast half
-  (dark) and the state's own record (light) must stay visibly separate. No `<title>`
-  inside SVGs (desktop-layout test).
-- **This Week (`/changes`)**: `app/app/changes/`, data `app/data/weekly_changes.json` from
-  `phase3_levels/build_weekly_changes.py`. Every value is read from a published file and
-  keeps its own date.
-- **Guards (do not touch)**: `check_not_shrinking` in `fetch_apwrims_context.py` and
-  `check_past_weeks` in `build_drought_watch.py`. On 3 Oct 2026 the APWRIMS portal dropped
-  September for all 28 districts; these guards stop that being published.
-- The weekly workflow now opens a GitHub issue when a refresh fails or keeps a feed
-  (`phase3_levels/refresh_health.py`).
+| PR | What landed |
+|---|---|
+| #40 | **Readiness from the State's data.** Counts are read from the published map (595 and 628 of 670). Each mandal names its own outline source, and the Agriculture CSV has an `outline` column. |
+| #40 | **Two experiments; neither changes the model.** (1) Rain averaged over the official outlines gives no gain (gate MAE 1.7969 → 1.8001 m). (2) The blend over-forecasts recharge when a forecast is made before a dry monsoon fails (bias −1.08 m); two corrections were tested and rejected. Both are written up on Methodology; scripts are `phase3_levels/experiment_*.py`. |
+| #41 | **Design pass.** Quiet caveat line in place of boxed banners; neutral briefing panels in place of the salmon alarm boxes; a 6-column verify table with signal pills; Data readiness as a list. Also: the Constituencies statewide panel, This Week cards, Watchlist ordering and the sidebar State wells date. Seven undefined token names now alias real tokens. |
+| #42 | **A confidence note on every released forecast** (`app/lib/forecastReliability.ts`): "Backed by its record" or "Lower confidence". |
+| #42 | **A one-page brief for each of the 175 assembly seats** (`/constituencies/<AC code>`): prints on one A4 sheet. |
+| #42 | **The CHIRPS v3 record rebuilt** with every part of a split mandal (1981-01 to 2026-08), and the model retrained on it. |
+| #42 | **A measured cross-section in the crop-water lab**, replacing the AI artwork. A rendering fix restored spaces lost after `</strong>`. |
+| #43 | **Seven reference crops in the crop-water lab**, each drawn by its habit; this brief. |
 
-### Added later on 3 October: the State's own data (AI Living Labs data lake, AWARE)
+Taken off the to-do list as done: per-constituency briefs, the sidebar State wells date,
+the Overview alarm panels, the crop visual, the forecast confidence flag and the
+rainfall rebuild.
 
-What landed (PRs #36–#38):
+## 1. Priorities, in order
 
-- **Official mandal outlines on every map**: 595 of 670. The data lake gives each
-  boundary's vertices unordered; `phase3_levels/build_official_boundaries.py` rebuilds the
-  ring and keeps it only if it is within 3% of the official area, does not lie over
-  official neighbours (worst first), and touches the mandal it replaces. Names repeat
-  across districts: 16 records landed 10–580 km from their mandal and are withheld,
-  outline and codes. Spikes and crumbs are removed. Result: `app/data/ap_map_display.json`,
-  same order and names as `ap_map_geometry.json`, each feature with `src`
-  (`official`/`prototype`), `lgd`, `ac`, `acCode`, `pc`, `div`, `officialKm2`, `verdict`.
-- **The State network's latest reading** (early September, 1,746 stations): mandal pages
-  (`components/MandalStateReading.tsx`, server only), the overview strip and the Monsoon
-  page. Data `gw_state_snapshot.json` (server only) and `gw_state_summary.json` (client-safe),
-  from `build_datalake_snapshot.py`. Its May value equals our APWRIMS May in 585 of 587
-  mandals: same department series, one month newer. It also carries the department's own
-  depth bands (`ground_water_category`) and AWARE's module counts (groundwater, dry spell
-  and El Niño modules issue nothing).
-- **Constituencies page** (`/constituencies`): all 175 assembly and 25 parliamentary seats,
-  164 drawn with the State's own outline (`build_official_regions.py` →
-  `official_regions.json`), the rest as the union of their mandals. A mandal with no
-  constituency on its State record is placed by location (40 of them); 11 city seats have
-  no mandal of their own on our map and say so. `components/constituencies/`, data
-  `constituencies.json` from `build_constituencies.py` (runs weekly).
-- **District outlines were rebuilt but are not drawn**: next to prototype districts they
-  left seams. The district map is unchanged on purpose.
-- Fixed: Monsoon Watch areas counted only the first part of split mandals; and
-  `prefers-color-scheme` rules gave light pages dark "no data" cells. **This app themes
-  only through `data-theme`; never key colours to `prefers-color-scheme`.**
+1. **Merge your redesign with `main`.** This is the biggest risk.
+2. **Re-render the Monsoon film and build the 60-second El Niño video.** Each needs human review before publishing.
+3. **Telugu versions of the constituency brief and a CM one-pager.** A Telugu speaker reviews every line.
+4. **An independent, sceptical review of the whole site.** Report only; change no code.
+5. **Remaining visual polish**, in your redesign's language.
+6. **Optional, ask first:** the EOS-04 soil-moisture check.
 
-Rules for these:
+## 2. Task 1: merge your redesign with `main`
 
-- **Maps draw `ap_map_display.json`; the pipeline and model read `ap_map_geometry.json`.**
-  Never point the pipeline at the display file, and never point a map at the raw file
-  (import `mapGeometry` from `lib/data.ts`). The model is re-tested on official outlines
-  before it moves.
-- Data-lake files in `app/data` are builder output: re-run the builder, never hand-edit.
-  The builders need `data/raw/datalake/`, which only the user can pull
-  (`phase3_levels/fetch_datalake.py`, their login via getpass). Never add credentials
-  anywhere; never commit `data/raw/datalake/`.
-- Keep the wording that carries meaning: "one reading, not a monthly mean", "not merged
-  into it", "the model does not use it", "placed by location", "No mandal of its own on
-  this map", whose outline is drawn, and the "N of 175" coverage line.
-- Tests: `app/e2e/governance-constituencies.spec.ts`, `tests/test_official_data.py`
-  (includes "no official outline is drawn far from the mandal it replaces").
+Your uncommitted redesign on `codex/groundwater-redesign` was based on `70e3f9e`. It is
+now far behind.
 
-## 1. What was built
+Steps:
+1. Commit the redesign on its own branch.
+2. Merge `main` into it.
+3. For generated data files, take `main`'s copy; never hand-merge JSON.
+4. Merge code by hand.
+5. Run `git diff --name-only main...` for the full overlap.
 
-### New data, refreshed every Monday
+**Changed on `main` since `7305ab7`** (the previous brief). Expect conflicts in these files:
 
-APWRIMS publishes more than groundwater. Three of its public dashboards are now
-ingested by `phase3_levels/fetch_apwrims_context.py`. It sends about twenty
-requests, verifies TLS, needs no login, and keeps the previous section if a feed
-fails.
+- **Pages:** `app/app/` `agriculture`, `changes` (and `Changes.module.css`), `constituencies`, `districts`, `estimates`, `map`, `methodology`, `nasa`, `readiness`, `scenario` and `watchlist` pages, plus `globals.css` (print rules at the end).
+- **Components:**
+  - `AppShell`, `Badges` (new `SignalPill`), `LiveMap`, `MandalDetail`, `MandalSeasonContext`, `MandalTable`, `OverviewCockpit`, `PacificEnso`, `SelectedMandalPanel`, `SourceReadinessPanel`;
+  - `agriculture/AgricultureWorkspace`, `CropWaterLab`, `CropField.module.css`, `GovernanceBrief`;
+  - `constituencies/ConstituencyExplorer` and `Constituencies.module.css`;
+  - `drought/Drought.module.css` and `MandalMatrix`;
+  - `living-water-table/SelectedMandalPanel`.
+- **Libraries:** `app/lib/agriculture.ts`, `agricultureServer.ts` and `data.ts`.
+- **Pipeline:** `phase3_levels/fetch_chirps_history.py` and `fetch_weekly.py`, plus `.github/workflows/phase3_weekly_levels.yml`.
 
-- **Soil moisture.** NRSC VIC land-surface model, per mandal, at 5, 30, 100 and
-  150 cm. Each mandal is compared with its own values on the same date in every
-  year since 2014. The figures are **modelled**, not measured.
-- **Gauge rainfall.** AP Directorate of Economics and Statistics mandal rain
-  gauges, for the water year from 1 June, against the department's normal. Each
-  mandal gets the IMD departure bands: excess, normal, deficient, scanty, no
-  rain. **Measured.**
-- **Reservoirs.** 113 major and medium reservoirs, with storage now and a year
-  ago, river basin, and the release into each canal. **Measured** at the dam;
-  where the water goes is not known.
+**New on `main`:**
+- `app/app/constituencies/[code]/page.tsx`;
+- `app/components/constituencies/PrintBrief.tsx` and `ConstituencyBrief.module.css`;
+- `app/components/agriculture/FieldSection.tsx` and `FieldSection.module.css`;
+- `app/lib/forecastReliability.ts`;
+- `phase3_levels/build_forecast_reliability.py` and `experiment_*.py`;
+- `tests/test_forecast_reliability.py`;
+- `app/e2e/governance-text.spec.ts`.
 
-It writes three outputs:
-- `app/data/water_context.json` (476 KB): the full record, imported only by
-  server code;
-- `app/data/water_context_summary.json` (16 KB): state and district figures,
-  safe in client code;
-- `app/data/water_context_mandals.json` (28 KB): per-mandal values for the
-  maps.
+**Deleted on `main`; do not bring them back:**
+- `components/agriculture/NaturalCropScene.tsx` (the WebGL scene);
+- `components/agriculture/cropArtwork.ts`;
+- six `app/public/assets/agriculture-*-stages` and `agriculture-root-zone` images.
 
-Each run also writes a receipt, `data/refresh_receipts/apwrims_context.json`.
+**Contracts the merge must keep:**
+- **Maps:** they draw `mapGeometry` from `lib/data.ts`, which is `ap_map_display.json`. The pipeline and model read `ap_map_geometry.json`. Never cross them.
+- **Agriculture:** `officialOutline` on each agriculture row, `outlineLabel()` in tooltips, and the `outline` CSV column.
+- **Forecasts:** `reliabilityFor(id)` drives the `forecast-trust` note in the mandal panel.
+- **Crop numbers:** `CROP_REFERENCE` in `lib/agriculture.ts` is the single source for coefficients, root depths, heights and source labels; `FieldSection` reads it. Never type a crop number in a component.
+- **Constituency pages:** `/constituencies/[code]` uses `generateStaticParams` with `dynamicParams = false`.
+- **Text after an inline tag:** a line of text that follows `</strong>` or `</em>` on the next source line loses its leading space in this build. Write `{" "}`; `governance-text.spec.ts` reads the rendered text.
+- **Print:** the print rules hide `.mobileBar`, force `main > div` to full opacity and keep the desktop grid. Without them the brief prints blank or on two pages.
+- **Weekly refresh:** "build forecast reliability" runs after "publish V2 app data", and `app/data/forecast_reliability.json` is in the workflow's commit list.
 
-### The three-signal count, the main new idea
+Then wire `main`'s data into your redesigned pages (atlas `EvidencePanel`,
+`WaterWorkspace`, `ReviewQueue`, `AtlasMap`) using the modules in section 8. Do not bring
+back CHIRPS v2, or "Not connected" for soil, gauges or reservoirs. Crop-sown data and canal
+delivery to mandals are still genuinely not connected.
 
-For each mandal, the site counts how many of three stated tests point to
-stress:
-- the groundwater shortfall is flagged;
-- gauge rain is 20% or more below normal;
-- soil moisture is in the driest quarter of years for the date.
+## 3. Task 2: the Monsoon film and the El Niño video (human review required)
 
-It is a count, not a score. It uses only boundaries that join to exactly one
-record. Currently all three agree in **21 of 524** mandals. The rules are in
-`AGREEMENT_RULES` in `app/lib/agriculture.ts`, together with `agreementOf`; do
-not re-derive them anywhere else.
+**The film** (`app/public/films/monsoon/`) is a fixed August-2026 edition on CHIRPS v2. The
+site now reads:
 
-### Rainfall record moved to CHIRPS v3
-
-CHIRPS v2 production ends after December 2026. The whole record was rebuilt on
-v3, from 1981. `phase3_levels/fetch_chirps_history.py` refuses to mix products,
-guarded by `mandal_rain_history_chirps_manifest.json`. The model was re-run and
-still clears its release gates:
-- 3-month forecast error: 1.797 m (1.774 m on v2);
-- nowcast error: 1.010 m (1.007 m on v2).
-
-v3 reads June–August 2026 at **−41.5%**, the driest in 46 years. v2 read
-−28.4%.
-
-### IMD, wired but dormant
-
-`phase3_levels/fetch_imd_context.py` reads district forecasts, warnings,
-district rainfall and river-basin forecasts. It does nothing without the
-`IMD_API_KEY` secret. With a key it writes only a cache that git ignores
-(`data/private/`). It publishes to `app/data/imd_context.json` only when the
-`IMD_PUBLISH` variable is `1`, because IMD's terms restrict redistribution. No
-page reads IMD data yet.
-
-### App modules
-
-| Module | What it is | Client-safe? |
+| Figure | Film says (v2) | Site reads now (v3) |
 |---|---|---|
-| `app/lib/waterContext.ts` | the full water context | **No**, server only |
-| `app/lib/agricultureServer.ts` | memoised agriculture evidence, with water | **No**, server only |
-| `app/lib/waterSummary.ts` | `waterSummary`, `waterForDistrict()` | Yes |
-| `app/lib/waterMandals.ts` | map layers `gauge_rain_dev` and `soil_pct`: fixed scales, colours, legends, text | Yes |
-| `app/lib/agriculture.ts` | agreement rules, counts and filters; soil, rain and signal columns in the CSV | Yes |
-| `app/lib/irrigation.ts` | `seasonContext()`, plus season fields in the AWARE preview (tier logic unchanged) | Yes |
-| `app/lib/brief.ts` | `seasonSentence()`: a ready-made sentence, **not rendered anywhere yet** | Yes |
-| `app/lib/data.ts` | water types only, no water JSON imports | Yes |
+| June–August rain | 28.4% below average | 41.5% below average, driest of 46 years |
+| El Niño summer monsoons below average | 6 of 7 | 5 of 7 |
+| Mandals with falling water | 62.7% | check against `app/data` |
 
-A `"use client"` file that imports a server-only module ships half a megabyte
-to every visitor. `tests/test_weekly_refresh_covers_published_data.py` fails if
-that happens.
+Until the film is regenerated, the Monsoon page shows a "Since this edition" note.
 
-### New and changed screens
+Assess first, and show the user before rendering:
+1. **Narration diff.** Run `scripts/prepare_monsoon_film.py` without `--voice` and diff each scene's `voice` in `manifest.json`. Expect changes in `ap-history` and `rain`. Check that `mandals` and `well` (Orvakal) are unchanged.
+2. **Possible new line.** The user may want one line of corroboration from the State's own gauges or wells. That changes the script, so ask. Every spoken number is read from `app/data`, never typed; the tests enforce this.
+3. **Timing.** Check pronunciations and caption timing, and that each scene's speech fits its duration (`test_monsoon_film.py`).
+4. **Size.** The renders are about 82 MB (landscape) and 90 MB (portrait), committed to git. Ask whether to keep committing them or move them to Git LFS or external hosting.
 
-- **Overview** (`app/components/OverviewCockpit.tsx`, a client component now
-  wrapped by a server `page.tsx`):
-  - a "This water year so far" strip: gauge rain, soil, reservoirs, and the
-    three-signal count;
-  - Gauge rain and Soil views on the map.
-- **Agriculture** (`AgricultureWorkspace.tsx`):
-  - `WaterContextStrip`: three cards for gauge rainfall (with a category bar and
-    key), soil moisture and reservoir storage (with basin bars and the largest
-    canal releases);
-  - a "Three signals agree" tile with "Show them on the map";
-  - agreement dots in the review table, the side panel and the map tooltip;
-  - filters "all three" and "two or more";
-  - three figures in the governance brief;
-  - a readiness source checklist.
-- **Monsoon:**
-  - satellite rain, gauge rain and reservoir storage tiles;
-  - source ribbon;
-  - a "Since this edition" note under the film, listing figures that have moved
-    since it was made.
-- **Climate:** a "This water year by district — driest first" table.
-- **Map:** "Gauge rain vs normal" and "Soil moisture" views with fixed-scale
-  legends (`MandalStatusMap.tsx`).
-- **Every mandal page:** a "This season" card (`MandalSeasonContext.tsx`) with
-  gauge rain, soil by depth, the three tests and the district's reservoirs.
-- **Irrigation:** a "This season" column.
-- **Other pages:** Snapshot, Methodology (an agreement card and the CHIRPS v3
-  note), Readiness (three new sources and gate 04), Reports (a season CSV),
-  Estimates and Scenario labels, the sidebar data dates and the AI brief route.
-- **Name:** the site is now "AP Water Intelligence — Groundwater, Monsoon &
-  Agriculture (Prototype)"; the sidebar and mobile header say "AP Water
-  Intelligence".
-
-### Tests
-
-- New Python tests:
-  - `tests/test_water_context.py` (22): parsing, categories, baselines, digests
-    and unique-boundary joins;
-  - `tests/test_chirps_product.py` (6): the v3 product guard;
-  - `tests/test_imd_context.py` (8): dormant without a key, how the key is sent,
-    parsers, private by default.
-- New browser tests: `app/e2e/governance-water-context.spec.ts` (7).
-- Updated:
-  - the refresh-coverage test, which now scans all of `app/lib`,
-    `app/components` and `app/app`, and blocks client leaks;
-  - `test_monsoon_film.py`: the film is checked against its own recorded
-    snapshot, and the page must disclose what has moved since.
-
-Current state: 295 Python tests, the type check and 132 Playwright tests pass.
-
-To run them:
-```sh
-python3 -m pytest -q                                   # repository root
-cd app && npm run typecheck && PAGES_BASE_PATH= npm run build:static
-node scripts/serve-static.mjs --port 3217 --bind 127.0.0.1 --directory out   # from app/
-PLAYWRIGHT_BASE_URL=http://127.0.0.1:3217 npx playwright test                # from app/, never the root
-```
-Port 3100 is taken on this machine.
-
-## 2. Task 1: re-narrate and re-render the Monsoon film. Human review is required.
-
-**Why.** The film (`app/public/films/monsoon/`) is a fixed August-2026 edition.
-It speaks CHIRPS v2 figures:
-- "rainfall was 28.4 percent below" its average;
-- "6 of 7 El Nino summer monsoons" had below-average rain.
-
-The site now reads −41.5% and 5 of 7. Until the film is regenerated, the Monsoon
-page shows the "Since this edition" note (`app/components/MonsoonFilm.tsx`).
-
-**Assess first, and show the user before rendering:**
-1. Which narration lines change. Run `scripts/prepare_monsoon_film.py` without
-   `--voice` and diff each scene's `voice` in
-   `app/public/films/monsoon/manifest.json`. Expect changes in `ap-history`
-   (5 of 7) and `rain` (41.5 percent below). Check that `mandals` (62.7%) and
-   `well` (Orvakal) are unchanged.
-2. Whether to add one line of corroboration from the state's own gauges.
-   `water_context.json` holds the water-year-to-date gauge figures. That changes
-   the script, so it needs the user's approval. Every spoken number must be read
-   from `app/data`, never typed. The tests enforce this.
-3. Pronunciations, caption timing, and that each scene's speech fits its
-   duration (`test_monsoon_film.py` checks the timeline).
-4. Size. The renders are about 82 MB (landscape) and 90 MB (portrait), both
-   committed to git. Ask the user whether to keep committing them or move them
-   to Git LFS or external hosting.
-
-**Then render**, following `docs/monsoon_film_production.md`:
+Then render, following `docs/monsoon_film_production.md`:
 ```sh
 PYTHONPATH=.video-python python3 scripts/prepare_monsoon_film.py --voice   # edge-tts
 python3 -m http.server 4178 --bind 127.0.0.1 --directory app/public
@@ -257,179 +118,208 @@ node scripts/render_monsoon_film.mjs
 node scripts/render_monsoon_film.mjs --portrait
 ```
 
-**Verify:**
+Done when:
 - every scene check in `dist/monsoon-film` passes;
-- `python3 -m pytest` passes;
-- the Playwright `film` project passes;
-- the "Since this edition" note no longer appears on `/monsoon/`.
+- `pytest` and the Playwright `film` project pass;
+- the "Since this edition" note disappears from `/monsoon/`. It goes by itself once the `narrated` figures in `app/data/monsoon_film.json` equal the live ones.
 
-The note disappears by itself once the `narrated` figures in
-`app/data/monsoon_film.json` equal the live ones.
+**The El Niño video.** `docs/el_nino_60s_script.md` carries the current figures:
 
-## 3. Task 2: the 60-second El Niño video
-
-`docs/el_nino_60s_script.md` carries the v3 figures:
-- −13.0% usually, −41.5% this year;
-- below normal in 5 of 7 years;
-- Spearman ρ −0.47 against the June–August ONI (p = 0.001).
+| Figure | Value |
+|---|---|
+| June–August rain, El Niño years | −13.0% usually; −41.5% this year |
+| El Niño years below normal | 5 of 7 |
+| Spearman ρ against the June–August ONI | −0.47 (p = 0.001) |
+| Recharge shortfall | 8,029 million m³, in 543 of 593 mandals |
 
 `tests/test_elnino_script.py` requires the on-screen cards to match
-`app/data/monsoon_watch.json`. Assess `scripts/build_elnino_video.py`: its inputs,
-assets and voice. Build the video, then check the card text, the words-per-minute
-limits and the sources table. Same human-review gate as the film.
+`app/data/monsoon_watch.json`. Assess `scripts/build_elnino_video.py` (inputs, assets,
+voice), build it, then check the cards, the words-per-minute limits and the sources table.
+The same human-review gate applies.
 
-## 4. Task 3: merge your redesign with `main`. This is the biggest risk.
+## 4. Task 3: Telugu, for the people who will actually use the briefs
 
-Your uncommitted redesign on `codex/groundwater-redesign` was based on `70e3f9e`,
-behind `main`. At last check it touched these same files:
-- `README.md`
-- `app/app/methodology/page.tsx`, `app/app/reports/page.tsx`
-- `app/components/DataProvenanceDates.tsx`
-- `app/lib/data.ts`
-- `phase3_levels/build_levels_engine.py`
-- the generated data files
+District collectors, MLAs and their staff work in Telugu. Build in this order:
 
-Run `git diff --name-only main...` for the current overlap. Since that check, `main`
-also changed these, which your redesign will meet:
-- `app/lib/data.ts`: `mapGeometry` now imports `ap_map_display.json`; new helpers
-  `boundarySummary`, `boundaryLabel`, `geometryForMandal`. Your `AtlasMap` must draw
-  `mapGeometry`, not a raw geometry import.
-- `app/lib/types.ts`: `MapMandal` gained `src`, `lgd`, `ac`, `acCode`, `pc`, `div`,
-  `officialKm2`, `verdict`; `MapGeometry` gained `official_*` fields.
-- `app/components/AppShell.tsx`: nav items This Week, Drought Watch, Constituencies.
-- `app/components/MandalDetail.tsx` (adds `MandalStateReading`, `MandalDroughtCheck`),
-  `OverviewCockpit.tsx` (State wells and drought cells), `MapLegend.tsx`,
-  `MandalStatusMap.tsx` (outline labels), `app/app/monsoon/page.tsx` (`EnsoOutlook`, State
-  wells stat), `methodology` and `readiness` pages (new sources; the ledger now has nine).
+1. **The CM one-pager, in English first.** It does not exist yet. Generate it from `app/data`. Ideally it goes on an A4 print route like the constituency brief, reusing its print CSS. It should carry:
+   - the situation: rain, recharge shortfall, the State wells' latest reading;
+   - the mandals where all three sources agree;
+   - how the forecasts have fared;
+   - the most affected seats;
+   - what each department must supply: crop-sown aggregates, the canal command-area map, an IMD key.
 
-Steps:
-1. Commit the redesign on its own branch.
-2. Merge `main` into it.
-3. For generated data files, take `main`'s copy and re-run the pipeline steps.
-4. Merge code by hand.
+   `seasonSentence()` in `app/lib/brief.ts` is ready. Every number is read from data files, with the same caveats as the pages.
+2. **Telugu versions of the CM one-pager and the constituency brief.** Use a separate static route per language, e.g. `/constituencies/[code]/te`, so each prints on its own. Rules:
+   - Keep every number, date and Measured/Modelled tag identical to the English.
+   - Mandal and district names in Telugu must come from an authoritative list (LGD or the State's records). Never machine-transliterate names unreviewed.
+   - Put the terms in a glossary, `docs/telugu_glossary.md`, for the reviewer: groundwater, recharge, forecast confidence, "not a declaration", "modelled".
+   - Load a Telugu face that the CSP allows, e.g. Noto Sans Telugu through `next/font`.
+   - Re-check that the largest seat (AC 172, 11 mandals) still prints on one A4 sheet. Telugu runs longer.
+3. **Gate.** A Telugu speaker reviews every line before anything is published. Show the user both PDFs side by side first.
 
-Then wire the new data into your redesigned pages (atlas `EvidencePanel`,
-`WaterWorkspace`, `ReviewQueue`, `AtlasMap`), using the modules in section 1.
-Do not bring back CHIRPS v2, or "Not connected" for soil, gauges or reservoirs.
-Crop data and canal delivery to mandals are still genuinely not connected.
+## 5. Task 4: the sceptical review (report only)
 
-## 5. Task 4: visual polish for the CM review
+Before polish, read the site as its harshest reviewer would. Picture a senior IAS officer
+who has seen many dashboards and says "this won't cut it".
 
-Do this after Task 3, in your redesign's visual language. Do not restyle
-`main`'s current look separately. The aim: a senior official understands each
-page's answer in five seconds, and an analyst can still find every caveat.
+Write `docs/review_<date>.md`. Change no code in this task.
 
-**Already fixed on this branch; don't redo:**
-- the brand in the sidebar and mobile header;
-- the Overview map views wrapping onto two lines;
-- the unlabelled rain-category bar (it now has a key);
-- the mandal card's half-empty reservoir row;
-- "2/3" breaking across lines;
-- the Agriculture section badge, now "Groundwater readings · Aug 2026".
+For every page, at 1440 and 390 px, in light and dark:
+- **Five-second test.** Does a senior official get the page's answer in five seconds? What is in the way?
+- **Overclaims.** Is anything modelled presented as measured, or a provisional flag presented as a finding? Does every headline figure carry its date and source?
+- **Consistency.** Does the same count differ between pages? Examples: mandals compared, flagged, three-source agreement, the "N of 175" seats.
+- **Traceability.** Trace each headline figure to its `app/data` file and the upstream source. Report any you cannot trace.
+- **Disclaimers.** Are Drought Watch ("not a declaration"), the crop lab ("not advice"), and the forecasts (confidence note, "nothing changes a forecast") stated where an official would read them, not only in a footnote?
+- **Missing pieces.** What would the CMO ask for that is missing, and which department holds it?
 
-**Found in a screenshot check on 2026-10-02** (1440 and 390 px, light and dark):
-1. **Overview leads with model internals.**
-   - The KPI row (median modelled nowcast, deepest modelled mandal, median
-     model band, outside the model band) is analyst language.
-   - Two identical alarm-pink panels follow ("Monsoon watch" and "This water
-     year so far").
-   - The single strongest governance figure, "Three signals agree: 21 mandals",
-     sits at the bottom left of the second panel.
+Rank findings by severity (would embarrass in the room / confusing / cosmetic). Give each
+the page, a screenshot path and a proposed fix. The user decides what to act on.
 
-   Consider:
-   - one "season at a glance" band led by that count;
-   - red used only on figures that are bad, not on whole panels;
-   - the KPI row moved under the model-evaluation disclosure.
-2. **Names disagree.** The Overview hero still reads "AP Groundwater
-   Verification Cockpit", and every hero eyebrow says "Andhra Pradesh
-   Groundwater Assessment". Propose wording to the user; don't rename on your
-   own.
-3. **Monsoon "This season so far":** seven tiles in a four-column grid leave a
-   gap, and "State storage estimate — Under review" uses headline-figure styling
-   for a non-figure. Make it a status chip.
-4. **Map page:** the card title ("Andhra Pradesh — Mandal Fusion Status") and
-   the "Latest observation period Aug 2026" chip stay the same when the Gauge
-   rain or Soil view is selected. Only the legend changes. The title and date
-   should follow the view.
-5. **Dark theme:**
-   - a light gradient band shows above the hero, and in the top gutter of
-     mandal pages;
-   - no-data mandals render near-white on dark maps. Use a dark-theme no-data
-     token.
-6. **Text density.** Many notes are grey 10–11.5 px. For laptops and
-   projectors, use at least 12 px body text with 4.5:1 contrast. Move long
-   caveats behind a disclosure, keeping their words exactly.
-7. **Phone (390 px):** the Overview map views scroll sideways with no cue, and
-   "Soil" is off screen. Use a select, a fade edge or wrapping.
-8. **One colour language.** Each signal uses its own colours:
-   - groundwater flags: red, amber, green and grey;
-   - rain bands: maroon, red, amber, green and blue;
+## 6. Task 5: remaining visual polish
+
+Do this after Task 1, in your redesign's visual language. Each item below was still open
+on 3 October:
+
+1. **Names disagree.** The Overview hero reads "AP Groundwater Verification Cockpit" (`OverviewCockpit.tsx`). The hero eyebrows read "Andhra Pradesh Groundwater Assessment" (`HeaderHero.tsx`, `LivingWaterTablePage.tsx`). The site is "AP Water Intelligence". Propose wording to the user; don't rename on your own.
+2. **The Overview KPI row leads with model internals:** Median Modelled Nowcast, deepest nowcast, band width, outside band. Consider leading with the season and the three-signal count, and moving the KPI row under the model-evaluation disclosure.
+3. **Monsoon "State storage estimate — Under review"** (`app/app/monsoon/page.tsx`) uses headline-figure styling for a non-figure. Make it a status chip.
+4. **Map page:** the card title ("Andhra Pradesh — Mandal Fusion Status") and the "Latest observation period" chip stay the same when the Gauge rain or Soil view is selected (`app/app/map/page.tsx`). They should follow the view.
+5. **One documented stress palette with a shape or pattern cue,** so red–green colour blindness loses nothing. The palettes today:
+   - groundwater flags: red, amber, green, grey;
+   - rain bands: maroon, red, amber, green, blue;
    - soil: blue bars;
-   - agreement: red and green dots.
+   - agreement: dots.
+6. **Projector check.** Test 1920×1080 and 1280×720 at 125–150% zoom. Check that the constituency brief, the Agriculture brief and Snapshot print cleanly.
+7. **Constituencies.** The 11 city seats with no mandal of their own read as blank grey; give them a hatch and a legend entry. The selected seat's label can clip at the map edge.
+8. **Dark theme.** No-data mandals render near-white on dark maps; use a dark no-data token. Check for a light gradient band above the hero.
+9. **Text density.** Body text should be at least 12 px with 4.5:1 contrast. Move long caveats behind a disclosure with their words unchanged.
+10. **Phone.** Check the Overview map-view switcher (sideways scroll with no cue) and the size of the agreement dots; either may already be fixed.
+11. **Crop-water lab (new).** Check all seven crops at 390 px and in dark theme. The drawings are generated from `CROP_REFERENCE`; do not replace them with artwork. Keep "Soil depth to scale · plants at half scale · not field imagery" and the stand-in notes.
 
-   Define one documented stress palette. Add a shape or pattern cue so that
-   red–green colour blindness loses nothing.
-9. **Agreement dots** are 8 px. Make them legible, explain them at first use,
-   and keep "a count, not a score".
-10. **Presentation conditions.** Check 1920×1080 and 1280×720 at 125–150% zoom,
-    as on a projector, and that the Agriculture brief and Snapshot print
-    cleanly.
-11. **New screens from 3 October** (Drought Watch, This Week, Constituencies, the
-    El Niño outlook, the mandal "State network" card): bring them into the same
-    visual language. On Constituencies, the selected seat's label can clip at the
-    map edge, and the seats with no mandal of their own read as blank grey; give
-    them a hatch and a legend entry. The sidebar's Data Status could list
-    "State wells · 9 Sep 2026" beside the other feeds.
+Rules for this task:
+- **Meaning.** Do not change any number, date, unit, Measured/Modelled tag, source link or caveat wording without the user's approval. The hierarchy may change; the meaning may not.
+- **Bundle size.** Do not grow the client bundle. The largest chunk is 4.15 MB, the shared data chunk, the same as live; the next is 3.52 MB. Check after `build:static`, and never import server-only modules into client files.
+- **Page weight.** A component that renders the full mandal list into each of the roughly 670 mandal pages once made the export 1.1 GB.
+- **Tests.** Keep `pytest`, `typecheck` and every Playwright project green. Change a layout test only with a stated reason.
+- **Accessibility.** Respect `prefers-reduced-motion`, visible keyboard focus and the existing ARIA labels.
+- **Theme.** This app themes only through `data-theme`; never key colours to `prefers-color-scheme`.
+- **Review first.** Show the user before-and-after screenshots (1440 and 390 px, light and dark) before committing.
 
-**Rules for this task:**
-- Do not change any number, date, unit, Measured/Modelled tag, source link or
-  caveat wording without the user's approval. The hierarchy may change; the
-  meaning may not.
-- Do not grow the client bundle. The largest chunk is 3.51 MB; check it after
-  `build:static`. Do not import server-only modules into client files.
-- Watch per-page weight. A component that renders the full mandal list into
-  each of the roughly 670 mandal pages once made the export 1.1 GB.
-- Keep `pytest`, `typecheck` and every Playwright project green. If a layout
-  test pins old structure, change it only with a stated reason.
-- Respect `prefers-reduced-motion`, visible keyboard focus and the existing
-  ARIA labels.
-- Show the user before-and-after screenshots (1440 and 390 px, light and dark)
-  before committing.
+## 7. Task 6: optional, ask the user first
 
-## 6. Task 5: optional, and ask the user first
+**EOS-04 500 m soil-moisture check** for one district. ISRO Bhoonidhi is open data, but it
+needs a login, and its API needs a whitelisted static IP.
+1. Download the rasters by hand.
+2. Take zonal statistics on the mandal polygons.
+3. Compare them with APWRIMS's NRSC model values.
 
-- **EOS-04 500 m soil-moisture check** for one district. ISRO Bhoonidhi is open
-  data but needs a login, and its API needs a whitelisted static IP. Download the
-  rasters by hand, take zonal statistics on the prototype mandal polygons, and
-  compare with APWRIMS's NRSC model values. This checks the modelled soil signal
-  before officials lean on it.
-- **A one-page CM brief (PDF)** generated from `app/data`:
-  - the situation;
-  - the mandals where three sources agree;
-  - what each department must supply: crop-sown aggregates, the canal
-    command-area map, an IMD key.
+This tests the modelled soil signal before officials lean on it.
 
-  `seasonSentence()` in `app/lib/brief.ts` is ready to use. Every number must be
-  read from the data files.
-- **Telugu versions** of the one-pager and the film narration. edge-tts has
-  Telugu voices. A Telugu speaker must review every line before anything is
-  published.
-- **A one-page brief per constituency** (175 printable pages from
-  `constituencies.json`: the seat's mandals, groundwater status, State wells since May,
-  drought-manual reading, rain), for MLA and collector meetings. Every number read from
-  the data files; same caveats as the page.
+## 8. Reference: what the site carries now
 
-## 7. Guardrails
+### Sources, refreshed every Monday
 
-- Never push to `main` while the weekly refresh runs (Mondays from 02:00 UTC,
-  about 20 minutes). Its own push fails if `main` moves under it.
-- A public portal is not authorisation. Never get past a login: APWRIMS's
-  crop-sown and crop-stress dashboards sit behind one, and access to them is the
-  thing to ask the state for.
-- Keep "measured" and "modelled" labels on every figure, and each figure's own
-  date.
-- Never put a key or token in the repository, a commit message or a chat.
-- The AI Living Labs data lake is pulled only by the signed-in user. Never script around
-  its login, never store a password or refresh token, never commit `data/raw/datalake/`.
-- The State readings are a single snapshot; the model never uses them, and they are never
-  merged into the monthly series.
+| Source | What it gives | Status |
+|---|---|---|
+| APWRIMS groundwater | Monthly well depths; the base of the model | Measured |
+| APWRIMS soil moisture | NRSC VIC model, per mandal, at 5, 30, 100 and 150 cm. Each mandal is set against its own same-date values since 2014. | Modelled |
+| APWRIMS gauge rain | AP DES mandal gauges, water year from 1 June, against the department's normal, in IMD bands | Measured |
+| APWRIMS reservoirs | 113 reservoirs, storage now and a year ago, and canal releases. Where the water goes is not known. | Measured |
+| CHIRPS v3 rain | 1981 onward, mandal means over every part of a split mandal. Product guard in `fetch_chirps_history.py`. | Satellite estimate |
+| NOAA CPC El Niño outlook | Synopsis quoted word for word | Forecast |
+
+All APWRIMS feeds come through `fetch_apwrims_context.py`. It needs no login and keeps the
+previous section if a feed fails.
+
+**IMD** is wired but dormant. It needs the `IMD_API_KEY` secret, and it publishes only with
+`IMD_PUBLISH=1`, because IMD's terms restrict redistribution.
+
+**The State's own data** comes from the AI Living Labs data lake. The user pulls it with
+their own login (`fetch_datalake.py`, getpass). It supplies two things:
+- 595 of 670 official mandal outlines, through `build_official_boundaries.py`;
+- the State network's latest reading, 1,746 stations, through `build_datalake_snapshot.py`.
+
+The rules for it:
+- The reading is one snapshot. The model never uses it, and it is never merged into the monthly series.
+- Files built from it are builder output: re-run the builder, never hand-edit them.
+
+### Key figures and rules
+
+**Three-signal count.** For each mandal the site counts how many of three tests point to
+stress:
+- the groundwater shortfall is flagged;
+- gauge rain is 20% or more below normal;
+- soil moisture is in the driest quarter of years for the date.
+
+It is a count, not a score, and it uses only boundaries that join to exactly one record.
+The rules live in `AGREEMENT_RULES` and `agreementOf` in `app/lib/agriculture.ts`; do not
+re-derive them elsewhere.
+
+**Forecast confidence.**
+- `build_forecast_reliability.py --calibrate` splits the 2018–2026 quarterly backtest by the month a forecast is made and by the rain over the three months before it (deficit ≤ −20%, near normal, surplus ≥ +20%).
+- Each cell gets a verdict against assuming no change:
+  - beats: 10% or more better;
+  - worse: 5% or more worse;
+  - level: anything between;
+  - untested: fewer than 500 rows or 5 years.
+- August 2026's 657 forecasts: 642 level, 15 beats.
+- Nothing changes a forecast. An El Niño rule was tested and rejected.
+
+**Drought Watch** (`/drought`) reads each mandal through the national *Manual for Drought
+Management 2020*. Do not change its rules, thresholds or "interpretations" list, or any
+wording that says "not a declaration".
+
+**El Niño outlook** (`/monsoon#enso-outlook`). The NOAA synopsis is quoted word for word.
+The forecast half (dark) and the State's record (light) stay visibly separate.
+
+**Guards (do not touch).** `check_not_shrinking` in `fetch_apwrims_context.py` and
+`check_past_weeks` in `build_drought_watch.py`. On 3 October the APWRIMS portal dropped
+September for all 28 districts; these guards stopped it being published.
+
+**Crop-water lab.** Seven reference crops: maize, groundnut, cotton, chilli, red gram,
+Bengal gram and jowar.
+- Coefficients and heights come from FAO-56 Table 12; root depths from Table 22 (Chapter 8).
+- Chilli uses the sweet-pepper row.
+- Red gram uses the "beans, dry and pulses" row, with ICRISAT's rooting depth (2 m) and height (<https://oar.icrisat.org/10485/>).
+- A note beside the crop picker names each stand-in.
+- Bengal gram is a rabi crop.
+- Paddy is deliberately absent: flooding and percolation need different accounting.
+
+### Modules: what client code may import
+
+| Module | What it is | Client-safe? |
+|---|---|---|
+| `app/lib/waterContext.ts`, `agricultureServer.ts` | Full water context; agriculture evidence with water | **No** |
+| `drought_watch`, `gw_state_snapshot` data | Drought Watch detail; the State wells snapshot | **No** |
+| `app/lib/waterSummary.ts`, `waterMandals.ts`, `stateSummary.ts` | Summaries and map layers | Yes |
+| `app/lib/agriculture.ts` | Agreement rules, `CROP_REFERENCE`, crop budget, CSV | Yes (imports only types from `lib/data`) |
+| `app/lib/forecastReliability.ts` | `reliabilityFor(id)`, `reliabilitySummary()` | Yes |
+| `app/lib/brief.ts` | `seasonSentence()` | Yes |
+
+A `"use client"` file that imports a server-only module ships half a megabyte to every
+visitor; `tests/test_weekly_refresh_covers_published_data.py` fails if that happens.
+
+### Checks
+
+Current state: 386 Python tests, the type check and 151 Playwright tests pass. One
+Playwright test, the 390 px agriculture fade-in check, can time out when the whole suite
+runs in parallel; it passes on its own.
+
+```sh
+python3 -m pytest -q                                   # repository root
+cd app && npm run typecheck && PAGES_BASE_PATH= npm run build:static
+node scripts/serve-static.mjs --port 3217 --bind 127.0.0.1 --directory out   # from app/
+PLAYWRIGHT_BASE_URL=http://127.0.0.1:3217 npx playwright test                # from app/, never the root
+python3 scripts/audit_watch_sources.py --online        # after Monsoon Watch inputs change; expect 0 mismatches
+```
+
+Port 3100 is taken on this machine.
+
+## 9. Guardrails
+
+- **Weekly refresh.** Never push to `main` while it runs (Mondays from 02:00 UTC, about 20 minutes). Its own push fails if `main` moves under it.
+- **Logins.** A public portal is not authorisation. Never get past a login. APWRIMS's crop-sown and crop-stress dashboards sit behind one, and access to them is what to ask the State for.
+- **Labels.** Keep the Measured/Modelled label and the date on every figure.
+- **Secrets.** Never put a key, token or password in the repository, a commit message or a chat. Credentials live only as GitHub Actions secrets.
+- **Data lake.** Only the signed-in user pulls it. Never script around its login, never store a password or refresh token, and never commit `data/raw/datalake/`.
+- **People.** Never scrape personal or farmer-level records.

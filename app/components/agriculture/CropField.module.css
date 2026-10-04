@@ -84,3 +84,4 @@
   .stageDemand em { margin-top: 3px; font-size: 8px; }
 }
 @media (prefers-reduced-motion: reduce) { .stageTrack i { transition: none; } }
+.standIn { font-size: 10px; line-height: 1.45; color: var(--muted); font-weight: 400; }
