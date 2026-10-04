@@ -5670,3 +5670,9 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 .forecastTrust.caution { border-left-color: var(--amber); background: var(--st-watch-bg); }
 .forecastTrust.caution strong { color: #a9741a; }
 :root[data-theme="dark"] .forecastTrust.caution strong { color: #ecc46a; }
+
+/* Categorical map legends (crop vegetation classes, groundwater categories). */
+.categoryLegend { list-style: none; margin: 8px 0 4px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 11.5px; color: var(--ink-soft); }
+.categoryLegend li { display: inline-flex; align-items: center; gap: 6px; }
+.categoryLegend i { width: 11px; height: 11px; border-radius: 2px; flex-shrink: 0; }
+.categoryLegend b { font-weight: 650; color: var(--ink); font-variant-numeric: tabular-nums; margin-left: 2px; }

@@ -151,3 +151,27 @@ def test_the_full_water_context_stays_out_of_client_components():
     assert "water_context" not in "".join(re.findall(r'^import .*$', data_ts, re.M)), \
         "data.ts reaches client bundles; it must not import the water-context files"
     assert not offenders, f"client components import the full water context: {offenders}"
+
+
+def test_the_field_signals_are_both_fetched_and_committed():
+    weekly = open(os.path.join(ROOT, "phase3_levels", "fetch_weekly.py")).read()
+    assert "fetch_field_signals.py" in weekly
+    for name in ("field_signals.json", "field_signals_mandals.json"):
+        assert name in committed_data_files()
+        assert name in imported_data_files()
+
+
+def test_the_full_field_signals_stay_out_of_client_components():
+    """Every mandal's forecast, weekly series and volumes (~400 KB): server code passes on
+    what a page draws; client code gets the map layers in field_signals_mandals.json."""
+    offenders = []
+    for base in SOURCE_DIRS:
+        for folder, _, names in os.walk(base):
+            for name in names:
+                if not name.endswith((".ts", ".tsx")):
+                    continue
+                source = open(os.path.join(folder, name)).read()
+                client = source.lstrip().startswith(('"use client"', "'use client'"))
+                if client and ("lib/fieldSignalsServer" in source or "field_signals.json" in source):
+                    offenders.append(os.path.relpath(os.path.join(folder, name), ROOT))
+    assert not offenders, f"client components import the full field signals: {offenders}"

@@ -42,7 +42,19 @@
   "official_flag": false
  },
  {
-  "label": "NOAA STAR vegetation health index (satellite, 4 km weekly)",
+  "label": "ECMWF IFS open forecast via Open-Meteo: reference evapotranspiration and rain, a week back and a week ahead (forecast)",
+  "status": "available",
+  "data_label": "forecast-crop-weather",
+  "official_flag": false
+ },
+ {
+  "label": "ISRIC SoilGrids 2.0 soil water-holding capacity, by depth (predicted, 250 m)",
+  "status": "available",
+  "data_label": "model-soil-capacity",
+  "official_flag": false
+ },
+ {
+  "label": "NOAA STAR vegetation health index (satellite, 4 km weekly; weighted to cropland with ESA WorldCover 2021)",
   "status": "available",
   "data_label": "satellite-vegetation-condition",
   "official_flag": false
@@ -57,6 +69,12 @@
   "label": "NOAA Climate Prediction Center El Niño outlook (forecast)",
   "status": "available",
   "data_label": "forecast-enso-outlook",
+  "official_flag": false
+ },
+ {
+  "label": "Dynamic Ground Water Resources assessment 2025-2026, by mandal (CGWB and the State Ground Water Department, via INGRES's public dashboard)",
+  "status": "available",
+  "data_label": "official-gw-assessment",
   "official_flag": false
  },
  {

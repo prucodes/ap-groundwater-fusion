@@ -22,7 +22,7 @@ const GROUND = 214;
 const SOIL_M = 2.3;
 const PX_PER_M = 150;               // soil to scale
 const AIR_PX_PER_M = PX_PER_M / 2;  // plants at half scale
-const RESERVE_SCALE = 60;           // the reserve slider's range, mm
+const RESERVE_SCALE = 60;           // the reserve slider's usual range, mm
 
 export function rootRange(crop: CropKey, stage: number) {
   return stage === 0 ? SOWING_ROOTS : CROP_REFERENCE[crop].rootM;
@@ -445,10 +445,12 @@ export function StageGlyph({ crop, stage }: { crop: CropKey; stage: number }) {
   );
 }
 
-export function FieldSection({ crop, stage, rain, reserve, demand, eto, kc, gap, focus, moving, detail, waterTable }: {
+export function FieldSection({ crop, stage, rain, reserve, demand, eto, kc, gap, focus, moving, detail, waterTable, reserveScale = RESERVE_SCALE }: {
   crop: CropKey; stage: number; rain: number; reserve: number; demand: number; eto: number; kc: number; gap: number;
   focus: FieldFocus; moving: boolean; detail: boolean;
   waterTable: { depthM: number; label: string } | null;
+  /** The reserve slider's range, which grows when live values exceed the usual 60 mm. */
+  reserveScale?: number;
 }) {
   const frame = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(1160);
@@ -477,7 +479,7 @@ export function FieldSection({ crop, stage, rain, reserve, demand, eto, kc, gap,
   const rainStreaks = Math.round(Math.min(70, rain) * 0.9);
   const wisps = Math.round(Math.min(70, demand) / 3);
   const infiltration = Math.round(Math.min(rain, demand + 30) / 2.5);
-  const reserveShare = Math.min(1, reserve / RESERVE_SCALE);
+  const reserveShare = Math.min(1, reserve / reserveScale);
   const perWeek = compact ? "" : " / 7 days";
   const rootLabelY = Math.max(depthY((range.min + range.max) / 2), GROUND + 112);
   const ticks = Array.from({ length: 10 }, (_, i) => i * 0.25);

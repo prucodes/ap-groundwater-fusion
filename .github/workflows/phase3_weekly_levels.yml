@@ -80,6 +80,8 @@ jobs:
             app/data/water_context_mandals.json \
             app/data/drought_watch.json \
             app/data/drought_watch_summary.json \
+            app/data/field_signals.json \
+            app/data/field_signals_mandals.json \
             app/data/enso_outlook.json \
             app/data/constituencies.json \
             app/data/weekly_changes.json \

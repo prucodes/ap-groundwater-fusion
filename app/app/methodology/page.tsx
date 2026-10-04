@@ -3,7 +3,7 @@ import { HeaderHero } from "../../components/HeaderHero";
 import { MethodologyFlow } from "../../components/MethodologyFlow";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
-import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconSatellite } from "../../components/icons";
+import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconLeaf, IconSatellite } from "../../components/icons";
 import { mapGeometry, modelCard } from "../../lib/data";
 import { stateSummary } from "../../lib/stateSummary";
 
@@ -245,6 +245,53 @@ export default function MethodologyPage() {
             drought declaration, a crop-loss estimate or a ranking of need. The soil model is driven by rainfall, so the
             rain and soil answers are not independent; groundwater is. Each source is joined to its boundary only when the
             join is unique: a boundary two source rows claim gets no value rather than the first or the worst.
+          </p>
+        </div>
+      </section>
+
+      <section className="card" aria-labelledby="method-field-week">
+        <div className="cardHead">
+          <div className="cardTitle" id="method-field-week">
+            <span className="titleIcon">
+              <IconLeaf />
+            </span>
+            This week in the fields: crop water, crop vegetation and the groundwater category
+          </div>
+          <span className="cardSub">FAO-56 water balance / satellite index / official assessment</span>
+        </div>
+        <div className="methodSteps">
+          <p>
+            <strong>The crop water check</strong>{" "}is an FAO-56 Chapter 8 root-zone water balance run for every mandal, for a crop
+            and growth stage the reader chooses. It starts from the soil moisture APWRIMS publishes (NRSC&rsquo;s VIC model:
+            plant-available water to 5, 30, 100 and 150 cm as a share of what the soil holds) and steps forward a day at a time
+            to a week ahead with ECMWF&rsquo;s open IFS forecast of reference evapotranspiration (Penman-Monteith) and rain, via
+            Open-Meteo. How much the soil holds in millimetres comes from ISRIC SoilGrids 2.0 (field capacity minus wilting point,
+            by depth). Rain under a fifth of the day&rsquo;s reference evapotranspiration is treated as evaporated; the crop uses
+            Ks&nbsp;&times;&nbsp;Kc&nbsp;&times;&nbsp;ETo; stress begins once it has used the share p of the root zone&rsquo;s
+            available water that Table 22 gives it, adjusted for its rate of use, and below that its water use falls in proportion
+            (Eq.&nbsp;84). Roots are 0.2 m at the initial stage and afterwards the larger Table 22 depth, the one its footnote gives
+            for rainfed crops, capped at 1.5 m, the deepest the soil model reports. The pipeline runs its own copy of the
+            calculation for every crop and stage and the page must reproduce its counts. Crop and stage are chosen, not observed;
+            no irrigation, runoff or capillary rise is modelled; it is a screening view, not a watering instruction.
+          </p>
+          <p>
+            <strong>Crop vegetation</strong>{" "}is NOAA STAR&rsquo;s weekly Vegetation Condition Index, the same 4 km files Drought
+            Watch reads: this week&rsquo;s greenness against the same week in every year on record. Here each 4 km cell is weighted
+            by its cropland share from ESA WorldCover 2021 (10 m, read at about 330 m), so forest on the Eastern Ghats does not stand
+            in for fields; a mandal with less than half a cell of cropland keeps the plain value and says so. The headline is the
+            mean of the last four weeks, classed by the drought manual&rsquo;s Table 3.4 (60&ndash;100 normal, 40&ndash;60
+            moderate, below 40 severe). WorldCover is a 2021 snapshot, not this season&rsquo;s sowing, and the index measures plant
+            vigour, not yield.
+          </p>
+          <p>
+            <strong>The groundwater category</strong>{" "}is the official Dynamic Ground Water Resources assessment, made each year by
+            the Central Ground Water Board and the State Ground Water Department under the GEC-2015 method, read from the public
+            dashboard of INGRES. In Andhra Pradesh the assessment unit is the mandal; its stage of extraction is the year&rsquo;s
+            groundwater draft over the annual extractable resource (safe up to 70%, semi-critical to 90%, critical to 100%,
+            over-exploited above; saline where the water is too salty to use). Units are matched to our boundaries by district and
+            name, then by the district a boundary&rsquo;s neighbours give it (the prototype map labels some same-named mandals with
+            another district), then by spelling; city wards assessed separately stay unmatched, and every match records how it was
+            made. The statewide stage is INGRES&rsquo;s own figure, not a sum we recompute.
           </p>
         </div>
       </section>

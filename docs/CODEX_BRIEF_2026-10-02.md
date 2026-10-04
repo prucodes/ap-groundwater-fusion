@@ -1,7 +1,7 @@
 # Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026)
 
 Written by Claude Code for Codex. This replaces the 2 October brief at the same path.
-Everything below is on `main` (through PR #43) and live on GitHub Pages.
+Everything below is on `main` (through PR #44) and live on GitHub Pages.
 
 Ground rules:
 - Start every task on a fresh branch off `main`.
@@ -24,6 +24,7 @@ things look, but never change what they say without asking.
 | #42 | **The CHIRPS v3 record rebuilt** with every part of a split mandal (1981-01 to 2026-08), and the model retrained on it. |
 | #42 | **A measured cross-section in the crop-water lab**, replacing the AI artwork. A rendering fix restored spaces lost after `</strong>`. |
 | #43 | **Seven reference crops in the crop-water lab**, each drawn by its habit; this brief. |
+| #44 | **This week in the fields** (Agriculture section 02): an FAO-56 crop water check for every mandal, for a chosen crop and stage, on this week's soil moisture and ECMWF's forecast. Also crop vegetation (NOAA VCI weighted to cropland) and the official CGWB groundwater category, on the Agriculture map, the Map page and every mandal page. The Map page's title and date now follow the view. |
 
 Taken off the to-do list as done: per-constituency briefs, the sidebar State wells date,
 the Overview alarm panels, the crop visual, the forecast confidence flag and the
@@ -63,6 +64,11 @@ Steps:
 - **Pipeline:** `phase3_levels/fetch_chirps_history.py` and `fetch_weekly.py`, plus `.github/workflows/phase3_weekly_levels.yml`.
 
 **New on `main`:**
+- `app/components/agriculture/LiveCropCheck.tsx` (+ CSS) and `FieldSignalsStrip.tsx`;
+- `app/lib/cropWater.ts`, `app/lib/fieldSignals.ts` (client-safe) and `app/lib/fieldSignalsServer.ts` (server only);
+- `phase3_levels/fetch_field_signals.py` (weekly), `crop_water.py`, and the static builders `build_soil_water_capacity.py` and `build_cropland_fraction.py`;
+- `app/data/field_signals.json` (server only) and `field_signals_mandals.json` (client-safe);
+- `tests/test_field_signals.py` and `app/e2e/agriculture-live.spec.ts`;
 - `app/app/constituencies/[code]/page.tsx`;
 - `app/components/constituencies/PrintBrief.tsx` and `ConstituencyBrief.module.css`;
 - `app/components/agriculture/FieldSection.tsx` and `FieldSection.module.css`;
@@ -80,7 +86,9 @@ Steps:
 - **Maps:** they draw `mapGeometry` from `lib/data.ts`, which is `ap_map_display.json`. The pipeline and model read `ap_map_geometry.json`. Never cross them.
 - **Agriculture:** `officialOutline` on each agriculture row, `outlineLabel()` in tooltips, and the `outline` CSV column.
 - **Forecasts:** `reliabilityFor(id)` drives the `forecast-trust` note in the mandal panel.
-- **Crop numbers:** `CROP_REFERENCE` in `lib/agriculture.ts` is the single source for coefficients, root depths, heights and source labels; `FieldSection` reads it. Never type a crop number in a component.
+- **Crop numbers:** `CROP_REFERENCE` in `lib/agriculture.ts` is the single source for coefficients, root depths, depletion fractions (p), heights and source labels; `FieldSection` reads it. Never type a crop number in a component. `phase3_levels/crop_water.py` mirrors it, and `tests/test_field_signals.py` fails if they drift.
+- **Crop water check:** `lib/cropWater.ts` and `phase3_levels/crop_water.py` are the same FAO-56 water balance, step for step, including left-to-right sums. The page must reproduce the pipeline's `crossCheck` counts exactly (`agriculture-live.spec.ts`). Change one, change both.
+- **Field signals:** client code imports only `lib/fieldSignals.ts` (the map layers). `field_signals.json` and `lib/fieldSignalsServer.ts` stay on the server; the Agriculture page gets slim rows (`fieldEvidenceInput({ slim: true })`) and draws its live map after load, so the page stays near 1.5 MB.
 - **Constituency pages:** `/constituencies/[code]` uses `generateStaticParams` with `dynamicParams = false`.
 - **Text after an inline tag:** a line of text that follows `</strong>` or `</em>` on the next source line loses its leading space in this build. Write `{" "}`; `governance-text.spec.ts` reads the rendered text.
 - **Print:** the print rules hide `.mobileBar`, force `main > div` to full opacity and keep the desktop grid. Without them the brief prints blank or on two pages.
@@ -183,18 +191,19 @@ on 3 October:
 1. **Names disagree.** The Overview hero reads "AP Groundwater Verification Cockpit" (`OverviewCockpit.tsx`). The hero eyebrows read "Andhra Pradesh Groundwater Assessment" (`HeaderHero.tsx`, `LivingWaterTablePage.tsx`). The site is "AP Water Intelligence". Propose wording to the user; don't rename on your own.
 2. **The Overview KPI row leads with model internals:** Median Modelled Nowcast, deepest nowcast, band width, outside band. Consider leading with the season and the three-signal count, and moving the KPI row under the model-evaluation disclosure.
 3. **Monsoon "State storage estimate — Under review"** (`app/app/monsoon/page.tsx`) uses headline-figure styling for a non-figure. Make it a status chip.
-4. **Map page:** the card title ("Andhra Pradesh — Mandal Fusion Status") and the "Latest observation period" chip stay the same when the Gauge rain or Soil view is selected (`app/app/map/page.tsx`). They should follow the view.
-5. **One documented stress palette with a shape or pattern cue,** so red–green colour blindness loses nothing. The palettes today:
+4. **One documented stress palette with a shape or pattern cue,** so red–green colour blindness loses nothing. The palettes today:
    - groundwater flags: red, amber, green, grey;
    - rain bands: maroon, red, amber, green, blue;
    - soil: blue bars;
-   - agreement: dots.
-6. **Projector check.** Test 1920×1080 and 1280×720 at 125–150% zoom. Check that the constituency brief, the Agriculture brief and Snapshot print cleanly.
-7. **Constituencies.** The 11 city seats with no mandal of their own read as blank grey; give them a hatch and a legend entry. The selected seat's label can clip at the map edge.
-8. **Dark theme.** No-data mandals render near-white on dark maps; use a dark no-data token. Check for a light gradient band above the hero.
-9. **Text density.** Body text should be at least 12 px with 4.5:1 contrast. Move long caveats behind a disclosure with their words unchanged.
-10. **Phone.** Check the Overview map-view switcher (sideways scroll with no cue) and the size of the agreement dots; either may already be fixed.
-11. **Crop-water lab (new).** Check all seven crops at 390 px and in dark theme. The drawings are generated from `CROP_REFERENCE`; do not replace them with artwork. Keep "Soil depth to scale · plants at half scale · not field imagery" and the stand-in notes.
+   - agreement: dots;
+   - crop water: comfortable, within 7 days, short now, severe (`CROP_WATER_STATES`);
+   - crop vegetation and groundwater category (`VCI_CLASSES`, `GEC_CATEGORIES` in `lib/agriculture.ts`).
+5. **Projector check.** Test 1920×1080 and 1280×720 at 125–150% zoom. Check that the constituency brief, the Agriculture brief and Snapshot print cleanly.
+6. **Constituencies.** The 11 city seats with no mandal of their own read as blank grey; give them a hatch and a legend entry. The selected seat's label can clip at the map edge.
+7. **Dark theme.** No-data mandals render near-white on dark maps; use a dark no-data token. Check for a light gradient band above the hero.
+8. **Text density.** Body text should be at least 12 px with 4.5:1 contrast. Move long caveats behind a disclosure with their words unchanged.
+9. **Phone.** Check the Overview map-view switcher (sideways scroll with no cue) and the size of the agreement dots; either may already be fixed.
+10. **Crop-water lab and This week in the fields (new).** Check all seven crops and the field-week chart at 390 px and in dark theme. The drawings are generated from `CROP_REFERENCE`; do not replace them with artwork. Keep "Soil depth to scale · plants at half scale · not field imagery" and the stand-in notes.
 
 Rules for this task:
 - **Meaning.** Do not change any number, date, unit, Measured/Modelled tag, source link or caveat wording without the user's approval. The hierarchy may change; the meaning may not.
@@ -227,6 +236,10 @@ This tests the modelled soil signal before officials lean on it.
 | APWRIMS reservoirs | 113 reservoirs, storage now and a year ago, and canal releases. Where the water goes is not known. | Measured |
 | CHIRPS v3 rain | 1981 onward, mandal means over every part of a split mandal. Product guard in `fetch_chirps_history.py`. | Satellite estimate |
 | NOAA CPC El Niño outlook | Synopsis quoted word for word | Forecast |
+| ECMWF IFS via Open-Meteo | Daily reference ET (Penman-Monteith) and rain per mandal, a week back and a week ahead; drives the crop water check | Forecast |
+| NOAA STAR VHP × ESA WorldCover | Weekly VCI per mandal, weighted to cropland (2021 cropland map) | Satellite index |
+| CGWB / State GWD via INGRES | The Dynamic Ground Water Resources assessment per mandal: category, stage of extraction, draft by use; latest year and the one before. Matched to boundaries by name, neighbourhood and spelling (664 of 670) | Official assessment |
+| ISRIC SoilGrids 2.0 | Water-holding capacity by depth per mandal (static; `build_soil_water_capacity.py`) | Predicted |
 
 All APWRIMS feeds come through `fetch_apwrims_context.py`. It needs no login and keeps the
 previous section if a feed fails.
@@ -294,6 +307,9 @@ Bengal gram and jowar.
 | `app/lib/waterSummary.ts`, `waterMandals.ts`, `stateSummary.ts` | Summaries and map layers | Yes |
 | `app/lib/agriculture.ts` | Agreement rules, `CROP_REFERENCE`, crop budget, CSV | Yes (imports only types from `lib/data`) |
 | `app/lib/forecastReliability.ts` | `reliabilityFor(id)`, `reliabilitySummary()` | Yes |
+| `app/lib/cropWater.ts` | The FAO-56 crop water check; mirrors `phase3_levels/crop_water.py` | Yes |
+| `app/lib/fieldSignals.ts` | Map layers `vci` and `gec_category` | Yes |
+| `app/lib/fieldSignalsServer.ts` | Forecast, weekly series, volumes; `liveField()`, `fieldEvidenceInput()` | **No** |
 | `app/lib/brief.ts` | `seasonSentence()` | Yes |
 
 A `"use client"` file that imports a server-only module ships half a megabyte to every
@@ -301,7 +317,7 @@ visitor; `tests/test_weekly_refresh_covers_published_data.py` fails if that happ
 
 ### Checks
 
-Current state: 386 Python tests, the type check and 151 Playwright tests pass. One
+Current state: 404 Python tests, the type check and 157 Playwright tests pass. One
 Playwright test, the 390 px agriculture fade-in check, can time out when the whole suite
 runs in parallel; it passes on its own.
 

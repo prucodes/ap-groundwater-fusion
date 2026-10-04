@@ -24,6 +24,7 @@ import {
 } from "../../lib/data";
 import type { DistrictLayerKey, MandalHeatLayerKey } from "../../lib/types";
 import { isWaterLayer, WATER_LAYER_META, waterLayerGradient, waterMandals, type WaterMandalLayer } from "../../lib/waterMandals";
+import { FIELD_LAYER_META, fieldLegend, isFieldLayer, type FieldLayer } from "../../lib/fieldSignals";
 
 const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "water_balance_mm", label: "Water Balance" },
@@ -31,13 +32,15 @@ const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "rainfall_mm", label: "Rainfall" },
 ];
 
-type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer;
+type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer | FieldLayer;
 const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "status", label: "Fusion status" },
   { key: "water_balance_mm", label: "Water Balance" },
   { key: "rainfall_mm", label: "Rainfall (CHIRPS)" },
   { key: "gauge_rain_dev", label: "Gauge rain vs normal" },
   { key: "soil_pct", label: "Soil moisture" },
+  { key: "vci", label: "Crop vegetation" },
+  { key: "gec_category", label: "Groundwater category" },
 ];
 
 function legendGradient(layer: string) {
@@ -105,8 +108,14 @@ export default function MapPage() {
                 <span className="titleIcon">
                   <IconMap />
                 </span>
-                {level === "mandal" ? "Andhra Pradesh — Mandal Fusion Status" : "Andhra Pradesh — District Heat-Map"}
-                {latestObservationPeriod ? (
+                {level === "district" ? "Andhra Pradesh — District Heat-Map"
+                  : mandalView === "status" ? "Andhra Pradesh — Mandal Fusion Status"
+                    : `Andhra Pradesh — ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
+                {level === "mandal" && (isWaterLayer(mandalView) || isFieldLayer(mandalView)) ? (
+                  <span className="dataAsOf">{isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].period : FIELD_LAYER_META[mandalView].period}</span>
+                ) : level === "mandal" && mandalView !== "status" ? (
+                  <span className="dataAsOf">{mandalView === "rainfall_mm" ? formatPeriod(mandalHeat.rainfall_period) : mandalHeat.balance_year}</span>
+                ) : latestObservationPeriod ? (
                   <span className="dataAsOf">
                     Latest observation period {formatPeriod(latestObservationPeriod)}
                   </span>
@@ -163,6 +172,20 @@ export default function MapPage() {
                       series yet (shown grey).
                     </div>
                   </>
+                ) : isFieldLayer(mandalView) ? (
+                  <div className="choroLegend" data-testid="field-layer-legend">
+                    <div className="choroHead">
+                      <span>{FIELD_LAYER_META[mandalView].label}</span>
+                      <span className="choroPeriod">{FIELD_LAYER_META[mandalView].period}</span>
+                    </div>
+                    <ul className="categoryLegend">
+                      {fieldLegend(mandalView).map(item => <li key={item.key}><i style={{ background: item.color }} />{item.label}<b>{item.count}</b></li>)}
+                      <li><i style={{ background: "#d3d9dc" }} />{mandalView === "vci" ? "No value" : "Not matched to an assessment unit"}</li>
+                    </ul>
+                    <div className="mapHint">
+                      <IconInfo style={{ width: 13, height: 13 }} /> {FIELD_LAYER_META[mandalView].note} Context only; it does not change any groundwater status.
+                    </div>
+                  </div>
                 ) : isWaterLayer(mandalView) ? (
                   <div className="choroLegend">
                     <div className="choroHead">

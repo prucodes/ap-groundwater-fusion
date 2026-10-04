@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AgricultureWorkspace } from "../../components/agriculture/AgricultureWorkspace";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { buildAgricultureEvidence } from "../../lib/agriculture";
+import { fieldEvidenceInput, liveField } from "../../lib/fieldSignalsServer";
 import { groundwaterRecords, mandalToPath, mapGeometry, MAP_VIEW, monsoonWatch } from "../../lib/data";
 import { waterContext } from "../../lib/waterContext";
 
@@ -12,6 +13,6 @@ export const metadata: Metadata = {
 
 export default function AgriculturePage() {
   const evidence = buildAgricultureEvidence(monsoonWatch, groundwaterRecords,
-    mapGeometry.mandals.map(feature => ({ d: feature.d, m: feature.m, src: feature.src, path: mandalToPath(feature.rings) })), waterContext);
-  return <AgricultureWorkspace evidence={evidence} mapView={{ width: MAP_VIEW.width, height: MAP_VIEW.height }} sourceStatus={<WatchEvidenceStatus />} />;
+    mapGeometry.mandals.map(feature => ({ d: feature.d, m: feature.m, src: feature.src, path: mandalToPath(feature.rings) })), waterContext, fieldEvidenceInput({ slim: true }));
+  return <AgricultureWorkspace evidence={evidence} mapView={{ width: MAP_VIEW.width, height: MAP_VIEW.height }} sourceStatus={<WatchEvidenceStatus />} live={liveField()} />;
 }

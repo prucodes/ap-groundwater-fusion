@@ -42,5 +42,5 @@ export function driest(rank: number) {
 /** Title case for the portal's ALL-CAPS names; mixed-case names pass through. */
 export function placeName(value: string) {
   if (/[a-z]/.test(value)) return value;
-  return value.toLowerCase().replace(/(^|[\s(\-/])([a-z])/g, (_, lead: string, letter: string) => lead + letter.toUpperCase()).replace(/\bNtr\b/g, "NTR");
+  return value.toLowerCase().replace(/(^|[\s(\-/.])([a-z])/g, (_, lead: string, letter: string) => lead + letter.toUpperCase()).replace(/\bNtr\b/g, "NTR");
 }

@@ -5,6 +5,7 @@ import { CROP_REFERENCE, CROP_REFERENCE_URL, CROP_STAGES, DEFAULT_BUDGET, PIGEON
 import { stateSummary } from "../../lib/stateSummary";
 import { IconCloudRain, IconDroplet, IconLeaf, IconPause, IconPlay, IconSun, IconTarget, IconSearch } from "../icons";
 import { FieldSection, StageGlyph, type FieldFocus } from "./FieldSection";
+import type { LabPreset } from "./LiveCropCheck";
 import styles from "./AgricultureWorkspace.module.css";
 import field from "./CropField.module.css";
 
@@ -20,8 +21,13 @@ const waterTable = (() => {
   return { depthM: depth, label: `State wells, statewide average, ${when}` };
 })();
 
-export function CropWaterLab() {
+export function CropWaterLab({ preset = null, onClearPreset }: { preset?: LabPreset | null; onClearPreset?: () => void }) {
   const [input, setInput] = useState({ ...DEFAULT_BUDGET });
+  // A mandal's live numbers from the crop water check, loaded once per request.
+  useEffect(() => {
+    if (preset) setInput({ crop: preset.crop, stage: preset.stage, eto: preset.eto, rain: preset.rain, reserve: preset.reserve });
+  }, [preset]);
+  const reserveMax = Math.max(60, Math.ceil(input.reserve / 20) * 20);
   const [moving, setMoving] = useState(true);
   const [focus, setFocus] = useState<FieldFocus>("roots");
   const [lens, setLens] = useState(false);
@@ -44,9 +50,13 @@ export function CropWaterLab() {
 
   return <section id="crop-water-lab" className={styles.section} aria-labelledby="crop-lab-title">
     <header className={styles.sectionHead}>
-      <div><span className={styles.eyebrow}>02 / The field water budget</span><h2 id="crop-lab-title">A crop's needs change with its stage.</h2></div>
-      <span className={styles.scenarioBadge}>Illustrative scenario · 7 days</span>
+      <div><span className={styles.eyebrow}>03 / The field water budget</span><h2 id="crop-lab-title">A crop's needs change with its stage.</h2></div>
+      <span className={styles.scenarioBadge}>{preset ? "Live values · 7 days" : "Illustrative scenario · 7 days"}</span>
     </header>
+    {preset ? <div className={field.livePreset} data-testid="lab-live-preset">
+      <IconTarget /><p><strong>Started from this week&rsquo;s values for {preset.place}</strong> ({preset.window}): reference ET averaged over the forecast, the forecast rain that counts, and the water the root zone can give before stress begins. The lab adds the week up in one step; the crop water check above runs it day by day, so the two can differ slightly. Move any slider to explore.</p>
+      <button type="button" className={styles.textButton} onClick={() => { setInput({ ...DEFAULT_BUDGET }); onClearPreset?.(); }}>Back to the scenario</button>
+    </div> : null}
     <div className={field.lab}>
       <div className={field.visual}>
         <div className={styles.sceneToolbar}>
@@ -63,7 +73,7 @@ export function CropWaterLab() {
         </div>
         <div className={field.scene} data-testid="crop-field" data-ready={ready} data-moving={moving && !reducedMotion} data-crop={input.crop} data-stage={input.stage} data-focus={focus}>
           <FieldSection crop={input.crop} stage={input.stage} rain={input.rain} reserve={input.reserve} eto={input.eto} kc={budget.kc}
-            demand={budget.demand} gap={budget.gap} focus={focus} moving={moving && !reducedMotion} detail={lens} waterTable={waterTable} />
+            demand={budget.demand} gap={budget.gap} focus={focus} moving={moving && !reducedMotion} detail={lens} waterTable={waterTable} reserveScale={reserveMax} />
           <div className={field.sceneTitle}><span>THE CROP / {String(input.stage + 1).padStart(2, "0")}</span><strong>{profile.name}<small>{CROP_STAGES[input.stage]}</small></strong></div>
         </div>
         <div className={field.sceneReadouts}>
@@ -98,14 +108,14 @@ export function CropWaterLab() {
         </div>
       </div>
       <div className={field.controls}>
-        <div className={styles.controlHead}><span className={styles.eyebrow}>Scenario inputs</span><button type="button" className={styles.textButton} onClick={() => setInput({ ...DEFAULT_BUDGET })}>Reset</button></div>
+        <div className={styles.controlHead}><span className={styles.eyebrow}>Scenario inputs</span><button type="button" className={styles.textButton} onClick={() => { setInput({ ...DEFAULT_BUDGET }); onClearPreset?.(); }}>Reset</button></div>
         <label className={styles.selectLabel}>Reference crop<select aria-label="Reference crop" value={input.crop} onChange={event => setInput({ ...input, crop: event.target.value as CropKey })}>{Object.entries(CROP_REFERENCE).map(([key, crop]) => <option value={key} key={key}>{crop.name}</option>)}</select>{"standIn" in profile ? <small className={field.standIn} data-testid="crop-stand-in">{profile.standIn}</small> : null}</label>
         <div className={field.activeStage}><IconLeaf /><div><span>Selected reference stage</span><strong>{CROP_STAGES[input.stage]}</strong></div><b>{budget.kc.toFixed(2)}<small>Kc</small></b></div>
         {([
-          { key: "eto", title: "Reference ET", unit: "mm/day", max: 10, step: .5, Icon: IconSun },
-          { key: "rain", title: "Effective rain", unit: "mm / 7 days", max: 70, step: 1, Icon: IconCloudRain },
-          { key: "reserve", title: "Usable soil reserve", unit: "mm at start", max: 60, step: 1, Icon: IconDroplet },
-        ] as const).map(({ key, title, unit, max, step, Icon }) => <label className={styles.sliderControl} key={key}>
+          { key: "eto", title: "Reference ET", unit: "mm/day", max: 10, step: .1, Icon: IconSun },
+          { key: "rain", title: "Effective rain", unit: "mm / 7 days", max: 70, step: .5, Icon: IconCloudRain },
+          { key: "reserve", title: "Usable soil reserve", unit: "mm at start", max: reserveMax, step: .5, Icon: IconDroplet },
+        ] as Array<{ key: "eto" | "rain" | "reserve"; title: string; unit: string; max: number; step: number; Icon: typeof IconSun }>).map(({ key, title, unit, max, step, Icon }) => <label className={styles.sliderControl} key={key}>
           <span><Icon />{title}<strong>{input[key]} <small>{unit}</small></strong></span>
           <input type="range" aria-label={title} aria-valuetext={`${input[key]} ${unit}`} min={0} max={max} step={step} value={input[key]} onChange={event => setInput({ ...input, [key]: Number(event.target.value) })} style={{ "--range-fill": `${input[key] / max * 100}%` } as CSSProperties} />
         </label>)}
