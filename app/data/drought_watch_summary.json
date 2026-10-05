@@ -1,10 +1,10 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-10-03T23:11:25+00:00",
+ "generatedAt": "2026-10-05T13:54:11+00:00",
  "season": {
   "name": "Kharif 2026",
   "start": "2026-06-01",
-  "asOf": "2026-10-02",
+  "asOf": "2026-10-03",
   "declareBy": "2026-10-31",
   "earlyFrom": "2026-08-01",
   "weeks": [
@@ -120,29 +120,29 @@
   "trigger1Light": 567,
   "drySpell": 465,
   "counts": {
-   "severe": 26,
-   "moderate|severe": 39,
-   "moderate": 313,
+   "severe": 46,
+   "moderate|severe": 40,
+   "moderate": 297,
    "normal|moderate": 11,
-   "normal": 76,
+   "normal": 71,
    "noTrigger": 140,
    "insufficient": 65
   },
   "countsLight": {
-   "severe": 32,
-   "moderate|severe": 46,
-   "moderate": 370,
+   "severe": 52,
+   "moderate|severe": 47,
+   "moderate": 354,
    "normal|moderate": 14,
-   "normal": 105,
+   "normal": 100,
    "noTrigger": 38,
    "insufficient": 65
   },
   "previous": {
-   "severe": 29,
-   "moderate|severe": 40,
-   "moderate": 303,
+   "severe": 45,
+   "moderate|severe": 41,
+   "moderate": 292,
    "normal|moderate": 12,
-   "normal": 83,
+   "normal": 77,
    "noTrigger": 138,
    "insufficient": 65
   },
@@ -159,8 +159,8 @@
      "i": 91,
      "d": "ANAKAPALLI",
      "m": "K.KOTAPADU",
-     "from": "normal",
-     "to": "moderate"
+     "from": "moderate",
+     "to": "severe"
     },
     {
      "i": 95,
@@ -191,13 +191,6 @@
      "to": "moderate|severe"
     },
     {
-     "i": 238,
-     "d": "ELURU",
-     "m": "CHATRAI",
-     "from": "normal",
-     "to": "moderate"
-    },
-    {
      "i": 261,
      "d": "KRISHNA",
      "m": "PENAMALURU",
@@ -217,6 +210,20 @@
      "m": "KOWTHALAM",
      "from": "normal",
      "to": "moderate"
+    },
+    {
+     "i": 503,
+     "d": "NANDYAL",
+     "m": "PAMULAPADU",
+     "from": "moderate",
+     "to": "severe"
+    },
+    {
+     "i": 538,
+     "d": "NANDYAL",
+     "m": "KOLIMIGUNDLA",
+     "from": "moderate",
+     "to": "severe"
     },
     {
      "i": 602,
@@ -242,6 +249,13 @@
      "to": "normal|moderate"
     },
     {
+     "i": 175,
+     "d": "KONASEEMA",
+     "m": "ALLAVARAM",
+     "from": "moderate",
+     "to": "normal"
+    },
+    {
      "i": 176,
      "d": "KONASEEMA",
      "m": "AMALAPURAM",
@@ -249,32 +263,11 @@
      "to": "moderate"
     },
     {
-     "i": 309,
-     "d": "GUNTUR",
-     "m": "PHIRANGIPURAM",
+     "i": 274,
+     "d": "KRISHNA",
+     "m": "AVANIGADDA",
      "from": "severe",
      "to": "moderate"
-    },
-    {
-     "i": 329,
-     "d": "BAPATLA",
-     "m": "KARLAPALEM",
-     "from": "severe",
-     "to": "moderate"
-    },
-    {
-     "i": 331,
-     "d": "BAPATLA",
-     "m": "NIZAMPATNAM",
-     "from": "moderate",
-     "to": "normal"
-    },
-    {
-     "i": 361,
-     "d": "BAPATLA",
-     "m": "VETAPALEM",
-     "from": "moderate",
-     "to": "normal"
     },
     {
      "i": 466,
@@ -291,15 +284,43 @@
      "to": "noTrigger"
     }
    ],
-   "total": 20
+   "total": 19
   },
   "impactKnown": {
    "rs": 670,
    "sm": 605,
-   "hy": 584
+   "hy": 583
   }
  },
  "districts": [
+  {
+   "district": "ANAKAPALLI",
+   "mandals": 26,
+   "trigger1": 19,
+   "counts": {
+    "severe": 7,
+    "moderate|severe": 2,
+    "moderate": 10,
+    "normal|moderate": 0,
+    "normal": 0,
+    "noTrigger": 3,
+    "insufficient": 4
+   }
+  },
+  {
+   "district": "ANNAMAYYA",
+   "mandals": 26,
+   "trigger1": 24,
+   "counts": {
+    "severe": 4,
+    "moderate|severe": 4,
+    "moderate": 16,
+    "normal|moderate": 0,
+    "normal": 0,
+    "noTrigger": 0,
+    "insufficient": 2
+   }
+  },
   {
    "district": "Y.S.R KADAPA",
    "mandals": 39,
@@ -315,45 +336,59 @@
    }
   },
   {
-   "district": "ANNAMAYYA",
-   "mandals": 26,
-   "trigger1": 24,
-   "counts": {
-    "severe": 0,
-    "moderate|severe": 5,
-    "moderate": 19,
-    "normal|moderate": 0,
-    "normal": 0,
-    "noTrigger": 0,
-    "insufficient": 2
-   }
-  },
-  {
    "district": "NANDYAL",
    "mandals": 29,
    "trigger1": 22,
    "counts": {
-    "severe": 4,
+    "severe": 6,
     "moderate|severe": 1,
-    "moderate": 14,
+    "moderate": 13,
     "normal|moderate": 0,
-    "normal": 3,
+    "normal": 2,
     "noTrigger": 4,
     "insufficient": 3
    }
   },
   {
-   "district": "ANAKAPALLI",
-   "mandals": 26,
-   "trigger1": 19,
+   "district": "CHITTOOR",
+   "mandals": 24,
+   "trigger1": 20,
    "counts": {
     "severe": 3,
-    "moderate|severe": 2,
+    "moderate|severe": 3,
     "moderate": 13,
     "normal|moderate": 0,
     "normal": 1,
     "noTrigger": 3,
-    "insufficient": 4
+    "insufficient": 1
+   }
+  },
+  {
+   "district": "BAPATLA",
+   "mandals": 23,
+   "trigger1": 18,
+   "counts": {
+    "severe": 4,
+    "moderate|severe": 2,
+    "moderate": 11,
+    "normal|moderate": 1,
+    "normal": 0,
+    "noTrigger": 2,
+    "insufficient": 3
+   }
+  },
+  {
+   "district": "SRI SATHYA SAI",
+   "mandals": 32,
+   "trigger1": 30,
+   "counts": {
+    "severe": 4,
+    "moderate|severe": 1,
+    "moderate": 24,
+    "normal|moderate": 0,
+    "normal": 1,
+    "noTrigger": 2,
+    "insufficient": 0
    }
   },
   {
@@ -371,31 +406,31 @@
    }
   },
   {
-   "district": "BAPATLA",
-   "mandals": 23,
-   "trigger1": 18,
+   "district": "KRISHNA",
+   "mandals": 29,
+   "trigger1": 16,
    "counts": {
-    "severe": 2,
-    "moderate|severe": 2,
-    "moderate": 11,
-    "normal|moderate": 1,
+    "severe": 3,
+    "moderate|severe": 1,
+    "moderate": 10,
+    "normal|moderate": 0,
     "normal": 2,
-    "noTrigger": 2,
-    "insufficient": 3
+    "noTrigger": 4,
+    "insufficient": 9
    }
   },
   {
-   "district": "SRI SATHYA SAI",
-   "mandals": 32,
-   "trigger1": 30,
+   "district": "ANANTHAPURAMU",
+   "mandals": 33,
+   "trigger1": 25,
    "counts": {
-    "severe": 2,
-    "moderate|severe": 1,
-    "moderate": 26,
+    "severe": 3,
+    "moderate|severe": 0,
+    "moderate": 22,
     "normal|moderate": 0,
-    "normal": 1,
-    "noTrigger": 2,
-    "insufficient": 0
+    "normal": 0,
+    "noTrigger": 3,
+    "insufficient": 5
    }
   },
   {
@@ -410,34 +445,6 @@
     "normal": 2,
     "noTrigger": 0,
     "insufficient": 2
-   }
-  },
-  {
-   "district": "CHITTOOR",
-   "mandals": 24,
-   "trigger1": 20,
-   "counts": {
-    "severe": 0,
-    "moderate|severe": 3,
-    "moderate": 16,
-    "normal|moderate": 0,
-    "normal": 1,
-    "noTrigger": 3,
-    "insufficient": 1
-   }
-  },
-  {
-   "district": "PALNADU",
-   "mandals": 30,
-   "trigger1": 14,
-   "counts": {
-    "severe": 3,
-    "moderate|severe": 0,
-    "moderate": 11,
-    "normal|moderate": 0,
-    "normal": 0,
-    "noTrigger": 9,
-    "insufficient": 7
    }
   },
   {
@@ -469,31 +476,31 @@
    }
   },
   {
-   "district": "KRISHNA",
+   "district": "VIZIANAGARAM",
    "mandals": 29,
-   "trigger1": 16,
+   "trigger1": 21,
+   "counts": {
+    "severe": 2,
+    "moderate|severe": 1,
+    "moderate": 8,
+    "normal|moderate": 2,
+    "normal": 8,
+    "noTrigger": 5,
+    "insufficient": 3
+   }
+  },
+  {
+   "district": "PALNADU",
+   "mandals": 30,
+   "trigger1": 14,
    "counts": {
     "severe": 2,
     "moderate|severe": 0,
     "moderate": 12,
     "normal|moderate": 0,
-    "normal": 2,
-    "noTrigger": 4,
-    "insufficient": 9
-   }
-  },
-  {
-   "district": "ELURU",
-   "mandals": 26,
-   "trigger1": 18,
-   "counts": {
-    "severe": 1,
-    "moderate|severe": 1,
-    "moderate": 7,
-    "normal|moderate": 0,
-    "normal": 9,
-    "noTrigger": 4,
-    "insufficient": 4
+    "normal": 0,
+    "noTrigger": 9,
+    "insufficient": 7
    }
   },
   {
@@ -503,9 +510,9 @@
    "counts": {
     "severe": 0,
     "moderate|severe": 2,
-    "moderate": 7,
+    "moderate": 6,
     "normal|moderate": 0,
-    "normal": 2,
+    "normal": 3,
     "noTrigger": 6,
     "insufficient": 2
    }
@@ -553,17 +560,31 @@
    }
   },
   {
-   "district": "VIZIANAGARAM",
-   "mandals": 29,
-   "trigger1": 21,
+   "district": "WEST GODAVARI",
+   "mandals": 19,
+   "trigger1": 18,
    "counts": {
-    "severe": 1,
-    "moderate|severe": 0,
+    "severe": 0,
+    "moderate|severe": 1,
     "moderate": 10,
-    "normal|moderate": 2,
+    "normal|moderate": 0,
+    "normal": 7,
+    "noTrigger": 0,
+    "insufficient": 1
+   }
+  },
+  {
+   "district": "ELURU",
+   "mandals": 26,
+   "trigger1": 18,
+   "counts": {
+    "severe": 0,
+    "moderate|severe": 1,
+    "moderate": 9,
+    "normal|moderate": 0,
     "normal": 8,
-    "noTrigger": 5,
-    "insufficient": 3
+    "noTrigger": 4,
+    "insufficient": 4
    }
   },
   {
@@ -581,34 +602,6 @@
    }
   },
   {
-   "district": "WEST GODAVARI",
-   "mandals": 19,
-   "trigger1": 18,
-   "counts": {
-    "severe": 0,
-    "moderate|severe": 1,
-    "moderate": 9,
-    "normal|moderate": 0,
-    "normal": 8,
-    "noTrigger": 0,
-    "insufficient": 1
-   }
-  },
-  {
-   "district": "EAST GODAVARI",
-   "mandals": 23,
-   "trigger1": 16,
-   "counts": {
-    "severe": 1,
-    "moderate|severe": 0,
-    "moderate": 8,
-    "normal|moderate": 2,
-    "normal": 5,
-    "noTrigger": 5,
-    "insufficient": 2
-   }
-  },
-  {
    "district": "GUNTUR",
    "mandals": 15,
    "trigger1": 9,
@@ -623,17 +616,17 @@
    }
   },
   {
-   "district": "ANANTHAPURAMU",
-   "mandals": 33,
-   "trigger1": 25,
+   "district": "EAST GODAVARI",
+   "mandals": 23,
+   "trigger1": 16,
    "counts": {
-    "severe": 0,
+    "severe": 1,
     "moderate|severe": 0,
-    "moderate": 25,
-    "normal|moderate": 0,
-    "normal": 0,
-    "noTrigger": 3,
-    "insufficient": 5
+    "moderate": 7,
+    "normal|moderate": 2,
+    "normal": 6,
+    "noTrigger": 5,
+    "insufficient": 2
    }
   },
   {
@@ -657,9 +650,9 @@
    "counts": {
     "severe": 0,
     "moderate|severe": 0,
-    "moderate": 6,
+    "moderate": 7,
     "normal|moderate": 0,
-    "normal": 7,
+    "normal": 6,
     "noTrigger": 2,
     "insufficient": 3
    }
@@ -707,25 +700,25 @@
   "noTrigger",
   "noTrigger",
   "moderate",
-  "severe",
+  "moderate",
   "moderate",
   "noTrigger",
   "noTrigger",
-  "severe",
+  "moderate",
   "normal",
-  "moderate",
+  "normal",
   "moderate|severe",
   "moderate",
   "moderate",
   "normal",
   "normal|moderate",
-  "moderate",
-  "moderate",
+  "severe",
+  "moderate|severe",
   "normal",
   "insufficient",
   "normal",
   "normal",
-  "normal",
+  "moderate",
   "moderate",
   "normal",
   "normal",
@@ -752,18 +745,18 @@
   "normal|moderate",
   "normal",
   "moderate",
-  "moderate",
+  "normal",
   "normal|moderate",
   "normal",
   "moderate",
   "noTrigger",
   "moderate",
+  "severe",
+  "normal",
   "moderate",
-  "normal",
-  "normal",
   "insufficient",
   "moderate",
-  "moderate",
+  "severe",
   "moderate",
   "moderate",
   "noTrigger",
@@ -780,12 +773,12 @@
   "moderate",
   "moderate",
   "moderate",
-  "normal",
   "moderate",
+  "severe",
   "noTrigger",
   "moderate",
   "insufficient",
-  "moderate",
+  "severe",
   "moderate",
   "severe",
   "noTrigger",
@@ -796,13 +789,13 @@
   "moderate",
   "moderate",
   "noTrigger",
-  "moderate",
+  "severe",
   "moderate|severe",
   "moderate",
   "severe",
   "severe",
   "severe",
-  "moderate",
+  "severe",
   "moderate",
   "insufficient",
   "moderate",
@@ -822,12 +815,12 @@
   "moderate",
   "normal|moderate",
   "moderate",
-  "normal",
-  "insufficient",
-  "noTrigger",
-  "insufficient",
-  "noTrigger",
   "moderate",
+  "insufficient",
+  "noTrigger",
+  "insufficient",
+  "noTrigger",
+  "normal",
   "noTrigger",
   "insufficient",
   "moderate",
@@ -837,7 +830,7 @@
   "moderate",
   "noTrigger",
   "normal|moderate",
-  "moderate",
+  "normal",
   "noTrigger",
   "noTrigger",
   "moderate",
@@ -869,15 +862,15 @@
   "moderate",
   "noTrigger",
   "moderate",
-  "moderate",
-  "moderate",
-  "noTrigger",
-  "noTrigger",
-  "noTrigger",
-  "severe",
   "normal",
   "moderate",
+  "noTrigger",
+  "noTrigger",
+  "noTrigger",
+  "moderate",
   "normal",
+  "moderate",
+  "moderate",
   "noTrigger",
   "noTrigger",
   "noTrigger",
@@ -900,7 +893,7 @@
   "insufficient",
   "normal",
   "moderate",
-  "normal",
+  "moderate",
   "moderate",
   "severe",
   "normal",
@@ -924,7 +917,7 @@
   "moderate",
   "moderate",
   "normal",
-  "normal",
+  "moderate",
   "normal",
   "insufficient",
   "normal",
@@ -950,9 +943,9 @@
   "moderate",
   "moderate",
   "moderate",
-  "moderate",
+  "moderate|severe",
   "insufficient",
-  "moderate",
+  "severe",
   "moderate",
   "normal",
   "moderate",
@@ -991,7 +984,7 @@
   "moderate",
   "noTrigger",
   "insufficient",
-  "severe",
+  "moderate",
   "moderate",
   "moderate",
   "moderate",
@@ -1003,21 +996,21 @@
   "moderate",
   "insufficient",
   "moderate",
-  "moderate",
-  "moderate",
-  "insufficient",
-  "noTrigger",
-  "noTrigger",
-  "noTrigger",
-  "noTrigger",
-  "insufficient",
   "severe",
+  "moderate",
+  "insufficient",
+  "noTrigger",
+  "noTrigger",
+  "noTrigger",
+  "noTrigger",
+  "insufficient",
+  "moderate",
   "insufficient",
   "moderate",
   "noTrigger",
   "moderate",
   "moderate",
-  "moderate",
+  "severe",
   "moderate",
   "noTrigger",
   "noTrigger",
@@ -1025,7 +1018,7 @@
   "moderate",
   "moderate",
   "moderate",
-  "normal",
+  "moderate",
   "severe",
   "severe",
   "moderate",
@@ -1055,7 +1048,7 @@
   "moderate",
   "moderate",
   "normal|moderate",
-  "normal",
+  "severe",
   "moderate",
   "moderate",
   "moderate|severe",
@@ -1168,11 +1161,11 @@
   "insufficient",
   "moderate",
   "moderate",
+  "severe",
   "moderate",
+  "severe",
   "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
+  "severe",
   "noTrigger",
   "noTrigger",
   "insufficient",
@@ -1193,7 +1186,7 @@
   "insufficient",
   "noTrigger",
   "noTrigger",
-  "normal",
+  "moderate",
   "insufficient",
   "moderate",
   "insufficient",
@@ -1217,7 +1210,7 @@
   "moderate",
   "insufficient",
   "normal",
-  "severe",
+  "moderate",
   "severe",
   "moderate",
   "moderate",
@@ -1229,46 +1222,23 @@
   "moderate",
   "moderate",
   "moderate",
-  "moderate",
-  "moderate",
+  "severe",
+  "severe",
   "noTrigger",
-  "moderate",
+  "severe",
   "moderate",
   "normal",
   "insufficient",
   "noTrigger",
   "moderate",
   "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "noTrigger",
+  "severe",
   "moderate",
   "moderate",
   "noTrigger",
   "moderate",
   "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "insufficient",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "insufficient",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
+  "noTrigger",
   "moderate",
   "moderate",
   "moderate",
@@ -1276,6 +1246,21 @@
   "moderate",
   "moderate",
   "severe",
+  "insufficient",
+  "moderate",
+  "moderate",
+  "moderate",
+  "severe",
+  "moderate",
+  "moderate",
+  "moderate",
+  "insufficient",
+  "moderate",
+  "moderate",
+  "moderate",
+  "moderate",
+  "moderate",
+  "moderate",
   "moderate",
   "moderate",
   "moderate",
@@ -1284,21 +1269,29 @@
   "moderate",
   "moderate",
   "severe",
+  "moderate",
+  "moderate",
+  "moderate",
+  "moderate",
+  "moderate",
+  "moderate",
+  "moderate",
+  "severe",
   "noTrigger",
   "moderate|severe",
   "normal",
   "noTrigger",
   "moderate",
   "moderate",
+  "severe",
+  "severe",
   "moderate",
   "moderate",
   "moderate",
   "moderate",
   "moderate",
   "moderate",
-  "moderate",
-  "moderate",
-  "moderate",
+  "severe",
   "moderate|severe",
   "moderate",
   "moderate",
@@ -1322,13 +1315,13 @@
   "moderate",
   "moderate|severe",
   "moderate",
-  "moderate|severe",
+  "moderate",
   "insufficient",
   "moderate",
   "moderate",
   "moderate",
   "moderate",
-  "moderate",
+  "severe",
   "insufficient",
   "noTrigger",
   "moderate|severe",
@@ -1339,7 +1332,7 @@
   "noTrigger",
   "moderate|severe",
   "noTrigger",
-  "moderate",
+  "severe",
   "moderate|severe",
   "moderate",
   "moderate",
@@ -1349,7 +1342,7 @@
   "moderate",
   "moderate",
   "insufficient",
-  "moderate",
+  "severe",
   "moderate|severe",
   "normal",
   "insufficient",

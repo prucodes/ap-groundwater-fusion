@@ -1,10 +1,10 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-10-03T11:34:16+00:00",
+ "generatedAt": "2026-10-05T13:58:43+00:00",
  "comparedWith": {
   "label": "the data the site was showing before this refresh",
-  "commit": "cc86184",
-  "committedAt": "2026-10-02T22:56:40-04:00"
+  "commit": "ec1bd3a",
+  "committedAt": "2026-10-05T09:27:49-04:00"
  },
  "items": [
   {
@@ -14,12 +14,12 @@
    "better": "higher",
    "href": "/climate/",
    "before": -33.2,
-   "after": -33.2,
+   "after": -34.9,
    "beforeAsOf": "2026-10-01",
-   "afterAsOf": "2026-10-01",
-   "change": 0.0,
-   "direction": "same",
-   "refreshed": false
+   "afterAsOf": "2026-10-03",
+   "change": -1.7,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "soilBelow",
@@ -28,12 +28,12 @@
    "better": "lower",
    "href": "/agriculture/",
    "before": 530,
-   "after": 530,
+   "after": 608,
    "beforeAsOf": "2026-10-01",
-   "afterAsOf": "2026-10-01",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "afterAsOf": "2026-10-04",
+   "change": 78,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "soilDriest",
@@ -42,12 +42,12 @@
    "better": "lower",
    "href": "/agriculture/",
    "before": 12,
-   "after": 12,
+   "after": 35,
    "beforeAsOf": "2026-10-01",
-   "afterAsOf": "2026-10-01",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "afterAsOf": "2026-10-04",
+   "change": 23,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "reservoirs",
@@ -56,12 +56,12 @@
    "better": "higher",
    "href": "/agriculture/",
    "before": 50.5,
-   "after": 50.5,
+   "after": 50.0,
    "beforeAsOf": "2026-10-02T15:03+05:30",
-   "afterAsOf": "2026-10-02T15:03+05:30",
-   "change": 0.0,
-   "direction": "same",
-   "refreshed": false
+   "afterAsOf": "2026-10-05T18:04+05:30",
+   "change": -0.5,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "trigger1",
@@ -69,13 +69,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": null,
+   "before": 465,
    "after": 465,
-   "beforeAsOf": null,
-   "afterAsOf": "2026-10-01",
-   "change": null,
-   "direction": null,
-   "refreshed": null
+   "beforeAsOf": "2026-10-02",
+   "afterAsOf": "2026-10-03",
+   "change": 0,
+   "direction": "same",
+   "refreshed": true
   },
   {
    "key": "droughtSevere",
@@ -83,13 +83,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": null,
-   "after": 26,
-   "beforeAsOf": null,
-   "afterAsOf": "2026-10-01",
-   "change": null,
-   "direction": null,
-   "refreshed": null
+   "before": 26,
+   "after": 46,
+   "beforeAsOf": "2026-10-02",
+   "afterAsOf": "2026-10-03",
+   "change": 20,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "droughtModerate",
@@ -97,13 +97,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": null,
-   "after": 313,
-   "beforeAsOf": null,
-   "afterAsOf": "2026-10-01",
-   "change": null,
-   "direction": null,
-   "refreshed": null
+   "before": 313,
+   "after": 297,
+   "beforeAsOf": "2026-10-02",
+   "afterAsOf": "2026-10-03",
+   "change": -16,
+   "direction": "better",
+   "refreshed": true
   },
   {
    "key": "gwStress",
@@ -112,12 +112,40 @@
    "better": "lower",
    "href": "/map/",
    "before": 382,
-   "after": 382,
+   "after": 381,
    "beforeAsOf": "2026-08",
-   "afterAsOf": "2026-08",
+   "afterAsOf": "2026-09",
+   "change": -1,
+   "direction": "better",
+   "refreshed": true
+  },
+  {
+   "key": "vegSevere",
+   "label": "Mandals whose crop vegetation is severely below normal",
+   "unit": "mandals",
+   "better": "lower",
+   "href": "/agriculture/",
+   "before": 246,
+   "after": 246,
+   "beforeAsOf": "2026-09-30",
+   "afterAsOf": "2026-09-30",
    "change": 0,
    "direction": "same",
    "refreshed": false
+  },
+  {
+   "key": "cropsShort",
+   "label": "Mandals where most field crops are short of water (4 of 7 at mid-season)",
+   "unit": "mandals",
+   "better": "lower",
+   "href": "/agriculture/#field-week",
+   "before": 76,
+   "after": 87,
+   "beforeAsOf": "2026-10-04",
+   "afterAsOf": "2026-10-05",
+   "change": 11,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "ensoPeak",
@@ -125,24 +153,345 @@
    "unit": "°C",
    "better": "context",
    "href": "/monsoon/",
-   "before": null,
+   "before": 2.67,
    "after": 2.67,
-   "beforeAsOf": null,
+   "beforeAsOf": "2026-09-10",
    "afterAsOf": "2026-09-10",
-   "change": null,
-   "direction": null,
-   "refreshed": null,
+   "change": 0.0,
+   "direction": "same",
+   "refreshed": false,
    "note": "El Niño Advisory"
   }
  ],
  "groundwater": {
-  "worse": 0,
-  "better": 0,
-  "moved": [],
-  "truncated": false,
+  "worse": 89,
+  "better": 68,
+  "moved": [
+   {
+    "id": "ap-temp-mandal-alluri-sitharama-raju-ananthagiri-077",
+    "mandal": "ANANTHAGIRI",
+    "district": "ALLURI SITHARAMA RAJU",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-alluri-sitharama-raju-hukumpeta-078",
+    "mandal": "HUKUMPETA",
+    "district": "ALLURI SITHARAMA RAJU",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-alluri-sitharama-raju-munchingi-puttu-073",
+    "mandal": "MUNCHINGI PUTTU",
+    "district": "ALLURI SITHARAMA RAJU",
+    "from": "stable",
+    "to": "watch",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-ananthapuramu-anantapur-568",
+    "mandal": "ANANTAPUR",
+    "district": "ANANTHAPURAMU",
+    "from": "stable",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-ananthapuramu-atmakur-503",
+    "mandal": "ATMAKUR",
+    "district": "ANANTHAPURAMU",
+    "from": "stable",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-ananthapuramu-narpala-566",
+    "mandal": "NARPALA",
+    "district": "ANANTHAPURAMU",
+    "from": "stable",
+    "to": "watch",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-ananthapuramu-peddapappur-552",
+    "mandal": "PEDDAPAPPUR",
+    "district": "ANANTHAPURAMU",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-ananthapuramu-peddavadugur-549",
+    "mandal": "PEDDAVADUGUR",
+    "district": "ANANTHAPURAMU",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-ananthapuramu-tadpatri-551",
+    "mandal": "TADPATRI",
+    "district": "ANANTHAPURAMU",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-ananthapuramu-uravakonda-555",
+    "mandal": "URAVAKONDA",
+    "district": "ANANTHAPURAMU",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-annamayya-galiveedu-473",
+    "mandal": "GALIVEEDU",
+    "district": "ANNAMAYYA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-annamayya-peddamandyam-607",
+    "mandal": "PEDDAMANDYAM",
+    "district": "ANNAMAYYA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-annamayya-punganur-653",
+    "mandal": "PUNGANUR",
+    "district": "ANNAMAYYA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-annamayya-ramapuram-479",
+    "mandal": "RAMAPURAM",
+    "district": "ANNAMAYYA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-bapatla-parchur-346",
+    "mandal": "PARCHUR",
+    "district": "BAPATLA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-chittoor-baireddipalle-661",
+    "mandal": "BAIREDDIPALLE",
+    "district": "CHITTOOR",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-chittoor-santhipuram-663",
+    "mandal": "SANTHIPURAM",
+    "district": "CHITTOOR",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-chittoor-yadamarri-668",
+    "mandal": "YADAMARRI",
+    "district": "CHITTOOR",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-east-godavari-kovvur-196",
+    "mandal": "KOVVUR",
+    "district": "EAST GODAVARI",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-east-godavari-mandapeta-156",
+    "mandal": "MANDAPETA",
+    "district": "EAST GODAVARI",
+    "from": "stable",
+    "to": "watch",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-eluru-agiripalle-243",
+    "mandal": "AGIRIPALLE",
+    "district": "ELURU",
+    "from": "stable",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-eluru-velairpadu-180",
+    "mandal": "VELAIRPADU",
+    "district": "ELURU",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-guntur-phirangipuram-310",
+    "mandal": "PHIRANGIPURAM",
+    "district": "GUNTUR",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-konaseema-amalapuram-177",
+    "mandal": "AMALAPURAM",
+    "district": "KONASEEMA",
+    "from": "stable",
+    "to": "watch",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-konaseema-ramachandrapuram-160",
+    "mandal": "RAMACHANDRAPURAM",
+    "district": "KONASEEMA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-krishna-avanigadda-275",
+    "mandal": "AVANIGADDA",
+    "district": "KRISHNA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-krishna-gudivada-259",
+    "mandal": "GUDIVADA",
+    "district": "KRISHNA",
+    "from": "stable",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-krishna-gudur-495",
+    "mandal": "GUDUR",
+    "district": "KRISHNA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-krishna-guduru-269",
+    "mandal": "GUDURU",
+    "district": "KRISHNA",
+    "from": "stable",
+    "to": "watch",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-krishna-koduru-277",
+    "mandal": "KODURU",
+    "district": "KRISHNA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-krishna-pedaparupudi-260",
+    "mandal": "PEDAPARUPUDI",
+    "district": "KRISHNA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-krishna-unguturu-251",
+    "mandal": "UNGUTURU",
+    "district": "KRISHNA",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-kurnool-adoni-509",
+    "mandal": "ADONI",
+    "district": "KURNOOL",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-kurnool-aspari-513",
+    "mandal": "ASPARI",
+    "district": "KURNOOL",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-kurnool-c-belagal-494",
+    "mandal": "C.BELAGAL",
+    "district": "KURNOOL",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-kurnool-chippagiri-529",
+    "mandal": "CHIPPAGIRI",
+    "district": "KURNOOL",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-kurnool-kowthalam-490",
+    "mandal": "KOWTHALAM",
+    "district": "KURNOOL",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-kurnool-mantralayam-488",
+    "mandal": "MANTRALAYAM",
+    "district": "KURNOOL",
+    "from": "stable",
+    "to": "watch",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-kurnool-pedda-kadubur-491",
+    "mandal": "PEDDA KADUBUR",
+    "district": "KURNOOL",
+    "from": "stable",
+    "to": "watch",
+    "worse": true
+   },
+   {
+    "id": "ap-temp-mandal-markapuram-tripuranthakam-337",
+    "mandal": "TRIPURANTHAKAM",
+    "district": "MARKAPURAM",
+    "from": "watch",
+    "to": "stress",
+    "worse": true
+   }
+  ],
+  "truncated": true,
   "latestMonth": {
    "before": "2026-08",
-   "after": "2026-08"
+   "after": "2026-09"
   }
  },
  "drought": {
@@ -158,8 +507,8 @@
     "i": 91,
     "d": "ANAKAPALLI",
     "m": "K.KOTAPADU",
-    "from": "normal",
-    "to": "moderate"
+    "from": "moderate",
+    "to": "severe"
    },
    {
     "i": 95,
@@ -190,13 +539,6 @@
     "to": "moderate|severe"
    },
    {
-    "i": 238,
-    "d": "ELURU",
-    "m": "CHATRAI",
-    "from": "normal",
-    "to": "moderate"
-   },
-   {
     "i": 261,
     "d": "KRISHNA",
     "m": "PENAMALURU",
@@ -216,6 +558,20 @@
     "m": "KOWTHALAM",
     "from": "normal",
     "to": "moderate"
+   },
+   {
+    "i": 503,
+    "d": "NANDYAL",
+    "m": "PAMULAPADU",
+    "from": "moderate",
+    "to": "severe"
+   },
+   {
+    "i": 538,
+    "d": "NANDYAL",
+    "m": "KOLIMIGUNDLA",
+    "from": "moderate",
+    "to": "severe"
    },
    {
     "i": 602,
@@ -255,25 +611,11 @@
     "to": "moderate"
    },
    {
-    "i": 309,
-    "d": "GUNTUR",
-    "m": "PHIRANGIPURAM",
+    "i": 274,
+    "d": "KRISHNA",
+    "m": "AVANIGADDA",
     "from": "severe",
     "to": "moderate"
-   },
-   {
-    "i": 329,
-    "d": "BAPATLA",
-    "m": "KARLAPALEM",
-    "from": "severe",
-    "to": "moderate"
-   },
-   {
-    "i": 361,
-    "d": "BAPATLA",
-    "m": "VETAPALEM",
-    "from": "moderate",
-    "to": "normal"
    },
    {
     "i": 466,
@@ -293,9 +635,9 @@
   "basis": "each mandal's manual reading now against the same reading one week of rain earlier"
  },
  "counts": {
-  "better": 0,
-  "worse": 0,
-  "same": 5,
-  "unknown": 4
+  "better": 2,
+  "worse": 6,
+  "same": 3,
+  "unknown": 0
  }
 }
