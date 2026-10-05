@@ -87,3 +87,38 @@ def test_crystal_includes_the_latest_pre_monsoon_year():
         f"Crystal view ends at {gw['years'][-1]} but May {max(covered)} readings are published; "
         "run phase3_levels/build_crystal_data.py"
     )
+
+
+def test_outlook_is_the_summer_outlook_on_the_same_boundary():
+    # The outlook mode must show the Summer Outlook's own projection for the
+    # outline it is drawn on, so the two pages never disagree about a mandal.
+    gw = _crystal()
+    summer = json.loads((APP_DATA / "summer_outlook.json").read_text())
+    meta = gw["outlook"]
+    assert (meta["targetMay"], meta["anchor"], meta["deepM"]) == (summer["targetMay"], summer["anchor"], summer["deepM"])
+    assert meta["statewide"]["beyond"] == summer["summary"]["beyond"]
+    tiers = {"beyond": "x", "dry": "d", "within": "w"}
+    joined = 0
+    for mandal in gw["mandals"]:
+        row = summer["mandals"][mandal["b"] - 1]
+        if row is None:
+            assert mandal["o"] is None, f"{mandal['n']} has a projection the Summer Outlook does not"
+            continue
+        o = mandal["o"]
+        assert (o["a"], o["t"], o["y"], o["r"], o["k"], o["w"], o.get("p")) == (
+            row["anchor"], row["typical"], row["dry"], row["deepestMay"], tiers[row["tier"]], row["winters"], row.get("people")
+        ), f"{mandal['n']} does not carry its Summer Outlook projection"
+        joined += 1
+    assert joined > 500, f"too few mandals carry the outlook ({joined})"
+
+
+def test_outlook_tiers_follow_the_depths_they_are_drawn_from():
+    # The view lights a record rim when the projected May is past the record;
+    # the tier key must agree with the depths, as the Summer Outlook sets it.
+    for mandal in _crystal()["mandals"]:
+        o = mandal["o"]
+        if not o:
+            continue
+        expected = "x" if o["t"] > o["r"] else "d" if o["y"] > o["r"] else "w"
+        assert o["k"] == expected, f"{mandal['n']}: tier {o['k']} but depths say {expected}"
+        assert o["t"] <= o["y"], f"{mandal['n']}: a typical winter projected deeper than a dry one"

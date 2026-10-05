@@ -111,10 +111,6 @@ STEPS = [
     # after similar rain fared in the backtest. Optional: a failure keeps last
     # week's notes, which name the month they describe.
     ("build forecast reliability", [PY, os.path.join(HERE, "build_forecast_reliability.py")], False),
-    # The Crystal 3D view embeds its own dataset, rebuilt here from the measured
-    # series just published. Optional: a failure keeps last week's view, and the
-    # test suite blocks publication if a new pre-monsoon year went missing.
-    ("rebuild Crystal view data", [PY, os.path.join(HERE, "build_crystal_data.py")], False),
     # Whether this season is recharging, measured per mandal against its own
     # past seasons. Built after the app data so it reads the history the site
     # has just published. Optional: it is a standalone page and a front-page
@@ -142,6 +138,11 @@ STEPS = [
     # APWRIMS reading and its own past winters, with its leave-one-year-out record.
     # After the APWRIMS history and context (its boundary links). Optional.
     ("build summer outlook", [PY, os.path.join(HERE, "build_summer_outlook.py")], False, 300),
+    # The Crystal 3D view embeds its own dataset: the measured May series published
+    # above, and next May's outlook just built for its outlook mode. Optional: a
+    # failure keeps last week's view, and the test suite blocks publication if a
+    # new pre-monsoon year went missing or the outlook fell out of step.
+    ("rebuild Crystal view data", [PY, os.path.join(HERE, "build_crystal_data.py")], False),
     # Last of the builders: this week's headlines beside the ones the site was
     # showing (the files at HEAD), each with its own date. Optional.
     # Every figure by assembly constituency, from this week's groundwater,

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Crystal Water Table — Andhra Pradesh | Cinematic 3D",
   description:
-    "Cinematic liquid-map 3D view of measured pre-monsoon (May) depth to water, mandal by mandal — year-by-year time-lapse, CGWB extraction-stress mode, district labels.",
+    "Cinematic liquid-map 3D view of measured pre-monsoon (May) depth to water, mandal by mandal — year-by-year time-lapse, CGWB extraction-stress mode, district labels, and next May's outlook against each mandal's own record.",
 };
 
 // The cinematic view is a deliberately self-contained WebGL page (its own
@@ -17,7 +17,7 @@ export default function CrystalWaterTablePage() {
           sits above the frame in normal flow rather than floating over it —
           as an overlay it covered the 3D view's own heading on a phone. */}
       <p className="crystalNotice">
-        <strong>May depth to water, mandal by mandal, in 3D</strong>: where the water table sits deepest. Prototype: missing
+        <strong>May depth to water, mandal by mandal, in 3D</strong>, with next May&rsquo;s outlook. Prototype: missing
         readings are interpolated and marked; height is presentational.
       </p>
       <iframe
