@@ -90,3 +90,78 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900
     expect(errors).toEqual([]);
   });
 }
+
+type Projection = { a: number; t: number; y: number; r: number; k: "x" | "d" | "w"; p: number | null; s?: string } | null;
+const withOutlook = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as {
+  years: string[]; outlook: { targetMay: string; statewide: { mandals: number; beyond: number; dry: number } };
+  mandals: { id: string; lvl: number[]; gap: number[]; n: string; o: Projection }[];
+};
+const nextMay = withOutlook.outlook.targetMay.slice(0, 4);
+const shown = withOutlook.mandals.filter(m => m.o);
+const pastTypical = shown.filter(m => m.o!.k === "x");
+const pastDry = shown.filter(m => m.o!.k !== "w");
+
+for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900 }]) {
+  test(`Crystal's May outlook sinks each mandal against its own record at ${viewport.width}px`, async ({ page }) => {
+    test.setTimeout(90000);
+    await page.setViewportSize(viewport);
+    const errors: string[] = []; page.on("pageerror", error => errors.push(String(error)));
+    await page.goto("/crystal");
+    const frame = page.frameLocator(".crystalFrame");
+    await expect(frame.locator("#kCov")).toContainText("605");
+    const inner = page.frames().find(f => f.url().includes("water-crystal-3d"))!;
+    const scene = () => inner.evaluate(() => new Function("return {proj:+curP.toFixed(2),lit:Array.from(curR).filter(r=>r>0.99).length}")()) as Promise<{ proj: number; lit: number }>;
+
+    await frame.getByRole("button", { name: `May ${nextMay} outlook`, exact: true }).click();
+    // Last May as measured, then the water settles on next May's projection and the broken records light.
+    await expect(frame.getByLabel("Year", { exact: true })).toHaveValue(String(withOutlook.years.length), { timeout: 8000 });
+    await expect.poll(scene, { timeout: 8000 }).toEqual({ proj: 1, lit: pastTypical.length });
+    await expect(frame.locator("#oPast")).toHaveText(`${pastTypical.length} / ${shown.length}`);
+    await expect(frame.locator("#oPastD")).toHaveText(`${withOutlook.outlook.statewide.beyond} of ${withOutlook.outlook.statewide.mandals} statewide`);
+    await expect(frame.locator("#lgNote")).toContainText(viewport.width > 760 ? "not a forecast of rain" : "not a rain forecast");
+    await expect(frame.getByRole("button", { name: "District", exact: true })).toBeHidden();
+    // Each lit mandal's water sits below its own record rim.
+    const below = await inner.evaluate(() => new Function("return M.every((m,f)=>curR[f]<0.99||curH[f]<hOut(m.o.r))")());
+    expect(below).toBe(true);
+    const framing = await inner.evaluate(() => new Function("const p=new THREE.Vector3();let minX=1,maxX=-1;for(let i=0;i<positions.length;i+=3){p.set(positions[i],positions[i+1],positions[i+2]).project(camera);minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);}return {minX,maxX};")());
+    expect(framing.minX).toBeGreaterThan(-1);
+    expect(framing.maxX).toBeLessThan(1);
+    await page.screenshot({ path: `/tmp/crystal-outlook-${viewport.width}.png` });
+
+    await frame.getByRole("button", { name: "Dry winter", exact: true }).click();
+    await expect(frame.locator("#oPast")).toHaveText(`${pastDry.length} / ${shown.length}`);
+    await expect.poll(scene, { timeout: 8000 }).toEqual({ proj: 1, lit: pastDry.length });
+
+    const index = withOutlook.mandals.findIndex(m => m.o && m.o.k === "x" && !m.o.s);
+    const o = withOutlook.mandals[index].o!;
+    await frame.getByLabel("Inspect a mandal").selectOption(String(index));
+    await expect(frame.locator("#mcName")).toHaveText(withOutlook.mandals[index].n);
+    await expect(frame.locator("#ocTier")).toContainText("Beyond its record");
+    await expect(frame.locator("#ocV")).toHaveText(o.y.toFixed(1));
+    await expect(frame.locator("#ocDelta")).toContainText(`${(o.y - o.r).toFixed(1)} m past its deepest May`);
+    await expect(frame.locator("#ocSummer")).toHaveAttribute("href", "./summer/");
+    await expect(frame.locator("#outlookProfile svg")).toBeVisible();
+    await expect(frame.locator("#wellProfile")).toBeHidden();
+    await page.screenshot({ path: `/tmp/crystal-outlook-mandal-${viewport.width}.png` });
+    await frame.getByRole("button", { name: "Close mandal details" }).click();
+
+    // Back to the measured view: no projection left on screen.
+    await frame.getByRole("button", { name: "Water depth", exact: true }).click();
+    await expect(frame.getByLabel("Year", { exact: true })).toHaveValue(String(withOutlook.years.length - 1));
+    await expect.poll(scene, { timeout: 8000 }).toEqual({ proj: 0, lit: 0 });
+    await expect(frame.locator("#kCov")).toBeVisible();
+    await expect(frame.locator("#oPast")).toBeHidden();
+    expect(errors).toEqual([]);
+  });
+}
+
+test("The Summer Outlook opens the 3D view straight into its outlook", async ({ page }) => {
+  test.setTimeout(60000);
+  await page.goto("/summer/");
+  const link = page.getByTestId("summer-3d-link");
+  await expect(link).toHaveAttribute("href", /\/crystal\/\?mode=outlook$/);
+  await link.click();
+  const frame = page.frameLocator(".crystalFrame");
+  await expect(frame.getByRole("button", { name: `May ${nextMay} outlook`, exact: true })).toHaveAttribute("aria-pressed", "true");
+  await expect(frame.locator("#oPast")).toHaveText(`${pastTypical.length} / ${shown.length}`, { timeout: 10000 });
+});

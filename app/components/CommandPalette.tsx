@@ -52,7 +52,7 @@ const PAGES: Item[] = [
   { label: "Scenario Lab", sub: "Monsoon what-if + drought sim", href: "/scenario", kind: "page" },
   { label: "AWARE Preview", sub: "Monitor, review and field-verify + AWARE bridge", href: "/irrigation", kind: "page" },
   { label: "Model Evidence Lab", sub: "Advanced measured-versus-model comparison", href: "/living-water-table", kind: "page" },
-  { label: "Water Depth 3D", sub: "Recorded May depth by mandal and district", href: "/crystal", kind: "page" },
+  { label: "Water Depth 3D", sub: "Recorded May depth, and next May's outlook in 3D", href: "/crystal", kind: "page" },
 ];
 
 const PAGE_ICON: Record<string, React.ReactNode> = {

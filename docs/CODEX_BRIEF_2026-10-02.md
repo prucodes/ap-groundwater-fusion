@@ -1,7 +1,7 @@
 # Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026)
 
 Written by Claude Code for Codex. This replaces the 2 October brief at the same path.
-Everything below is on `main` (through PR #49) and live on GitHub Pages.
+Everything below is on `main` (through PR #51) and live on GitHub Pages.
 
 Ground rules:
 - Start every task on a fresh branch off `main`.
@@ -29,6 +29,8 @@ things look, but never change what they say without asking.
 | #47 | **Summer Water Outlook and the crop check at field scale.** `/summer/` projects each mandal's May depth from its latest APWRIMS reading and its own past winters (typical = median drawdown, dry = largest), against its own deepest May on record, with a 10 m CGWB class boundary beside it so a shallow delta record does not read as a drinking-water emergency. Leave-one-year-out record on every past year: "beyond its record" calls went past the record about one year in three against one in eight overall. The crop check's record gains a field-scale reading: Sentinel-2 NDVI at 160 m over rainfed cropland pixels, weekly greenest clear view, three-week change less the State's that week. Its field-scale figures were wrong (the reflectance offset taken off twice) and are withdrawn; see #48. |
 | #48 | **The live scorecard at field scale, people in the summer outlook, and the Sentinel-2 correction.** Each Monday's frozen calls are now also scored against Sentinel-2 at 160 m over rainfed cropland (`score_field_calls.py`; tile masks committed in `phase3_levels/data/sentinel_masks/`, ~1.3 MB, so the runner needs no WorldCover or WorldCereal); rabi's clear skies make this the season it can read most mandals; first score due 31 October. The summer outlook counts by mandal outline and adds WorldPop 2020 population (`build_mandal_population.py`, `phase3_levels/data/mandal_population.json`): about 56 lakh people live in the 58 mandals heading past their record more than 10 m down. Correction: #47 subtracted the baseline-04.00 reflectance offset that the archive had already removed (`earthsearch:boa_offset_applied`), saturating NDVI; `stored_offset()` now reads the flag, `check_composite()` refuses implausible weeks, a test checks the committed outcomes. Corrected field-scale reading: none backed; eight weak (groundnut, chilli and the pulses, mostly at the initial and mid-season stages), lower in 2025 and 2026 but not in 2024; maize, cotton and jowar show nothing (36% of rainfed mandal-weeks had a clear view). |
 | #49 | **A brief on every screen, and a grouped, shorter menu.** Each hero now opens with three lines: what this is, what it says now (written from that page's data each Monday) and what to do with it. The fixed lines live in `app/lib/pageBriefs.ts`; light "now" lines in `app/lib/pageNow.ts` (summary files only, safe in client pages); heavy pages write their own. `HeaderHero` takes `brief` (it replaces the subtitle and hides the status chips); `components/PageBrief.tsx` gives a band for pages with their own hero (Agriculture, Snapshot). The sidebar is grouped (This week, Water now, Season ahead, Farms, Places) with Evidence & tools folded. Review Queue, Verify / Watchlist, Executive Snapshot and Reports left the menu; their pages still open and point to the field-teams list or the digest. Band headlines that repeated the brief (Summer, Rabi, This Week) were removed. |
+| #50 | **Type-check fix for #49's deploy.** The summer e2e test typed the outlook summary without `beyondDeep`. CI runs `npm run typecheck` (it covers `e2e/`); run that, not a bare `tsc -p .`. |
+| #51 | **Next May's outlook in the Water Depth 3D view.** A third mode on `/crystal` (`app/public/water-crystal-3d.html`): the 2015–2026 May time-lapse runs on into a projected May frame, drawn hatched; each mandal is coloured by its Summer Outlook tier; and a glowing rim with a glass sleeve marks its deepest May on record wherever the projected water falls below it. A typical / dry winter switch, an inspector with the latest reading, both projections, the record and people, and `?mode=outlook` (here or on the framing page; the Summer Outlook links to it). `build_crystal_data.py` joins `summer_outlook.json` by boundary into each mandal's `o` and a top-level `outlook`; the weekly run now rebuilds the view after the summer outlook. |
 | #44 | **This week in the fields** (Agriculture section 02): an FAO-56 crop water check for every mandal, for a chosen crop and stage, on this week's soil moisture and ECMWF's forecast. Also crop vegetation (NOAA VCI weighted to cropland) and the official CGWB groundwater category, on the Agriculture map, the Map page and every mandal page. The Map page's title and date now follow the view. |
 
 Taken off the to-do list as done: per-constituency briefs, the sidebar State wells date,
@@ -306,6 +308,11 @@ The forecast half (dark) and the State's record (light) stay visibly separate.
 **Guards (do not touch).** `check_not_shrinking` in `fetch_apwrims_context.py` and
 `check_past_weeks` in `build_drought_watch.py`. On 3 October the APWRIMS portal dropped
 September for all 28 districts; these guards stopped it being published.
+
+**Water Depth 3D outlook.** The projection is carried apart from the measured years
+(`o` per mandal, `outlook` at the top; `nForecast` stays 0), and its tiers are the Summer
+Outlook's own, joined by boundary, so the two pages never disagree about a mandal. Keep the
+hatching and the line "not a forecast of rain" wherever the projection is drawn.
 
 **Crop-water lab.** Seven reference crops: maize, groundnut, cotton, chilli, red gram,
 Bengal gram and jowar.

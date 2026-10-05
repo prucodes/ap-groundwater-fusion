@@ -62,7 +62,7 @@ export default function SummerPage() {
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconMap /> Mandal by mandal</span>
           <h2 id="summer-map">Where the record may break</h2>
-          <p>Projected from each mandal&rsquo;s {month(o.anchor)} reading and its own past winters: the typical drawdown from {MONTHS[Number(o.anchor.slice(5, 7)) - 1]} to May, and the largest. Grey: too short a record to project, or no reading.</p>
+          <p>Projected from each mandal&rsquo;s {month(o.anchor)} reading and its own past winters: the typical drawdown from {MONTHS[Number(o.anchor.slice(5, 7)) - 1]} to May, and the largest. Grey: too short a record to project, or no reading. <Link href="/crystal/?mode=outlook" data-testid="summer-3d-link">See it in 3D →</Link></p>
         </header>
         <div className={shared.soilGrid}>
           <StateOutlineMap testId="summer-map" aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height}

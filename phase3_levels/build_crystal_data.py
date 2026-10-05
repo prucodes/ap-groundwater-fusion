@@ -9,6 +9,12 @@ every year compares like with like. A year with no May reading is interpolated
 from the neighbouring years and flagged in `gap`, so the view can say so. There
 is no forecast: nForecast is always 0.
 
+The view's outlook mode reads the summer drinking-water outlook
+(build_summer_outlook.py): next May's depth projected from each mandal's latest
+APWRIMS reading and its own past winters, against its deepest May on record.
+It is joined by boundary, as the outlook counts mandals, and carried apart
+from the measured years so a projection is never mistaken for a reading.
+
 Run from anywhere:  python phase3_levels/build_crystal_data.py
 """
 import csv
@@ -24,6 +30,8 @@ ROOT = os.path.join(HERE, "..")
 APP_DATA = os.path.join(ROOT, "app", "data")
 HTML = os.path.join(ROOT, "app", "public", "water-crystal-3d.html")
 EXTRACTION = os.path.join(HERE, "data", "mandal_extraction_cgwb2024.csv")
+SUMMER = os.path.join(APP_DATA, "summer_outlook.json")
+TIER_KEY = {"beyond": "x", "dry": "d", "within": "w"}
 
 PRE_MONSOON_MONTH = "05"
 # A year enters the timeline once at least this share of mandals has a May reading.
@@ -118,6 +126,46 @@ def match_extraction(table, district, mandal):
     return elsewhere[0] if len(elsewhere) == 1 else None
 
 
+def letters(value):
+    return re.sub(r"[^a-z]", "", str(value).lower())
+
+
+def load_outlook():
+    """The summer outlook, or None when it has not been built."""
+    if not os.path.exists(SUMMER):
+        return None
+    with open(SUMMER) as handle:
+        return json.load(handle)
+
+
+def outlook_entry(row, name):
+    """One boundary's projection, in metres below ground, with its tier key."""
+    if not row:
+        return None
+    entry = {
+        "a": row["anchor"], "t": row["typical"], "y": row["dry"], "r": row["deepestMay"],
+        "k": TIER_KEY[row["tier"]], "w": row["winters"], "p": row.get("people"),
+    }
+    # Two APWRIMS mandals can share an outline; name the series when it is not this mandal's own spelling.
+    if letters(row["mandal"]) != letters(name):
+        entry["s"] = row["mandal"]
+    return entry
+
+
+def outlook_meta(summer):
+    backtest = summer.get("backtest") or {}
+    return {
+        "anchor": summer["anchor"],
+        "targetMay": summer["targetMay"],
+        "deepM": summer["deepM"],
+        "generatedAt": summer["generatedAt"],
+        "statewide": {k: summer["summary"][k] for k in ("mandals", "beyond", "dry", "within", "beyondDeep")},
+        "pastRecordPct": backtest.get("pastRecordPct"),
+        "baseRatePct": backtest.get("baseRatePct"),
+        "populationYear": (summer.get("people") or {}).get("year"),
+    }
+
+
 def build():
     records = load("mandal_groundwater_records_v2.json")["records"]
     series = load("mandal_observation_series_v2.json")["series"]
@@ -127,6 +175,8 @@ def build():
     # mandals on one polygon.
     geometry = load("ap_map_geometry.json")["mandals"]
     extraction = load_extraction()
+    summer = load_outlook()
+    projections = summer["mandals"] if summer else []
 
     # May readings per mandal; a month reported twice is averaged.
     may = {}
@@ -168,6 +218,8 @@ def build():
         slope = ols_slope([(int(years[i]), raw[i]) for i in measured])
         stage = match_extraction(extraction, identity["districtName"], identity["mandalName"])
         stage_matched += stage is not None
+        projection = outlook_entry(projections[ordinal - 1] if ordinal <= len(projections) else None,
+                                   identity["mandalName"])
         out.append({
             "id": identity["mandalId"],
             "b": ordinal,
@@ -179,6 +231,7 @@ def build():
             "trend": round(slope, 2),
             "stage": stage[0] if stage else None,
             "cat": stage[1] if stage else None,
+            "o": projection,
         })
 
     lons = [p[0] for m in out for p in m["poly"]]
@@ -190,6 +243,7 @@ def build():
         "basis": "measured_pre_monsoon_may",
         "throughPeriod": manifest["periods"]["latestObservationPeriod"],
         "generatedAt": manifest["generatedAt"],
+        "outlook": outlook_meta(summer) if summer else None,
         "mandals": out,
     }
     stats = {
@@ -199,6 +253,7 @@ def build():
         "dropped_sparse": dropped_sparse,
         "dropped_no_geometry": dropped_geometry,
         "cgwb_matched": stage_matched,
+        "projected": sum(1 for m in out if m["o"]),
     }
     return dataset, stats
 
@@ -216,7 +271,7 @@ def main():
     print(
         f"crystal: {stats['mandals']} mandals, {stats['years']} pre-monsoon (May), "
         f"{stats['interpolated_cells']} interpolated mandal-years, "
-        f"{stats['cgwb_matched']} CGWB-matched"
+        f"{stats['cgwb_matched']} CGWB-matched, {stats['projected']} with a May outlook"
     )
     print(
         f"  dropped: {stats['dropped_sparse']} too sparse, "

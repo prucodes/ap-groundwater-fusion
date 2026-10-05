@@ -50,8 +50,8 @@ export const BRIEFS = {
     use: "Brief a collector, or compare districts before a review.",
   },
   "/crystal": {
-    what: "The depth to water in May, mandal by mandal, as a relief you can turn.",
-    use: "Show where the water table sits deepest, at a glance.",
+    what: "The depth to water in May, mandal by mandal, as a relief you can turn, with next May's outlook against each mandal's own record.",
+    use: "Show where the water table sits deepest, and where next May may sink past it.",
   },
   "/methodology": {
     what: "How every figure on this site is made, tested and limited.",
