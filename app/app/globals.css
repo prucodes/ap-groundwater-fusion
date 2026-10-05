@@ -4545,6 +4545,10 @@ pre.jsonBody {
   /* The shell's top bar already takes 56px of the screen. */
   .crystalFrameWrap { height: calc(100dvh - 56px); }
 }
+@media (max-width: 560px) {
+  /* Every line here is a line the 3D scene loses on a phone. */
+  .crystalNotice { padding: 6px 12px; font-size: 11px; line-height: 1.35; }
+}
 
 /* Tables keep a readable width on phones and scroll inside .tableWrap, instead
    of being squeezed to fit and wrapping cell text one character per line. */

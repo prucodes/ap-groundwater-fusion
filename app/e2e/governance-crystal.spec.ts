@@ -149,7 +149,8 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900
     await frame.getByRole("button", { name: "Water depth", exact: true }).click();
     await expect(frame.getByLabel("Year", { exact: true })).toHaveValue(String(withOutlook.years.length - 1));
     await expect.poll(scene, { timeout: 8000 }).toEqual({ proj: 0, lit: 0 });
-    await expect(frame.locator("#kCov")).toBeVisible();
+    if (viewport.width > 760) await expect(frame.locator("#kCov")).toBeVisible();
+    else await expect(frame.locator("#phoneStat")).toContainText("mean depth");
     await expect(frame.locator("#oPast")).toBeHidden();
     expect(errors).toEqual([]);
   });
@@ -164,4 +165,45 @@ test("The Summer Outlook opens the 3D view straight into its outlook", async ({ 
   const frame = page.frameLocator(".crystalFrame");
   await expect(frame.getByRole("button", { name: `May ${nextMay} outlook`, exact: true })).toHaveAttribute("aria-pressed", "true");
   await expect(frame.locator("#oPast")).toHaveText(`${pastTypical.length} / ${shown.length}`, { timeout: 10000 });
+});
+
+test("On a phone the scene comes first and the state fills the space the panels leave", async ({ page }) => {
+  test.setTimeout(90000);
+  await page.setViewportSize({ width: 375, height: 812 });
+  const errors: string[] = []; page.on("pageerror", error => errors.push(String(error)));
+  await page.goto("/crystal");
+  const frame = page.frameLocator(".crystalFrame");
+  await expect(frame.locator("#phoneStat")).toContainText("mean depth");
+  // One line in place of the four stat cards; pinch replaces the zoom buttons; Reset stays.
+  await expect(frame.locator("#kpis")).toBeHidden();
+  await expect(frame.getByRole("button", { name: "Zoom in" })).toBeHidden();
+  await expect(frame.getByRole("button", { name: "Reset view", exact: true })).toBeVisible();
+  // The notes open from the key.
+  await expect(frame.locator("#lgNote")).toBeHidden();
+  await frame.getByRole("button", { name: "About this key" }).click();
+  await expect(frame.locator("#lgNote")).toBeVisible();
+  await frame.getByRole("button", { name: "About this key" }).click();
+  await page.waitForTimeout(3200);
+  const inner = page.frames().find(f => f.url().includes("water-crystal-3d"))!;
+  const fill = () => inner.evaluate(() => new Function(`
+    const p=new THREE.Vector3();let minX=1,maxX=-1,minY=1,maxY=-1;
+    for(let i=0;i<positions.length;i+=3){p.set(positions[i],positions[i+1],positions[i+2]).project(camera);
+      minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y);}
+    const h=innerHeight, top=(1-maxY)/2*h, bottom=(1-minY)/2*h;
+    return {minX,maxX,top,bottom,band:phoneBand};`)()) as Promise<{ minX: number; maxX: number; top: number; bottom: number; band: { top: number; bottom: number } }>;
+  const shape = await fill();
+  expect(shape.minX).toBeGreaterThan(-1);
+  expect(shape.maxX).toBeLessThan(1);
+  expect(shape.top).toBeGreaterThanOrEqual(shape.band.top - 2);
+  expect(shape.bottom).toBeLessThanOrEqual(shape.band.bottom + 2);
+  expect(shape.bottom - shape.top).toBeGreaterThan(0.75 * (shape.band.bottom - shape.band.top));
+  // A tapped mandal rises as a sheet, and the state refits above it.
+  await frame.getByLabel("Inspect a mandal").selectOption("0");
+  const sheet = (await frame.locator("#mCard").boundingBox())!;
+  const frameBox = (await page.locator(".crystalFrame").boundingBox())!;
+  // Boxes are in page coordinates; the scene's are the frame's own.
+  expect(Math.round(sheet.y + sheet.height)).toBe(Math.round(frameBox.y + frameBox.height));
+  await expect.poll(async () => (await fill()).bottom, { timeout: 5000 }).toBeLessThanOrEqual(sheet.y - frameBox.y);
+  await frame.getByRole("button", { name: "Close mandal details" }).click();
+  expect(errors).toEqual([]);
 });
