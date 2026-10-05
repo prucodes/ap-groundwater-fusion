@@ -374,6 +374,54 @@
     body.outlook #reliefTools{display:none}
     body.cardOpen #legend{display:none}
   }
+
+  /* ---------- phones: the scene first ----------
+     One compact band of controls on top and a slim key over the timeline below;
+     the four stat cards become one line, the notes open from the key, zoom is a
+     pinch, and a tapped mandal rises as a sheet. The camera then frames the state
+     in the space between the two bands (see fitPhone). */
+  #phoneStat,#lgMore{display:none}
+  @media(max-width:760px){
+    #titleBlock{left:14px;right:60px;top:12px}
+    #titleBlock .eyebrow,#titleBlock .sub{display:none}
+    #titleBlock h1{font-size:18px;line-height:1.25;white-space:nowrap}
+    #focusBtn{top:8px;bottom:auto;right:14px;width:34px;height:34px}
+    #rail{left:14px;right:14px;top:42px;gap:6px}
+    #rail .seg{padding:3px;gap:2px}
+    #rail .seg button{font-size:11px;padding:5px 9px}
+    .reliefControl{padding:5px 10px;font-size:11px}
+    #mandalPick{flex:1 1 110px;width:auto;min-width:0;max-width:none;padding:6px 8px;font-size:11px}
+    #reliefTools{order:6;max-width:none}
+    #phoneStat{display:block;order:7;width:100%;font-size:11px;line-height:1.4;color:var(--ink-2);padding:1px 2px 0;
+      text-shadow:0 1px 6px rgba(1,10,20,.9)}
+    #phoneStat strong{color:var(--ink);font-weight:600}
+    #kpis,#kpisOutlook{display:none!important}
+    #camStack #czi,#camStack #czo{display:none}
+    /* The state turns to run up a portrait screen, so north needs showing. */
+    #compass{display:grid;left:auto;right:14px;top:auto;bottom:calc(var(--hud-bottom,150px) + 42px);width:32px;height:32px}
+    /* A needle, not a letter: a turned "N" reads as a "Z". Cyan tip is north. */
+    #cN{display:flex;flex-direction:column;align-items:center;font-size:0;line-height:0}
+    #cN::before,#cN::after{content:"";width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent}
+    #cN::before{border-bottom:10px solid var(--cyan)}
+    #cN::after{border-top:10px solid rgba(159,184,204,.45)}
+    #camStack{top:auto;bottom:var(--hud-bottom,150px);right:14px}
+    #camStack button{width:32px;height:32px;font-size:13px}
+    #legend{left:14px;right:14px;bottom:68px;max-width:none;padding:8px 10px 9px}
+    #legend .lgTitle{margin-bottom:6px;font-size:9.5px;padding-right:24px}
+    #legend .lgNote,#legend .rimKey,#legend .ocats .cat[data-k="n"]{display:none}
+    #legend.lgOpen .lgNote{display:block}
+    #legend.lgOpen .rimKey,#legend.lgOpen .ocats .cat[data-k="n"]{display:flex}
+    #lgMore{display:grid;place-items:center;position:absolute;top:6px;right:8px;width:22px;height:22px;padding:0;
+      border-radius:50%;border:1px solid var(--line);background:rgba(127,228,255,.06);color:var(--ink-2);
+      font:italic 600 11px/1 Georgia,serif;cursor:pointer}
+    #lgMore[aria-expanded="true"]{color:var(--ink);background:rgba(127,228,255,.16)}
+    #legend .cats,#legend .ocats{gap:4px 10px}
+    #timeline{left:14px;right:14px;bottom:12px;padding:6px 10px 8px}
+    #play{width:30px;height:30px}
+    #mCard{left:0;right:0;bottom:0;top:auto;width:auto;max-height:56%;border-radius:14px 14px 0 0;
+      padding:14px 16px 18px;background:rgba(3,15,26,.97)}
+    body.cardOpen #timeline,body.cardOpen #camStack{display:none}
+  }
 </style>
 </head>
 <body>
@@ -464,7 +512,7 @@
     <button id="gMandal" aria-pressed="true">Mandal</button>
     <button id="gDistrict" aria-pressed="false">District</button>
   </div>
-  <label class="glass reliefControl"><input id="depthRelief" type="checkbox">Depth relief / schematic</label>
+  <label class="glass reliefControl"><input id="depthRelief" type="checkbox" aria-label="Depth relief / schematic"><span class="lgLong">Depth relief / schematic</span><span class="lgShort">Relief</span></label>
   <div id="reliefTools" class="glass" hidden><label>Vertical scale<input id="reliefScale" aria-label="Relief vertical scale" type="range" min="0.7" max="1.8" step="0.1" value="1.2"><output id="reliefScaleValue">1.2×</output></label></div>
   <select id="mandalPick" aria-label="Inspect a mandal"><option value="">State overview</option></select>
   <div class="glass" id="yearCard">
@@ -472,10 +520,12 @@
     <div id="yearTag"></div>
     <div id="statLine"></div>
   </div>
+  <div id="phoneStat" aria-live="polite"></div>
 </div>
 
 <div class="hud glass" id="legend" data-mode="level">
   <div class="lgTitle" id="lgTitle">Depth to water</div>
+  <button id="lgMore" type="button" aria-label="About this key" aria-expanded="false">i</button>
   <div id="lgRamp"></div>
   <div class="lgRow"><span>0 m</span><span id="depthMax">deep / m bgl</span></div>
   <div class="cats">
@@ -1204,18 +1254,59 @@ function sizeTargets(w,h){
 const target=new THREE.Vector3(0,0.32,-0.35);
 let theta=REDUCED?0.32:-0.9, phi=0.96, radius=26;
 if(QP.has("top")){theta=0;phi=0.06;radius=14;}
-if(REDUCED){radius=fitRadius(12.9);}
-let thetaV=0, autoRot=!REDUCED, interacted=false;
+let thetaV=0, autoRot=!REDUCED&&innerWidth>760, interacted=false;
 let introT0=-1; const INTRO=REDUCED?0:2600;
 function easeOut(t){return 1-Math.pow(1-t,3);}
+/* Phones: frame the state in the space the panels leave rather than the whole
+   screen. The view is offset so the band's middle is the picture's middle, and
+   the radius is the closest that keeps every sampled point of the land inside. */
+const PHONE=()=>innerWidth<=760;
+/* On a portrait phone the state turns so its long south-west to north-east axis
+   runs up the screen (Rayalaseema nearest, the north coast farthest), seen a
+   little more from above: it then fills the free band instead of a thin strip. */
+const homeTheta=()=>PHONE()?-0.98:0.32, homePhi=()=>PHONE()?0.78:0.96;
+const FIT_PTS=[];
+/* Sea level to the tallest relief: the coastal walls reach down to the water. */
+for(let i=0;i<NV;i+=13) for(const y of [0,1.46]) FIT_PTS.push(new THREE.Vector3(vBaseX[i],y,vBaseZ[i]));
+let phoneBand=null, phoneRadius=null;
+const _fp=new THREE.Vector3();
+function placeCamera(th,ph,r){
+  camera.position.set(target.x+r*Math.sin(ph)*Math.sin(th),target.y+r*Math.cos(ph),target.z+r*Math.sin(ph)*Math.cos(th));
+  camera.lookAt(target); camera.updateMatrixWorld();
+}
+function fitPhone(){
+  if(!PHONE()){ if(phoneBand){phoneBand=null;phoneRadius=null;camera.clearViewOffset();} return; }
+  const box=id=>{const el=document.getElementById(id);return el&&el.offsetHeight>0?el.getBoundingClientRect():null;};
+  const above=["titleBlock","rail"].map(box).filter(Boolean), below=["legend","timeline","mCard"].map(box).filter(Boolean);
+  const top=Math.max(0,...above.map(r=>r.bottom))+8, bottom=Math.min(innerHeight,...below.map(r=>r.top))-8;
+  if(bottom-top<120) return;
+  phoneBand={top,bottom};
+  document.documentElement.style.setProperty("--hud-bottom",`${Math.round(innerHeight-bottom+16)}px`);
+  camera.setViewOffset(innerWidth,innerHeight,0,-((top+bottom)/2-innerHeight/2),innerWidth,innerHeight);
+  const yTop=1-2*top/innerHeight, yBot=1-2*bottom/innerHeight, save=camera.position.clone();
+  let lo=5,hi=80;
+  for(let it=0;it<24;it++){
+    const r=(lo+hi)/2; placeCamera(homeTheta(),homePhi(),r);
+    let ok=true;
+    for(const p of FIT_PTS){_fp.copy(p).project(camera);
+      if(_fp.z>1||Math.abs(_fp.x)>0.95||_fp.y>yTop||_fp.y<yBot){ok=false;break;}}
+    if(ok)hi=r; else lo=r;
+  }
+  camera.position.copy(save); camera.lookAt(target); camera.updateMatrixWorld();
+  phoneRadius=hi;
+  if(!interacted) radius=phoneRadius;
+}
 function fitRadius(base){
   const a=innerWidth/Math.max(innerHeight,1);
+  if(PHONE()&&phoneRadius) return phoneRadius;
   if(innerWidth<=760)return Math.min(52,base*Math.max(1,1.35/a));
   return Math.min(22,base*Math.sqrt(Math.max(1,1.72/a)));
 }
+/* After the fit's own state exists: it is read here before the first frame. */
+if(REDUCED){radius=fitRadius(12.9);}
 function issueCameraCommand(command){
   interacted=true;autoRot=false;introT0=nowMs-INTRO;
-  if(command==="reset"){theta=.32;phi=.96;thetaV=0;radius=fitRadius(12.9);}
+  if(command==="reset"){theta=homeTheta();phi=homePhi();thetaV=0;radius=fitRadius(12.9);}
   else radius=Math.max(7.5,Math.min(56,radius*(command==="zoom_in"?.85:1.18)));
 }
 function updateCamera(){
@@ -1224,8 +1315,8 @@ function updateCamera(){
   if(it<1){
     const e=easeOut(it);
     radius=26+(fitRadius(12.9)-26)*e;
-    theta=-0.9+(0.32+0.9)*e;
-    phi=1.22+(0.96-1.22)*e;
+    theta=-0.9+(homeTheta()+0.9)*e;
+    phi=1.22+(homePhi()-1.22)*e;
   }else if(autoRot){ theta+=0.00055; }
   theta+=thetaV; thetaV*=0.92;
   phi=Math.max(0.42,Math.min(1.32,phi));
@@ -1586,6 +1677,8 @@ function showStateDistribution(){
   snapPanel.style.display=mode==="level"?"block":"none";
 }
 const SNAP_LEGEND=document.getElementById("snapLegend").innerHTML;
+const lgMore=document.getElementById("lgMore");
+lgMore.onclick=()=>{const open=legend.classList.toggle("lgOpen");lgMore.setAttribute("aria-expanded",String(open));fitPhone();};
 function hideCard(){mCard.style.display="none";document.body.classList.remove("cardOpen");document.getElementById("mandalPick").value="";showStateDistribution();}
 document.getElementById("mcClose").onclick=()=>{pinned=-1;hideCard();};
 function handleClick(idx){
@@ -1609,8 +1702,8 @@ if(OL){
   const s=document.createElement("span"); s.className="proj"; s.textContent="’"+TARGET_YEAR.slice(2); s.title=`May ${TARGET_YEAR}, projected`; ticks.appendChild(s);
   const b=document.getElementById("mOutlook"); b.hidden=false; b.textContent=`May ${TARGET_YEAR} outlook`;
   const counts={}; for(const m of M){const k=olClass(m);counts[k]=(counts[k]||0)+1;}
-  document.getElementById("ocats").innerHTML=["xd","xs","d","w","n"].filter(k=>counts[k]).map(k=>`<div class="cat${k==="n"?"":" hatch"}"><span class="dot" style="color:${OUT_HEX[k]};background-color:${OUT_HEX[k]}"></span>${both(OUT_LBL[k],OUT_SHORT[k])}<b>${counts[k]}</b></div>`).join("")
-    +`<div class="rimKey"><i></i><span>${both("Deepest May on record: lit where the water falls below it","Rim: deepest May on record, lit where the water falls below")}</span></div>`;
+  document.getElementById("ocats").innerHTML=["xd","xs","d","w","n"].filter(k=>counts[k]).map(k=>`<div class="cat${k==="n"?"":" hatch"}" data-k="${k}"><span class="dot" style="color:${OUT_HEX[k]};background-color:${OUT_HEX[k]}"></span>${both(OUT_LBL[k],OUT_SHORT[k])}<b>${counts[k]}</b></div>`).join("")
+    +`<div class="rimKey" data-k="rim"><i></i><span>${both("Deepest May on record: lit where the water falls below it","Rim: deepest May on record, lit where the water falls below")}</span></div>`;
 }
 const nStress=M.filter(m=>m.cat&&m.cat!=="safe").length;
 const nAssessed=M.filter(m=>m.cat).length;
@@ -1650,6 +1743,18 @@ function refreshHUD(){
     yearTag.style.color=proj?"#e6b85c":"var(--cyan)";
     statLine.innerHTML=proj?`<strong>${M.filter(broken).length}</strong> mandals past their deepest May`:`coloured by the May ${TARGET_YEAR} outlook`;
     updateOutlookKpis();
+  }
+  const phoneStat=document.getElementById("phoneStat");
+  if(mode==="outlook"){
+    const shown=M.filter(m=>m.o), past=shown.filter(broken);
+    phoneStat.innerHTML=proj
+      ? `<strong>${past.length}</strong> of ${shown.length} mandals past their deepest May \u00B7 <strong>${lakhs(past.reduce((n,m)=>n+(m.o.p||0),0))}</strong> people`
+      : `May ${YEARS[year]} as measured \u00B7 coloured by the May ${TARGET_YEAR} outlook`;
+  }else if(mode==="stress"){
+    phoneStat.innerHTML=`<strong>${nStress}</strong> of ${nAssessed} matched mandals non-safe \u00B7 CGWB 2024`;
+  }else{
+    const recorded=recordedAt(year).length;
+    phoneStat.innerHTML=`<strong>${fmt1(meanByYear[year])} m</strong> mean depth \u00B7 May ${YEARS[year]} \u00B7 ${recorded} of ${NM} recorded`;
   }
   const sliderMax=mode==="outlook"?NY:NY-1, sliderAt=proj?NY:year;
   slider.max=sliderMax; slider.value=sliderAt;
@@ -1801,6 +1906,9 @@ updateEncodingNote();
 /* ============================== resize & loop ============================== */
 const railObserver=new ResizeObserver(()=>document.documentElement.style.setProperty("--rail-bottom",`${document.getElementById("rail").getBoundingClientRect().bottom+12}px`));
 railObserver.observe(document.getElementById("rail"));
+let refitTimer=0;
+const bandObserver=new ResizeObserver(()=>{clearTimeout(refitTimer);refitTimer=setTimeout(fitPhone,60);});
+for(const id of ["rail","legend","titleBlock","mCard"]) bandObserver.observe(document.getElementById(id));
 const depthProbe=new THREE.LineSegments(new THREE.BufferGeometry(),new THREE.LineBasicMaterial({color:0xd5efe9,transparent:true,opacity:.82,depthTest:false}));
 depthProbe.renderOrder=8;scene.add(depthProbe);
 const probeTag=document.getElementById("probeTag"),probeLeader=document.getElementById("probeLeader"),probePoint=new THREE.Vector3();
@@ -1846,6 +1954,7 @@ function resize(){
   const w=innerWidth,h=innerHeight;
   renderer.setSize(w,h,false);
   camera.aspect=w/h; camera.updateProjectionMatrix();
+  fitPhone();
   crystalMat.uniforms.uFogScale.value=w<=760?Math.max(1,fitRadius(12.9)/15):1;
   if(!interacted)radius=fitRadius(12.9);
   sizeTargets(w,h);
@@ -1892,7 +2001,12 @@ function loop(t){
   updateCamera();
   updateDistrictLabels();
   updateDepthProbe();
-  cN.style.transform=`rotate(${-theta}rad)`;
+  if(PHONE()){
+    /* Point at north as the camera actually shows it: project a step north of the target. */
+    _fp.copy(target).project(camera); const x0=_fp.x, y0=_fp.y;
+    _fp.set(target.x,target.y,target.z-1).project(camera);
+    cN.style.transform=`rotate(${Math.atan2(_fp.x-x0,_fp.y-y0)}rad)`;
+  }else cN.style.transform=`rotate(${-theta}rad)`;
   pick();
   if(window.__DEBUG_HUD){
     let el=document.getElementById("dbgHud");
