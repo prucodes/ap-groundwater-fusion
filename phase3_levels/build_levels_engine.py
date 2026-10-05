@@ -610,6 +610,14 @@ def main():
         f"after holding out {len(latest):,} latest targets"
     )
     lower, point, upper, models, diagnostics = calibrated_predict(train, latest)
+    # APWRIMS posts a month within days and CHIRPS about three weeks after it,
+    # so the newest month can reach the model before its rain does. Its
+    # estimates are made without that month's rain and remade when it arrives.
+    rain_through = str(df.loc[df.rain_1m.notna(), "date"].max())
+    without_rain = latest[latest.rain_1m.isna()]
+    if len(without_rain):
+        print(f"  {len(without_rain)} latest targets ({', '.join(sorted(without_rain.date.unique()))}) "
+              f"estimated before their rainfall was published (rain runs to {rain_through})")
     joblib.dump(
         {
             "m50": models["p50"],
@@ -671,6 +679,11 @@ def main():
         "modelVersion": MODEL_VERSION,
         "trainingPeriod": {"start": str(train.date.min()), "end": str(train.date.max())},
         "targetPeriodRange": {"start": str(latest.date.min()), "end": str(latest.date.max())},
+        "rainfall": {
+            "throughPeriod": rain_through,
+            "targetsWithoutRainfall": int(len(without_rain)),
+            "periodsWithoutRainfall": sorted(str(d) for d in without_rain.date.unique()),
+        },
         "featureNames": NUM + CAT,
         "targetVariable": "change_from_previous_month",
         "intervalType": "conformalised_quantile_p10_p90",

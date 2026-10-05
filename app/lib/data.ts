@@ -203,6 +203,8 @@ export type MonsoonWatch = {
     firstYear: number;
     source: string;
     product: string;
+    /** Groundwater months the satellite rain has not reached yet (CHIRPS posts ~3 weeks after a month). */
+    notYetPublished?: string[];
   } | null;
   elNinoRainfall: {
     swMonsoon: MonsoonComposite | null;

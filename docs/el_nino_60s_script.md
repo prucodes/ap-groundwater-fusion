@@ -33,6 +33,21 @@ line runs faster than 171.
 | 7 | 0:46–0:53 | Across forty-five years an El Niño costs Andhra Pradesh thirteen percent of its monsoon rain. This year, forty-two. | **−13.0% usually · −41.5% this year** | The 46-column rainfall chart, El Niño years in red, this year outlined. |
 | 8 | 0:53–1:00 | Today the water table is lower than it was in May across sixty-three percent of mandals. That has never happened. | **62.7% of mandals** *· 8,029 million m³ short* | The recharge map fills in, mandal by mandal. Hold on the red. |
 
+### The figures on screen, as read
+
+Lines 6–8 were written from `app/data/monsoon_watch.json` as generated on
+2026-10-03: groundwater May → August 2026, rain June–August 2026. The live page
+moves every Monday, so re-read these on the day of recording and update this
+table with the cards; the test holds the cards to this table, not to the week.
+
+| Figure | Value |
+|---|---|
+| Ocean Niño Index, JJA 2026 | +1.80 |
+| Mandals lower than in May | 62.7% |
+| Rain this year | −41.5% |
+| An El Niño monsoon, usually | −13.0% |
+| Short of a normal season | 8,029 million m³ |
+
 ---
 
 ## Sources, line by line

@@ -275,8 +275,15 @@ def test_every_row_has_rainfall_and_it_comes_from_the_finer_product():
     # Keyed by boundary, because sixteen district/mandal name pairs repeat.
     assert not table.duplicated(["boundary_index", "date"]).any()
     frame = engine.build_frame()
-    assert frame.rain_1m.notna().all(), "no mandal-month may be left without rainfall"
-    assert frame.rain_1m.between(0, 3000).all()
+    # APWRIMS posts a month within days and CHIRPS about three weeks after it,
+    # so the newest month may arrive before its rain. Only that month may lack
+    # it: any month the rainfall record covers must reach every row.
+    covered = frame.loc[frame.rain_1m.notna(), "date"].max()
+    missing = frame[frame.rain_1m.isna()]
+    assert (missing.date > covered).all(), "a month the rainfall record covers was left without rainfall"
+    assert missing.date.nunique() <= 1, f"rainfall is more than a month behind: {sorted(missing.date.unique())}"
+    assert covered >= min(table.date.max(), frame.date.max()), "rows stop reading rain before the CHIRPS record ends"
+    assert frame.rain_1m.dropna().between(0, 3000).all()
 
 
 def test_power_still_stands_behind_chirps():

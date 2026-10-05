@@ -133,6 +133,7 @@ export default function MonsoonPage() {
                 {rain.product.split(" monthly")[0]} · {formatNumber(rain.mm)} mm against {formatNumber(rain.normalMm)} normal · {rain.rankDriest}
                 {rain.rankDriest === 1 ? "st" : rain.rankDriest === 2 ? "nd" : rain.rankDriest === 3 ? "rd" : "th"}
                 {" "}driest of {rain.ofYears} since {rain.firstYear}
+                {rain.notYetPublished?.length ? <> · {rain.notYetPublished.map(p => monthName(p).split(" ")[0]).join(", ")} rain not yet published</> : null}
               </em>
             </div>
           ) : null}
