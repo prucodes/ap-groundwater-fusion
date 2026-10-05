@@ -78,6 +78,7 @@ const caveats = [
   modelCard.disclosures.spatial,
   modelCard.disclosures.crossNetwork,
   modelCard.disclosures.climateBalance,
+  ...(modelCard.disclosures.rainfall ? [modelCard.disclosures.rainfall] : []),
 ];
 
 export default function MethodologyPage() {

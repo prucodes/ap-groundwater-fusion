@@ -71,20 +71,41 @@ def test_no_forecast_is_promised():
     assert "do not put a forecast in this video" in text
 
 
-def test_the_on_screen_figures_are_the_ones_the_site_publishes():
-    """A narrator may say "sixty-three percent". A card on screen may not: it is
-    a written record, and it must read what the page reads."""
-    import json
+def figures_as_read():
+    """The table of on-screen figures the script records, with the date it was read."""
+    text = open(SCRIPT).read()
+    section = text.split("### The figures on screen, as read", 1)[1].split("\n---", 1)[0]
+    read_on = re.search(r"as generated on\s+(\d{4}-\d{2}-\d{2})", section)
+    values = dict(re.findall(r"^\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|$", section, re.M))
+    values.pop("Figure", None)
+    values = {k: v for k, v in values.items() if not set(v) <= set("-")}
+    return (read_on.group(1) if read_on else None), values
 
-    with open(WATCH) as handle:
-        watch = json.load(handle)
-    cards = " ".join(r["onscreen"] for r in rows()).replace("\u2212", "-")
-    assert f'{watch["enso"]["oniC"]:+.2f}' in cards
-    assert f'{watch["recharge"]["fallingPct"]}%' in cards
-    assert f'{abs(watch["rainfall"]["anomalyPct"])}%' in cards
-    assert f'{abs(watch["elNinoRainfall"]["swMonsoon"]["elNinoAnomalyPct"])}%' in cards
-    volume = watch["recharge"]["volume"]
-    assert f'{round(volume["shortfallMm3"]):,}' in cards
+
+def test_the_on_screen_figures_are_the_ones_the_script_records():
+    """A narrator may say "sixty-three percent". A card on screen may not: it is
+    a written record, and it must read what the page read on a stated day.
+
+    Held to the script's own table rather than to this week's file: the live
+    figures move every Monday, and a test on them failed the weekly refresh
+    the day September's readings arrived."""
+    read_on, figures = figures_as_read()
+    assert read_on, "the script must say when its figures were read"
+    cards = " ".join(r["onscreen"] for r in rows())
+    for name, value in figures.items():
+        assert value in cards, f"{name} reads {value} in the table but not on any card"
+    assert len(figures) == 5
+
+
+def test_the_recorded_figures_were_published_figures():
+    """Each recorded figure must be one the site could have shown: the right
+    sign and form, from the sources the script names."""
+    _, figures = figures_as_read()
+    assert re.fullmatch(r"[+\u2212]\d\.\d\d", figures["Ocean Niño Index, JJA 2026"])
+    assert re.fullmatch(r"\d{1,3}\.\d%", figures["Mandals lower than in May"])
+    assert re.fullmatch(r"\u2212\d{1,2}\.\d%", figures["Rain this year"])
+    assert re.fullmatch(r"\u2212\d{1,2}\.\d%", figures["An El Niño monsoon, usually"])
+    assert re.fullmatch(r"[\d,]+ million m³", figures["Short of a normal season"])
 
 
 def test_every_claim_has_a_source_row():

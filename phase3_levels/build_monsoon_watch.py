@@ -26,6 +26,7 @@ Outputs app/data/monsoon_watch.json.
 """
 import csv
 import datetime
+import itertools
 import json
 import math
 import os
@@ -481,7 +482,11 @@ def build():
         rain["year"] = rain.date.str.slice(0, 4).astype(int)
         rain["mon"] = rain.date.str.slice(5, 7).astype(int)
         district_of = rain.drop_duplicates("boundary_index").set_index("boundary_index").district.to_dict()
-        elapsed = tuple(m for m in SW_MONSOON if m <= target_mm)
+        # APWRIMS posts a month within days; CHIRPS about three weeks after it
+        # ends. Until then the rain is read over the monsoon months it covers,
+        # and says so, rather than dropping the whole section.
+        covered = set(rain.loc[rain.year == year, "mon"])
+        elapsed = tuple(itertools.takewhile(lambda m: m in covered, (m for m in SW_MONSOON if m <= target_mm)))
         if elapsed:
             totals = seasonal_totals(rain, elapsed, "mm")
             yearly = totals.groupby("year")["mm"].mean()
@@ -489,6 +494,8 @@ def build():
                 other = yearly.drop(year)
                 rainfall = {
                     "months": f"{elapsed[0]:02d}-{elapsed[-1]:02d}",
+                    # The groundwater month the rain has not reached yet, if any.
+                    "notYetPublished": [f"{year}-{m:02d}" for m in SW_MONSOON if elapsed[-1] < m <= target_mm],
                     "mm": round(float(yearly[year]), 1),
                     "normalMm": round(float(other.mean()), 1),
                     "anomalyPct": round(float(100 * (yearly[year] / other.mean() - 1)), 1),

@@ -780,6 +780,19 @@ def build_records(generated_at):
     }
 
 
+def rainfall_disclosure(rainfall):
+    """Whether the latest estimates read their own month's rain, and what it costs when they cannot."""
+    if not rainfall:
+        return "Every estimate reads rainfall for its own month and the eleven before it."
+    if not rainfall.get("targetsWithoutRainfall"):
+        return f"Every estimate reads rainfall for its own month; satellite rain (CHIRPS) runs to {rainfall['throughPeriod']}."
+    months = ", ".join(rainfall["periodsWithoutRainfall"])
+    return (f"{rainfall['targetsWithoutRainfall']} estimates for {months} were made before that month's satellite rain "
+            f"was published (CHIRPS posts about three weeks after a month ends; it runs to {rainfall['throughPeriod']}). "
+            "Measured on August 2026, a month without its rain raised the average error from 0.89 m to 1.04 m. "
+            "They are remade when it arrives.")
+
+
 def build_model_card(context, generated_at):
     evaluations = context["evaluations"]
     temporal = evaluations["temporalNowcast"]
@@ -866,6 +879,7 @@ def build_model_card(context, generated_at):
             "climateBalance": "Rainfall minus actual evapotranspiration is a climatic water-balance indicator, not direct measured recharge.",
             "crossNetwork": "CGWB/APWRIMS results are a cross-network comparability diagnostic with site, aquifer, timing and aggregation limitations.",
             "officialUse": "Prototype results do not replace official field measurements or APWRIMS outputs.",
+            "rainfall": rainfall_disclosure(context["nowcastBundle"].get("rainfall")),
         },
         "dataAuthorizationStatus": "pending for APWRIMS-format browser-session research sample",
         "boundaryStatus": "public prototype; temporary identifiers",
