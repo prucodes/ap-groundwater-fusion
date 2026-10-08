@@ -9,8 +9,8 @@
   2022,
   2023
  ],
- "mandals": 409,
- "stations": 934,
+ "mandals": 398,
+ "stations": 862,
  "minMoveM": 0.5,
  "frozenMonths": [
   "2021-03",
@@ -22,33 +22,33 @@
   "2021-12"
  ],
  "overall": {
-  "mandalWindows": 2064,
-  "clearMoves": 1416,
+  "mandalWindows": 1717,
+  "clearMoves": 1199,
   "direction": {
-   "forecast": 0.7111581920903954,
-   "measured": 0.769774011299435,
-   "seasonal": 0.6878531073446328
+   "forecast": 0.7464553794829024,
+   "measured": 0.76814011676397,
+   "seasonal": 0.7231025854879066
   },
   "errorM": {
-   "forecast": 2.4737011151346606,
-   "measured": 2.603215843023256,
-   "seasonal": 3.5551468023255812,
-   "noChange": 1.7505801841085273
+   "forecast": 2.847793334701514,
+   "measured": 2.758665695981363,
+   "seasonal": 3.619985730926034,
+   "noChange": 1.8334143855562026
   },
   "correlation": {
-   "forecast": 0.24804014951973552,
-   "measured": 0.30446431554741404
+   "forecast": 0.2707611818545798,
+   "measured": 0.3184121673213114
   },
   "bySeason": {
    "usual": {
-    "clearMoves": 974,
-    "forecast": 0.8788501026694046,
-    "measured": 0.8655030800821355
+    "clearMoves": 867,
+    "forecast": 0.8881199538638985,
+    "measured": 0.8742791234140715
    },
    "broke": {
-    "clearMoves": 442,
-    "forecast": 0.3416289592760181,
-    "measured": 0.5588235294117647
+    "clearMoves": 332,
+    "forecast": 0.37650602409638556,
+    "measured": 0.49096385542168675
    }
   }
  },
@@ -58,25 +58,24 @@
    "years": [
     2018,
     2019,
-    2020,
-    2022
+    2020
    ],
-   "mandalWindows": 988,
-   "clearMoves": 641,
+   "mandalWindows": 641,
+   "clearMoves": 424,
    "direction": {
-    "forecast": 0.672386895475819,
-    "measured": 0.7878315132605305,
-    "seasonal": 0.6318252730109204
+    "forecast": 0.7358490566037735,
+    "measured": 0.7924528301886793,
+    "seasonal": 0.7028301886792453
    },
    "errorM": {
-    "forecast": 2.6718284697658117,
-    "measured": 2.4160197368421055,
-    "seasonal": 3.65777024291498,
-    "noChange": 1.805280870445344
+    "forecast": 2.9804915870646314,
+    "measured": 2.73107488299532,
+    "seasonal": 3.8870039001560057,
+    "noChange": 2.056774570982839
    },
    "correlation": {
-    "forecast": 0.29219253463978906,
-    "measured": 0.3644227651956909
+    "forecast": 0.32888221919198485,
+    "measured": 0.4035301677285724
    }
   },
   "may_aug": {
@@ -90,18 +89,18 @@
    "mandalWindows": 1076,
    "clearMoves": 775,
    "direction": {
-    "forecast": 0.743225806451613,
+    "forecast": 0.752258064516129,
     "measured": 0.7548387096774194,
     "seasonal": 0.7341935483870968
    },
    "errorM": {
-    "forecast": 2.291777484674087,
+    "forecast": 2.768741680645047,
     "measured": 2.7751022304832715,
     "seasonal": 3.4609163568773234,
     "noChange": 1.700353159851301
    },
    "correlation": {
-    "forecast": 0.16730209246155497,
+    "forecast": 0.19893262934717051,
     "measured": 0.23377142486915456
    }
   }

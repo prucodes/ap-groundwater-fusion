@@ -7,6 +7,7 @@ ground-truth validation of either network or a universal model error floor.
 """
 import argparse, csv, datetime, json, math, os, re
 import numpy as np
+from series_quality import history_carried_forward  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.join(HERE, "..", "app", "data")
@@ -26,11 +27,12 @@ def evaluate():
         pts=[pt for ring in m["rings"] for pt in ring]
         if pts: cents[norm(m["m"])]=(sum(p[1] for p in pts)/len(pts), sum(p[0] for p in pts)/len(pts))
     apw = {}  # (mkey, YYYY-MM) -> level
+    carried = set(history_carried_forward())
     mk_pts = {}
     for r in csv.DictReader(open(os.path.join(HERE, "apwrims", "apwrims_gw_history.csv"))):
         try: lvl=float(r["level_mbgl"])
         except: continue
-        if not (0<lvl<60): continue
+        if not (0<lvl<60) or r["date"] in carried: continue
         mk=norm(r["mandal"]); apw[(mk, r["date"])]=lvl
         if mk in cents: mk_pts[mk]=cents[mk]
     mks=list(mk_pts); mlat=np.array([mk_pts[k][0] for k in mks]); mlon=np.array([mk_pts[k][1] for k in mks])

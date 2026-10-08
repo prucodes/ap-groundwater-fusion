@@ -18,6 +18,7 @@ import os
 
 import numpy as np
 import pandas as pd
+from series_quality import history_carried_forward  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "data", "mandal_series_discontinuities.csv")
@@ -74,6 +75,7 @@ def main():
     parser.add_argument("--history", default=os.path.join(HERE, "apwrims", "apwrims_gw_history.csv"))
     args = parser.parse_args()
     history = pd.read_csv(args.history)
+    history = history[~history.date.isin(history_carried_forward(args.history))]
     end = pd.PeriodIndex(history.date, freq="M").max()
     found = scan(history, end)
     fields = ["mandal_uuid", "district", "mandal", "regime_start", "median_before_m",

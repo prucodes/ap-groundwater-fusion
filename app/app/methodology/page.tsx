@@ -80,6 +80,7 @@ const caveats = [
   modelCard.disclosures.crossNetwork,
   modelCard.disclosures.climateBalance,
   ...(modelCard.disclosures.rainfall ? [modelCard.disclosures.rainfall] : []),
+  ...(modelCard.disclosures.carriedForward ? [modelCard.disclosures.carriedForward] : []),
 ];
 
 export default function MethodologyPage() {
@@ -220,22 +221,26 @@ export default function MethodologyPage() {
           <p>
             <strong>When the three-month forecast can and cannot be trusted in a dry year.</strong>{" "}Retrained every quarter since
             2018 and scored on what followed, forecasts whose three months turned out at least 25% drier than normal during the
-            monsoon expected about 1 m more recharge than happened (2.15 m mean error against 1.79 m for assuming no change).
+            monsoon expected about 1.2 m more recharge than happened (2.26 m mean error against 1.81 m for assuming no change).
             That happens when the forecast is made before the season fails, as from June for September: nothing measured then
-            says the monsoon will fail. Once the season&rsquo;s deficit is measured, from August on, the bias is small (about
-            0.2 m) and the forecast beats no change. Shrinking toward no change and correcting by past bias were both tested;
+            says the monsoon will fail. Forecasts made from October, once the season is over, carry no such bias (between
+            &minus;0.3 m and +0.6 m). Shrinking toward no change and correcting by past bias were both tested;
             neither improved every period, so the released forecast is unchanged. The model was also re-run on the State&rsquo;s
             official mandal outlines: error moved by under 0.3% (1.797 m against 1.800 m), so its inputs are unchanged.
           </p>
           <p>
             <strong>Each released forecast says how such forecasts have fared.</strong>{" "}The same backtest, split by the month a
             forecast is made and by whether the rain over the three months before it ran short, near normal or above, shows where
-            the forecast earns its place: made in June it beat assuming no change by 14&ndash;25% whatever the rain; made in July,
-            only after a dry spell (19%); made in August it did about as well as no change, and in September worse. Every forecast carries the verdict of its own cell, with the error behind it,
+            the forecast earns its place: made in June it beat assuming no change by 11&ndash;21% whatever the rain; made in July,
+            after a dry or ordinary spell (24% and 16%) but not after a wet one; made in August or September, after an ordinary
+            spell (19% and 12%), and about as well as no change after a dry or wet one. Every forecast carries the verdict of its own cell, with the error behind it,
             and &ldquo;lower confidence&rdquo; where it has not beaten no change. A rule built on El Ni&ntilde;o at the forecast
             date was tested first and rejected: forecasts made while the Pacific was already warm beat no change as often as any
             others. In October 2026 the rainfall record was rebuilt from 1981 so that mandals drawn in more than one part average
-            rain over every part (seven mandals moved by 1.8&ndash;3.1%); retrained on it, the forecast&rsquo;s error is 1.794 m.
+            rain over every part (seven mandals moved by 1.8&ndash;3.1%); retrained on it, the forecast&rsquo;s error was 1.794 m.
+            Later that month the months the State carried forward in 2021 were taken out as missing (see the caveats below):
+            over the backtest since 2018 the released forecast&rsquo;s error fell from 2.22 m to 2.17 m; over the months since
+            2024 it rose from 1.73 m to 1.81 m, still well under assuming no change (2.22 m).
           </p>
         </div>
       </section>
