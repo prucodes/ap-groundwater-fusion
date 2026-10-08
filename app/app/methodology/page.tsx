@@ -4,7 +4,7 @@ import { MethodologyFlow } from "../../components/MethodologyFlow";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconLeaf, IconSatellite } from "../../components/icons";
-import { mapGeometry, modelCard } from "../../lib/data";
+import { basePath, mapGeometry, modelCard } from "../../lib/data";
 import { stateSummary } from "../../lib/stateSummary";
 import { checkRecord } from "../../lib/cropWaterRecord";
 import { summerOutlook as summer } from "../../lib/summer";
@@ -95,6 +95,18 @@ export default function MethodologyPage() {
         brief={brief("/methodology")}
         showChips={false}
         variant="compact"
+        actions={
+          <>
+            <a className="heroAction heroActionLead" href={`${basePath}/brief/ap-water-intelligence-brief.pdf`} download="AP-Water-Intelligence-brief.pdf" data-testid="methodology-brief-pdf">
+              <span className="heroActionLabel">Download the six-page brief</span>
+              <span className="heroActionSub">Sources, model and this week&rsquo;s maps (PDF)</span>
+            </a>
+            <Link className="heroAction" href="/brief/">
+              <span className="heroActionLabel">Read it on screen</span>
+              <span className="heroActionSub">The same brief as a page</span>
+            </Link>
+          </>
+        }
       />
       <DataProvenanceDates />
 

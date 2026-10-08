@@ -26,6 +26,9 @@ export default defineConfig({
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3100",
     trace: "off",
+    // CI runners have no GPU: SwiftShader draws the 3D view, and newer Chromium
+    // only allows it with this flag.
+    launchOptions: { args: ["--ignore-gpu-blocklist", "--enable-unsafe-swiftshader"] },
   },
   projects: [
     {

@@ -84,7 +84,7 @@ export default function MonsoonPage() {
       </div>
 
       <WatchEvidenceStatus />
-      <nav className={styles.nav} aria-label="Monsoon sections"><a href="#season-evidence">Season evidence</a><a href="#monsoon-film-title">Film brief</a><a href="#enso-outlook">El Niño outlook</a><a href="#pacific-evidence">Pacific record</a><a href="#monsoon-map">Groundwater map</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
+      <nav className={`${styles.nav} jumpNav`} aria-label="Monsoon sections"><a href="#season-evidence">Season evidence</a><a href="#monsoon-film-title">Film brief</a><a href="#enso-outlook">El Niño outlook</a><a href="#pacific-evidence">Pacific record</a><a href="#monsoon-map">Groundwater map</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
 
       <section className={styles.season} id="season-evidence" aria-label="Season evidence">
         <div className="cardHead">

@@ -43,7 +43,10 @@ const shortDay = (iso: string | null | undefined) => {
   return match ? `${Number(match[3])} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][Number(match[2]) - 1]}` : "—";
 };
 
-export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | null }) {
+/** The summer outlook's headline, worked out on the server (the outlook file stays out of the browser). */
+export type OverviewSummer = { beyond: number; beyondDeep: number; deepM: number; peopleDeep: string | null };
+
+export function OverviewCockpit({ agreement, summer }: { agreement: OverviewAgreement | null; summer?: OverviewSummer | null }) {
   const s = dashboardSummary.summary;
   const [selectedId, setSelectedId] = useState(mandals[0]?.id);
   const [mapView, setMapView] = useState<"status" | MandalHeatLayerKey | WaterMandalLayer>("status");
@@ -87,7 +90,7 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
   return (
     <div className="pageWrap">
       <HeaderHero
-        title="AP Groundwater Verification Cockpit"
+        title="Andhra Pradesh water this week"
         brief={brief("/", groundwaterStressNow())}
         showBanner={false}
         showChips={false}
@@ -106,205 +109,45 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
         }
       />
 
-      <div className="sourceMiniBar">
-        <span>
-          <strong>Research evidence mode.</strong> Source authorization, official identities, method approval and field validation remain pending.
-        </span>
-        <span className="sourceMiniMeta">
-          {datasetManifest.counts.modelledRecordCount} modelled · {datasetManifest.counts.boundaryFeatureCount} boundaries · GRACE fetch{" "}
-          {s.sample_fetch_date}
-        </span>
-      </div>
-
-      <div className="modelValueRow stagger">
-        <KpiCard
-          icon={<IconDroplet />}
-          label="Median Modelled Nowcast"
-          value={<>{medianModelledDepth !== null ? formatNumber(medianModelledDepth) : "—"}<span className="unit">m</span></>}
-          foot={`m below ground / targets ${datasetManifest.periods.modelTargetPeriodRange.start} to ${datasetManifest.periods.modelTargetPeriodRange.end}`}
-          accent="var(--teal)"
-        />
-        <KpiCard
-          icon={<IconActivity />}
-          label="Deepest Modelled Mandal"
-          value={<>{deepestNowcast?.estimate_mbgl !== null && deepestNowcast?.estimate_mbgl !== undefined ? formatNumber(deepestNowcast.estimate_mbgl) : "—"}<span className="unit">m</span></>}
-          foot={deepestNowcast ? `${titleCase(deepestNowcast.mandal_name)} · ${titleCase(deepestNowcast.district_name)}` : "No modelled row"}
-          footAccent
-          accent="var(--rust)"
-        />
-        <KpiCard
-          icon={<IconShield />}
-          label="Median Model Band"
-          value={<>{medianBandWidth !== null ? formatNumber(medianBandWidth) : "—"}<span className="unit">m</span></>}
-          foot="typical P10–P90 width, not guaranteed confidence"
-          accent="var(--amber)"
-        />
-        <KpiCard
-          icon={<IconLayers />}
-          label="Outside the Model Band"
-          value={<CountUp value={outsideBandCount} />}
-          foot="reading outside its own P10–P90 · verify before use"
-          footAccent
-          accent="var(--cyan)"
-        />
-      </div>
-
-      <details className="overviewEvaluation">
-      <summary><span>Model evaluation &amp; uncertainty</span><strong>{formatNumber(temporalEval.model.maeM)} m MAE</strong><span>Temporal holdout / not a field replacement</span></summary>
-      <div className="modelValidationStrip">
-        <div className="modelValidationIntro">
-          <span className="validationEyebrow">How accurate is β?</span>
-          <strong>Validated temporal nowcast / gap-fill, not a replacement for field sensors.</strong>
-          <span>
-            Evaluation holds out recent APWRIMS-format mandal-months ({temporalEval.evaluationPeriod.start}–
-            {temporalEval.evaluationPeriod.end}) and compares the calculated level against observed depth.
+      {/* Four lines first: what moved in the ground, the rain, the manual and the
+          summer ahead, one figure each. The full set of numbers waits below. */}
+      <section className="overviewHeadlines" aria-label="This week in four lines">
+        <Link className="headlineCard" href="/map/">
+          <span className="headlineKicker"><IconDroplet /> Groundwater</span>
+          <strong>{stateSummary.state?.currentM != null ? <>{stateSummary.state.currentM.toFixed(1)}<small>m below ground</small></> : "No reading"}</strong>
+          <span className="headlineText">
+            The State&rsquo;s wells on average{stateSummary.state?.vsYearAgoM != null ? `, ${Math.abs(stateSummary.state.vsYearAgoM).toFixed(1)} m ${stateSummary.state.vsYearAgoM > 0 ? "deeper" : "shallower"} than a year ago` : ""}.
           </span>
-        </div>
-        <div className="validationMetric">
-          <span>MAE</span>
-          <strong>{formatNumber(temporalEval.model.maeM)} m</strong>
-          <em>average absolute error</em>
-        </div>
-        <div className="validationMetric">
-          <span>vs baseline</span>
-          <strong>{baselineLiftPct}% better</strong>
-          <em>previous-year same-month</em>
-        </div>
-        <div className="validationMetric">
-          <span>P10–P90</span>
-          <strong>{formatNumber(intervalEval.empiricalCoveragePct)}%</strong>
-          <em>actual holdout coverage</em>
-        </div>
-        <Link className="validationLink" href="/estimates">
-          Open model card <IconArrowRight />
+          <span className="headlineGo">Mandal Map <IconArrowRight /></span>
         </Link>
-      </div>
-      <div className="depthBandStrip">
-        <div className="depthBandIntro"><span className="validationEyebrow">Accuracy by depth</span><span>Error by depth band versus carrying the last reading forward.</span></div>
-        {temporalEval.depthBands.map(band => <div className="depthBandCell" key={band.band}><span>{band.band}</span><strong>{formatNumber(band.maeM)} m</strong><em>vs {formatNumber(band.lastReadingMaeM)} m baseline</em></div>)}
-      </div>
-      </details>
-
-      {/* The nowcast answers "how deep"; this answers "is the season refilling
-          it". Only raised to the front page when this season is outside the
-          range of every season it can be compared with. */}
-      {seasonFailing ? (
-        <div className="monsoonStrip">
-          <div className="monsoonStripIntro">
-            <span className="validationEyebrow">Monsoon watch</span>
-            <span>
-              {watch.enso?.state === "el_nino" ? (
-                <>
-                  The published ONI indicates <strong>{watch.enso.strength} El Niño conditions</strong>.
-                  More monitored source series are deeper than May than in the available comparison seasons.
-                </>
-              ) : (
-                <>
-                  More monitored source series are deeper than May than in the available comparison seasons.
-                </>
-              )}
+        <Link className="headlineCard" href="/monsoon/">
+          <span className="headlineKicker"><IconCloudRain /> Monsoon</span>
+          <strong>{formatNumber(watch.recharge.fallingPct)}%<small>of mandal series lower than in May</small></strong>
+          <span className="headlineText">
+            {watch.rainfall ? `Rain ${Math.abs(watch.rainfall.anomalyPct).toFixed(0)}% ${watch.rainfall.anomalyPct < 0 ? "below" : "above"} normal, the ${watch.rainfall.rankDriest === 1 ? "driest" : `${watch.rainfall.rankDriest}${watch.rainfall.rankDriest === 2 ? "nd" : watch.rainfall.rankDriest === 3 ? "rd" : "th"} driest`} of ${watch.rainfall.ofYears} years.` : "The season's recharge, mandal by mandal."}
+            {seasonFailing ? ` More than any past season, which ranged ${formatNumber(priorFallingLow)} to ${formatNumber(priorFallingHigh)}%.` : ""}
+          </span>
+          <span className="headlineGo">Monsoon Watch <IconArrowRight /></span>
+        </Link>
+        <Link className="headlineCard" href="/drought/">
+          <span className="headlineKicker"><IconShield /> Drought manual</span>
+          <strong>{droughtSummary.state.trigger1}<small>mandals meet the rainfall trigger</small></strong>
+          <span className="headlineText">
+            {droughtSummary.state.counts.severe} read severe and {droughtSummary.state.counts.moderate} moderate on impact. Evidence for the manual, not a declaration.
+          </span>
+          <span className="headlineGo">Drought Watch <IconArrowRight /></span>
+        </Link>
+        {summer ? (
+          <Link className="headlineCard" href="/summer/">
+            <span className="headlineKicker"><IconWaves /> Next summer</span>
+            <strong>{summer.beyond}<small>mandals heading past their deepest May</small></strong>
+            <span className="headlineText">
+              {summer.beyondDeep} of them more than {summer.deepM} m down{summer.peopleDeep ? `, home to about ${summer.peopleDeep}` : ""}. A projection from past winters.
             </span>
-          </div>
-          <div className="monsoonStripCell">
-            <span>Lower than May</span>
-            <strong>{formatNumber(watch.recharge.fallingPct)}%</strong>
-            <em>
-              source-series share / prior {formatNumber(priorFallingLow)}–{formatNumber(priorFallingHigh)}%
-            </em>
-          </div>
-          {watch.rainfall ? (
-            <div className="monsoonStripCell">
-              <span>Rain vs normal</span>
-              <strong>{formatNumber(watch.rainfall.anomalyPct)}%</strong>
-              <em>
-                dryness rank {watch.rainfall.rankDriest} of{" "}
-                {watch.rainfall.ofYears}
-              </em>
-            </div>
-          ) : null}
-          {watch.enso ? (
-            <div className="monsoonStripCell">
-              <span>Ocean state</span>
-              <strong>
-                {watch.enso.oniC > 0 ? "+" : ""}
-                {watch.enso.oniC.toFixed(2)} °C
-              </strong>
-              <em>{watch.enso.state === "el_nino" ? "El Niño" : watch.enso.state === "la_nina" ? "La Niña" : "Neutral"}, {watch.enso.strength}</em>
-            </div>
-          ) : null}
-          <div className="monsoonStripCell">
-            <span>Provisional series flags</span>
-            <strong>{watch.recharge.flaggedShort}</strong>
-            <em>baseline review pending</em>
-          </div>
-          <Link className="validationLink" href="/monsoon">
-            Open monsoon watch <IconArrowRight />
+            <span className="headlineGo">Summer Outlook <IconArrowRight /></span>
           </Link>
-        </div>
-      ) : null}
-
-      {/* The season beside the groundwater: measured gauges, modelled soil and
-          measured storage, each dated by its own source. Context only. */}
-      {season.rain || season.soil || season.reservoirs ? (
-        <section className="monsoonStrip seasonStrip" aria-label="This water year so far">
-          <div className="monsoonStripIntro">
-            <span className="validationEyebrow">This water year so far</span>
-            <span>
-              The state&rsquo;s rain gauges, modelled soil moisture and reservoir storage, from APWRIMS, each with its own date.
-              Context beside the groundwater record: none of it changes a groundwater status.
-            </span>
-          </div>
-          {season.rain ? (
-            <div className="monsoonStripCell">
-              <span>Gauge rain vs normal</span>
-              <strong>{signedPct(season.rain.deviationPct)}</strong>
-              <em>{shortDay(season.rain.start)} to {shortDay(season.rain.end)} · {rainShort} of {season.rain.mandals} mandals deficient or worse</em>
-            </div>
-          ) : null}
-          {season.soil ? (
-            <div className="monsoonStripCell">
-              <span>Soil moisture, {season.soil.depthCm} cm</span>
-              <strong>{season.soil.belowOwnMedian} / {season.soil.withBaseline}</strong>
-              <em>mandals below their usual {shortDay(season.soil.asOf)} level · modelled</em>
-            </div>
-          ) : null}
-          {season.reservoirs ? (
-            <div className="monsoonStripCell">
-              <span>Reservoir storage</span>
-              <strong>{formatNumber(season.reservoirs.storagePct)}%</strong>
-              <em>of capacity · {formatNumber(season.reservoirs.lastYearPct)}% a year ago</em>
-            </div>
-          ) : null}
-          {agreement ? (
-            <div className="monsoonStripCell">
-              <span>Three signals agree</span>
-              <strong>{agreement.agreeAll}</strong>
-              <em>mandals where groundwater, gauge rain and soil all point to stress</em>
-            </div>
-          ) : null}
-          <div className="monsoonStripCell">
-            <span>Drought manual, step 1</span>
-            <strong>{droughtSummary.state.trigger1}</strong>
-            <em>
-              mandals with a dry spell · {droughtSummary.state.counts.severe} severe, {droughtSummary.state.counts.moderate} moderate on impact ·{" "}
-              <Link href="/drought">Drought Watch</Link>
-            </em>
-          </div>
-          {stateSummary.state?.currentM !== null && stateSummary.state ? (
-            <div className="monsoonStripCell" data-testid="state-network-cell">
-              <span>State wells, early Sep</span>
-              <strong>{`${stateSummary.state.currentM?.toFixed(1)} m`}</strong>
-              <em>
-                {`below ground on average · ${stateSummary.state.sinceMayM !== null ? `${stateSummary.state.sinceMayM.toFixed(1)} m deeper than May` : ""} · `}
-                {`${stateSummary.state.vsYearAgoM !== null ? `${stateSummary.state.vsYearAgoM.toFixed(1)} m deeper than a year ago` : ""} · ${stateSummary.state.stationsTotal.toLocaleString("en-US")} stations (AWARE)`}
-              </em>
-            </div>
-          ) : null}
-          <Link className="validationLink" href="/agriculture#agriculture-watch">
-            Open the water watch <IconArrowRight />
-          </Link>
-        </section>
-      ) : null}
+        ) : null}
+      </section>
 
       {/* One statewide average hides the thing a reader actually needs: the
           error where THEIR water sits. Shown against the rule the model has to
@@ -391,6 +234,129 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
             </div>
           )}
 
+        </section>
+
+          <section className="card">
+            <div className="cardHead">
+              <div className="cardTitle">
+                <span className="titleIcon">
+                  <IconGlobe />
+                </span>
+                Status Summary
+              </div>
+              <Link className="linkAction" href="/watchlist">
+                Watchlist <IconArrowRight />
+              </Link>
+            </div>
+            <StatusSummaryCard />
+          </section>
+        </div>
+
+        <aside className="overviewSideStack">
+          <SelectedMandalPanel mandal={current} />
+        </aside>
+      </div>
+
+      {/* The season beside the groundwater: measured gauges, modelled soil and
+          measured storage, each dated by its own source. Context only. */}
+      {season.rain || season.soil || season.reservoirs ? (
+        <section className="monsoonStrip seasonStrip" aria-label="This water year so far">
+          <div className="monsoonStripIntro">
+            <span className="validationEyebrow">This water year so far</span>
+            <span>
+              The state&rsquo;s rain gauges, modelled soil moisture and reservoir storage, from APWRIMS, each with its own date.
+              Context beside the groundwater record: none of it changes a groundwater status.
+            </span>
+          </div>
+          {season.rain ? (
+            <div className="monsoonStripCell">
+              <span>Gauge rain vs normal</span>
+              <strong>{signedPct(season.rain.deviationPct)}</strong>
+              <em>{shortDay(season.rain.start)} to {shortDay(season.rain.end)} · {rainShort} of {season.rain.mandals} mandals deficient or worse</em>
+            </div>
+          ) : null}
+          {season.soil ? (
+            <div className="monsoonStripCell">
+              <span>Soil moisture, {season.soil.depthCm} cm</span>
+              <strong>{season.soil.belowOwnMedian} / {season.soil.withBaseline}</strong>
+              <em>mandals below their usual {shortDay(season.soil.asOf)} level · modelled</em>
+            </div>
+          ) : null}
+          {season.reservoirs ? (
+            <div className="monsoonStripCell">
+              <span>Reservoir storage</span>
+              <strong>{formatNumber(season.reservoirs.storagePct)}%</strong>
+              <em>of capacity · {formatNumber(season.reservoirs.lastYearPct)}% a year ago</em>
+            </div>
+          ) : null}
+          {agreement ? (
+            <div className="monsoonStripCell">
+              <span>Three signals agree</span>
+              <strong>{agreement.agreeAll}</strong>
+              <em>mandals where groundwater, gauge rain and soil all point to stress</em>
+            </div>
+          ) : null}
+          <div className="monsoonStripCell">
+            <span>Drought manual, step 1</span>
+            <strong>{droughtSummary.state.trigger1}</strong>
+            <em>
+              mandals with a dry spell · {droughtSummary.state.counts.severe} severe, {droughtSummary.state.counts.moderate} moderate on impact ·{" "}
+              <Link href="/drought">Drought Watch</Link>
+            </em>
+          </div>
+          {stateSummary.state?.currentM !== null && stateSummary.state ? (
+            <div className="monsoonStripCell" data-testid="state-network-cell">
+              <span>State wells, early Sep</span>
+              <strong>{`${stateSummary.state.currentM?.toFixed(1)} m`}</strong>
+              <em>
+                {`below ground on average · ${stateSummary.state.sinceMayM !== null ? `${stateSummary.state.sinceMayM.toFixed(1)} m deeper than May` : ""} · `}
+                {`${stateSummary.state.vsYearAgoM !== null ? `${stateSummary.state.vsYearAgoM.toFixed(1)} m deeper than a year ago` : ""} · ${stateSummary.state.stationsTotal.toLocaleString("en-US")} stations (AWARE)`}
+              </em>
+            </div>
+          ) : null}
+          <Link className="validationLink" href="/agriculture#agriculture-watch">
+            Open the water watch <IconArrowRight />
+          </Link>
+        </section>
+      ) : null}
+
+      {/* Every number the cockpit carries, for the reader who wants them: the
+          model's own figures, its accuracy by depth, and the map's side rail. */}
+      <details className="overviewMore">
+        <summary><span>All figures and model accuracy</span><strong>{formatNumber(temporalEval.model.maeM)} m average error</strong><span>Model nowcasts, coverage and accuracy by depth</span></summary>
+        <div className="modelValueRow stagger">
+        <KpiCard
+          icon={<IconDroplet />}
+          label="Median Modelled Nowcast"
+          value={<>{medianModelledDepth !== null ? formatNumber(medianModelledDepth) : "—"}<span className="unit">m</span></>}
+          foot={`m below ground / targets ${datasetManifest.periods.modelTargetPeriodRange.start} to ${datasetManifest.periods.modelTargetPeriodRange.end}`}
+          accent="var(--teal)"
+        />
+        <KpiCard
+          icon={<IconActivity />}
+          label="Deepest Modelled Mandal"
+          value={<>{deepestNowcast?.estimate_mbgl !== null && deepestNowcast?.estimate_mbgl !== undefined ? formatNumber(deepestNowcast.estimate_mbgl) : "—"}<span className="unit">m</span></>}
+          foot={deepestNowcast ? `${titleCase(deepestNowcast.mandal_name)} · ${titleCase(deepestNowcast.district_name)}` : "No modelled row"}
+          footAccent
+          accent="var(--rust)"
+        />
+        <KpiCard
+          icon={<IconShield />}
+          label="Median Model Band"
+          value={<>{medianBandWidth !== null ? formatNumber(medianBandWidth) : "—"}<span className="unit">m</span></>}
+          foot="typical P10–P90 width, not guaranteed confidence"
+          accent="var(--amber)"
+        />
+        <KpiCard
+          icon={<IconLayers />}
+          label="Outside the Model Band"
+          value={<CountUp value={outsideBandCount} />}
+          foot="reading outside its own P10–P90 · verify before use"
+          footAccent
+          accent="var(--cyan)"
+        />
+      </div>
+
           <div className="overviewKpiRail stagger">
             <KpiCard
               icon={<IconActivity />}
@@ -432,28 +398,39 @@ export function OverviewCockpit({ agreement }: { agreement: OverviewAgreement | 
               accent="var(--amber)"
             />
           </div>
-        </section>
-
-          <section className="card">
-            <div className="cardHead">
-              <div className="cardTitle">
-                <span className="titleIcon">
-                  <IconGlobe />
-                </span>
-                Status Summary
-              </div>
-              <Link className="linkAction" href="/watchlist">
-                Watchlist <IconArrowRight />
-              </Link>
-            </div>
-            <StatusSummaryCard />
-          </section>
+      <div className="modelValidationStrip">
+        <div className="modelValidationIntro">
+          <span className="validationEyebrow">How accurate is β?</span>
+          <strong>Validated temporal nowcast / gap-fill, not a replacement for field sensors.</strong>
+          <span>
+            Evaluation holds out recent APWRIMS-format mandal-months ({temporalEval.evaluationPeriod.start}–
+            {temporalEval.evaluationPeriod.end}) and compares the calculated level against observed depth.
+          </span>
         </div>
-
-        <aside className="overviewSideStack">
-          <SelectedMandalPanel mandal={current} />
-        </aside>
+        <div className="validationMetric">
+          <span>MAE</span>
+          <strong>{formatNumber(temporalEval.model.maeM)} m</strong>
+          <em>average absolute error</em>
+        </div>
+        <div className="validationMetric">
+          <span>vs baseline</span>
+          <strong>{baselineLiftPct}% better</strong>
+          <em>previous-year same-month</em>
+        </div>
+        <div className="validationMetric">
+          <span>P10–P90</span>
+          <strong>{formatNumber(intervalEval.empiricalCoveragePct)}%</strong>
+          <em>actual holdout coverage</em>
+        </div>
+        <Link className="validationLink" href="/estimates">
+          Open model card <IconArrowRight />
+        </Link>
       </div>
+      <div className="depthBandStrip">
+        <div className="depthBandIntro"><span className="validationEyebrow">Accuracy by depth</span><span>Error by depth band versus carrying the last reading forward.</span></div>
+        {temporalEval.depthBands.map(band => <div className="depthBandCell" key={band.band}><span>{band.band}</span><strong>{formatNumber(band.maeM)} m</strong><em>vs {formatNumber(band.lastReadingMaeM)} m baseline</em></div>)}
+      </div>
+      </details>
 
       <div className="overviewSupportGrid">
         <section className="card">

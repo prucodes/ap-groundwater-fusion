@@ -1,0 +1,53 @@
+import { expect, test } from "@playwright/test";
+import watch from "../data/monsoon_watch.json";
+import summer from "../data/summer_outlook.json";
+
+/* The overview leads with four lines, one figure each, and keeps every other
+   number one click away; the project brief is a page and a PDF; the long pages
+   keep their section menus in reach as they scroll. */
+
+test("the overview opens on four headline cards, with the full figures folded", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Andhra Pradesh water this week");
+  const lines = page.getByRole("region", { name: "This week in four lines" });
+  const cards = lines.getByRole("link");
+  await expect(cards).toHaveCount(4);
+  await expect(cards.nth(1)).toContainText(`${watch.recharge.fallingPct}%`);
+  await expect(cards.nth(3)).toContainText(String(summer.summary.beyond));
+  await expect(cards.nth(3)).toHaveAttribute("href", /\/summer\/?$/);
+  // The headline cards come before the map; the model's numbers wait behind one click.
+  const map = page.locator(".overviewMapLead");
+  expect((await lines.boundingBox())!.y).toBeLessThan((await map.boundingBox())!.y);
+  const more = page.locator("details.overviewMore");
+  await expect(more).not.toHaveAttribute("open", "");
+  await expect(more.getByText("Median Modelled Nowcast")).toBeHidden();
+  await more.locator("summary").click();
+  await expect(more.getByText("Median Modelled Nowcast")).toBeVisible();
+  await expect(more).toContainText("Accuracy by depth");
+});
+
+test("the project brief is a six-sheet page with this week's maps, and Methodology offers its PDF", async ({ page }) => {
+  await page.goto("/brief/");
+  await expect(page.getByTestId("brief-sheet")).toHaveCount(6);
+  await expect(page.locator("svg[aria-hidden='true'] path").first()).toBeAttached();
+  await expect(page.getByTestId("brief-sheet").nth(4)).toContainText(`${summer.summary.beyond}mandals past their deepest May`);
+  await expect(page.getByTestId("brief-pdf")).toHaveAttribute("href", /\/brief\/ap-water-intelligence-brief\.pdf$/);
+  await page.goto("/methodology/");
+  await expect(page.getByTestId("methodology-brief-pdf")).toHaveAttribute("href", /\/brief\/ap-water-intelligence-brief\.pdf$/);
+  await expect(page.getByRole("link", { name: /Read it on screen/ })).toHaveAttribute("href", /\/brief\/?$/);
+});
+
+for (const viewport of [{ width: 1440, height: 900, top: 0 }, { width: 390, height: 844, top: 56 }]) {
+  test(`long pages keep their section menu in reach as they scroll at ${viewport.width}px`, async ({ page }) => {
+    await page.setViewportSize({ width: viewport.width, height: viewport.height });
+    for (const [route, name] of [["/drought/", "Drought sections"], ["/monsoon/", "Monsoon sections"], ["/agriculture/", "Agriculture sections"]] as const) {
+      await page.goto(route);
+      const nav = page.getByRole("navigation", { name });
+      await expect(nav).toBeVisible();
+      await page.mouse.wheel(0, 2400);
+      await expect.poll(async () => Math.round((await nav.boundingBox())!.y), { timeout: 4000 }).toBe(viewport.top);
+      // On a phone the menu is one line that scrolls, never a block down the screen.
+      if (viewport.width < 640) expect((await nav.boundingBox())!.height).toBeLessThan(60);
+    }
+  });
+}
