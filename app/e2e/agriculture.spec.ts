@@ -131,7 +131,8 @@ for (const width of [375, 768, 1920]) {
       return Array.from(document.querySelectorAll("body *")).filter(el => el.getBoundingClientRect().right > innerWidth + 1 && !clipped(el))
         .slice(0, 6).map(el => `${el.tagName.toLowerCase()}.${String((el as HTMLElement).className).split(" ")[0]} "${(el.textContent ?? "").trim().slice(0, 30)}" ${Math.round(el.getBoundingClientRect().right)}px`);
     });
-    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), `wider than the screen: ${wide.join("; ")}`).toBe(false);
+    // Within 1 px, as the phone and desktop layout tests allow: Linux text metrics round a sub-pixel over.
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), `wider than the screen: ${wide.join("; ")}`).toBeLessThanOrEqual(1);
     const scene = page.getByTestId("crop-field");
     const sceneWidth = await scene.evaluate(element => ({ scene: element.clientWidth, column: element.parentElement!.clientWidth }));
     expect(Math.abs(sceneWidth.scene - sceneWidth.column)).toBeLessThanOrEqual(1);
