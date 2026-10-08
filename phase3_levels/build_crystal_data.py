@@ -15,6 +15,10 @@ APWRIMS reading and its own past winters, against its deepest May on record.
 It is joined by boundary, as the outlook counts mandals, and carried apart
 from the measured years so a projection is never mistaken for a reading.
 
+The latest month is carried too (`now`, and `c` per mandal): its reading set
+against the same mandal's readings for that calendar month in earlier years,
+since depth swings with the season and only the same month compares fairly.
+
 Run from anywhere:  python phase3_levels/build_crystal_data.py
 """
 import csv
@@ -40,6 +44,9 @@ MIN_YEAR_COVERAGE = 0.5
 # so interpolation never carries more of its line than the readings do.
 MIN_MANDAL_COVERAGE = 0.5
 POLY_POINTS = 24
+# The latest month is compared with a mandal's own same-month readings only
+# when it has at least this many earlier years of them.
+MIN_SAME_MONTH_YEARS = 4
 GW_LINE = re.compile(r"^const GW = .*;$", re.M)
 
 
@@ -166,6 +173,30 @@ def outlook_meta(summer):
     }
 
 
+def same_month(series_entry, period):
+    """{year: mean reading} for the calendar month of `period`, in metres below ground."""
+    by_year = defaultdict(list)
+    for obs in series_entry["observations"]:
+        if obs["period"][5:7] == period[5:7] and obs.get("value") is not None:
+            by_year[int(obs["period"][:4])].append(obs["value"])
+    return {year: sum(v) / len(v) for year, v in by_year.items()}
+
+
+def latest_entry(readings, period):
+    """This month's reading beside the mandal's usual (median) and deepest for the same month in earlier years."""
+    year = int(period[:4])
+    value = readings.get(year)
+    if value is None:
+        return None
+    earlier = sorted(v for y, v in readings.items() if y < year)
+    entry = {"v": round(value, 1)}
+    if len(earlier) >= MIN_SAME_MONTH_YEARS:
+        mid = len(earlier) // 2
+        usual = earlier[mid] if len(earlier) % 2 else (earlier[mid - 1] + earlier[mid]) / 2
+        entry.update({"u": round(usual, 1), "r": round(earlier[-1], 1), "n": len(earlier)})
+    return entry
+
+
 def build():
     records = load("mandal_groundwater_records_v2.json")["records"]
     series = load("mandal_observation_series_v2.json")["series"]
@@ -196,6 +227,10 @@ def build():
     if not eligible:
         sys.exit("No year has enough pre-monsoon readings to build the Crystal view.")
     years = [str(y) for y in range(int(eligible[0]), int(eligible[-1]) + 1)]
+
+    latest = manifest["periods"]["latestObservationPeriod"]
+    # A May is already the timeline's last frame; any other month gets its own.
+    now_period = latest if latest[5:7] != PRE_MONSOON_MONTH else None
 
     out, dropped_sparse, dropped_geometry, stage_matched = [], 0, 0, 0
     for record in records:
@@ -232,6 +267,7 @@ def build():
             "stage": stage[0] if stage else None,
             "cat": stage[1] if stage else None,
             "o": projection,
+            "c": latest_entry(same_month(series[identity["mandalId"]], now_period), now_period) if now_period else None,
         })
 
     lons = [p[0] for m in out for p in m["poly"]]
@@ -244,6 +280,8 @@ def build():
         "throughPeriod": manifest["periods"]["latestObservationPeriod"],
         "generatedAt": manifest["generatedAt"],
         "outlook": outlook_meta(summer) if summer else None,
+        "now": {"period": now_period, "minYears": MIN_SAME_MONTH_YEARS,
+                "firstYear": int(years[0])} if now_period else None,
         "mandals": out,
     }
     stats = {
@@ -254,6 +292,7 @@ def build():
         "dropped_no_geometry": dropped_geometry,
         "cgwb_matched": stage_matched,
         "projected": sum(1 for m in out if m["o"]),
+        "latest": sum(1 for m in out if m["c"]),
     }
     return dataset, stats
 
@@ -271,7 +310,8 @@ def main():
     print(
         f"crystal: {stats['mandals']} mandals, {stats['years']} pre-monsoon (May), "
         f"{stats['interpolated_cells']} interpolated mandal-years, "
-        f"{stats['cgwb_matched']} CGWB-matched, {stats['projected']} with a May outlook"
+        f"{stats['cgwb_matched']} CGWB-matched, {stats['projected']} with a May outlook, "
+        f"{stats['latest']} with a {dataset['now']['period'] if dataset['now'] else 'latest'} reading"
     )
     print(
         f"  dropped: {stats['dropped_sparse']} too sparse, "

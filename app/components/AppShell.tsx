@@ -54,7 +54,7 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
       { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
       { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
       { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
-      { href: "/crystal", label: "Water Depth 3D", Icon: IconWaves, desc: "Recorded May depth by mandal and district, and next May's outlook in relief." },
+      { href: "/crystal", label: "Water Depth 3D", Icon: IconWaves, desc: "May depth since 2015, the latest month against its usual, and next May's outlook." },
   ] },
   { label: "Season ahead", items: [
       { href: "/summer", label: "Summer Outlook", Icon: IconArrowDown, desc: "Where the water table may stand by May, mandal by mandal, against each mandal's own deepest May on record." },

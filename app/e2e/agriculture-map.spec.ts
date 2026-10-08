@@ -1,4 +1,11 @@
 import { expect, test, type Locator } from "@playwright/test";
+import watch from "../data/monsoon_watch.json";
+
+// Orvakal's figures come from the published Monsoon Watch, so these checks follow
+// each Monday's data instead of the month they were written in.
+const ORVAKAL = (watch as unknown as { mandals: Array<{ mandal: string; latestDepthM: number; status: string }> }).mandals.find(m => m.mandal === "Orvakal")!;
+const ORVAKAL_DEPTH = ORVAKAL.latestDepthM.toFixed(2);
+const LATEST = (([year, month]) => `${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][Number(month) - 1]} ${year}`)(watch.season.latestMonth.split("-"));
 
 // SVG bounding-box centres can fall outside an irregular mandal polygon.
 async function interiorPoint(path: Locator) {
@@ -28,8 +35,8 @@ for (const width of [1440, 390]) {
     const tooltip = map.getByRole("tooltip");
     await expect(tooltip).toContainText("Orvakal");
     await expect(tooltip).toContainText("Kurnool district");
-    await expect(tooltip).toContainText("28.97");
-    await expect(tooltip).toContainText("Aug 2026");
+    await expect(tooltip).toContainText(ORVAKAL_DEPTH);
+    await expect(tooltip).toContainText(LATEST);
     await expect(tooltip).toContainText("Shortfall vs own normal");
     await expect(tooltip).toContainText("crop records not connected");
     await expect(tooltip).toContainText(/(Official|Public prototype) boundary/);
@@ -87,6 +94,6 @@ test("touching a mandal opens its evidence card", async ({ browser }) => {
   const point = await interiorPoint(map.getByRole("button", { name: /^Orvakal:/ }));
   await page.touchscreen.tap(point.x, point.y);
   await expect(map.getByRole("tooltip")).toContainText("Orvakal");
-  await expect(page.getByRole("complementary", { name: "Selected mandal evidence" })).toContainText("28.97");
+  await expect(page.getByRole("complementary", { name: "Selected mandal evidence" })).toContainText(ORVAKAL_DEPTH);
   await context.close();
 });

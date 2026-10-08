@@ -122,3 +122,36 @@ def test_outlook_tiers_follow_the_depths_they_are_drawn_from():
         expected = "x" if o["t"] > o["r"] else "d" if o["y"] > o["r"] else "w"
         assert o["k"] == expected, f"{mandal['n']}: tier {o['k']} but depths say {expected}"
         assert o["t"] <= o["y"], f"{mandal['n']}: a typical winter projected deeper than a dry one"
+
+
+def test_the_latest_month_is_set_against_its_own_same_month_readings():
+    # Depth swings with the season: the latest reading is compared only with the
+    # same mandal's readings for the same calendar month in earlier years.
+    gw = _crystal()
+    latest = json.loads((APP_DATA / "dataset_manifest.json").read_text())["periods"]["latestObservationPeriod"]
+    if latest[5:7] == "05":
+        assert gw["now"] is None, "a May is already the timeline's last frame"
+        return
+    assert gw["now"]["period"] == latest
+    series = json.loads((APP_DATA / "mandal_observation_series_v2.json").read_text())["series"]
+    year, checked = int(latest[:4]), 0
+    for mandal in gw["mandals"]:
+        by_year = defaultdict(list)
+        for obs in series[mandal["id"]]["observations"]:
+            if obs["period"][5:7] == latest[5:7] and obs.get("value") is not None:
+                by_year[int(obs["period"][:4])].append(obs["value"])
+        readings = {y: sum(v) / len(v) for y, v in by_year.items()}
+        c = mandal["c"]
+        if year not in readings:
+            assert c is None, f"{mandal['n']} shows a reading it does not have"
+            continue
+        assert c["v"] == round(readings[year], 1)
+        earlier = sorted(v for y, v in readings.items() if y < year)
+        if len(earlier) < gw["now"]["minYears"]:
+            assert "u" not in c
+            continue
+        mid = len(earlier) // 2
+        usual = earlier[mid] if len(earlier) % 2 else (earlier[mid - 1] + earlier[mid]) / 2
+        assert (c["u"], c["r"], c["n"]) == (round(usual, 1), round(earlier[-1], 1), len(earlier)), mandal["n"]
+        checked += 1
+    assert checked > 500, f"too few mandals compared ({checked})"

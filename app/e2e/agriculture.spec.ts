@@ -1,4 +1,10 @@
 import { expect, test } from "@playwright/test";
+import watch from "../data/monsoon_watch.json";
+
+// Orvakal's figures come from the published Monsoon Watch, so these checks follow
+// each Monday's data instead of the month they were written in.
+const ORVAKAL = (watch as unknown as { mandals: Array<{ mandal: string; latestDepthM: number; status: string }> }).mandals.find(m => m.mandal === "Orvakal")!;
+const ORVAKAL_DEPTH = ORVAKAL.latestDepthM.toFixed(2);
 
 for (const width of [1440, 390]) {
   test(`agriculture lab, evidence and exports at ${width}px`, async ({ page }, testInfo) => {
@@ -46,7 +52,7 @@ for (const width of [1440, 390]) {
     await page.getByRole("searchbox", { name: "Search mandals or districts" }).fill("orvakal");
     const rail = page.getByRole("complementary", { name: "Selected mandal evidence" });
     await expect(rail.getByRole("heading", { name: "Orvakal", exact: true })).toBeVisible();
-    await expect(page.getByText("28.97", { exact: false }).first()).toBeVisible();
+    await expect(page.getByText(ORVAKAL_DEPTH, { exact: false }).first()).toBeVisible();
     const season = rail.getByRole("definition").filter({ hasText: /vs normal/ });
     await expect(season).toHaveCount(1);
     await expect(rail).toContainText(/Soil moisture 30 cm/);
