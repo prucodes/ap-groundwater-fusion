@@ -145,8 +145,6 @@ function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropK
         {fieldVerdict && field ? <span className={styles.recordVerdict} style={{ "--tone": fieldVerdict.tone } as CSSProperties} data-testid="field-week-sentinel" data-verdict={field.verdict}><i />{fieldVerdict.label}<em>field scale, Sentinel-2</em></span> : null}
       </div>
       <p>{sentence} {reading}</p>
-      {fieldSentence ? <p className={styles.recordField}>{fieldSentence}</p> : null}
-      {pooledNote ? <p className={styles.recordPooled}>{pooledNote}</p> : null}
       {record.live && record.live.frozen ? (() => {
         const live = record.live, score = live.record[`${crop}-${stage}`]?.within.sameSeason;
         const field = live.fieldRecord[`${crop}-${stage}`];
@@ -159,7 +157,14 @@ function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropK
             : <>Each week&rsquo;s calls on the real forecast are frozen as made and scored three weeks later, against Sentinel-2 at field scale and the 4 km index; rabi&rsquo;s clear skies let the field-scale test read most mandals. {live.frozen} week{live.frozen === 1 ? "" : "s"} frozen since {day(live.firstFrozen, false)}{live.nextDue ? <>; the first score is due {day(live.nextDue, false)}</> : null}.</>}
         </p>;
       })() : null}
-      <small>{record.rainfed.text} {record.acrossCaveat} Weather as it happened (ERA5), not the forecast; vegetation from the satellite index, which the soil model does not use.</small>
+      {/* The verdict, its main reading and the live scorecard stay in view; the field-scale
+          sentence, the pooled reading and how the record was built open beneath. */}
+      <details className={styles.recordMore}>
+        <summary>Field scale, pooled seasons and how the record was scored</summary>
+        {fieldSentence ? <p className={styles.recordField}>{fieldSentence}</p> : null}
+        {pooledNote ? <p className={styles.recordPooled}>{pooledNote}</p> : null}
+        <small>{record.rainfed.text} {record.acrossCaveat} Weather as it happened (ERA5), not the forecast; vegetation from the satellite index, which the soil model does not use.</small>
+      </details>
     </div>
     <figure className={styles.recordSeasons} aria-label={rows.map(row => `${row.label}: ${row.value} points, ${row.count}`).join("; ")}>
       <figcaption>Vegetation after &ldquo;short&rdquo;, against after &ldquo;comfortable&rdquo; <span>Index points, same mandal and season. Dashed: the {record.rules.backedPoints}-point bar for &ldquo;backed&rdquo;.</span></figcaption>

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { CATEGORY_META, CATEGORY_ORDER, IMPACT_META, place, signed, signedPct, type DroughtDistrict } from "../../lib/drought";
 import styles from "./Drought.module.css";
+import { RowFold, foldAt } from "../RowFold";
 
 type SortKey = "severity" | "trigger" | "rain" | "vci" | "pasm" | "gwdi";
 
@@ -33,7 +34,9 @@ export function DistrictMatrix({ districts }: { districts: DroughtDistrict[] }) 
   const head = (key: SortKey, label: string) => (
     <th aria-sort={sort === key ? "ascending" : undefined}><button type="button" onClick={() => setSort(key)}>{label}{sort === key ? " ▾" : ""}</button></th>
   );
+  // The ten districts first in the chosen order; the rest open in place.
   return (
+    <RowFold id="drought-district-rows" total={rows.length} visible={10} noun="districts">
     <div className={styles.tableWrap}>
       <table className={styles.matrix} data-testid="drought-district-matrix">
         <thead>
@@ -49,8 +52,8 @@ export function DistrictMatrix({ districts }: { districts: DroughtDistrict[] }) 
           </tr>
         </thead>
         <tbody>
-          {rows.map(d => (
-            <tr key={d.district}>
+          {rows.map((d, i) => (
+            <tr key={d.district} {...foldAt(i, 10)}>
               <td className={styles.district}>{place(d.district)}<small>{d.mandals} mandals · {d.assessed} assessed</small></td>
               <td className={styles.num}>{d.trigger1}<small style={{ color: "var(--muted)", fontWeight: 400 }}> / {d.assessed}</small></td>
               <td>
@@ -71,5 +74,6 @@ export function DistrictMatrix({ districts }: { districts: DroughtDistrict[] }) 
         </tbody>
       </table>
     </div>
+    </RowFold>
   );
 }

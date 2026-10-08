@@ -19,6 +19,14 @@
 .notice { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 11px; line-height: 1.65; color: var(--muted); }
 .notice > svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 1px; color: var(--ag-green); }
 .notice strong { color: var(--ink-soft); font-weight: 600; }
+.notice p { margin: 0; }
+/* The source list opens beside the caveat rather than standing as a paragraph under the hero. */
+.noticeMore summary { display: inline-flex; align-items: center; gap: 6px; margin-top: 2px; cursor: pointer; list-style: none; font-weight: 600; color: var(--ag-green); }
+.noticeMore summary::-webkit-details-marker { display: none; }
+.noticeMore summary::after { content: ""; width: 5px; height: 5px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.noticeMore[open] summary::after { transform: translateY(1px) rotate(-135deg); }
+.noticeMore p { margin-top: 4px; }
+@media print { .noticeMore::details-content { content-visibility: visible; display: contents; } }
 .sectionNav { display: flex; flex-wrap: wrap; gap: 12px 22px; align-items: center; min-height: 54px; padding-block: 12px; border-bottom: 1px solid var(--line); }
 .sectionNav a { display: flex; gap: 6px; align-items: baseline; text-decoration: none; color: var(--ag-green); font: 10px var(--font-mono); }
 .sectionNav a span { font: 600 12px var(--font-sans); color: var(--ink); }

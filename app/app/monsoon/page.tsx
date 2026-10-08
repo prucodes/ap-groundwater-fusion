@@ -19,6 +19,7 @@ import { EnsoOutlook } from "../../components/monsoon/EnsoOutlook";
 import { TemperatureRecord } from "../../components/TemperatureRecord";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { CountedReach } from "../../components/CountedReach";
+import { RowFold, foldAt } from "../../components/RowFold";
 import { apTemperature, formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
 import { stateSummary } from "../../lib/stateSummary";
@@ -96,74 +97,108 @@ export default function MonsoonPage() {
             {monthName(w.season.preMonsoonMonth)} → {monthName(w.season.latestMonth)} · {r.mandals} source series
           </span>
         </div>
-        <div className="monsoonHeadline">
-          <div className="monsoonStat">
-            <span>Lower than in May</span>
-            <strong>{formatNumber(r.fallingPct)}%</strong>
-            <em>
+        {/* Four lines first: the ground, the State's wells, the rain and the reservoirs.
+            Every other season figure is in the fold beneath, with how each is measured. */}
+        <div className="overviewHeadlines monsoonLead">
+          <div className="headlineCard headlineStatic">
+            <span className="headlineKicker"><IconDroplet /> Groundwater</span>
+            <strong>{formatNumber(r.fallingPct)}%<small>of mandal series lower than in May</small></strong>
+            <span className="headlineText">
               {r.falling} of {r.mandals} source series
               {priorLow === null || priorHigh === null
-                ? ""
-                : ` · ${formatNumber(priorLow)}–${formatNumber(priorHigh)}% in the previous ${prior.length} seasons`}
-            </em>
+                ? "."
+                : `; the previous ${prior.length} seasons ranged ${formatNumber(priorLow)} to ${formatNumber(priorHigh)}%.`}
+            </span>
           </div>
-          <div className="monsoonStat">
-            <span>Short of retained baseline</span>
-            <strong>{formatNumber(r.shortOfNormalPct)}%</strong>
-            <em>median shortfall {formatNumber(r.medianShortfallM)} m</em>
-          </div>
-          <div className="monsoonStat">
-            <span>Provisional shortfall flags</span>
-            <strong>{r.flaggedShort}</strong>
-            <em>{r.flaggedSevere} larger shortfalls · not crop loss</em>
-          </div>
-          {r.volume ? (
-            <div className="monsoonStat">
-              <span>State storage estimate</span>
-              <strong>Under review</strong>
-              <em>Boundary duplicates and specific-yield assumptions require validation</em>
+          {stateSummary.state && stateSummary.summary.withChange ? (
+            <div className="headlineCard headlineStatic" data-testid="state-network-stat">
+              <span className="headlineKicker"><IconActivity /> State wells, early Sep</span>
+              <strong>{formatNumber(Math.round((100 * stateSummary.summary.deeperSinceMay) / stateSummary.summary.withChange))}%<small>{`of ${stateSummary.summary.withChange} mandals deeper than in May`}</small></strong>
+              <span className="headlineText">
+                {`${stateSummary.summary.deeperThanYearAgo} deeper than a year ago. AWARE feed, one reading, ${stateSummary.state.stationsTotal.toLocaleString("en-IN")} stations.`}
+              </span>
             </div>
           ) : null}
           {rain ? (
-            <div className="monsoonStat">
-              <span>Satellite rain, {monthName(`${w.season.year}-${rain.months.slice(0, 2)}`).slice(0, 3)}–
-                {MONTHS[Number(rain.months.slice(3))]}</span>
-              <strong>{formatNumber(rain.anomalyPct)}%</strong>
-              <em>
-                {rain.product.split(" monthly")[0]} · {formatNumber(rain.mm)} mm against {formatNumber(rain.normalMm)} normal · {rain.rankDriest}
-                {rain.rankDriest === 1 ? "st" : rain.rankDriest === 2 ? "nd" : rain.rankDriest === 3 ? "rd" : "th"}
-                {" "}driest of {rain.ofYears} since {rain.firstYear}
-                {rain.notYetPublished?.length ? <> · {rain.notYetPublished.map(p => monthName(p).split(" ")[0]).join(", ")} rain not yet published</> : null}
-              </em>
-            </div>
-          ) : null}
-          {gauges ? (
-            <div className="monsoonStat">
-              <span>Rain gauges, since 1 Jun</span>
-              <strong>{formatNumber(gauges.deviationPct)}%</strong>
-              <em>
-                AP DES gauges, measured, to {day(gauges.end)} · {gauges.categories.deficient + gauges.categories.scanty + gauges.categories.noRain} of {gauges.mandals} mandals deficient or worse
-              </em>
-            </div>
-          ) : null}
-          {stateSummary.state && stateSummary.summary.withChange ? (
-            <div className="monsoonStat" data-testid="state-network-stat">
-              <span>State wells, early Sep</span>
-              <strong>{formatNumber(Math.round((100 * stateSummary.summary.deeperSinceMay) / stateSummary.summary.withChange))}%</strong>
-              <em>
-                {`of ${stateSummary.summary.withChange} mandals deeper than in May · ${stateSummary.summary.deeperThanYearAgo} deeper than a year ago · AWARE feed, one reading, ${stateSummary.state.stationsTotal} stations`}
-              </em>
+            <div className="headlineCard headlineStatic">
+              <span className="headlineKicker"><IconCloudRain /> Rain, {MONTHS[Number(rain.months.slice(0, 2))]} to {MONTHS[Number(rain.months.slice(3))]}</span>
+              <strong>{formatNumber(rain.anomalyPct)}%<small>against normal{rain.rankDriest === 1 ? `, driest of ${rain.ofYears} years` : ""}</small></strong>
+              <span className="headlineText">
+                {formatNumber(rain.mm)} mm against {formatNumber(rain.normalMm)} mm ({rain.product.split(" monthly")[0]}).
+                {gauges ? ` State gauges since 1 June: ${formatNumber(gauges.deviationPct)}% to ${day(gauges.end)}.` : ""}
+              </span>
             </div>
           ) : null}
           {storage ? (
-            <div className="monsoonStat">
-              <span>Reservoir storage</span>
-              <strong>{formatNumber(storage.storagePct)}%</strong>
-              <em>of capacity at {day(storage.asOf)} · {formatNumber(storage.lastYearPct)}% a year ago · {storage.count} reservoirs</em>
+            <div className="headlineCard headlineStatic">
+              <span className="headlineKicker"><IconWaves /> Reservoirs</span>
+              <strong>{formatNumber(storage.storagePct)}%<small>of capacity on {day(storage.asOf)}</small></strong>
+              <span className="headlineText">{formatNumber(storage.lastYearPct)}% a year ago, across {storage.count} reservoirs.</span>
             </div>
           ) : null}
         </div>
-        <p className="cardNote">{r.rule}. Source-series totals are not unique boundary counts; the Agriculture review uses reconciled boundary units. Baseline review pending.</p>
+        <details className="foldMore">
+          <summary><span>All season figures</span><strong>{r.flaggedShort} provisional shortfall flags</strong><span>Baseline, flags, storage estimate and gauges, with how each is measured</span></summary>
+          <div className="monsoonHeadline">
+            <div className="monsoonStat">
+              <span>Lower than in May</span>
+              <strong>{formatNumber(r.fallingPct)}%</strong>
+              <em>
+                {r.falling} of {r.mandals} source series
+                {priorLow === null || priorHigh === null
+                  ? ""
+                  : ` · ${formatNumber(priorLow)}–${formatNumber(priorHigh)}% in the previous ${prior.length} seasons`}
+              </em>
+            </div>
+            <div className="monsoonStat">
+              <span>Short of retained baseline</span>
+              <strong>{formatNumber(r.shortOfNormalPct)}%</strong>
+              <em>median shortfall {formatNumber(r.medianShortfallM)} m</em>
+            </div>
+            <div className="monsoonStat">
+              <span>Provisional shortfall flags</span>
+              <strong>{r.flaggedShort}</strong>
+              <em>{r.flaggedSevere} larger shortfalls · not crop loss</em>
+            </div>
+            {r.volume ? (
+              <div className="monsoonStat">
+                <span>State storage estimate</span>
+                <strong>Under review</strong>
+                <em>Boundary duplicates and specific-yield assumptions require validation</em>
+              </div>
+            ) : null}
+            {rain ? (
+              <div className="monsoonStat">
+                <span>Satellite rain, {monthName(`${w.season.year}-${rain.months.slice(0, 2)}`).slice(0, 3)}–
+                  {MONTHS[Number(rain.months.slice(3))]}</span>
+                <strong>{formatNumber(rain.anomalyPct)}%</strong>
+                <em>
+                  {rain.product.split(" monthly")[0]} · {formatNumber(rain.mm)} mm against {formatNumber(rain.normalMm)} normal · {rain.rankDriest}
+                  {rain.rankDriest === 1 ? "st" : rain.rankDriest === 2 ? "nd" : rain.rankDriest === 3 ? "rd" : "th"}
+                  {" "}driest of {rain.ofYears} since {rain.firstYear}
+                  {rain.notYetPublished?.length ? <> · {rain.notYetPublished.map(p => monthName(p).split(" ")[0]).join(", ")} rain not yet published</> : null}
+                </em>
+              </div>
+            ) : null}
+            {gauges ? (
+              <div className="monsoonStat">
+                <span>Rain gauges, since 1 Jun</span>
+                <strong>{formatNumber(gauges.deviationPct)}%</strong>
+                <em>
+                  AP DES gauges, measured, to {day(gauges.end)} · {gauges.categories.deficient + gauges.categories.scanty + gauges.categories.noRain} of {gauges.mandals} mandals deficient or worse
+                </em>
+              </div>
+            ) : null}
+            {storage ? (
+              <div className="monsoonStat">
+                <span>Reservoir storage</span>
+                <strong>{formatNumber(storage.storagePct)}%</strong>
+                <em>of capacity at {day(storage.asOf)} · {formatNumber(storage.lastYearPct)}% a year ago · {storage.count} reservoirs</em>
+              </div>
+            ) : null}
+          </div>
+          <p className="cardNote">{r.rule}. Source-series totals are not unique boundary counts; the Agriculture review uses reconciled boundary units. Baseline review pending.</p>
+        </details>
       </section>
       <MonsoonFilm live={monsoonWatch.rainfall && monsoonWatch.elNinoRainfall.swMonsoon ? {
         rainProduct: monsoonWatch.rainfall.product.split(" monthly")[0], rainMonths: monsoonWatch.rainfall.months,
@@ -432,6 +467,7 @@ export default function MonsoonPage() {
           </div>
           <span className="cardSub">district median, metres against own normal</span>
         </div>
+        <RowFold id="monsoon-shortfall-rows" total={w.districts.length} visible={8} noun="districts">
         <div className="tableWrap capped">
           <table className="dataTable compact">
             <thead>
@@ -445,8 +481,8 @@ export default function MonsoonPage() {
               </tr>
             </thead>
             <tbody>
-              {w.districts.map((d) => (
-                <tr key={d.district}>
+              {w.districts.map((d, i) => (
+                <tr key={d.district} {...foldAt(i, 8)}>
                   <td>{displayName(d.district)}</td>
                   <td>{d.mandals}</td>
                   <td>{d.thisSeasonM > 0 ? "+" : ""}{formatNumber(d.thisSeasonM)} m</td>
@@ -460,6 +496,7 @@ export default function MonsoonPage() {
             </tbody>
           </table>
         </div>
+        </RowFold>
         <p className="cardNote">
           A positive depth change means the water table fell between May and {monthName(w.season.latestMonth)}.
           These district medians summarise retained source-series comparisons; they are not area-weighted
@@ -485,6 +522,7 @@ export default function MonsoonPage() {
             are required before operational use; this is not an irrigation instruction.
           </span>
         </div>
+        <RowFold id="monsoon-queue-rows" total={worst.length} visible={8} noun="rows">
         <div className="tableWrap capped">
           <table className="dataTable compact">
             <thead>
@@ -500,8 +538,8 @@ export default function MonsoonPage() {
               </tr>
             </thead>
             <tbody>
-              {worst.map((m) => (
-                <tr key={m.mandalUuid}>
+              {worst.map((m, i) => (
+                <tr key={m.mandalUuid} {...foldAt(i, 8)}>
                   <td>
                     {displayName(m.mandal)}
                     {m.status === "severe" ? <span className="sevPill">severe</span> : null}
@@ -518,6 +556,7 @@ export default function MonsoonPage() {
             </tbody>
           </table>
         </div>
+        </RowFold>
         <p className="cardNote">
           A mandal is flagged only when it misses its own normal by at least {formatNumber(1)} m{" "}
           <strong>and</strong> by at least twice its own year-to-year spread. Either test alone fails: metres

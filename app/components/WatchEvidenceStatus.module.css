@@ -1,11 +1,17 @@
-.evidence { color: var(--ink); border-block: 1px solid var(--line); padding: 12px 0; margin: 10px 0; }
-.summary { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; font-size: 11px; }
-.summary strong { font-weight: 600; }
-.summary > span:last-child { color: var(--muted); margin-left: auto; }
+.evidence { color: var(--ink); border-block: 1px solid var(--line); margin: 0; }
+/* One line until opened: what the snapshot is, that it is pending review, and how recent it is. */
+.evidence summary { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; padding: 10px 2px; cursor: pointer; list-style: none; font-size: 11.5px; }
+.evidence summary::-webkit-details-marker { display: none; }
+.evidence summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 6px; }
+.evidence summary > strong { font-weight: 600; }
+.pendingTag { color: var(--ink-soft); }
+.pendingTag strong { color: #986820; font-weight: 600; }
+.through { color: var(--muted); }
+.open { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; color: var(--teal); font-weight: 600; }
+.open::after { content: ""; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.evidence details[open] .open::after { transform: translateY(1px) rotate(-135deg); }
 .tag { font: 500 9px var(--font-mono); color: var(--accent, #267462); border-left: 2px solid #5e9c89; padding-left: 8px; }
-.pending { color: var(--ink-soft); font-size: 11px; line-height: 1.6; margin: 9px 0 0; }
-.pending strong { color: #986820; font-weight: 600; }
-.evidence summary { cursor: pointer; color: var(--muted); font-size: 10px; width: fit-content; padding-top: 9px; }
+.pending { color: var(--ink-soft); font-size: 11px; line-height: 1.6; margin: 4px 0 0; }
 .sources { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin: 20px 0; }
 .sources > div { min-width: 0; }
 .sources span { display: block; font: 9px var(--font-mono); color: var(--muted); margin-bottom: 8px; }
@@ -13,7 +19,8 @@
 .sources p, .gates p { font-size: 11px; line-height: 1.65; color: var(--ink-soft); margin: 6px 0; }
 .sources a { font-size: 10px; color: var(--accent, #267462); text-underline-offset: 3px; }
 .receipt { font-size: 10px; line-height: 1.6; color: var(--muted); padding-bottom: 12px; border-bottom: 1px solid var(--line); }
-.gates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; padding-top: 14px; }
+.gates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; padding: 14px 0; }
 .gates > div:nth-child(2) strong { color: #a37121; }
 @media (max-width: 900px) { .sources { grid-template-columns: repeat(2, minmax(0, 1fr)); } .gates { grid-template-columns: 1fr; gap: 10px; } }
-@media (max-width: 600px) { .summary > span:last-child { margin-left: 0; width: 100%; } .sources { gap: 16px; } }
+@media (max-width: 600px) { .open { margin-left: 0; } .sources { gap: 16px; } }
+@media print { .evidence details::details-content { content-visibility: visible; display: contents; } }

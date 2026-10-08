@@ -238,7 +238,10 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
       <span className={styles.heroCredit}>AI landscape illustration</span>
     </header>
     {brief ? <PageBriefBand brief={brief} /> : null}
-    <div className={styles.notice}><IconInfo /><p><strong>Prototype planning workspace.</strong> Groundwater evidence and illustrative crop scenarios are separate. Gauge rainfall, modelled soil moisture and reservoir storage come from APWRIMS; reference evapotranspiration and rain from ECMWF&rsquo;s open forecast; crop vegetation from NOAA&rsquo;s satellite index; the groundwater category from the official assessment on INGRES. Each is dated. Crop booking and canal delivery to fields are not connected. No field watering instruction or crop-loss prediction.</p></div>
+    <div className={styles.notice}><IconInfo /><div>
+      <p><strong>Prototype planning workspace.</strong> Groundwater evidence and illustrative crop scenarios are separate. No field watering instruction or crop-loss prediction.</p>
+      <details className={styles.noticeMore}><summary>Where each figure comes from</summary><p>Gauge rainfall, modelled soil moisture and reservoir storage come from APWRIMS; reference evapotranspiration and rain from ECMWF&rsquo;s open forecast; crop vegetation from NOAA&rsquo;s satellite index; the groundwater category from the official assessment on INGRES. Each is dated. Crop booking and canal delivery to fields are not connected.</p></details>
+    </div></div>
     {sourceStatus}
     <nav className={`${styles.sectionNav} jumpNav`} aria-label="Agriculture sections"><a href="#agriculture-brief">01 <span>District brief</span></a><a href="#field-week">02 <span>This week in the fields</span></a><a href="#crop-water-lab">03 <span>Crop-water lab</span></a><a href="#agriculture-watch">04 <span>Water watch</span></a><a href="#agriculture-readiness">05 <span>Evidence readiness</span></a><Link href="/drought">06 <span>Drought manual →</span></Link><span className={styles.snapshot}>Observed window: {period(evidence.startPeriod)} to {period(evidence.period)}</span></nav>
     <div className={styles.metrics} aria-label="State evidence summary">

@@ -2122,23 +2122,24 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
    NASA Signals — provenance ribbon, signal gauges, raster cards
    ============================================================ */
 
-/* Sources and their dates: a quiet ledger line, label soft, value firm. */
+/* Sources and their dates: a quiet ledger line, not a box. Every source and
+   date stays on screen; it reads like a footnote under the hero. */
 .provRibbon {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 14px;
-  padding: 11px 16px;
-  border-radius: 12px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  font-size: 12px;
-  color: var(--ink);
+  gap: 6px 12px;
+  padding: 0 6px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--muted);
 }
-.provRibbonItem { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.provRibbonItem { display: inline-flex; align-items: center; gap: 6px; font-weight: 500; font-variant-numeric: tabular-nums; }
 .provRibbonItem strong { font-weight: 500; color: var(--muted); }
-.provRibbonItem svg { width: 14px; height: 14px; color: var(--teal); opacity: 0.9; }
+.provRibbonItem svg { width: 13px; height: 13px; color: var(--teal); opacity: 0.8; }
 .provRibbonDot { width: 3px; height: 3px; border-radius: 50%; background: var(--line-strong); }
+/* Directly under the prototype line, the two read as one footnote. */
+.protoBanner + .provRibbon { margin-top: -12px; }
 
 .sigGaugeRow {
   display: grid;
@@ -5766,16 +5767,50 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
   .headlineCard strong { font-size: 26px; }
 }
 .overviewMore { margin: 18px 0; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--card); box-shadow: var(--shadow-card); }
-.overviewMore > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 14px 18px; cursor: pointer; list-style: none; font-size: 13px; color: var(--ink-soft); }
-.overviewMore > summary::-webkit-details-marker { display: none; }
-.overviewMore > summary > span:first-child { font-weight: 600; color: var(--ink); }
-.overviewMore > summary > strong { font-family: var(--font-mono); font-size: 12px; color: var(--teal); }
-.overviewMore > summary > span:last-child { margin-left: auto; font-size: 12px; color: var(--muted); }
-.overviewMore > summary::after { content: ""; width: 7px; height: 7px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: rotate(45deg); align-self: center; transition: transform .2s; }
-.overviewMore[open] > summary::after { transform: rotate(-135deg); }
+.overviewMore > summary, .foldMore > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 14px 18px; cursor: pointer; list-style: none; font-size: 13px; color: var(--ink-soft); }
+.overviewMore > summary::-webkit-details-marker, .foldMore > summary::-webkit-details-marker { display: none; }
+.overviewMore > summary > span:first-child, .foldMore > summary > span:first-child { font-weight: 600; color: var(--ink); }
+.overviewMore > summary > strong, .foldMore > summary > strong { font-family: var(--font-mono); font-size: 12px; color: var(--teal); }
+.overviewMore > summary > span:last-child, .foldMore > summary > span:last-child { margin-left: auto; font-size: 12px; color: var(--muted); }
+.overviewMore > summary::after, .foldMore > summary::after { content: ""; width: 7px; height: 7px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: rotate(45deg); align-self: center; transition: transform .2s; }
+.overviewMore[open] > summary::after, .foldMore[open] > summary::after { transform: rotate(-135deg); }
 .overviewMore[open] > summary { border-bottom: 1px solid var(--line); }
 .overviewMore > :not(summary) { margin: 14px 18px; }
 .overviewMore .overviewKpiRail { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; }
+
+/* ============================================================
+   Calm pass: the same rule on every screen. The few figures that answer the
+   page's question lead; every other figure, row and method note stays on the
+   page, one click away, and prints in full.
+   ============================================================ */
+/* Headline cards that state a figure rather than lead elsewhere: no lift on hover. */
+.headlineStatic:hover { border-color: var(--line); transform: none; }
+.monsoonLead { margin: 6px 0 0; }
+
+/* A fold inside a card: a hairline above, no second box. */
+.foldMore { margin-top: 14px; border-top: 1px solid var(--line); }
+.foldMore > summary { padding: 12px 2px 4px; }
+.foldMore[open] > summary { padding-bottom: 12px; }
+.foldMore > :not(summary) { margin: 0 0 12px; }
+.foldMore > summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; border-radius: 6px; }
+
+/* Long tables and lists show their first rows; the rest open in place. The
+   toggle is a checkbox so it needs no script, and printing shows every row. */
+.rowFoldToggle { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.rowFoldToggle:not(:checked) ~ * [data-fold] { display: none; }
+.rowFoldLabel { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 12px; font-weight: 600; color: var(--teal); cursor: pointer; user-select: none; }
+.rowFoldLabel:hover { border-color: var(--teal); }
+.rowFoldLabel::after { content: ""; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.rowFoldToggle:checked ~ .rowFoldLabel::after { transform: translateY(1px) rotate(-135deg); }
+.rowFoldToggle:focus-visible ~ .rowFoldLabel { outline: 2px solid var(--teal); outline-offset: 2px; }
+.rowFoldLabel .rowFoldLess, .rowFoldToggle:checked ~ .rowFoldLabel .rowFoldMore { display: none; }
+.rowFoldToggle:checked ~ .rowFoldLabel .rowFoldLess { display: inline; }
+@media print {
+  .rowFoldToggle ~ * [data-fold] { display: revert !important; }
+  .rowFoldLabel { display: none !important; }
+}
+/* Its own rule: a browser without ::details-content drops only this one. */
+@media print { details.foldMore::details-content, details.overviewMore::details-content { content-visibility: visible; display: contents; } }
 
 /* ============================================================
    Section menus on long pages stay in reach as the page scrolls.

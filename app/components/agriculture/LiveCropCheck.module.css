@@ -139,6 +139,14 @@
 .recordLive span { display: inline-flex; align-items: center; gap: 6px; margin-right: 8px; font: 600 10px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--teal); }
 .recordLive span i { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 20%, transparent); }
 .recordText small { font-size: 10.5px; line-height: 1.5; color: var(--muted); }
+.recordMore { display: grid; gap: 6px; }
+.recordMore[open] { gap: 8px; }
+.recordMore > summary { display: inline-flex; align-items: center; gap: 7px; width: fit-content; cursor: pointer; list-style: none; font-size: 11.5px; font-weight: 600; color: var(--teal); }
+.recordMore > summary::-webkit-details-marker { display: none; }
+.recordMore > summary::after { content: ""; width: 5px; height: 5px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.recordMore[open] > summary::after { transform: translateY(1px) rotate(-135deg); }
+.recordMore > summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+@media print { .recordMore::details-content { content-visibility: visible; display: contents; } }
 .recordSeasons { margin: 0; display: grid; gap: 7px; }
 .recordSeasons figcaption { font-size: 11px; font-weight: 600; color: var(--ink-soft); }
 .recordSeasons figcaption span { display: block; font-weight: 400; font-size: 10px; color: var(--muted); }

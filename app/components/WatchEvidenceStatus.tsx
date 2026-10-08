@@ -23,10 +23,15 @@ export function WatchEvidenceStatus() {
     }
   } catch { /* An absent or outdated receipt is not a successful verification. */ }
   return <section className={styles.evidence} aria-label="Evidence status and release gates">
-    <div className={styles.summary}><span className={styles.tag}>RESEARCH SNAPSHOT</span><strong>Real source inputs. Not live telemetry.</strong><span>Groundwater through {month(w.season.latestMonth)}</span></div>
-    <p className={styles.pending}><strong>Baseline review pending.</strong> Seasonal flags are provisional, not operational advisories.{check ? ` ${check.flagDifferences} source-series flags change with an unfiltered history baseline.` : ""}</p>
     <details>
-      <summary>Source dates, verification and governance readiness</summary>
+      <summary>
+        <span className={styles.tag}>RESEARCH SNAPSHOT</span>
+        <strong>Real source inputs. Not live telemetry.</strong>
+        <span className={styles.pendingTag}><strong>Baseline review pending.</strong> Seasonal flags are provisional.</span>
+        <span className={styles.through}>Groundwater through {month(w.season.latestMonth)}</span>
+        <span className={styles.open}>Sources, checks and release gates</span>
+      </summary>
+      <p className={styles.pending}>Seasonal flags are provisional, not operational advisories.{check ? ` ${check.flagDifferences} source-series flags change with an unfiltered history baseline.` : ""}</p>
       <div className={styles.sources}>
         <div><span>GROUNDWATER</span><strong>APWRIMS monthly series</strong><p>{month(w.season.latestMonth)} observations. Retained research history; source-use authorization pending.</p><a href="https://apwrims.ap.gov.in/mis/groundwater/levels" target="_blank" rel="noreferrer">APWRIMS source</a></div>
         <div><span>RAINFALL</span><strong>{w.rainfall ? w.rainfall.product.split(" monthly")[0] : "CHIRPS"} estimates and AP gauges</strong><p>{w.rainfall ? `${w.rainfall.months} / ${w.season.year}` : "Period unavailable"} monthly satellite-and-gauge product, equal-weight mandal means, for the history since {w.rainfall?.firstYear ?? 1981}.{rain ? ` AP DES mandal gauges to ${day(rain.end)}: ${signed(rain.deviationPct)} against the department's normal, area-weighted.` : " Not an official state rainfall total."}</p><a href={w.rainfall?.source ?? "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/"} target="_blank" rel="noreferrer">Publisher catalogue</a></div>
