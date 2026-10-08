@@ -43,8 +43,19 @@ test("makes no request to an outside service from a local build", async ({ page 
   expect(await page.locator('script[src*="gc.zgo.at"]').count()).toBe(0);
 });
 
+/**
+ * Wait until Next's router has written its own history entry. It reads the address before it
+ * hydrates and writes that address back when hydration commits, so on a slow runner an address
+ * the test set in between was put back to /monsoon/ and counted as a second move. A reader
+ * cannot change routes before then: until hydration a link is a full page load.
+ */
+async function routerReady(page: Page) {
+  await page.waitForFunction(() => history.state?.__NA === true);
+}
+
 test("counts a move to another page, dropping the theme it was opened with", async ({ page }) => {
   await page.goto("/monsoon/");
+  await routerReady(page);
   const sent = await recordSends(page);
   await page.evaluate(() => history.pushState({}, "", "/districts/?theme=dark"));
   expect(await sent()).toEqual([{ path: "/districts/" }]);
