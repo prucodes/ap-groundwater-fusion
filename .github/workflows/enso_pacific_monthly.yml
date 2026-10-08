@@ -36,7 +36,8 @@ jobs:
         with:
           python-version: "3.11"
       - name: Install dependencies
-        run: pip install numpy scipy pandas xarray netCDF4 pillow shapely certifi
+        # pytest runs the checks below; without it the refresh stops before publishing.
+        run: pip install numpy scipy pandas xarray netCDF4 pillow shapely certifi pytest
 
       - name: Rebuild the Pacific panel
         run: python3 phase3_levels/build_enso_pacific.py
