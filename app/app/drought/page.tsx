@@ -187,7 +187,10 @@ export default function DroughtPage() {
           </div>
           <span className={styles.badge}>Built {shortDate(builtOn, true)} · data {shortDate(d.generatedAt.slice(0, 10), true)}</span>
         </div>
-        <DroughtMethod data={d} />
+        <details className="foldMore">
+          <summary><span>The manual&rsquo;s tables, as this page reads them</span><span>Rules, interpretations, sources and what this is not</span></summary>
+          <DroughtMethod data={d} />
+        </details>
       </section>
     </div>
   );

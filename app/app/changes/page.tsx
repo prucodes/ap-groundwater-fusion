@@ -7,6 +7,7 @@ import { GEC_CATEGORIES, type GecCategory } from "../../lib/agriculture";
 import { fieldPriority, PRIORITY_SIGNALS, standsOut } from "../../lib/fieldPriority";
 import { fieldSignals } from "../../lib/fieldSignalsServer";
 import styles from "./Changes.module.css";
+import { RowFold, foldAt } from "../../components/RowFold";
 import { brief } from "../../lib/pageBriefs";
 
 export const metadata: Metadata = {
@@ -64,6 +65,12 @@ function categoryLabel(key: string) {
 export default function ChangesPage() {
   const items = changes.items;
   const first = items.every(item => item.before === null || item.direction === "same");
+  // Moved figures lead, worse first; the ones that held steady follow as a slim row.
+  const ORDER: Record<string, number> = { worse: 0, better: 1, moved: 2, new: 3, same: 4 };
+  const rank = (item: Item) => ORDER[item.direction ?? "new"];
+  const sorted = items.map((item, index) => ({ item, index })).sort((a, b) => rank(a.item) - rank(b.item) || a.index - b.index).map(({ item }) => item);
+  const moved = sorted.filter(item => item.direction !== "same");
+  const steady = sorted.filter(item => item.direction === "same");
   const droughtMoves = [...changes.drought.worse.map(m => ({ ...m, worse: true })), ...changes.drought.better.map(m => ({ ...m, worse: false }))];
 
   return (
@@ -89,25 +96,23 @@ export default function ChangesPage() {
         </ul>
       </section>
 
-      <section className={styles.cards} aria-label="Headlines this week" data-testid="weekly-changes">
-        {items.map(item => (
-          <Link href={item.href} className={styles.card} key={item.key} data-direction={item.direction ?? "new"}>
-            <span className={styles.cardLabel}>{item.label}</span>
-            <strong className={styles.value}>{format(item.after, item.unit)}</strong>
-            <span className={styles.status}>
-              <span className={styles.badge}>
-                {item.direction ? DIRECTION_TEXT[item.direction] : "First reading"}
-                {delta(item) && item.direction !== "same" ? ` · ${delta(item)}` : ""}
-              </span>
-              {item.before !== null && item.direction !== "same" ? <span className={styles.was}>was {format(item.before, item.unit)}</span> : null}
-            </span>
-            <span className={styles.dates}>
-              {item.beforeAsOf && item.beforeAsOf !== item.afterAsOf ? `${asOf(item.beforeAsOf)} → ${asOf(item.afterAsOf)}` : `As of ${asOf(item.afterAsOf)}`}
-              {item.refreshed === false ? " · source has not updated" : ""}
-            </span>
-            {item.note ? <span className={styles.note}>{item.note}</span> : null}
-          </Link>
-        ))}
+      <section className={styles.headlines} aria-label="Headlines this week" data-testid="weekly-changes">
+        {moved.length ? (
+          <>
+            <h2 className={styles.groupHead}>Moved this week <span>{moved.length}</span></h2>
+            <div className={styles.cards}>
+              {moved.map(item => <ChangeCard item={item} key={item.key} />)}
+            </div>
+          </>
+        ) : null}
+        {steady.length ? (
+          <>
+            <h2 className={styles.groupHead}>Held steady <span>{steady.length}</span></h2>
+            <div className={`${styles.cards} ${styles.cardsSteady}`}>
+              {steady.map(item => <ChangeCard item={item} key={item.key} />)}
+            </div>
+          </>
+        ) : null}
       </section>
 
       <FieldTeams />
@@ -119,15 +124,17 @@ export default function ChangesPage() {
             <span>{changes.drought.basis}</span>
           </div>
           {droughtMoves.length ? (
+            <RowFold id="moved-drought-rows" total={droughtMoves.length} visible={8} noun="mandals">
             <ul>
-              {droughtMoves.map(m => (
-                <li key={`${m.d}-${m.m}`} data-worse={m.worse}>
+              {droughtMoves.map((m, i) => (
+                <li key={`${m.d}-${m.m}`} data-worse={m.worse} {...foldAt(i, 8)}>
                   <span className={styles.mark}>{m.worse ? "▲" : "▼"}</span>
                   <span className={styles.where}><b>{place(m.m ?? "")}</b><small>{place(m.d ?? "")}</small></span>
                   <span className={styles.move}>{categoryLabel(m.from)} → <b>{categoryLabel(m.to)}</b></span>
                 </li>
               ))}
             </ul>
+            </RowFold>
           ) : <p className={styles.empty}>No mandal changed its reading this week.</p>}
           <Link href="/drought" className={styles.more}>Open the Drought Watch →</Link>
         </section>
@@ -138,15 +145,17 @@ export default function ChangesPage() {
             <span>Latest reading {asOf(changes.groundwater.latestMonth.before)} → {asOf(changes.groundwater.latestMonth.after)} · {changes.groundwater.worse} worse, {changes.groundwater.better} better</span>
           </div>
           {changes.groundwater.moved.length ? (
+            <RowFold id="moved-groundwater-rows" total={changes.groundwater.moved.length} visible={8} noun="mandals">
             <ul>
-              {changes.groundwater.moved.map(m => (
-                <li key={m.id} data-worse={m.worse}>
+              {changes.groundwater.moved.map((m, i) => (
+                <li key={m.id} data-worse={m.worse} {...foldAt(i, 8)}>
                   <span className={styles.mark}>{m.worse ? "▲" : "▼"}</span>
                   <span className={styles.where}><b>{place(m.mandal ?? "")}</b><small>{place(m.district ?? "")}</small></span>
                   <span className={styles.move}>{STATUS_TEXT[m.from] ?? m.from} → <b>{STATUS_TEXT[m.to] ?? m.to}</b></span>
                 </li>
               ))}
             </ul>
+            </RowFold>
           ) : (
             <p className={styles.empty}>
               {changes.groundwater.latestMonth.before === changes.groundwater.latestMonth.after
@@ -165,6 +174,28 @@ export default function ChangesPage() {
         of the national drought manual, not a declaration. Groundwater: APWRIMS monthly series. El Niño: NOAA CPC.
       </p>
     </div>
+  );
+}
+
+/** One headline: its figure now, which way it moved, what it was, and the dates of both readings. */
+function ChangeCard({ item }: { item: Item }) {
+  return (
+    <Link href={item.href} className={styles.card} data-direction={item.direction ?? "new"}>
+      <span className={styles.cardLabel}>{item.label}</span>
+      <strong className={styles.value}>{format(item.after, item.unit)}</strong>
+      <span className={styles.status}>
+        <span className={styles.badge}>
+          {item.direction ? DIRECTION_TEXT[item.direction] : "First reading"}
+          {delta(item) && item.direction !== "same" ? ` · ${delta(item)}` : ""}
+        </span>
+        {item.before !== null && item.direction !== "same" ? <span className={styles.was}>was {format(item.before, item.unit)}</span> : null}
+      </span>
+      <span className={styles.dates}>
+        {item.beforeAsOf && item.beforeAsOf !== item.afterAsOf ? `${asOf(item.beforeAsOf)} → ${asOf(item.afterAsOf)}` : `As of ${asOf(item.afterAsOf)}`}
+        {item.refreshed === false ? " · source has not updated" : ""}
+      </span>
+      {item.note ? <span className={styles.note}>{item.note}</span> : null}
+    </Link>
   );
 }
 
@@ -187,6 +218,7 @@ function FieldTeams() {
           {tally.map(t => <li key={t.n}><b>{t.count}</b>{t.n === 6 ? "all six" : `${t.n} of 6`}</li>)}
         </ul>
       </div>
+      <RowFold id="field-team-rows" total={shown.length} visible={8} noun="mandals">
       <div className={styles.matrixWrap}>
         <table className={styles.matrix}>
           <thead>
@@ -200,7 +232,7 @@ function FieldTeams() {
           </thead>
           <tbody>
             {shown.map((row, rank) => (
-              <tr key={row.index}>
+              <tr key={row.index} {...foldAt(rank, 8)}>
                 <th scope="row"><span className={styles.rank}>{rank + 1}</span>{row.id ? <Link href={`/mandals/${row.id}`}>{place(row.mandal)}</Link> : place(row.mandal)}<small>{place(row.district)}</small></th>
                 {PRIORITY_SIGNALS.map(signal => {
                   const value = row.signals[signal.key];
@@ -214,6 +246,7 @@ function FieldTeams() {
           </tbody>
         </table>
       </div>
+      </RowFold>
       <ol className={styles.signalKey}>
         {PRIORITY_SIGNALS.map(signal => <li key={signal.key}><b>{signal.short}.</b> {signal.label}</li>)}
       </ol>

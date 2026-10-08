@@ -21,6 +21,7 @@ import {
 import { waterSummary } from "../../lib/waterSummary";
 import { day, signed } from "../../components/agriculture/waterContextFormat";
 import { brief } from "../../lib/pageBriefs";
+import { RowFold, foldAt } from "../../components/RowFold";
 
 const RAIN_LABEL: Record<string, string> = { excess: "Excess", normal: "Normal", deficient: "Deficient", scanty: "Scanty", noRain: "No rain" };
 const RAIN_COLOR: Record<string, string> = { excess: "#2789af", normal: "#5e9c89", deficient: "#ce982b", scanty: "#b64c42", noRain: "#7a2e27" };
@@ -116,6 +117,7 @@ export default function ClimatePage() {
             {waterSummary.soil ? <><span className="dotsep" /><span>Soil below its usual level for the date in <b>{waterSummary.soil.belowOwnMedian}</b> of {waterSummary.soil.withBaseline} mandals</span></> : null}
             {waterSummary.reservoirs ? <><span className="dotsep" /><span>Reservoirs <b>{formatNumber(waterSummary.reservoirs.storagePct)}%</b> full against {formatNumber(waterSummary.reservoirs.lastYearPct)}% a year ago</span></> : null}
           </div>
+          <RowFold id="climate-district-rows" total={waterSummary.districts.filter((d) => d.rain || d.soil).length} visible={10} noun="districts">
           <div className="tableWrap">
             <table className="dataTable">
               <thead>
@@ -124,8 +126,8 @@ export default function ClimatePage() {
               <tbody>
                 {waterSummary.districts.filter((d) => d.rain || d.soil)
                   .sort((a, b) => (a.rain?.deviationPct ?? 999) - (b.rain?.deviationPct ?? 999))
-                  .map((d) => (
-                    <tr key={d.key}>
+                  .map((d, i) => (
+                    <tr key={d.key} {...foldAt(i, 10)}>
                       <td className="cellStrong">{titleCase(d.district)}</td>
                       <td>{d.rain ? `${formatNumber(d.rain.actualMm)} mm` : "—"}</td>
                       <td>{d.rain ? `${formatNumber(d.rain.normalMm)} mm` : "—"}</td>
@@ -139,6 +141,7 @@ export default function ClimatePage() {
               </tbody>
             </table>
           </div>
+          </RowFold>
           <div className="fusionNote" style={{ marginTop: 14 }}>
             <IconInfo />
             <span>
