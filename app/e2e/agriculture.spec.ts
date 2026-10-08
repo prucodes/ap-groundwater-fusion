@@ -132,7 +132,9 @@ for (const width of [375, 768, 1920]) {
       while (el && chain.length < 14) {
         let best: Element | null = null, reach = -1;
         for (const kid of Array.from(el.children)) {
-          const box = kid.getBoundingClientRect(), far = Math.max(box.right, box.left + kid.scrollWidth);
+          // A box that scrolls or clips its own content reaches only as far as its edge.
+          const box = kid.getBoundingClientRect(), own = ["auto", "scroll", "hidden", "clip"].includes(getComputedStyle(kid).overflowX);
+          const far = own ? box.right : Math.max(box.right, box.left + kid.scrollWidth);
           if (far > reach) { reach = far; best = kid; }
         }
         if (!best || reach <= innerWidth + 0.5) break;
