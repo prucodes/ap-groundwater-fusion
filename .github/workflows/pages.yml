@@ -59,6 +59,15 @@ jobs:
         run: |
           npx playwright install --with-deps chromium
           node scripts/print-digest.mjs --directory out --base "$PAGES_BASE_PATH"
+      - name: Print the project brief to PDF
+        # /brief/ printed to out/brief/ap-water-intelligence-brief.pdf with this
+        # week's maps, 3D renders and site screenshots, linked from Methodology.
+        # A failure never blocks the site.
+        working-directory: app
+        continue-on-error: true
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: node scripts/print-brief.mjs --directory out --base "$PAGES_BASE_PATH"
       - name: Disable Jekyll processing
         # Without this, Pages' Jekyll step ignores files/dirs beginning with "_",
         # which would drop Next's _next/ asset directory and break every page.
@@ -77,3 +86,36 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  browser-tests:
+    # The full browser suite against this commit, built at the root as the tests
+    # expect. It reports and never holds back the deploy: a test that new data
+    # breaks shows a red cross on this run the same day, not a week later.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+      - name: Install dependencies
+        working-directory: app
+        run: npm ci
+      - name: Build static export at the root
+        working-directory: app
+        env:
+          PAGES_BASE_PATH: ""
+        run: npm run build:static
+      - name: Install Chromium
+        working-directory: app
+        run: npx playwright install --with-deps chromium
+      - name: Run the browser suite
+        working-directory: app
+        env:
+          CI: "1"
+          PLAYWRIGHT_BASE_URL: http://127.0.0.1:3217
+        run: |
+          node scripts/serve-static.mjs --port 3217 --bind 127.0.0.1 --directory out &
+          for i in $(seq 1 50); do curl -sf http://127.0.0.1:3217/ >/dev/null && break; sleep 0.2; done
+          npx playwright test --retries=1

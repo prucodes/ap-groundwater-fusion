@@ -1,7 +1,7 @@
 # Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026)
 
 Written by Claude Code for Codex. This replaces the 2 October brief at the same path.
-Everything below is on `main` (through PR #55) and live on GitHub Pages.
+Everything below is on `main` (through PR #57) and live on GitHub Pages.
 
 Ground rules:
 - Start every task on a fresh branch off `main`.
@@ -34,6 +34,8 @@ things look, but never change what they say without asking.
 | #53 | **The weekly refresh carries on when groundwater arrives before its rain.** APWRIMS posts a month within days; CHIRPS about three weeks after it ends. The Monsoon Watch reads rain over the months it covers and lists `notYetPublished`; the model estimates the newest month without its rain and says so (`rainfall` in the nowcast file, `disclosures.rainfall` in the model card, shown on Methodology; measured cost on Aug 2026: MAE 0.89 → 1.04 m). `docs/el_nino_60s_script.md`'s on-screen figures are pinned to a dated table, not to each week's file. |
 | #54 | **Water Depth 3D on a phone: the scene first.** One-line title, one contextual control row, one summary line (`#phoneStat`) in place of the stat cards, a slim key with notes behind an "i", pinch to zoom, a bottom-sheet mandal card. `fitPhone()` frames the state in the band between the panels and turns it to run up a portrait screen, with a compass needle. Desktop unchanged. |
 | #55 | **The latest month on Water depth 3D.** The page opens on the newest reading (e.g. September 2026) after the Mays on the timeline, each mandal coloured against its own earlier readings for that month: shallower than usual, within 1 m, deeper, deeper than any on record (`now` and `c` from `build_crystal_data.py`). A September is never compared with a May. |
+| #56 | **The source audit runs weekly; phones reach content first.** `audit_watch_sources.py --online` is the last weekly builder and `reports/watch-source-audit.json` is committed, so the evidence panels keep a current receipt. Phone heroes lead with "What it says now" (the other two lines behind a CSS-only "About this page"); the source ribbon scrolls; the retired Alerts link left the sidebar. |
+| #57 | **A calmer Overview, the brief as a page, pinned section menus, browser tests in CI.** The Overview opens on four headline cards (groundwater, monsoon, drought manual, next summer), then the map; the model's figures fold under "All figures and model accuracy". `/brief/` is the six-page brief built from the week's data; `scripts/print-brief.mjs` prints it to `brief/ap-water-intelligence-brief.pdf` on every deploy (Methodology links it). Section menus on Monsoon, Drought and Agriculture stay pinned (`.jumpNav`). Both deploy workflows run the full browser suite in a `browser-tests` job that reports without blocking. |
 | #44 | **This week in the fields** (Agriculture section 02): an FAO-56 crop water check for every mandal, for a chosen crop and stage, on this week's soil moisture and ECMWF's forecast. Also crop vegetation (NOAA VCI weighted to cropland) and the official CGWB groundwater category, on the Agriculture map, the Map page and every mandal page. The Map page's title and date now follow the view. |
 
 Taken off the to-do list as done: per-constituency briefs, the sidebar State wells date,

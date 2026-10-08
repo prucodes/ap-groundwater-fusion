@@ -93,6 +93,12 @@ export default function DroughtPage() {
         <span className="provRibbonItem"><IconShield /> evidence for steps 1–2 · not a declaration</span>
       </div>
 
+      <nav className="jumpNav jumpNavPlain" aria-label="Drought sections">
+        <a href="#drought-path">Three steps</a><a href="#drought-where">Every mandal</a><a href="#drought-season">Dry weeks</a>
+        <a href="#drought-districts">Districts</a><a href="#drought-water">Reservoirs and sowing</a><a href="#drought-state">To a notification</a>
+        <a href="#drought-method">How it reads the manual</a>
+      </nav>
+
       <DroughtCommand data={{ state: d.state, season: d.season, rules: d.rules }} builtDays={daysUntil(d.season.declareBy)} />
 
       <section className={styles.section} aria-labelledby="drought-path">
