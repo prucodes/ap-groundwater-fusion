@@ -142,7 +142,7 @@
 .recordSeasons { margin: 0; display: grid; gap: 7px; }
 .recordSeasons figcaption { font-size: 11px; font-weight: 600; color: var(--ink-soft); }
 .recordSeasons figcaption span { display: block; font-weight: 400; font-size: 10px; color: var(--muted); }
-.seasonRow { display: grid; grid-template-columns: 70px minmax(0, 1fr) 108px; align-items: center; gap: 10px; font-size: 11px; color: var(--ink-soft); }
+.seasonRow { display: grid; grid-template-columns: 70px minmax(0, 1fr) minmax(108px, max-content); align-items: center; gap: 10px; font-size: 11px; color: var(--ink-soft); }
 .seasonTrack { position: relative; height: 12px; border-radius: 6px; background: var(--field); }
 .seasonTrack i { position: absolute; top: 0; bottom: 0; border-radius: 6px; }
 .seasonTrack i[data-dir="lower"] { background: var(--lc-green); }
@@ -178,7 +178,9 @@
   .districts li button { grid-template-columns: 104px minmax(0, 1fr) auto; gap: 8px; }
   .detail { padding: 14px 12px 16px; }
   .mapFigure { padding: 10px 8px 58px; }
-  .seasonRow { grid-template-columns: 50px minmax(0, 1fr) 100px; }
+  /* The value column takes its own text's width ("569 mandal-seasons" sets wider on Linux and Android
+     than on a Mac); the bar beside it gives way, so nothing spills past the screen. */
+  .seasonRow { grid-template-columns: 50px minmax(0, 1fr) minmax(88px, max-content); }
   .seasonAxis { padding: 0 110px 0 60px; white-space: nowrap; }
   .seasonAxis small { display: none; }
 }

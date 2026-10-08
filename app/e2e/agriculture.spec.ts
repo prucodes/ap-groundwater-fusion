@@ -125,7 +125,26 @@ for (const width of [375, 768, 1920]) {
     await page.setViewportSize({ width, height: width < 600 ? 844 : 1080 });
     await page.goto("/agriculture/");
     await expect(page.locator("main > div")).toHaveCSS("opacity", "1");
-    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+    // From <body> down, the child whose content reaches furthest right, so a failure names the element.
+    const wide = await page.evaluate(() => {
+      const chain: string[] = [];
+      let el: Element | null = document.body;
+      while (el && chain.length < 14) {
+        let best: Element | null = null, reach = -1;
+        for (const kid of Array.from(el.children)) {
+          // A box that scrolls or clips its own content reaches only as far as its edge.
+          const box = kid.getBoundingClientRect(), own = ["auto", "scroll", "hidden", "clip"].includes(getComputedStyle(kid).overflowX);
+          const far = own ? box.right : Math.max(box.right, box.left + kid.scrollWidth);
+          if (far > reach) { reach = far; best = kid; }
+        }
+        if (!best || reach <= innerWidth + 0.5) break;
+        chain.push(`${best.tagName.toLowerCase()}.${String((best as HTMLElement).className).split(" ")[0] || "-"}@${Math.round(reach)}`);
+        el = best;
+      }
+      return chain;
+    });
+    // Within 1 px, as the phone and desktop layout tests allow: Linux text metrics round a sub-pixel over.
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth), `wider than the screen, through: ${wide.join(" > ")}`).toBeLessThanOrEqual(1);
     const scene = page.getByTestId("crop-field");
     const sceneWidth = await scene.evaluate(element => ({ scene: element.clientWidth, column: element.parentElement!.clientWidth }));
     expect(Math.abs(sceneWidth.scene - sceneWidth.column)).toBeLessThanOrEqual(1);
