@@ -5790,7 +5790,7 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 .crossLead { margin: 4px 0 0; max-width: 920px; font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
 .crossLead b { color: var(--ink); }
 /* Inside a card the figures sit on the field tone: one surface, not a card within a card. */
-.card .overviewHeadlines .headlineCard { background: var(--field); box-shadow: none; }
+.card .overviewHeadlines .headlineCard, .headlinesFlat .headlineCard { background: var(--field); box-shadow: none; }
 @media (max-width: 640px) { .overviewHeadlines.headlines3 { grid-template-columns: minmax(0, 1fr); } }
 
 /* A fold inside a card: a hairline above, no second box. */

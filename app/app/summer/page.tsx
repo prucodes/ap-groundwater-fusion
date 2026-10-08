@@ -9,6 +9,7 @@ import { rabiView } from "../../lib/rabi";
 import shared from "../rabi/Rabi.module.css";
 import styles from "./Summer.module.css";
 import { brief } from "../../lib/pageBriefs";
+import drinking from "../../data/drinking_water.json";
 
 export const metadata: Metadata = {
   title: "Summer Water Outlook | AP Water Intelligence",
@@ -128,6 +129,8 @@ export default function SummerPage() {
         </div>
       </section>
 
+      <DrinkingWater beyondPeople={people?.beyond ?? null} />
+
       {bt ? <section className={shared.block} aria-labelledby="summer-record" data-testid="summer-record">
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconShield /> How it has fared</span>
@@ -163,5 +166,74 @@ export default function SummerPage() {
         Source: {o.source}, {o.firstYear} to {month(o.anchor)}.{people ? ` People: ${people.source} (CC BY 4.0), a modelled estimate for ${people.year} that counts everyone in the mandal, towns included, not only those on wells.` : ""} A mandal is projected when it has at least four past winters with readings in both months. APWRIMS reports a mandal&rsquo;s average across its piezometers; one village&rsquo;s wells can sit well above or below it. Rain this winter, recharge structures and new pumping all move the answer; the outlook is refreshed as each month&rsquo;s readings arrive. <Link href="/methodology/">Methodology <IconArrowRight /></Link>
       </p>
     </div>
+  );
+}
+
+const pct = (share: number) => `${Math.round(share * 100)}%`;
+const count = (n: number) => n.toLocaleString("en-IN");
+
+/** Who drinks from these wells: the State's rural drinking-water sources in the mandals heading past their record. */
+function DrinkingWater({ beyondPeople }: { beyondPeople: number | null }) {
+  const d = drinking;
+  const b = d.byTier.beyond;
+  const piped = d.state.pipedSchemes;
+  const asOf = d.asOf ? new Date(`${d.asOf}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }) : null;
+  const rows = [...d.formerDistricts].sort((x, y) => y.beyond.sources - x.beyond.sources);
+  return (
+    <section className={shared.block} aria-labelledby="summer-drinking" data-testid="summer-drinking">
+      <header className={shared.blockHead}>
+        <span className={shared.eyebrow}><IconDroplet /> Drinking water</span>
+        <h2 id="summer-drinking">Drinking water rests on these wells</h2>
+        <p>
+          Nineteen in twenty of the State&rsquo;s rural drinking-water schemes draw on groundwater. The {b.mandals} mandals heading
+          past their deepest May hold {count(b.sources)} of its drinking-water sources and delivery points: where a summer supply
+          plan starts.
+        </p>
+      </header>
+      <div className="overviewHeadlines headlines3 headlinesFlat">
+        <div className="headlineCard headlineStatic">
+          <span className="headlineKicker">On groundwater</span>
+          <strong>{pct(d.state.groundwaterShare)}<small>of rural drinking-water schemes</small></strong>
+          <span className="headlineText">{pct(d.state.pipedGroundwaterShare)} of piped schemes too: {count(piped.groundwater)} on groundwater against {count(piped.surface)} on surface water.</span>
+        </div>
+        <div className="headlineCard headlineStatic">
+          <span className="headlineKicker">Heading past the record</span>
+          <strong>{count(b.sources)}<small>drinking-water sources</small></strong>
+          <span className="headlineText">In the {b.mandals} mandals heading past their deepest May{beyondPeople ? `, home to about ${lakhs(beyondPeople)} people` : ""}.</span>
+        </div>
+        <div className="headlineCard headlineStatic">
+          <span className="headlineKicker">Already above a limit</span>
+          <strong>{count(b.chemical)}<small>tested above a chemical limit</small></strong>
+          <span className="headlineText">Sources in those mandals that tested above a permissible chemical limit; a supply plan should not lean on them.</span>
+        </div>
+      </div>
+      <details className="foldMore">
+        <summary><span>By district</span><span>Schemes on groundwater, mandals past the record and their sources</span></summary>
+        <div className="tableWrap">
+          <table className="dataTable compact">
+            <thead><tr><th>District (as the mission reports it)</th><th>Schemes on groundwater</th><th>Mandals past the record</th><th>Their sources</th><th>Above a chemical limit</th></tr></thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr key={row.name}>
+                  <td>{row.name}</td>
+                  <td>{row.groundwaterShare === null ? "—" : pct(row.groundwaterShare)}</td>
+                  <td>{row.beyond.mandals}</td>
+                  <td>{count(row.beyond.sources)}</td>
+                  <td>{count(row.beyond.chemical)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="cardNote">
+          Jal Jeevan Mission, public IMIS reports{asOf ? `, as on ${asOf}` : ""}: schemes by source (format B26) and tested
+          sources by block (format E5). The mission still reports the 13 districts from before 2022, so each mandal is listed
+          under that district. Sources include delivery points and stand posts as the mission counts them. All {d.matching.blocks} blocks
+          are placed on a mandal outline, {d.matching.exactName} by name and {d.matching.reviewed} through a reviewed list of spellings
+          and of names two districts share, placed by location. A test above a chemical limit is a reading of water quality,
+          not a forecast. Only counts are read; no habitation or scheme is named.
+        </p>
+      </details>
+    </section>
   );
 }
