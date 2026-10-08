@@ -1,0 +1,110 @@
+{
+ "contractVersion": "cross-network-v1",
+ "source": "CGWB National Hydrograph Network, manual readings, via India Data Portal (ISB)",
+ "forecast": "Released three-month forecast (model blended with the year-ago level), rolling-origin backtest",
+ "years": [
+  2018,
+  2019,
+  2020,
+  2022,
+  2023
+ ],
+ "mandals": 409,
+ "stations": 934,
+ "minMoveM": 0.5,
+ "frozenMonths": [
+  "2021-03",
+  "2021-04",
+  "2021-06",
+  "2021-09",
+  "2021-10",
+  "2021-11",
+  "2021-12"
+ ],
+ "overall": {
+  "mandalWindows": 2064,
+  "clearMoves": 1416,
+  "direction": {
+   "forecast": 0.7111581920903954,
+   "measured": 0.769774011299435,
+   "seasonal": 0.6878531073446328
+  },
+  "errorM": {
+   "forecast": 2.4737011151346606,
+   "measured": 2.603215843023256,
+   "seasonal": 3.5551468023255812,
+   "noChange": 1.7505801841085273
+  },
+  "correlation": {
+   "forecast": 0.24804014951973552,
+   "measured": 0.30446431554741404
+  },
+  "bySeason": {
+   "usual": {
+    "clearMoves": 974,
+    "forecast": 0.8788501026694046,
+    "measured": 0.8655030800821355
+   },
+   "broke": {
+    "clearMoves": 442,
+    "forecast": 0.3416289592760181,
+    "measured": 0.5588235294117647
+   }
+  }
+ },
+ "windows": {
+  "aug_nov": {
+   "label": "August to November",
+   "years": [
+    2018,
+    2019,
+    2020,
+    2022
+   ],
+   "mandalWindows": 988,
+   "clearMoves": 641,
+   "direction": {
+    "forecast": 0.672386895475819,
+    "measured": 0.7878315132605305,
+    "seasonal": 0.6318252730109204
+   },
+   "errorM": {
+    "forecast": 2.6718284697658117,
+    "measured": 2.4160197368421055,
+    "seasonal": 3.65777024291498,
+    "noChange": 1.805280870445344
+   },
+   "correlation": {
+    "forecast": 0.29219253463978906,
+    "measured": 0.3644227651956909
+   }
+  },
+  "may_aug": {
+   "label": "May to August",
+   "years": [
+    2018,
+    2019,
+    2022,
+    2023
+   ],
+   "mandalWindows": 1076,
+   "clearMoves": 775,
+   "direction": {
+    "forecast": 0.743225806451613,
+    "measured": 0.7548387096774194,
+    "seasonal": 0.7341935483870968
+   },
+   "errorM": {
+    "forecast": 2.291777484674087,
+    "measured": 2.7751022304832715,
+    "seasonal": 3.4609163568773234,
+    "noChange": 1.700353159851301
+   },
+   "correlation": {
+    "forecast": 0.16730209246155497,
+    "measured": 0.23377142486915456
+   }
+  }
+ },
+ "caveat": "CGWB's wells are mostly shallow dug wells and APWRIMS's are piezometers, so depths are not compared, only the change over each window. The State's own measured change is the benchmark: no model can be expected to agree with CGWB more often than the State's wells do."
+}

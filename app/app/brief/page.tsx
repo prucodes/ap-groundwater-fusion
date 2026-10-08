@@ -154,7 +154,7 @@ const WATER: SourceRow[] = [
   ["APWRIMS", "AP Water Resources Information & Management System", "Depth to water below ground per mandal, from state piezometers, 2014 to date", "mandal · monthly", <><b>The measured series</b> the model learns from and every page reports</>],
   ["APWRIMS context feeds", "AP DES gauges · NRSC soil moisture · reservoirs", "Mandal rain gauges, modelled soil moisture, reservoir storage and canal releases", "mandal · daily to weekly", "Drought triggers, the crop check, reservoir context"],
   ["CGWB assessment via INGRES", "hosted by IIT Hyderabad", "2024 Dynamic Ground Water Resource Assessment: stage of extraction and category", "unit · annual", "The official safe → over-exploited label"],
-  ["CGWB station levels", "via India-WRIS", "Central network well readings", "station · seasonal", "Cross-network comparison"],
+  ["CGWB station levels", "via India Data Portal", "Central network well readings, 2013 to 2023", "station · seasonal", "Checks the forecast on wells it never saw"],
   ["NASA GRACE-DA", "GRACE gravimetry assimilated in a land model", "Groundwater storage percentile", "coarse grid · weekly", "Regional storage context only"],
   ["AP Data Lake", "AI Living Labs, access-controlled", "The State's official groundwater snapshot and mandal outlines", "mandal · on request", "Official boundaries; well-count check"],
 ];

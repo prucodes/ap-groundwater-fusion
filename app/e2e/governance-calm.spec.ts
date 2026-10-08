@@ -2,6 +2,7 @@ import { expect, test, type Locator } from "@playwright/test";
 import watch from "../data/monsoon_watch.json";
 import changes from "../data/weekly_changes.json";
 import drought from "../data/drought_watch_summary.json";
+import crossNetwork from "../data/cross_network_check.json";
 
 /* The calm pass: each page leads with the few figures that answer its question,
    and every other figure, row and method note stays on the page, one click away.
@@ -66,4 +67,16 @@ test("the research snapshot is one line until opened, with its caveat in view", 
   await expect(evidence.getByText("Operational release pending")).toBeHidden();
   await evidence.locator("summary").click();
   await expect(evidence.getByText("Operational release pending")).toBeVisible();
+});
+
+test("Methodology shows the forecast checked on wells it never saw, method folded", async ({ page }) => {
+  await page.goto("/methodology/");
+  const section = page.getByTestId("method-cross-network");
+  await expect(section.getByRole("heading", { name: /never saw/ }).or(section.getByText("Checked on wells it never saw"))).toBeVisible();
+  const share = `${Math.round(crossNetwork.overall.direction.forecast! * 100)}%`;
+  await expect(section.locator(".headlineCard").first()).toContainText(share);
+  await expect(section.locator(".headlineCard")).toHaveCount(3);
+  const fold = section.locator("details.foldMore");
+  await expect(fold).toHaveJSProperty("open", false);
+  await expect(section).toContainText(crossNetwork.frozenMonths[0]);
 });
