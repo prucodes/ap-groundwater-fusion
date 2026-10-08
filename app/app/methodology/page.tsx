@@ -219,6 +219,15 @@ export default function MethodologyPage() {
             The groundwater forecast experiment remains research-only. Historical ENSO associations do not establish a local forecast or causation.
           </p>
           <p>
+            <strong>Checked against IMD&rsquo;s own rainfall grid.</strong>{" "}The India Meteorological Department&rsquo;s 0.25° grid
+            (Pai et al. 2014), the rainfall officials quote, agrees with the CHIRPS record the model reads: across 604 mandals from
+            2014 to 2025 the June to September totals match on average (CHIRPS at 1.00 of IMD), month by month they move together
+            (r&nbsp;=&nbsp;0.87), and a wet or a dry season reads the same way in 78% of mandal-seasons. As the model&rsquo;s rain,
+            IMD would cut the nowcast&rsquo;s error by about 2% (1.060 m to 1.041 m over 2024 and 2025, better in 18 of 24 months).
+            IMD publishes a year&rsquo;s grid only after the year ends, while CHIRPS posts each month in about three weeks, and the
+            weekly nowcast needs this season&rsquo;s rain, so CHIRPS stays the input.
+          </p>
+          <p>
             <strong>When the three-month forecast can and cannot be trusted in a dry year.</strong>{" "}Retrained every quarter since
             2018 and scored on what followed, forecasts whose three months turned out at least 25% drier than normal during the
             monsoon expected about 1.2 m more recharge than happened (2.26 m mean error against 1.81 m for assuming no change).
