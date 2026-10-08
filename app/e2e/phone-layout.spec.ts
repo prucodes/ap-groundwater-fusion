@@ -123,18 +123,20 @@ test.describe("phone layout", () => {
     expect(closedBox!.x + closedBox!.width).toBeLessThanOrEqual(0);
 
     await page.locator(".mobileNavBtn").click();
-    await page.waitForTimeout(400);
+    // The drawer slides in; a slow runner can still be mid-slide after a fixed wait,
+    // so wait for it to arrive. A drawer that never opens still fails here.
+    await expect.poll(async () => (await sidebar.boundingBox())!.x).toBeGreaterThanOrEqual(-1);
 
     const openBox = await sidebar.boundingBox();
-    expect(openBox!.x).toBeGreaterThanOrEqual(-1);
     // A drawer that covers the whole screen has no visible way back to content.
     expect(openBox!.width).toBeLessThan(viewportWidth);
 
     // Escape must close it, or a keyboard user is trapped.
     await page.keyboard.press("Escape");
-    await page.waitForTimeout(400);
-    const reclosed = await sidebar.boundingBox();
-    expect(reclosed!.x + reclosed!.width).toBeLessThanOrEqual(0);
+    await expect.poll(async () => {
+      const box = (await sidebar.boundingBox())!;
+      return box.x + box.width;
+    }).toBeLessThanOrEqual(0);
   });
 
   test("navigating from the drawer closes it", async ({ page }) => {
