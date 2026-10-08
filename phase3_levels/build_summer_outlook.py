@@ -35,6 +35,7 @@ import json
 import os
 import statistics
 import sys
+from series_quality import history_carried_forward  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -61,8 +62,9 @@ def load_json(path):
 def load_history(path=HISTORY):
     series = collections.defaultdict(dict)
     names = {}
+    carried = set(history_carried_forward(path))
     for row in csv.DictReader(open(path)):
-        if row["level_mbgl"]:
+        if row["level_mbgl"] and row["date"] not in carried:
             series[row["mandal_uuid"]][row["date"]] = float(row["level_mbgl"])
             names[row["mandal_uuid"]] = (row["district"], row["mandal"])
     return series, names

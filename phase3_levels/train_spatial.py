@@ -22,6 +22,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.model_selection import GroupKFold
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from series_quality import history_carried_forward  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.join(HERE, "..", "app", "data")
@@ -113,6 +114,7 @@ def metrics(y, p):
 def evaluate():
     df = pd.read_csv(os.path.join(HERE, "apwrims", "apwrims_gw_history.csv"))
     df = df[(df.level_mbgl > 0) & (df.level_mbgl < 60)].copy()
+    df = df[~df.date.isin(history_carried_forward())].copy()
     cents = mandal_centroids()
     resolved = resolve_centroids(df.mandal.unique(), cents)
     key = df.mandal.str.strip().str.upper()

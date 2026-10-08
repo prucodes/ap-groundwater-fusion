@@ -28,6 +28,9 @@ import shapely
 from shapely.geometry import MultiPolygon, Point, Polygon
 from shapely.strtree import STRtree
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from series_quality import history_carried_forward  # noqa: E402
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 APP = os.path.join(ROOT, "app", "data")
@@ -37,7 +40,6 @@ OUT = os.path.join(APP, "cross_network_check.json")
 
 WINDOWS = {"may_aug": (5, 8, "May to August"), "aug_nov": (8, 11, "August to November")}
 MIN_MOVE = 0.5          # metres: a smaller median move is too close to call either way
-FROZEN = 0.5            # a month where at least this share of mandals repeat last month's value
 MAX_DEPTH = 60.0        # the same plausibility cut the model applies to its own series
 
 
@@ -76,23 +78,6 @@ def cgwb_changes(shapes):
     return out
 
 
-def frozen_months(history):
-    """Months the State's series carried forward rather than measured.
-
-    In most months about one mandal in twenty repeats last month's value exactly. In
-    much of 2021 nearly all of them did: a change over such a month is zero by
-    construction, so it says nothing about the water and is left out here.
-    """
-    table = history.pivot_table(index="mandal_uuid", columns="date", values="level_mbgl")
-    months = sorted(table.columns)
-    out = []
-    for before, month in zip(months, months[1:]):
-        both = table[[before, month]].dropna()
-        if len(both) and float(np.mean(both[before] == both[month])) >= FROZEN:
-            out.append(month)
-    return out
-
-
 def model_changes(geo):
     """The backtest's forecast for each mandal-window, with the State's measured change beside it."""
     sys.path.insert(0, HERE)
@@ -100,7 +85,7 @@ def model_changes(geo):
     rows = pd.read_csv(ROWS)
     history = pd.read_csv(os.path.join(HERE, "apwrims", "apwrims_gw_history.csv"))
     history = history[(history.level_mbgl > 0) & (history.level_mbgl < MAX_DEPTH)].copy()
-    frozen = frozen_months(history)
+    frozen = history_carried_forward()
     window_months = lambda origin, target: {origin} | {str(p) for p in pd.period_range(origin, target, freq="M")}
     rows = rows[[not (window_months(o, t) & set(frozen)) for o, t in zip(rows.origin, rows.target_date)]]
     history["mkey"] = history.mandal_uuid

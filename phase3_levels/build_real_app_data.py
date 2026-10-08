@@ -6,6 +6,7 @@ not rewrite the inactive V1 JSON files.
 """
 import csv, json, os, re, datetime, statistics as st
 from collections import defaultdict
+from series_quality import history_carried_forward  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.join(HERE, "..", "app", "data")
@@ -50,12 +51,13 @@ def build_legacy_v1():
     # APWRIMS per-mandal history -> count, median/avg, current-vs-own-history percentile
     hist = defaultdict(list)
     hist2 = defaultdict(list)  # keyed by norm2 — merges urban/rural/directional splits
+    carried = set(history_carried_forward())
     for r in csv.DictReader(open(os.path.join(HERE, "apwrims", "apwrims_gw_history.csv"))):
         try:
             lvl = float(r["level_mbgl"])
         except ValueError:
             continue
-        if 0 < lvl < 60:
+        if 0 < lvl < 60 and r["date"] not in carried:
             hist[norm(r["mandal"])].append((r["date"], lvl))
             hist2[norm2(r["mandal"])].append((r["date"], lvl))
 

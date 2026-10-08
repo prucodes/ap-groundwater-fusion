@@ -12,6 +12,7 @@ import os
 import re
 import statistics
 from collections import defaultdict
+from series_quality import history_carried_forward  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.abspath(os.path.join(HERE, "..", "app", "data"))
@@ -130,6 +131,7 @@ def read_histories(path):
     raw_series = set()
     raw_row_count = 0
     valid_row_count = 0
+    carried = set(history_carried_forward(path))
     with open(path) as handle:
         for row in csv.DictReader(handle):
             raw_row_count += 1
@@ -137,7 +139,7 @@ def read_histories(path):
                 level = float(row["level_mbgl"])
             except (TypeError, ValueError):
                 continue
-            if not 0 < level < 60:
+            if not 0 < level < 60 or row["date"] in carried:
                 continue
             valid_row_count += 1
             district = norm(row["district"])
@@ -793,6 +795,16 @@ def rainfall_disclosure(rainfall):
             "They are remade when it arrives.")
 
 
+def carried_forward_disclosure():
+    """Which months of the State's series are treated as missing, and why."""
+    months = history_carried_forward()
+    if not months:
+        return None
+    return (f"Treated as missing: {', '.join(months)}. In those months nearly every mandal in the State's series repeats "
+            "the month before to the centimetre, against about one in twenty in an ordinary month, so the readings are "
+            "copies rather than measurements. The model does not learn from them, is not scored on them, and no page draws them.")
+
+
 def build_model_card(context, generated_at):
     evaluations = context["evaluations"]
     temporal = evaluations["temporalNowcast"]
@@ -880,6 +892,7 @@ def build_model_card(context, generated_at):
             "crossNetwork": "CGWB/APWRIMS results are a cross-network comparability diagnostic with site, aquifer, timing and aggregation limitations.",
             "officialUse": "Prototype results do not replace official field measurements or APWRIMS outputs.",
             "rainfall": rainfall_disclosure(context["nowcastBundle"].get("rainfall")),
+            "carriedForward": carried_forward_disclosure(),
         },
         "dataAuthorizationStatus": "pending for APWRIMS-format browser-session research sample",
         "boundaryStatus": "public prototype; temporary identifiers",

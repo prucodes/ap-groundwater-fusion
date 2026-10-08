@@ -25,6 +25,7 @@ import os
 import re
 import numpy as np
 import pandas as pd
+from series_quality import history_carried_forward  # noqa: E402
 import joblib
 try:
     from .source_identity import reconcile as reconcile_sources
@@ -94,6 +95,8 @@ def mk_est(quantile=None):
 def build_frame():
     lv = pd.read_csv(os.path.join(HERE, "apwrims", "apwrims_gw_history.csv"))
     lv = lv[(lv.level_mbgl > 0) & (lv.level_mbgl < 60)].copy()
+    # Months the State carried forward rather than measured are missing, not readings.
+    lv = lv[~lv.date.isin(history_carried_forward())].copy()
     # Names repeat across districts (and Urban/Rural must remain distinct).
     # Use the source UUID for time-series features, never a name-only key.
     lv["mkey"] = lv.mandal_uuid

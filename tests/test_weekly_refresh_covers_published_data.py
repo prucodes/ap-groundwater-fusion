@@ -37,6 +37,11 @@ STATIC_BY_DESIGN = {
         "from 250 MB of sources that gain a month at a time, so it refreshes monthly "
         "alongside the Pacific panel rather than weekly"
     ),
+    "cross_network_check.json": (
+        "the forecast checked on CGWB's wells; built by phase3_levels/validate_cross_network.py "
+        "from the git-ignored rolling backtest rows and CGWB readings that end in August 2023, so "
+        "it is re-run by hand whenever the backtest is"
+    ),
     "enso_pacific.json": (
         "the Pacific panel's month frames; built by phase3_levels/build_enso_pacific.py "
         "from a 159 MB source that gains one month at a time, so it is run deliberately "
