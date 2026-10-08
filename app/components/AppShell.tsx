@@ -33,7 +33,6 @@ import {
 } from "./icons";
 import { OrbitGlobe3D } from "./OrbitGlobe3D";
 import { ThemeToggle } from "./ThemeToggle";
-import { AlertsBell } from "./AlertsBell";
 import { CommandPalette } from "./CommandPalette";
 import { datasetManifest, formatPeriod } from "../lib/data";
 import { waterSummary } from "../lib/waterSummary";
@@ -225,7 +224,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="utilLabel">Search</span>
             <kbd className="utilKbd">⌘K</kbd>
           </button>
-          <AlertsBell collapsed={collapsed} />
           <ThemeToggle collapsed={collapsed} />
         </div>
 
