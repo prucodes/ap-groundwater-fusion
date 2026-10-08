@@ -9,6 +9,7 @@ import { stateSummary } from "../../lib/stateSummary";
 import { checkRecord } from "../../lib/cropWaterRecord";
 import { summerOutlook as summer } from "../../lib/summer";
 import { brief } from "../../lib/pageBriefs";
+import crossNetwork from "../../data/cross_network_check.json";
 
 const labels = [
   { code: "APWRIMS (AP-GWD)", text: "Recorded mandal depth history. Modelled nowcasts are separate derived values; neither is presented as a certified official output." },
@@ -238,6 +239,8 @@ export default function MethodologyPage() {
           </p>
         </div>
       </section>
+
+      <CrossNetworkCheck />
 
       <section className="card">
         <div className="cardHead">
@@ -533,5 +536,85 @@ export default function MethodologyPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+const pct = (share: number | null) => (share === null ? "—" : `${Math.round(share * 100)}%`);
+
+/** The forecast on CGWB's wells, which the model never trained on (phase3_levels/validate_cross_network.py). */
+function CrossNetworkCheck() {
+  const c = crossNetwork;
+  const o = c.overall;
+  const first = c.years[0], last = c.years[c.years.length - 1];
+  return (
+    <section className="card" aria-labelledby="method-cross-network" data-testid="method-cross-network">
+      <div className="cardHead">
+        <div className="cardTitle" id="method-cross-network">
+          <span className="titleIcon"><IconDroplet /></span>
+          Checked on wells it never saw
+        </div>
+        <span className="cardSub">CGWB &middot; {c.stations.toLocaleString("en-IN")} wells &middot; {first} to {last}</span>
+      </div>
+      <p className="crossLead">
+        On CGWB&rsquo;s own wells, which the model never trained on, the three-month forecast called whether the water table
+        would rise or fall in <b>{pct(o.direction.forecast)}</b>{" "}of mandal-seasons; the State&rsquo;s own wells agree with
+        CGWB&rsquo;s {pct(o.direction.measured)} of the time. It keeps pace in an ordinary season and misses most turns when
+        the monsoon breaks the pattern.
+      </p>
+      <div className="overviewHeadlines headlines3">
+        <div className="headlineCard headlineStatic">
+          <span className="headlineKicker">The forecast</span>
+          <strong>{pct(o.direction.forecast)}<small>rise or fall called right</small></strong>
+          <span className="headlineText">{o.clearMoves.toLocaleString("en-IN")} mandal-seasons where CGWB&rsquo;s wells moved at least {c.minMoveM} m, in {c.mandals} mandals.</span>
+        </div>
+        <div className="headlineCard headlineStatic">
+          <span className="headlineKicker">The State&rsquo;s own wells</span>
+          <strong>{pct(o.direction.measured)}<small>agree with CGWB</small></strong>
+          <span className="headlineText">The ceiling: two networks of different wells do not always move together.</span>
+        </div>
+        <div className="headlineCard headlineStatic">
+          <span className="headlineKicker">When the season broke the pattern</span>
+          <strong>{pct(o.bySeason.broke.forecast)}<small>of turns caught</small></strong>
+          <span className="headlineText">The State&rsquo;s wells caught {pct(o.bySeason.broke.measured)}; in an ordinary season the forecast matched {pct(o.bySeason.usual.forecast)}. After a failing monsoon, read it with care.</span>
+        </div>
+      </div>
+      <details className="foldMore">
+        <summary><span>How this was checked</span><span>Windows, years, what was left out and why</span></summary>
+        <p className="cardNote">
+          CGWB reads its National Hydrograph Network by hand in May, August and November. None of these wells feeds the
+          model, which learns only from the State&rsquo;s APWRIMS series. The rolling backtest retrains the forecast every
+          quarter and scores the three months that follow, and two of its windows line up with CGWB&rsquo;s rounds: May to
+          August and August to November. Each mandal-season compares the forecast&rsquo;s change with the median change of
+          CGWB&rsquo;s wells inside that mandal&rsquo;s outline.
+        </p>
+        <p className="cardNote">
+          Depths are not compared. CGWB&rsquo;s wells are mostly shallow dug wells and the State&rsquo;s are piezometers: in
+          metres of change even the State&rsquo;s wells sit {o.errorM.measured.toFixed(1)} m from CGWB&rsquo;s on average, more
+          than assuming no change ({o.errorM.noChange.toFixed(1)} m). The direction of the change is what the two networks share.
+        </p>
+        <div className="tableWrap">
+          <table className="dataTable compact">
+            <thead><tr><th>Window</th><th>Years</th><th>Mandal-seasons</th><th>Forecast</th><th>State&rsquo;s wells</th></tr></thead>
+            <tbody>
+              {Object.values(c.windows).map((w) => (
+                <tr key={w.label}>
+                  <td>{w.label}</td>
+                  <td>{w.years.join(", ")}</td>
+                  <td>{w.clearMoves.toLocaleString("en-IN")}</td>
+                  <td>{pct(w.direction.forecast)}</td>
+                  <td>{pct(w.direction.measured)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="cardNote">
+          Left out: {c.frozenMonths.join(", ")}. In those months nearly every mandal in the State&rsquo;s series repeats the
+          month before, against about one in twenty in an ordinary month, so a change over them is zero by construction.
+          CGWB&rsquo;s readings come from India Data Portal (ISB), which runs to August 2023; India-WRIS did not answer on
+          8 October 2026. Built by <code>phase3_levels/validate_cross_network.py</code>.
+        </p>
+      </details>
+    </section>
   );
 }
