@@ -3,6 +3,7 @@ import watch from "../data/monsoon_watch.json";
 import changes from "../data/weekly_changes.json";
 import drought from "../data/drought_watch_summary.json";
 import crossNetwork from "../data/cross_network_check.json";
+import drinking from "../data/drinking_water.json";
 
 /* The calm pass: each page leads with the few figures that answer its question,
    and every other figure, row and method note stays on the page, one click away.
@@ -79,4 +80,17 @@ test("Methodology shows the forecast checked on wells it never saw, method folde
   const fold = section.locator("details.foldMore");
   await expect(fold).toHaveJSProperty("open", false);
   await expect(section).toContainText(crossNetwork.frozenMonths[0]);
+});
+
+test("Summer Outlook shows who drinks from the wells heading past their record, by district folded", async ({ page }) => {
+  await page.goto("/summer/");
+  const section = page.getByTestId("summer-drinking");
+  await expect(section.getByRole("heading", { name: "Drinking water rests on these wells" })).toBeVisible();
+  const cards = section.locator(".headlineCard");
+  await expect(cards).toHaveCount(3);
+  await expect(cards.nth(0)).toContainText(`${Math.round(drinking.state.groundwaterShare * 100)}%`);
+  await expect(cards.nth(1)).toContainText(drinking.byTier.beyond.sources.toLocaleString("en-IN"));
+  await expect(cards.nth(2)).toContainText(drinking.byTier.beyond.chemical.toLocaleString("en-IN"));
+  await expect(section.locator("details.foldMore")).toHaveJSProperty("open", false);
+  await expect(section.locator("tbody tr")).toHaveCount(drinking.formerDistricts.length);
 });
