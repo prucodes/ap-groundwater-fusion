@@ -4,6 +4,7 @@ import changes from "../data/weekly_changes.json";
 import drought from "../data/drought_watch_summary.json";
 import crossNetwork from "../data/cross_network_check.json";
 import drinking from "../data/drinking_water.json";
+import tanks from "../data/tank_fill.json";
 
 /* The calm pass: each page leads with the few figures that answer its question,
    and every other figure, row and method note stays on the page, one click away.
@@ -93,4 +94,14 @@ test("Summer Outlook shows who drinks from the wells heading past their record, 
   await expect(cards.nth(2)).toContainText(drinking.byTier.beyond.chemical.toLocaleString("en-IN"));
   await expect(section.locator("details.foldMore")).toHaveJSProperty("open", false);
   await expect(section.locator("tbody tr")).toHaveCount(drinking.formerDistricts.length);
+});
+
+test("Rabi Outlook shows the tanks going into rabi against their usual, method folded", async ({ page }) => {
+  await page.goto("/rabi/");
+  const section = page.getByTestId("rabi-tanks");
+  await expect(section.getByRole("heading", { name: "The water in the tanks" })).toBeVisible();
+  await expect(section).toContainText(`${tanks.emptier}`);
+  await expect(section).toContainText(`${Math.round(tanks.wetHaNow / 100).toLocaleString("en-IN")} km²`);
+  await expect(page.getByTestId("rabi-tank-map")).toBeVisible();
+  await expect(section.locator("details.foldMore")).toHaveJSProperty("open", false);
 });

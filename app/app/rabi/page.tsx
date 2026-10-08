@@ -4,7 +4,8 @@ import { HeaderHero } from "../../components/HeaderHero";
 import { IconArrowRight, IconCloudRain, IconDroplet, IconGlobe, IconLeaf, IconSatellite, IconWaves } from "../../components/icons";
 import { day } from "../../components/agriculture/waterContextFormat";
 import { CROP_WATER_STATES } from "../../lib/cropWater";
-import { titleCase } from "../../lib/data";
+import { mapGeometry, titleCase } from "../../lib/data";
+import tanks from "../../data/tank_fill.json";
 import { rabiView, SOIL_CLASSES, type SoilClass } from "../../lib/rabi";
 import { StateOutlineMap } from "../../components/StateOutlineMap";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
@@ -100,6 +101,8 @@ export default function RabiPage() {
         </section>
       ) : null}
 
+      <TankSection />
+
       {soil ? (
         <section className={styles.block} aria-labelledby="rabi-soil" data-testid="rabi-soil">
           <header className={styles.blockHead}>
@@ -193,5 +196,89 @@ export default function RabiPage() {
         El Niño from <a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/" target="_blank" rel="noreferrer">NOAA CPC</a>; past October–December rain from CHIRPS v3.
       </p>
     </div>
+  );
+}
+
+const TANK_CLASSES = {
+  e: { label: "Emptier than usual", color: "#d08a3c" },
+  u: { label: "About usual", color: "#c9d6cf" },
+  f: { label: "Fuller than usual", color: "#3f8fb5" },
+  n: { label: "Not seen through cloud, or too short a record", color: "#eef1f3" },
+  x: { label: "Few or no tanks", color: "#f7f8f9" },
+} as const;
+type TankKey = keyof typeof TANK_CLASSES;
+const km2 = (ha: number) => Math.round(ha / 100).toLocaleString("en-IN");
+
+/** Tank-fed rabi: how much of each mandal's tank bed holds water now, against its own usual for the same weeks. */
+function TankSection() {
+  const t = tanks;
+  if (!t.window) return null;
+  const keyOf = (row: (typeof t.mandals)[number]): TankKey => {
+    if (!row) return "x";
+    if (row.now === null || row.usual === null) return "n";
+    return row.now < row.usual - 0.1 ? "e" : row.now > row.usual + 0.1 ? "f" : "u";
+  };
+  const keys = t.mandals.map(keyOf);
+  const districts = new Map<string, { now: number; usual: number; mandals: number; emptier: number }>();
+  t.mandals.forEach((row, index) => {
+    if (!row || row.now === null || row.usual === null) return;
+    const name = mapGeometry.mandals[index]?.d ?? "";
+    const d = districts.get(name) ?? { now: 0, usual: 0, mandals: 0, emptier: 0 };
+    d.now += row.tankHa * row.now; d.usual += row.tankHa * row.usual; d.mandals += 1; d.emptier += keys[index] === "e" ? 1 : 0;
+    districts.set(name, d);
+  });
+  // Districts whose tanks usually hold at least 3 km² of water this time of year, lowest share of usual first.
+  const rows = [...districts.entries()].filter(([, d]) => d.usual >= 300).sort((a, b) => a[1].now / a[1].usual - b[1].now / b[1].usual).slice(0, 7);
+  const until = day(t.window[1], false);
+  const share = t.wetHaUsual ? Math.round((100 * t.wetHaNow) / t.wetHaUsual) : null;
+  const years = t.byYear.filter(y => y.medianShare !== null);
+  const latest = years[years.length - 1];
+  const lowest = latest && years.every(y => y.medianShare! >= latest.medianShare!) ? latest : null;
+  return (
+    <section className={styles.block} aria-labelledby="rabi-tanks" data-testid="rabi-tanks">
+      <header className={styles.blockHead}>
+        <span className={styles.eyebrow}><IconDroplet /> Tank-fed rabi</span>
+        <h2 id="rabi-tanks">The water in the tanks</h2>
+        <p>
+          From {day(t.window[0], false)} to {until}, the tank beds of the {t.scoredMandals} mandals with tanks held water over
+          {" "}<b>{km2(t.wetHaNow)} km²</b>, against a usual {km2(t.wetHaUsual)} km² for the same weeks ({t.usualYears[0]}–{t.usualYears[1]}){share !== null ? `, ${share}% of usual` : ""}.
+          {" "}<b>{t.emptier}</b> mandals are emptier than their usual and {t.fuller} fuller.
+          {lowest ? <>{" "}The typical tank mandal&rsquo;s bed is {Math.round(lowest.medianShare! * 100)}% wet, the lowest of the {years.length} years read.</> : null}
+        </p>
+      </header>
+      <div className={styles.soilGrid}>
+        <StateOutlineMap testId="rabi-tank-map" aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height}
+          keys={keys}
+          colors={Object.fromEntries(Object.entries(TANK_CLASSES).map(([k, c]) => [k, c.color]))}
+          notes={t.mandals.map((row) => row ? `${Math.round(row.tankHa).toLocaleString("en-IN")} ha of tank bed${row.now !== null ? `; ${Math.round(row.now * 100)}% holding water now` : "; not seen clear this window"}${row.usual !== null ? `, usual ${Math.round(row.usual * 100)}%` : ""}` : "Few or no tanks")}
+          label={`Tank beds holding water against each mandal's usual for the same weeks: ${t.emptier} emptier, ${t.fuller} fuller, of ${t.scoredMandals} mandals with tanks.`}
+          legend={(["e", "u", "f", "n"] as TankKey[]).map(k => <span key={k}><i style={{ background: TANK_CLASSES[k].color }} />{TANK_CLASSES[k].label}</span>)} />
+        <div className={styles.soilSide}>
+          <div className={styles.districts}>
+            <h3>Where the tanks are furthest below their usual</h3>
+            <ol>
+              {rows.map(([name, d]) => <li key={name}>
+                <span><b>{place(name)}</b><small>{d.emptier} of {d.mandals} tank mandals emptier than usual</small></span>
+                <span className={styles.districtBar} aria-hidden="true"><i style={{ width: `${Math.min(100, (100 * d.now) / Math.max(d.usual, 1))}%` }} /></span>
+                <span className={styles.districtValue}><b>{Math.round((100 * d.now) / Math.max(d.usual, 1))}%</b> of usual</span>
+              </li>)}
+            </ol>
+          </div>
+          <details className="foldMore">
+            <summary><span>How the tanks are read</span><span>Tank beds, satellite, window</span></summary>
+            <p className="cardNote">
+              Tank beds are the water that came and went with the seasons both before and after 2000 in the JRC Global Surface Water
+              record (1984 to 2021): {t.tankBodies.toLocaleString("en-IN")} water bodies of 2 to 5,000 ha with little permanent water,
+              {" "}{km2(t.tankHa)} km² in {t.tankMandals} mandals. Permanent lakes and lagoons, reservoir drawdown rings and water that
+              became permanent after 2000, largely aquaculture, are left out. Water is Sentinel-2&rsquo;s own scene classification
+              at 80 m, each pixel&rsquo;s share of clear looks that saw water from 15 September to 15 October, against the median of
+              the same weeks in {t.usualYears[0]} to {t.usualYears[1]}. A mandal is read where at least half its tank bed was seen
+              clear; emptier or fuller means more than ten points from its usual. Weedy or very shallow water can read as land in
+              every year alike. Tanks fill again in the northeast monsoon, so this is the start of rabi, not its end.
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
   );
 }

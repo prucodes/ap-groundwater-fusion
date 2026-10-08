@@ -142,6 +142,10 @@ STEPS = [
     # drinking-water sources, matched to mandals and set beside the outlook just
     # built. Optional: if the portal does not answer, last week's file stays.
     ("build drinking water beside the outlook", [PY, os.path.join(HERE, "build_drinking_water.py")], False, 600),
+    # The tanks going into rabi: Sentinel-2's scene classification over the committed
+    # tank-bed masks, 15 September to 15 October, against the same weeks since 2019.
+    # Re-reads only the latest window (about a minute of small files); optional.
+    ("build tank fill", [PY, os.path.join(HERE, "build_tank_fill.py")], False, 1200),
     # The Crystal 3D view embeds its own dataset: the measured May series published
     # above, and next May's outlook just built for its outlook mode. Optional: a
     # failure keeps last week's view, and the test suite blocks publication if a

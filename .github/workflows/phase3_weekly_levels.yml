@@ -85,6 +85,8 @@ jobs:
             app/data/crop_water_scorecard.json \
             app/data/summer_outlook.json \
             app/data/drinking_water.json \
+            app/data/tank_fill.json \
+            phase3_levels/data/tank_fill_years.json \
             app/data/enso_outlook.json \
             app/data/constituencies.json \
             app/data/weekly_changes.json \
