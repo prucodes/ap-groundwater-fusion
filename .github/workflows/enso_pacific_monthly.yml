@@ -21,6 +21,8 @@ on:
 
 permissions:
   contents: write
+  # To start the site deploy once a new month is committed (see the last step).
+  actions: write
 
 concurrency:
   # Never two of these at once, and never one while a dispatch is running.
@@ -54,6 +56,7 @@ jobs:
         run: python3 -m pytest tests/test_enso_pacific.py tests/test_temperature_record.py -q
 
       - name: Commit if the ocean moved
+        id: publish
         run: |
           git config user.name "phase3-bot"
           git config user.email "bot@local"
@@ -67,3 +70,12 @@ jobs:
           # Rebase rather than fail if the weekly refresh landed while this ran.
           git pull --rebase --autostash origin main
           git push
+          echo "published=true" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy the new month
+        # A push made with this workflow's own token starts no other workflow, so the
+        # new month would wait for the next deploy. A dispatch is the one exception.
+        if: steps.publish.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
