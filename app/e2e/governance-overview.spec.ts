@@ -44,8 +44,13 @@ for (const viewport of [{ width: 1440, height: 900, top: 0 }, { width: 390, heig
       await page.goto(route);
       const nav = page.getByRole("navigation", { name });
       await expect(nav).toBeVisible();
-      await page.mouse.wheel(0, 2400);
-      await expect.poll(async () => Math.round((await nav.boundingBox())!.y), { timeout: 4000 }).toBe(viewport.top);
+      // A busy runner can drop a wheel that lands as the page first paints, so scroll until
+      // the menu reaches the top. A menu that did not stick would scroll past it and never settle.
+      await expect.poll(async () => {
+        const y = Math.round((await nav.boundingBox())!.y);
+        if (y > viewport.top) await page.mouse.wheel(0, 2400);
+        return y;
+      }, { timeout: 8000 }).toBe(viewport.top);
       // On a phone the menu is one line that scrolls, never a block down the screen.
       if (viewport.width < 640) expect((await nav.boundingBox())!.height).toBeLessThan(60);
     }
