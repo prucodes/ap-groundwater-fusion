@@ -1,0 +1,90 @@
+{
+ "question": "Does IMD's gridded rainfall beat CHIRPS as the model's rain input?",
+ "window": {
+  "first": "2024-01",
+  "last": "2025-12"
+ },
+ "rowsWithImdRain": 67299,
+ "agreement": {
+  "mandals": 604,
+  "years": [
+   2014,
+   2025
+  ],
+  "monthlyCorrelation": 0.867,
+  "seasonCorrelation": 0.806,
+  "seasonRatioMedian": 1.004,
+  "wetDryAgreement": 0.784,
+  "wetDrySeasons": 4966
+ },
+ "results": {
+  "chirps": {
+   "origins": 24,
+   "rows": 16351,
+   "maeM": 1.0601,
+   "lastReadingMaeM": 1.2122,
+   "byMonth": {
+    "2024-01": 0.9942,
+    "2024-02": 0.9304,
+    "2024-03": 0.911,
+    "2024-04": 1.1564,
+    "2024-05": 1.4047,
+    "2024-06": 1.6602,
+    "2024-07": 1.3711,
+    "2024-08": 1.1732,
+    "2024-09": 1.4847,
+    "2024-10": 1.2696,
+    "2024-11": 1.0271,
+    "2024-12": 0.9077,
+    "2025-01": 0.6524,
+    "2025-02": 0.6747,
+    "2025-03": 0.8093,
+    "2025-04": 0.8141,
+    "2025-05": 0.9433,
+    "2025-06": 0.8611,
+    "2025-07": 0.8053,
+    "2025-08": 1.3369,
+    "2025-09": 1.008,
+    "2025-10": 1.0923,
+    "2025-11": 1.3533,
+    "2025-12": 0.8121
+   }
+  },
+  "imd": {
+   "origins": 24,
+   "rows": 16351,
+   "maeM": 1.0412,
+   "lastReadingMaeM": 1.2122,
+   "byMonth": {
+    "2024-01": 0.9992,
+    "2024-02": 0.925,
+    "2024-03": 0.9297,
+    "2024-04": 1.1365,
+    "2024-05": 1.3638,
+    "2024-06": 1.6055,
+    "2024-07": 1.3461,
+    "2024-08": 1.2241,
+    "2024-09": 1.4494,
+    "2024-10": 1.2,
+    "2024-11": 1.0758,
+    "2024-12": 0.8712,
+    "2025-01": 0.6462,
+    "2025-02": 0.6684,
+    "2025-03": 0.8103,
+    "2025-04": 0.8081,
+    "2025-05": 0.9331,
+    "2025-06": 0.8503,
+    "2025-07": 0.8175,
+    "2025-08": 1.2303,
+    "2025-09": 0.9361,
+    "2025-10": 1.0331,
+    "2025-11": 1.3351,
+    "2025-12": 0.8024
+   }
+  }
+ },
+ "gainPct": 1.78,
+ "monthsImdBetter": 18,
+ "availability": "IMD's gridded page lists whole years only, 2025 the latest in June 2026: a year is published after it ends, while CHIRPS posts each month about three weeks after it. The weekly nowcast needs this season's rain, so CHIRPS stays the production input.",
+ "note": "Rolling origin, retrained before every month; IMD replaces CHIRPS only where a mandal name is unique in both records."
+}
