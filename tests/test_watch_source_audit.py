@@ -94,3 +94,15 @@ def test_manifest_only_accepts_a_matching_dated_receipt(tmp_path):
         assert apwrims_refresh_state("abc", "2026-09-30", receipt) == missing
     receipt.write_text("[]")
     assert apwrims_refresh_state("abc", "2026-09-30", receipt) == missing
+
+
+def test_the_weekly_refresh_renews_the_receipt_for_the_snapshot_it_publishes():
+    # A receipt is honoured only for the watch file it hashes, so the audit has to
+    # run after the last step that writes that file, and its receipt be committed.
+    weekly = (ROOT / "phase3_levels/fetch_weekly.py").read_text()
+    order = [weekly.index(f'"{name}"') for name in ("build monsoon watch", "build weekly changes",
+                                                     "audit Monsoon Watch against its sources", "validate V2 contract")]
+    assert order == sorted(order), "the audit must follow the watch and its readers, before the contract check"
+    assert "audit_watch_sources.py\"), \"--online\"" in weekly
+    workflow = (ROOT / ".github/workflows/phase3_weekly_levels.yml").read_text()
+    assert "reports/watch-source-audit.json" in workflow.split("git add", 1)[1].split("git commit", 1)[0]

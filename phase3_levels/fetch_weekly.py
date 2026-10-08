@@ -150,6 +150,14 @@ STEPS = [
     # snapshot (those two come from a signed-in data lake pull, not this job).
     ("build constituencies", [PY, os.path.join(HERE, "build_constituencies.py")], False),
     ("build weekly changes", [PY, os.path.join(HERE, "build_weekly_changes.py")], False),
+    # The Monsoon Watch checked against its sources: every figure recomputed from
+    # the stored history, then a few public requests (NOAA's index, the CHIRPS
+    # listing, three APWRIMS series; no login). The pages trust the receipt only
+    # for the snapshot it hashes, so it runs after the last step that writes the
+    # watch. Optional: a portal hiccup leaves the page saying there is no current
+    # receipt, which is true, and never stops the refresh.
+    ("audit Monsoon Watch against its sources",
+     [PY, os.path.join(SCRIPTS, "audit_watch_sources.py"), "--online"], False, 600),
     ("validate V2 contract", [PY, os.path.join(HERE, "validate_phase0.py")], True),
 ]
 
