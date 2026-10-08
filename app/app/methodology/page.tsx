@@ -218,7 +218,7 @@ export default function MethodologyPage() {
             on rolling origin and made the forecast worse — 1.776 m to 1.850 m mean error, and worse in every aquifer.
             The groundwater forecast experiment remains research-only. Historical ENSO associations do not establish a local forecast or causation.
           </p>
-          <p>
+          <p data-sourced="phase3_levels/data/mandal_rain_history_imd.csv reports/imd_rainfall_experiment.json">
             <strong>Checked against IMD&rsquo;s own rainfall grid.</strong>{" "}The India Meteorological Department&rsquo;s 0.25° grid
             (Pai et al. 2014), the rainfall officials quote, agrees with the CHIRPS record the model reads: across 604 mandals from
             2014 to 2025 the June to September totals match on average (CHIRPS at 1.00 of IMD), month by month they move together

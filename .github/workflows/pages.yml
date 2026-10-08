@@ -91,6 +91,21 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v4
 
+  python-tests:
+    # The integrity suite the weekly refresh runs before it publishes. Run here too, so a change
+    # that would stop Monday's refresh shows on its own pull request, not on Monday.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt scikit-learn joblib pandas numpy rasterio xarray netCDF4
+      - name: Run the Python integrity suite
+        run: python -m pytest -q
+
   browser-tests:
     # The full browser suite against this commit, built at the root as the tests
     # expect. It reports and never holds back the deploy: a test that new data
