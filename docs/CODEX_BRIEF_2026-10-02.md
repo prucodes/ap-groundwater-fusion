@@ -1,7 +1,8 @@
-# Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026)
+# Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026, updated 8 October)
 
 Written by Claude Code for Codex. This replaces the 2 October brief at the same path.
-Everything below is on `main` (through PR #57) and live on GitHub Pages.
+Everything below is on `main` (through PR #61) and live on GitHub Pages.
+Your branch predates this file: read it with `git show origin/main:docs/CODEX_BRIEF_2026-10-02.md`.
 
 Ground rules:
 - Start every task on a fresh branch off `main`.
@@ -36,6 +37,10 @@ things look, but never change what they say without asking.
 | #55 | **The latest month on Water depth 3D.** The page opens on the newest reading (e.g. September 2026) after the Mays on the timeline, each mandal coloured against its own earlier readings for that month: shallower than usual, within 1 m, deeper, deeper than any on record (`now` and `c` from `build_crystal_data.py`). A September is never compared with a May. |
 | #56 | **The source audit runs weekly; phones reach content first.** `audit_watch_sources.py --online` is the last weekly builder and `reports/watch-source-audit.json` is committed, so the evidence panels keep a current receipt. Phone heroes lead with "What it says now" (the other two lines behind a CSS-only "About this page"); the source ribbon scrolls; the retired Alerts link left the sidebar. |
 | #57 | **A calmer Overview, the brief as a page, pinned section menus, browser tests in CI.** The Overview opens on four headline cards (groundwater, monsoon, drought manual, next summer), then the map; the model's figures fold under "All figures and model accuracy". `/brief/` is the six-page brief built from the week's data; `scripts/print-brief.mjs` prints it to `brief/ap-water-intelligence-brief.pdf` on every deploy (Methodology links it). Section menus on Monsoon, Drought and Agriculture stay pinned (`.jumpNav`). Both deploy workflows run the full browser suite in a `browser-tests` job that reports without blocking. |
+| #58 | **Browser tests on every pull request.** `pages.yml` now runs on pull requests to `main` too: the build checks and the full browser suite, with the deploy skipped and a concurrency group of its own. Three tests made fit for GitHub's Linux runners: the 3D view gets 6 minutes on CI (WebGL is drawn in software), the Monsoon map hover retries until hydration has finished, and the Agriculture 375 px framing test names whatever overflows (it found the crop-check record's value column; fixed with a `max-content` column). |
+| #59 | **The analytics test waits for Next's router.** Next reads the address before it hydrates and writes it back when hydration commits, so a test that moved pages too early saw `/monsoon/` counted twice. `routerReady()` in `e2e/analytics.spec.ts` waits for `history.state.__NA`. The counter itself was right. |
+| #60 | **Calm pass: the few figures that matter lead; the rest fold in place.** Sources under each hero are one quiet line (`.provRibbon`), not a boxed panel. The research snapshot (`WatchEvidenceStatus`) is one line that opens to sources, checks and release gates. Monsoon Watch leads with four headline cards (groundwater, State wells, rain, reservoirs) and folds the other season figures under "All season figures". This Week puts what moved first, worse first, and the steady figures beneath. Long tables and lists (Monsoon, Drought, Climate, This Week) show their first rows with "Show all" (`components/RowFold.tsx`). The Drought method notes and the Agriculture source list and crop-check detail fold beneath their headings. Nothing was removed; `e2e/governance-calm.spec.ts` checks that folded rows stay in the page, open in place and print. |
+| #61 | **The section-menu test scrolls until the menu sticks.** A single wheel could be dropped as Drought Watch first painted on a busy runner. A menu that does not stick still fails. |
 | #44 | **This week in the fields** (Agriculture section 02): an FAO-56 crop water check for every mandal, for a chosen crop and stage, on this week's soil moisture and ECMWF's forecast. Also crop vegetation (NOAA VCI weighted to cropland) and the official CGWB groundwater category, on the Agriculture map, the Map page and every mandal page. The Map page's title and date now follow the view. |
 
 Taken off the to-do list as done: per-constituency briefs, the sidebar State wells date,
@@ -44,26 +49,37 @@ rainfall rebuild.
 
 ## 1. Priorities, in order
 
-1. **Merge your redesign with `main`.** This is the biggest risk.
+1. **Save your redesign, then compare it with `main` before any merge.** This is the biggest risk: it has been uncommitted since `70e3f9e`, and `main` has moved on by PRs #40 to #61.
 2. **Re-render the Monsoon film and build the 60-second El Niño video.** Each needs human review before publishing.
 3. **Telugu versions of the constituency brief and a CM one-pager.** A Telugu speaker reviews every line.
 4. **An independent, sceptical review of the whole site.** Report only; change no code.
-5. **Remaining visual polish**, in your redesign's language.
+5. **Remaining visual polish**, in the visual language the user keeps after Task 1.
 6. **Optional, ask first:** the EOS-04 soil-moisture check.
 
-## 2. Task 1: merge your redesign with `main`
+## 2. Task 1: save, compare, then merge only what the user chooses
 
 Your uncommitted redesign on `codex/groundwater-redesign` was based on `70e3f9e`. It is
-now far behind.
+now far behind. Stop for the user's OK after each of the first three steps.
 
-Steps:
-1. Commit the redesign on its own branch.
+First:
+1. Commit everything uncommitted on `codex/groundwater-redesign` as one WIP commit. Do not merge, push or touch `main`.
+2. Write `docs/redesign_vs_main.md`: page by page, what your redesign does that the live site does not, with 1440 and 390 px screenshots of both (your branch locally, the live site at https://prucodes.github.io/ap-groundwater-fusion/). For each page recommend one of: keep `main`, take yours, or move one named piece into `main`. Change no code.
+3. The user decides: a full merge, moving named pieces into `main`, or retiring the redesign. Moving pieces is likely cheaper, since `main` has had the calm pass (#57, #60) and is what is live and tested.
+
+If the user chooses a full merge:
+1. Start from the WIP commit above.
 2. Merge `main` into it.
 3. For generated data files, take `main`'s copy; never hand-merge JSON.
 4. Merge code by hand.
 5. Run `git diff --name-only main...` for the full overlap.
 
-**Changed on `main` since `7305ab7`** (the previous brief). Expect conflicts in these files:
+**Changed on `main` since the 3 October brief** (PRs #57 to #61), on top of the list below:
+- `app/app/globals.css` (the calm-pass block, `.jumpNav`, the Overview headline cards), `app/app/changes/` (page and CSS), `climate`, `drought`, `monsoon`, `methodology` and `brief` pages;
+- `components/WatchEvidenceStatus.tsx` (+ CSS), `OverviewCockpit`, `PageBrief`, `AppShell`, `drought/DistrictMatrix`, `agriculture/AgricultureWorkspace` (+ CSS) and `LiveCropCheck` (+ CSS);
+- new: `components/RowFold.tsx`, `app/app/brief/`, `app/scripts/print-brief.mjs`, `e2e/governance-calm.spec.ts` and `governance-overview.spec.ts`;
+- `.github/workflows/pages.yml` (pull requests, `browser-tests`) and `phase3_weekly_levels.yml`, `app/playwright.config.ts`.
+
+**Changed on `main` since `7305ab7`** (the brief before that). Expect conflicts in these files:
 
 - **Pages:** `app/app/` `agriculture`, `changes` (and `Changes.module.css`), `constituencies`, `districts`, `estimates`, `map`, `methodology`, `nasa`, `readiness`, `scenario` and `watchlist` pages, plus `globals.css` (print rules at the end).
 - **Components:**
@@ -118,6 +134,8 @@ Steps:
 - **Text after an inline tag:** a line of text that follows `</strong>` or `</em>` on the next source line loses its leading space in this build. Write `{" "}`; `governance-text.spec.ts` reads the rendered text.
 - **Print:** the print rules hide `.mobileBar`, force `main > div` to full opacity and keep the desktop grid. Without them the brief prints blank or on two pages. The brief now has ten table columns and a field band; AC 172 (11 mandals) fits one A4 page with about 80 px to spare, and `governance-constituencies.spec.ts` prints it to PDF and counts the pages. Re-measure before adding anything to the brief.
 - **Weekly refresh:** "build forecast reliability" runs after "publish V2 app data", and `app/data/forecast_reliability.json` is in the workflow's commit list.
+- **Fold, never delete:** a long table or list shows its first rows through `RowFold` and `foldAt()`, and the rest stay in the page with `data-fold`; a long caveat goes behind `<details className="foldMore">` with its words unchanged. Print shows every folded row and note. `governance-calm.spec.ts` checks all three.
+- **Browser tests:** every pull request runs the full suite (`browser-tests` in `pages.yml`). Keep it green; a test that is only flaky on CI gets its cause found, not a longer retry. In tests that change the address, wait for `history.state.__NA` first (`routerReady()`).
 
 Then wire `main`'s data into your redesigned pages (atlas `EvidencePanel`,
 `WaterWorkspace`, `ReviewQueue`, `AtlasMap`) using the modules in section 8. Do not bring
@@ -210,12 +228,12 @@ the page, a screenshot path and a proposed fix. The user decides what to act on.
 
 ## 6. Task 5: remaining visual polish
 
-Do this after Task 1, in your redesign's visual language. Each item below was still open
-on 3 October:
+Do this after the user's Task 1 decision, in the visual language the user keeps. Each item
+below was still open on 3 October; its status on 8 October is noted:
 
 1. **Names disagree.** The Overview hero reads "AP Groundwater Verification Cockpit" (`OverviewCockpit.tsx`). The hero eyebrows read "Andhra Pradesh Groundwater Assessment" (`HeaderHero.tsx`, `LivingWaterTablePage.tsx`). The site is "AP Water Intelligence". Propose wording to the user; don't rename on your own.
-2. **The Overview KPI row leads with model internals:** Median Modelled Nowcast, deepest nowcast, band width, outside band. Consider leading with the season and the three-signal count, and moving the KPI row under the model-evaluation disclosure.
-3. **Monsoon "State storage estimate — Under review"** (`app/app/monsoon/page.tsx`) uses headline-figure styling for a non-figure. Make it a status chip.
+2. **Done in #57:** the Overview leads with four headline cards; the model's figures fold under "All figures and model accuracy".
+3. **Monsoon "State storage estimate: Under review"** (`app/app/monsoon/page.tsx`) now sits inside the "All season figures" fold (#60) but still uses headline-figure styling for a non-figure. Make it a status chip.
 4. **One documented stress palette with a shape or pattern cue,** so red–green colour blindness loses nothing. The palettes today:
    - groundwater flags: red, amber, green, grey;
    - rain bands: maroon, red, amber, green, blue;
@@ -226,7 +244,7 @@ on 3 October:
 5. **Projector check.** Test 1920×1080 and 1280×720 at 125–150% zoom. Check that the constituency brief, the Agriculture brief and Snapshot print cleanly.
 6. **Constituencies.** The 11 city seats with no mandal of their own read as blank grey; give them a hatch and a legend entry. The selected seat's label can clip at the map edge.
 7. **Dark theme.** No-data mandals render near-white on dark maps; use a dark no-data token. Check for a light gradient band above the hero.
-8. **Text density.** Body text should be at least 12 px with 4.5:1 contrast. Move long caveats behind a disclosure with their words unchanged.
+8. **Text density.** Body text should be at least 12 px with 4.5:1 contrast. #60 folded the longest caveats on Monsoon, Drought and Agriculture; look for any left on other pages, and fold them the same way (`foldMore`), words unchanged.
 9. **Phone.** Check the Overview map-view switcher (sideways scroll with no cue) and the size of the agreement dots; either may already be fixed.
 10. **Crop-water lab and This week in the fields (new).** Check all seven crops and the field-week chart at 390 px and in dark theme. The drawings are generated from `CROP_REFERENCE`; do not replace them with artwork. Keep "Soil depth to scale · plants at half scale · not field imagery" and the stand-in notes.
 
