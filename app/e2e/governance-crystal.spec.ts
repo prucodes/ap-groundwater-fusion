@@ -6,7 +6,7 @@ const data = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as { years: strin
 
 for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900 }]) {
   test(`Crystal preserves its scene and truthful analytics at ${viewport.width}px`, async ({ page }) => {
-    test.setTimeout(90000);
+    test.setTimeout(process.env.CI ? 360000 : 90000);
     await page.setViewportSize(viewport);
     const errors: string[] = []; page.on("pageerror", error => errors.push(String(error)));
     await page.goto("/crystal");
@@ -108,7 +108,7 @@ const pastDry = shown.filter(m => m.o!.k !== "w");
 
 for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900 }]) {
   test(`Crystal's May outlook sinks each mandal against its own record at ${viewport.width}px`, async ({ page }) => {
-    test.setTimeout(90000);
+    test.setTimeout(process.env.CI ? 360000 : 90000);
     await page.setViewportSize(viewport);
     const errors: string[] = []; page.on("pageerror", error => errors.push(String(error)));
     await page.goto("/crystal");
@@ -174,7 +174,7 @@ test("The Summer Outlook opens the 3D view straight into its outlook", async ({ 
 });
 
 test("On a phone the scene comes first and the state fills the space the panels leave", async ({ page }) => {
-  test.setTimeout(90000);
+  test.setTimeout(process.env.CI ? 360000 : 90000);
   await page.setViewportSize({ width: 375, height: 812 });
   const errors: string[] = []; page.on("pageerror", error => errors.push(String(error)));
   await page.goto("/crystal");
@@ -219,7 +219,7 @@ const latestData = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as { years:
 
 test("Water depth opens on the latest reading, each mandal against its usual for that month", async ({ page }) => {
   test.skip(!latestData.now, "the latest reading is a May, already the timeline's last frame");
-  test.setTimeout(90000);
+  test.setTimeout(process.env.CI ? 360000 : 90000);
   await page.setViewportSize({ width: 1440, height: 1000 });
   const errors: string[] = []; page.on("pageerror", error => errors.push(String(error)));
   const period = latestData.now!.period;

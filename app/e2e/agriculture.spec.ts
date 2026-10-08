@@ -125,7 +125,13 @@ for (const width of [375, 768, 1920]) {
     await page.setViewportSize({ width, height: width < 600 ? 844 : 1080 });
     await page.goto("/agriculture/");
     await expect(page.locator("main > div")).toHaveCSS("opacity", "1");
-    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+    // Any element reaching past the screen that no scrolling box contains, named, so a failure says what.
+    const wide = await page.evaluate(() => {
+      const clipped = (el: Element) => { for (let p = el.parentElement; p; p = p.parentElement) { const o = getComputedStyle(p).overflowX; if (o === "auto" || o === "scroll" || o === "hidden" || o === "clip") return true; } return false; };
+      return Array.from(document.querySelectorAll("body *")).filter(el => el.getBoundingClientRect().right > innerWidth + 1 && !clipped(el))
+        .slice(0, 6).map(el => `${el.tagName.toLowerCase()}.${String((el as HTMLElement).className).split(" ")[0]} "${(el.textContent ?? "").trim().slice(0, 30)}" ${Math.round(el.getBoundingClientRect().right)}px`);
+    });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), `wider than the screen: ${wide.join("; ")}`).toBe(false);
     const scene = page.getByTestId("crop-field");
     const sceneWidth = await scene.evaluate(element => ({ scene: element.clientWidth, column: element.parentElement!.clientWidth }));
     expect(Math.abs(sceneWidth.scene - sceneWidth.column)).toBeLessThanOrEqual(1);

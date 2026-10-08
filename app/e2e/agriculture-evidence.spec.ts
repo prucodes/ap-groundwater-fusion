@@ -38,7 +38,11 @@ test("Monsoon Watch does not pick a value from duplicate boundary joins", async 
   for (const row of watch.mandals) if (row.boundaryIndex !== null) counts.set(row.boundaryIndex, (counts.get(row.boundaryIndex) ?? 0) + 1);
   const ambiguous = [...counts.entries()].find(([, count]) => count > 1)![0];
   const shape = page.locator(".rechargeMapSvg path").nth(ambiguous);
-  await shape.dispatchEvent("mousemove", { clientX: 200, clientY: 200 });
+  // The map's handlers attach on hydration, which a slow runner can finish after the first event.
+  await expect.poll(async () => {
+    await shape.dispatchEvent("mousemove", { clientX: 200, clientY: 200 });
+    return page.locator(".rechargeTip").count();
+  }, { timeout: 15000 }).toBeGreaterThan(0);
   await expect(page.locator(".rechargeTip")).toContainText("Multiple source series");
   await expect(page.locator(".rechargeTip")).not.toContainText("m against");
   await expect(page.getByText("State storage estimate", { exact: true }).locator("..")).toContainText("Under review");

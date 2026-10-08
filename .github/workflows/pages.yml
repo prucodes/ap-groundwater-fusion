@@ -6,12 +6,15 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Pull requests run the checks and the browser suite before merge; they never deploy.
+  pull_request:
+    branches: [main]
   workflow_dispatch: {}
 
 # Allow one concurrent deployment; let an in-progress run finish so a live
 # deploy is never left half-published.
 concurrency:
-  group: pages
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'pages' }}
   cancel-in-progress: false
 
 permissions:
@@ -79,6 +82,7 @@ jobs:
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
