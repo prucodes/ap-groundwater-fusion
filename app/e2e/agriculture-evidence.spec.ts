@@ -1,5 +1,15 @@
 import { expect, test } from "@playwright/test";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import watch from "../data/monsoon_watch.json";
+
+// The public-portal check applies only to the snapshot it was run on (the page
+// compares hashes). After a weekly refresh the page must say there is no current
+// receipt rather than show the old one; until the audit is re-run, expect that.
+type Receipt = { snapshotHash: string; onlineCheckedAt?: string; online?: { groundwater?: { probes?: Array<{ snapshotMatches?: boolean }> } }; unfilteredHistoryComparison: { mismatches: unknown[] } };
+const receipt = (() => { try { return JSON.parse(readFileSync("../reports/watch-source-audit.json", "utf8")) as Receipt; } catch { return null; } })();
+const snapshotHash = createHash("sha256").update(readFileSync("data/monsoon_watch.json")).digest("hex");
+const current = receipt && receipt.snapshotHash === snapshotHash && receipt.onlineCheckedAt ? receipt : null;
 
 for (const route of ["agriculture", "monsoon"]) {
   test(`${route} exposes dated sources and operational release gates`, async ({ page }, testInfo) => {
@@ -8,8 +18,14 @@ for (const route of ["agriculture", "monsoon"]) {
     await expect(evidence).toContainText("Not live telemetry");
     await expect(evidence.getByText("Baseline review pending.", { exact: true })).toBeVisible();
     await evidence.locator("summary").click();
-    await expect(evidence).toContainText("3/3 sampled series matched");
-    await expect(evidence).toContainText("341 source-series comparisons change");
+    if (current) {
+      const probes = current.online?.groundwater?.probes ?? [];
+      await expect(evidence).toContainText(`${probes.filter(p => p.snapshotMatches).length}/${probes.length} sampled series matched`);
+      await expect(evidence).toContainText(`${current.unfilteredHistoryComparison.mismatches.length} source-series comparisons change`);
+    } else {
+      await expect(evidence).toContainText("No current source-verification receipt available for this snapshot");
+      await expect(evidence).toContainText("Some usable observations are omitted");
+    }
     await expect(evidence).toContainText("Not connected");
     await expect(evidence).toContainText("Operational release pending");
     await evidence.screenshot({ path: testInfo.outputPath(`${route}-source-status.png`) });

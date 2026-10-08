@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 
 const html = readFileSync("public/water-crystal-3d.html", "utf8");
-const data = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as { years: string[]; mandals: { id: string; lvl: number[]; gap: number[]; n: string }[] };
+const data = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as { years: string[]; now: { period: string } | null; mandals: { id: string; lvl: number[]; gap: number[]; n: string }[] };
 
 for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900 }]) {
   test(`Crystal preserves its scene and truthful analytics at ${viewport.width}px`, async ({ page }) => {
@@ -13,6 +13,11 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900
     const frame = page.frameLocator(".crystalFrame");
     await expect(frame.locator("#kCov")).toContainText("605");
     await expect(frame.locator("#fallback")).not.toBeVisible();
+    // It opens on the latest reading; the Mays are a step back on the timeline.
+    if (data.now) {
+      await expect(frame.getByLabel("Year", { exact: true })).toHaveValue(String(data.years.length));
+      await frame.getByLabel("Year", { exact: true }).fill(String(data.years.length - 1));
+    }
     const year = data.years.length - 1;
     const observed = data.mandals.filter(m => !m.gap.includes(year));
     const mean = observed.reduce((n, m) => n + m.lvl[year], 0) / observed.length;
@@ -93,7 +98,7 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900
 
 type Projection = { a: number; t: number; y: number; r: number; k: "x" | "d" | "w"; p: number | null; s?: string } | null;
 const withOutlook = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as {
-  years: string[]; outlook: { targetMay: string; statewide: { mandals: number; beyond: number; dry: number } };
+  years: string[]; now: { period: string } | null; outlook: { targetMay: string; statewide: { mandals: number; beyond: number; dry: number } };
   mandals: { id: string; lvl: number[]; gap: number[]; n: string; o: Projection }[];
 };
 const nextMay = withOutlook.outlook.targetMay.slice(0, 4);
@@ -147,7 +152,8 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900
 
     // Back to the measured view: no projection left on screen.
     await frame.getByRole("button", { name: "Water depth", exact: true }).click();
-    await expect(frame.getByLabel("Year", { exact: true })).toHaveValue(String(withOutlook.years.length - 1));
+    // ...on the frame it left: the latest reading, where there is one.
+    await expect(frame.getByLabel("Year", { exact: true })).toHaveValue(String(withOutlook.years.length - (withOutlook.now ? 0 : 1)));
     await expect.poll(scene, { timeout: 8000 }).toEqual({ proj: 0, lit: 0 });
     if (viewport.width > 760) await expect(frame.locator("#kCov")).toBeVisible();
     else await expect(frame.locator("#phoneStat")).toContainText("mean depth");
@@ -205,5 +211,45 @@ test("On a phone the scene comes first and the state fills the space the panels 
   expect(Math.round(sheet.y + sheet.height)).toBe(Math.round(frameBox.y + frameBox.height));
   await expect.poll(async () => (await fill()).bottom, { timeout: 5000 }).toBeLessThanOrEqual(sheet.y - frameBox.y);
   await frame.getByRole("button", { name: "Close mandal details" }).click();
+  expect(errors).toEqual([]);
+});
+
+type Latest = { v: number; u?: number; r?: number; n?: number } | null;
+const latestData = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as { years: string[]; now: { period: string } | null; mandals: { n: string; c: Latest }[] };
+
+test("Water depth opens on the latest reading, each mandal against its usual for that month", async ({ page }) => {
+  test.skip(!latestData.now, "the latest reading is a May, already the timeline's last frame");
+  test.setTimeout(90000);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  const errors: string[] = []; page.on("pageerror", error => errors.push(String(error)));
+  const period = latestData.now!.period;
+  const month = new Date(`${period}-01T00:00:00Z`).toLocaleString("en", { month: "long", timeZone: "UTC" });
+  const tenths = (x: number) => Math.round(x * 10) / 10;
+  const kind = (c: Latest) => !c ? "none" : c.u == null ? "new" : c.v > c.r! ? "rec" : tenths(c.v - c.u) >= 1 ? "deep" : tenths(c.u - c.v) >= 1 ? "shal" : "near";
+  const count = (k: string) => latestData.mandals.filter(m => kind(m.c) === k).length;
+  const read = latestData.mandals.filter(m => m.c);
+  await page.goto("/crystal");
+  const frame = page.frameLocator(".crystalFrame");
+  await expect(frame.locator("#yearBig")).toHaveText(`${month.slice(0, 3)} ${period.slice(0, 4)}`);
+  await expect(frame.locator("#yearTag")).toContainText(`usual ${month}`);
+  await expect(frame.locator("#statLine")).toContainText(`${count("deep") + count("rec")} deeper than usual`);
+  await expect(frame.locator("#statLine")).toContainText(`${count("shal")} shallower`);
+  await expect(frame.locator("#kCov")).toHaveText(`${read.length} / ${latestData.mandals.length}`);
+  await expect(frame.locator("#kAvg")).toHaveText(`${(read.reduce((n, m) => n + m.c!.v, 0) / read.length).toFixed(1)} m`);
+  await expect(frame.locator("#lgTitle")).toContainText(`against its usual ${month}`);
+  for (const k of ["shal", "near", "deep", "rec"]) await expect(frame.locator(`#ncats [data-k="${k}"] b`)).toHaveText(String(count(k)));
+  await expect(frame.locator('#ncats [data-k="rec"]')).toContainText(`Deeper than any ${month} on record`);
+  await expect(frame.locator("#lgNote")).toContainText("only the same month compares");
+  // A record-deep mandal's card says so, with the depth it beat.
+  const index = latestData.mandals.findIndex(m => kind(m.c) === "rec");
+  await frame.getByLabel("Inspect a mandal").selectOption(String(index));
+  await expect(frame.locator("#mcBadge")).toContainText("LATEST READING");
+  await expect(frame.locator("#mcV")).toHaveText(latestData.mandals[index].c!.v.toFixed(1));
+  await expect(frame.locator("#mcDelta")).toContainText(`Deeper than any ${month} in ${latestData.mandals[index].c!.n} years`);
+  await frame.getByRole("button", { name: "Close mandal details" }).click();
+  // A step back is last May, on the depth ramp again.
+  await frame.getByLabel("Year", { exact: true }).fill(String(latestData.years.length - 1));
+  await expect(frame.locator("#yearBig")).toHaveText(latestData.years[latestData.years.length - 1]);
+  await expect(frame.locator("#lgTitle")).toHaveText("Depth to water");
   expect(errors).toEqual([]);
 });

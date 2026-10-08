@@ -1,7 +1,7 @@
 # Codex brief: the redesign merge, film and video, Telugu, a sceptical review, polish (rewritten 3 October 2026)
 
 Written by Claude Code for Codex. This replaces the 2 October brief at the same path.
-Everything below is on `main` (through PR #51) and live on GitHub Pages.
+Everything below is on `main` (through PR #55) and live on GitHub Pages.
 
 Ground rules:
 - Start every task on a fresh branch off `main`.
@@ -31,6 +31,9 @@ things look, but never change what they say without asking.
 | #49 | **A brief on every screen, and a grouped, shorter menu.** Each hero now opens with three lines: what this is, what it says now (written from that page's data each Monday) and what to do with it. The fixed lines live in `app/lib/pageBriefs.ts`; light "now" lines in `app/lib/pageNow.ts` (summary files only, safe in client pages); heavy pages write their own. `HeaderHero` takes `brief` (it replaces the subtitle and hides the status chips); `components/PageBrief.tsx` gives a band for pages with their own hero (Agriculture, Snapshot). The sidebar is grouped (This week, Water now, Season ahead, Farms, Places) with Evidence & tools folded. Review Queue, Verify / Watchlist, Executive Snapshot and Reports left the menu; their pages still open and point to the field-teams list or the digest. Band headlines that repeated the brief (Summer, Rabi, This Week) were removed. |
 | #50 | **Type-check fix for #49's deploy.** The summer e2e test typed the outlook summary without `beyondDeep`. CI runs `npm run typecheck` (it covers `e2e/`); run that, not a bare `tsc -p .`. |
 | #51 | **Next May's outlook in the Water Depth 3D view.** A third mode on `/crystal` (`app/public/water-crystal-3d.html`): the 2015–2026 May time-lapse runs on into a projected May frame, drawn hatched; each mandal is coloured by its Summer Outlook tier; and a glowing rim with a glass sleeve marks its deepest May on record wherever the projected water falls below it. A typical / dry winter switch, an inspector with the latest reading, both projections, the record and people, and `?mode=outlook` (here or on the framing page; the Summer Outlook links to it). `build_crystal_data.py` joins `summer_outlook.json` by boundary into each mandal's `o` and a top-level `outlook`; the weekly run now rebuilds the view after the summer outlook. |
+| #53 | **The weekly refresh carries on when groundwater arrives before its rain.** APWRIMS posts a month within days; CHIRPS about three weeks after it ends. The Monsoon Watch reads rain over the months it covers and lists `notYetPublished`; the model estimates the newest month without its rain and says so (`rainfall` in the nowcast file, `disclosures.rainfall` in the model card, shown on Methodology; measured cost on Aug 2026: MAE 0.89 → 1.04 m). `docs/el_nino_60s_script.md`'s on-screen figures are pinned to a dated table, not to each week's file. |
+| #54 | **Water Depth 3D on a phone: the scene first.** One-line title, one contextual control row, one summary line (`#phoneStat`) in place of the stat cards, a slim key with notes behind an "i", pinch to zoom, a bottom-sheet mandal card. `fitPhone()` frames the state in the band between the panels and turns it to run up a portrait screen, with a compass needle. Desktop unchanged. |
+| #55 | **The latest month on Water depth 3D.** The page opens on the newest reading (e.g. September 2026) after the Mays on the timeline, each mandal coloured against its own earlier readings for that month: shallower than usual, within 1 m, deeper, deeper than any on record (`now` and `c` from `build_crystal_data.py`). A September is never compared with a May. |
 | #44 | **This week in the fields** (Agriculture section 02): an FAO-56 crop water check for every mandal, for a chosen crop and stage, on this week's soil moisture and ECMWF's forecast. Also crop vegetation (NOAA VCI weighted to cropland) and the official CGWB groundwater category, on the Agriculture map, the Map page and every mandal page. The Map page's title and date now follow the view. |
 
 Taken off the to-do list as done: per-constituency briefs, the sidebar State wells date,
@@ -313,6 +316,10 @@ September for all 28 districts; these guards stopped it being published.
 (`o` per mandal, `outlook` at the top; `nForecast` stays 0), and its tiers are the Summer
 Outlook's own, joined by boundary, so the two pages never disagree about a mandal. Keep the
 hatching and the line "not a forecast of rain" wherever the projection is drawn.
+
+**Water Depth 3D latest month.** Compare a month only with the same calendar month: usual is
+the median of the mandal's earlier readings for it (at least 4 years), and within 1 m counts as
+usual. The May time-lapse stays May-only.
 
 **Crop-water lab.** Seven reference crops: maize, groundnut, cotton, chilli, red gram,
 Bengal gram and jowar.

@@ -29,7 +29,12 @@ test("this week lists every headline with its dates and is reachable from the si
 test("each released forecast says how such forecasts have fared", async ({ page }) => {
   await page.goto("/");
   const trust = page.getByTestId("forecast-trust").first();
-  await expect(trust).toContainText(/Lower confidence|Backed by its record/);
-  await expect(trust).toContainText("Forecasts made in");
-  await expect(trust).toContainText("average error over");
+  await expect(trust).toContainText(/Lower confidence|Backed by its record|Untested conditions/);
+  // A forecast made where the backtest is thin says so instead of quoting an error it does not have.
+  if (/Untested conditions/.test((await trust.textContent()) ?? "")) {
+    await expect(trust).toContainText("too few forecasts");
+  } else {
+    await expect(trust).toContainText("Forecasts made in");
+    await expect(trust).toContainText("average error over");
+  }
 });
