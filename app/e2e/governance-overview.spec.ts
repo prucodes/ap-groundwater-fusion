@@ -58,9 +58,14 @@ for (const viewport of [{ width: 1440, height: 900, top: 0 }, { width: 390, heig
 }
 
 test("no page of the brief runs into its footer when printed", async ({ page }) => {
+  // Measured as scripts/print-brief.mjs prints: after the network is idle and every face has loaded,
+  // since a fallback font would wrap differently and the PDF is never printed with one.
+  await page.goto("/brief/", { waitUntil: "networkidle" });
   await page.emulateMedia({ media: "print" });
-  await page.goto("/brief/");
-  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(async () => {
+    await Promise.all([...document.fonts].map(face => face.load().catch(() => undefined)));
+    await document.fonts.ready;
+  });
   // Each sheet is a fixed A4 page with overflow hidden: text that does not fit is cut off
   // silently rather than adding a page, so measure the lowest content against the footer.
   const gaps = await page.$$eval('[data-testid="brief-sheet"]', sheets => sheets.map(sheet => {
