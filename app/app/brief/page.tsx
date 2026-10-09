@@ -5,6 +5,9 @@ import path from "node:path";
 import droughtJson from "../../data/drought_watch.json";
 import cardJson from "../../data/model_card.json";
 import watchJson from "../../data/monsoon_watch.json";
+import crossNetwork from "../../data/cross_network_check.json";
+import drinking from "../../data/drinking_water.json";
+import tanks from "../../data/tank_fill.json";
 import { basePath, datasetManifest, mapGeometry } from "../../lib/data";
 import { summerOutlook } from "../../lib/summer";
 import styles from "./Brief.module.css";
@@ -150,16 +153,19 @@ const ICON: Record<string, ReactNode> = {
 };
 
 type SourceRow = [string, string, string, string, ReactNode];
+const WORDS: Record<number, string> = { 17: "seventeen", 18: "eighteen", 19: "nineteen", 20: "twenty", 21: "twenty-one", 22: "twenty-two" };
 const WATER: SourceRow[] = [
   ["APWRIMS", "AP Water Resources Information & Management System", "Depth to water below ground per mandal, from state piezometers, 2014 to date", "mandal · monthly", <><b>The measured series</b> the model learns from and every page reports</>],
   ["APWRIMS context feeds", "AP DES gauges · NRSC soil moisture · reservoirs", "Mandal rain gauges, modelled soil moisture, reservoir storage and canal releases", "mandal · daily to weekly", "Drought triggers, the crop check, reservoir context"],
   ["CGWB assessment via INGRES", "hosted by IIT Hyderabad", "2024 Dynamic Ground Water Resource Assessment: stage of extraction and category", "unit · annual", "The official safe → over-exploited label"],
   ["CGWB station levels", "via India Data Portal", "Central network well readings, 2013 to 2023", "station · seasonal", "Checks the forecast on wells it never saw"],
+  ["Jal Jeevan Mission IMIS", "Dept. of Drinking Water and Sanitation", "Drinking-water schemes by source; sources tested", "block · weekly", "Who drinks from wells past their record"],
   ["NASA GRACE-DA", "GRACE gravimetry assimilated in a land model", "Groundwater storage percentile", "coarse grid · weekly", "Regional storage context only"],
   ["AP Data Lake", "AI Living Labs, access-controlled", "The State's official groundwater snapshot and mandal outlines", "mandal · on request", "Official boundaries; well-count check"],
 ];
 const CLIMATE: SourceRow[] = [
   ["CHIRPS v3.0", "UC Santa Barbara Climate Hazards Center", "Satellite-and-gauge rainfall, 1981 to date", "0.05° · monthly", <><b>The model&rsquo;s rainfall input</b>, anomalies, SPI</>],
+  ["IMD gridded rainfall", "India Meteorological Department", "Observed rainfall (Pai et al. 2014)", "0.25° · yearly release", "Cross-check of CHIRPS; not the input"],
   ["NASA POWER", "MERRA-2 reanalysis", "Rainfall", "≈55 km · monthly", "Fallback where CHIRPS is missing"],
   ["TerraClimate", "University of Idaho", "Actual evapotranspiration, water balance", "≈4 km · monthly", "Rain-minus-ET context (not recharge)"],
   ["NOAA CPC", "Oceanic Niño Index, ENSO outlook", "El Niño state and official outlook", "index · monthly", "El Niño context and composites"],
@@ -168,7 +174,8 @@ const CLIMATE: SourceRow[] = [
 ];
 const LAND: SourceRow[] = [
   ["NOAA STAR VHP", "Vegetation Health Product", "Vegetation Condition Index", "4 km · weekly", "Crop stress; the crop check's track record"],
-  ["Sentinel-2 L2A", "ESA Copernicus via Element 84, AWS", "Red and near-infrared reflectance, cloud mask", "10 m (read at 160 m) · 5 days", "Field-scale NDVI change to score the crop check"],
+  ["Sentinel-2 L2A", "ESA Copernicus via Element 84, AWS", "Reflectance and scene classification", "10 m (read at 80–160 m) · 5 days", "Crop check's field-scale score; water in tanks"],
+  ["JRC Global Surface Water", "EC Joint Research Centre, 1984–2021", "Where water has come and gone", "30 m · static", "Tank beds, apart from lakes and aquaculture"],
   ["ESA WorldCereal 2021", "", "Irrigated versus rainfed cropland", "10 m · one season", "Isolating rainfed fields"],
   ["ESA WorldCover 2021", "", "Land cover and cropland", "10 m · one year", "Cropland mask"],
   ["ISRIC SoilGrids", "", "Soil texture and water capacity", "250 m · static", "Soil water holding in the crop check"],
@@ -189,6 +196,17 @@ function Band({ num, title, lede }: { num: string; title: string; lede: ReactNod
 }
 function Foot({ n }: { n: number }) {
   return <div className={styles.pfoot}><span><b>AP Water Intelligence</b> · data sources and model · prucodes.github.io/ap-groundwater-fusion</span><span className={styles.mono}>{n} / 6</span></div>;
+}
+
+type ImdExperiment = { window: { first: string; last: string }; gainPct: number; results: Record<"chirps" | "imd", { maeM: number; rows: number }> };
+
+/** IMD's grid as the model's rain (phase3_levels/experiment_imd_rainfall.py), read at build time. */
+function imdExperiment(): ImdExperiment | null {
+  try {
+    return JSON.parse(readFileSync(path.join(process.cwd(), "..", "reports", "imd_rainfall_experiment.json"), "utf8")) as ImdExperiment;
+  } catch {
+    return null;
+  }
 }
 
 export default function BriefPage() {
@@ -218,6 +236,10 @@ export default function BriefPage() {
   });
   const refreshed = day((datasetManifest as { generatedAt?: string }).generatedAt ?? watch.generatedAt);
   const pct = (a: number, b: number) => Math.round(100 * (b - a) / b);
+  const imd = imdExperiment();
+  const tankYears = tanks.byYear.filter(y => y.medianShare !== null);
+  const tankLatest = tankYears[tankYears.length - 1];
+  const tankLowest = tankLatest && tankYears.every(y => y.medianShare! >= tankLatest.medianShare!);
 
   return (
     <div className="pageWrap">
@@ -275,7 +297,7 @@ export default function BriefPage() {
           </section>
 
           <section className={styles.page} data-testid="brief-sheet">
-            <Band num="02 · Data sources" title="One measured series, seventeen supporting ones" lede={<>Only the first row is what the model predicts; the rest are inputs, cross-checks or context, each <b>joined to the same {mapGeometry.mandals.length} mandal outlines</b> before use.</>} />
+            <Band num="02 · Data sources" title={`One measured series, ${WORDS[WATER.length + CLIMATE.length + LAND.length - 1] ?? WATER.length + CLIMATE.length + LAND.length - 1} supporting ones`} lede={<>Only the first row is what the model predicts; the rest are inputs, cross-checks or context, each <b>joined to the same {mapGeometry.mandals.length} mandal outlines</b> before use.</>} />
             <div className={styles.body} style={{ paddingTop: "2mm" }}>
               <div className={styles.grouphead}><div className={styles.ic}>{ICON.drop}</div><h3>Water</h3><span>the measured target and official context</span></div><SourceTable rows={WATER} />
               <div className={styles.grouphead}><div className={styles.ic}>{ICON.cloud}</div><h3>Rain and climate</h3><span>model inputs and climate context</span></div><SourceTable rows={CLIMATE} />
@@ -303,13 +325,15 @@ export default function BriefPage() {
                 <tr><td>Nowcast, retrained every month</td><td className={styles.num}>{roll.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{roll.maeM.toFixed(2)} m</td><td className={styles.num}>{roll.lastReadingMaeM.toFixed(2)} m last</td><td className={`${styles.num} ${styles.gain}`}>{roll.skillVsLastReadingPct.toFixed(0)}%</td></tr>
                 {h3 ? <tr><td>Forecast 3 months ahead, rolling origins</td><td className={styles.num}>{h3.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{h3.maeM.toFixed(2)} m</td><td className={styles.num}>{h3.baselines.noChange.maeM.toFixed(2)} m no change</td><td className={`${styles.num} ${styles.gain}`}>{pct(h3.maeM, h3.baselines.noChange.maeM)}%</td></tr> : null}
                 <tr><td>80% band coverage</td><td className={styles.num}>{interval.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{interval.empiricalCoveragePct.toFixed(1)}%</td><td className={styles.num}>80% nominal</td><td className={styles.num}>±{(interval.meanWidthM / 2).toFixed(1)} m</td></tr>
+                <tr><td>Rise or fall on CGWB&rsquo;s wells, never trained on ({crossNetwork.years[0]}–{String(crossNetwork.years[crossNetwork.years.length - 1]).slice(2)})</td><td className={styles.num}>{crossNetwork.overall.clearMoves.toLocaleString("en-US")}</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.forecast! * 100)}% right</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.measured! * 100)}% State wells</td><td className={styles.num}>near ceiling</td></tr>
+                {imd ? <tr><td>IMD rain in place of CHIRPS, retrained every month ({imd.window.first.slice(0, 4)}–{imd.window.last.slice(2, 4)})</td><td className={styles.num}>{imd.results.imd.rows.toLocaleString("en-US")}</td><td className={styles.num}>{imd.results.imd.maeM.toFixed(2)} m</td><td className={styles.num}>{imd.results.chirps.maeM.toFixed(2)} m CHIRPS</td><td className={styles.num}>{Math.round(imd.gainPct)}%, a year late</td></tr> : null}
                 <tr><td>Ungauged mandal (whole mandal held out)</td><td className={styles.num}>{spatial.rowCount.toLocaleString("en-US")}</td><td className={styles.num}>{spatial.reportedMetric.maeM.toFixed(1)} m</td><td className={styles.num}>state average</td><td className={`${styles.num} ${styles.no}`}>not released</td></tr>
               </tbody></table>
               <div className={styles.twocol} style={{ marginTop: "4mm" }}>
                 <div className={styles.chartcard}><h3>Error grows with depth; the model wins in every band</h3><p>Average absolute error on held-out months</p><ErrorByDepth bands={t.depthBands} /></div>
                 <div className={styles.stack}>
                   <div className={`${styles.note} ${styles.teal}`}><b>Release rule.</b> A horizon is published only if it beats both no-change and same-month-last-year by at least 5% under rolling-origin validation, with no leakage and consistent results by terrain. Three months passes; one, six and twelve do not yet, so they are not shown.</div>
-                  <div className={styles.note}><b>Tried and rejected, on evidence.</b> The El Niño index made it worse. Rain over official outlines: no gain (1.797 vs 1.800 m). NASA near-real-time rain read twice as wet as CHIRPS and raised error 0.62 → 0.96 m. A month whose satellite rain is unpublished is estimated without it and says so (0.89 → 1.04 m).</div>
+                  <div className={styles.note}><b>Tried and rejected, on evidence.</b> The El Niño index made it worse. Rain over official outlines: no gain (1.797 vs 1.800 m). NASA near-real-time rain read twice as wet as CHIRPS and raised error 0.62 → 0.96 m. A month whose satellite rain is unpublished is estimated without it and says so (0.89 → 1.04 m). The State&rsquo;s seven carried-forward months of 2021 are treated as missing.</div>
                 </div>
               </div>
             </div>
@@ -317,13 +341,17 @@ export default function BriefPage() {
           </section>
 
           <section className={styles.page} data-testid="brief-sheet">
-            <Band num="04 · What it shows this week" title={`Four readings of the same ${mapGeometry.mandals.length} mandals`} lede="Each map is drawn from this week's published data. Each compares a mandal with its own history, and each method carries a backtest or a rule from an official manual." />
+            <Band num="04 · What it shows this week" title={`Six readings of the same ${mapGeometry.mandals.length} mandals`} lede="Each map and figure is drawn from this week's published data. Each compares a mandal with its own history, and each method carries a backtest or a rule from an official manual." />
             <div className={styles.body}>
               <div className={styles.maps}>
                 <div className={styles.mapcard}><div className={styles.k}>Water Depth 3D</div><h3>{latestMonth} against its usual {latestMonth}</h3><div className={styles.big}>{(latestCounts.get("deep") ?? 0) + (latestCounts.get("rec") ?? 0)}<small>mandals deeper than usual; {latestCounts.get("rec") ?? 0} deepest on record</small></div><p className={styles.how}>Latest reading against the median of the same mandal&rsquo;s earlier {latestMonth}s; within 1 m counts as usual.</p><MandalMap classes={latest.classes} colours={NOW_COL} /><Legend counts={latestCounts} items={[["shal", "Shallower than usual", NOW_COL.shal], ["near", "Within 1 m", NOW_COL.near], ["deep", "Deeper than usual", NOW_COL.deep], ["rec", "Deepest on record", NOW_COL.rec]]} /></div>
                 <div className={styles.mapcard}><div className={styles.k}>Monsoon Watch</div><h3>Did this monsoon recharge the ground?</h3><div className={styles.big}>{watch.recharge.fallingPct}%<small>of {watch.recharge.mandals} mandal series lower than in May</small></div><p className={styles.how}>May-to-now change against the same mandal&rsquo;s median over ten seasons; flagged when 1 m short and twice its own spread.{watch.rainfall ? ` Rain ${Math.abs(watch.rainfall.anomalyPct)}% ${watch.rainfall.anomalyPct < 0 ? "below" : "above"} normal.` : ""}</p><MandalMap classes={monsoon} colours={MON_COL} /><Legend counts={tally(monsoon)} items={[["normal", "Normal", MON_COL.normal], ["short", "Short", MON_COL.short], ["severe", "Severe shortfall", MON_COL.severe]]} /></div>
                 <div className={styles.mapcard}><div className={styles.k}>Drought Watch</div><h3>What the national drought manual says</h3><div className={styles.big}>{drought.state.counts.severe ?? 0} · {drought.state.counts.moderate ?? 0}<small>severe · moderate, of {drought.state.assessed} assessed</small></div><p className={styles.how}>The Manual for Drought Management 2020: rain deficit and dry spells, then impact on vegetation, soil, groundwater and reservoirs. It reads the manual; it does not declare.</p><MandalMap classes={droughtClasses} colours={DRO_COL} /><Legend counts={tally(droughtClasses)} items={[["severe", "Severe", DRO_COL.severe], ["moderate|severe", "Moderate to severe", DRO_COL["moderate|severe"]], ["moderate", "Moderate", DRO_COL.moderate], ["normal", "Normal", DRO_COL.normal], ["noTrigger", "No trigger", DRO_COL.noTrigger]]} /></div>
                 <div className={styles.mapcard}><div className={styles.k}>Summer Outlook</div><h3>Where May {summer.targetMay.slice(0, 4)} may break the record</h3><div className={styles.big}>{summer.summary.beyond}<small>mandals past their deepest May in a typical winter</small></div><p className={styles.how}>Latest reading plus the mandal&rsquo;s own past winter drawdowns, against its deepest May.{summer.backtest?.pastRecordPct?.beyond ? ` Backtest: past “beyond” calls came true 1 in ${Math.round(100 / summer.backtest.pastRecordPct.beyond)}, against 1 in ${Math.round(100 / summer.backtest.baseRatePct)} overall.` : ""}</p><MandalMap classes={summerClasses} colours={SUM_COL} /><Legend counts={tally(summerClasses)} items={[["xd", `Beyond record, ${summer.deepM} m+`, SUM_COL.xd], ["xs", "Beyond, under 10 m", SUM_COL.xs], ["dry", "Only in a dry winter", SUM_COL.dry], ["within", "Within its record", SUM_COL.within]]} /></div>
+              </div>
+              <div className={styles.strip}>
+                <div><div className={styles.k}>Drinking water · Jal Jeevan Mission</div><div className={styles.big}>{Math.round(drinking.state.groundwaterShare * 100)}%<small>of rural drinking-water schemes draw on groundwater</small></div><p>{drinking.byTier.beyond.sources.toLocaleString("en-IN")} sources sit in the {drinking.byTier.beyond.mandals} mandals heading past their deepest May; {drinking.byTier.beyond.chemical.toLocaleString("en-IN")} tested above a chemical limit.</p></div>
+                {tanks.window ? <div><div className={styles.k}>Tanks · Sentinel-2 over JRC tank beds</div><div className={styles.big}>{Math.round((100 * tanks.wetHaNow) / Math.max(tanks.wetHaUsual, 1))}%<small>of their usual water, {day(tanks.window[0]).replace(/ \d{4}$/, "")} to {day(tanks.window[1]).replace(/ \d{4}$/, "")}</small></div><p>{tanks.emptier} of {tanks.scoredMandals} tank mandals emptier than usual{tankLowest ? `; the typical tank bed is ${Math.round(tankLatest.medianShare! * 100)}% wet, the lowest of ${tankYears.length} years` : ""}.</p></div> : null}
               </div>
             </div>
             <Foot n={5} />
@@ -353,10 +381,10 @@ export default function BriefPage() {
               <div className={styles.sec}>Sources</div>
               <div className={styles.links}>
                 <div><b>Platform</b> prucodes.github.io/ap-groundwater-fusion · /methodology</div>
-                <div><b>Groundwater</b> apwrims.ap.gov.in · ingres.iith.ac.in · indiawris.gov.in · nasagrace.unl.edu</div>
-                <div><b>Rain</b> data.chc.ucsb.edu/products/CHIRPS/v3.0 · power.larc.nasa.gov · climatologylab.org/terraclimate</div>
+                <div><b>Groundwater</b> apwrims.ap.gov.in · ingres.iith.ac.in · indiadataportal.com (CGWB wells) · nasagrace.unl.edu · ejalshakti.gov.in (drinking water)</div>
+                <div><b>Rain</b> data.chc.ucsb.edu/products/CHIRPS/v3.0 · imdpune.gov.in (gridded) · power.larc.nasa.gov · climatologylab.org/terraclimate</div>
                 <div><b>Climate</b> cpc.ncep.noaa.gov (ONI) · psl.noaa.gov (ERSST v5) · open-meteo.com (ECMWF open data)</div>
-                <div><b>Land</b> star.nesdis.noaa.gov (VHP) · earth-search.aws.element84.com (Sentinel-2) · esa-worldcereal.org · esa-worldcover.org · soilgrids.org · worldpop.org</div>
+                <div><b>Land</b> star.nesdis.noaa.gov (VHP) · earth-search.aws.element84.com (Sentinel-2) · global-surface-water.appspot.com (JRC) · esa-worldcereal.org · esa-worldcover.org · soilgrids.org · worldpop.org</div>
                 <div><b>Methods</b> Manual for Drought Management 2020 · FAO-56 (Allen et al., 1998) · scikit-learn</div>
               </div>
             </div>
