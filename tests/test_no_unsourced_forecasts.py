@@ -25,6 +25,19 @@ def strip_comments(source):
     return re.sub(r"(?<![:\w])//[^\n]*", "", source)
 
 
+# A paragraph may set a figure beside one of those bodies only when it declares the file in
+# this repository the figure comes from: <p data-sourced="path [path ...]">. Every declared
+# file must exist; the paragraph is then sourced, not hearsay, and the scan skips it.
+SOURCED = re.compile(r'<p data-sourced="([^"]+)">(.*?)</p>', re.S)
+
+
+def without_sourced(source):
+    for match in SOURCED.finditer(source):
+        for path in match.group(1).split():
+            assert os.path.exists(os.path.join(ROOT, path)), f"data-sourced names a file that is not here: {path}"
+    return SOURCED.sub("", source)
+
+
 def page_sources():
     for base, _, files in os.walk(os.path.join(APP, "app")):
         if "node_modules" in base:
@@ -32,7 +45,7 @@ def page_sources():
         for name in files:
             if name.endswith((".tsx", ".ts")):
                 path = os.path.join(base, name)
-                yield path, strip_comments(open(path).read())
+                yield path, without_sourced(strip_comments(open(path).read()))
 
 
 def test_the_scanner_ignores_comments_but_still_sees_published_text():
@@ -40,6 +53,15 @@ def test_the_scanner_ignores_comments_but_still_sees_published_text():
     real claim in rendered text must."""
     assert "IMD" not in strip_comments('/* was: IMD outlook 92% of LPA */\nconst a = 1;')
     assert "IMD" in strip_comments('<span>IMD projects 92% of LPA</span>')
+
+
+def test_a_sourced_paragraph_must_name_files_that_exist():
+    assert "IMD" not in without_sourced('<p data-sourced="tests/test_no_unsourced_forecasts.py">IMD grid 78%</p>')
+    try:
+        without_sourced('<p data-sourced="no/such/file.csv">IMD grid 78%</p>')
+    except AssertionError:
+        return
+    raise AssertionError("a paragraph citing a missing file was let through")
 
 
 def test_no_page_attributes_a_number_to_a_forecaster_we_do_not_fetch():
