@@ -75,6 +75,7 @@ const caveats = [
   "NASA GRACE-DA values are percentiles (0–100), not groundwater depth (mbgl). They must never be converted to depth.",
   "Level estimates are modelled (calibrated to APWRIMS) and must not be treated as official APWRIMS results.",
   "Most mandal outlines are rebuilt from the State's official boundary points (AWARE); the rest are public prototypes. An official boundary export from APSAC/RTGS would remove the rebuild step.",
+  ...(modelCard.disclosures.outlines ? [modelCard.disclosures.outlines] : []),
   "Outputs are prototype review signals, not official mandal-level groundwater determinations.",
   modelCard.disclosures.spatial,
   modelCard.disclosures.crossNetwork,
