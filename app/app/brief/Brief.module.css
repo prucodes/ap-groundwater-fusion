@@ -31,7 +31,7 @@
 .inside small { display: block; font-size: 7.4pt; color: #a9c4da; margin-top: 1mm; line-height: 1.35; }
 .cover .foot { position: absolute; left: 16mm; right: 16mm; bottom: 12mm; display: flex; justify-content: space-between; font-size: 8pt; color: #7f9fbd; border-top: 1px solid rgba(127,228,255,.15); padding-top: 3mm; }
 /* inner pages */
-.band { background: linear-gradient(135deg, #061a30 0%, #0b2a4d 60%, #123b66 100%); color: #fff; padding: 10mm 15mm 6.5mm; position: relative; overflow: hidden; }
+.band { background: linear-gradient(135deg, #061a30 0%, #0b2a4d 60%, #123b66 100%); color: #fff; padding: 8mm 15mm 6mm; position: relative; overflow: hidden; }
 .band::after { content: ""; position: absolute; right: -30mm; top: -45mm; width: 95mm; height: 95mm; border-radius: 50%; border: 1px solid rgba(127,228,255,.12); }
 .band h2 { font-size: 20pt; font-weight: 600; margin-top: 2.5mm; color: #fff; }
 .band .lede { font-size: 10pt; color: #c3d7ea; margin-top: 2mm; max-width: 165mm; line-height: 1.45; }
@@ -56,18 +56,18 @@
 .shots figcaption { font-size: 7.4pt; color: #4a5b70; margin-top: 1.2mm; font-weight: 500; }
 table.src { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 7.2pt; table-layout: fixed; background: #fff; border: 1px solid #e4e9f0; border-radius: 10px; overflow: hidden; }
 table.src th { text-align: left; font-weight: 600; font-size: 6.4pt; color: #667085; text-transform: uppercase; letter-spacing: .06em; padding: 1.3mm 2.3mm; background: #f1f4f8; border-bottom: 1px solid #e4e9f0; }
-table.src td { padding: 0.7mm 2.3mm; border-bottom: 1px solid #eef2f6; vertical-align: top; line-height: 1.3; color: #33455c; }
+table.src td { padding: 0.55mm 2.3mm; border-bottom: 1px solid #eef2f6; vertical-align: top; line-height: 1.24; color: #33455c; }
 table.src col.c1 { width: 27%; } table.src col.c2 { width: 31%; } table.src col.c3 { width: 18%; } table.src col.c4 { width: 24%; }
 table.src tr:last-child td { border-bottom: 0; }
 table.src td:first-child { font-weight: 600; color: #0d2138; }
-table.src td:first-child small { display: block; font-weight: 400; color: #8a97a8; font-size: 6.3pt; margin-top: .3mm; }
+table.src td:first-child small { display: block; font-weight: 400; color: #8a97a8; font-size: 6.1pt; margin-top: .1mm; }
 table.src td:nth-child(3) { font-family: var(--font-mono); font-size: 6.4pt; color: #1f6f8a; }
 .grouphead { display: flex; align-items: center; gap: 2.5mm; margin: 2.4mm 0 1.2mm; }
 .grouphead .ic { width: 7mm; height: 7mm; border-radius: 6px; background: rgba(31,138,138,.1); display: grid; place-items: center; }
 .grouphead .ic svg { width: 4.2mm; height: 4.2mm; }
 .grouphead h3 { font-size: 10.5pt; font-weight: 600; }
 .grouphead span { font-size: 8pt; color: #8a97a8; }
-.formula { background: linear-gradient(135deg, #061a30, #0b2a4d); color: #fff; border-radius: 10px; padding: 4mm 5mm; font-family: var(--font-display); font-size: 13pt; display: flex; align-items: center; justify-content: space-between; gap: 4mm; }
+.formula { background: linear-gradient(135deg, #061a30, #0b2a4d); color: #fff; border-radius: 10px; padding: 3mm 5mm; font-family: var(--font-display); font-size: 13pt; display: flex; align-items: center; justify-content: space-between; gap: 4mm; }
 .formula .eq { font-family: "Times New Roman", serif; font-size: 15pt; font-style: italic; letter-spacing: .01em; }
 .formula .eq sub { font-size: 9pt; }
 .formula small { font-family: var(--font-sans); font-size: 7.6pt; color: #a9c4da; font-style: normal; max-width: 70mm; line-height: 1.4; }
@@ -78,7 +78,7 @@ table.src td:nth-child(3) { font-family: var(--font-mono); font-size: 6.4pt; col
 .step i { font-style: normal; font-family: var(--font-mono); font-size: 7pt; color: #1f8a8a; }
 table.res { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 7.6pt; background: #fff; border: 1px solid #e4e9f0; border-radius: 10px; overflow: hidden; }
 table.res th { text-align: left; font-size: 6.9pt; text-transform: uppercase; letter-spacing: .05em; color: #667085; background: #f1f4f8; padding: 1.8mm 2.2mm; border-bottom: 1px solid #e4e9f0; }
-table.res td { padding: 1.7mm 2.2mm; border-bottom: 1px solid #eef2f6; color: #33455c; }
+table.res td { padding: 1.15mm 2.2mm; border-bottom: 1px solid #eef2f6; color: #33455c; }
 table.res tr:last-child td { border-bottom: 0; }
 table.res td.num { font-family: var(--font-mono); font-size: 7.2pt; white-space: nowrap; }
 table.res td.gain { color: #1f8a8a; font-weight: 700; }
@@ -103,6 +103,14 @@ table.res td.no { color: #a33b2c; font-weight: 600; }
 .mapcard .big small { font-family: var(--font-sans); font-size: 7.8pt; font-weight: 500; color: #4a5b70; margin-left: 1.5mm; }
 .mapcard .how { font-size: 7.3pt; color: #667085; margin-top: 1.5mm; line-height: 1.38; min-height: 9mm; }
 .map { width: 84%; display: block; margin: 1.5mm auto 0; }
+.maps .map { width: 71%; }
+/* Under the four maps: two more readings from the same week, as figures without a map. */
+.strip { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; margin-top: 3.5mm; }
+.strip > div { background: #fff; border: 1px solid #e4e9f0; border-left: 3px solid #1f8a8a; border-radius: 8px; padding: 2.6mm 3.5mm; }
+.strip .k { font-family: var(--font-mono); font-size: 6.6pt; letter-spacing: .12em; text-transform: uppercase; color: #1f8a8a; }
+.strip .big { font-family: var(--font-display); font-size: 14pt; font-weight: 600; color: #0d2138; margin-top: 1mm; line-height: 1; }
+.strip .big small { font-family: var(--font-sans); font-size: 7.4pt; font-weight: 500; color: #4a5b70; margin-left: 1.5mm; }
+.strip p { font-size: 7.3pt; line-height: 1.38; color: #4a5b70; margin: 1.2mm 0 0; }
 .lg { display: flex; flex-wrap: wrap; gap: 1mm 3mm; font-size: 6.9pt; color: #33455c; margin-top: 1.5mm; }
 .lg i { display: inline-block; width: 2.6mm; height: 2.6mm; border-radius: 1px; margin-right: 1mm; vertical-align: -.3mm; }
 .lg b { color: #0d2138; }

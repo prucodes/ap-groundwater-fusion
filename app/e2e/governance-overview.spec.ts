@@ -56,3 +56,28 @@ for (const viewport of [{ width: 1440, height: 900, top: 0 }, { width: 390, heig
     }
   });
 }
+
+test("no page of the brief runs into its footer when printed", async ({ page }) => {
+  // Measured as scripts/print-brief.mjs prints: after the network is idle and every face has loaded,
+  // since a fallback font would wrap differently and the PDF is never printed with one.
+  await page.goto("/brief/", { waitUntil: "networkidle" });
+  await page.emulateMedia({ media: "print" });
+  await page.evaluate(async () => {
+    await Promise.all([...document.fonts].map(face => face.load().catch(() => undefined)));
+    await document.fonts.ready;
+  });
+  // Each sheet is a fixed A4 page with overflow hidden: text that does not fit is cut off
+  // silently rather than adding a page, so measure the lowest content against the footer.
+  const gaps = await page.$$eval('[data-testid="brief-sheet"]', sheets => sheets.map(sheet => {
+    const foot = sheet.querySelector('[class*="pfoot"]')?.getBoundingClientRect();
+    let lowest = 0;
+    for (const el of sheet.querySelectorAll("*")) {
+      if (el.closest('[class*="pfoot"]') || (el.closest("svg") && el.tagName !== "svg")) continue;
+      if (el.children.length && !["svg", "IMG", "TR"].includes(el.tagName)) continue;
+      const box = el.getBoundingClientRect();
+      if (box.width && box.height) lowest = Math.max(lowest, box.bottom);
+    }
+    return foot ? foot.top - lowest : sheet.getBoundingClientRect().bottom - lowest;
+  }));
+  gaps.forEach((gap, index) => expect(gap, `sheet ${index + 1} runs past its footer`).toBeGreaterThanOrEqual(0));
+});
