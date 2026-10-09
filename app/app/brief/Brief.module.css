@@ -56,7 +56,7 @@
 .shots figcaption { font-size: 7.4pt; color: #4a5b70; margin-top: 1.2mm; font-weight: 500; }
 table.src { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 7.2pt; table-layout: fixed; background: #fff; border: 1px solid #e4e9f0; border-radius: 10px; overflow: hidden; }
 table.src th { text-align: left; font-weight: 600; font-size: 6.4pt; color: #667085; text-transform: uppercase; letter-spacing: .06em; padding: 1.3mm 2.3mm; background: #f1f4f8; border-bottom: 1px solid #e4e9f0; }
-table.src td { padding: 0.55mm 2.3mm; border-bottom: 1px solid #eef2f6; vertical-align: top; line-height: 1.24; color: #33455c; }
+table.src td { padding: 0.4mm 2.3mm; border-bottom: 1px solid #eef2f6; vertical-align: top; line-height: 1.24; color: #33455c; }
 table.src col.c1 { width: 27%; } table.src col.c2 { width: 31%; } table.src col.c3 { width: 18%; } table.src col.c4 { width: 24%; }
 table.src tr:last-child td { border-bottom: 0; }
 table.src td:first-child { font-weight: 600; color: #0d2138; }
@@ -78,7 +78,7 @@ table.src td:nth-child(3) { font-family: var(--font-mono); font-size: 6.4pt; col
 .step i { font-style: normal; font-family: var(--font-mono); font-size: 7pt; color: #1f8a8a; }
 table.res { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 7.6pt; background: #fff; border: 1px solid #e4e9f0; border-radius: 10px; overflow: hidden; }
 table.res th { text-align: left; font-size: 6.9pt; text-transform: uppercase; letter-spacing: .05em; color: #667085; background: #f1f4f8; padding: 1.8mm 2.2mm; border-bottom: 1px solid #e4e9f0; }
-table.res td { padding: 1.15mm 2.2mm; border-bottom: 1px solid #eef2f6; color: #33455c; }
+table.res td { padding: 0.95mm 2.2mm; border-bottom: 1px solid #eef2f6; color: #33455c; }
 table.res tr:last-child td { border-bottom: 0; }
 table.res td.num { font-family: var(--font-mono); font-size: 7.2pt; white-space: nowrap; }
 table.res td.gain { color: #1f8a8a; font-weight: 700; }

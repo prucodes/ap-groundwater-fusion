@@ -71,13 +71,24 @@ test("no page of the brief runs into its footer when printed", async ({ page }) 
   const gaps = await page.$$eval('[data-testid="brief-sheet"]', sheets => sheets.map(sheet => {
     const foot = sheet.querySelector('[class*="pfoot"]')?.getBoundingClientRect();
     let lowest = 0;
+    const reach = (box: DOMRect) => { if (box.width && box.height) lowest = Math.max(lowest, box.bottom); };
     for (const el of sheet.querySelectorAll("*")) {
       if (el.closest('[class*="pfoot"]') || (el.closest("svg") && el.tagName !== "svg")) continue;
       if (el.children.length && !["svg", "IMG", "TR"].includes(el.tagName)) continue;
-      const box = el.getBoundingClientRect();
-      if (box.width && box.height) lowest = Math.max(lowest, box.bottom);
+      reach(el.getBoundingClientRect());
+    }
+    // Every line of text too: a paragraph holding a bold run is not a leaf, and its last line
+    // once rested on page 3's footer while only the bold first line was measured.
+    const walker = document.createTreeWalker(sheet, NodeFilter.SHOW_TEXT);
+    const range = document.createRange();
+    for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+      if (!node.textContent?.trim() || node.parentElement?.closest('[class*="pfoot"]')) continue;
+      range.selectNodeContents(node);
+      reach(range.getBoundingClientRect());
     }
     return foot ? foot.top - lowest : sheet.getBoundingClientRect().bottom - lowest;
   }));
-  gaps.forEach((gap, index) => expect(gap, `sheet ${index + 1} runs past its footer`).toBeGreaterThanOrEqual(0));
+  // Clear of the footer's rule by about 1.5 mm, not just short of it: a line resting on the rule
+  // still reads as cramped on paper.
+  gaps.forEach((gap, index) => expect(gap, `sheet ${index + 1} crowds its footer`).toBeGreaterThanOrEqual(6));
 });
