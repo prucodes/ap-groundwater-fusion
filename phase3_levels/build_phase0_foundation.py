@@ -128,6 +128,7 @@ def write_json(path, payload):
 def read_histories(path):
     exact = defaultdict(list)
     reconciled = defaultdict(list)
+    by_series = defaultdict(list)
     raw_series = set()
     raw_row_count = 0
     valid_row_count = 0
@@ -150,8 +151,9 @@ def read_histories(path):
             }
             exact[(district, norm(row["mandal"]))].append(item)
             reconciled[(district, norm2(row["mandal"]))].append(item)
+            by_series[row["mandal_uuid"]].append(item)
             raw_series.add(row["mandal_uuid"])
-    return exact, reconciled, raw_series, raw_row_count, valid_row_count
+    return exact, reconciled, by_series, raw_series, raw_row_count, valid_row_count
 
 
 def aggregate_history(rows, reconcile):
@@ -247,9 +249,7 @@ def build_records(generated_at):
     if os.path.exists(alias_path):
         with open(alias_path) as handle:
             for row in csv.DictReader(handle):
-                alias_sources[int(row["boundary_index"])].append(
-                    (norm(row["district"]), norm(row["mandal"]))
-                )
+                alias_sources[int(row["boundary_index"])].append(row["mandal_uuid"])
 
     discontinuity_path = os.path.join(HERE, "data", "mandal_series_discontinuities.csv")
     regime_starts = {}
@@ -275,7 +275,7 @@ def build_records(generated_at):
     grace_provenance = json.load(open(paths["graceProvenance"]))
     nowcast_bundle = json.load(open(paths["nowcasts"]))
     evaluations = json.load(open(paths["evaluations"]))
-    exact_history, reconciled_history, raw_series, observation_rows, valid_observation_rows = read_histories(paths["apwrimsHistory"])
+    exact_history, reconciled_history, series_history, raw_series, observation_rows, valid_observation_rows = read_histories(paths["apwrimsHistory"])
 
     boundary_rows = list(geometry["mandals"])
     boundary_exact = defaultdict(list)
@@ -285,6 +285,12 @@ def build_records(generated_at):
         boundary_relaxed[(norm(feature["d"]), norm(feature["m"]))].append(boundary_index)
     assigned_nowcasts = {}
     remaining_nowcasts = []
+
+    def record_strength(row):
+        readings = series_history.get(row.get("sourceSeriesId"), [])
+        periods = {item["period"] for item in readings}
+        return (len(periods), max(periods, default=""), str(row.get("sourceSeriesId")))
+
     # The engine already resolved every series to a boundary, or decided it
     # could not without guessing. Inherit that decision rather than re-deriving
     # it here: several town sub-series can share one polygon, and a series with
@@ -300,6 +306,13 @@ def build_records(generated_at):
             unmapped_series.append(row)
             remaining_nowcasts.append(row)
         elif index in assigned_nowcasts:
+            # Several State mandals on one polygon (a town's halves since the
+            # split): the longer record stands for it, then the more recent one,
+            # so the choice never hangs on file order.
+            held = assigned_nowcasts[int(index)]
+            if record_strength(row) > record_strength(held):
+                assigned_nowcasts[int(index)] = row
+                row = held
             shared_boundary_series.append(row)
         else:
             assigned_nowcasts[int(index)] = row
@@ -446,7 +459,10 @@ def build_records(generated_at):
         history_rows = exact_history.get(identity, [])
         if nowcast_source is not None:
             coverage = "modelled"
-            history_rows = exact_history.get(
+            # The modelled series' own readings, by its State ID. A name key drops
+            # Urban and Rural, so Rajahmundry (Urban) and (Rural) once shared one
+            # chart, two wells interleaved month by month, on both polygons.
+            history_rows = series_history.get(nowcast_source.get("sourceSeriesId"), []) or exact_history.get(
                 (norm(nowcast_source["district"]), nowcast_source["mkey"]),
                 [],
             )
@@ -458,15 +474,19 @@ def build_records(generated_at):
             # though the two spell the mandal differently.
             aliased = [
                 row
-                for key in alias_sources.get(boundary_index, [])
-                for row in exact_history.get(key, [])
+                for series_id in alias_sources.get(boundary_index, [])
+                for row in series_history.get(series_id, [])
             ]
             history_rows = aliased or (
                 []
                 if norm2(mandal_name) in modelled_reconciled_names
                 else reconciled_history.get(reconciled_identity, [])
             )
-            reconcile = bool(history_rows) and not aliased
+            # Several aliased series on one polygon (a town's halves) are averaged
+            # month by month, never interleaved.
+            reconcile = bool(history_rows) and (
+                not aliased or len({row["sourceSeriesId"] for row in aliased}) > 1
+            )
             series_candidate = aggregate_history(history_rows, reconcile=True)
             if len(series_candidate) >= 6:
                 coverage = "measured_only"
@@ -805,6 +825,18 @@ def carried_forward_disclosure():
             "copies rather than measurements. The model does not learn from them, is not scored on them, and no page draws them.")
 
 
+def outlines_disclosure(context):
+    """Why the map draws fewer outlines than the State has mandals."""
+    mandals, outlines = context["rawSeriesCount"], len(context["records"])
+    shared, without = context["seriesSharingBoundaryCount"], context["seriesWithoutBoundaryCount"]
+    if mandals <= outlines and not (shared or without):
+        return None
+    return (f"The State's record lists {mandals} mandals; the map draws {outlines} outlines, from a public sub-district "
+            f"map made before the latest splits. {shared} newer town mandals share their former town's outline, which "
+            f"shows the one with the longer record, and {without} have no outline yet; the model still estimates them. "
+            "Official outlines for the split mandals would let the map draw every one.")
+
+
 def build_model_card(context, generated_at):
     evaluations = context["evaluations"]
     temporal = evaluations["temporalNowcast"]
@@ -893,6 +925,7 @@ def build_model_card(context, generated_at):
             "officialUse": "Prototype results do not replace official field measurements or APWRIMS outputs.",
             "rainfall": rainfall_disclosure(context["nowcastBundle"].get("rainfall")),
             "carriedForward": carried_forward_disclosure(),
+            "outlines": outlines_disclosure(context),
         },
         "dataAuthorizationStatus": "pending for APWRIMS-format browser-session research sample",
         "boundaryStatus": "public prototype; temporary identifiers",

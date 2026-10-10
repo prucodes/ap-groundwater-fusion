@@ -20,6 +20,10 @@ from source_identity import key, reconcile  # noqa: E402
 
 OUT = os.path.join(HERE, "data", "mandal_boundary_aliases.csv")
 REPORT = os.path.join(HERE, "data", "mandal_boundary_unresolved.csv")
+# Pairs no spelling rule can settle, each checked against the State's own records:
+# the AI Living Labs data lake reading for the same month names the mandal, and
+# its official outline overlaps this boundary (official_outline_iou) and no other.
+CONFIRMED = os.path.join(HERE, "data", "mandal_boundary_confirmed.csv")
 
 # Qualifiers that name part of a town, not a different place.
 # Every pair this admits is a transliteration a reader can check by eye:
@@ -44,9 +48,25 @@ def stripped(name):
     return re.sub(r"[^A-Z0-9]", "", text)
 
 
+def confirmed_pairs(boundaries, path=CONFIRMED):
+    """{source series: boundary index} from the reviewed table, refusing a row whose
+    boundary no longer carries the name it was reviewed against."""
+    if not os.path.exists(path):
+        return {}
+    pairs = {}
+    with open(path) as handle:
+        for row in csv.DictReader(handle):
+            index = int(row["boundary_index"])
+            if boundaries[index]["m"] != row["boundary_mandal"]:
+                raise ValueError(f"boundary {index} is no longer {row['boundary_mandal']}; re-review {row['mandal']}")
+            pairs[row["mandal_uuid"]] = index
+    return pairs
+
+
 def build(sources, boundaries):
     matches, unresolved = reconcile(sources, boundaries)
     claimed = {match["boundaryIndex"] for match in matches.values()}
+    confirmed = confirmed_pairs(boundaries)
     by_pair, by_name = defaultdict(list), defaultdict(list)
     for index, row in enumerate(boundaries):
         by_pair[(key(row["d"]), stripped(row["m"]))].append(index)
@@ -57,6 +77,10 @@ def build(sources, boundaries):
         source_names[stripped(row["mandal"])].append(row)
 
     aliases, left = [], []
+    # D, first: a pair confirmed against the State's records outranks any rule.
+    for uid in sorted(set(pending) & set(confirmed)):
+        aliases.append((pending.pop(uid), confirmed[uid], "confirmed_against_state_records"))
+        claimed.add(confirmed[uid])
     for uid, row in sorted(pending.items()):
         name = stripped(row["mandal"])
         # A: the same district, once the town qualifier is removed. Several

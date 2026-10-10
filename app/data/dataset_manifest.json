@@ -1,24 +1,24 @@
 {
   "manifestVersion": "2.0.0",
   "dataContractVersion": "2.0.0",
-  "generatedAt": "2026-10-08T22:37:26+00:00",
+  "generatedAt": "2026-10-09T15:04:26+00:00",
   "generator": "phase3_levels/build_phase0_foundation.py",
   "generatorVersion": "phase0-publisher-2.0.0",
   "officialAdministrativeUnitCount": null,
   "counts": {
     "boundaryFeatureCount": 670,
     "rawSourceSeriesCount": 688,
-    "seriesWithoutBoundaryCount": 14,
+    "seriesWithoutBoundaryCount": 5,
     "seriesSharingBoundaryCount": 14,
     "observationRowCount": 91460,
     "validObservationRowCount": 86620,
-    "historySeriesCount": 660,
-    "modelledRecordCount": 657,
+    "historySeriesCount": 669,
+    "modelledRecordCount": 666,
     "measuredOnlyCount": 3,
-    "boundaryOnlyCount": 10,
+    "boundaryOnlyCount": 1,
     "noDataCount": 0,
     "excludedCount": 0,
-    "missingGroundwaterValueCount": 10,
+    "missingGroundwaterValueCount": 1,
     "districtCount": 28,
     "rainfallContextCoverage": 670,
     "climateBalanceCoverage": 670,
@@ -30,21 +30,21 @@
     "modelTargetPeriodRange": {
       "start": "2026-06",
       "end": "2026-09",
-      "latestTargetCount": 639
+      "latestTargetCount": 650
     },
     "graceValidPeriod": null,
     "graceFetchDate": "2026-10-08",
     "rainfallValidPeriod": "2026.08",
     "etValidPeriod": "2025",
-    "modelBuildTimestamp": "2026-10-08T22:29:06+00:00",
-    "uiGenerationTimestamp": "2026-10-08T22:37:26+00:00"
+    "modelBuildTimestamp": "2026-10-09T14:57:54+00:00",
+    "uiGenerationTimestamp": "2026-10-09T15:04:26+00:00"
   },
   "joinDiagnostics": {
     "joinIdentity": "normalized district plus normalized mandal",
     "climateNameOnlyJoinAllowed": false,
-    "modelledMatches": 657,
+    "modelledMatches": 666,
     "measuredOnlyMatches": 3,
-    "boundaryOnlyMatches": 10,
+    "boundaryOnlyMatches": 1,
     "climateMatches": 670,
     "graceDistrictMatches": 670,
     "extractionMatches": 486,
@@ -52,17 +52,17 @@
   },
   "refreshStatus": {
     "apwrims": {
-      "status": "refreshed",
+      "status": "retained_local_input",
       "fetchDate": "2026-10-08",
       "checkedAt": "2026-10-08T22:27:28+00:00"
     },
     "graceDa": {
-      "status": "refreshed",
+      "status": "retained_local_input",
       "fetchDate": "2026-10-08"
     },
     "rainfall": {
-      "status": "refreshed",
-      "fetchDate": "2026-10-08"
+      "status": "retained_local_input",
+      "fetchDate": "2026-10-02"
     },
     "evapotranspiration": {
       "status": "retained_local_input",
@@ -71,29 +71,29 @@
   },
   "inputHashes": {
     "apwrimsHistory": "83790c630a9df3a150118761ba351f2f2b89b6eae1db0e66eed2706ba8930f83",
-    "nowcasts": "5d0f1bd685bdd97e68a30bd3992a97ac558f59b603251f3746fc006fb726fb14",
+    "nowcasts": "02048df9a263605ccdc53ede550ca8a402001cad05071b4b1dd1157caeeb230f",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
     "districtSignals": "e9d397c10d706f85bbe614a9844bbba06d0a94158b43400afc3282ff3b24ae98",
     "climateContext": "7aaf277a786e4a035898de3c3bae98ac5188308dd6729be0b767332422c595fd",
     "graceProvenance": "82c52b62ceb6a0f7fdf762570201e03ca59cbc3e14b838a9a7f641d6b381963b",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "c3979679905c058a0f0413b3583466d82bf429413ba05364c703ff6ba0b99688"
+    "evaluations": "d33198f73d5cd739ade2f72913dce21639aaf6ca275c46d02ca720b982d9fcbf"
   },
   "files": [
     {
       "file": "mandal_groundwater_records_v2.json",
-      "bytes": 4297628,
-      "sha256": "7aecf474694ac22700653d69d62629cf9d0d79619a6f102fb1c07fe73d045642"
+      "bytes": 4495664,
+      "sha256": "8196f4d24d529591526aee14a0bb6e727630eda08b36810dd8438ac4d2771e9e"
     },
     {
       "file": "mandal_observation_series_v2.json",
-      "bytes": 6636059,
-      "sha256": "f256c96b23fe53ec071a842d07afa19ea493353b4d0dfae84f39d9f663ab9354"
+      "bytes": 6657904,
+      "sha256": "cdcf4b23c1c83ec64db50fac15acd0e146c2a648cb85e1e4e1bbdb834b9925d8"
     },
     {
       "file": "model_card.json",
-      "bytes": 22200,
-      "sha256": "4d49594bc7d62629be6cedd14dda0a864d7b98f3e6cb5628662dc9b40b5d45a9"
+      "bytes": 22581,
+      "sha256": "5e2d59194c0745b3ee838a2b49a8c39a85aee04ea76145305822ac4aebda115e"
     },
     {
       "file": "ap_map_geometry.json",
@@ -137,22 +137,22 @@
         "file": "app/data/mandal_groundwater_records_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 4297628,
-        "sha256": "7aecf474694ac22700653d69d62629cf9d0d79619a6f102fb1c07fe73d045642"
+        "bytes": 4495664,
+        "sha256": "8196f4d24d529591526aee14a0bb6e727630eda08b36810dd8438ac4d2771e9e"
       },
       {
         "file": "app/data/mandal_observation_series_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 6636059,
-        "sha256": "f256c96b23fe53ec071a842d07afa19ea493353b4d0dfae84f39d9f663ab9354"
+        "bytes": 6657904,
+        "sha256": "cdcf4b23c1c83ec64db50fac15acd0e146c2a648cb85e1e4e1bbdb834b9925d8"
       },
       {
         "file": "app/data/model_card.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 22200,
-        "sha256": "4d49594bc7d62629be6cedd14dda0a864d7b98f3e6cb5628662dc9b40b5d45a9"
+        "bytes": 22581,
+        "sha256": "5e2d59194c0745b3ee838a2b49a8c39a85aee04ea76145305822ac4aebda115e"
       },
       {
         "file": "app/data/ap_map_geometry.json",
@@ -207,15 +207,15 @@
         "file": "phase3_levels/outputs/mandal_nowcasts_v2.json",
         "status": "active",
         "schemaVersion": "2.0.0",
-        "bytes": 328953,
-        "sha256": "5d0f1bd685bdd97e68a30bd3992a97ac558f59b603251f3746fc006fb726fb14"
+        "bytes": 328900,
+        "sha256": "02048df9a263605ccdc53ede550ca8a402001cad05071b4b1dd1157caeeb230f"
       },
       {
         "file": "phase3_levels/outputs/phase0_evaluations.json",
         "status": "active",
         "schemaVersion": "1.0.0",
         "bytes": 14881,
-        "sha256": "c3979679905c058a0f0413b3583466d82bf429413ba05364c703ff6ba0b99688"
+        "sha256": "d33198f73d5cd739ade2f72913dce21639aaf6ca275c46d02ca720b982d9fcbf"
       }
     ],
     "legacy": [

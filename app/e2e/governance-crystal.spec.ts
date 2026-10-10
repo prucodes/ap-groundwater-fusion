@@ -2,7 +2,9 @@ import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 
 const html = readFileSync("public/water-crystal-3d.html", "utf8");
-const data = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as { years: string[]; now: { period: string } | null; mandals: { id: string; lvl: number[]; gap: number[]; n: string }[] };
+const data = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as { years: string[]; now: { period: string } | null; mandals: { id: string; lvl: number[]; gap: number[]; n: string; c?: unknown }[] };
+// It opens on the latest month: the mandals with a reading that month, of all it draws.
+const latestCoverage = `${data.mandals.filter(m => m.c).length} / ${data.mandals.length}`;
 
 for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900 }]) {
   test(`Crystal preserves its scene and truthful analytics at ${viewport.width}px`, async ({ page }) => {
@@ -11,7 +13,7 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900
     const errors: string[] = []; page.on("pageerror", error => errors.push(String(error)));
     await page.goto("/crystal");
     const frame = page.frameLocator(".crystalFrame");
-    await expect(frame.locator("#kCov")).toContainText("605");
+    await expect(frame.locator("#kCov")).toContainText(latestCoverage);
     await expect(frame.locator("#fallback")).not.toBeVisible();
     // It opens on the latest reading; the Mays are a step back on the timeline.
     if (data.now) {
@@ -113,7 +115,7 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900
     const errors: string[] = []; page.on("pageerror", error => errors.push(String(error)));
     await page.goto("/crystal");
     const frame = page.frameLocator(".crystalFrame");
-    await expect(frame.locator("#kCov")).toContainText("605");
+    await expect(frame.locator("#kCov")).toContainText(latestCoverage);
     const inner = page.frames().find(f => f.url().includes("water-crystal-3d"))!;
     const scene = () => inner.evaluate(() => new Function("return {proj:+curP.toFixed(2),lit:Array.from(curR).filter(r=>r>0.99).length}")()) as Promise<{ proj: number; lit: number }>;
 
