@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-12T15:39:32+00:00",
+  "generatedAt": "2026-10-12T17:12:00+00:00",
   "modelVersion": "phase0-forecast-3m-1.0.0",
   "horizonMonths": 3,
   "label": "Released 3-month forecast; modelled, not an APWRIMS measurement",

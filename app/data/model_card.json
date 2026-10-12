@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "modelName": "AP Mandal Groundwater Temporal Nowcast",
   "modelVersion": "phase0-nowcast-3.0.0",
-  "buildTimestamp": "2026-10-12T15:31:10+00:00",
+  "buildTimestamp": "2026-10-12T17:03:46+00:00",
   "trainingPeriod": {
     "start": "2015-06",
     "end": "2026-08"
@@ -159,7 +159,7 @@
     },
     "spatialEstimation": {
       "task": "whole_mandal_spatial_estimation",
-      "generatedAt": "2026-10-12T15:38:20+00:00",
+      "generatedAt": "2026-10-12T17:10:49+00:00",
       "validation": "5-fold GroupKFold with whole mandals held out",
       "rowCount": 82332,
       "mandalCount": 651,
@@ -221,7 +221,7 @@
     },
     "directForecast": {
       "task": "direct_multi_horizon_forecast",
-      "generatedAt": "2026-10-12T15:39:11+00:00",
+      "generatedAt": "2026-10-12T17:11:40+00:00",
       "featureTiming": "features available at forecast origin; no future rainfall",
       "baselineDefinitions": {
         "noChange": "the level at the forecast origin",
@@ -561,7 +561,7 @@
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",
-      "generatedAt": "2026-10-12T15:39:13+00:00",
+      "generatedAt": "2026-10-12T17:11:41+00:00",
       "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
       "overlapPeriod": {
         "start": "2014-06",
@@ -646,13 +646,13 @@
   },
   "inputHashes": {
     "apwrimsHistory": "83790c630a9df3a150118761ba351f2f2b89b6eae1db0e66eed2706ba8930f83",
-    "nowcasts": "376c9c2b9e25c491c961143cee93a4c3cd91077a0230081ec5c32c341665b25d",
+    "nowcasts": "805fe1513bc56cd9237aeaab57a4afacabe5acd569f3bbca160a647222b6f333",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
     "districtSignals": "e9d397c10d706f85bbe614a9844bbba06d0a94158b43400afc3282ff3b24ae98",
     "climateContext": "7aaf277a786e4a035898de3c3bae98ac5188308dd6729be0b767332422c595fd",
     "graceProvenance": "b684342563f6edeaf0287bb74d5c91ff3ac816aae9786d92de5a66b35f7c2d62",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "abcfdca35280d78d415235940313bd55fee45b1f8ba8db05b4e7ceb056da8a40"
+    "evaluations": "c1d53e1ed2d008c67a8d513691e54454ca2019b4ec6a47a02be7e7419e570b5b"
   },
-  "generatedAt": "2026-10-12T15:39:32+00:00"
+  "generatedAt": "2026-10-12T17:12:00+00:00"
 }

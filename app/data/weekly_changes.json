@@ -1,10 +1,10 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-10-12T16:09:17+00:00",
+ "generatedAt": "2026-10-12T17:26:34+00:00",
  "comparedWith": {
   "label": "the data the site was showing before this refresh",
-  "commit": "811d9ac",
-  "committedAt": "2026-10-12T11:14:42-04:00"
+  "commit": "695ae55",
+  "committedAt": "2026-10-12T12:49:01-04:00"
  },
  "items": [
   {
@@ -13,13 +13,13 @@
    "unit": "%",
    "better": "higher",
    "href": "/climate/",
-   "before": -36.9,
+   "before": -38.9,
    "after": -38.9,
-   "beforeAsOf": "2026-10-07",
+   "beforeAsOf": "2026-10-10",
    "afterAsOf": "2026-10-10",
-   "change": -2.0,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0.0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "soilBelow",
@@ -27,13 +27,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 636,
+   "before": 660,
    "after": 660,
-   "beforeAsOf": "2026-10-07",
+   "beforeAsOf": "2026-10-11",
    "afterAsOf": "2026-10-11",
-   "change": 24,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "soilDriest",
@@ -41,13 +41,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 33,
+   "before": 52,
    "after": 52,
-   "beforeAsOf": "2026-10-07",
+   "beforeAsOf": "2026-10-11",
    "afterAsOf": "2026-10-11",
-   "change": 19,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "reservoirs",
@@ -55,13 +55,13 @@
    "unit": "%",
    "better": "higher",
    "href": "/agriculture/",
-   "before": 49.4,
+   "before": 48.6,
    "after": 48.6,
-   "beforeAsOf": "2026-10-08T15:08+05:30",
+   "beforeAsOf": "2026-10-12T17:06+05:30",
    "afterAsOf": "2026-10-12T17:06+05:30",
-   "change": -0.8,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0.0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "trigger1",
@@ -69,13 +69,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 468,
+   "before": 477,
    "after": 477,
-   "beforeAsOf": "2026-10-07",
+   "beforeAsOf": "2026-10-10",
    "afterAsOf": "2026-10-10",
-   "change": 9,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "droughtSevere",
@@ -83,13 +83,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 32,
+   "before": 30,
    "after": 30,
-   "beforeAsOf": "2026-10-07",
+   "beforeAsOf": "2026-10-10",
    "afterAsOf": "2026-10-10",
-   "change": -2,
-   "direction": "better",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "droughtModerate",
@@ -97,13 +97,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 319,
+   "before": 325,
    "after": 325,
-   "beforeAsOf": "2026-10-07",
+   "beforeAsOf": "2026-10-10",
    "afterAsOf": "2026-10-10",
-   "change": 6,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "gwStress",
@@ -111,12 +111,12 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/map/",
-   "before": 394,
+   "before": 393,
    "after": 393,
    "beforeAsOf": "2026-09",
    "afterAsOf": "2026-09",
-   "change": -1,
-   "direction": "better",
+   "change": 0,
+   "direction": "same",
    "refreshed": false
   },
   {
@@ -140,12 +140,12 @@
    "better": "lower",
    "href": "/agriculture/#field-week",
    "before": 108,
-   "after": 108,
+   "after": 94,
    "beforeAsOf": "2026-10-09",
-   "afterAsOf": "2026-10-09",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "afterAsOf": "2026-10-12",
+   "change": -14,
+   "direction": "better",
+   "refreshed": true
   },
   {
    "key": "ensoPeak",
@@ -164,18 +164,9 @@
   }
  ],
  "groundwater": {
-  "worse": 1,
+  "worse": 0,
   "better": 0,
-  "moved": [
-   {
-    "id": "ap-temp-mandal-sri-sathya-sai-talupula-578",
-    "mandal": "TALUPULA",
-    "district": "SRI SATHYA SAI",
-    "from": "stable",
-    "to": "watch",
-    "worse": true
-   }
-  ],
+  "moved": [],
   "truncated": false,
   "latestMonth": {
    "before": "2026-09",
@@ -589,9 +580,9 @@
   "basis": "each mandal's manual reading now against the same reading one week of rain earlier"
  },
  "counts": {
-  "better": 2,
-  "worse": 6,
-  "same": 3,
+  "better": 1,
+  "worse": 0,
+  "same": 10,
   "unknown": 0
  }
 }
