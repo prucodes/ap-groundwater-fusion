@@ -127,10 +127,15 @@ def test_phase1_1_does_not_add_cinematic_dependencies_or_forecasts():
         "@react-three/postprocessing",
         "postprocessing",
         "deck.gl",
-        "maplibre-gl",
         "cesium",
     }
     assert forbidden.isdisjoint(package["dependencies"])
+    # MapLibre draws the basemap beneath the Leaflet maps, loaded only there (vectorBasemap.ts);
+    # the 3D water table itself still adds no map engine.
+    app_sources = [p for p in (ROOT / "app").rglob("*") if p.suffix in {".ts", ".tsx"} and p.is_file()
+                   and not {"node_modules", ".next", "out"}.intersection(p.relative_to(ROOT / "app").parts)]
+    importers = {p.name for p in app_sources if '"maplibre-gl"' in p.read_text()}
+    assert importers <= {"vectorBasemap.ts"}, importers
     source = "\n".join(
         path.read_text()
         for path in COMPONENTS.glob("*")

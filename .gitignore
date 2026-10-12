@@ -57,3 +57,6 @@ data/raw/datalake/
 data/raw/experiments/
 # CHIRPS Andhra Pradesh window cache for the outline experiment
 data/raw/chirps/ap_window/
+
+# MapLibre worker, copied from node_modules at build time (app/scripts/vendor-maplibre.mjs)
+app/public/vendor/

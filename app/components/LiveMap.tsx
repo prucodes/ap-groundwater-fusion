@@ -4,7 +4,7 @@ import "leaflet/dist/leaflet.css";
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import type { GeoJsonObject } from "geojson";
-import type { GeoJSON, Layer, Map as LeafletMap, PathOptions, TileLayer } from "leaflet";
+import type { GeoJSON, Layer, Map as LeafletMap, PathOptions } from "leaflet";
 import {
   agreementMeta,
   districtGeometry,
@@ -20,6 +20,7 @@ import {
 import { isWaterLayer, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
 import type { MandalHeatLayerKey } from "../lib/types";
 import { useIsDark } from "./useIsDark";
+import { addVectorBasemap } from "./vectorBasemap";
 
 type Mode = "status" | "single";
 
@@ -46,12 +47,7 @@ type SeedProps = {
   centroid?: number[];
 };
 
-// CARTO began stamping "API KEY REQUIRED" into its keyless basemap tiles, so the
-// watermark appeared over every map without any change on our side. OpenStreetMap's
-// standard tiles need no key. There is no dark variant, so dark mode is a CSS
-// filter over the same tiles (see .leaflet-tile-pane in globals.css).
-const BASEMAP_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
-const BASEMAP_ATTRIBUTION = "&copy; OpenStreetMap contributors";
+// The basemap is vector, in the platform's palette, with names above the data (vectorBasemap.ts).
 
 const tooltipOpts = { sticky: true, className: "liveTip", direction: "auto" as const, opacity: 1, offset: [8, 0] as [number, number] };
 
@@ -205,7 +201,7 @@ export function LiveMap({
   useEffect(() => {
     let cancelled = false;
     let map: LeafletMap | null = null;
-    let tile: TileLayer | null = null;
+    let stopBasemap: (() => void) | null = null;
     let observer: MutationObserver | null = null;
     let resizeObs: ResizeObserver | null = null;
     let mask: Layer | null = null;
@@ -263,10 +259,7 @@ export function LiveMap({
         zoomSnap: 0.25, maxBoundsViscosity: 1 });
       mapRef.current = map;
 
-      tile = L.tileLayer(BASEMAP_URL, {
-        attribution: BASEMAP_ATTRIBUTION,
-        maxZoom: 19,
-      }).addTo(map);
+      addVectorBasemap(L, map, { cancelled: () => cancelled }).then((stop) => { stopBasemap = stop; });
 
       // Spotlight mask: dim everything outside Andhra Pradesh so the state
       // reads as a distinct shape against the surrounding basemap, and use the
@@ -383,8 +376,7 @@ export function LiveMap({
       resizeObs = new ResizeObserver(() => map?.invalidateSize());
       resizeObs.observe(containerRef.current);
 
-      // React to theme toggle by reskinning the mask. The basemap itself is
-      // darkened by a CSS filter rather than a second tile URL.
+      // React to theme toggle by reskinning the mask; the basemap restyles itself.
       observer = new MutationObserver(() => {
         const d = isDark();
         (mask as unknown as { setStyle?: (s: PathOptions) => void })?.setStyle?.({
@@ -400,6 +392,7 @@ export function LiveMap({
       cancelled = true;
       observer?.disconnect();
       resizeObs?.disconnect();
+      stopBasemap?.();
       layersById.current = {};
       geoRef.current = null;
       if (map) map.remove();
