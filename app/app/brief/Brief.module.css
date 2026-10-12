@@ -31,7 +31,7 @@
 .inside small { display: block; font-size: 7.4pt; color: #a9c4da; margin-top: 1mm; line-height: 1.35; }
 .cover .foot { position: absolute; left: 16mm; right: 16mm; bottom: 12mm; display: flex; justify-content: space-between; font-size: 8pt; color: #7f9fbd; border-top: 1px solid rgba(127,228,255,.15); padding-top: 3mm; }
 /* inner pages */
-.band { background: linear-gradient(135deg, #061a30 0%, #0b2a4d 60%, #123b66 100%); color: #fff; padding: 8mm 15mm 6mm; position: relative; overflow: hidden; }
+.band { background: var(--band-navy); color: #fff; padding: 8mm 15mm 6mm; position: relative; overflow: hidden; }
 .band::after { content: ""; position: absolute; right: -30mm; top: -45mm; width: 95mm; height: 95mm; border-radius: 50%; border: 1px solid rgba(127,228,255,.12); }
 .band h2 { font-size: 20pt; font-weight: 600; margin-top: 2.5mm; color: #fff; }
 .band .lede { font-size: 10pt; color: #c3d7ea; margin-top: 2mm; max-width: 165mm; line-height: 1.45; }

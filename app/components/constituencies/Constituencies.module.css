@@ -7,7 +7,7 @@
   position: relative; overflow: hidden; margin: 18px 0 0; padding: 24px 28px; border-radius: var(--radius-lg); color: #eaf3fb;
   background: radial-gradient(900px 300px at 0% -30%, rgba(18, 181, 203, .22), transparent 60%),
               radial-gradient(700px 300px at 100% 120%, rgba(215, 155, 46, .22), transparent 65%),
-              linear-gradient(135deg, #061a30 0%, #0b2a4d 58%, #123b66 100%);
+              var(--band-navy);
   box-shadow: var(--shadow-pop);
 }
 .kicker { font: 600 10.5px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #6fe0ee; }
