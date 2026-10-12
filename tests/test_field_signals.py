@@ -251,6 +251,16 @@ def test_irrigated_shares_are_percentages_of_cropland_per_boundary():
 
 # --- the live scorecard ---------------------------------------------------------------
 
+def test_a_kept_forecast_keeps_the_check_its_calls_were_frozen_with(monkeypatch):
+    monkeypatch.setattr(ffs, "cross_check", lambda *args: {"issued": "2026-10-12", "fresh": True})
+    previous = {"weather": {"issued": "2026-10-09"}, "crossCheck": {"issued": "2026-10-09", "counts": {}}}
+    kept = {"issued": "2026-10-09"}
+    assert ffs.check_for(kept, False, previous, None, None) is previous["crossCheck"]
+    assert ffs.check_for({"issued": "2026-10-12"}, True, previous, None, None)["fresh"]
+    # No earlier check to keep, or a forecast from another day: the check is built afresh.
+    assert ffs.check_for(kept, False, {"weather": kept}, None, None)["fresh"]
+
+
 def test_frozen_calls_are_the_calls_the_page_counted():
     import score_field_calls as score
     field = json.load(open(FIELD))

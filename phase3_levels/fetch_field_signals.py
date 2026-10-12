@@ -598,6 +598,17 @@ def soil_by_boundary(context, count):
     return [seen.get(i) for i in range(count)]
 
 
+def check_for(weather, refreshed, previous, capacity, context):
+    """This run's cross-check. A forecast kept from an earlier run keeps that run's check:
+    the calls frozen for its issue date were made on that run's soil reading, and running
+    the old forecast on this week's soil would publish counts nobody froze, failing the
+    scorecard's own test and with it the whole weekly refresh (12 October 2026)."""
+    kept = previous.get("crossCheck")
+    if not refreshed and kept and (previous.get("weather") or {}).get("issued") == (weather or {}).get("issued"):
+        return kept
+    return cross_check(weather, capacity, context)
+
+
 def cross_check(weather, capacity, context):
     """Every crop and stage, statewide: the counts the page must reproduce."""
     soil = context.get("soilMoisture") if context else None
@@ -732,7 +743,8 @@ def main():
         "soilCapacity": capacity,
         "irrigation": irrigation(),
     }
-    payload["crossCheck"] = cross_check(payload.get("weather"), capacity, context)
+    payload["crossCheck"] = check_for(payload.get("weather"), status["weather"]["status"] == "refreshed",
+                                      previous, capacity, context)
     text = render(payload)
     write_text(OUT, text)
     write_text(MANDALS_OUT, json.dumps(mandal_values(payload, geometry()), ensure_ascii=False, separators=(",", ":")) + "\n")
