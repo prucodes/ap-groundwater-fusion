@@ -30,6 +30,10 @@ STATIC_BY_DESIGN = {
     ),
     "gw_state_summary.json": "the statewide digest of gw_state_snapshot.json, written with it",
     "ap_district_geometry.json": "district polygons and their layer ranges",
+    "ap_label_area.json": (
+        "the outline the basemap names places within, built by scripts/build_label_area.py from "
+        "ap_district_geometry.json; tests/test_label_area.py fails if it no longer covers the districts"
+    ),
     "dashboard_summary.json": "a July 2026 snapshot; the UI derives its live figures in data.ts instead",
     "source_readiness.json": "hand-maintained description of which sources are live",
     "ap_temperature.json": (

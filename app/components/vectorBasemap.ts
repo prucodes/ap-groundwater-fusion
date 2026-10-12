@@ -4,6 +4,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import type * as Leaflet from "leaflet";
 import type { ExpressionSpecification, StyleSpecification } from "maplibre-gl";
 import { basePath } from "../lib/data";
+import labelArea from "../data/ap_label_area.json";
 
 /* The basemap under every Leaflet map: OpenFreeMap's vector tiles (OpenMapTiles schema,
    OpenStreetMap data, no key), drawn by MapLibre in the platform's own palette. It replaced
@@ -11,8 +12,10 @@ import { basePath } from "../lib/data";
    style published, inverted by a CSS filter on the dark one.
 
    Two layers: the ground (land, water, rivers, borders) beneath the data, and the place
-   names above it, so a district headquarters stays legible over the choropleth. The data
-   itself stays Leaflet's: the same paths, tooltips and clicks as before. */
+   names above it, so a district headquarters stays legible over the choropleth. Only places
+   inside Andhra Pradesh are named: neighbouring states, their cities and the sea drew the eye
+   away from the State the map is about. The data itself stays Leaflet's: the same paths,
+   tooltips and clicks as before. */
 
 const TILES = "https://tiles.openfreemap.org/planet";
 const GLYPHS = "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf";
@@ -25,17 +28,22 @@ export const BASEMAP_ATTRIBUTION =
 const PALETTE = {
   light: {
     land: "#f4f6f9", water: "#d9e6f2", river: "#c3d6e8", state: "#b9c3cf", country: "#9fabba",
-    city: "#3f4f63", town: "#5d6b7e", region: "#8a97a8", sea: "#7f9ab3", halo: "#f4f6f9",
+    city: "#3f4f63", town: "#5d6b7e", halo: "#f4f6f9",
   },
   dark: {
     land: "#0f1e32", water: "#071526", river: "#18344f", state: "#2a4262", country: "#3b5677",
-    city: "#c9d6e5", town: "#8fa3ba", region: "#5f7590", sea: "#4f6d8f", halo: "#0b1828",
+    city: "#c9d6e5", town: "#8fa3ba", halo: "#0b1828",
   },
 } as const;
 
 type Palette = (typeof PALETTE)["light" | "dark"];
 
 const NAME = ["coalesce", ["get", "name:en"], ["get", "name_en"], ["get", "name:latin"], ["get", "name"]] as ExpressionSpecification;
+
+/** Only places inside Andhra Pradesh: the State padded about 650 m outward, so a coastal city
+ *  whose point sits just offshore keeps its name and a town across a land border does not.
+ *  Built by scripts/build_label_area.py. */
+const IN_AP = ["within", labelArea.geometry] as unknown as ExpressionSpecification;
 
 function source(): StyleSpecification["sources"] {
   return { omt: { type: "vector", url: TILES } };
@@ -70,7 +78,7 @@ export function groundStyle(dark: boolean): StyleSpecification {
   } as unknown as StyleSpecification;
 }
 
-/** Place and sea names: drawn above the data, on a transparent canvas. */
+/** City and town names inside Andhra Pradesh: drawn above the data, on a transparent canvas. */
 export function labelStyle(dark: boolean): StyleSpecification {
   const p: Palette = PALETTE[dark ? "dark" : "light"];
   const halo = { "text-halo-color": p.halo, "text-halo-width": 1.4, "text-halo-blur": 0.4 };
@@ -80,27 +88,14 @@ export function labelStyle(dark: boolean): StyleSpecification {
     sources: source(),
     layers: [
       {
-        id: "sea-names", type: "symbol", source: "omt", "source-layer": "water_name",
-        filter: ["in", ["get", "class"], ["literal", ["ocean", "sea", "bay"]]],
-        layout: { "text-field": NAME, "text-font": ["Noto Sans Italic"], "text-size": 12, "text-letter-spacing": 0.18, "text-max-width": 8 },
-        paint: { "text-color": p.sea, ...halo },
-      },
-      {
-        id: "state-names", type: "symbol", source: "omt", "source-layer": "place", maxzoom: 7.6,
-        // Neighbours only: Andhra Pradesh's own name would sit across its data.
-        filter: ["all", ["==", ["get", "class"], "state"], ["!=", ["get", "name:en"], "Andhra Pradesh"], ["!=", ["get", "name"], "Andhra Pradesh"]],
-        layout: { "text-field": NAME, "text-font": ["Noto Sans Regular"], "text-size": 10.5, "text-transform": "uppercase", "text-letter-spacing": 0.22, "text-max-width": 7 },
-        paint: { "text-color": p.region, ...halo },
-      },
-      {
         id: "towns", type: "symbol", source: "omt", "source-layer": "place", minzoom: 8,
-        filter: ["==", ["get", "class"], "town"],
+        filter: ["all", ["==", ["get", "class"], "town"], IN_AP],
         layout: { "text-field": NAME, "text-font": ["Noto Sans Regular"], "text-size": 10.5, "text-max-width": 8 },
         paint: { "text-color": p.town, ...halo },
       },
       {
         id: "cities", type: "symbol", source: "omt", "source-layer": "place", minzoom: 5,
-        filter: ["==", ["get", "class"], "city"],
+        filter: ["all", ["==", ["get", "class"], "city"], IN_AP],
         layout: {
           "text-field": NAME, "text-font": ["Noto Sans Bold"], "text-max-width": 8,
           "text-size": ["interpolate", ["linear"], ["zoom"], 5, 10.5, 9, 13],
