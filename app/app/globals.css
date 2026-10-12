@@ -22,11 +22,17 @@
   --ink: #0d2138;
   --ink-soft: #33455c;
   --muted: #667085;
-  --muted-2: #8a97a8;
+  /* 4.4:1 on white; #8a97a8 left footnotes, units and map hints at 3:1 */
+  --muted-2: #6b7a8d;
   --line: #e4e9f0;
   --line-strong: #d4dce8;
   --hairline: #eef2f7;
   --field: #f3f6fa;
+  /* Signal colours as type: mixed toward the ink, so each reads on its own theme
+     (light cyan type was 2.5:1 on white, the status green 2.9:1 on its own tint). */
+  --cyan-ink: color-mix(in srgb, var(--cyan) 62%, var(--ink));
+  --st-normal-ink: color-mix(in srgb, var(--st-normal) 62%, var(--ink));
+  --amber-ink: color-mix(in srgb, var(--amber) 62%, var(--ink));
 
   /* Status palette */
   --st-normal: #5e9b6b;
@@ -1633,7 +1639,7 @@ select:focus-visible {
 }
 
 .kpiFoot.accent {
-  color: var(--accent, var(--teal));
+  color: color-mix(in srgb, var(--accent, var(--teal)) 62%, var(--ink));
   font-weight: 600;
 }
 
@@ -1660,7 +1666,7 @@ select:focus-visible {
   background: currentColor;
 }
 
-.badge.normal { color: var(--st-normal); background: var(--st-normal-bg); }
+.badge.normal { color: var(--st-normal-ink); background: var(--st-normal-bg); }
 .badge.watch { color: #a9741a; background: var(--st-watch-bg); }
 .badge.stress { color: #b85c22; background: var(--st-stress-bg); }
 .badge.verify { color: #b0432f; background: var(--st-verify-bg); }
@@ -1704,12 +1710,12 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
 .signalPill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 .signalPill.strong { color: var(--st-verify); background: var(--st-verify-bg); }
 .signalPill.partial { color: #a9741a; background: var(--st-watch-bg); }
-.signalPill.agree { color: var(--st-normal); background: var(--st-normal-bg); }
+.signalPill.agree { color: var(--st-normal-ink); background: var(--st-normal-bg); }
 :root[data-theme="dark"] .signalPill.partial { color: #ecc46a; }
 
 .agreeTag.strong { color: var(--st-verify); }
-.agreeTag.partial { color: var(--amber); }
-.agreeTag.agree { color: var(--st-normal); }
+.agreeTag.partial { color: var(--amber-ink); }
+.agreeTag.agree { color: var(--st-normal-ink); }
 
 /* ============================================================
    Donut / status summary
@@ -2073,6 +2079,8 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
 .choroUnit { color: var(--muted); font-weight: 500; font-size: 11px; }
 .choroPeriod { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
 .choroBar { height: 10px; border-radius: 6px; margin: 8px 0 4px; }
+/* Text coloured by a category set inline as --tone, mixed toward the ink to stay legible */
+.toneText { color: color-mix(in srgb, var(--tone, currentColor) 62%, var(--ink)); }
 /* the sequential ramp as a legend, matching SEQ_RAMP in lib/data.ts */
 .choroBar.seqRamp { background: linear-gradient(90deg, #e6f1f8, #0e6f95); }
 :root[data-theme="dark"] .choroBar.seqRamp { background: linear-gradient(90deg, #16324a, #3fc1dc); }
@@ -2296,7 +2304,7 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
   background: linear-gradient(150deg, rgba(215, 155, 46, 0.16), rgba(198, 90, 70, 0.05));
   border-color: rgba(215, 155, 46, 0.42);
 }
-.presetVal { font-family: var(--font-display, inherit); font-size: 27px; font-weight: 700; letter-spacing: -0.02em; color: var(--pt); line-height: 1; }
+.presetVal { font-family: var(--font-display, inherit); font-size: 27px; font-weight: 700; letter-spacing: -0.02em; color: color-mix(in srgb, var(--pt) 70%, var(--ink)); line-height: 1; }
 .presetLabel { font-size: 14px; font-weight: 650; color: var(--text); margin-top: 7px; }
 .presetSub { font-size: 11.5px; color: var(--text-soft); line-height: 1.35; }
 .presetActiveBar { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--pt); }
@@ -2539,12 +2547,12 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
 .actionCardTop { display: flex; align-items: center; justify-content: space-between; }
 .actionDot { width: 12px; height: 12px; border-radius: 50%; background: var(--ac); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ac) 18%, transparent); }
 .actionCount { font-family: var(--font-display, inherit); font-size: 34px; font-weight: 700; color: var(--text); line-height: 1; }
-.actionName { margin-top: 8px; font-size: 15px; font-weight: 650; color: var(--ac); }
+.actionName { margin-top: 8px; font-size: 15px; font-weight: 650; color: color-mix(in srgb, var(--ac) 70%, var(--ink)); }
 .actionGloss { margin-top: 4px; font-size: 12px; color: var(--text-soft); line-height: 1.5; }
 
 .verifyPill {
   display: inline-block; margin-left: 8px; padding: 2px 8px; border-radius: 999px;
-  font-size: 10px; font-weight: 700; color: #d79b2e; background: rgba(215,155,46,0.14);
+  font-size: 10px; font-weight: 700; color: var(--amber-ink); background: rgba(215,155,46,0.14);
 }
 .basisTag {
   display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 999px;
@@ -2560,7 +2568,7 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
   display: inline-flex; align-items: center; gap: 7px;
   padding: 5px 11px; border-radius: 999px; font-size: 11.5px; font-weight: 650;
 }
-.awareStatus.pending { color: #c98a1e; background: rgba(215,155,46,0.13); border: 1px solid rgba(215,155,46,0.3); }
+.awareStatus.pending { color: var(--amber-ink); background: rgba(215,155,46,0.13); border: 1px solid rgba(215,155,46,0.3); }
 .awareStatusDot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: pulse 1.8s infinite; }
 
 .awareSteps {
@@ -2887,7 +2895,7 @@ table.dataTable tbody tr.selected {
 .readinessList.readinessGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 9px; }
 .readinessCounts { display: flex; flex-wrap: wrap; gap: 6px; }
 .readinessConnected { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 4px; padding: 0; list-style: none; }
-.readinessConnected li { padding: 4px 9px; border-radius: 999px; font-size: 11.5px; color: var(--st-normal); background: var(--st-normal-bg); }
+.readinessConnected li { padding: 4px 9px; border-radius: 999px; font-size: 11.5px; color: var(--st-normal-ink); background: var(--st-normal-bg); }
 
 .readinessItem {
   display: flex;
@@ -2926,7 +2934,7 @@ table.dataTable tbody tr.selected {
 }
 
 .readyIcon svg { width: 16px; height: 16px; }
-.readyIcon.available { background: var(--st-normal-bg); color: var(--st-normal); }
+.readyIcon.available { background: var(--st-normal-bg); color: var(--st-normal-ink); }
 .readyIcon.pending { background: var(--st-watch-bg); color: #a9741a; }
 .readyIcon.partial { background: rgba(31, 138, 138, .12); color: var(--teal); }
 .readyIcon.manual { background: var(--st-low-bg); color: #5f5494; }
@@ -2952,7 +2960,7 @@ table.dataTable tbody tr.selected {
   flex: none;
 }
 
-.readyTag.available { background: var(--st-normal-bg); color: var(--st-normal); }
+.readyTag.available { background: var(--st-normal-bg); color: var(--st-normal-ink); }
 .readyTag.pending { background: var(--st-watch-bg); color: #a9741a; }
 .readyTag.partial { background: rgba(31, 138, 138, .12); color: var(--teal); }
 .readyTag.manual { background: var(--st-low-bg); color: #5f5494; }
@@ -3039,7 +3047,7 @@ table.dataTable tbody tr.selected {
 }
 
 .metricSub { font-size: 10.5px; color: var(--muted-2); margin-top: 4px; }
-.metricSub.wet { color: var(--sig-gw); font-weight: 600; }
+.metricSub.wet { color: var(--cyan-ink); font-weight: 600; }
 
 .depthGauge { display: flex; align-items: center; gap: 10px; margin: 4px 0; }
 
@@ -3148,7 +3156,7 @@ table.dataTable tbody tr.selected {
   display: grid;
   place-items: center;
   background: var(--st-normal-bg);
-  color: var(--st-normal);
+  color: var(--st-normal-ink);
   margin-top: 1px;
 }
 
@@ -3542,7 +3550,7 @@ pre.jsonBody {
   margin-right: 6px;
   vertical-align: 1px;
 }
-.seTag.can { background: var(--st-normal-bg); color: var(--st-normal); }
+.seTag.can { background: var(--st-normal-bg); color: var(--st-normal-ink); }
 .seTag.cant { background: var(--st-verify-bg); color: #b0432f; }
 :root[data-theme="dark"] .seTag.cant { color: #ef9d8c; }
 
@@ -3875,7 +3883,7 @@ pre.jsonBody {
 .scrubName { flex: 1; color: var(--ink-soft); }
 .scrubNum { font-family: var(--font-display); font-weight: 600; color: var(--ink); }
 .scrubDelta { width: 56px; text-align: right; font-size: 11px; font-weight: 600; color: var(--muted-2); }
-.scrubDelta.up { color: var(--st-normal); }
+.scrubDelta.up { color: var(--st-normal-ink); }
 .scrubDelta.down { color: var(--st-verify); }
 
 /* Executive Snapshot */
@@ -4638,7 +4646,7 @@ pre.jsonBody {
 .hgMonsoonTag {
   font-size: 10px; letter-spacing: .09em; text-transform: uppercase;
   padding: 2px 7px; border-radius: 3px;
-  color: var(--sig-gw); background: color-mix(in srgb, var(--sig-gw) 12%, transparent);
+  color: var(--cyan-ink); background: color-mix(in srgb, var(--sig-gw) 12%, transparent);
 }
 
 .hgSvg { width: 100%; height: auto; display: block; cursor: crosshair; }
@@ -4666,7 +4674,7 @@ pre.jsonBody {
 .mcStatLabel { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-2); }
 .mcStatValue {
   font-family: var(--font-mono, ui-monospace, monospace);
-  font-size: 21px; font-weight: 600; line-height: 1.15; color: var(--st-normal);
+  font-size: 21px; font-weight: 600; line-height: 1.15; color: var(--st-normal-ink);
   font-variant-numeric: tabular-nums;
 }
 .mcStatValue small { font-size: 12px; font-weight: 500; color: var(--muted); }
@@ -4693,7 +4701,7 @@ pre.jsonBody {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 11.5px; text-align: right; font-variant-numeric: tabular-nums;
 }
-.mcDelta.up { color: var(--st-normal); }
+.mcDelta.up { color: var(--st-normal-ink); }
 .mcDelta.down { color: var(--st-verify); }
 
 .mcKey { display: flex; flex-wrap: wrap; gap: 5px 14px; }
@@ -4770,7 +4778,7 @@ pre.jsonBody {
   font-size: 10.5px; font-variant-numeric: tabular-nums; white-space: nowrap;
 }
 .dtgTrend.down { color: var(--st-verify); }
-.dtgTrend.up { color: var(--cyan); }
+.dtgTrend.up { color: var(--cyan-ink); }
 .dtgLatest {
   font-family: var(--font-mono, ui-monospace, monospace);
   font-size: 12px; font-weight: 600; color: var(--ink);
@@ -5109,7 +5117,7 @@ pre.jsonBody {
 .ensoSeasonMonths { font-size: 12px; color: var(--muted); }
 .ensoSeasonCard > strong { font-size: 30px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; }
 .ensoSeasonCard > strong.bad { color: var(--st-verify); }
-.ensoSeasonCard > strong.good { color: var(--st-normal); }
+.ensoSeasonCard > strong.good { color: var(--st-normal-ink); }
 .ensoSeasonCard > em { font-style: normal; font-size: 12px; color: var(--muted); }
 .ensoSeasonFacts { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; font-size: 12.5px; line-height: 1.5; color: var(--muted); }
 .ensoSeasonFacts strong { color: var(--ink-soft); }
@@ -5126,7 +5134,7 @@ pre.jsonBody {
   background: var(--st-verify-bg);
 }
 table.dataTable td.bad { color: var(--st-verify); font-weight: 600; }
-table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
+table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
 
 .methodSteps { display: flex; flex-direction: column; gap: 10px; }
 .methodSteps p { margin: 0; font-size: 13px; line-height: 1.65; color: var(--ink-soft); }
@@ -5279,7 +5287,7 @@ table.dataTable td.good { color: var(--st-normal); font-weight: 600; }
 .rechargeTip span { color: var(--muted); }
 .rechargeTip em { font-style: normal; font-weight: 600; }
 .rechargeTip em.bad { color: var(--st-verify); }
-.rechargeTip em.good { color: var(--st-normal); }
+.rechargeTip em.good { color: var(--st-normal-ink); }
 
 .rechargeMapSide { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 16px; }
 .rechargeLegend { display: flex; flex-direction: column; gap: 6px; font-size: 11.5px; color: var(--muted); }

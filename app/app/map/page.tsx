@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
 import { MandalStatusMap } from "../../components/MandalStatusMap";
@@ -301,7 +302,7 @@ export default function MapPage() {
                     {titleCase(m.district_name)} · est {formatNumber(m.estimate_mbgl)} m
                   </div>
                 </div>
-                <span className="readyTag" style={{ background: `${sm.color}1f`, color: sm.color }}>
+                <span className="readyTag toneText" style={{ background: `${sm.color}1f`, "--tone": sm.color } as CSSProperties}>
                   {sm.label}
                 </span>
               </button>

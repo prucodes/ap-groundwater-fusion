@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
 import { DistrictMap } from "../../components/DistrictMap";
 import {
@@ -131,8 +132,8 @@ export default function ClimatePage() {
                       <td className="cellStrong">{titleCase(d.district)}</td>
                       <td>{d.rain ? `${formatNumber(d.rain.actualMm)} mm` : "—"}</td>
                       <td>{d.rain ? `${formatNumber(d.rain.normalMm)} mm` : "—"}</td>
-                      <td className="cellPct" style={{ color: d.rain?.category ? RAIN_COLOR[d.rain.category] : undefined }}>
-                        {d.rain ? <>{signed(d.rain.deviationPct, 0)} <span className="wetTag" style={{ color: RAIN_COLOR[d.rain.category ?? "normal"], background: `${RAIN_COLOR[d.rain.category ?? "normal"]}1f` }}>{RAIN_LABEL[d.rain.category ?? ""] ?? "—"}</span></> : "—"}
+                      <td className={d.rain?.category ? "cellPct toneText" : "cellPct"} style={d.rain?.category ? { "--tone": RAIN_COLOR[d.rain.category] } as CSSProperties : undefined}>
+                        {d.rain ? <>{signed(d.rain.deviationPct, 0)} <span className="wetTag toneText" style={{ "--tone": RAIN_COLOR[d.rain.category ?? "normal"], background: `${RAIN_COLOR[d.rain.category ?? "normal"]}1f` } as CSSProperties}>{RAIN_LABEL[d.rain.category ?? ""] ?? "—"}</span></> : "—"}
                       </td>
                       <td>{d.soil ? `${formatNumber(d.soil.medianPct)}% median · ${d.soil.belowOwnMedian}/${d.soil.withBaseline} below usual` : "—"}</td>
                       <td>{d.reservoirs ? `${d.reservoirs.count} · ${formatNumber(d.reservoirs.storagePct)}% (${formatNumber(d.reservoirs.lastYearPct)}% last year)` : "—"}</td>
@@ -240,8 +241,8 @@ export default function ClimatePage() {
                     <td className="cellStrong">{titleCase(d.d)}</td>
                     <td>{formatNumber(et + bal)} mm</td>
                     <td>{formatNumber(et)} mm</td>
-                    <td className="cellPct" style={{ color: bm.color }}>{bal > 0 ? "+" : ""}{formatNumber(bal)} mm</td>
-                    <td><span className="wetTag" style={{ color: bm.color, background: `${bm.color}1f` }}>{bm.label}</span></td>
+                    <td className="cellPct toneText" style={{ "--tone": bm.color } as CSSProperties}>{bal > 0 ? "+" : ""}{formatNumber(bal)} mm</td>
+                    <td><span className="wetTag toneText" style={{ "--tone": bm.color, background: `${bm.color}1f` } as CSSProperties}>{bm.label}</span></td>
                   </tr>
                 );
               })}
