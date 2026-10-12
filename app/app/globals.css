@@ -2655,8 +2655,16 @@ div.leaflet-container {
 }
 
 .leaflet-interactive {
-  transition: fill-opacity 0.2s var(--ease), stroke-width 0.2s var(--ease);
+  /* fill too: a layer switch recolours the State in a glide, so the eye follows what moved */
+  transition: fill 0.5s var(--ease), fill-opacity 0.2s var(--ease), stroke-width 0.2s var(--ease);
   cursor: pointer;
+}
+/* The server-drawn mandal maps (Map, Estimates, Monsoon's recharge map) glide the same way. */
+.estMapSvg path, .rechargeCell {
+  transition: fill 0.5s var(--ease), fill-opacity 0.25s var(--ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  .leaflet-interactive, .estMapSvg path, .rechargeCell { transition: none; }
 }
 
 /* Pulsing seed markers */
