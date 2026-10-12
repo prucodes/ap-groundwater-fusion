@@ -210,7 +210,7 @@ function FieldTeams() {
     <section className={styles.teams} id="field-teams" aria-labelledby="field-teams-title" data-testid="field-teams">
       <div className={styles.teamsHead}>
         <div>
-          <span className={styles.kicker}>Where field teams would learn most this week</span>
+          <span className={`${styles.kicker} ${styles.kickerOnCard}`}>Where field teams would learn most this week</span>
           <h2 id="field-teams-title">Mandals where most signals point to water stress at once</h2>
           <p>Six published signals, each a stated test on a figure this site already shows. Where four or more agree, a visit can confirm or rule out stress quickly. A list for verification visits: not a ranking of need, an allocation or a declaration. The signals are not all independent: soil moisture is modelled from rain, and the crop check starts from the soil moisture.</p>
         </div>

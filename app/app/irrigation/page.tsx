@@ -2,6 +2,7 @@
 // datasets; on-demand SSR keeps it out of the build-time static generation pass.
 export const dynamic = "force-dynamic";
 
+import type { CSSProperties } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
 import { DistrictMap } from "../../components/DistrictMap";
 import {
@@ -133,7 +134,7 @@ export default function IrrigationPage() {
                         <span className="verifyCountPill">{a.verifyMandals} to verify</span>
                       ) : null}
                     </td>
-                    <td><span className="wetTag" style={{ color: m.color, background: `${m.color}1f` }}>{m.label}</span></td>
+                    <td><span className="wetTag toneText" style={{ "--tone": m.color, background: `${m.color}1f` } as CSSProperties}>{m.label}</span></td>
                     <td className="cellPct">
                       <span className="priorityBar" aria-hidden="true">
                         <span

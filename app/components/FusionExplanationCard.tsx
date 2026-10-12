@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { MandalGroundwaterView } from "../lib/types";
 import { formatNumber, statusMeta } from "../lib/data";
 import { IconArrowRight, IconInfo } from "./icons";
@@ -31,7 +32,7 @@ export function FusionExplanationCard({ mandal }: { mandal: MandalGroundwaterVie
         </span>
         <div className="fusionNode">
           <div className="nodeLabel">Rainfall / ET context</div>
-          <div className="nodeVal" style={{ color: "var(--sig-gw)" }}>
+          <div className="nodeVal" style={{ color: "var(--cyan-ink)" }}>
             {formatNumber(mandal.rainfall_mm)} mm
           </div>
           <div className="metricSub">climate balance: {climateBalance}</div>
@@ -41,7 +42,7 @@ export function FusionExplanationCard({ mandal }: { mandal: MandalGroundwaterVie
         </span>
         <div className="fusionNode verdict">
           <div className="nodeLabel">Modelled nowcast</div>
-          <div className="nodeVal" style={{ color: meta.color }}>
+          <div className="nodeVal toneText" style={{ "--tone": meta.color } as CSSProperties}>
             {est} m
           </div>
           <div className="metricSub">model P10–P90 {interval} m · {meta.label}</div>
