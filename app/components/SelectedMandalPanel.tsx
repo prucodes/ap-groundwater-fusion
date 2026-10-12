@@ -52,7 +52,15 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         </div>
       ) : null}
 
-      <div className="sideSection">
+      {/* On a phone the panel leads with the mandal and its record; the evidence below folds
+          behind one toggle (CSS only, so it works without a script and prints in full). */}
+      <input type="checkbox" id={`side-more-${mandal.id}`} className="sideMoreToggle" />
+      <label htmlFor={`side-more-${mandal.id}`} className="sideMoreLabel">
+        <span className="sideMoreShow">All evidence for this mandal</span>
+        <span className="sideMoreHide">Show less</span>
+      </label>
+
+      <div className="sideSection" data-phone-fold="">
         <div className="sideSectionTitle">
           <IconFlask /> Measured Input · APWRIMS (APWRIMS-format)
         </div>
@@ -75,7 +83,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         <div className="sideCaveat">APWRIMS readings (session sample · authorization pending); level estimates are modelled (β), not official results.</div>
       </div>
 
-      <div className="sideSection">
+      <div className="sideSection" data-phone-fold="">
         <div className="sideSectionTitle">
           <IconTarget /> Measured &amp; Modelled Values
         </div>
@@ -139,7 +147,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         )}
       </div>
 
-      <div className="sideSection">
+      <div className="sideSection" data-phone-fold="">
         <div className="sideSectionTitle">
           <IconSatellite /> NASA Satellite-Model Signal (GRACE-DA)
         </div>
@@ -170,7 +178,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         </div>
       </div>
 
-      <div className="sideSection">
+      <div className="sideSection" data-phone-fold="">
         <div className="sideSectionTitle">
           <IconTarget /> Fusion &amp; Agreement
         </div>
@@ -196,7 +204,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         <div className="sideCaveat">{agreementReason(mandal)}</div>
       </div>
 
-      <div className="sideSection">
+      <div className="sideSection" data-phone-fold="">
         <div className="sideSectionTitle">
           <IconDroplet /> Monitoring Note
         </div>

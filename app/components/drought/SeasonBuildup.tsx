@@ -1,5 +1,6 @@
 import { RAIN_CLASS_META, shortDate, type DroughtWatch, type RainClass } from "../../lib/drought";
 import styles from "./Drought.module.css";
+import { ChartData } from "../chart/ChartKit";
 
 const STACK: RainClass[] = ["noRain", "largeDeficient", "deficient", "normal", "excess"];
 
@@ -55,6 +56,11 @@ export function SeasonBuildup({ timeline, facts = [] }: {
         {STACK.slice().reverse().map(key => <span key={key}><i style={{ background: RAIN_CLASS_META[key].color }} />{RAIN_CLASS_META[key].label}</span>)}
         <span><i style={{ background: "var(--ink)", height: 3 }} />4-week dry spell so far</span>
       </div>
+      <ChartData
+        caption="Mandals in each rainfall class, week by week this season, with those in a 4-week dry spell"
+        columns={["Week ending", ...STACK.slice().reverse().map(key => RAIN_CLASS_META[key].label), "Dry spell"]}
+        rows={[...timeline].reverse().map(t => [shortDate(t.end), ...STACK.slice().reverse().map(key => t.classes[key] ?? 0), t.drySpell])}
+      />
       {facts.length ? (
         <dl className={styles.facts}>
           {facts.map(fact => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd><small>{fact.note}</small></div>)}

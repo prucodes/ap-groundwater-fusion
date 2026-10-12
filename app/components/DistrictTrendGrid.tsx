@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import type { DistrictSeries } from "../lib/data";
 import { titleCase } from "../lib/data";
+import { ChartData } from "./chart/ChartKit";
 
 /**
  * Twenty-eight district hydrographs on one screen, sorted steepest-deepening
@@ -105,6 +106,15 @@ export function DistrictTrendGrid({ series, selected, onSelect }: Props) {
           Slope is least squares over the measured record.
         </span>
       </div>
+      <ChartData
+        caption="Each district's latest depth and its trend over the measured record, deepening first"
+        columns={["District", "Latest depth (m)", "Trend (m a year)"]}
+        rows={[...usable].sort((a, b) => (b.trendMPerYear ?? -99) - (a.trendMPerYear ?? -99)).map((s) => [
+          titleCase(s.district_name),
+          s.points[s.points.length - 1].value.toFixed(2),
+          s.trendMPerYear === null ? "—" : `${s.trendMPerYear > 0 ? "+" : ""}${s.trendMPerYear.toFixed(2)}`,
+        ])}
+      />
     </div>
   );
 }

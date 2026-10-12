@@ -9,7 +9,7 @@ import { MapLegend } from "./MapLegend";
 import { StatusSummaryCard } from "./StatusSummaryCard";
 import { SatelliteSignalCards } from "./SatelliteSignalCards";
 import { SelectedMandalPanel } from "./SelectedMandalPanel";
-import { SourceReadinessPanel } from "./SourceReadinessPanel";
+import { ReadinessSummary } from "./SourceReadinessPanel";
 import { MandalTable } from "./MandalTable";
 import { CountUp } from "./CountUp";
 import {
@@ -479,7 +479,7 @@ export function OverviewCockpit({ agreement, summer }: { agreement: OverviewAgre
                 Details <IconArrowRight />
               </Link>
             </div>
-            <SourceReadinessPanel compact />
+            <ReadinessSummary />
           </section>
         </div>
       </div>

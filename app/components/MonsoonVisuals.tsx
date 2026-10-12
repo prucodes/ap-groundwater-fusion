@@ -414,6 +414,12 @@ export function RainfallHistory() {
           line is the {rows.length}-year mean · {current.year} is {Math.abs(current.anomalyPct)}% below it
         </span>
       </div>
+      <ChartData
+        caption={`${history.months} rainfall over Andhra Pradesh by year, against the ${rows.length}-year mean of ${Math.round(history.meanMm)} mm`}
+        columns={["Year", "Rain (mm)", "Against the mean", "Ocean state"]}
+        rows={[...rows].reverse().map((r) => [r.year, Math.round(r.mm), `${r.anomalyPct > 0 ? "+" : ""}${r.anomalyPct}%`,
+          r.state === "el_nino" ? "El Niño" : r.state === "la_nina" ? "La Niña" : "neutral"])}
+      />
     </div>
   );
 }
