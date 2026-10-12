@@ -1090,17 +1090,30 @@ export const MAP_VIEW = (() => {
   return { width, height, project, minLon, minLat, maxLon, maxLat };
 })();
 
+/** Points closer than this (MAP_VIEW units, under a pixel where the maps are drawn) to the
+ *  last one kept are dropped. */
+const PATH_TOLERANCE = 0.6;
+
+/** One outline in MAP_VIEW units: a move, then relative steps at one decimal under a single
+ *  implicit "l". Absolute two-decimal points, each with its own "L", made the State's 670
+ *  mandals 770 KB of every page that drew them. */
 export function ringToPath(ring: number[][]): string {
   if (!ring.length) return "";
-  const parts = ring.map(([lon, lat], i) => {
+  let head = "", lastX = 0, lastY = 0, keptX = NaN, keptY = NaN;
+  const steps: string[] = [];
+  ring.forEach(([lon, lat], i) => {
     const [x, y] = MAP_VIEW.project(lon, lat);
-    return `${i === 0 ? "M" : "L"}${x} ${y}`;
+    if (i > 0 && i < ring.length - 1 && Math.hypot(x - keptX, y - keptY) < PATH_TOLERANCE) return;
+    const rx = Math.round(x * 10) / 10, ry = Math.round(y * 10) / 10;
+    if (i === 0) head = `M${rx} ${ry}`;
+    else steps.push(`${+(rx - lastX).toFixed(1)} ${+(ry - lastY).toFixed(1)}`);
+    lastX = rx; lastY = ry; keptX = x; keptY = y;
   });
-  return `${parts.join(" ")} Z`;
+  return `${head}${steps.length ? "l" + steps.join(" ") : ""}z`;
 }
 
 export function mandalToPath(rings: number[][][]): string {
-  return rings.map(ringToPath).join(" ");
+  return rings.map(ringToPath).join("");
 }
 
 /** Normalize a mandal/district name for tolerant matching (mirrors the Python norm). */

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { countEvent } from "../lib/visit-counter";
-import { basePath, mapGeometry, pacificEnso } from "../lib/data";
+import { basePath, districtGeometry, pacificEnso } from "../lib/data";
 import { IconChevronLeft, IconChevronRight, IconPause, IconPlay } from "./icons";
 import styles from "./PacificEnso.module.css";
 
@@ -11,9 +11,23 @@ const project = (lon: number, lat: number) => [
   (lon - data.window.lon0) / (data.window.lon1 - data.window.lon0) * 1000,
   (data.window.lat0 - lat) / (data.window.lat0 - data.window.lat1) * 1000 / data.aspect,
 ];
-const statePath = mapGeometry.mandals.flatMap(m => m.rings.map(ring => ring.map((point, i) =>
-  `${i ? "L" : "M"}${project(point[0], point[1]).map(n => n.toFixed(2)).join(",")}`
-).join(" ") + "Z")).join(" ");
+/* Andhra Pradesh at Pacific scale is about thirty units across: its 28 districts, points under
+   a quarter unit apart dropped, relative steps at two decimals. Drawn from all 670 mandals at
+   full precision it was one 381 KB path, the heaviest thing on the Monsoon page. */
+const ringAtPacificScale = (ring: number[][]) => {
+  let head = "", lastX = 0, lastY = 0, keptX = NaN, keptY = NaN;
+  const steps: string[] = [];
+  ring.forEach(([lon, lat], i) => {
+    const [x, y] = project(lon, lat);
+    if (i > 0 && i < ring.length - 1 && Math.hypot(x - keptX, y - keptY) < 0.25) return;
+    const rx = Math.round(x * 100) / 100, ry = Math.round(y * 100) / 100;
+    if (i === 0) head = `M${rx} ${ry}`;
+    else steps.push(`${+(rx - lastX).toFixed(2)} ${+(ry - lastY).toFixed(2)}`);
+    lastX = rx; lastY = ry; keptX = x; keptY = y;
+  });
+  return `${head}${steps.length ? "l" + steps.join(" ") : ""}z`;
+};
+const statePath = districtGeometry.districts.flatMap(d => d.rings.map(ringAtPacificScale)).join("");
 const monthLabel = (value: string) => new Date(`${value}-01T12:00:00Z`).toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" });
 const signed = (value: number) => `${value > 0 ? "+" : ""}${value.toFixed(2)} °C`;
 const locationStyle = (lon: number, lat: number) => {
