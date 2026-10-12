@@ -17,7 +17,7 @@
   background:
     radial-gradient(900px 320px at 8% -20%, rgba(18, 181, 203, .22), transparent 60%),
     radial-gradient(700px 300px at 100% 120%, rgba(178, 58, 46, .28), transparent 65%),
-    linear-gradient(135deg, #061a30 0%, #0b2a4d 58%, #123b66 100%);
+    var(--band-navy);
   box-shadow: var(--shadow-pop);
 }
 .command::after { /* a faint survey grid */

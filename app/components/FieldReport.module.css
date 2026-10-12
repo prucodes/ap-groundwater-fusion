@@ -35,7 +35,7 @@
 .primary svg, .secondary svg { width: 15px; height: 15px; }
 
 .side { display: grid; gap: 14px; position: sticky; top: 16px; }
-.called { padding: 20px; border-radius: var(--radius); color: #eaf3fb; background: linear-gradient(135deg, #061a30 0%, #0b2a4d 60%, #123b66 100%); box-shadow: var(--shadow-pop); }
+.called { padding: 20px; border-radius: var(--radius); color: #eaf3fb; background: var(--band-navy); box-shadow: var(--shadow-pop); }
 .kicker { font: 600 10px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: #6fe0ee; }
 .called h3 { margin: 6px 0 12px; font: 600 20px var(--font-display); color: #fff; }
 .called h3 small { display: block; font: 500 12px var(--font-sans); color: #9fb6cc; }

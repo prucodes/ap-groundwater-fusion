@@ -3,7 +3,7 @@
 .summary {
   position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: center;
   margin: 18px 0 0; padding: 24px 28px; border-radius: var(--radius-lg); color: #eaf3fb; box-shadow: var(--shadow-pop);
-  background: radial-gradient(800px 280px at 0% -30%, rgba(18, 181, 203, .25), transparent 60%), linear-gradient(135deg, #061a30 0%, #0b2a4d 60%, #123b66 100%);
+  background: radial-gradient(800px 280px at 0% -30%, rgba(18, 181, 203, .25), transparent 60%), var(--band-navy);
 }
 .summary::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
