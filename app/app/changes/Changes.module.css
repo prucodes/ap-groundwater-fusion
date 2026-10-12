@@ -111,6 +111,12 @@
 .teamsFoot { font-size: 10.5px; line-height: 1.6; color: var(--muted); margin-top: 10px; }
 .teamsFoot a { color: var(--accent, #27745d); }
 @media (max-width: 760px) {
+  /* On a phone the steady figures pair up, two to a row, so what moved stays the story:
+     eighteen full cards in one column were two screens of "no change". */
+  .cardsSteady { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .cardsSteady .card { padding: 10px 11px 9px 13px; gap: 4px; }
+  .cardsSteady .value { font-size: 18px; }
+  .cardsSteady .dates { display: none; }
   .teams { padding: 14px 12px; }
   .teamsHead { flex-direction: column; gap: 12px; }
   .signalKey { grid-template-columns: minmax(0, 1fr); }
