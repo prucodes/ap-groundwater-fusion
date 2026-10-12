@@ -45,6 +45,29 @@ function shortName(label: string) {
   return label.replace(/^Real /, "").replace(/\s*\(.*$/, "").replace(/ via APWRIMS.*$/, "").trim();
 }
 
+/** Readiness in three counts and what it waits on, for the Overview: the full list of sources
+ *  and their states lives on Readiness, one click away, instead of a column of chips here. */
+export function ReadinessSummary() {
+  const counts = { available: 0, partial: 0, pending: 0, manual: 0 };
+  for (const item of readinessItems) counts[tone(item.status)] += 1;
+  const waiting = readinessItems.filter((item) => tone(item.status) === "pending").map((item) => compactLabel(item.label));
+  return (
+    <div className="readySummary">
+      <div className="readySummaryCounts">
+        <span className="readyTag available">{counts.available} connected</span>
+        {counts.partial ? <span className="readyTag partial">{counts.partial} partial</span> : null}
+        {counts.pending ? <span className="readyTag pending">{counts.pending} pending</span> : null}
+        {counts.manual ? <span className="readyTag manual">{counts.manual} manual</span> : null}
+      </div>
+      {waiting.length ? (
+        <p className="readySummaryNext">
+          Waiting on {waiting.slice(0, 3).join(", ")}{waiting.length > 3 ? ` and ${waiting.length - 3} more` : ""}.
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 export function SourceReadinessPanel({ compact = false }: { compact?: boolean }) {
   const counts = { available: 0, partial: 0, pending: 0, manual: 0 };
   for (const item of readinessItems) counts[tone(item.status)] += 1;
