@@ -108,6 +108,11 @@ export type DroughtSummary = {
 /** Most severe first: the order every legend, stack and count follows. */
 export const CATEGORY_ORDER: DroughtCategory[] = ["severe", "moderate|severe", "moderate", "normal|moderate", "normal", "noTrigger", "insufficient"];
 
+/** One character per category, so a whole State's readings travel to a client map as a short string. */
+export const CATEGORY_CODE: Record<DroughtCategory, string> = {
+  severe: "s", "moderate|severe": "x", moderate: "m", "normal|moderate": "y", normal: "t", noTrigger: "o", insufficient: "i",
+};
+
 export const CATEGORY_META: Record<DroughtCategory, { label: string; short: string; color: string; ink: string; note: string }> = {
   severe: { label: "Severe", short: "Severe", color: "#b23a2e", ink: "#fff",
     note: "Trigger 1 set; at least two impact indicators severe and the third at least moderate." },

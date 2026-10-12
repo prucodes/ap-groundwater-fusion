@@ -13,6 +13,7 @@ import { CROP_WATER_STATES, MAX_ROOT_M, OUTLOOK_DAYS, RECORD_VERDICTS, SEVERE_CO
 import { IconArrowRight, IconCloudRain, IconDroplet, IconLeaf, IconSun } from "../icons";
 import { day, placeName } from "./waterContextFormat";
 import styles from "./LiveCropCheck.module.css";
+import { ChartData } from "../chart/ChartKit";
 
 export type LabPreset = { crop: CropKey; stage: number; eto: number; rain: number; reserve: number; place: string; window: string; key: number };
 
@@ -348,6 +349,10 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
             <div><dt><IconCloudRain />Useful rain, 7 days</dt><dd>{mm(active.rainUsed)}<small>forecast; daily rain under 0.2 ETo left out</small></dd></div>
             <div><dt><IconLeaf />Water use now</dt><dd>{Math.round(active.ksNow * 100)}%<small>of the unstressed rate (FAO-56 Ks)</small></dd></div>
           </dl>
+          <ChartData caption={`Root-zone water day by day for ${place}, mm the roots can draw (stress below ${mm(active.taw - active.raw)})`}
+            columns={["Day", "Water the roots can draw", "Rain that counts", ""]}
+            rows={live.dates.map((date, i) => [`${weekday(date)} ${day(date, false)}`, mm(active.path[i]), active.rainEffective[i] > 0 ? mm(active.rainEffective[i]) : "—",
+              i === live.today ? "Today" : i < live.today ? "Past" : active.path[i] < active.taw - active.raw ? "Forecast · short" : "Forecast"])} />
           {irrigatedAt(selected) !== null ? <p className={styles.irrigatedNote} data-testid="field-week-irrigated-share">
             <b>{Math.round(irrigatedAt(selected)!)}%</b> of {place}&rsquo;s cropland was mapped irrigated in rabi 2020&ndash;21 ({irrigation!.source}).{" "}
             {mostlyIrrigated(selected) ? "Most fields here have a canal or a well, so read the check for the rainfed ones." : "Mostly rainfed: the check reads these fields as they are."}

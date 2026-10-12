@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
 import changesJson from "../../data/weekly_changes.json";
-import { CATEGORY_META, place, shortDate } from "../../lib/drought";
+import { CATEGORY_CODE, CATEGORY_META, place, shortDate } from "../../lib/drought";
+import { droughtWatch } from "../../lib/droughtWatch";
+import { STATIC_MAP_VIEW } from "../../lib/staticMap";
+import { WeekMoveMap } from "../../components/WeekMoveMap";
 import { GEC_CATEGORIES, type GecCategory } from "../../lib/agriculture";
 import { fieldPriority, PRIORITY_SIGNALS, standsOut } from "../../lib/fieldPriority";
 import { fieldSignals } from "../../lib/fieldSignalsServer";
@@ -62,6 +65,44 @@ function categoryLabel(key: string) {
   return (CATEGORY_META as Record<string, { label: string }>)[key]?.label ?? key;
 }
 
+/** Last week's and this week's manual reading for every mandal on the map, and which way the
+ *  listed ones moved, each as one character per boundary index for the client map. */
+function weekMoves() {
+  const count = droughtWatch.mandals.reduce((n, row) => Math.max(n, row.i + 1), 0);
+  const before = Array<string>(count).fill(CATEGORY_CODE.insufficient), after = [...before], moves = Array<string>(count).fill("n");
+  for (const row of droughtWatch.mandals) {
+    before[row.i] = CATEGORY_CODE[row.prev] ?? CATEGORY_CODE.insufficient;
+    after[row.i] = CATEGORY_CODE[row.category] ?? CATEGORY_CODE.insufficient;
+  }
+  changes.drought.worse.forEach(m => { if (m.i !== undefined && m.i < count) moves[m.i] = "w"; });
+  changes.drought.better.forEach(m => { if (m.i !== undefined && m.i < count) moves[m.i] = "b"; });
+  return { before: before.join(""), after: after.join(""), moves: moves.join("") };
+}
+
+/** Where a group of movers sits: the districts holding three or more of them, or how thinly they spread. */
+function spread(movers: Mover[], noun: string) {
+  const byDistrict = new Map<string, number>();
+  movers.forEach(m => byDistrict.set(m.d ?? "", (byDistrict.get(m.d ?? "") ?? 0) + 1));
+  const ranked = [...byDistrict].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  const lead = ranked.filter(([, n]) => n >= 3).slice(0, 3);
+  if (lead.length) {
+    const names = lead.map(([d, n]) => `${place(d)} (${n})`);
+    return `${noun} gather in ${names.length > 1 ? `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}` : names[0]}`;
+  }
+  return `${noun} are spread over ${ranked.length} districts, no more than ${ranked[0]?.[1] ?? 0} in any one`;
+}
+
+/** The map's finding in a sentence: how many moved into severe, and where the worse and better readings sit. */
+function moveStory() {
+  const { worse, better } = changes.drought;
+  const severe = worse.filter(m => m.to === "severe").length;
+  const parts = [
+    worse.length ? spread(worse, "Worse readings") : null,
+    better.length ? spread(better, worse.length ? "better ones" : "Better readings") : null,
+  ].filter(Boolean);
+  return `${severe ? `${severe} moved into severe. ` : ""}${parts.join("; ")}.`;
+}
+
 export default function ChangesPage() {
   const items = changes.items;
   const first = items.every(item => item.before === null || item.direction === "same");
@@ -115,30 +156,43 @@ export default function ChangesPage() {
         ) : null}
       </section>
 
+      <section className={styles.moves} aria-labelledby="week-moves-title" data-testid="week-moves">
+        <header className={styles.movesHead}>
+          <span className={`${styles.kicker} ${styles.kickerOnCard}`}>Where it moved</span>
+          <h2 id="week-moves-title">{droughtMoves.length
+            ? <>{changes.drought.worse.length} mandals read worse on the drought manual this week, {changes.drought.better.length} better</>
+            : <>No mandal changed its drought manual reading this week</>}</h2>
+          {droughtMoves.length ? <p>{moveStory()}</p> : null}
+        </header>
+        <div className={styles.movesGrid}>
+          <WeekMoveMap {...weekMoves()} aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height}
+            label={`Drought manual reading by mandal: ${changes.drought.worse.length} worse and ${changes.drought.better.length} better than last week.`} />
+          <div className={styles.movesList}>
+            <div className={styles.listHead}>
+              <h3>Readings that moved</h3>
+              <span>{changes.drought.basis.charAt(0).toUpperCase() + changes.drought.basis.slice(1)}</span>
+            </div>
+            {droughtMoves.length ? (
+              <RowFold id="moved-drought-rows" total={droughtMoves.length} visible={8} noun="mandals">
+              <ul>
+                {droughtMoves.map((m, i) => (
+                  <li key={`${m.d}-${m.m}`} data-worse={m.worse} {...foldAt(i, 8)}>
+                    <span className={styles.mark}>{m.worse ? "▲" : "▼"}</span>
+                    <span className={styles.where}><b>{place(m.m ?? "")}</b><small>{place(m.d ?? "")}</small></span>
+                    <span className={styles.move}>{categoryLabel(m.from)} → <b>{categoryLabel(m.to)}</b></span>
+                  </li>
+                ))}
+              </ul>
+              </RowFold>
+            ) : <p className={styles.empty}>No mandal changed its reading this week.</p>}
+            <Link href="/drought" className={styles.more}>Open the Drought Watch →</Link>
+          </div>
+        </div>
+      </section>
+
       <FieldTeams />
 
       <div className={styles.lists}>
-        <section className={styles.list} aria-label="Drought manual readings that moved">
-          <div className={styles.listHead}>
-            <h3>Drought manual readings that moved</h3>
-            <span>{changes.drought.basis}</span>
-          </div>
-          {droughtMoves.length ? (
-            <RowFold id="moved-drought-rows" total={droughtMoves.length} visible={8} noun="mandals">
-            <ul>
-              {droughtMoves.map((m, i) => (
-                <li key={`${m.d}-${m.m}`} data-worse={m.worse} {...foldAt(i, 8)}>
-                  <span className={styles.mark}>{m.worse ? "▲" : "▼"}</span>
-                  <span className={styles.where}><b>{place(m.m ?? "")}</b><small>{place(m.d ?? "")}</small></span>
-                  <span className={styles.move}>{categoryLabel(m.from)} → <b>{categoryLabel(m.to)}</b></span>
-                </li>
-              ))}
-            </ul>
-            </RowFold>
-          ) : <p className={styles.empty}>No mandal changed its reading this week.</p>}
-          <Link href="/drought" className={styles.more}>Open the Drought Watch →</Link>
-        </section>
-
         <section className={styles.list} aria-label="Groundwater status that moved">
           <div className={styles.listHead}>
             <h3>Groundwater status that moved</h3>
