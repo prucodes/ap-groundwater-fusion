@@ -2,6 +2,7 @@
 
 import { useId, useMemo, useState } from "react";
 import { isMonsoonMonth, type DepthPoint } from "../lib/data";
+import { Callout, ChartData } from "./chart/ChartKit";
 
 /**
  * Depth-to-water hydrograph — the fundamental instrument of the discipline, and
@@ -26,6 +27,7 @@ type Props = {
 };
 
 const PAD_FULL = { top: 18, right: 16, bottom: 26, left: 44 };
+const MONTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const PAD_COMPACT = { top: 12, right: 8, bottom: 14, left: 30 };
 const VIEW_W = 900;
 
@@ -95,14 +97,18 @@ export function Hydrograph({ series, nowcast = null, height = 260, compact = fal
         }
       : null;
 
-    return { points, trace, water, bands, ticks, depthTicks, maxDepth, plotH, plotW, nc, x, y };
+    // The deepest reading on record, marked where it happened.
+    const deepest = points.reduce((a, p) => (p.value > a.value ? p : a), points[0]);
+
+    return { points, trace, water, bands, ticks, depthTicks, maxDepth, plotH, plotW, nc, x, y, deepest };
   }, [series, nowcast, height, PAD]);
 
   if (!model) {
     return <p className="muted" style={{ fontSize: 13 }}>Not enough measured history to draw a hydrograph.</p>;
   }
 
-  const { points, trace, water, bands, ticks, depthTicks, plotH, nc } = model;
+  const { points, trace, water, bands, ticks, depthTicks, plotH, nc, deepest } = model;
+  const monthName = (period: string) => `${MONTH_NAMES[Number(period.slice(5, 7)) - 1] ?? ""} ${period.slice(0, 4)}`;
   const active = hoverIndex !== null ? points[hoverIndex] : points[points.length - 1];
 
   function onMove(e: React.MouseEvent<SVGSVGElement>) {
@@ -188,6 +194,12 @@ export function Hydrograph({ series, nowcast = null, height = 260, compact = fal
           </text>
         ))}
 
+        {!compact && hoverIndex === null ? (
+          <Callout x={deepest.x} y={deepest.y} dx={deepest.x > VIEW_W / 2 ? -18 : 18} dy={-30}
+                   anchor={deepest.x > VIEW_W / 2 ? "end" : "start"}
+                   label={`Deepest on record: ${deepest.value.toFixed(1)} m`} sub={monthName(deepest.period)} />
+        ) : null}
+
         {hoverIndex !== null ? (
           <g>
             <line x1={active.x} y1={PAD.top} x2={active.x} y2={PAD.top + plotH} stroke="var(--ink-soft)" strokeWidth="1" opacity="0.45" />
@@ -199,12 +211,19 @@ export function Hydrograph({ series, nowcast = null, height = 260, compact = fal
       </svg>
 
       {compact ? null : (
-      <div className="hgKey">
-        <span className="hgKeyItem"><i className="hgSwatch hgSwatchLine" /> Measured (APWRIMS)</span>
-        {nc ? <span className="hgKeyItem"><i className="hgSwatch hgSwatchModel" /> Modelled nowcast · p10–p90</span> : null}
-        <span className="hgKeyItem"><i className="hgSwatch hgSwatchMonsoon" /> Monsoon (Jun–Sep)</span>
-        <span className="hgKeyItem hgKeyNote">Depth increases downward — a higher fill is a shallower water table.</span>
-      </div>
+        <>
+          <div className="hgKey">
+            <span className="hgKeyItem"><i className="hgSwatch hgSwatchLine" /> Measured (APWRIMS)</span>
+            {nc ? <span className="hgKeyItem"><i className="hgSwatch hgSwatchModel" /> Modelled nowcast · p10–p90</span> : null}
+            <span className="hgKeyItem"><i className="hgSwatch hgSwatchMonsoon" /> Monsoon (Jun–Sep)</span>
+            <span className="hgKeyItem hgKeyNote">Depth increases downward — a higher fill is a shallower water table.</span>
+          </div>
+          <ChartData
+            caption="Depth to water by month, metres below ground (APWRIMS)"
+            columns={["Month", "Depth (m)"]}
+            rows={[...points].reverse().map((p) => [monthName(p.period), p.value.toFixed(2)])}
+          />
+        </>
       )}
     </div>
   );

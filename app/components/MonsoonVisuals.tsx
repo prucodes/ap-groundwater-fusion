@@ -3,6 +3,7 @@
 import { useId, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { MAP_VIEW, mandalToPath, mapGeometry, monsoonWatch } from "../lib/data";
 import { countEvent } from "../lib/visit-counter";
+import { Callout, ChartData } from "./chart/ChartKit";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -265,11 +266,17 @@ export function RechargeTrajectory() {
   const now = nowPoints.map((p, i) => `${i === 0 ? "M" : "L"}${x(p.month).toFixed(1)} ${y(p.value).toFixed(1)}`).join(" ");
   const ticks = [hi, (hi + lo) / 2, lo];
   const last = nowPoints[nowPoints.length - 1];
+  // The season's answer, written where the line ends: how far it has come, and against what.
+  const lastBand = band.find((b) => b.month === last.month);
+  const below = !!lastBand && last.value < lastBand.low, above = !!lastBand && last.value > lastBand.high;
+  const verdict = !lastBand ? undefined
+    : below ? `below all ${past.length} seasons before` : above ? `above all ${past.length} seasons before` : `within the ${past.length} seasons' range`;
+  const signedM = (value: number) => `${value > 0.005 ? "+" : value < -0.005 ? "−" : ""}${Math.abs(value).toFixed(2)} m`;
 
   return (
     <div className="trajectoryWrap">
       <svg viewBox={`0 0 ${width} ${height}`} className="trajectorySvg" role="img"
-           aria-label="How far the water table has risen since May, this season against the ten before it">
+           aria-label={`How far the water table has risen since May, this season against the ${past.length} before it`}>
         {ticks.map((value, i) => (
           <g key={i}>
             <line x1={pad.left} x2={width - pad.right} y1={y(value)} y2={y(value)} className="trajGrid" />
@@ -288,9 +295,9 @@ export function RechargeTrajectory() {
         {nowPoints.map((p) => (
           <circle key={p.month} cx={x(p.month)} cy={y(p.value)} r={4} className="trajNowDot" />
         ))}
-        <text x={x(last.month) + 8} y={y(last.value) + 4} className="trajNowLabel">
-          {current.year}
-        </text>
+        <Callout x={x(last.month)} y={y(last.value)} dx={16} dy={last.value < (hi + lo) / 2 ? -34 : 34} anchor="start"
+                 tone={below ? "alert" : above ? "good" : "ink"}
+                 label={`${current.year}: ${signedM(last.value)} since May`} sub={verdict} />
         {months.map((month) => (
           <text key={month} x={x(month)} y={height - 8} className="trajAxis" textAnchor="middle">
             {MONTHS[month]}
@@ -298,11 +305,19 @@ export function RechargeTrajectory() {
         ))}
       </svg>
       <div className="trajKey">
-        <span><span className="trajKeySwatch band" /> the range across the ten seasons before this one</span>
+        <span><span className="trajKeySwatch band" /> the range across the {past.length} seasons before this one</span>
         <span><span className="trajKeyLine median" /> their median</span>
         <span><span className="trajKeyLine now" /> {current.year}</span>
         <span className="trajKeyNote">above the dashed line the water table has risen since May</span>
       </div>
+      <ChartData
+        caption={`Rise in the water table since May (m), ${current.year} against the ${past.length} seasons before`}
+        columns={["Month", String(current.year), "Median", "Lowest", "Highest"]}
+        rows={band.map((b) => {
+          const now = nowPoints.find((p) => p.month === b.month);
+          return [MONTHS[b.month], now ? signedM(now.value) : "—", signedM(b.mid), signedM(b.low), signedM(b.high)];
+        })}
+      />
     </div>
   );
 }

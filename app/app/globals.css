@@ -5859,3 +5859,35 @@ html { scroll-padding-top: 64px; }
   .jumpNav::-webkit-scrollbar { display: none; }
   .jumpNav > * { flex: none; }
 }
+
+/* ===================== Chart kit (components/chart/ChartKit.tsx) ===================== */
+.chartCallout { pointer-events: none; }
+.chartCalloutRing { fill: none; stroke: var(--ink); stroke-width: 1.6; }
+.chartCalloutLeader { stroke: var(--ink-soft); stroke-width: 1; }
+.chartCalloutLabel {
+  font: 650 12.5px var(--font-sans); fill: var(--ink);
+  paint-order: stroke; stroke: var(--card); stroke-width: 4px; stroke-linejoin: round;
+}
+.chartCalloutSub { font-weight: 500; font-size: 11px; fill: var(--muted); }
+.chartCallout-alert .chartCalloutRing { stroke: var(--st-verify); }
+.chartCallout-alert .chartCalloutLabel { fill: color-mix(in srgb, var(--st-verify) 70%, var(--ink)); }
+.chartCallout-good .chartCalloutRing { stroke: var(--st-normal); }
+.chartCallout-good .chartCalloutLabel { fill: var(--st-normal-ink); }
+
+.chartData { margin-top: 10px; font-size: 12px; }
+.chartData > summary {
+  display: inline-flex; align-items: center; gap: 6px; cursor: pointer; list-style: none;
+  font-size: 11.5px; font-weight: 600; color: var(--teal);
+}
+.chartData > summary::-webkit-details-marker { display: none; }
+.chartData > summary::after { content: ""; width: 5px; height: 5px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.chartData[open] > summary::after { transform: translateY(1px) rotate(-135deg); }
+.chartDataScroll { max-height: 280px; overflow: auto; margin-top: 8px; border: 1px solid var(--line); border-radius: var(--radius-sm); }
+.chartData table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.chartData caption { text-align: left; padding: 8px 10px 4px; font-size: 11px; color: var(--muted); }
+.chartData th, .chartData td { padding: 5px 10px; text-align: right; border-bottom: 1px solid var(--hairline); white-space: nowrap; }
+.chartData th[scope="row"], .chartData thead th:first-child { text-align: left; }
+.chartData thead th { position: sticky; top: 0; background: var(--field); font-size: 10.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.chartData tbody th { font-weight: 600; color: var(--ink); }
+.chartData td { color: var(--ink-soft); }
+@media print { .chartData { display: none; } }
