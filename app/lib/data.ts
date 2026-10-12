@@ -722,19 +722,25 @@ function hexLerp(a: string, b: string, t: number): string {
 }
 
 /** Generic heat color: diverging (deficit→surplus) for balance, sequential otherwise. */
-export function heatColor(value: number | null, min: number, max: number, diverging: boolean): string {
-  if (value === null || value === undefined) return "#dfe6ef";
+/** The sequential ramp, light and dark: on the dark theme the low end starting at near-white
+ *  drew Andhra Pradesh as a white shape, so there it rises from deep blue to bright teal. */
+export const SEQ_RAMP = { light: ["#e6f1f8", "#0e6f95"], dark: ["#16324a", "#3fc1dc"] } as const;
+export const seqGradient = (dark = false) => `linear-gradient(90deg, ${SEQ_RAMP[dark ? "dark" : "light"].join(", ")})`;
+
+export function heatColor(value: number | null, min: number, max: number, diverging: boolean, dark = false): string {
+  if (value === null || value === undefined) return dark ? "#24364e" : "#dfe6ef";
   const t = Math.max(0, Math.min(1, (value - min) / (max - min || 1)));
   if (diverging) {
     return t < 0.5 ? hexLerp("#c65a46", "#e7cf86", t * 2) : hexLerp("#e7cf86", "#4f9268", (t - 0.5) * 2);
   }
-  return hexLerp("#e6f1f8", "#0e6f95", t);
+  const [low, high] = SEQ_RAMP[dark ? "dark" : "light"];
+  return hexLerp(low, high, t);
 }
 
 /** Choropleth color for a district layer value. */
-export function districtLayerColor(key: DistrictLayerKey, value: number | null): string {
+export function districtLayerColor(key: DistrictLayerKey, value: number | null, dark = false): string {
   const { min, max } = districtGeometry.layers[key];
-  return heatColor(value, min, max, key === "water_balance_mm");
+  return heatColor(value, min, max, key === "water_balance_mm", dark);
 }
 
 /* ---------------- Mandal heat (statewide, all ~670 mandals) ---------------- */
@@ -824,9 +830,9 @@ export function mandalHeatStatus(district: string, mandal: string): string {
   return mandalHeatEntry(district, mandal)?.water_balance_status ?? "";
 }
 
-export function mandalHeatColor(layer: MandalHeatLayerKey, district: string, mandal: string): string {
+export function mandalHeatColor(layer: MandalHeatLayerKey, district: string, mandal: string, dark = false): string {
   const { min, max } = mandalHeat.layers[layer];
-  return heatColor(mandalHeatValue(district, mandal, layer), min, max, layer === "water_balance_mm");
+  return heatColor(mandalHeatValue(district, mandal, layer), min, max, layer === "water_balance_mm", dark);
 }
 export const prototypeNotice = dashboardSummary.summary.prototype_notice;
 

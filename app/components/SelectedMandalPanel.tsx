@@ -7,6 +7,7 @@ import { IconActivity, IconArrowRight, IconDroplet, IconFlask, IconSatellite, Ic
 import { Hydrograph } from "./Hydrograph";
 import { ExtractionBadge } from "./ExtractionBadge";
 import { reliabilityFor } from "../lib/forecastReliability";
+import { inkOn } from "../lib/contrast";
 
 export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView }) {
   const meta = statusMeta(mandal.status_bucket);
@@ -20,7 +21,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         <h3>{titleCase(mandal.mandal_name)}</h3>
         <div className="sub">{titleCase(mandal.district_name)} District</div>
         <div className="sidePanelChips">
-          <span className="badge" style={{ background: meta.color, color: "#fff" }}>
+          <span className="badge" style={{ background: meta.color, color: inkOn(meta.color) }}>
             {meta.label}
           </span>
           <span className="badge">{mandal.confidence_label} Confidence</span>

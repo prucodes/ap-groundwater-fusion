@@ -758,13 +758,17 @@ for(let f=0; f<NM; f++){
     let ox=mx-m._cx, oz=mz-m._cz; const ol=Math.hypot(ox,oz)||1;
     if(isCoastEdge(f, mx+ox/ol*0.18, mz+oz/ol*0.18)){
       coastPos.push(p.x,0,p.y,q.x,0,q.y); coastFeat.push(f,f);
-      const quad=[[p,0],[q,0],[q,1],[p,0],[q,1],[p,1]];
-      for(const [pt,top] of quad){
-        vBaseX.push(pt.x); vBaseZ.push(pt.y);
-        vTop.push(top); vFeat.push(f); vShade.push(glint*(top?0.72:0.34));
-      }
-      faceFeat.push(f,f);
     }
+    /* Every edge gets its wall, down to sea level. With walls on the coast alone,
+       relief left the map hollow: mandals stand at different heights, and the sea
+       showed through beneath the surface wherever neighbours parted or the coast
+       test missed an edge. Inside the state the walls only show in the steps. */
+    const quad=[[p,0],[q,0],[q,1],[p,0],[q,1],[p,1]];
+    for(const [pt,top] of quad){
+      vBaseX.push(pt.x); vBaseZ.push(pt.y);
+      vTop.push(top); vFeat.push(f); vShade.push(glint*(top?0.72:0.34));
+    }
+    faceFeat.push(f,f);
     edgePos.push(p.x,0,p.y,q.x,0,q.y); edgeFeat.push(f,f);
   }
 }
@@ -893,7 +897,7 @@ const crystalMat=new THREE.ShaderMaterial({
       col*=1.0+sin(vW.x*0.5+uTime*0.06)*sin(vW.z*0.4-uTime*0.05)*0.06;
       float fd=smoothstep(13.0*uFogScale,30.0*uFogScale,length(cameraPosition-vW));
       col=mix(col,vec3(0.004,0.039,0.078),fd);
-      gl_FragColor=vec4(col,vT>0.5?1.0:0.96);
+      gl_FragColor=vec4(col,1.0);  /* walls solid too: a see-through wall reads as hollow */
     }`,
 });
 const crystals=new THREE.Mesh(geo,crystalMat); scene.add(crystals);

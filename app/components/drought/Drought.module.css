@@ -1,8 +1,8 @@
 /* Drought Watch. Built on the app's tokens (globals.css) so light and dark
    themes follow; the command panel is dark in both, like the page heroes. */
 
-.page { --drought-empty: #d8dee8; --dw-red: #b23a2e; --dw-amber: #e39a3b; --dw-green: #5e9b6b; }
-:global(:root[data-theme="dark"]) .page { --drought-empty: #24364e; }
+.page { --drought-empty: #d8dee8; --dw-red: #b23a2e; --dw-amber: #e39a3b; --dw-green: #5e9b6b; --dw-bad-ink: #b23a2e; --dw-warn-ink: #9a5b0c; --dw-good-ink: #2f6a3d; }
+:global(:root[data-theme="dark"]) .page { --drought-empty: #24364e; --dw-bad-ink: #ef9d8c; --dw-warn-ink: #ecc46a; --dw-good-ink: #8fd2a1; }
 
 /* ---------- source ribbon ---------- */
 .ribbon { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 12px 16px; margin: 14px 0 0; background: var(--field); border: 1px solid var(--line); border-radius: var(--radius-sm); }

@@ -13,7 +13,7 @@ function tone(value: number | null, severe: number, moderate: number, lowerIsWor
   if (value === null) return { background: "var(--field)", color: "var(--muted)" };
   const bad = lowerIsWorse ? value < severe : value > severe;
   const warn = lowerIsWorse ? value < moderate : value > moderate;
-  return bad ? { background: "rgba(178,58,46,.14)", color: "#b23a2e" } : warn ? { background: "rgba(227,154,59,.16)", color: "#9a5b0c" } : { background: "rgba(94,155,107,.14)", color: "#2f6a3d" };
+  return bad ? { background: "rgba(178,58,46,.14)", color: "var(--dw-bad-ink, #b23a2e)" } : warn ? { background: "rgba(227,154,59,.16)", color: "var(--dw-warn-ink, #9a5b0c)" } : { background: "rgba(94,155,107,.14)", color: "var(--dw-good-ink, #2f6a3d)" };
 }
 
 /** Every district through the manual: how many mandals reach each outcome, and the median of each indicator. */
@@ -68,7 +68,7 @@ export function DistrictMatrix({ districts }: { districts: DroughtDistrict[] }) 
               <td><span className={styles.cellTag} style={tone(d.medianVci, 40, 60)}>{d.medianVci === null ? "—" : d.medianVci.toFixed(0)}</span></td>
               <td><span className={styles.cellTag} style={tone(d.medianPasm, 51, 76)}>{d.medianPasm === null ? "—" : `${d.medianPasm.toFixed(0)}%`}</span></td>
               <td><span className={styles.cellTag} style={tone(d.medianGwdi, -0.45, -0.30)}>{signed(d.medianGwdi)}</span></td>
-              <td>{d.sown ? <span className={styles.cellTag} style={{ background: `${IMPACT_META[d.sown.cls].color}22`, color: IMPACT_META[d.sown.cls].color }}>{d.sown.pctOfNormal}% · reported</span> : <span style={{ color: "var(--muted)", fontSize: 11 }}>not shared</span>}</td>
+              <td>{d.sown ? <span className={styles.cellTag} style={{ background: `${IMPACT_META[d.sown.cls].color}22`, color: IMPACT_META[d.sown.cls].text }}>{d.sown.pctOfNormal}% · reported</span> : <span style={{ color: "var(--muted)", fontSize: 11 }}>not shared</span>}</td>
             </tr>
           ))}
         </tbody>

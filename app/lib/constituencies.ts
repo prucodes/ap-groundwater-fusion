@@ -63,8 +63,9 @@ export const METRICS = {
 } as const;
 export type MetricKey = keyof typeof METRICS;
 
-const SHARE = ["#f3ecd9", "#f1d49a", "#e9a15a", "#d4573a", "#9e2a20"];
-const FALL = ["#2d8f8f", "#9fd0c8", "#f3ecd9", "#e9a15a", "#c0392b", "#7d1d14"];
+const CALM = "var(--ramp-calm, #f3ecd9)";
+const SHARE = [CALM, "#f1d49a", "#e9a15a", "#d4573a", "#9e2a20"];
+const FALL = ["#2d8f8f", "#9fd0c8", CALM, "#e9a15a", "#c0392b", "#7d1d14"];
 const RAIN = ["#9e2a20", "#d4573a", "#f1d49a", "#cfe6e3", "#5fb3b0", "#1f6f6f"];
 
 export function metricColor(metric: MetricKey, value: number | null): string {

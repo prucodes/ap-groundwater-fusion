@@ -70,7 +70,7 @@ export function SowingPanel({ data }: { data: Pick<DroughtWatch, "sowingDistrict
                 <span className={styles.threshold} style={{ left: "75%" }} />
               </>}
             </span>
-            <b style={{ color: IMPACT_META[r.cls].color }}>{r.pctOfNormal}% · {IMPACT_META[r.cls].label}</b>
+            <b style={{ color: IMPACT_META[r.cls].text }}>{r.pctOfNormal}% · {IMPACT_META[r.cls].label}</b>
           </div>
         ))}
       </div>

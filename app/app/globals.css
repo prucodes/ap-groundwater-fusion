@@ -109,6 +109,8 @@
   --st-insufficient-bg: rgba(152, 162, 179, 0.16);
 
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px rgba(0, 0, 0, 0.34);
+  /* the calm end of the warm map ramps: cream glares on a dark map */
+  --ramp-calm: #4a4334;
   --shadow-pop: 0 14px 44px rgba(0, 0, 0, 0.5);
 }
 
@@ -120,8 +122,13 @@
 :root[data-theme="dark"] .badge.low { color: #b6acdf; }
 :root[data-theme="dark"] .badge.insufficient { color: #b9c4d2; }
 :root[data-theme="dark"] .readyTag.available,
-:root[data-theme="dark"] .wetTag.verywet,
-:root[data-theme="dark"] .wetTag.extreme { color: #7fdcd0; }
+:root[data-theme="dark"] .wetTag.extreme { color: #7fdcd0; background: rgba(15, 125, 150, 0.22); }
+:root[data-theme="dark"] .wetTag.verywet { color: #7fdcd0; background: rgba(31, 138, 138, 0.22); }
+:root[data-theme="dark"] .wetTag.wet { color: #8fd2a1; background: rgba(63, 125, 87, 0.22); }
+:root[data-theme="dark"] .wetTag.normal { color: #b9c4d2; background: rgba(152, 162, 179, 0.16); }
+:root[data-theme="dark"] .wetTag.dry { color: #ecc46a; background: rgba(215, 155, 46, 0.18); }
+:root[data-theme="dark"] .srTip,
+:root[data-theme="dark"] .seTag.cant { color: #ef9d8c; }
 
 /* Map stays a touch lighter than the page for cartographic legibility */
 :root[data-theme="dark"] .mapPoly { fill: #21364f; stroke: #314a6b; }
@@ -136,6 +143,11 @@ body {
   padding: 0;
 }
 
+/* The page's own ground, so overscroll and anything below the sticky sidebar match the theme. */
+html { background: var(--bg); }
+/* Native controls (scrollbars, select menus, date pickers) follow the theme too. */
+:root[data-theme="dark"] { color-scheme: dark; }
+
 body {
   background: linear-gradient(180deg, #eaf0f7 0%, var(--bg) 26%, var(--bg) 100%);
   background-attachment: fixed;
@@ -145,6 +157,11 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+/* The light theme's top wash started at #eaf0f7 on the dark theme too. */
+:root[data-theme="dark"] body {
+  background: linear-gradient(180deg, #0a1a2e 0%, var(--bg) 26%, var(--bg) 100%);
+  background-attachment: fixed;
 }
 
 a {
@@ -2056,6 +2073,9 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
 .choroUnit { color: var(--muted); font-weight: 500; font-size: 11px; }
 .choroPeriod { font-family: var(--font-mono); font-size: 10.5px; color: var(--muted); }
 .choroBar { height: 10px; border-radius: 6px; margin: 8px 0 4px; }
+/* the sequential ramp as a legend, matching SEQ_RAMP in lib/data.ts */
+.choroBar.seqRamp { background: linear-gradient(90deg, #e6f1f8, #0e6f95); }
+:root[data-theme="dark"] .choroBar.seqRamp { background: linear-gradient(90deg, #16324a, #3fc1dc); }
 .choroScale { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); }
 
 .mapLegend {
@@ -2618,7 +2638,8 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
 .liveBadgeDot { width: 6px; height: 6px; border-radius: 50%; background: #6fe0a0; box-shadow: 0 0 7px #6fe0a0; animation: pulse 2.4s infinite; }
 .liveBadgeSep { color: rgba(143, 178, 214, 0.5); }
 
-.leaflet-container {
+/* div. so this outranks leaflet.css, whose #ddd backdrop showed light grey round dark maps */
+div.leaflet-container {
   font-family: var(--font-sans);
   background: var(--map-sea-b);
 }
@@ -4283,6 +4304,8 @@ pre.jsonBody {
 .estSortBtn { font-size: 12px; padding: 6px 11px; border-radius: 99px; border: 1px solid var(--line); background: var(--card); color: var(--muted); cursor: pointer; transition: all .12s var(--ease); }
 .estSortBtn:hover { color: var(--ink); border-color: var(--line-strong); }
 .estSortBtn.active { background: var(--ink); color: var(--card); border-color: var(--ink); }
+/* on the dark theme an inverted pill glares; active controls there are teal, as elsewhere */
+:root[data-theme="dark"] .estSortBtn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
 .estTableScroll { max-height: 540px; overflow-y: auto; margin-top: 4px; }
 .estTable { width: 100%; border-collapse: collapse; font-size: 13px; }
 .estTable .thHint { display: block; font-size: 9px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--muted-2); opacity: 0.8; margin-top: 1px; }

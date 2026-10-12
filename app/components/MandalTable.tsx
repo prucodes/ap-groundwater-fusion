@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import type { MandalGroundwaterView } from "../lib/types";
 import { formatNumber, statusMeta, titleCase } from "../lib/data";
 import { SignalPill } from "./Badges";
+import { foldAt, RowFold } from "./RowFold";
 
 const MAX_DEPTH = 25; // mbgl scale ceiling for the depth gauge
 
@@ -17,11 +18,14 @@ function trendLabel(m: MandalGroundwaterView) {
 export function MandalTable({
   rows,
   limit,
+  fold,
   selectedId,
   onSelect,
 }: {
   rows: MandalGroundwaterView[];
   limit?: number;
+  /** Show this many rows, the rest one click away (calm pass: fold, never delete). */
+  fold?: number;
   selectedId?: string;
   onSelect?: (id: string) => void;
 }) {
@@ -33,7 +37,9 @@ export function MandalTable({
     else router.push(`/mandals/${m.id}`);
   }
 
+  const visible = fold ?? data.length;
   return (
+    <RowFold id="verify-mandal-rows" total={data.length} visible={visible} noun="mandals">
     <div className="tableWrap">
       <table className="dataTable verifyTable">
         <thead>
@@ -47,12 +53,13 @@ export function MandalTable({
           </tr>
         </thead>
         <tbody>
-          {data.map((m) => {
+          {data.map((m, index) => {
             const depthPct = Math.min(100, ((m.median_groundwater_mbgl ?? 0) / MAX_DEPTH) * 100);
             const status = statusMeta(m.status_bucket);
             const band = ((m.estimate_band_p90 ?? 0) - (m.estimate_band_p10 ?? 0)) / 2;
             return (
               <tr
+                {...foldAt(index, visible)}
                 key={m.id}
                 className={selectedId === m.id ? "selected" : ""}
                 onClick={() => activate(m)}
@@ -96,5 +103,6 @@ export function MandalTable({
         </tbody>
       </table>
     </div>
+    </RowFold>
   );
 }

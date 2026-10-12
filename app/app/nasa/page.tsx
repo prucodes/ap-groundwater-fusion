@@ -136,7 +136,7 @@ export default function NasaSignalsPage() {
             <span>NASA Groundwater %ile <span className="choroUnit">(0–100)</span></span>
             <span className="choroPeriod">Fetched {sampleDate}</span>
           </div>
-          <div className="choroBar" style={{ background: "linear-gradient(90deg, #e6f1f8, #0e6f95)" }} />
+          <div className="choroBar seqRamp" />
           <div className="choroScale">
             <span>Lower · {formatNumber(gwRange.min)}</span>
             <span>Higher · {formatNumber(gwRange.max)}</span>

@@ -1,7 +1,7 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { GeoJsonObject } from "geojson";
 import type { GeoJSON, Map as LeafletMap, PathOptions, TileLayer } from "leaflet";
 import { districtGeometry, districtLayerColor, formatNumber, formatPeriod, titleCase } from "../lib/data";
@@ -17,6 +17,10 @@ const BASEMAP_ATTRIBUTION = "&copy; OpenStreetMap contributors";
 function isDark() {
   return typeof document !== "undefined" && document.documentElement.dataset.theme === "dark";
 }
+
+/** District borders: white lines on the light map, softened on the dark one, where solid
+ *  white outlined every district in glare. Matches the mandal map's dark edges. */
+const edgeColor = () => (isDark() ? "rgba(255,255,255,0.45)" : "#ffffff");
 
 function tooltipHtml(p: DistrictFeature) {
   const bal = p.water_balance_mm;
@@ -85,15 +89,15 @@ export function DistrictMap({
         const p = feat?.properties as DistrictFeature;
         const co = colorRef.current;
         if (co && p && co[p.d]) {
-          return { weight: 1, color: "#ffffff", fillColor: co[p.d], fillOpacity: 0.85 };
+          return { weight: 1, color: edgeColor(), fillColor: co[p.d], fillOpacity: 0.85 };
         }
         const sc = scenarioRef.current;
         if (sc && p) {
           const v = sc[p.d] ?? null;
-          return { weight: 1, color: "#ffffff", fillColor: districtLayerColor("water_balance_mm", v), fillOpacity: 0.86 };
+          return { weight: 1, color: edgeColor(), fillColor: districtLayerColor("water_balance_mm", v, isDark()), fillOpacity: 0.86 };
         }
         const value = p ? (p[layerRef.current] as number | null) : null;
-        return { weight: 1, color: "#ffffff", fillColor: districtLayerColor(layerRef.current, value), fillOpacity: 0.82 };
+        return { weight: 1, color: edgeColor(), fillColor: districtLayerColor(layerRef.current, value, isDark()), fillOpacity: 0.82 };
       };
 
       const geo: GeoJSON = L.geoJSON(fc as GeoJsonObject, {
@@ -138,6 +142,14 @@ export function DistrictMap({
   }, []);
 
   // Recolor on layer change, scenario update, or colour override without re-initialising the map.
+  const [theme, setTheme] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    const sync = () => setTheme(document.documentElement.dataset.theme);
+    sync();
+    const observer = new MutationObserver(sync);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => observer.disconnect();
+  }, []);
   const scenarioSig = scenarioValues ? Object.values(scenarioValues).join(",") : "";
   const colorSig = colorOverride ? Object.values(colorOverride).join(",") : "";
   useEffect(() => {
@@ -147,19 +159,19 @@ export function DistrictMap({
       const path = lyr as unknown as { feature?: { properties?: DistrictFeature }; setStyle: (s: PathOptions) => void };
       const p = path.feature?.properties;
       if (colorOverride && p && colorOverride[p.d]) {
-        path.setStyle({ fillColor: colorOverride[p.d], fillOpacity: 0.85, weight: 1, color: "#ffffff" });
+        path.setStyle({ fillColor: colorOverride[p.d], fillOpacity: 0.85, weight: 1, color: edgeColor() });
         return;
       }
       if (scenarioValues && p) {
         const v = scenarioValues[p.d] ?? null;
-        path.setStyle({ fillColor: districtLayerColor("water_balance_mm", v), fillOpacity: 0.86, weight: 1, color: "#ffffff" });
+        path.setStyle({ fillColor: districtLayerColor("water_balance_mm", v, isDark()), fillOpacity: 0.86, weight: 1, color: edgeColor() });
         return;
       }
       const value = p ? (p[layer] as number | null) : null;
-      path.setStyle({ fillColor: districtLayerColor(layer, value), fillOpacity: 0.82, weight: 1, color: "#ffffff" });
+      path.setStyle({ fillColor: districtLayerColor(layer, value, isDark()), fillOpacity: 0.82, weight: 1, color: edgeColor() });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layer, scenarioSig, colorSig]);
+  }, [layer, scenarioSig, colorSig, theme]);
 
   return (
     <div className="liveMapWrap" style={{ height }}>
