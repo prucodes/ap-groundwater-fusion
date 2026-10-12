@@ -724,7 +724,7 @@ function hexLerp(a: string, b: string, t: number): string {
 /** Generic heat color: diverging (deficit→surplus) for balance, sequential otherwise. */
 /** The sequential ramp, light and dark: on the dark theme the low end starting at near-white
  *  drew Andhra Pradesh as a white shape, so there it rises from deep blue to bright teal. */
-export const SEQ_RAMP = { light: ["#e6f1f8", "#0e6f95"], dark: ["#16324a", "#3fc1dc"] } as const;
+export const SEQ_RAMP = { light: ["#cfe3ef", "#0e6f95"], dark: ["#16324a", "#3fc1dc"] } as const;
 export const seqGradient = (dark = false) => `linear-gradient(90deg, ${SEQ_RAMP[dark ? "dark" : "light"].join(", ")})`;
 
 export function heatColor(value: number | null, min: number, max: number, diverging: boolean, dark = false): string {

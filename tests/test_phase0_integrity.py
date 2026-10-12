@@ -47,9 +47,14 @@ def sha256(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+# Installed packages and build output are not the application. The weekly refresh runs
+# this suite after npm ci, and MapLibre's gl-matrix ships a *directory* named types.d.ts.
+NOT_APPLICATION = {"node_modules", ".next", "out"}
+
+
 def application_sources():
     for path in APP.rglob("*"):
-        if path.suffix in {".ts", ".tsx"}:
+        if path.suffix in {".ts", ".tsx"} and path.is_file() and not NOT_APPLICATION.intersection(path.relative_to(APP).parts):
             yield path, path.read_text()
 
 

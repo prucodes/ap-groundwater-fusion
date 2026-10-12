@@ -194,5 +194,5 @@ def test_navigation_and_package_policy():
     assert 'href: "/living-water-table"' in command_palette
     assert package["dependencies"]["@react-three/fiber"] == "^9.6.1"
     assert "@react-three/drei" not in package["dependencies"]
-    forbidden = {"deck.gl", "maplibre-gl", "cesium", "@react-three/postprocessing"}
+    forbidden = {"deck.gl", "cesium", "@react-three/postprocessing"}
     assert forbidden.isdisjoint(package["dependencies"])

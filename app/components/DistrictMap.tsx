@@ -3,16 +3,12 @@
 import "leaflet/dist/leaflet.css";
 import { useEffect, useRef, useState } from "react";
 import type { GeoJsonObject } from "geojson";
-import type { GeoJSON, Map as LeafletMap, PathOptions, TileLayer } from "leaflet";
+import type { GeoJSON, Map as LeafletMap, PathOptions } from "leaflet";
 import { districtGeometry, districtLayerColor, formatNumber, formatPeriod, titleCase } from "../lib/data";
 import type { DistrictFeature, DistrictLayerKey } from "../lib/types";
+import { addVectorBasemap } from "./vectorBasemap";
 
-// CARTO began stamping "API KEY REQUIRED" into its keyless basemap tiles, so the
-// watermark appeared over every map without any change on our side. OpenStreetMap's
-// standard tiles need no key. There is no dark variant, so dark mode is a CSS
-// filter over the same tiles (see .leaflet-tile-pane in globals.css).
-const BASEMAP_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
-const BASEMAP_ATTRIBUTION = "&copy; OpenStreetMap contributors";
+// The basemap is vector, in the platform's palette, with names above the data (vectorBasemap.ts).
 
 function isDark() {
   return typeof document !== "undefined" && document.documentElement.dataset.theme === "dark";
@@ -64,7 +60,7 @@ export function DistrictMap({
   useEffect(() => {
     let cancelled = false;
     let map: LeafletMap | null = null;
-    let tile: TileLayer | null = null;
+    let stopBasemap: (() => void) | null = null;
 
     (async () => {
       const L = (await import("leaflet")).default;
@@ -80,10 +76,7 @@ export function DistrictMap({
       const dark = isDark();
       map = L.map(containerRef.current, { zoomControl: true, scrollWheelZoom: false, zoomSnap: 0.25, maxBoundsViscosity: 1 });
       mapRef.current = map;
-      tile = L.tileLayer(BASEMAP_URL, {
-        attribution: BASEMAP_ATTRIBUTION,
-        maxZoom: 19,
-      }).addTo(map);
+      addVectorBasemap(L, map, { cancelled: () => cancelled }).then((stop) => { stopBasemap = stop; });
 
       const styleFor = (feat?: { properties?: DistrictFeature }): PathOptions => {
         const p = feat?.properties as DistrictFeature;
@@ -129,12 +122,12 @@ export function DistrictMap({
       setTimeout(() => { map?.invalidateSize(); fit(); }, 60);
       setTimeout(() => map?.invalidateSize(), 300);
 
-      // Dark mode is a CSS filter over the tile pane now, so there is no theme
-      // observer here any more — the tile URL never changes.
+      // The basemap follows the theme itself (vectorBasemap.ts).
     })();
 
     return () => {
       cancelled = true;
+      stopBasemap?.();
       geoRef.current = null;
       if (map) map.remove();
       mapRef.current = null;

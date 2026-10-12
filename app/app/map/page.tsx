@@ -28,6 +28,8 @@ import { isWaterLayer, WATER_LAYER_META, waterLayerGradient, waterMandals, type 
 import { FIELD_LAYER_META, fieldLegend, isFieldLayer, type FieldLayer } from "../../lib/fieldSignals";
 import { brief } from "../../lib/pageBriefs";
 import { groundwaterStressNow } from "../../lib/pageNow";
+import { useIsDark } from "../../components/useIsDark";
+import { seqGradient } from "../../lib/data";
 
 const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "water_balance_mm", label: "Water Balance" },
@@ -46,13 +48,14 @@ const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "gec_category", label: "Groundwater category" },
 ];
 
-function legendGradient(layer: string) {
+function legendGradient(layer: string, dark: boolean) {
   return layer === "water_balance_mm"
     ? "linear-gradient(90deg, #c65a46, #e7cf86, #4f9268)"
-    : "linear-gradient(90deg, #e6f1f8, #0e6f95)";
+    : seqGradient(dark);
 }
 
 export default function MapPage() {
+  const dark = useIsDark();
   const [level, setLevel] = useState<"mandal" | "district">("mandal");
   const [layer, setLayer] = useState<DistrictLayerKey>("water_balance_mm");
   const [mandalView, setMandalView] = useState<MandalView>("status");
@@ -215,7 +218,7 @@ export default function MapPage() {
                         {mandalView === "rainfall_mm" ? formatPeriod(mandalHeat.rainfall_period) : mandalHeat.balance_year} · {mandalHeat.count} mandals
                       </span>
                     </div>
-                    <div className="choroBar" style={{ background: legendGradient(mandalView) }} />
+                    <div className="choroBar" style={{ background: legendGradient(mandalView, dark) }} />
                     <div className="choroScale">
                       <span>{mandalView === "water_balance_mm" ? "Deficit" : "Low"} · {formatNumber(mandalHeat.layers[mandalView].min)}</span>
                       <span>{mandalView === "water_balance_mm" ? "Surplus" : "High"} · {formatNumber(mandalHeat.layers[mandalView].max)}</span>
@@ -237,7 +240,7 @@ export default function MapPage() {
                     </span>
                     <span className="choroPeriod">{meta.period}</span>
                   </div>
-                  <div className="choroBar" style={{ background: legendGradient(layer) }} />
+                  <div className="choroBar" style={{ background: legendGradient(layer, dark) }} />
                   <div className="choroScale">
                     <span>{layer === "water_balance_mm" ? "Deficit" : "Low"} · {formatNumber(meta.min)}</span>
                     <span>{layer === "water_balance_mm" ? "Surplus" : "High"} · {formatNumber(meta.max)}</span>

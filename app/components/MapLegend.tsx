@@ -22,7 +22,7 @@ export function MapLegend({ note = true }: { note?: boolean }) {
       {note && (
         <div className="mapHint">
           <IconInfo style={{ width: 13, height: 13 }} />
-          Live basemap © OpenStreetMap © CARTO. {boundarySummary}
+          Basemap © OpenFreeMap · OpenMapTiles · OpenStreetMap. {boundarySummary}
         </div>
       )}
     </>

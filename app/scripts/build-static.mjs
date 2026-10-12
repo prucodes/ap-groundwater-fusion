@@ -98,6 +98,7 @@ try {
     apiMoved = true;
   }
 
+  execFileSync("node", [join(APP_DIR, "scripts", "vendor-maplibre.mjs")], { cwd: APP_DIR, stdio: "inherit" });
   execFileSync("npx", ["next", "build"], {
     cwd: APP_DIR,
     stdio: "inherit",

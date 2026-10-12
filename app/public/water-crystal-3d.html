@@ -598,7 +598,13 @@ let renderer;
 try{
   renderer = new THREE.WebGLRenderer({canvas, antialias:true, powerPreference:"high-performance"});
 }catch(e){ document.getElementById("fallback").style.display="grid"; throw e; }
-const DPR = Math.min(devicePixelRatio||1, 2);
+/* Software WebGL (no usable GPU: some virtual machines and older laptops, and headless test
+   runners) shades every pixel on the CPU, and at full resolution this scene stalled there.
+   It renders at a lower internal resolution instead; a real GPU keeps the screen's own. */
+const GL_RENDERER = (()=>{ try{ const gl=renderer.getContext(), ext=gl.getExtension("WEBGL_debug_renderer_info");
+  return ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)) : ""; }catch(e){ return ""; } })();
+const SOFTWARE_GL = /swiftshader|llvmpipe|software|basic render/i.test(GL_RENDERER);
+const DPR = SOFTWARE_GL ? 0.6 : Math.min(devicePixelRatio||1, 2);
 renderer.setPixelRatio(DPR);
 
 const scene = new THREE.Scene();

@@ -2082,7 +2082,7 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
 /* Text coloured by a category set inline as --tone, mixed toward the ink to stay legible */
 .toneText { color: color-mix(in srgb, var(--tone, currentColor) 62%, var(--ink)); }
 /* the sequential ramp as a legend, matching SEQ_RAMP in lib/data.ts */
-.choroBar.seqRamp { background: linear-gradient(90deg, #e6f1f8, #0e6f95); }
+.choroBar.seqRamp { background: linear-gradient(90deg, #cfe3ef, #0e6f95); }
 :root[data-theme="dark"] .choroBar.seqRamp { background: linear-gradient(90deg, #16324a, #3fc1dc); }
 .choroScale { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); }
 
@@ -4610,15 +4610,8 @@ pre.jsonBody {
   .estSearch input { width: 100%; min-width: 0; }
 }
 
-/* The previous basemap was a muted "light" style; OSM's standard tiles are much
-   more saturated and compete with the choropleth, so desaturate them. Applied to
-   the tile pane only, so the layers the app draws keep their real colours. */
-.leaflet-tile-pane { filter: saturate(0.4) brightness(1.05) contrast(0.96); }
-
-/* OSM publishes no dark basemap, so dark mode inverts the same tiles. */
-:root[data-theme="dark"] .leaflet-tile-pane {
-  filter: invert(1) hue-rotate(180deg) brightness(0.88) contrast(0.9) saturate(0.6);
-}
+/* The basemap is drawn in the platform's palette (components/vectorBasemap.ts), light and
+   dark, so the tile pane needs no filter: dark mode once inverted OSM's raster tiles. */
 
 /* ===================== Hydrograph =====================
    The depth trace is the one chart on the site drawn from the full measured
