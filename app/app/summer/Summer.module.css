@@ -32,6 +32,7 @@
 .value { text-align: right; font-variant-numeric: tabular-nums; }
 .value b { display: block; font: 600 15px var(--font-display); color: var(--ink); }
 .value small { font-size: 11px; color: #a33b2c; }
+:global(:root[data-theme="dark"]) .value small { color: #ef9d8c; }
 .rangeKey { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-top: 12px; font-size: 11px; color: var(--ink-soft); }
 .rangeKey span { display: inline-flex; align-items: center; gap: 7px; }
 .keyNow, .keyTypical { width: 10px; height: 10px; border-radius: 50%; }
@@ -53,6 +54,7 @@
 .year { display: grid; grid-template-columns: 70px minmax(0, 1fr) 44px; gap: 12px; align-items: center; font-size: 12px; color: var(--ink-soft); }
 .year[data-elnino] > span:first-child { font-weight: 700; color: var(--ink); }
 .year[data-elnino] > span:first-child::after { content: " · El Niño"; font-weight: 500; color: #a33b2c; font-size: 10.5px; }
+:global(:root[data-theme="dark"]) .year[data-elnino] > span:first-child::after { color: #ef9d8c; }
 .year em { font-style: normal; text-align: right; font: 600 13px var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
 .yearTrack { position: relative; height: 10px; border-radius: 5px; background: var(--chart-track); }
 .yearTrack i { position: absolute; top: 0; bottom: 0; border-radius: 5px; }

@@ -23,7 +23,7 @@ import {
   IconShield,
   IconWaves,
 } from "./icons";
-import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat, mandals, modelCard, monsoonWatch, selectedMandal, titleCase, verifyMandals, wetnessLabel } from "../lib/data";
+import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat, mandals, modelCard, monsoonWatch, selectedMandal, seqGradient, titleCase, verifyMandals, wetnessLabel } from "../lib/data";
 import type { MandalHeatLayerKey } from "../lib/types";
 import { waterSummary } from "../lib/waterSummary";
 import { droughtSummary } from "../lib/droughtSummary";
@@ -32,6 +32,7 @@ import { officialStatusLine } from "../lib/data";
 import { WATER_LAYER_META, isWaterLayer, waterLayerGradient, type WaterMandalLayer } from "../lib/waterMandals";
 import { brief } from "../lib/pageBriefs";
 import { groundwaterStressNow } from "../lib/pageNow";
+import { useIsDark } from "./useIsDark";
 
 /** Counts the server works out from the full water context, which never reaches the browser. */
 export type OverviewAgreement = { agreeAll: number; allKnown: number; agreeTwo: number };
@@ -47,6 +48,7 @@ const shortDay = (iso: string | null | undefined) => {
 export type OverviewSummer = { beyond: number; beyondDeep: number; deepM: number; peopleDeep: string | null };
 
 export function OverviewCockpit({ agreement, summer }: { agreement: OverviewAgreement | null; summer?: OverviewSummer | null }) {
+  const dark = useIsDark();
   const s = dashboardSummary.summary;
   const [selectedId, setSelectedId] = useState(mandals[0]?.id);
   const [mapView, setMapView] = useState<"status" | MandalHeatLayerKey | WaterMandalLayer>("status");
@@ -202,7 +204,7 @@ export function OverviewCockpit({ agreement, summer }: { agreement: OverviewAgre
                 </span>
                 <Link className="linkAction" href="/map">Full map <IconArrowRight /></Link>
               </div>
-              <div className="choroBar" style={{ background: waterLayerGradient(mapView) }} />
+              <div className="choroBar" style={{ background: waterLayerGradient(mapView, dark) }} />
               <div className="choroScale">
                 <span>{WATER_LAYER_META[mapView].low} · {WATER_LAYER_META[mapView].min}%</span>
                 <span>{WATER_LAYER_META[mapView].period}</span>
@@ -224,7 +226,7 @@ export function OverviewCockpit({ agreement, summer }: { agreement: OverviewAgre
                   background:
                     mapView === "water_balance_mm"
                       ? "linear-gradient(90deg,#c65a46,#e7cf86,#4f9268)"
-                      : "linear-gradient(90deg,#e6f1f8,#0e6f95)",
+                      : seqGradient(dark),
                 }}
               />
               <div className="choroScale">
@@ -448,7 +450,7 @@ export function OverviewCockpit({ agreement, summer }: { agreement: OverviewAgre
               View full watchlist <IconArrowRight />
             </Link>
           </div>
-          <MandalTable rows={verifyMandals()} limit={30} selectedId={selectedId} onSelect={setSelectedId} />
+          <MandalTable rows={verifyMandals()} limit={30} fold={10} selectedId={selectedId} onSelect={setSelectedId} />
         </section>
 
         <div className="contentGrid">

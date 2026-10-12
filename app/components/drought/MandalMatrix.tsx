@@ -4,6 +4,7 @@ import {
 } from "../../lib/drought";
 import { boundaryLabel, mapGeometry } from "../../lib/data";
 import styles from "./Drought.module.css";
+import { inkOn } from "../../lib/contrast";
 
 const WHY: Record<DroughtMandal["t1Why"], string> = {
   drySpell: "set by a dry spell",
@@ -15,7 +16,7 @@ const WHY: Record<DroughtMandal["t1Why"], string> = {
 
 function Cls({ value }: { value: ImpactClass | null | undefined }) {
   if (!value) return <span className={styles.cls} style={{ background: "var(--field)", color: "var(--muted)" }}>n/a</span>;
-  return <span className={styles.cls} style={{ background: IMPACT_META[value].color, color: "#fff" }}>{IMPACT_META[value].label}</span>;
+  return <span className={styles.cls} style={{ background: IMPACT_META[value].color, color: inkOn(IMPACT_META[value].color) }}>{IMPACT_META[value].label}</span>;
 }
 
 /** Weekly rain against normal, the dry weeks red and a counted spell darker. */

@@ -1,5 +1,5 @@
 import waterMandalsJson from "../data/water_context_mandals.json";
-import { heatColor } from "./data";
+import { heatColor, seqGradient } from "./data";
 import type { WaterMandalValues } from "./data";
 
 /** Per-mandal gauge-rain departure and soil moisture for the map layers (~30 KB). */
@@ -43,15 +43,15 @@ export function waterLayerValue(layer: WaterMandalLayer, district: string, manda
   return row ? (layer === "gauge_rain_dev" ? row.rainDeviationPct : row.soilPct) : null;
 }
 
-export function waterLayerColor(layer: WaterMandalLayer, district: string, mandal: string): string {
+export function waterLayerColor(layer: WaterMandalLayer, district: string, mandal: string, dark = false): string {
   const meta = WATER_LAYER_META[layer];
-  return heatColor(waterLayerValue(layer, district, mandal), meta.min, meta.max, meta.diverging);
+  return heatColor(waterLayerValue(layer, district, mandal), meta.min, meta.max, meta.diverging, dark);
 }
 
-export function waterLayerGradient(layer: WaterMandalLayer) {
+export function waterLayerGradient(layer: WaterMandalLayer, dark = false) {
   return WATER_LAYER_META[layer].diverging
     ? "linear-gradient(90deg, #c65a46, #e7cf86, #4f9268)"
-    : "linear-gradient(90deg, #e6f1f8, #0e6f95)";
+    : seqGradient(dark);
 }
 
 /** "−51%" / "38% · 2nd driest of 13" for hover cards; null when the mandal has no value. */

@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import fieldJson from "../data/field_signals.json";
 import recordJson from "../data/crop_water_record.json";
+import waterJson from "../data/water_context.json";
 import type { CheckRecord } from "../lib/cropWater";
 
 /* This week in the fields. The crop water check runs in the browser; the
@@ -8,7 +9,13 @@ import type { CheckRecord } from "../lib/cropWater";
    and stage, and the page must reproduce those counts exactly. */
 
 type Counts = { stressed: number; severe: number; soon: number; ok: number; unknown: number };
-const check = (fieldJson as unknown as { crossCheck: { counts: Record<string, Counts> } }).crossCheck.counts;
+const field = fieldJson as unknown as { crossCheck: { counts: Record<string, Counts>; soilAsOf?: string; issued?: string }; weather: { issued: string } };
+const check = field.crossCheck.counts;
+// The pipeline's counts were made on one soil reading and one forecast. When the soil has
+// refreshed since and field signals have not (12 October 2026: the step timed out), the page
+// works on the newer soil and must drop the claim instead of matching stale counts.
+const soilAsOf = (waterJson as unknown as { soilMoisture?: { asOf?: string } }).soilMoisture?.asOf;
+const crossChecked = field.crossCheck.soilAsOf === soilAsOf && field.crossCheck.issued === field.weather.issued;
 const assessment = (fieldJson as unknown as { assessment: { year: string; state: { stagePct: number } } }).assessment;
 const record = recordJson as unknown as CheckRecord;
 
@@ -26,6 +33,10 @@ test("the crop water check reproduces the pipeline's counts for every crop and s
   await expect(map.locator("path").first()).toBeVisible();
   for (const [crop, stage, key] of [["Maize", "Mid-season", "maize-1"], ["Chilli", "Initial", "chilli-0"], ["Red gram", "End-season", "redgram-2"], ["Groundnut", "Mid-season", "groundnut-1"]] as const) {
     await pick(page, crop, stage);
+    if (!crossChecked) {
+      expect(await map.getAttribute("data-agrees"), "claims agreement with counts made on other soil").toBeNull();
+      continue;
+    }
     await expect(map).toHaveAttribute("data-agrees", "true");
     for (const state of ["stressed", "soon", "ok", "unknown"] as const) {
       await expect(page.getByTestId(`field-week-${state}`).locator("strong")).toHaveText(String(check[key][state]));

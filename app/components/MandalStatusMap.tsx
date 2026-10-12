@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useIsDark } from "./useIsDark";
 import { IconInfo } from "./icons";
 import {
   MAP_VIEW,
@@ -35,6 +36,7 @@ export function MandalStatusMap({
   /** Cap height (px); omit to fill the container width and scale by aspect. */
   maxHeight?: number;
 }) {
+  const dark = useIsDark();
   const [hover, setHover] = useState<HoverState | null>(null);
   const [focusIndex, setFocusIndex] = useState(0);
 
@@ -56,7 +58,7 @@ export function MandalStatusMap({
         {mapGeometry.mandals.map((m, i) => {
           const rec = mandalByMapKey(m.d, m.m);
           const fill = layer
-            ? isWaterLayer(layer) ? waterLayerColor(layer, m.d, m.m) : isFieldLayer(layer) ? fieldLayerColor(layer, m.d, m.m) : mandalHeatColor(layer, m.d, m.m)
+            ? isWaterLayer(layer) ? waterLayerColor(layer, m.d, m.m, dark) : isFieldLayer(layer) ? fieldLayerColor(layer, m.d, m.m) : mandalHeatColor(layer, m.d, m.m, dark)
             : rec?.status_bucket
               ? statusMeta(rec.status_bucket).color
               : "var(--field)";

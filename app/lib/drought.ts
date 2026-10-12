@@ -125,10 +125,12 @@ export const CATEGORY_META: Record<DroughtCategory, { label: string; short: stri
     note: "No unique gauge record for this prototype boundary, so the manual's first step cannot run." },
 };
 
-export const IMPACT_META: Record<ImpactClass, { label: string; color: string }> = {
-  severe: { label: "Severe", color: "#b23a2e" },
-  moderate: { label: "Moderate", color: "#e39a3b" },
-  normal: { label: "Normal", color: "#5e9b6b" },
+/** `color` fills swatches and maps; `text` is the same class as legible type, lifted on the dark
+ *  theme by the drought page's --dw-*-ink tokens (red and amber type fell to 2.4–2.9:1 there). */
+export const IMPACT_META: Record<ImpactClass, { label: string; color: string; text: string }> = {
+  severe: { label: "Severe", color: "#b23a2e", text: "var(--dw-bad-ink, #b23a2e)" },
+  moderate: { label: "Moderate", color: "#e39a3b", text: "var(--dw-warn-ink, #9a5b0c)" },
+  normal: { label: "Normal", color: "#5e9b6b", text: "var(--dw-good-ink, #2f6a3d)" },
 };
 
 export const RAIN_CLASS_META: Record<RainClass, { label: string; color: string; range: string }> = {

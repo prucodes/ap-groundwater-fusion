@@ -19,6 +19,7 @@ import {
 } from "../lib/data";
 import { isWaterLayer, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
 import type { MandalHeatLayerKey } from "../lib/types";
+import { useIsDark } from "./useIsDark";
 
 type Mode = "status" | "single";
 
@@ -126,8 +127,8 @@ function featureStyle(
   if (opts.heatLayer) {
     return {
       weight: opts.selected ? 2 : 0.5,
-      color: opts.selected ? "#0d2138" : "#ffffff",
-      fillColor: isWaterLayer(opts.heatLayer) ? waterLayerColor(opts.heatLayer, p.d, p.m) : mandalHeatColor(opts.heatLayer, p.d, p.m),
+      color: opts.selected ? "#0d2138" : opts.dark ? "rgba(255,255,255,0.45)" : "#ffffff",
+      fillColor: isWaterLayer(opts.heatLayer) ? waterLayerColor(opts.heatLayer, p.d, p.m, opts.dark) : mandalHeatColor(opts.heatLayer, p.d, p.m, opts.dark),
       fillOpacity: 0.82,
     };
   }
@@ -406,7 +407,8 @@ export function LiveMap({
     };
   }, [mode, mandalId, navigateOnClick, router]);
 
-  // Re-style all features on selection or heat-layer change.
+  // Re-style all features on selection, heat-layer or theme change.
+  const themeDark = useIsDark();
   useEffect(() => {
     const geo = geoRef.current;
     if (!geo) return;
@@ -417,7 +419,7 @@ export function LiveMap({
       if (!p) return;
       path.setStyle(featureStyle(p, { heatLayer, dark, selected: !!p.id && p.id === selectedId }));
     });
-  }, [heatLayer, selectedId]);
+  }, [heatLayer, selectedId, themeDark]);
 
   // Real coverage — mandals with a fused record (not the legacy 10 seed flags).
   const mappedCount = mandals.length;

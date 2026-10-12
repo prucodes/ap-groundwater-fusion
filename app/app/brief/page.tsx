@@ -256,7 +256,7 @@ export default function BriefPage() {
             <h1>AP Water <b>Intelligence</b></h1>
             <p className={styles.sub}>Data sources and the groundwater model</p>
             <p className={styles.meta}>A technical note for review · figures from the weekly refresh of {refreshed}</p>
-            <div className={styles.hero3d}><img src="./cover3d.jpg" alt="3D relief of Andhra Pradesh's mandals" /></div>
+            <div className={styles.hero3d}><img src={`${basePath}/brief/cover3d.jpg`} alt="3D relief of Andhra Pradesh's mandals" /></div>
             <p className={styles.caption}>Depth to water in {latestMonth}, each mandal against its own usual {latestMonth}, as the platform&rsquo;s 3D view draws it: blue shallower than usual, slate about usual, amber deeper, red deeper than any {latestMonth} on record.</p>
             <div className={styles.kpis}>
               <div className={styles.kpi}><b>{mapGeometry.mandals.length}</b><span>mandals mapped, each compared with its own history</span></div>
@@ -289,7 +289,7 @@ export default function BriefPage() {
               <div className={styles.sec}>The site itself</div>
               <div className={styles.shots}>
                 {([["monsoon", "Monsoon Watch"], ["drought", "Drought Watch"], ["map", "Mandal Map"], ["summer", "Summer Outlook"]] as const).map(([key, label]) => (
-                  <figure key={key}><img src={`./site-${key}.jpg`} alt="" /><figcaption>{label}</figcaption></figure>
+                  <figure key={key}><img src={`${basePath}/brief/site-${key}.jpg`} alt="" /><figcaption>{label}</figcaption></figure>
                 ))}
               </div>
             </div>
@@ -360,7 +360,7 @@ export default function BriefPage() {
           <section className={styles.page} data-testid="brief-sheet">
             <Band num="05 · Limits and open questions" title="Where a hydrogeologist's view would help most" lede="The model knows depth well and storage, aquifers and pumping poorly. These are the questions we would most value a review on." />
             <div className={styles.body}>
-              <div className={styles.banner}><img src="./outlook3d.jpg" alt="May outlook in 3D" /><div className={styles.cap}><b>May {summer.targetMay.slice(0, 4)} in a dry winter</b>, from the 3D view: glowing rims mark each mandal&rsquo;s deepest May on record where the projected water falls below it.</div></div>
+              <div className={styles.banner}><img src={`${basePath}/brief/outlook3d.jpg`} alt="May outlook in 3D" /><div className={styles.cap}><b>May {summer.targetMay.slice(0, 4)} in a dry winter</b>, from the 3D view: glowing rims mark each mandal&rsquo;s deepest May on record where the projected water falls below it.</div></div>
               <div className={styles.sec}>Known limits</div>
               <div className={styles.limits}>
                 <div className={styles.lim}><b>Aquifer properties are coarse.</b> Aquifer type is a district proxy; for 259 of 688 series the measured specific yield disagrees with the label.</div>

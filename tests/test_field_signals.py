@@ -251,6 +251,30 @@ def test_irrigated_shares_are_percentages_of_cropland_per_boundary():
 
 # --- the live scorecard ---------------------------------------------------------------
 
+def test_the_forecast_gives_up_inside_its_budget(monkeypatch):
+    monkeypatch.setattr(ffs, "BATCH_PAUSE_S", 0)
+    days = ["2026-10-05", "2026-10-06"]
+    answer = lambda points: [{"daily": {"time": days, "et0_fao_evapotranspiration": [4.0, 4.1], "precipitation_sum": [0.0, 1.2]}} for _ in points]  # noqa: E731
+    ticks = iter([0, 0] + [10_000] * 50)
+    with pytest.raises(RuntimeError, match="too slow"):
+        ffs.build_weather(datetime.date(2026, 10, 6), fetch=answer, clock=lambda: next(ticks))
+
+
+def test_a_spent_daily_quota_is_not_waited_out(monkeypatch):
+    import io
+    import urllib.error
+    calls, sleeps = [], []
+    def refuse(*args, **kwargs):
+        calls.append(1)
+        body = io.BytesIO(b'{"error":true,"reason":"Daily API request limit exceeded. Please try again tomorrow."}')
+        raise urllib.error.HTTPError("https://api.open-meteo.com", 429, "Too Many Requests", {}, body)
+    monkeypatch.setattr(ffs.urllib.request, "urlopen", refuse)
+    monkeypatch.setattr(ffs.time, "sleep", sleeps.append)
+    with pytest.raises(urllib.error.HTTPError):
+        ffs.request_json("https://api.open-meteo.com/v1/forecast", tries=3)
+    assert calls == [1] and sleeps == []
+
+
 def test_a_kept_forecast_keeps_the_check_its_calls_were_frozen_with(monkeypatch):
     monkeypatch.setattr(ffs, "cross_check", lambda *args: {"issued": "2026-10-12", "fresh": True})
     previous = {"weather": {"issued": "2026-10-09"}, "crossCheck": {"issued": "2026-10-09", "counts": {}}}

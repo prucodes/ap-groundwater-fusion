@@ -73,6 +73,11 @@ FORECAST_DAYS = 7
 BATCH = 50
 BATCH_PAUSE_S = 6
 RATE_LIMIT_WAIT_S = 65
+# The whole forecast gets six minutes of the step's twenty. On 12 October 2026 a runner whose
+# shared address had spent Open-Meteo's quota waited out 429s batch after batch until the
+# step was killed at twenty minutes, losing the vegetation and assessment sections with it.
+WEATHER_BUDGET_S = 360
+WEATHER_TIMEOUT_S = 45
 
 VEG_WEEKS = 16           # the trend: about four months
 VEG_AVERAGED = 4         # the headline: the last four weeks, as Drought Watch averages
@@ -110,7 +115,18 @@ def request_json(url, data=None, timeout=120, tries=4):
             if attempt == tries - 1 or not is_transient(error):
                 raise
             limited = isinstance(error, urllib.error.HTTPError) and error.code == 429
+            if limited and spent_quota(error):
+                raise
             time.sleep(RATE_LIMIT_WAIT_S if limited else 5 * (attempt + 1))
+
+
+def spent_quota(error):
+    """A 429 for an hourly or daily cap, which a minute's wait cannot clear (Open-Meteo names it)."""
+    try:
+        reason = error.read().decode("utf-8", "replace")
+    except Exception:  # noqa: BLE001 - no body: treat it as the per-minute limit
+        return False
+    return bool(re.search(r"\b(hourly|daily)\b", reason, re.I))
 
 
 def geometry():
@@ -136,17 +152,20 @@ def weather_batch(points):
         "latitude": ",".join(str(lat) for lat, _ in points), "longitude": ",".join(str(lon) for _, lon in points),
         "daily": "et0_fao_evapotranspiration,precipitation_sum", "timezone": "Asia/Kolkata",
         "past_days": PAST_DAYS, "forecast_days": FORECAST_DAYS, "models": WEATHER_MODEL})
-    answer = request_json(f"{OPEN_METEO}?{query}")
+    answer = request_json(f"{OPEN_METEO}?{query}", timeout=WEATHER_TIMEOUT_S, tries=3)
     return answer if isinstance(answer, list) else [answer]
 
 
-def build_weather(today, fetch=weather_batch):
+def build_weather(today, fetch=weather_batch, budget_s=WEATHER_BUDGET_S, clock=time.monotonic):
     shapes = mandal_shapes()
     count = len(geometry())
     points = mandal_points(shapes, count)
     wanted = [i for i, point in enumerate(points) if point]
     eto, rain, dates = [None] * count, [None] * count, None
+    stop = clock() + budget_s
     for start in range(0, len(wanted), BATCH):
+        if clock() > stop:
+            raise RuntimeError(f"Open-Meteo too slow: {start} of {len(wanted)} mandals in {budget_s} s; last week's forecast is kept")
         chunk = wanted[start:start + BATCH]
         answers = fetch([points[i] for i in chunk])
         if len(answers) != len(chunk):

@@ -29,7 +29,7 @@ type Report = {
 
 const today = () => new Date().toISOString().slice(0, 10);
 const blankCrop = (): Crop => ({ c: "Maize", s: "Growing", k: "Good", w: "Rainfed" });
-const human = (iso: string) => new Date(`${iso}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+const human = (iso: string) => iso ? new Date(`${iso}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" }) : "";
 
 function encode(report: Report) {
   const bytes = new TextEncoder().encode(JSON.stringify(report));
@@ -85,7 +85,9 @@ function Chips<T extends string>({ label, options, value, onChange }: { label: s
 export function FieldReport({ calls, week }: { calls: SiteCall[]; week: string | null }) {
   const [tab, setTab] = useState<"write" | "collect">("write");
   const [index, setIndex] = useState<number>(calls[0]?.i ?? 0);
-  const [date, setDate] = useState(today);
+  // Set on mount, never at render: the static page is built days before anyone opens it, and a
+  // build-day date that differs from the visitor's broke hydration (and the dark theme with it).
+  const [date, setDate] = useState("");
   const [crops, setCrops] = useState<Crop[]>([blankCrop()]);
   const [bores, setBores] = useState<string>("Working");
   const [tankers, setTankers] = useState(false);
@@ -97,6 +99,7 @@ export function FieldReport({ calls, week }: { calls: SiteCall[]; week: string |
   // The mandal from the link on This Week (?m=<boundary index>), else the saved draft.
   useEffect(() => {
     const fromLink = Number(new URLSearchParams(window.location.search).get("m"));
+    setDate(today());
     try {
       const draft = JSON.parse(localStorage.getItem(DRAFT_KEY) ?? "null");
       if (draft && typeof draft.i === "number" && (!fromLink || draft.i === fromLink)) {
@@ -163,7 +166,7 @@ export function FieldReport({ calls, week }: { calls: SiteCall[]; week: string |
             </optgroup>)}
           </select>
         </label>
-        <label className={styles.field}><span>Date of the visit</span><input type="date" value={date} max={today()} onChange={event => setDate(event.target.value)} /></label>
+        <label className={styles.field}><span>Date of the visit</span><input type="date" value={date} max={restored ? today() : undefined} onChange={event => setDate(event.target.value)} /></label>
 
         <fieldset className={styles.crops}>
           <legend>Crops seen</legend>

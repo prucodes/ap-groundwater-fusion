@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { mandals, statusMeta, titleCase } from "../lib/data";
+import { inkOn } from "../lib/contrast";
 
 // Deliberately a client component, and deliberately rendered only after mount.
 //
@@ -34,7 +35,7 @@ export function MandalSelectorStrip({ activeId }: { activeId: string }) {
               padding: "7px 12px",
               border: active ? `1px solid ${meta.color}` : "1px solid var(--line)",
               background: active ? meta.color : "var(--card)",
-              color: active ? "#fff" : "var(--ink-soft)",
+              color: active ? inkOn(meta.color) : "var(--ink-soft)",
             }}
           >
             <span

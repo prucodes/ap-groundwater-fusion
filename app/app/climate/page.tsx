@@ -224,18 +224,19 @@ export default function ClimatePage() {
         <div className="cardHead">
           <div className="cardTitle"><span className="titleIcon"><IconWaves /></span>District water balance — ranked driest first</div>
         </div>
+        <RowFold id="climate-balance-rows" total={ranked.length} visible={10} noun="districts">
         <div className="tableWrap">
           <table className="dataTable">
             <thead>
               <tr><th>District</th><th>Annual rainfall</th><th>Annual ET</th><th>Balance</th><th>Status</th></tr>
             </thead>
             <tbody>
-              {ranked.map((d) => {
+              {ranked.map((d, i) => {
                 const et = d.annual_et_mm as number;
                 const bal = d.water_balance_mm as number;
                 const bm = balanceMeta(d.water_balance_status);
                 return (
-                  <tr key={d.d}>
+                  <tr key={d.d} {...foldAt(i, 10)}>
                     <td className="cellStrong">{titleCase(d.d)}</td>
                     <td>{formatNumber(et + bal)} mm</td>
                     <td>{formatNumber(et)} mm</td>
@@ -247,6 +248,7 @@ export default function ClimatePage() {
             </tbody>
           </table>
         </div>
+        </RowFold>
       </section>
     </div>
   );
