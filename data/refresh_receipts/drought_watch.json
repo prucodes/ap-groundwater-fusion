@@ -1,19 +1,19 @@
 {
- "generatedAt": "2026-10-08T22:41:56+00:00",
- "asOf": "2026-10-07",
+ "generatedAt": "2026-10-12T15:44:41+00:00",
+ "asOf": "2026-10-10",
  "state": {
-  "severe": 32,
-  "moderate|severe": 33,
-  "moderate": 319,
-  "normal|moderate": 17,
-  "normal": 67,
-  "noTrigger": 137,
-  "insufficient": 65
+  "severe": 30,
+  "moderate|severe": 27,
+  "moderate": 325,
+  "normal|moderate": 19,
+  "normal": 76,
+  "noTrigger": 138,
+  "insufficient": 55
  },
  "weeks": 18,
  "vciWeeks": 18,
- "pasm": 605,
- "gwdi": 577,
+ "pasm": 615,
+ "gwdi": 592,
  "spi": 670,
  "reservoirs": 95
 }
