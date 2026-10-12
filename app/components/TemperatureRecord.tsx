@@ -1,6 +1,7 @@
 "use client";
 
 import { apTemperature } from "../lib/data";
+import { Callout, ChartData } from "./chart/ChartKit";
 
 /** Andhra Pradesh's temperature record, from two products that disagree.
  *
@@ -55,9 +56,10 @@ export function TemperatureRecord() {
           <g>
             <circle cx={x(warmest.year)} cy={y(warmest.anomalyC)} r={6} fill={colours[0]}
                     stroke="var(--card)" strokeWidth={2} />
-            <text className="tempPeak" x={x(warmest.year)} y={y(warmest.anomalyC) - 14} textAnchor="middle">
-              {warmest.year}
-            </text>
+            <Callout x={x(warmest.year)} y={y(warmest.anomalyC)}
+                     dx={x(warmest.year) > W * 0.6 ? -16 : 16} dy={8} anchor={x(warmest.year) > W * 0.6 ? "end" : "start"}
+                     tone="alert" label={`Warmest year: ${warmest.year}`}
+                     sub={`${warmest.anomalyC > 0 ? "+" : ""}${warmest.anomalyC.toFixed(2)} °C, ${fine.label}`} />
           </g>
         ) : null}
         {[years[0], 1970, 1990, 2010, years[years.length - 1]].map((year) => (
@@ -75,6 +77,14 @@ export function TemperatureRecord() {
         ))}
         <span className="tempKeyNote">°C against the {data.baseline} average</span>
       </div>
+      <ChartData
+        caption={`Annual temperature against the ${data.baseline} average (°C)`}
+        columns={["Year", ...records.map((record) => record.label)]}
+        rows={[...years].reverse().map((year) => [year, ...records.map((record) => {
+          const point = record.series.find((p) => p.year === year);
+          return point ? `${point.anomalyC > 0 ? "+" : ""}${point.anomalyC.toFixed(2)}` : "—";
+        })])}
+      />
 
       <div className="tempFindings">
         <div className="tempFinding">
