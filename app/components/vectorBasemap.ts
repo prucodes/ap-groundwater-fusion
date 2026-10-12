@@ -114,6 +114,24 @@ export function labelStyle(dark: boolean): StyleSpecification {
 
 const dark = () => typeof document !== "undefined" && document.documentElement.dataset.theme === "dark";
 
+let software: boolean | undefined;
+/** Whether WebGL here runs on the CPU (no usable GPU: some virtual machines and older laptops,
+ *  and headless test runners). There two basemap canvases slowed every page around them, so the
+ *  map draws its data on the plain sea colour instead; `?basemap` in the URL forces it on. */
+export function softwareWebGL(): boolean {
+  if (software !== undefined) return software;
+  try {
+    const gl = document.createElement("canvas").getContext("webgl");
+    const info = gl?.getExtension("WEBGL_debug_renderer_info");
+    const name = gl && info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : "";
+    software = /swiftshader|llvmpipe|software|basic render/i.test(name);
+    gl?.getExtension("WEBGL_lose_context")?.loseContext();
+  } catch {
+    software = false;
+  }
+  return software;
+}
+
 type GLLayer = Leaflet.Layer & { getMaplibreMap: () => { setStyle: (style: StyleSpecification) => void } };
 
 /** Put the ground beneath and the names above `map`; returns the cleanup. If the tiles cannot
@@ -121,6 +139,7 @@ type GLLayer = Leaflet.Layer & { getMaplibreMap: () => { setStyle: (style: Style
 export async function addVectorBasemap(
   L: typeof Leaflet, map: Leaflet.Map, { labels = true, cancelled = () => false }: { labels?: boolean; cancelled?: () => boolean } = {},
 ): Promise<() => void> {
+  if (softwareWebGL() && !new URLSearchParams(window.location.search).has("basemap")) return () => {};
   const gl = await import("maplibre-gl");
   // The static export does not emit MapLibre's module worker; scripts/vendor-maplibre.mjs copies it.
   gl.setWorkerUrl(`${basePath}/vendor/maplibre-gl-worker.js`);
