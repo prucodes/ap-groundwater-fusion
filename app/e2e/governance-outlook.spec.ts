@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import outlook from "../data/enso_outlook.json";
 import changes from "../data/weekly_changes.json";
+import drought from "../data/drought_watch.json";
 
 /* NOAA's outlook must arrive dated, quoted and kept apart from the state's own
    record; the weekly page must show every headline with its dates. */
@@ -22,8 +23,37 @@ test("this week lists every headline with its dates and is reachable from the si
   await page.getByRole("link", { name: /This Week/ }).first().click();
   await expect(page.getByRole("heading", { level: 1 })).toContainText("This Week");
   await expect(page.getByTestId("weekly-changes").getByRole("link")).toHaveCount(changes.items.length);
-  await expect(page.getByRole("region", { name: "Drought manual readings that moved" })).toBeVisible();
+  await expect(page.getByTestId("week-moves")).toBeVisible();
   await expect(page.getByRole("region", { name: "Groundwater status that moved" })).toBeVisible();
+});
+
+test("this week's map shows where the drought reading moved, and switches to last week and this", async ({ page }) => {
+  const { worse, better } = changes.drought;
+  await page.goto("/");
+  if (worse.length + better.length) {
+    await expect(page.locator(".headlineCard", { hasText: "Drought manual" })).toContainText(`${worse.length} worse and ${better.length} better than last week`);
+  }
+  await page.goto("/changes/");
+  const map = page.getByTestId("week-move-map");
+  await expect(map).toHaveAttribute("data-ready", "true");
+  await expect(map.locator("path[data-key]")).toHaveCount(drought.mandals.length);
+  if (!worse.length && !better.length) {
+    await expect(page.getByTestId("week-view-moved")).toHaveCount(0);
+    return;
+  }
+  await expect(page.getByTestId("week-moves").getByRole("heading", { level: 2 })).toContainText(`${worse.length} mandals read worse`);
+  // What moved: worse and better coloured, every mover ringed.
+  await expect(map.locator('path[data-key="w"]')).toHaveCount(worse.length);
+  await expect(map.locator('path[data-key="b"]')).toHaveCount(better.length);
+  await expect(map.locator("path[data-mark]")).toHaveCount(worse.length + better.length);
+  // Last week and this week: each mandal takes the reading of that week.
+  const severe = (key: "prev" | "category") => drought.mandals.filter(row => row[key] === "severe").length;
+  await page.getByTestId("week-view-before").click();
+  await expect(page.getByTestId("week-view-before")).toHaveAttribute("aria-pressed", "true");
+  await expect(map.locator('path[data-key="s"]')).toHaveCount(severe("prev"));
+  await page.getByTestId("week-view-after").click();
+  await expect(map.locator('path[data-key="s"]')).toHaveCount(severe("category"));
+  await expect(map.locator("path[data-mark]")).toHaveCount(worse.length + better.length);
 });
 
 test("each released forecast says how such forecasts have fared", async ({ page }) => {

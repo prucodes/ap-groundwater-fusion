@@ -458,6 +458,9 @@ export function EnsoTrail() {
       <span className="ensoTrailNote">
         {rows[0].date} to {last.date} · dashed lines are the ±0.5 °C El Niño and La Niña thresholds
       </span>
+      <ChartData caption="Oceanic Niño Index by three-month season, °C"
+        columns={["Season", "Index"]}
+        rows={rows.map((r) => [`${r.season} ${r.date.slice(0, 4)}`, `${r.oniC > 0 ? "+" : r.oniC < 0 ? "−" : ""}${Math.abs(r.oniC).toFixed(2)} °C`]).reverse()} />
     </div>
   );
 }

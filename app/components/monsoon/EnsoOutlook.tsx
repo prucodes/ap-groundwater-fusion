@@ -4,6 +4,7 @@ import { monsoonWatch } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
 import { place, shortDate, signedPct } from "../../lib/drought";
 import styles from "./EnsoOutlook.module.css";
+import { ChartData } from "../chart/ChartKit";
 
 /* What NOAA's forecasters expect the Pacific to do next, and what past El
    Niños meant for rain in Andhra Pradesh, side by side and never merged: the
@@ -26,6 +27,8 @@ const THRESHOLDS = [
   { c: 1.5, label: "strong" },
   { c: 2.0, label: "very strong" },
 ];
+
+const signedC = (c: number) => `${c > 0 ? "+" : c < 0 ? "−" : ""}${Math.abs(c).toFixed(2)}`;
 
 function laNina(row: Outlook["strengths"][number]) {
   return row.laNinaVeryStrong + row.laNinaStrong + row.laNinaModerate + row.laNinaWeak;
@@ -172,6 +175,9 @@ export function EnsoOutlook() {
             Median peak <b>{`+${outlook.peak.medianC.toFixed(2)} °C`}</b> in {outlook.peak.label}; half of NOAA&rsquo;s outcomes lie
             between {outlook.peak.likelyRangeC[0].toFixed(2)} and {outlook.peak.likelyRangeC[1].toFixed(2)} °C. Dark band: 25th–75th percentile; light: 5th–95th.
           </p>
+          <ChartData caption="NOAA's forecast of the Niño 3.4 index by season, °C above normal"
+            columns={["Season", "Median", "Middle half (25th–75th)", "Range (5th–95th)"]}
+            rows={outlook.outlook.map(r => [r.label, signedC(r.p50), `${signedC(r.p25)} to ${signedC(r.p75)}`, `${signedC(r.p5)} to ${signedC(r.p95)}`])} />
         </div>
         <div className={styles.tile}>
           <span className={styles.tileLabel}>Chance of each strength, by season</span>
@@ -180,6 +186,9 @@ export function EnsoOutlook() {
             {BANDS.map(b => <li key={b.key}><i style={{ background: b.color }} />{b.label}</li>)}
           </ul>
           <p>A very strong event (≥ 2.0 °C) peaks at <b>{peakVeryStrong}%</b>. Top figure on each bar is that chance.</p>
+          <ChartData caption="Chance of each El Niño strength by season, per cent"
+            columns={["Season", ...BANDS.map(b => b.label.split(" (")[0])]}
+            rows={outlook.strengths.map(r => [r.label, ...BANDS.map(b => `${Math.round(b.key === "laNina" ? laNina(r) : r[b.key])}%`)])} />
         </div>
       </div>
 

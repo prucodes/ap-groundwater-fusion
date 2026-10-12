@@ -47,7 +47,11 @@ const shortDay = (iso: string | null | undefined) => {
 /** The summer outlook's headline, worked out on the server (the outlook file stays out of the browser). */
 export type OverviewSummer = { beyond: number; beyondDeep: number; deepM: number; peopleDeep: string | null };
 
-export function OverviewCockpit({ agreement, summer }: { agreement: OverviewAgreement | null; summer?: OverviewSummer | null }) {
+export function OverviewCockpit({ agreement, summer, droughtWeek = null }: {
+  agreement: OverviewAgreement | null; summer?: OverviewSummer | null;
+  /** Mandals whose drought manual reading moved since last week, as the This Week map counts them. */
+  droughtWeek?: { worse: number; better: number } | null;
+}) {
   const dark = useIsDark();
   const s = dashboardSummary.summary;
   const [selectedId, setSelectedId] = useState(mandals[0]?.id);
@@ -135,7 +139,9 @@ export function OverviewCockpit({ agreement, summer }: { agreement: OverviewAgre
           <span className="headlineKicker"><IconShield /> Drought manual</span>
           <strong>{droughtSummary.state.trigger1}<small>mandals meet the rainfall trigger</small></strong>
           <span className="headlineText">
-            {droughtSummary.state.counts.severe} read severe and {droughtSummary.state.counts.moderate} moderate on impact. Evidence for the manual, not a declaration.
+            {droughtSummary.state.counts.severe} read severe and {droughtSummary.state.counts.moderate} moderate on impact{droughtWeek && droughtWeek.worse + droughtWeek.better > 0
+              ? `; ${droughtWeek.worse} worse and ${droughtWeek.better} better than last week. Evidence, not a declaration.`
+              : ". Evidence for the manual, not a declaration."}
           </span>
           <span className="headlineGo">Drought Watch <IconArrowRight /></span>
         </Link>

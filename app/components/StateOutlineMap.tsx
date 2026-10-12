@@ -19,7 +19,7 @@ const load = () => (pending ??= fetch(`${BASE}/geo/mandal-outlines.json`).then(r
 
 const title = (value: string) => (/[a-z]/.test(value) ? value : value.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase()));
 
-export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, testId }: {
+export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, testId, marks }: {
   /** One key per boundary index (a character or a short code), looked up in `colors`. */
   keys: string[];
   colors: Record<string, string>;
@@ -30,11 +30,18 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
   aspect: number;
   legend: ReactNode;
   testId?: string;
+  /** Boundary indices to outline in ink, drawn last so the ring sits above its neighbours. */
+  marks?: number[];
 }) {
   const [outlines, setOutlines] = useState<Outlines | null>(null);
   const [failed, setFailed] = useState(false);
   const [hover, setHover] = useState<{ index: number; x: number; y: number } | null>(null);
   const frame = useRef<HTMLDivElement>(null);
+  const marked = marks?.length ? new Set(marks) : null;
+  // Marked mandals draw after the district lines, so their ring is never cut by one.
+  const shape = (index: number) => <path key={index} d={outlines?.mandals[index]} data-key={keys[index]} data-mark={marked?.has(index) ? "" : undefined}
+    fill={colors[keys[index]] ?? colors.n}
+    onPointerMove={event => { const box = frame.current?.getBoundingClientRect(); if (box && event.pointerType !== "touch") setHover({ index, x: event.clientX - box.left, y: event.clientY - box.top }); }} />;
   useEffect(() => {
     let live = true;
     load().then(value => { if (live) setOutlines(value); }).catch(() => { if (live) setFailed(true); });
@@ -44,9 +51,9 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
   return <figure className={styles.figure} data-testid={testId} data-ready={outlines ? "true" : "false"}>
     <div ref={frame} className={styles.frame} style={{ aspectRatio: String(aspect) }} onPointerLeave={() => setHover(null)}>
       {outlines ? <svg viewBox={`0 0 ${outlines.view.width} ${outlines.view.height}`} role="img" aria-label={label}>
-        {outlines.mandals.map((d, index) => <path key={index} d={d} data-key={keys[index]} fill={colors[keys[index]] ?? colors.n}
-          onPointerMove={event => { const box = frame.current?.getBoundingClientRect(); if (box && event.pointerType !== "touch") setHover({ index, x: event.clientX - box.left, y: event.clientY - box.top }); }} />)}
+        {outlines.mandals.map((_, index) => (marked?.has(index) ? null : shape(index)))}
         <path d={outlines.districts} className={styles.districts} />
+        {marks?.filter(index => index < outlines.mandals.length).map(shape)}
       </svg> : <div className={styles.placeholder} role="img" aria-label={label}>{failed ? "The map outlines did not load; the figures beside it stand on their own." : null}</div>}
       {hover && outlines ? (() => {
         const [district, mandal] = outlines.names[hover.index] ?? ["", ""];

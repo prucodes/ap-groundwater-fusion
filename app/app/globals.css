@@ -2059,6 +2059,16 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
 .segBtn svg { width: 14px; height: 14px; }
 .segBtn.active { background: var(--card); color: var(--teal); box-shadow: var(--shadow-card); }
 
+/* This Week's map: the view switch sits on the map's sea, the legend marks a ring and a held reading. */
+.weekMoveMap { position: relative; min-width: 0; }
+.weekMoveViews { position: absolute; z-index: 2; top: 20px; left: 20px; }
+.weekMoveMap .weekMoveHeld { background: #e3e8ec; }
+.weekMoveMap .weekMoveRing { background: transparent; border: 1.5px solid var(--ink); }
+:root[data-theme="dark"] .weekMoveMap .weekMoveHeld { background: #1b2a3e; border: 1px solid var(--line-strong); }
+/* the outline map draws "not assessed" darker on the dark theme; its swatch follows */
+:root[data-theme="dark"] .weekMoveMap .weekMoveNoData { background: #2a3c55 !important; }
+@media (max-width: 760px) { .weekMoveViews { position: static; margin-bottom: 10px; } }
+
 /* Layer chips */
 .layerBar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
 .layerBarLabel { font-size: 10.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
