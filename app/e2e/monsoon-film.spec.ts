@@ -56,6 +56,8 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
       await expect(section.getByTestId("film-review")).toContainText(film.narration.voice);
     } else {
       await expect(section.getByTestId("film-review")).toHaveCount(0);
+      await expect(section.getByText("English review narration", { exact: false })).toHaveCount(0);
+      await expect(section.getByText("English narration", { exact: false })).toBeVisible();
     }
     const video = section.locator("video");
     await expect(video).toBeVisible();

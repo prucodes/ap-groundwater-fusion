@@ -92,7 +92,7 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
           <span className={styles.eyebrow}>The ocean-to-aquifer story</span>
           <h2 id="monsoon-film-title">{film.title}</h2>
         </div>
-        <span className={styles.duration}>{clock(film.duration)} · English review narration</span>
+        <span className={styles.duration}>{clock(film.duration)} · {film.review.publishApproved ? "English narration" : "English review narration"}</span>
       </div>
       <video
         ref={ref}
