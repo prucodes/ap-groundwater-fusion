@@ -12,7 +12,7 @@ spec.loader.exec_module(film)
 
 def inputs():
     return tuple(json.loads((ROOT / "app/data" / name).read_text()) for name in (
-        "monsoon_watch.json", "ap_map_geometry.json", "enso_pacific.json"))
+        "monsoon_watch.json", "ap_map_display.json", "enso_pacific.json"))
 
 
 def test_movie_narration_tracks_changed_measurements():
@@ -126,3 +126,49 @@ def test_the_page_says_where_the_live_record_has_moved_from_the_film():
     assert "Since this edition:" in component
     for figure in ("rainAnomalyPct", "rainProduct", "elNinoBelowNormal", "fallingPct"):
         assert figure in component, f"a change in {figure} would go unmentioned"
+
+
+def test_new_chapters_keep_indices_dates_and_projections_separate():
+    data = film.snapshot(**film.load_inputs())
+    scenes = {s["id"]: s for s in data["scenes"]}
+    assert {"ocean", "northeast", "state-wells", "summer", "drought"} <= scenes.keys()
+    assert "RONI" in scenes["ocean"]["source"] and "ONI" in scenes["ocean"]["source"]
+    assert "not an Andhra Pradesh rainfall forecast" in scenes["ocean"]["voice"]
+    assert str(data["summer"]["backtest"]["pastRecordPct"]["beyond"]) in scenes["summer"]["voice"]
+    assert "WorldPop 2020" in scenes["summer"]["source"]
+    assert "not a drought declaration" in scenes["drought"]["voice"]
+    assert "None forecasts Andhra Pradesh rainfall" in scenes["close"]["voice"]
+    assert all(s["rings"] for s in data["shapes"])
+    assert {s["boundarySource"] for s in data["shapes"]} == {"official", "prototype"}
+    assert data["review"]["publishApproved"] is False
+
+
+def test_every_new_source_and_theme_change_invalidates_the_snapshot():
+    original = film.load_inputs()
+    data = film.snapshot(**original)
+    assert len(data["sourceHashes"]) == 8
+    changed = copy.deepcopy(original)
+    changed["summer"]["summary"]["beyond"] += 1
+    updated = film.snapshot(**changed)
+    assert updated["sourceHash"] != data["sourceHash"]
+    assert str(changed["summer"]["summary"]["beyond"]) in next(s["voice"] for s in updated["scenes"] if s["id"] == "summer")
+    assert len(data["design"]["drought"]) == 7
+
+
+def test_ambiguous_boundary_join_is_not_silently_last_wins():
+    watch, geo, pacific = inputs()
+    duplicate = copy.deepcopy(next(m for m in watch["mandals"] if m["boundaryIndex"] is not None and m["mandal"] != "Orvakal"))
+    watch["mandals"].append(duplicate)
+    data = film.snapshot(watch, geo, pacific)
+    assert data["shapes"][duplicate["boundaryIndex"]]["shortfall"] is None
+
+
+def test_fixed_edition_assets_are_internally_consistent_and_under_limit():
+    data = json.loads((ROOT / "app/public/films/monsoon/manifest.json").read_text())
+    assert data["duration"] <= 210
+    for name in ("chapters.json", "transcript.txt", "captions.vtt"):
+        assert (ROOT / "app/public/films/monsoon" / name).stat().st_size > 100
+    for orientation in ("landscape", "portrait"):
+        record = json.loads((ROOT / f"app/public/films/monsoon/render-{orientation}.json").read_text())
+        assert record["sourceHash"] == data["sourceHash"]
+        assert record["duration"] == data["duration"]

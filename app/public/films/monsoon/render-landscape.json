@@ -1,0 +1,14 @@
+{
+  "sourceHash": "d709b8ba814469956636186d38523e91dd8eba7f5cafa413dd7bbded8fab1bd2",
+  "renderedAt": "2026-10-13T04:01:37.433Z",
+  "duration": 195.507,
+  "format": "landscape",
+  "narration": {
+    "voice": "macOS Rishi (en-IN)",
+    "requestedVoice": "en-IN-PrabhatNeural",
+    "synthetic": true,
+    "status": "temporary-local-review",
+    "rateWpm": 165,
+    "tempo": 1
+  }
+}

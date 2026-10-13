@@ -61,14 +61,14 @@ def test_it_reaches_andhra_pradesh_and_does_not_open_there():
     assert "Andhra" not in first_half
 
 
-def test_no_forecast_is_promised():
-    """The site publishes none, and the model measured worse when the index was
-    added to it. A video promising what happens next contradicts the page."""
+def test_pacific_forecasts_are_distinguished_from_ap_rainfall():
     text = open(SCRIPT).read().lower()
     narration = " ".join(r["vo"].lower() for r in rows())
-    for word in ("will fall", "will be", "expect", "forecast", "predict"):
+    for word in ("will fall", "will be", "expect rainfall", "predict rainfall"):
         assert word not in narration, f"the narration promises something: {word!r}"
-    assert "do not put a forecast in this video" in text
+    assert "never forecast ap rainfall" in text
+    assert "track record" in text and "noaa pacific forecast" in text
+    assert "not rainfall predictions" in narration
 
 
 def figures_as_read():
@@ -101,11 +101,11 @@ def test_the_recorded_figures_were_published_figures():
     """Each recorded figure must be one the site could have shown: the right
     sign and form, from the sources the script names."""
     _, figures = figures_as_read()
-    assert re.fullmatch(r"[+\u2212]\d\.\d\d", figures["Ocean Niño Index, JJA 2026"])
+    assert re.fullmatch(r"[+\u2212]\d\.\d\d", figures["Ocean Niño Index, JAS 2026"])
     assert re.fullmatch(r"\d{1,3}\.\d%", figures["Mandals lower than in May"])
     assert re.fullmatch(r"\u2212\d{1,2}\.\d%", figures["Rain this year"])
     assert re.fullmatch(r"\u2212\d{1,2}\.\d%", figures["An El Niño monsoon, usually"])
-    assert re.fullmatch(r"[\d,]+ million m³", figures["Short of a normal season"])
+    assert re.fullmatch(r"\d+ of \d+", figures["Compared mandal count"])
 
 
 def test_every_claim_has_a_source_row():
@@ -116,11 +116,9 @@ def test_every_claim_has_a_source_row():
         assert row["n"] in sourced, f"line {row['n']} has no source row"
 
 
-def test_the_famine_figure_is_the_sourced_one_not_the_reel_s():
-    """The reference reel uses "3 percent of the world's population", a
-    contested global total. The India estimate is far better established."""
+def test_history_is_context_not_a_disaster_superlative():
     text = open(SCRIPT).read()
     narration = " ".join(r["vo"] for r in rows())
-    assert "eight million" in narration
+    assert "strongest" not in narration and "never happened" not in narration
     assert "3 percent" not in narration and "3% of the world" not in narration
-    assert "5.6" in text and "9.6" in text, "the estimate's range must be recorded"
+    assert "1997–98" in text and "2015–16" in text and "NOAA historical ENSO record" in text

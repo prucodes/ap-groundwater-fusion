@@ -10,8 +10,7 @@ sea-surface anomaly, the trade winds and the rain composited over it the way a
 NOAA plot is. The last three scenes are drawn from this project's own published
 data: the ocean index, the 46-year rainfall record and the 670 mandal polygons.
 
-There is no narration. No text-to-speech is available here, so the captions
-carry the script's words verbatim, which is how these are watched anyway.
+This short cut is caption-led; the longer monsoon film has its own narration.
 
     python3 scripts/build_elnino_video.py --out dist/el_nino_60s.mp4
 """
@@ -19,6 +18,7 @@ import argparse
 import json
 import math
 import os
+import re
 import ssl
 import subprocess
 import sys
@@ -48,7 +48,7 @@ ERSST = "https://downloads.psl.noaa.gov/Datasets/noaa.ersst.v5/sst.mnmean.nc"
 SST_WINDOW = dict(lon0=108, lon1=296, lat0=56, lat1=-56)
 # The run-up to the present event, stepped through on screen. Watching the warm
 # water actually arrive is the one thing a still cannot do.
-SST_SEQUENCE = [f"2025-{m:02d}-01" for m in range(9, 13)] + [f"2026-{m:02d}-01" for m in range(1, 9)]
+SST_SEQUENCE = [f"2025-{m:02d}-01" for m in range(9, 13)] + [f"2026-{m:02d}-01" for m in range(1, 10)]
 # Frames drawn between each pair of measured months. The measurement is monthly;
 # stepping it looks like a slideshow, so the between-frames are interpolated and
 # the month stamp only advances on a real one.
@@ -58,32 +58,32 @@ SST_NEUTRAL = "2021-12-01"
 # Straight out of docs/el_nino_60s_script.md, as (start, end, caption, card).
 # Kept here so a timing change in the script shows up as a diff rather than
 # quietly drifting out of step with the film.
-SCENES = [
-    (0, 6,
-     "Imagine a fan the width of the Pacific,\nrunning for as long as anyone has farmed.",
-     "A fan the width of an ocean"),
-    (6, 16,
-     "Trade winds drag warm water away from South America\nand pile it up near Indonesia, where it falls as rain.\nCold water rises behind it, off Peru.",
-     "trade winds · east to west"),
-    (16, 22,
-     "Every few years the fan slows.\nThe warm water slides back east.\nThat is an El Niño.",
-     "The fan slows"),
-    (22, 29,
-     "The rain does not disappear. It moves.\nAnd when it moves off Asia,\nit takes the Indian monsoon with it.",
-     "the rain moves"),
-    (29, 39,
-     "In 1877 the strongest El Niño ever recorded did exactly this.\nThe monsoon failed. Across the Madras Presidency and the Deccan,\nfamine killed more than eight million people.",
-     "1877"),
-    (39, 46,
-     "An El Niño is running now.\nIt is the warmest June to August in the record since 1950.",
-     "+1.80 °C"),
-    (46, 53,
-     "Across forty-five years an El Niño costs Andhra Pradesh\nfifteen percent of its monsoon rain. This year, twenty-eight.",
-     "−15.2% usually · −28.4% this year"),
-    (53, 60,
-     "Today the water table is lower than it was in May\nacross sixty-three percent of mandals.\nThat has never happened.",
-     "62.7% of mandals"),
-]
+def script_scenes():
+    """The dated shooting script is the single source for captions and cards."""
+    text = open(os.path.join(ROOT, "docs/el_nino_60s_script.md")).read()
+    result = []
+    for row in text.splitlines():
+        if not re.match(r"\|\s*\d+\s*\|\s*\d:\d\d", row):
+            continue
+        cells = [cell.strip() for cell in row.split("|")[1:-1]]
+        times = [int(v.split(":")[0])*60+int(v.split(":")[1]) for v in cells[1].split("–")]
+        result.append((*times, cells[2], cells[3].replace("*", "")))
+    assert len(result) == 8 and result[-1][1] == DURATION
+    return result
+
+
+SCENES = script_scenes()
+
+
+def check_script_figures(watch):
+    cards = " ".join(scene[3] for scene in SCENES)
+    values = [f"{watch['enso']['oniC']:+.2f}", f"{watch['recharge']['fallingPct']}%",
+              str(watch['rainfall']['anomalyPct']).replace('-', '−')+'%',
+              f"{watch['elNinoRainfall']['swMonsoon']['elNinoAnomalyPct']:.1f}".replace('-', '−')+'%',
+              f"{watch['recharge']['falling']} of {watch['recharge']['mandals']}"]
+    assert all(value in cards for value in values), "60-second script is stale; update its dated figures before rendering"
+    assert (watch["enso"]["season"], watch["season"]["year"], watch["season"]["latestMonth"], watch["rainfall"]["months"]) == ("JAS", 2026, "2026-09", "06-08"), "60-second script observation windows changed; update the dated edition"
+    assert watch["rainfall"]["product"].startswith("CHIRPS v3.0"), "60-second script product version is stale"
 
 
 def tls_context():
@@ -221,29 +221,40 @@ def projected_mandals(geo, watch):
     box = 1000.0
     height = box * (lat_span / lon_span)
 
-    placed = {m["boundaryIndex"]: m for m in watch["mandals"] if m["boundaryIndex"] is not None}
-    stops = [(-1, "#2f7d6b"), (0, "#8fbfae"), (1, "#f2d7a0"),
-             (2, "#e2a05f"), (4, "#cf6b46"), (float("inf"), "#9e2f22")]
+    groups = {}
+    for row in watch["mandals"]:
+        if row["boundaryIndex"] is not None:
+            groups.setdefault(row["boundaryIndex"], []).append(row)
+    placed = {i: rows[0] for i, rows in groups.items() if len(rows) == 1}
+    tokens = open(os.path.join(ROOT, "app/lib/data.ts")).read().split("export const SEQ_RAMP", 1)[1]
+    ramp = re.findall(r"#[\da-fA-F]{6}", re.search(r"dark:\s*\[([^]]+)\]", tokens)[1])
+    ends = [[int(color[i:i+2], 16) for i in (1, 3, 5)] for color in ramp]
+    colors = ["#"+"".join(f"{round(a+(b-a)*f):02x}" for a,b in zip(*ends)) for f in (0,.25,.5,.75,1)]
+    stops = list(zip((0, 1, 2, 4, float("inf")), colors))
 
     shapes = []
     for index, feature in enumerate(geo["mandals"]):
         rings = [ring for ring in feature.get("rings", []) if len(ring) >= 4]
         if not rings:
             continue
-        points = []
-        for lon, lat in rings[0]:
-            x = (lon - min_lon) * cos_lat / lon_span * box
-            y = (max_lat - lat) / lat_span * height
-            points.append(f"{x:.1f},{y:.1f}")
+        paths = []
+        for ring in rings:
+            points = []
+            for lon, lat in ring:
+                x = (lon - min_lon) * cos_lat / lon_span * box
+                y = (max_lat - lat) / lat_span * height
+                points.append(f"{x:.1f},{y:.1f}")
+            paths.append("M" + "L".join(points) + "Z")
         row = placed.get(index)
-        fill = "#1b2b3c"
+        fill = "#536372"
         if row is not None:
             fill = next(colour for limit, colour in stops if row["shortfallM"] <= limit)
-        shapes.append({"d": "M" + "L".join(points) + "Z", "f": fill})
+        shapes.append({"d": " ".join(paths), "f": fill})
     return shapes, round(height)
 
 
 def build_page(watch, geo, pacific_size, asia_size, sst_count):
+    check_script_figures(watch)
     shapes, map_height = projected_mandals(geo, watch)
     payload = {
         "scenes": [{"a": a, "b": b, "cap": cap, "card": card} for a, b, cap, card in SCENES],
@@ -253,7 +264,10 @@ def build_page(watch, geo, pacific_size, asia_size, sst_count):
                  for r in watch["rainfallHistory"]["years"]],
         "rainMean": watch["rainfallHistory"]["meanMm"],
         "oni": [r["oniC"] for r in watch["enso"]["recent"]],
-        "volume": round(watch["recharge"]["volume"]["shortfallMm3"]),
+        "currentOni": watch["enso"]["oniC"], "oniSeason": watch["enso"]["season"],
+        "fallingPct": watch["recharge"]["fallingPct"], "falling": watch["recharge"]["falling"], "compared": watch["recharge"]["mandals"],
+        "rainAnomaly": watch["rainfall"]["anomalyPct"], "historyAnomaly": watch["elNinoRainfall"]["swMonsoon"]["elNinoAnomalyPct"],
+        "readOn": watch["generatedAt"][:10],
         "pac": list(pacific_size),
         "asia": list(asia_size),
         "sstCount": sst_count,
@@ -437,18 +451,18 @@ function scene(i) {
     winds(p, { dur: 3.0, from: -380, to: 1250 });
     node.appendChild(n("div", "kicker rise", s.card));
   } else if (i === 4) {
-    node.appendChild(n("div", "yr rise", "1877"));
+    node.appendChild(n("div", "yr rise", "1997–98"));
     node.appendChild(n("div", "yrsub rise",
-      "The strongest El Ni&ntilde;o ever recorded.<br>The monsoon failed across the Madras Presidency and the Deccan."));
-    node.appendChild(n("div", "toll rise", "8,000,000+"));
-    node.appendChild(n("div", "tollsub", "excess mortality estimated 5.6–9.6 million"));
+      "Selected major events / NOAA historical ENSO record"));
+    node.appendChild(n("div", "toll rise", "2015–16"));
+    node.appendChild(n("div", "tollsub", "A recurring pattern. Local outcomes differ."));
   } else if (i === 5) {
     const p = plate("pacific.jpg", ["sst_" + String(D.sstCount - 1).padStart(2, "0") + ".png"]);
     p.style.top = "820px"; p.style.height = "560px";
     node.appendChild(p);
     p.querySelector(".sstLayer").classList.add("show");
     node.appendChild(n("div", "card rise",
-      "+1.80&nbsp;&deg;C<small>NOAA Oceanic Ni&ntilde;o Index &middot; JJA 2026</small>"));
+      `+${D.currentOni}&nbsp;&deg;C<small>NOAA CPC ONI &middot; Jul–Sep 2026</small>`));
     const W = 900, H = 250, pad = 28, lo = Math.min(-0.9, ...D.oni) - .2, hi = Math.max(.9, ...D.oni) + .2;
     const X = k => pad + k / (D.oni.length - 1) * (W - pad * 2);
     const Y = v => pad + (hi - v) / (hi - lo) * (H - pad * 2);
@@ -462,7 +476,7 @@ function scene(i) {
     node.appendChild(n("div", "foot", "two years of the index · measured sea surface below"));
   } else if (i === 6) {
     node.appendChild(n("div", "card rise",
-      "<span style='font-size:66px'>&minus;15.2% usually</span><small style='font-size:60px;font-weight:800;color:#ff9350;margin-top:14px'>&minus;28.4% this year</small>"));
+      `<span style='font-size:60px'>${D.historyAnomaly.toFixed(1)}% historical mean</span><small style='font-size:60px;font-weight:600;color:#ff9350;margin-top:14px'>${D.rainAnomaly}% Jun–Aug 2026</small><small>History: June–September, 1981–2025</small>`));
     const W = 900, H = 520, pad = 28, max = Math.max(...D.rain.map(r => r.mm));
     const band = (W - pad * 2) / D.rain.length;
     let bars = "";
@@ -479,9 +493,12 @@ function scene(i) {
       <line class="dash" x1="${pad}" x2="${W - pad}" y1="${meanY.toFixed(1)}" y2="${meanY.toFixed(1)}"/></svg>`);
     box.style.cssText = "position:absolute;left:90px;top:560px;";
     node.appendChild(box);
-    node.appendChild(n("div", "foot", "June–August rainfall, every year since 1981 · CHIRPS"));
+    node.appendChild(n("div", "foot", "June–August rainfall, every year since 1981 · CHIRPS v3.0"));
   } else {
-    node.appendChild(n("div", "card rise", "62.7%<small>of mandals lower than they were in May</small>"));
+    node.appendChild(n("div", "card rise", `${D.fallingPct}%<small>${D.falling} of ${D.compared} compared mandals<br>deeper than May / September 2026</small>`));
+    const mapKey = n("div", null, "Map: water-level shortfall against own normal / m<br>Dark → bright cyan: ≤0, 0–1, 1–2, 2–4, ≥4 · grey: no match<br>Rebuilt State outlines + prototype fallback; not certified boundaries");
+    mapKey.style.cssText = "position:absolute;left:60px;right:60px;top:390px;font-size:22px;line-height:1.5;text-align:center;color:#a2b6c3";
+    node.appendChild(mapKey);
     let paths = "";
     D.shapes.forEach((m, k) => {
       paths += `<path class="cell" d="${m.d}" fill="${m.f}" stroke="#04101c" stroke-width="1.1"
@@ -491,10 +508,11 @@ function scene(i) {
     box.style.cssText = "position:absolute;left:50px;top:520px;";
     node.appendChild(box);
     node.appendChild(n("div", "foot",
-      D.volume.toLocaleString("en-IN") + " million m³ short · Andhra Pradesh's own wells"));
+      `Observed AP wells · read ${D.readOn}<br>Pacific outlook and summer projection are separate evidence.<br>Neither forecasts AP rainfall.`));
   }
 
   const cap = n("div", "caption");
+  if (i === 7) cap.style.bottom = "230px";
   s.cap.split("\n").forEach((line) => cap.appendChild(n("span", "capLine", line)));
   node.appendChild(cap);
   return node;
@@ -586,7 +604,7 @@ window.__play = function () {
       const k = Math.floor(p * layers.length);
       layers.forEach((el, j) => el.classList.toggle("show", j === k));
       if (stamp && t >= s3.a && t < s3.b) {
-        stamp.textContent = D.sstLabels[k] || "";
+        stamp.textContent = (D.sstLabels[k] || "") + (D.sstMeasured[k] ? " / monthly field" : " / interpolated");
         stamp.style.opacity = D.sstMeasured[k] ? "1" : ".55";
       }
     }
@@ -667,7 +685,7 @@ def main():
     os.makedirs(out_dir, exist_ok=True)
 
     watch = json.load(open(os.path.join(APP, "monsoon_watch.json")))
-    geo = json.load(open(os.path.join(APP, "ap_map_geometry.json")))
+    geo = json.load(open(os.path.join(APP, "ap_map_display.json")))
     pacific_size, asia_size = earth_crops(out_dir)
     sst_count = sst_fields(out_dir)
     html_path = os.path.join(out_dir, "el_nino_60s.html")

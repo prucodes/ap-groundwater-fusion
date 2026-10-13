@@ -1,7 +1,7 @@
 // Deterministic frame capture avoids real-time recording stalls and dropped animation frames.
 import { createRequire } from 'node:module';
-import { spawn } from 'node:child_process';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { spawn, execFileSync } from 'node:child_process';
+import { mkdir, readFile, writeFile, rename, stat } from 'node:fs/promises';
 import { once } from 'node:events';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -10,6 +10,8 @@ const require=createRequire(path.join(root,'app/package.json'));
 const {chromium}=require('@playwright/test');
 const format=process.argv.includes('--portrait')?'portrait':'landscape';
 const preview=process.argv.includes('--preview');
+const sourceCheck=()=>execFileSync('python3',[path.join(root,'scripts/prepare_monsoon_film.py'),'--check-sources'],{stdio:'inherit'});
+sourceCheck();
 const out=path.join(root,'app/public/films/monsoon');
 const evidence=path.join(root,'dist/monsoon-film',format);
 await mkdir(evidence,{recursive:true});
@@ -18,9 +20,13 @@ const browser=await chromium.launch({headless:true,args:['--enable-webgl','--use
 const page=await browser.newPage({viewport:{width:W,height:H},deviceScaleFactor:1});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 try{
-  await page.goto(`http://127.0.0.1:4178/films/monsoon/studio.html?capture=1&format=${format}`);
-  await page.waitForFunction(()=>window.filmReady===true,{timeout:60000});
+  const response=await page.goto(`${process.env.FILM_BASE_URL||'http://127.0.0.1:4178'}/films/monsoon/studio.html?capture=1&format=${format}`);
+  if(!response.ok())throw new Error('Film server returned '+response.status()+': verify FILM_BASE_URL and its public directory');
+  await page.waitForFunction(()=>window.filmReady===true,null,{timeout:60000});
   const data=JSON.parse(await readFile(path.join(out,'manifest.json'),'utf8'));
+  if(await page.evaluate(()=>window.filmManifest.sourceHash)!==data.sourceHash)throw new Error('Preview server is serving a different film snapshot');
+  if(!preview&&data.narration?.status==='pending')throw new Error('Narration is pending; only --preview is allowed');
+  if(data.duration>210)throw new Error('Film exceeds 3:30; edit narration before rendering');
   const checks=[];
   for(const s of data.scenes){
     for(const fraction of [.15,.55,.9]){
@@ -50,8 +56,11 @@ try{
       await page.screenshot({path:path.join(evidence,scene.id+'-'+cue.label.toLowerCase().replaceAll(' ','-')+'.png')});
     }
   }
-  await writeFile(path.join(evidence,'checks.json'),JSON.stringify({errors,checks,locationChecks},null,2));
-  const moving=new Set(['connection','normal','nino','india','recharge','mandals','districts','well','outlook','prepare','cities','close']);
+  await writeFile(path.join(evidence,'checks.json'),JSON.stringify({sourceHash:data.sourceHash,format,errors,checks,locationChecks,narration:data.narration},null,2));
+  const moving=new Set(['connection','normal','nino','india','recharge','mandals','districts','well','outlook','prepare','cities','close','ocean','summer','drought']);
+  for(const id of ['northeast','state-wells']){
+    if(!checks.some(c=>c.id===id&&c.changedFraction>.001))throw new Error('Chart reveal is static: '+id);
+  }
   if(errors.length||checks.some(c=>c.overflow.length||c.contrast<70||(moving.has(c.id)&&c.changedFraction!==null&&c.changedFraction<.001)))throw new Error('Scene verification failed: '+JSON.stringify({errors,checks}));
   await page.evaluate(()=>window.renderFilm(2.4));
   await page.screenshot({path:path.join(out,format==='landscape'?'poster.jpg':'poster-portrait.jpg'),type:'jpeg',quality:94});
@@ -61,8 +70,8 @@ try{
   }
   if(!preview){
     const fps=30,frames=Math.ceil(data.duration*fps);
-    const movie=path.join(out,`pacific-to-ap-${format}.mp4`);
-    const encoder=spawn('ffmpeg',['-hide_banner','-loglevel','warning','-y','-f','image2pipe','-framerate',String(fps),'-vcodec','mjpeg','-i','pipe:0','-i',path.join(out,'narration.m4a'),'-map','0:v','-map','1:a','-c:v','libx264','-preset','medium','-crf','22','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-movflags','+faststart','-t',String(data.duration),movie],{stdio:['pipe','inherit','inherit']});
+    const movie=path.join(out,`pacific-to-ap-${format}.mp4`),temporary=path.join(out,`.render-${format}.mp4`);
+    const encoder=spawn('ffmpeg',['-hide_banner','-loglevel','warning','-y','-f','image2pipe','-framerate',String(fps),'-vcodec','mjpeg','-i','pipe:0','-i',path.join(out,'narration.m4a'),'-map','0:v','-map','1:a','-c:v','libx264','-preset','medium','-crf','23','-pix_fmt','yuv420p','-c:a','aac','-b:a','192k','-movflags','+faststart','-t',String(data.duration),temporary],{stdio:['pipe','inherit','inherit']});
     let pipeError;encoder.stdin.on('error',e=>{pipeError=e;});
     const exit=once(encoder,'close');
     for(let i=0;i<frames;i++){
@@ -73,6 +82,10 @@ try{
       if(i%150===0)console.log(`${format}: ${i}/${frames} frames (${Math.round(i/frames*100)}%)`);
     }
     encoder.stdin.end();const [code]=await exit;if(code!==0)throw new Error('ffmpeg exited '+code);
+    sourceCheck();
+    if((await stat(temporary)).size>100*1024*1024)throw new Error('MP4 exceeds GitHub per-file limit; adjust encoding');
+    await rename(temporary,movie);
+    await writeFile(path.join(out,`render-${format}.json`),JSON.stringify({sourceHash:data.sourceHash,renderedAt:new Date().toISOString(),duration:data.duration,format,narration:data.narration},null,2));
     console.log('Rendered '+movie);
   }
 }finally{await browser.close();}

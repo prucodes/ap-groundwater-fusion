@@ -1,0 +1,633 @@
+{
+  "sourceHash": "d709b8ba814469956636186d38523e91dd8eba7f5cafa413dd7bbded8fab1bd2",
+  "format": "portrait",
+  "errors": [],
+  "checks": [
+    {
+      "id": "connection",
+      "time": 0.80775,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "ANDHRA PRADESH",
+          "x": 318.7939760437198,
+          "y": 920.9751947255811,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": null
+    },
+    {
+      "id": "connection",
+      "time": 2.9617500000000003,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "PACIFIC OCEAN",
+          "x": 684.3134399641746,
+          "y": 1171.421443369797,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 250,
+      "changedFraction": 0.8294509723081152
+    },
+    {
+      "id": "connection",
+      "time": 4.8465,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "PACIFIC OCEAN",
+          "x": 540.0000000000001,
+          "y": 1175.4919933482429,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 250,
+      "changedFraction": 0.5066996495567924
+    },
+    {
+      "id": "normal",
+      "time": 6.5877,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "INDONESIA",
+          "x": 296.91904493506036,
+          "y": 975.361272987635,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": null
+    },
+    {
+      "id": "normal",
+      "time": 9.7949,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "INDONESIA",
+          "x": 296.91904493506036,
+          "y": 975.361272987635,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": 0.05029890744176459
+    },
+    {
+      "id": "normal",
+      "time": 12.6012,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "SOUTH AMERICA",
+          "x": 760.5553220235442,
+          "y": 897.7655158506614,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": 0.6637806637806638
+    },
+    {
+      "id": "nino",
+      "time": 14.46575,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": null
+    },
+    {
+      "id": "nino",
+      "time": 17.29975,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": 0.5903937332508761
+    },
+    {
+      "id": "nino",
+      "time": 19.7795,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": 0.6048237476808905
+    },
+    {
+      "id": "history",
+      "time": 21.2263,
+      "overflow": [],
+      "geography": [],
+      "contrast": 253,
+      "changedFraction": null
+    },
+    {
+      "id": "history",
+      "time": 23.1951,
+      "overflow": [],
+      "geography": [],
+      "contrast": 253,
+      "changedFraction": 0.2637256922971209
+    },
+    {
+      "id": "history",
+      "time": 24.9178,
+      "overflow": [],
+      "geography": [],
+      "contrast": 253,
+      "changedFraction": 0.22400879543736688
+    },
+    {
+      "id": "ocean",
+      "time": 28.39725,
+      "overflow": [],
+      "geography": [],
+      "contrast": 249,
+      "changedFraction": null
+    },
+    {
+      "id": "ocean",
+      "time": 36.36325,
+      "overflow": [],
+      "geography": [],
+      "contrast": 249,
+      "changedFraction": 0.016491445062873634
+    },
+    {
+      "id": "ocean",
+      "time": 43.3335,
+      "overflow": [],
+      "geography": [],
+      "contrast": 249,
+      "changedFraction": 0.013193156050298907
+    },
+    {
+      "id": "india",
+      "time": 46.2445,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "ANDHRA PRADESH",
+          "x": 254.44544851913605,
+          "y": 1015.9836354512499,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": null
+    },
+    {
+      "id": "india",
+      "time": 48.6965,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "ANDHRA PRADESH",
+          "x": 389.0153163735048,
+          "y": 1032.176518442048,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": 0.8251219679791109
+    },
+    {
+      "id": "india",
+      "time": 50.842000000000006,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "ANDHRA PRADESH",
+          "x": 508.9171532325106,
+          "y": 1038.5028595395693,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": 0.8018278018278018
+    },
+    {
+      "id": "ap-history",
+      "time": 52.655,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": null
+    },
+    {
+      "id": "ap-history",
+      "time": 55.855,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": 0.10039167182024325
+    },
+    {
+      "id": "ap-history",
+      "time": 58.655,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": 0
+    },
+    {
+      "id": "rain",
+      "time": 60.8989,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": null
+    },
+    {
+      "id": "rain",
+      "time": 64.7493,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": 0.12279255136397993
+    },
+    {
+      "id": "rain",
+      "time": 68.1184,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": 0.011750154607297465
+    },
+    {
+      "id": "northeast",
+      "time": 70.9629,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": null
+    },
+    {
+      "id": "northeast",
+      "time": 75.9813,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": 0.007833436404864976
+    },
+    {
+      "id": "northeast",
+      "time": 80.3724,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": 0
+    },
+    {
+      "id": "recharge",
+      "time": 82.57244999999999,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": null
+    },
+    {
+      "id": "recharge",
+      "time": 85.09365,
+      "overflow": [],
+      "geography": [],
+      "contrast": 246,
+      "changedFraction": 0.7487803202088916
+    },
+    {
+      "id": "recharge",
+      "time": 87.2997,
+      "overflow": [],
+      "geography": [],
+      "contrast": 245,
+      "changedFraction": 0.7360681646395932
+    },
+    {
+      "id": "mandals",
+      "time": 89.43,
+      "overflow": [],
+      "geography": [],
+      "contrast": 249,
+      "changedFraction": null
+    },
+    {
+      "id": "mandals",
+      "time": 93.43,
+      "overflow": [],
+      "geography": [],
+      "contrast": 246,
+      "changedFraction": 0.07627293341579056
+    },
+    {
+      "id": "mandals",
+      "time": 96.93,
+      "overflow": [],
+      "geography": [],
+      "contrast": 248,
+      "changedFraction": 0.07366178794750224
+    },
+    {
+      "id": "districts",
+      "time": 98.85805,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": null
+    },
+    {
+      "id": "districts",
+      "time": 101.33285000000001,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": 0.07338693052978768
+    },
+    {
+      "id": "districts",
+      "time": 103.4983,
+      "overflow": [],
+      "geography": [],
+      "contrast": 247,
+      "changedFraction": 0.03896103896103896
+    },
+    {
+      "id": "state-wells",
+      "time": 105.94715000000001,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": null
+    },
+    {
+      "id": "state-wells",
+      "time": 110.82755,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": 0.12396069538926682
+    },
+    {
+      "id": "state-wells",
+      "time": 115.09790000000001,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": 0
+    },
+    {
+      "id": "well",
+      "time": 117.98495,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": null
+    },
+    {
+      "id": "well",
+      "time": 122.43015,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": 0.7544148972720401
+    },
+    {
+      "id": "well",
+      "time": 126.3197,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": 0.7353810210953068
+    },
+    {
+      "id": "outlook",
+      "time": 128.18189999999998,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": null
+    },
+    {
+      "id": "outlook",
+      "time": 130.1843,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": 0.7603243317529031
+    },
+    {
+      "id": "outlook",
+      "time": 131.9364,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": 0.7456881742596029
+    },
+    {
+      "id": "summer",
+      "time": 135.10085,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": null
+    },
+    {
+      "id": "summer",
+      "time": 142.20445,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": 0.04864976293547722
+    },
+    {
+      "id": "summer",
+      "time": 148.42010000000002,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": 0.044595616024187455
+    },
+    {
+      "id": "drought",
+      "time": 152.17135,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": null
+    },
+    {
+      "id": "drought",
+      "time": 157.43895,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": 0.05174190888476603
+    },
+    {
+      "id": "drought",
+      "time": 162.0481,
+      "overflow": [],
+      "geography": [],
+      "contrast": 242,
+      "changedFraction": 0.0498179069607641
+    },
+    {
+      "id": "prepare",
+      "time": 164.88150000000002,
+      "overflow": [],
+      "geography": [],
+      "contrast": 250,
+      "changedFraction": null
+    },
+    {
+      "id": "prepare",
+      "time": 168.9255,
+      "overflow": [],
+      "geography": [],
+      "contrast": 250,
+      "changedFraction": 0.6121074692503264
+    },
+    {
+      "id": "prepare",
+      "time": 172.464,
+      "overflow": [],
+      "geography": [],
+      "contrast": 251,
+      "changedFraction": 0.605510891225177
+    },
+    {
+      "id": "cities",
+      "time": 174.99495,
+      "overflow": [],
+      "geography": [],
+      "contrast": 254,
+      "changedFraction": null
+    },
+    {
+      "id": "cities",
+      "time": 179.04815,
+      "overflow": [],
+      "geography": [],
+      "contrast": 255,
+      "changedFraction": 0.6090153233010376
+    },
+    {
+      "id": "cities",
+      "time": 182.5947,
+      "overflow": [],
+      "geography": [],
+      "contrast": 254,
+      "changedFraction": 0.5861334432763005
+    },
+    {
+      "id": "close",
+      "time": 185.39285,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "ANDHRA PRADESH",
+          "x": 465.5515622818592,
+          "y": 1033.4354168067232,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": null
+    },
+    {
+      "id": "close",
+      "time": 190.15245000000002,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "ANDHRA PRADESH",
+          "x": 518.562942712446,
+          "y": 1034.556953260018,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": 0.6941524084381228
+    },
+    {
+      "id": "close",
+      "time": 194.3171,
+      "overflow": [],
+      "geography": [
+        {
+          "label": "ANDHRA PRADESH",
+          "x": 565.1306987902188,
+          "y": 1034.5191272857035,
+          "visible": true,
+          "inFrame": true
+        }
+      ],
+      "contrast": 255,
+      "changedFraction": 0.6818525389953961
+    }
+  ],
+  "locationChecks": [
+    {
+      "scene": "connection",
+      "cue": "ANDHRA PRADESH",
+      "time": 0.44999999999999996,
+      "label": "ANDHRA PRADESH",
+      "x": 318.7939760437198,
+      "y": 920.9751947255811,
+      "visible": true,
+      "inFrame": true
+    },
+    {
+      "scene": "connection",
+      "cue": "PACIFIC OCEAN",
+      "time": 3.853,
+      "label": "PACIFIC OCEAN",
+      "x": 540.0000000000001,
+      "y": 1175.4919933482429,
+      "visible": true,
+      "inFrame": true
+    },
+    {
+      "scene": "normal",
+      "cue": "INDONESIA",
+      "time": 9.481,
+      "label": "INDONESIA",
+      "x": 296.91904493506036,
+      "y": 975.361272987635,
+      "visible": true,
+      "inFrame": true
+    },
+    {
+      "scene": "normal",
+      "cue": "SOUTH AMERICA",
+      "time": 11.917,
+      "label": "SOUTH AMERICA",
+      "x": 760.5553220235442,
+      "y": 897.7655158506614,
+      "visible": true,
+      "inFrame": true
+    }
+  ],
+  "narration": {
+    "voice": "macOS Rishi (en-IN)",
+    "requestedVoice": "en-IN-PrabhatNeural",
+    "synthetic": true,
+    "status": "temporary-local-review",
+    "rateWpm": 165,
+    "tempo": 1
+  }
+}

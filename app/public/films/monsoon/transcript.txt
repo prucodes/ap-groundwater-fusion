@@ -1,0 +1,79 @@
+0.000s | A connected planet
+Andhra Pradesh's monsoon has a distant connection: the Pacific Ocean.
+Source: Earth imagery: NASA Blue Marble | Conceptual introduction
+
+5.385s | The Pacific engine
+Normally, trade winds push warm surface water towards Indonesia. Cold water rises near South America.
+Source: NOAA ENSO explanation | Circulation is schematic
+
+13.403s | El Niño / When the pattern shifts
+During El Nino, trade winds weaken. Warmth spreads east and tropical rainfall shifts.
+Source: NOAA ERSST v5 through 2026-09 | 1991-2020 baseline | Winds schematic
+
+20.488s | A pattern with a history
+Major events include nineteen ninety seven and twenty fifteen.
+Source: NOAA historical ENSO record | 1997-98 and 2015-16
+
+25.410s | The ocean now / observed and forecast
+NOAA's July to September ocean index is plus 2.16 degrees. Its October eighth outlook projects a relative-index peak of 2.74 degrees. Strong to very strong conditions remain over eighty three percent likely through March. This is not an Andhra Pradesh rainfall forecast.
+Source: NOAA CPC | Observed ONI: Jul-Sep 2026 | Forecast RONI: issued 2026-10-08 | Different indices
+
+45.325s | The India connection
+India's summer monsoon can weaken. The Indian Ocean and local weather also matter.
+Source: NOAA ENSO-monsoon explanation | Schematic; no local rainfall forecast
+
+51.455s | Andhra Pradesh / 45 years of rain
+5 of 7 El Nino summer monsoons were below average in Andhra Pradesh, averaging 13 percent below.
+Source: CHIRPS v3.0 project analysis | June-September, 1981-2025 | Historical association
+
+59.455s | Andhra Pradesh / rainfall
+June to August 2026 rainfall was 41.5 percent below average. Rank 1 driest in 46 years.
+Source: CHIRPS v3.0 | June to August 2026 | Comparison 1981-2026
+
+69.081s | October-December / northeast monsoon
+Historically, El Nino northeast monsoons averaged 7.7 percent below normal: 9 of 15 years. The north coast fared worst. This season has only just begun.
+Source: CHIRPS v3.0 project analysis | Oct-Dec, 1981-2025 | History, not an AP forecast
+
+81.627s | From rain to groundwater
+Rain infiltrates soil and fractured rock. Pumping and geology shape what remains.
+Source: AI-generated geological illustration | Flow is schematic; not a surveyed site
+
+87.930s | Andhra Pradesh / well readings
+By September, 54.3 percent of compared mandals were deeper than in May. 85.7 percent were short of their own ten year normal.
+Source: APWRIMS project series | 2026-05 to 2026-09 | Rebuilt State outlines + prototype fallback; not certified boundaries
+
+97.930s | Districts / change against own history
+District shortfalls differ. These are medians of observations, not predictions.
+Source: APWRIMS project series: 2026-05 to 2026-09 | CHIRPS v3 history: 1981-2025
+
+104.117s | The State's own wells / measured snapshot
+The State's 1746 station network reads 11.43 metres below ground on September ninth, 3.18 metres deeper than a year earlier.
+Source: AP AWARE State groundwater feed | 2026-09-09 | Latest-reading aggregate, not a monthly mean
+
+116.318s | A closer look / Orvakal
+Orvakal reads 29.68 metres. Water is 14.61 metres deeper this season, instead of its usual 2.36 metre rise.
+Source: APWRIMS | Orvakal, Kurnool | 2026-05 to 2026-09 | AI illustration, not site imagery
+
+127.431s | Possible outcomes / conditional
+Less recharge and continued pumping can increase pressure on wells.
+Source: Conditional risk, not a rainfall forecast or drought declaration | AI illustration
+
+132.437s | May 2027 / projection from past winters
+Past winters project 126 mandals beyond their deepest May. 76 are already over ten metres deep, home to about sixty seven lakh people in twenty twenty. Historically, only 32.5 percent of beyond-record calls materialised.
+Source: Project summer outlook | Anchor 2026-09 to 2027-05 | WorldPop 2020 | Not an AP rainfall forecast
+
+150.196s | Drought manual / evidence as of 2026-10-10
+As of October tenth, 477 mandals meet the rainfall trigger. 30 read severe, 325 moderate. This is manual evidence, not a drought declaration.
+Source: Project screening against DA&FW Drought Manual 2020 | 2026-10-10 | Incomplete indicators retained
+
+163.365s | Preparedness / homes, farms and communities
+For a possible dry spell: protect drinking water. Use drip irrigation and mulch where suitable. Agree a village contingency plan with local teams.
+Source: NIDM / ICAR / Jal Shakti guidance | AI illustration | Local advice, not a drought forecast
+
+173.475s | Cities / reduce the impact
+Cities cannot stop El Nino. Repair mains. Reuse safely treated water for non-drinking needs. Protect lakes and essential supplies.
+Source: MoHUA AMRUT 2.0 / NIDM guidance | AI urban illustration, not completed works
+
+183.608s | A proposed state review
+Read observations, NOAA's Pacific forecast, and the summer projection separately. None forecasts Andhra Pradesh rainfall. Verify locally. Assign action.
+Source: Proposed review, not an official directive | Well snapshot: 2026-09 | Synthetic narration; review pending

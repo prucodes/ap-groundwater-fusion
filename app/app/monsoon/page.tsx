@@ -26,6 +26,7 @@ import { stateSummary } from "../../lib/stateSummary";
 import { day } from "../../components/agriculture/waterContextFormat";
 import styles from "./MonsoonPage.module.css";
 import { brief } from "../../lib/pageBriefs";
+import { currentFilmFigures } from "../../lib/filmLiveFigures";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -200,12 +201,7 @@ export default function MonsoonPage() {
           <p className="cardNote">{r.rule}. Source-series totals are not unique boundary counts; the Agriculture review uses reconciled boundary units. Baseline review pending.</p>
         </details>
       </section>
-      <MonsoonFilm live={monsoonWatch.rainfall && monsoonWatch.elNinoRainfall.swMonsoon ? {
-        rainProduct: monsoonWatch.rainfall.product.split(" monthly")[0], rainMonths: monsoonWatch.rainfall.months,
-        rainAnomalyPct: monsoonWatch.rainfall.anomalyPct, year: monsoonWatch.season.year,
-        elNinoBelowNormal: monsoonWatch.elNinoRainfall.swMonsoon.elNinoBelowNormal, elNinoYears: monsoonWatch.elNinoRainfall.swMonsoon.elNinoYears,
-        fallingPct: monsoonWatch.recharge.fallingPct,
-      } : null} />
+      <MonsoonFilm live={currentFilmFigures()} />
 
       <EnsoOutlook />
 
