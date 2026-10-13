@@ -430,6 +430,101 @@
       padding:14px 16px 18px;background:rgba(3,15,26,.97)}
     body.cardOpen #timeline,body.cardOpen #camStack{display:none}
   }
+
+  /* The desktop atlas has one reading dock; comparisons belong to the selected place. */
+  :root{--ink-3:#819baa;--panel:rgba(4,19,29,.86)}
+  .glass{box-shadow:0 8px 24px rgba(0,0,0,.16);backdrop-filter:blur(12px)}
+  .dot{box-shadow:none}
+  #titleBlock h1{font-weight:400;text-shadow:none}
+  #titleBlock h1 b{font-weight:600}
+  #yearTag,#tipCat,#mcCat,#ocTier,.mcChips span,.rimKey{letter-spacing:0}
+  button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+  .seg button{border-radius:5px;letter-spacing:0}
+  .seg button[aria-pressed="true"]{background:#173a48;box-shadow:inset 0 -2px #7bdacb}
+  #tip{border-top:2px solid var(--cyan);background:rgba(4,19,29,.97)}
+  #snapPanel{position:static;transform:none;width:auto;margin-top:14px;padding:12px 0 0;
+    border:0;border-top:1px solid var(--line);border-radius:0;background:none;box-shadow:none;backdrop-filter:none}
+  #snapPanel .snapLegend{flex-wrap:wrap;gap:5px 9px}
+  #snapPanel svg{max-width:100%;height:auto}
+  body.sceneFocus #atlasDock{display:none}
+  @media(max-width:760px){
+    #rail .seg button{min-height:34px}
+    #mandalPick,.reliefControl{min-height:34px}
+    #legend[data-mode="now"],#legend[data-mode="outlook"]{max-width:none}
+    #legend .ocats .cat[data-k="n"]{display:flex}
+    #lgMore{width:28px;height:28px;top:3px;right:5px}
+    #legend .lgTitle{padding-right:30px}
+    #mcClose{width:40px;height:40px;top:4px;right:6px}
+    #mcName{padding-right:30px}
+    #play{width:36px;height:36px}
+  }
+  @media(min-width:761px){
+    #titleBlock{top:24px;left:28px;max-width:calc(100vw - 465px)}
+    #titleBlock .eyebrow{margin-bottom:8px;color:#84cfbf;font-size:10px}
+    #titleBlock h1{font-size:30px;line-height:1.15}
+    #titleBlock .sub{font-size:12px;line-height:1.5;margin-top:8px}
+    #titleBlock .caveat{font-size:10px;line-height:1.5;max-width:550px}
+    #kpis,#kpisOutlook{left:28px;top:var(--title-bottom,170px);gap:0;
+      border-top:1px solid var(--line);padding-top:12px;max-width:calc(100vw - 450px);flex-wrap:wrap}
+    #kpis .kpi,#kpisOutlook .kpi{min-width:0;padding:0 16px;margin:0;border:0;border-left:1px solid var(--line);
+      border-radius:0;background:none;box-shadow:none;backdrop-filter:none;flex:1 1 120px}
+    #kpis .kpi:first-child,#kpisOutlook .kpi:first-child{padding-left:0;border-left:0}
+    .kpi span{font-size:9px;color:#96adbb}
+    .kpi strong{font-size:22px;font-weight:500;line-height:1.3}
+    .kpi small{font-size:10px;line-height:1.5;max-width:170px}
+    #rail{top:24px;right:28px;width:385px;flex-direction:row;flex-wrap:wrap;gap:8px;align-items:center;justify-content:flex-end}
+    #rail .seg[aria-label="Colour mode"]{width:100%}
+    #rail .seg[aria-label="Colour mode"] button{flex:1;padding:8px 6px;font-size:11px;white-space:nowrap}
+    #rail .seg[aria-label="Geography"]{margin-right:auto}
+    #rail .seg[aria-label="Geography"] button{padding:6px 12px;font-size:11px}
+    #rail .reliefControl{padding:9px 10px;font-size:10px}
+    #mandalPick{width:100%;padding:9px 10px}
+    #reliefTools{width:100%;order:5}
+    #mCard{right:28px;width:290px;max-height:calc(100vh - var(--rail-bottom,205px) - var(--dock-height,180px) - 40px);
+      padding:16px;background:rgba(4,19,29,.96)}
+    #focusBtn{right:28px;top:auto;bottom:calc(var(--dock-height,180px) + 36px);border:1px solid var(--line);border-radius:6px}
+    #compass{left:28px;top:calc(var(--scene-mid,50vh) - 74px)}
+    #camStack{left:28px;top:calc(var(--scene-mid,50vh) - 24px);gap:6px}
+    #camStack button{border-radius:6px}
+    #atlasDock{position:fixed;z-index:5;left:28px;right:28px;bottom:18px;display:grid;
+      grid-template-columns:185px minmax(0,1fr);gap:10px 24px;padding:16px 20px 12px;
+      background:rgba(4,19,29,.94);border-top:1px solid rgba(159,234,255,.24);border-radius:6px;
+      backdrop-filter:blur(14px);pointer-events:none}
+    #atlasDock>*{pointer-events:auto}
+    #yearCard{grid-column:1;grid-row:1 / 3;align-self:center;text-align:left;padding:0 20px 0 0;
+      min-width:0;background:none;box-shadow:none;border:0;border-right:1px solid var(--line);border-radius:0;backdrop-filter:none}
+    #yearBig{font-size:30px;font-weight:400;line-height:1.2;text-shadow:none}
+    #yearTag{height:auto;font-size:9px;line-height:1.5;margin-top:6px;color:#88cdbf}
+    #statLine{font-size:10px;line-height:1.5;border:0;padding:0;margin-top:8px}
+    #legend,#legend[data-mode="outlook"],#legend[data-mode="now"]{position:relative;grid-column:2;grid-row:1;
+      inset:auto;transform:none;width:auto;max-width:none;padding:0;border:0;background:none;box-shadow:none;backdrop-filter:none}
+    #legend .lgTitle{font-size:10px;margin-bottom:8px;padding-right:28px;color:#b1c5d0}
+    #legend .cats,#legend .ocats{flex-direction:row;flex-wrap:wrap;gap:6px 20px}
+    #legend .cat{font-size:11px;line-height:1.5;gap:6px}
+    #legend .cat b{padding-left:0;margin-left:3px}
+    #legend .lgLong{display:none}#legend .lgShort{display:inline}
+    #legend .rimKey{font-size:10px;flex-basis:100%;border:0;padding:0;margin:0}
+    #legend .lgNote{font-size:10px;line-height:1.5;margin-top:8px;max-width:950px}
+    #legend .lgRow{margin-top:3px}
+    #lgRamp{max-width:600px;height:5px}
+    #timeline{position:relative;grid-column:2;grid-row:2;inset:auto;width:auto;transform:none;padding:9px 0 0;
+      border:0;border-top:1px solid var(--line);border-radius:0;background:none;box-shadow:none;backdrop-filter:none;gap:12px}
+    #timeline .track{height:32px}
+    #play{width:30px;height:30px}
+    #timeline .ticks span{font-size:10px}
+    #timeline input[type=range]::-webkit-slider-thumb{box-shadow:0 0 6px rgba(127,228,255,.32)}
+  }
+  @media(min-width:761px) and (max-width:1100px){
+    #titleBlock{max-width:calc(100vw - 410px)}
+    #titleBlock h1{font-size:25px}
+    #rail{width:340px}
+    #kpis,#kpisOutlook{top:max(var(--title-bottom,170px),var(--rail-bottom,170px));right:28px;max-width:none;flex-wrap:nowrap}
+    #kpis .kpi,#kpisOutlook .kpi{flex:1 1 0;padding-left:12px}
+    #kpis .kpi:first-child,#kpisOutlook .kpi:first-child{padding-left:0}
+    #atlasDock{grid-template-columns:155px minmax(0,1fr);gap:8px 18px}
+    #yearBig{font-size:25px}
+    #legend .cat{font-size:10px}
+  }
 </style>
 </head>
 <body>
@@ -500,11 +595,11 @@
     <a id="ocSummer" target="_top">Open the Summer Outlook</a>
     <div class="mcFoot">A projection from this mandal&rsquo;s own past winters, not a forecast of rain. Height is presentational.</div>
   </div>
-</div>
-<div class="hud glass" id="snapPanel">
+<div id="snapPanel">
   <div class="snapHead"><span id="snapHeading">Recorded depth distribution</span>
     <span class="snapLegend" id="snapLegend"><span><i style="background:#7fe4ff"></i>mandal</span><span><i style="background:#9db8cc"></i>district mean</span><span><i style="background:#5f7890"></i>displayed mean</span></span></div>
   <div id="snapChart"></div>
+</div>
 </div>
 <div class="hud" id="rail">
   <div class="glass seg" role="group" aria-label="Colour mode">
@@ -523,14 +618,15 @@
   <label class="glass reliefControl"><input id="depthRelief" type="checkbox" aria-label="Depth relief / schematic"><span class="lgLong">Depth relief / schematic</span><span class="lgShort">Relief</span></label>
   <div id="reliefTools" class="glass" hidden><label>Vertical scale<input id="reliefScale" aria-label="Relief vertical scale" type="range" min="0.7" max="1.8" step="0.1" value="1.2"><output id="reliefScaleValue">1.2×</output></label></div>
   <select id="mandalPick" aria-label="Inspect a mandal"><option value="">State overview</option></select>
+  <div id="phoneStat" aria-live="polite"></div>
+</div>
+
+<div id="atlasDock">
   <div class="glass" id="yearCard">
     <div id="yearBig"></div>
     <div id="yearTag"></div>
     <div id="statLine"></div>
   </div>
-  <div id="phoneStat" aria-live="polite"></div>
-</div>
-
 <div class="hud glass" id="legend" data-mode="level">
   <div class="lgTitle" id="lgTitle">Depth to water</div>
   <button id="lgMore" type="button" aria-label="About this key" aria-expanded="false">i</button>
@@ -554,6 +650,7 @@
     <input type="range" id="yearSlider" min="0" max="11" step="1" value="11" aria-label="Year">
     <div class="ticks" id="ticks"></div>
   </div>
+</div>
 </div>
 
 <div id="dLabels" aria-hidden="true"></div>
@@ -854,7 +951,7 @@ const crystalMat=new THREE.ShaderMaterial({
       if(vT>0.5){
         /* the top face IS water: multi-octave animated ripple normal */
         vec2 q=vW.xz;
-        float amp=mix(0.55,0.24,uRelief)*(0.65+0.6*dot(vC,vec3(0.33)));
+        float amp=mix(0.30,0.20,uRelief)*(0.65+0.6*dot(vC,vec3(0.33)));
         float e=0.05;
         float hC=wsurf(q);
         float tex=smoothstep(0.35,0.75,hC);
@@ -868,16 +965,16 @@ const crystalMat=new THREE.ShaderMaterial({
         vec3 N2=normalize(vec3((wsurf(q-vec2(e,0.0))-wsurf(q+vec2(e,0.0)))*amp,e*2.0,
                                (wsurf(q-vec2(0.0,e))-wsurf(q+vec2(0.0,e)))*amp)+wn*0.25);
         /* water body colour from the data tint: deep in troughs, luminous on slopes */
-        vec3 deepC=vC*0.70;
-        vec3 shalC=vC*1.20+vec3(0.02,0.05,0.07);
+        vec3 deepC=vC*0.82;
+        vec3 shalC=vC*1.12+vec3(0.01,0.025,0.03);
         float f2=pow(1.0-max(dot(N2,V),0.0),3.0);
         col=mix(deepC,shalC,clamp(f2*0.65+tex*0.48,0.0,1.0));
-        col+=vec3(0.55,0.95,1.0)*caust*mix(0.40,0.13,uRelief)*(1.0-0.6*uProj);
+        col+=vec3(0.55,0.95,1.0)*caust*mix(0.12,0.08,uRelief)*(1.0-0.6*uProj);
         col=mix(vec3(dot(col,vec3(0.299,0.587,0.114))),col,1.24);
         /* broad glossy sheen, like light on a still pool */
         col+=vec3(0.12,0.28,0.36)*pow(max(dot(reflect(-L,N2),V),0.0),6.0)*0.20;
         /* sun glitter breaking on the ripples */
-        col+=vec3(0.9,1.0,1.0)*pow(max(dot(reflect(-L,N2),V),0.0),120.0)*mix(0.5,0.18,uRelief);
+        col+=vec3(0.9,1.0,1.0)*pow(max(dot(reflect(-L,N2),V),0.0),120.0)*mix(0.16,0.10,uRelief);
         /* soft sky sheen */
         col+=vec3(0.10,0.25,0.32)*pow(max(dot(reflect(vec3(0.3,-0.8,0.5),N2),V),0.0),8.0)*0.15;
         /* a projection, not a reading: fine diagonal hatching over calmer water */
@@ -894,11 +991,11 @@ const crystalMat=new THREE.ShaderMaterial({
       }
       /* rim light */
       float fr=pow(1.0-max(dot(N,V),0.0),2.6);
-      col+=vec3(0.35,0.9,1.0)*fr*(vT>0.5?mix(0.38,0.16,uRelief):mix(0.45,0.20,uRelief));
+      col+=vec3(0.35,0.9,1.0)*fr*(vT>0.5?0.14:0.22);
       /* satellite scan sweep */
       float sp=fract(uTime/13.0), sx=mix(-7.0,7.0,sp);
       float band=smoothstep(0.5,0.0,abs(vW.x-sx))*smoothstep(0.0,0.06,sp)*smoothstep(1.0,0.94,sp);
-      col+=vec3(0.5,0.95,1.0)*band*mix(0.30,0.08,uRelief);
+      col+=vec3(0.5,0.95,1.0)*band*0.07;
       /* slow luminance drift, like cloud light */
       col*=1.0+sin(vW.x*0.5+uTime*0.06)*sin(vW.z*0.4-uTime*0.05)*0.06;
       float fd=smoothstep(13.0*uFogScale,30.0*uFogScale,length(cameraPosition-vW));
@@ -1191,7 +1288,7 @@ const water=new THREE.Mesh(
         vec3 L=normalize(vec3(0.55,0.75,0.35));
         /* fine ripple detail layered onto the rolling swell — the realism layer */
         float e=0.10, dfade=1.0-smoothstep(4.0,18.0,length(q));
-        float rAmp=1.4*max(dfade,0.25);
+        float rAmp=0.75*max(dfade,0.25);
         vec3 Nd=normalize(vec3((osurf(q-vec2(e,0.0))-osurf(q+vec2(e,0.0)))*rAmp,e*2.0,
                                (osurf(q-vec2(0.0,e))-osurf(q+vec2(0.0,e)))*rAmp));
         N=normalize(N+Nd*0.5);
@@ -1204,7 +1301,7 @@ const water=new THREE.Mesh(
         col+=vec3(0.30,0.65,0.80)*pow(max(dot(reflect(-L,N),V),0.0),42.0)*0.16;
         col+=vec3(0.55,0.85,1.0)*pow(max(dot(reflect(-L,N),V),0.0),240.0)*0.10*dfade;
         /* the stage is lit: water gently brightens toward the landmass, no ring */
-        col*=1.0+0.58*(1.0-smoothstep(0.0,9.0,length(q)));
+        col*=0.78+0.30*(1.0-smoothstep(0.0,9.0,length(q)));
         /* settle far field, keep the swell readable */
         float d=smoothstep(8.0,22.0,length(q));
         col=mix(col,vec3(0.007,0.045,0.082),d*0.65);
@@ -1215,7 +1312,7 @@ const water=new THREE.Mesh(
 water.rotation.x=-Math.PI/2; water.position.y=-0.02; scene.add(water);
 
 /* ============================== particles ============================== */
-const PN=REDUCED?0:120;
+const PN=0;
 let pGeo=null;
 if(PN){
   pGeo=new THREE.BufferGeometry();
@@ -1258,7 +1355,7 @@ const quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),null); quadScene.add(quad
 const mk=(w,h)=>new THREE.WebGLRenderTarget(w,h,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat});
 let rtScene,rtA,rtB;
 const brightMat=new THREE.ShaderMaterial({
-  uniforms:{tex:{value:null},thr:{value:0.62}},
+  uniforms:{tex:{value:null},thr:{value:0.78}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
   fragmentShader:`uniform sampler2D tex;uniform float thr;varying vec2 vUv;
     void main(){vec3 c=texture2D(tex,vUv).rgb;
@@ -1275,7 +1372,7 @@ const blurMat=new THREE.ShaderMaterial({
       gl_FragColor=vec4(s,1.0);}`,
 });
 const compMat=new THREE.ShaderMaterial({
-  uniforms:{tex:{value:null},bloom:{value:null},uStr:{value:0.92},uTime:{value:0}},
+  uniforms:{tex:{value:null},bloom:{value:null},uStr:{value:0.30},uTime:{value:0}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
   fragmentShader:`uniform sampler2D tex,bloom;uniform float uStr,uTime;varying vec2 vUv;
     float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
@@ -1284,7 +1381,7 @@ const compMat=new THREE.ShaderMaterial({
       c=vec3(1.0)-exp(-c*1.52);                       /* filmic-ish */
       float v=smoothstep(1.25,0.35,length(vUv-vec2(0.5,0.46)));
       c*=mix(0.72,1.0,v);
-      c+=(hash(vUv*vec2(1920.,1080.)+uTime)-0.5)*0.010; /* grain */
+      c+=(hash(vUv*vec2(1920.,1080.)+uTime)-0.5)*0.004; /* fine grain */
       gl_FragColor=vec4(c,1.0);
     }`,
 });
@@ -1298,8 +1395,8 @@ function sizeTargets(w,h){
 const target=new THREE.Vector3(0,0.32,-0.35);
 let theta=REDUCED?0.32:-0.9, phi=0.96, radius=26;
 if(QP.has("top")){theta=0;phi=0.06;radius=14;}
-let thetaV=0, autoRot=!REDUCED&&innerWidth>760, interacted=false;
-let introT0=-1; const INTRO=REDUCED?0:2600;
+let thetaV=0, autoRot=false, interacted=false;
+let introT0=null; const INTRO=REDUCED?0:2600;
 function easeOut(t){return 1-Math.pow(1-t,3);}
 /* Phones: frame the state in the space the panels leave rather than the whole
    screen. The view is offset so the band's middle is the picture's middle, and
@@ -1308,18 +1405,49 @@ const PHONE=()=>innerWidth<=760;
 /* On a portrait phone the state turns so its long south-west to north-east axis
    runs up the screen (Rayalaseema nearest, the north coast farthest), seen a
    little more from above: it then fills the free band instead of a thin strip. */
-const homeTheta=()=>PHONE()?-0.98:0.32, homePhi=()=>PHONE()?0.78:0.96;
+const homeTheta=()=>PHONE()?-0.98:0.32, homePhi=()=>PHONE()?0.78:0.86;
 const FIT_PTS=[];
 /* Sea level to the tallest relief: the coastal walls reach down to the water. */
 for(let i=0;i<NV;i+=13) for(const y of [0,1.46]) FIT_PTS.push(new THREE.Vector3(vBaseX[i],y,vBaseZ[i]));
-let phoneBand=null, phoneRadius=null;
+let phoneBand=null, phoneRadius=null, desktopRadius=null;
 const _fp=new THREE.Vector3();
 function placeCamera(th,ph,r){
   camera.position.set(target.x+r*Math.sin(ph)*Math.sin(th),target.y+r*Math.cos(ph),target.z+r*Math.sin(ph)*Math.cos(th));
   camera.lookAt(target); camera.updateMatrixWorld();
 }
+function fitDesktop(){
+  const box=id=>{const el=document.getElementById(id);return el&&el.offsetHeight>0?el.getBoundingClientRect():null;};
+  const above=["titleBlock","rail","kpis","kpisOutlook"].map(box).filter(Boolean);
+  const top=Math.max(0,...above.map(r=>r.bottom))+18;
+  const bottom=(box("atlasDock")?.top??innerHeight)-18;
+  if(bottom-top<100)return;
+  document.documentElement.style.setProperty("--scene-mid",`${(top+bottom)/2}px`);
+  const left=76,right=innerWidth-44;
+  camera.clearViewOffset();
+  const save=camera.position.clone(),maxH=Math.max(...curH,...toH);
+  const projected=r=>{
+    placeCamera(homeTheta(),homePhi(),r);
+    let x0=Infinity,x1=-Infinity,y0=Infinity,y1=-Infinity;
+    for(const p of FIT_PTS){_fp.copy(p);_fp.y=p.y?maxH:0;_fp.project(camera);
+      x0=Math.min(x0,_fp.x);x1=Math.max(x1,_fp.x);y0=Math.min(y0,_fp.y);y1=Math.max(y1,_fp.y);}
+    return{x0,x1,y0,y1};
+  };
+  let lo=5,hi=80;
+  for(let it=0;it<24;it++){
+    const r=(lo+hi)/2,b=projected(r);
+    if((b.x1-b.x0)*innerWidth/2<=right-left&&(b.y1-b.y0)*innerHeight/2<=bottom-top)hi=r;else lo=r;
+  }
+  // Centre the projected outline, not the geographic origin of an asymmetric state.
+  const b=projected(hi);
+  camera.setViewOffset(innerWidth,innerHeight,((b.x0+b.x1)/2+1)*innerWidth/2-(left+right)/2,
+    (1-(b.y0+b.y1)/2)*innerHeight/2-(top+bottom)/2,innerWidth,innerHeight);
+  camera.position.copy(save);camera.lookAt(target);camera.updateMatrixWorld();
+  desktopRadius=hi;
+  if(!interacted)radius=desktopRadius;
+}
 function fitPhone(){
-  if(!PHONE()){ if(phoneBand){phoneBand=null;phoneRadius=null;camera.clearViewOffset();} return; }
+  if(!PHONE()){phoneBand=null;phoneRadius=null;fitDesktop();return;}
+  desktopRadius=null;
   const box=id=>{const el=document.getElementById(id);return el&&el.offsetHeight>0?el.getBoundingClientRect():null;};
   const above=["titleBlock","rail"].map(box).filter(Boolean), below=["legend","timeline","mCard"].map(box).filter(Boolean);
   const top=Math.max(0,...above.map(r=>r.bottom))+8, bottom=Math.min(innerHeight,...below.map(r=>r.top))-8;
@@ -1343,6 +1471,7 @@ function fitPhone(){
 function fitRadius(base){
   const a=innerWidth/Math.max(innerHeight,1);
   if(PHONE()&&phoneRadius) return phoneRadius;
+  if(!PHONE()&&desktopRadius)return desktopRadius;
   if(innerWidth<=760)return Math.min(52,base*Math.max(1,1.35/a));
   return Math.min(22,base*Math.sqrt(Math.max(1,1.72/a)));
 }
@@ -1350,11 +1479,11 @@ function fitRadius(base){
 if(REDUCED){radius=fitRadius(12.9);}
 function issueCameraCommand(command){
   interacted=true;autoRot=false;introT0=nowMs-INTRO;
-  if(command==="reset"){theta=homeTheta();phi=homePhi();thetaV=0;radius=fitRadius(12.9);}
+  if(command==="reset"){fitPhone();theta=homeTheta();phi=homePhi();thetaV=0;radius=fitRadius(12.9);}
   else radius=Math.max(7.5,Math.min(56,radius*(command==="zoom_in"?.85:1.18)));
 }
 function updateCamera(){
-  if(introT0<0)introT0=nowMs;
+  if(introT0===null)introT0=nowMs;
   const it=INTRO?Math.min(1,(nowMs-introT0)/INTRO):1;
   if(it<1){
     const e=easeOut(it);
@@ -1816,7 +1945,7 @@ mandalPick.addEventListener("change",()=>{pinned=mandalPick.value===""?-1:Number
 document.getElementById("depthMax").textContent=`${fmt1(maxLvl)} m / deepest`;
 /* Labels that follow the embedded dataset, so the weekly rebuild needs no HTML edits. */
 const yearSpan=YEARS[0]+"\u2013"+YEARS[NY-1];
-document.getElementById("subLine").textContent=`Andhra Pradesh · ${NM} mandals · May depth to water, ${yearSpan}`+(NOW?`, and the latest reading (${NOW_MONTH} ${NOW_YEAR})`:"");
+document.getElementById("subLine").textContent=`Andhra Pradesh · ${NM} mandals · May ${yearSpan}`+(NOW?` + ${NOW_MONTH} ${NOW_YEAR}`:"");
 document.getElementById("tipY0").textContent=YEARS[0];
 document.getElementById("tipY1").textContent=YEARS[NY-1];
 document.getElementById("mcOwnLbl").textContent="vs own "+YEARS[0]+"\u2013"+YEARS[NY-1].slice(2);
@@ -2046,9 +2175,15 @@ updateEncodingNote();
 /* ============================== resize & loop ============================== */
 const railObserver=new ResizeObserver(()=>document.documentElement.style.setProperty("--rail-bottom",`${document.getElementById("rail").getBoundingClientRect().bottom+12}px`));
 railObserver.observe(document.getElementById("rail"));
+const layoutObserver=new ResizeObserver(()=>{
+  document.documentElement.style.setProperty("--title-bottom",`${document.getElementById("titleBlock").getBoundingClientRect().bottom+16}px`);
+  document.documentElement.style.setProperty("--dock-height",`${document.getElementById("atlasDock").offsetHeight}px`);
+});
+layoutObserver.observe(document.getElementById("titleBlock"));
+layoutObserver.observe(document.getElementById("atlasDock"));
 let refitTimer=0;
 const bandObserver=new ResizeObserver(()=>{clearTimeout(refitTimer);refitTimer=setTimeout(fitPhone,60);});
-for(const id of ["rail","legend","titleBlock","mCard"]) bandObserver.observe(document.getElementById(id));
+for(const id of ["rail","legend","titleBlock","kpis","kpisOutlook","mCard","atlasDock"]) bandObserver.observe(document.getElementById(id));
 const depthProbe=new THREE.LineSegments(new THREE.BufferGeometry(),new THREE.LineBasicMaterial({color:0xd5efe9,transparent:true,opacity:.82,depthTest:false}));
 depthProbe.renderOrder=8;scene.add(depthProbe);
 const probeTag=document.getElementById("probeTag"),probeLeader=document.getElementById("probeLeader"),probePoint=new THREE.Vector3();
@@ -2078,7 +2213,7 @@ function updateDepthProbe(){
   const px=(probePoint.x*.5+.5)*innerWidth,py=(-probePoint.y*.5+.5)*innerHeight;
   const w=probeTag.offsetWidth,h=probeTag.offsetHeight;
   let tx=Math.max(12,Math.min(innerWidth-w-12,px+14)),ty=Math.max(12,Math.min(innerHeight-h-120,py-24));
-  const obstacles=["rail","mCard","titleBlock","kpis","legend","snapPanel"].map(id=>document.getElementById(id)).filter(el=>el.offsetHeight>0).map(el=>el.getBoundingClientRect());
+  const obstacles=["rail","mCard","titleBlock","kpis","atlasDock"].map(id=>document.getElementById(id)).filter(el=>el.offsetHeight>0).map(el=>el.getBoundingClientRect());
   for(let pass=0;pass<3;pass++)for(const r of obstacles){
     if(tx+w+6>r.left&&tx-6<r.right&&ty+h+6>r.top&&ty-6<r.bottom){
       if(r.left>innerWidth*.55)tx=Math.max(12,r.left-w-14);

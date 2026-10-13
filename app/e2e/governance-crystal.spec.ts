@@ -6,6 +6,108 @@ const data = JSON.parse(html.match(/^const GW = (.*);$/m)![1]) as { years: strin
 // It opens on the latest month: the mandals with a reading that month, of all it draws.
 const latestCoverage = `${data.mandals.filter(m => m.c).length} / ${data.mandals.length}`;
 
+for (const viewport of [{ width: 320, height: 740 }, { width: 390, height: 844 }, { width: 430, height: 932 }]) {
+  test(`Touch atlas remains usable at ${viewport.width}px`, async ({ browser }, testInfo) => {
+    test.setTimeout(process.env.CI ? 360000 : 90000);
+    const context = await browser.newContext({ viewport, hasTouch: true, isMobile: true });
+    const page = await context.newPage();
+    try {
+      await page.goto(`${testInfo.project.use.baseURL}/crystal/`);
+      const frame = page.frameLocator(".crystalFrame");
+      await expect(frame.locator("#phoneStat")).toContainText("mean depth");
+      await frame.getByRole("button", { name: "Reset view", exact: true }).tap();
+      const inner = page.frames().find(f => f.url().includes("water-crystal-3d"))!;
+      const overflow = await inner.evaluate(() => [...document.querySelectorAll("#rail > *, #titleBlock h1, #legend, #timeline")]
+        .filter(el => (el as HTMLElement).offsetHeight > 0).some(el => {
+          const r=el.getBoundingClientRect();return r.left<0||r.right>innerWidth+1||el.scrollWidth>el.clientWidth+1;
+        }));
+      expect(overflow).toBe(false);
+      await expect(frame.locator("#kpis")).toBeHidden();
+      if (data.now && data.mandals.some(m => !m.c)) await expect(frame.locator('#ncats [data-k="n"]').last()).toBeVisible();
+      await frame.getByRole("button", { name: "About this key" }).tap();
+      await expect(frame.locator("#lgNote")).toBeVisible();
+      await frame.getByRole("button", { name: "About this key" }).tap();
+      if (viewport.width === 390) {
+        const bounds = (await page.locator(".crystalFrame").boundingBox())!;
+        const state = await inner.evaluate(() => new Function("return {radius,band:phoneBand}")());
+        const client = await context.newCDPSession(page);
+        const y=bounds.y+(state.band.top+state.band.bottom)/2,x=viewport.width/2;
+        await client.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{x:x-30,y,id:1},{x:x+30,y,id:2}] });
+        await client.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{x:x-55,y,id:1},{x:x+55,y,id:2}] });
+        await client.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+        await expect.poll(() => inner.evaluate(() => new Function("return radius")())).toBeLessThan(state.radius*.9);
+        await frame.getByRole("button", { name: "Reset view", exact: true }).tap();
+      }
+      await page.waitForTimeout(300);
+      await page.screenshot({ path: testInfo.outputPath(`atlas-touch-${viewport.width}.png`) });
+      await frame.getByLabel("Inspect a mandal").selectOption("0");
+      await expect(frame.locator("#mcName")).toHaveText(data.mandals[0].n);
+      await expect(frame.locator("#mCard")).toBeVisible();
+      await frame.getByRole("button", { name: "Close mandal details" }).tap();
+      await expect(frame.locator("#mCard")).toBeHidden();
+      await expect(frame.locator("#timeline")).toBeVisible();
+    } finally { await context.close(); }
+  });
+}
+
+for (const viewport of [{ width: 1280, height: 800 }, { width: 1440, height: 900 }, { width: 1920, height: 1080 }]) {
+  test(`Atlas reading dock leaves the state unobstructed at ${viewport.width}px`, async ({ page }, testInfo) => {
+    test.setTimeout(process.env.CI ? 360000 : 90000);
+    await page.setViewportSize(viewport);
+    await page.goto("/crystal/");
+    const frame = page.frameLocator(".crystalFrame");
+    await expect(frame.locator("#kCov")).toHaveText(latestCoverage);
+    await expect(frame.locator("#snapPanel")).toBeHidden();
+    await expect(frame.locator("#atlasDock #yearCard")).toBeVisible();
+    await expect(frame.locator("#atlasDock #legend")).toBeVisible();
+    await expect(frame.locator("#atlasDock #timeline")).toBeVisible();
+    // Reset must cancel the opening animation even when pressed before 2.6 seconds.
+    await frame.getByRole("button", { name: "Reset view", exact: true }).click();
+    const inner = page.frames().find(f => f.url().includes("water-crystal-3d"))!;
+    await expect.poll(() => inner.evaluate(() => new Function("return Math.abs(theta-homeTheta())+Math.abs(phi-homePhi())")())).toBeLessThan(.001);
+    await page.waitForTimeout(250);
+    const bounds = await inner.evaluate(() => new Function(`
+      const box=id=>document.getElementById(id).getBoundingClientRect();
+      const top=Math.max(...["titleBlock","rail","kpis"].map(id=>box(id).bottom));
+      const bottom=box("atlasDock").top,p=new THREE.Vector3();
+      let left=Infinity,right=-Infinity,low=Infinity,high=-Infinity;
+      for(let i=0;i<positions.length;i+=3){p.set(positions[i],positions[i+1],positions[i+2]).project(camera);
+        left=Math.min(left,(p.x+1)*innerWidth/2);right=Math.max(right,(p.x+1)*innerWidth/2);
+        low=Math.min(low,(1-p.y)*innerHeight/2);high=Math.max(high,(1-p.y)*innerHeight/2);}
+      const title=box("titleBlock"),rail=box("rail"),stats=box("kpis");
+      return {left,right,low,high,top,bottom,width:innerWidth,
+        headerClear:title.right<rail.left&&(stats.right<rail.left||stats.top>=rail.bottom),
+        overflow:document.documentElement.scrollWidth>innerWidth,rotating:autoRot};`)());
+    expect(bounds.headerClear).toBe(true);
+    expect(bounds.overflow).toBe(false);
+    expect(bounds.rotating).toBe(false);
+    expect(bounds.left).toBeGreaterThan(0);
+    expect(bounds.right).toBeLessThan(bounds.width);
+    expect(bounds.low).toBeGreaterThan(bounds.top);
+    expect(bounds.high).toBeLessThan(bounds.bottom);
+    expect(Math.max((bounds.right-bounds.left)/(bounds.width-120), (bounds.high-bounds.low)/(bounds.bottom-bounds.top))).toBeGreaterThan(.75);
+    await page.screenshot({ path: testInfo.outputPath(`atlas-${viewport.width}.png`) });
+    await frame.getByLabel("Inspect a mandal").selectOption("0");
+    await expect(frame.locator("#mCard #snapPanel")).toBeVisible();
+    await expect(frame.locator("#mcEvidence")).toHaveAttribute("href", `./mandals/${data.mandals[0].id}/`);
+    await frame.getByRole("button", { name: "Close mandal details" }).click();
+    await expect(frame.locator("#snapPanel")).toBeHidden();
+    if (viewport.width === 1440) {
+      const sample = () => inner.evaluate(() => new Function(`
+        renderer.setRenderTarget(null);renderer.render(scene,camera);
+        const gl=renderer.getContext(),w=canvas.width,h=canvas.height,buf=new Uint8Array(w*h*4);
+        gl.readPixels(0,0,w,h,gl.RGBA,gl.UNSIGNED_BYTE,buf);
+        const values=[];for(let y=Math.floor(h*.3);y<h*.75;y+=23)for(let x=Math.floor(w*.1);x<w*.9;x+=23){
+          const i=(y*w+x)*4;values.push(buf[i],buf[i+1],buf[i+2]);}return values;`)()) as Promise<number[]>;
+      const before = await sample();
+      await page.waitForTimeout(500);
+      const after = await sample();
+      expect(Math.max(...after)-Math.min(...after)).toBeGreaterThan(50);
+      expect(after.filter((value, i) => Math.abs(value-before[i])>2).length).toBeGreaterThan(20);
+    }
+  });
+}
+
 for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900 }]) {
   test(`Crystal preserves its scene and truthful analytics at ${viewport.width}px`, async ({ page }) => {
     test.setTimeout(process.env.CI ? 360000 : 90000);
@@ -49,8 +151,12 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 900
     if(viewport.width > 760){
       await expect(frame.locator("#probeTag")).toBeVisible();
       const label = (await frame.locator("#probeTag").boundingBox())!;
-      const rail = (await frame.locator("#rail").boundingBox())!;
-      expect(label.x + label.width).toBeLessThan(rail.x);
+      for (const id of ["rail", "mCard", "atlasDock"]) {
+        const panel = (await frame.locator(`#${id}`).boundingBox())!;
+        const overlaps = label.x < panel.x + panel.width && label.x + label.width > panel.x
+          && label.y < panel.y + panel.height && label.y + label.height > panel.y;
+        expect(overlaps, `depth probe overlaps ${id}`).toBe(false);
+      }
     }
     await frame.getByLabel("Relief vertical scale").fill("1.8");
     await expect(frame.locator("#reliefScaleValue")).toHaveText("1.8×");
