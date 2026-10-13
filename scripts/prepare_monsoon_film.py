@@ -19,7 +19,7 @@ from shapely.ops import unary_union
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "app/public/films/monsoon"
 TEMPO = 1.0
-VOICE = "en-IN-PrabhatNeural"
+VOICE = "en-GB-RyanNeural"
 VOICE_RATE = "+0%"
 VOICE_PITCH = "+0Hz"
 
@@ -260,7 +260,7 @@ def soundtrack(data):
     subprocess.run(args,check=True)
 
 
-def narrate_local_review(data):
+def narrate_local_review(data, voice):
     """Explicitly opt-in offline rough voice. Never label this as the requested neural voice."""
     cursor = 0
     locations = {"normal": [("Indonesia", "INDONESIA", 120, -3), ("South America", "SOUTH AMERICA", -78, -8)],
@@ -274,7 +274,7 @@ def narrate_local_review(data):
             files, offset, cues = [], 0., []
             for j, chunk in enumerate(chunks):
                 audio = Path(tmp) / f"{i}-{j}.aiff"
-                subprocess.run(["say", "-v", "Rishi", "-r", "165", "-o", str(audio), speech_text(chunk)], check=True)
+                subprocess.run(["say", "-v", voice, "-r", "165", "-o", str(audio), speech_text(chunk)], check=True)
                 for phrase, label, lon, lat in locations.get(scene["id"], []):
                     if chunk.startswith(phrase):
                         cues.append(dict(label=label, lon=lon, lat=lat, time=round(.35+offset, 3)))
@@ -294,7 +294,7 @@ def narrate_local_review(data):
             cursor += scene["duration"]
             print(f"Local review scene {i+1}: {scene['duration']:.1f}s", flush=True)
     data["duration"] = round(cursor, 3)
-    data["narration"] = dict(voice="macOS Rishi (en-IN)", requestedVoice=VOICE, synthetic=True,
+    data["narration"] = dict(voice=f"macOS {voice}", requestedVoice=VOICE, synthetic=True,
                              status="temporary-local-review", rateWpm=165, tempo=1.0)
     data["review"]["status"] = "temporary-voice-and-native-review-pending"
 
@@ -315,6 +315,7 @@ def main():
     parser.add_argument("--check-sources", action="store_true", help="Fail if app/data or site colour tokens changed after preparation")
     parser.add_argument("--voice-name", default=VOICE)
     parser.add_argument("--local-review-voice", action="store_true")
+    parser.add_argument("--review-voice", default="Eddy (English (UK))", help="macOS voice name used only for a review cut")
     args=parser.parse_args()
     VOICE = args.voice_name
     if args.check_sources:
@@ -334,7 +335,7 @@ def main():
         subprocess.run(["curl","-fL","https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73909/world.topo.bathy.200412.3x5400x2700.jpg","-o",str(OUT/"earth.jpg")],check=True)
     if args.voice or args.local_review_voice:
         if args.local_review_voice:
-            narrate_local_review(data)
+            narrate_local_review(data, args.review_voice)
         else:
             asyncio.run(narrate(data))
         assert data["duration"] <= 210, f"Edit the script, not the playback speed: {data['duration']:.1f}s exceeds 3:30"

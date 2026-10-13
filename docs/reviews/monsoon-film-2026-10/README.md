@@ -1,10 +1,10 @@
 # October 2026 film review
 
-**Draft review cut, not publication-approved.** The requested Edge neural voice
-returned HTTP 403. The user authorised the local Indian English voice (macOS
-Rishi) for review only. Native-speaker approval and the intended neural voice
-remain outstanding. The conditional Telugu edition is deferred, not represented
-as complete. No changes were pushed to `main`.
+**Draft review cut, not publication-approved.** Edge neural voice synthesis
+returned HTTP 403. The user selected macOS Eddy (English UK) for review only.
+The intended neural voice and native-speaker approval remain outstanding. The
+conditional Telugu edition is deferred, not represented as complete. No changes
+were pushed to `main`.
 
 Prepared from the October 12 data refresh and rechecked on the rendering day,
 October 13 UTC. September groundwater snapshot; June-August rainfall because
@@ -41,8 +41,8 @@ boundaries. Ambiguous joins remain missing instead of silently selecting a recor
 - **8 narrated-location checks** across both formats; Indonesia, South America, AP and Pacific front-facing and in frame at their audio-derived cues.
 - Source hash rechecked before and after both MP4 encodes; no source drift.
 - `data-testid="film-since"` absent in the built Monsoon page; review warning present.
-- Long film: **195.507 seconds**, 20 chapters, H.264/AAC 30 fps.
-- Landscape: 1920x1080, **55,580,429 bytes**. Portrait: 1080x1920, **58,267,491 bytes**.
+- Long film: **192.9 seconds**, 20 chapters, H.264/AAC 30 fps.
+- Both formats were regenerated with macOS Eddy (English UK) for review only.
 - Captions, chapter JSON, transcript, posters, narration, both MP4s and render records regenerated.
 - 60-second script and generator updated; local caption-led MP4 rendered at exactly 60 seconds, through September 2026 ERSST. Its generated file stays in ignored `dist/el-nino-october-2026/` per the existing workflow.
 
@@ -64,7 +64,7 @@ upgrades are outside this film change. No dependency manifest or lockfile was ch
 ## Before publication
 
 - Restore the intended neural narration when the service works; re-render both formats and rerun checks.
-- Have an Indian English native speaker review place names, El Nino, Indonesia, numbers and pacing.
+- Have a native English speaker review place names, El Nino, Indonesia, numbers and pacing.
 - If the voice quality is approved, prepare Telugu narration/captions and obtain a separate Telugu native-speaker review.
 - Have a domain reviewer sign off the observation/forecast/projection distinctions, dates and boundary limitations.
 - Keep the PR draft until those reviews are recorded. Do not infer approval from automated test results.

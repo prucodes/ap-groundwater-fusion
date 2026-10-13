@@ -11,10 +11,12 @@ checked-in source: the rainfall chapter still covers June-August 2026.
 
 **Not approved for publication.** Microsoft Edge synthesis with
 `en-IN-PrabhatNeural` returned HTTP 403 on both the film and a short test using
-edge-tts 7.2.8. A matching compatibility issue is recorded at
+edge-tts 7.2.8. The user does not require an Indian English voice; the intended
+neutral narration is `en-GB-RyanNeural`, which still needs a successful synthesis
+and listening review. A matching compatibility issue is recorded at
 https://github.com/rany2/edge-tts/discussions/489. No access-control workaround
-was attempted. The user explicitly approved macOS `Rishi` (Indian English) for
-a temporary review cut only. Both videos and the player visibly identify it as
+was attempted. The user selected macOS `Eddy (English (UK))` for a temporary
+review cut only. Both videos and the player visibly identify it as
 a review cut. `review.publishApproved` remains false. Open the PR as a draft;
 do not merge/deploy until the intended narration and native-speaker review are complete.
 
@@ -66,8 +68,8 @@ the surface with small splash rings; separate paths depict soil infiltration.
 Pumping is upward inside the illustrated borewell, never rain poured down it.
 These movements are conceptual, not calibrated groundwater simulation.
 
-The intended narration uses `en-IN-PrabhatNeural` at normal rate. The temporary
-offline review uses macOS Rishi at 165 words/minute, with no playback speed-up.
+The intended narration uses `en-GB-RyanNeural` at normal rate. The temporary
+offline review uses macOS Eddy (English UK) at 165 words/minute, with no playback speed-up.
 The spoken alias "El Neen-yo" guides the English synthesizer; captions retain the
 ordinary spelling. Indonesia is passed as the standard word to this voice.
 The narration remains synthetic; accent and pronunciation should be reviewed by

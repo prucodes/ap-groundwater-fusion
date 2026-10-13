@@ -141,7 +141,7 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
           Rebuilt State outlines with prototype fallback, not certified boundaries. Synthetic narration.
           NOAA&apos;s Pacific outlook and the historical-winter summer projection are labelled separately; neither forecasts AP rainfall.
           This is a fixed research edition, not a live feed or an official drought declaration.
-          {!film.review.publishApproved ? <strong data-testid="film-review"> Review cut only: temporary local Indian English voice. Neural voice and native-speaker approval pending.</strong> : null}
+          {!film.review.publishApproved ? <strong data-testid="film-review"> Review cut only: temporary local English voice. Final narration and native-speaker approval pending.</strong> : null}
           {since.length ? <span className={styles.since} data-testid="film-since"><strong>Since this edition:</strong> {since.join("; ")}. The figures elsewhere on this page are current.</span> : null}</p>
         <div className={styles.downloads}>
           <a href={`${assets}/pacific-to-ap-landscape.mp4`} download onClick={() => countEvent("monsoon/film-download", "Monsoon film: downloaded")}>Download film</a>

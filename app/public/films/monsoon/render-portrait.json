@@ -1,11 +1,11 @@
 {
   "sourceHash": "d709b8ba814469956636186d38523e91dd8eba7f5cafa413dd7bbded8fab1bd2",
-  "renderedAt": "2026-10-13T04:05:09.166Z",
-  "duration": 195.507,
+  "renderedAt": "2026-10-13T04:40:44.573Z",
+  "duration": 192.95,
   "format": "portrait",
   "narration": {
-    "voice": "macOS Rishi (en-IN)",
-    "requestedVoice": "en-IN-PrabhatNeural",
+    "voice": "macOS Eddy (English (UK))",
+    "requestedVoice": "en-GB-RyanNeural",
     "synthetic": true,
     "status": "temporary-local-review",
     "rateWpm": 165,
