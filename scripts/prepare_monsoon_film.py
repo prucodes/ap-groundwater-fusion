@@ -38,6 +38,26 @@ def digest(value):
     return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=True).encode()).hexdigest()
 
 
+def media_revision(data):
+    return digest({key: data[key] for key in ("sourceHash", "narration", "scenes", "review")})[:16]
+
+
+def approve_reviewed_cut(data, source_hashes, audio_hash):
+    """Approve only the unchanged cut that the user confirms a native speaker reviewed."""
+    if data["sourceHashes"] != source_hashes:
+        raise ValueError("Film sources changed: prepare and review a new cut")
+    if data["narration"].get("audioSha256") != audio_hash:
+        raise ValueError("Narration changed: review the replacement audio before approval")
+    if data["narration"].get("status") == "pending":
+        raise ValueError("Narration is pending")
+    data["review"] = {
+        "status": "native-speaker-approved", "publishApproved": True,
+        "approvedAt": datetime.now(timezone.utc).isoformat(),
+        "basis": "User confirmed native-speaker review of the complete film, including pronunciation and pacing",
+        "audioSha256": audio_hash,
+    }
+
+
 def design_tokens():
     """Read the site's source tokens; fail closed if their declarations change."""
     css = (ROOT / "app/app/globals.css").read_text()
@@ -374,6 +394,7 @@ def main():
     synthesis.add_argument("--voice",action="store_true")
     synthesis.add_argument("--local-review-voice", action="store_true")
     synthesis.add_argument("--kokoro", action="store_true", help="Local neural George narration with speech-derived timing")
+    synthesis.add_argument("--approve-reviewed-cut", action="store_true", help="Record explicit human approval of the existing full-film narration; never resynthesize")
     parser.add_argument("--check-sources", action="store_true", help="Fail if app/data or site colour tokens changed after preparation")
     parser.add_argument("--voice-name", default=VOICE)
     parser.add_argument("--review-voice", default="Eddy (English (UK))", help="macOS voice name used only for a review cut")
@@ -386,10 +407,16 @@ def main():
         assert saved["sourceHashes"] == current_source_hashes(), "Film sources changed: re-prepare and re-render both formats"
         print("Film source snapshot matches current app/data and site tokens")
         return
-    if not (args.voice or args.local_review_voice or args.kokoro):
-        parser.error("Choose --voice, --kokoro or --local-review-voice; never replace film metadata without matching narration")
+    if not (args.voice or args.local_review_voice or args.kokoro or args.approve_reviewed_cut):
+        parser.error("Choose a synthesis provider or --approve-reviewed-cut; never replace film metadata without matching narration")
     OUT.mkdir(parents=True,exist_ok=True)
-    data=snapshot(**load_inputs())
+    if args.approve_reviewed_cut:
+        data = json.loads((OUT / "manifest.json").read_text())
+        with (OUT / "narration.m4a").open("rb") as f:
+            audio_hash = hashlib.file_digest(f, "sha256").hexdigest()
+        approve_reviewed_cut(data, current_source_hashes(), audio_hash)
+    else:
+        data=snapshot(**load_inputs())
     shutil.copy(ROOT/"viz-src/three.min.js",OUT/"three.min.js")
     cache=Path(tempfile.gettempdir())/"ap-gw-video-assets/blue_marble.jpg"
     if cache.exists():
@@ -407,7 +434,7 @@ def main():
         soundtrack(data)
     with (OUT/"narration.m4a").open("rb") as f:
         data["narration"]["audioSha256"] = hashlib.file_digest(f, "sha256").hexdigest()
-    data["mediaVersion"] = digest({"source": data["sourceHash"], "narration": data["narration"], "scenes": data["scenes"]})[:16]
+    data["mediaVersion"] = media_revision(data)
     vtt(data)
     (OUT/"manifest.json").write_text(json.dumps(data,separators=(",",":")))
     metadata={"title":data["title"],"snapshot":data["snapshot"],"edition":data["edition"],"review":data["review"],"sourceHash":data["sourceHash"],"duration":data["duration"],

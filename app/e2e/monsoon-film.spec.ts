@@ -54,6 +54,8 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     if (!film.review.publishApproved) {
       await expect(section.getByTestId("film-review")).toContainText("Review cut only");
       await expect(section.getByTestId("film-review")).toContainText(film.narration.voice);
+    } else {
+      await expect(section.getByTestId("film-review")).toHaveCount(0);
     }
     const video = section.locator("video");
     await expect(video).toBeVisible();

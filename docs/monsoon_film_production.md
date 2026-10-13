@@ -1,6 +1,6 @@
 # Monsoon film production
 
-The October 2026 review edition explains El Nino, the India connection,
+The October 2026 edition explains El Nino, the India connection,
 AP rainfall history, measured groundwater changes, NOAA's attributed Pacific
 outlook, the historical-winter summer projection, drought-manual screening,
 village preparedness and city actions. It never forecasts AP rainfall or makes
@@ -9,13 +9,14 @@ checked-in source: the rainfall chapter still covers June-August 2026.
 
 ## Review gate
 
-**Not approved for publication.** The user selected Kokoro's George (`bm_george`,
-British English) after listening to neural voice auditions. George replaces
-the temporary macOS Eddy narration. Local neural synthesis is working; a
-Microsoft voice is no longer a release prerequisite. Both videos and the player
-identify this as a review cut. `review.publishApproved` remains false until a
-native English speaker reviews the complete narration, not just the audition.
-Keep the PR draft until that review and the domain review are recorded.
+**English narration approved for publication.** On October 13, 2026, the user
+confirmed that a native English speaker reviewed the complete George film,
+including pronunciation and pacing, and approved publication. The selected voice
+is Kokoro's George (`bm_george`, British English), replacing temporary macOS Eddy.
+The approved audio and speech timings are unchanged. `review.publishApproved`
+records the approval and binds it to the audio hash; both formats are re-rendered
+without the review watermark. This is language-review approval, not departmental
+validation or official endorsement of the prototype's figures.
 
 The Telugu edition is deferred. Kokoro George is English, not a Telugu voice.
 A Telugu edition needs an appropriate voice, translated captions and a separate
@@ -70,8 +71,8 @@ audition, with no playback speed-up. History and city narration are concise so
 the complete edition fits below 3:30 without accelerating the voice.
 The spoken alias "El Neen-yo" guides the English synthesizer; captions retain the
 ordinary spelling. Indonesia is passed as the standard word to this voice.
-The narration remains synthetic; accent and pronunciation should be reviewed by
-the intended audience before public distribution.
+The narration remains synthetic. Any replacement narration requires a new
+complete native-speaker review before public distribution.
 
 The visual direction also references NASA SVS's
 [ocean and atmosphere transition explainer](https://svs.gsfc.nasa.gov/5213/) and
@@ -135,6 +136,12 @@ FILM_BASE_URL=http://127.0.0.1:4179 node scripts/render_monsoon_film.mjs --portr
 python3 -m pytest
 ```
 
+Only after explicit full-film native-speaker approval, run
+`python3 scripts/prepare_monsoon_film.py --approve-reviewed-cut`, then re-render
+both formats. This preserves the approved audio, rejects source or audio drift,
+and changes the media revision to invalidate cached review-cut videos. New
+synthesis always resets approval to pending.
+
 The renderer currently uses macOS Metal. For another host, adjust its Chromium
 graphics backend. Each scene is checked at 15%, 55% and 90% for text overflow,
 nonblank canvas pixels, and motion where expected. Preview frames and results
@@ -149,7 +156,7 @@ Each source file's hash is retained in the manifest. The per-format render recor
 binds the MP4 to its source hash, duration and narration. Weekly data changes must
 not fail fixed-edition consistency tests; the page instead reports changed evidence.
 George's model, voice bundle and final audio hashes are retained in the manifest.
-`mediaVersion` also includes narration and scene timings; player media, posters,
+`mediaVersion` also includes narration, scene timings and approval; player media, posters,
 captions and downloads use that revision so old Eddy assets cannot be reused
 under an unchanged URL. The renderer verifies the served narration revision.
 
@@ -181,7 +188,7 @@ The exact generation prompt is recorded in `monsoon_urban_image_prompt.txt`.
 
 ## Verification
 
-The new review cut has 20 chapters, under the 210-second limit, in 1920 x 1080
+The new edition has 20 chapters, under the 210-second limit, in 1920 x 1080
 and 1080 x 1920, H.264/AAC at 30 fps. Exact duration and per-format provenance
 are in the generated manifest and render records. Key-frame evidence and final
 test results are recorded in the PR; older edition verification counts are not

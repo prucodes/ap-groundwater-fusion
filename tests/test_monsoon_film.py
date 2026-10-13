@@ -71,6 +71,25 @@ def test_pronunciation_changes_speech_not_captions():
     assert film.TEMPO == 1.0
 
 
+def test_approval_preserves_audio_and_invalidates_cached_review_video():
+    data = json.loads((ROOT / "app/public/films/monsoon/manifest.json").read_text())
+    data["review"] = {"publishApproved": False}
+    before = copy.deepcopy(data)
+    film.approve_reviewed_cut(data, data["sourceHashes"], data["narration"]["audioSha256"])
+    assert data["review"]["publishApproved"] is True
+    assert data["narration"] == before["narration"]
+    assert data["scenes"] == before["scenes"]
+    assert film.media_revision(data) != film.media_revision(before)
+
+
+@pytest.mark.parametrize("changed", ["sources", "audio"])
+def test_approval_rejects_changed_sources_or_audio(changed):
+    data = json.loads((ROOT / "app/public/films/monsoon/manifest.json").read_text())
+    with pytest.raises(ValueError, match="changed"):
+        film.approve_reviewed_cut(data, {} if changed == "sources" else data["sourceHashes"],
+                                 "changed" if changed == "audio" else data["narration"]["audioSha256"])
+
+
 def test_phoneme_alignment_uses_audio_timing_and_ignores_stress_spacing():
     marks = [SimpleNamespace(phoneme="abc ", start=.1),
              SimpleNamespace(phoneme="de", start=2.1),
@@ -122,6 +141,9 @@ def test_published_movie_snapshot_and_timeline_are_consistent():
     assert metadata["sourceHash"] == manifest["sourceHash"]
     assert metadata["mediaVersion"] == manifest["mediaVersion"]
     assert metadata["narration"] == manifest["narration"]
+    assert metadata["review"] == manifest["review"]
+    if manifest["review"]["publishApproved"]:
+        assert manifest["review"]["audioSha256"] == manifest["narration"]["audioSha256"]
     assert metadata["snapshot"] == manifest["snapshot"]
     assert metadata["narrated"] == film.narrated_figures(manifest)
     assert [c["text"] for c in metadata["chapters"]] == [s["voice"] for s in manifest["scenes"]]

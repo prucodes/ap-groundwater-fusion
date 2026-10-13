@@ -3,8 +3,11 @@
   "snapshot": "2026-09",
   "edition": "2026-10-12",
   "review": {
-    "status": "pending-native-speaker-review",
-    "publishApproved": false
+    "status": "native-speaker-approved",
+    "publishApproved": true,
+    "approvedAt": "2026-10-13T21:26:31.578086+00:00",
+    "basis": "User confirmed native-speaker review of the complete film, including pronunciation and pacing",
+    "audioSha256": "b1479fe316ced5aa87b33b2150e23caedd8f3cf86b9ad8e9062eaf1d8e2a420c"
   },
   "sourceHash": "d709b8ba814469956636186d38523e91dd8eba7f5cafa413dd7bbded8fab1bd2",
   "duration": 209.51,
@@ -25,7 +28,7 @@
     },
     "audioSha256": "b1479fe316ced5aa87b33b2150e23caedd8f3cf86b9ad8e9062eaf1d8e2a420c"
   },
-  "mediaVersion": "f3d8965ad874e4a6",
+  "mediaVersion": "eb4cc61d0b708256",
   "narrated": {
     "rainProduct": "CHIRPS v3.0",
     "rainMonths": "06-08",
