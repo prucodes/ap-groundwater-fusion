@@ -16,15 +16,22 @@ function clock(seconds: number) {
 export type FilmLiveFigures = {
   rainProduct: string; rainMonths: string; rainAnomalyPct: number; year: number;
   elNinoBelowNormal: number; elNinoYears: number; fallingPct: number;
+  [key: string]: unknown;
 } | null;
 
-const pct = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(1)}%`;
+const pct = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value)}%`;
+function canonical(value: unknown): string {
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    return JSON.stringify(Object.entries(value).sort(([a], [b]) => a.localeCompare(b)).map(([key, item]) => [key, canonical(item)]));
+  }
+  return JSON.stringify(value);
+}
 
 /** Where the live record has moved away from what this fixed edition says aloud. */
 export function sinceThisEdition(live: FilmLiveFigures, said: typeof film.narrated) {
   if (!live || !said) return [];
   const changes: string[] = [];
-  if (live.rainAnomalyPct !== said.rainAnomalyPct || live.rainProduct !== said.rainProduct) {
+  if (live.rainAnomalyPct !== said.rainAnomalyPct || live.rainProduct !== said.rainProduct || live.rainMonths !== said.rainMonths || live.year !== said.year) {
     changes.push(`rainfall for ${monthSpan(live.rainMonths)} ${live.year} now reads ${pct(live.rainAnomalyPct)} against its normal on ${live.rainProduct} (the film says ${pct(said.rainAnomalyPct)}, from ${said.rainProduct})`);
   }
   if (live.elNinoBelowNormal !== said.elNinoBelowNormal || live.elNinoYears !== said.elNinoYears) {
@@ -32,6 +39,20 @@ export function sinceThisEdition(live: FilmLiveFigures, said: typeof film.narrat
   }
   if (live.fallingPct !== said.fallingPct) {
     changes.push(`${live.fallingPct}% of compared mandals are deeper than in May (the film says ${said.fallingPct}%)`);
+  }
+  const groups: [string, string[]][] = [
+    ["the rainfall totals or historical rank", ["rainRank", "rainYears", "rainMm", "rainNormalMm"]],
+    ["the southwest monsoon historical mean", ["historyMeanPct"]],
+    ["the mandal comparison window or counts", ["latestMonth", "falling", "compared", "shortOfNormalPct"]],
+    ["Orvakal's well readings", ["well"]], ["the observed Pacific index", ["oni"]],
+    ["NOAA's Pacific outlook", ["ocean"]], ["the northeast monsoon history", ["northeast"]],
+    ["the State network snapshot", ["stateWells"]], ["the summer projection or its track record", ["summer"]],
+    ["the drought-manual evidence", ["drought"]],
+  ];
+  for (const [label, keys] of groups) {
+    if (keys.some(key => key in live && canonical(live[key]) !== canonical(said[key as keyof typeof said]))) {
+      changes.push(`${label} has been updated; see the current dated evidence on the site`);
+    }
   }
   return changes;
 }
@@ -44,6 +65,7 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
   const [vertical, setVertical] = useState(false);
   const resume = useRef({ time: 0, playing: false });
   const assets = `${basePath}/films/monsoon`;
+  const revision = `?v=${film.mediaVersion}`;
   useEffect(() => {
     const media = window.matchMedia("(max-width: 760px)");
     const update = () => {
@@ -70,7 +92,7 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
           <span className={styles.eyebrow}>The ocean-to-aquifer story</span>
           <h2 id="monsoon-film-title">{film.title}</h2>
         </div>
-        <span className={styles.duration}>{clock(film.duration)} · English narration</span>
+        <span className={styles.duration}>{clock(film.duration)} · English review narration</span>
       </div>
       <video
         ref={ref}
@@ -78,8 +100,8 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
         controls
         playsInline
         preload="metadata"
-        poster={`${assets}/${vertical ? "poster-portrait" : "poster"}.jpg`}
-        src={`${assets}/pacific-to-ap-${vertical ? "portrait" : "landscape"}.mp4`}
+        poster={`${assets}/${vertical ? "poster-portrait" : "poster"}.jpg${revision}`}
+        src={`${assets}/pacific-to-ap-${vertical ? "portrait" : "landscape"}.mp4${revision}`}
         aria-label="El Nino explained: history, India's monsoon, and Andhra Pradesh groundwater"
         onError={() => setFailed(true)}
         // onPlay rather than a click handler: the film uses the browser's own controls.
@@ -95,7 +117,7 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
           setActive(Math.max(0, film.chapters.findLastIndex((chapter) => chapter.start <= time)));
         }}
       >
-        <track kind="captions" src={`${assets}/captions.vtt`} srcLang="en" label="English" />
+        <track kind="captions" src={`${assets}/captions.vtt${revision}`} srcLang="en" label="English" />
         Your browser does not support video. The download and transcript are available below.
       </video>
       {failed ? <p role="alert">The video could not load. Use the download link or read the transcript below.</p> : null}
@@ -115,14 +137,16 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
         {film.chapters.map((chapter, index) => <option key={chapter.id} value={index}>{clock(chapter.start)} · {chapter.title}</option>)}
       </select>
       <div className={styles.meta}>
-        <p>Snapshot: {film.snapshot}. NOAA ocean reconstruction, CHIRPS rainfall and project APWRIMS well series.
+        <p>Edition: {film.edition}. Well snapshot: {film.snapshot}. NOAA ocean reconstruction, CHIRPS rainfall and project APWRIMS well series.
           Circulation is schematic; the aquifer, village and city scenes are AI-generated illustrations, not site imagery.
-          Prototype boundaries. Synthetic narration. Local outcomes are conditional, not forecasts.
-          The film is a fixed research edition, not a live update; its seasonal baseline is under review.
+          Rebuilt State outlines with prototype fallback, not certified boundaries. Synthetic narration.
+          NOAA&apos;s Pacific outlook and the historical-winter summer projection are labelled separately; neither forecasts AP rainfall.
+          This is a fixed research edition, not a live feed or an official drought declaration.
+          {!film.review.publishApproved ? <strong data-testid="film-review"> Review cut only: {film.narration.voice} narration. Native-speaker approval pending.</strong> : null}
           {since.length ? <span className={styles.since} data-testid="film-since"><strong>Since this edition:</strong> {since.join("; ")}. The figures elsewhere on this page are current.</span> : null}</p>
         <div className={styles.downloads}>
-          <a href={`${assets}/pacific-to-ap-landscape.mp4`} download onClick={() => countEvent("monsoon/film-download", "Monsoon film: downloaded")}>Download film</a>
-          <a href={`${assets}/pacific-to-ap-portrait.mp4`} download onClick={() => countEvent("monsoon/film-share", "Monsoon film: took the vertical cut to share")}>Vertical / WhatsApp</a>
+          <a href={`${assets}/pacific-to-ap-landscape.mp4${revision}`} download onClick={() => countEvent("monsoon/film-download", "Monsoon film: downloaded")}>Download film</a>
+          <a href={`${assets}/pacific-to-ap-portrait.mp4${revision}`} download onClick={() => countEvent("monsoon/film-share", "Monsoon film: took the vertical cut to share")}>Vertical / WhatsApp</a>
         </div>
       </div>
       <details className={styles.transcript} onToggle={event => { if (event.currentTarget.open) countEvent("monsoon/film-transcript", "Monsoon film: opened the transcript"); }}>

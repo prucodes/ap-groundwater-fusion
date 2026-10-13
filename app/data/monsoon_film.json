@@ -1,106 +1,307 @@
 {
   "title": "From the Pacific to Andhra Pradesh",
-  "snapshot": "2026-08",
-  "sourceHash": "57d6cc109d08041c63631ab8df48fefcaca7506447725cfef276ca6df70c0ea3",
-  "duration": 178.44,
+  "snapshot": "2026-09",
+  "edition": "2026-10-12",
+  "review": {
+    "status": "native-speaker-approved",
+    "publishApproved": true,
+    "approvedAt": "2026-10-13T21:26:31.578086+00:00",
+    "basis": "User confirmed native-speaker review of the complete film, including pronunciation and pacing",
+    "audioSha256": "b1479fe316ced5aa87b33b2150e23caedd8f3cf86b9ad8e9062eaf1d8e2a420c"
+  },
+  "sourceHash": "d709b8ba814469956636186d38523e91dd8eba7f5cafa413dd7bbded8fab1bd2",
+  "duration": 209.51,
+  "narration": {
+    "voice": "George (British English)",
+    "voiceId": "bm_george",
+    "engine": "Kokoro-82M v1.0",
+    "runtime": "kokoro-onnx 0.6.1",
+    "synthetic": true,
+    "status": "neural-review",
+    "speed": 1.0,
+    "tempo": 1.0,
+    "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+    "voicesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+    "modelSource": "https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.1",
+    "pronunciation": {
+      "El Nino": "El Neen-yo"
+    },
+    "audioSha256": "b1479fe316ced5aa87b33b2150e23caedd8f3cf86b9ad8e9062eaf1d8e2a420c"
+  },
+  "mediaVersion": "eb4cc61d0b708256",
   "narrated": {
-    "rainProduct": "CHIRPS v2.0",
+    "rainProduct": "CHIRPS v3.0",
     "rainMonths": "06-08",
-    "rainAnomalyPct": -28.4,
-    "elNinoBelowNormal": 6,
+    "rainAnomalyPct": -41.5,
+    "elNinoBelowNormal": 5,
     "elNinoYears": 7,
-    "fallingPct": 62.7
+    "fallingPct": 54.3,
+    "year": 2026,
+    "latestMonth": "2026-09",
+    "rainRank": 1,
+    "rainYears": 46,
+    "rainMm": 254.8,
+    "rainNormalMm": 435.4,
+    "historyMeanPct": -13.0,
+    "falling": 315,
+    "compared": 580,
+    "shortOfNormalPct": 85.7,
+    "well": {
+      "latestDepthM": 29.68,
+      "thisSeasonM": 14.61,
+      "typicalM": -2.36
+    },
+    "oni": {
+      "asOf": "2026-08",
+      "season": "JAS",
+      "oniC": 2.16,
+      "strength": "very strong"
+    },
+    "ocean": {
+      "issued": "2026-10-08",
+      "index": "RONI: CPC's relative Ni\u00f1o 3.4 index, three-month means, 1991\u20132020 base",
+      "peak": {
+        "season": "OND",
+        "label": "Oct\u2013Dec 2026",
+        "medianC": 2.74,
+        "likelyRangeC": [
+          2.54,
+          2.94
+        ]
+      },
+      "synopsis": "El Ni\u00f1o continues to strengthen, with a strong-to-very strong El Ni\u00f1o likely through January-March 2027 (remaining greater than an 83% chance)."
+    },
+    "northeast": {
+      "elNinoYears": 15,
+      "elNinoBelowNormal": 9,
+      "elNinoAnomalyPct": -7.7,
+      "firstYear": 1981,
+      "lastYear": 2025
+    },
+    "stateWells": {
+      "stations": 1746,
+      "currentM": 11.43,
+      "date": "2026-09-09",
+      "preMonsoonM": 10.1,
+      "postMonsoonM": 6.0,
+      "yearAgoM": 8.25,
+      "sinceMayM": 1.33,
+      "vsYearAgoM": 3.18,
+      "stationsTotal": 1746,
+      "band": "6m-20m"
+    },
+    "summer": {
+      "anchor": "2026-09",
+      "targetMay": "2027-05",
+      "beyond": 126,
+      "beyondDeep": 76,
+      "people": 6653915,
+      "backtest": {
+        "anchorMonth": "August",
+        "comparisons": 4710,
+        "years": [
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025,
+          2026
+        ],
+        "typicalErrorM": 1.63,
+        "persistenceErrorM": 1.95,
+        "withinDryPct": 89.4,
+        "pastRecordPct": {
+          "beyond": 32.5,
+          "dry": 12.1,
+          "within": 6.2
+        },
+        "tierCounts": {
+          "beyond": 760,
+          "dry": 1546,
+          "within": 2404
+        },
+        "baseRatePct": 12.4,
+        "recordsFlaggedPct": 74.3,
+        "byYear": [
+          {
+            "may": 2019,
+            "comparisons": 485,
+            "medianErrorM": 0.87
+          },
+          {
+            "may": 2020,
+            "comparisons": 507,
+            "medianErrorM": -2.31
+          },
+          {
+            "may": 2021,
+            "comparisons": 612,
+            "medianErrorM": -1.64
+          },
+          {
+            "may": 2022,
+            "comparisons": 609,
+            "medianErrorM": 0.12
+          },
+          {
+            "may": 2023,
+            "comparisons": 622,
+            "medianErrorM": 0.01
+          },
+          {
+            "may": 2024,
+            "comparisons": 623,
+            "medianErrorM": 0.91
+          },
+          {
+            "may": 2025,
+            "comparisons": 626,
+            "medianErrorM": -0.62
+          },
+          {
+            "may": 2026,
+            "comparisons": 626,
+            "medianErrorM": 0.39
+          }
+        ]
+      }
+    },
+    "drought": {
+      "asOf": "2026-10-10",
+      "trigger1": 477,
+      "counts": {
+        "severe": 30,
+        "moderate|severe": 27,
+        "moderate": 325,
+        "normal|moderate": 19,
+        "normal": 76,
+        "noTrigger": 138,
+        "insufficient": 55
+      }
+    }
   },
   "chapters": [
     {
       "id": "connection",
       "title": "A connected planet",
       "start": 0,
-      "text": "An ocean thousands of kilometres away can change the odds of rain in Andhra Pradesh. The connection begins in the Pacific."
+      "text": "Andhra Pradesh's monsoon has a distant connection: the Pacific Ocean."
     },
     {
       "id": "normal",
       "title": "The Pacific engine",
-      "start": 9.136,
+      "start": 6.129,
       "text": "Normally, trade winds push warm surface water towards Indonesia. Cold water rises near South America."
     },
     {
       "id": "nino",
       "title": "El Ni\u00f1o / When the pattern shifts",
-      "start": 18.44,
-      "text": "El Nino is a recurring ocean and atmosphere pattern. Trade winds weaken, warmth spreads east, and tropical rainfall shifts."
+      "start": 15.043,
+      "text": "During El Nino, trade winds weaken. Warmth spreads east and tropical rainfall shifts."
     },
     {
       "id": "history",
       "title": "A pattern with a history",
-      "start": 28.704,
-      "text": "The powerful events of nineteen ninety seven to ninety eight, and twenty fifteen to sixteen, show this is a recurring pattern."
+      "start": 22.357,
+      "text": "Major events: nineteen ninety seven; twenty fifteen."
+    },
+    {
+      "id": "ocean",
+      "title": "The ocean now / observed and forecast",
+      "start": 27.239,
+      "text": "NOAA's July to September ocean index is plus 2.16 degrees. Its October eighth outlook projects a relative-index peak of 2.74 degrees. Strong to very strong conditions remain over eighty three percent likely through March. This is not an Andhra Pradesh rainfall forecast."
     },
     {
       "id": "india",
       "title": "The India connection",
-      "start": 37.264,
-      "text": "That changes atmospheric circulation and can weaken India's summer monsoon. The Indian Ocean and local weather also shape the outcome."
+      "start": 48.6,
+      "text": "India's summer monsoon can weaken. The Indian Ocean and local weather also matter."
     },
     {
       "id": "ap-history",
       "title": "Andhra Pradesh / 45 years of rain",
-      "start": 47.36,
-      "text": "In the project's 45 year Andhra Pradesh record, 6 of 7 El Nino summer monsoons had below average rain. Individual years varied widely."
+      "start": 55.679,
+      "text": "5 of 7 El Nino summer monsoons were below average in Andhra Pradesh, averaging 13 percent below."
     },
     {
       "id": "rain",
       "title": "Andhra Pradesh / rainfall",
-      "start": 58.776,
-      "text": "In this project's June to August 2026 snapshot, Andhra Pradesh rainfall was 28.4 percent below its historical average."
+      "start": 64.956,
+      "text": "June to August 2026 rainfall was 41.5 percent below average. Rank 1 driest in 46 years."
+    },
+    {
+      "id": "northeast",
+      "title": "October-December / northeast monsoon",
+      "start": 76.025,
+      "text": "Historically, El Nino northeast monsoons averaged 7.7 percent below normal: 9 of 15 years. The north coast fared worst. This season has only just begun."
     },
     {
       "id": "recharge",
       "title": "From rain to groundwater",
-      "start": 68.68,
-      "text": "Some rain seeps through soil and rock, replenishing groundwater. Pumping and geology change how much water remains."
+      "start": 89.608,
+      "text": "Rain infiltrates soil and fractured rock. Pumping and geology shape what remains."
     },
     {
       "id": "mandals",
       "title": "Andhra Pradesh / well readings",
-      "start": 78.248,
-      "text": "By August, 62.7 percent of monitored mandals had deeper water levels than in May. These are observations, not an El Nino forecast."
+      "start": 96.697,
+      "text": "By September, 54.3 percent of compared mandals were deeper than in May. 85.7 percent were short of their own ten year normal."
     },
     {
       "id": "districts",
       "title": "Districts / change against own history",
-      "start": 89.856,
-      "text": "Districts show different groundwater shortfalls against their own normal seasons. These are medians of local observations, not predictions of the next season."
+      "start": 107.724,
+      "text": "District shortfalls differ. These are medians of observations, not predictions."
+    },
+    {
+      "id": "state-wells",
+      "title": "The State's own wells / measured snapshot",
+      "start": 114.334,
+      "text": "The State's 1746 station network reads 11.43 metres below ground on September ninth, 3.18 metres deeper than a year earlier."
     },
     {
       "id": "well",
       "title": "A closer look / Orvakal",
-      "start": 101.224,
-      "text": "In Orvakal, depth to water increased from 15.07 to 28.97 metres, instead of its usual seasonal rise. Deeper means farther below ground."
+      "start": 127.537,
+      "text": "Orvakal reads 29.68 metres. Water is 14.61 metres deeper this season, instead of its usual 2.36 metre rise."
     },
     {
       "id": "outlook",
       "title": "Possible outcomes / conditional",
-      "start": 114.32,
-      "text": "If rainfall stays low and pumping continues, recharge can weaken and drought risk can rise. Local forecasts need more than the Pacific index."
+      "start": 139.204,
+      "text": "Less recharge and continued pumping can increase pressure on wells."
+    },
+    {
+      "id": "summer",
+      "title": "May 2027 / projection from past winters",
+      "start": 145.079,
+      "text": "Past winters project 126 mandals beyond their deepest May. 76 are already over ten metres deep, home to about sixty seven lakh people in twenty twenty. Historically, only 32.5 percent of beyond-record calls materialised."
+    },
+    {
+      "id": "drought",
+      "title": "Drought manual / evidence as of 2026-10-10",
+      "start": 163.871,
+      "text": "As of October tenth, 477 mandals meet the rainfall trigger. 30 read severe, 325 moderate. This is manual evidence, not a drought declaration."
     },
     {
       "id": "prepare",
       "title": "Preparedness / homes, farms and communities",
-      "start": 125.616,
-      "text": "Prepare for a possible dry spell. Fix leaks and protect drinking water. Capture rain safely. Use drip irrigation and mulch where suitable, guided by crop needs. Track wells and storage, and agree a village contingency plan with local teams."
+      "start": 177.861,
+      "text": "For a possible dry spell: protect drinking water. Use drip irrigation and mulch where suitable. Agree a village contingency plan with local teams."
     },
     {
       "id": "cities",
       "title": "Cities / reduce the impact",
-      "start": 145.408,
-      "text": "Cities cannot stop El Nino. They can reduce water stress. Repair leaking mains. Reuse safely treated water for non-drinking needs. Protect lakes and rainwater systems. Plan essential supplies with local water teams."
+      "start": 189.399,
+      "text": "Cities cannot stop El Nino. Fix leaks, protect lakes, reuse safely treated water for non-drinking needs."
     },
     {
       "id": "close",
       "title": "A proposed state review",
-      "start": 165.2,
-      "text": "For a state review, verify local readings, identify priority water supplies, and assign teams to track action. El Nino is climate context, not a mandal forecast."
+      "start": 198.399,
+      "text": "Keep observations, NOAA's forecast and summer projections separate. None forecasts Andhra Pradesh rainfall. Verify locally. Assign action."
     }
   ],
   "sources": [
@@ -122,7 +323,27 @@
     },
     {
       "label": "CHIRPS",
-      "url": "https://data.chc.ucsb.edu/products/CHIRPS-2.0/global_monthly/tifs"
+      "url": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global"
+    },
+    {
+      "label": "NOAA CPC: Pacific outlook (RONI)",
+      "url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml"
+    },
+    {
+      "label": "NOAA CPC: observed ONI",
+      "url": "https://psl.noaa.gov/data/correlation/oni.data"
+    },
+    {
+      "label": "State groundwater network",
+      "url": "https://prucodes.github.io/ap-groundwater-fusion/monsoon/#monsoon-film-title"
+    },
+    {
+      "label": "Summer projection and track record",
+      "url": "https://prucodes.github.io/ap-groundwater-fusion/summer/"
+    },
+    {
+      "label": "Drought Manual 2020",
+      "url": "https://vedas.sac.gov.in/static/pdf/Drought%20Manual-2020.pdf"
     },
     {
       "label": "NIDM: drought preparedness and water conservation",

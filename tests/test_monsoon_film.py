@@ -3,6 +3,9 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("prepare_monsoon_film", ROOT / "scripts/prepare_monsoon_film.py")
@@ -12,7 +15,7 @@ spec.loader.exec_module(film)
 
 def inputs():
     return tuple(json.loads((ROOT / "app/data" / name).read_text()) for name in (
-        "monsoon_watch.json", "ap_map_geometry.json", "enso_pacific.json"))
+        "monsoon_watch.json", "ap_map_display.json", "enso_pacific.json"))
 
 
 def test_movie_narration_tracks_changed_measurements():
@@ -68,6 +71,39 @@ def test_pronunciation_changes_speech_not_captions():
     assert film.TEMPO == 1.0
 
 
+def test_approval_preserves_audio_and_invalidates_cached_review_video():
+    data = json.loads((ROOT / "app/public/films/monsoon/manifest.json").read_text())
+    data["review"] = {"publishApproved": False}
+    before = copy.deepcopy(data)
+    film.approve_reviewed_cut(data, data["sourceHashes"], data["narration"]["audioSha256"])
+    assert data["review"]["publishApproved"] is True
+    assert data["narration"] == before["narration"]
+    assert data["scenes"] == before["scenes"]
+    assert film.media_revision(data) != film.media_revision(before)
+
+
+@pytest.mark.parametrize("changed", ["sources", "audio"])
+def test_approval_rejects_changed_sources_or_audio(changed):
+    data = json.loads((ROOT / "app/public/films/monsoon/manifest.json").read_text())
+    with pytest.raises(ValueError, match="changed"):
+        film.approve_reviewed_cut(data, {} if changed == "sources" else data["sourceHashes"],
+                                 "changed" if changed == "audio" else data["narration"]["audioSha256"])
+
+
+def test_phoneme_alignment_uses_audio_timing_and_ignores_stress_spacing():
+    marks = [SimpleNamespace(phoneme="abc ", start=.1),
+             SimpleNamespace(phoneme="de", start=2.1),
+             SimpleNamespace(phoneme="f.", start=2.7)]
+    assert film.phrase_time(marks, "d\u02c8e f") == 2.45
+
+
+@pytest.mark.parametrize("phrase", ["", "xyz", "abc"])
+def test_phoneme_alignment_rejects_missing_or_ambiguous_cues(phrase):
+    marks = [SimpleNamespace(phoneme="abc abc", start=1)]
+    with pytest.raises(ValueError, match="no unique phoneme match"):
+        film.phrase_time(marks, phrase)
+
+
 def test_city_actions_and_state_review_are_not_official_directives():
     timeline = film.snapshot(*inputs())["scenes"]
     scenes = {s["id"]: s for s in timeline}
@@ -103,6 +139,11 @@ def test_published_movie_snapshot_and_timeline_are_consistent():
     manifest = json.loads((ROOT / "app/public/films/monsoon/manifest.json").read_text())
     metadata = json.loads((ROOT / "app/data/monsoon_film.json").read_text())
     assert metadata["sourceHash"] == manifest["sourceHash"]
+    assert metadata["mediaVersion"] == manifest["mediaVersion"]
+    assert metadata["narration"] == manifest["narration"]
+    assert metadata["review"] == manifest["review"]
+    if manifest["review"]["publishApproved"]:
+        assert manifest["review"]["audioSha256"] == manifest["narration"]["audioSha256"]
     assert metadata["snapshot"] == manifest["snapshot"]
     assert metadata["narrated"] == film.narrated_figures(manifest)
     assert [c["text"] for c in metadata["chapters"]] == [s["voice"] for s in manifest["scenes"]]
@@ -126,3 +167,51 @@ def test_the_page_says_where_the_live_record_has_moved_from_the_film():
     assert "Since this edition:" in component
     for figure in ("rainAnomalyPct", "rainProduct", "elNinoBelowNormal", "fallingPct"):
         assert figure in component, f"a change in {figure} would go unmentioned"
+
+
+def test_new_chapters_keep_indices_dates_and_projections_separate():
+    data = film.snapshot(**film.load_inputs())
+    scenes = {s["id"]: s for s in data["scenes"]}
+    assert {"ocean", "northeast", "state-wells", "summer", "drought"} <= scenes.keys()
+    assert "RONI" in scenes["ocean"]["source"] and "ONI" in scenes["ocean"]["source"]
+    assert "not an Andhra Pradesh rainfall forecast" in scenes["ocean"]["voice"]
+    assert str(data["summer"]["backtest"]["pastRecordPct"]["beyond"]) in scenes["summer"]["voice"]
+    assert "WorldPop 2020" in scenes["summer"]["source"]
+    assert "not a drought declaration" in scenes["drought"]["voice"]
+    assert "None forecasts Andhra Pradesh rainfall" in scenes["close"]["voice"]
+    assert all(s["rings"] for s in data["shapes"])
+    assert {s["boundarySource"] for s in data["shapes"]} == {"official", "prototype"}
+    assert data["review"]["publishApproved"] is False
+
+
+def test_every_new_source_and_theme_change_invalidates_the_snapshot():
+    original = film.load_inputs()
+    data = film.snapshot(**original)
+    assert len(data["sourceHashes"]) == 8
+    changed = copy.deepcopy(original)
+    changed["summer"]["summary"]["beyond"] += 1
+    updated = film.snapshot(**changed)
+    assert updated["sourceHash"] != data["sourceHash"]
+    assert str(changed["summer"]["summary"]["beyond"]) in next(s["voice"] for s in updated["scenes"] if s["id"] == "summer")
+    assert len(data["design"]["drought"]) == 7
+
+
+def test_ambiguous_boundary_join_is_not_silently_last_wins():
+    watch, geo, pacific = inputs()
+    duplicate = copy.deepcopy(next(m for m in watch["mandals"] if m["boundaryIndex"] is not None and m["mandal"] != "Orvakal"))
+    watch["mandals"].append(duplicate)
+    data = film.snapshot(watch, geo, pacific)
+    assert data["shapes"][duplicate["boundaryIndex"]]["shortfall"] is None
+
+
+def test_fixed_edition_assets_are_internally_consistent_and_under_limit():
+    data = json.loads((ROOT / "app/public/films/monsoon/manifest.json").read_text())
+    assert data["duration"] <= 210
+    for name in ("chapters.json", "transcript.txt", "captions.vtt"):
+        assert (ROOT / "app/public/films/monsoon" / name).stat().st_size > 100
+    for orientation in ("landscape", "portrait"):
+        record = json.loads((ROOT / f"app/public/films/monsoon/render-{orientation}.json").read_text())
+        assert record["sourceHash"] == data["sourceHash"]
+        assert record["duration"] == data["duration"]
+        assert record["mediaVersion"] == data["mediaVersion"]
+        assert record["narration"] == data["narration"]

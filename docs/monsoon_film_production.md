@@ -1,8 +1,26 @@
 # Monsoon film production
 
-The film explains El Nino, the India connection, AP rainfall history, observed
-groundwater changes, conditional risks, village preparedness and city actions. It is a
-prototype communication product, not an official forecast or drought declaration.
+The October 2026 edition explains El Nino, the India connection,
+AP rainfall history, measured groundwater changes, NOAA's attributed Pacific
+outlook, the historical-winter summer projection, drought-manual screening,
+village preparedness and city actions. It never forecasts AP rainfall or makes
+an official drought declaration. September CHIRPS is not yet published in the
+checked-in source: the rainfall chapter still covers June-August 2026.
+
+## Review gate
+
+**English narration approved for publication.** On October 13, 2026, the user
+confirmed that a native English speaker reviewed the complete George film,
+including pronunciation and pacing, and approved publication. The selected voice
+is Kokoro's George (`bm_george`, British English), replacing temporary macOS Eddy.
+The approved audio and speech timings are unchanged. `review.publishApproved`
+records the approval and binds it to the audio hash; both formats are re-rendered
+without the review watermark. This is language-review approval, not departmental
+validation or official endorsement of the prototype's figures.
+
+The Telugu edition is deferred. Kokoro George is English, not a Telugu voice.
+A Telugu edition needs an appropriate voice, translated captions and a separate
+native-speaker review. Automated checks do not approve pronunciation or translation.
 
 ## Assets and implementation
 
@@ -21,7 +39,8 @@ prototype communication product, not an official forecast or drought declaration
 
 NASA Blue Marble is the Earth texture. NOAA ERSST v5 monthly anomaly images are
 reprojected onto the globe. Wind trails and the ocean cross-section are schematic,
-not measured wind vectors. AP shapes use the project's public prototype geometry;
+not measured wind vectors. AP shapes use `ap_map_display.json`: rebuilt State
+outlines where available, with prototype fallback, not certified boundaries;
 their uniform extrusion does not represent elevation or water depth. Unmatched
 mandals remain grey. District history and current groundwater change have different
 units and observation windows, displayed separately.
@@ -29,13 +48,17 @@ units and observation windows, displayed separately.
 The aquifer scene is an AI illustration, not Orvakal imagery. Measured depths are
 shown on a separate numerical scale. Animated flow paths are conceptual. The
 preparedness village and urban scene are also illustrative, not real surveyed
-settlements or completed public works. The village scene remains at 2:05; the
-additional city scene begins at 2:25, followed by the proposed state review at 2:45.
+settlements or completed public works. The village scene remains immediately
+before the city scene and proposed state review. Exact chapter times are generated
+in `chapters.json`, not manually copied into production notes.
 
-Globe motion follows speech-derived word timings for Andhra Pradesh, the Pacific,
+Globe motion follows speech-derived timings for Andhra Pradesh, the Pacific,
 Indonesia and South America. The renderer checks each location's front-facing
 projection and frame bounds at its narrated cue in both formats. The normal-state
-caption changes with the spoken sentence. Cold upwelling is shown in the ocean
+caption follows the spoken passage. George is synthesized in complete scenes
+to preserve sentence flow. The timing-enabled model supplies phoneme durations;
+place cues are aligned to those durations, not guessed fractions of a scene.
+Ambiguous or missing alignments fail preparation. Cold upwelling is shown in the ocean
 cross-section, not as horizontal motion along the coast.
 
 Groundwater particles follow distance-parameterized fracture paths. Rain ends at
@@ -43,11 +66,13 @@ the surface with small splash rings; separate paths depict soil infiltration.
 Pumping is upward inside the illustrated borewell, never rain poured down it.
 These movements are conceptual, not calibrated groundwater simulation.
 
-Narration uses `en-GB-RyanNeural` at -2% rate, with no post-production speed-up.
+The selected narration uses Kokoro-82M v1.0 George at speed 1.0, matching the
+audition, with no playback speed-up. History and city narration are concise so
+the complete edition fits below 3:30 without accelerating the voice.
 The spoken alias "El Neen-yo" guides the English synthesizer; captions retain the
 ordinary spelling. Indonesia is passed as the standard word to this voice.
-The narration remains synthetic; accent and pronunciation should be reviewed by
-the intended audience before public distribution.
+The narration remains synthetic. Any replacement narration requires a new
+complete native-speaker review before public distribution.
 
 The visual direction also references NASA SVS's
 [ocean and atmosphere transition explainer](https://svs.gsfc.nasa.gov/5213/) and
@@ -78,32 +103,70 @@ city performance, savings target or funded project is asserted.
 
 ## Regeneration
 
-From the repository root, with ffmpeg, ffprobe, the project's Python dependencies,
-edge-tts and the app's Playwright Chromium installed:
+From the repository root, with ffmpeg, ffprobe, the project's Python dependencies
+and the app's Playwright Chromium installed. The isolated ignored environment
+`dist/voice-auditions/.venv` contains `kokoro-onnx==0.6.1`,
+`soundfile==0.14.0`, `espeakng-loader==0.2.4`, `phonemizer==3.4.0` and
+`numpy==2.4.6`; it uses ONNX Runtime 1.26.0. No application dependencies change.
+
+Download the [timing-enabled v1.0 model](https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.0.onnx)
+as `dist/voice-auditions/kokoro-v1.0-timed.onnx`, and the
+[v1.0 voices](https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin)
+as `dist/voice-auditions/voices-v1.0.bin`. Model weights are Apache-2.0;
+the [ONNX wrapper](https://github.com/thewh1teagle/kokoro-onnx) is MIT.
+The old export without phoneme durations is rejected.
 
 ```sh
-PYTHONPATH=.video-python python3 scripts/prepare_monsoon_film.py --voice
-python3 -m http.server 4178 --bind 127.0.0.1 --directory app/public
+dist/voice-auditions/.venv/bin/python scripts/prepare_monsoon_film.py --kokoro
+node app/scripts/serve-static.mjs --port 4179 --bind 127.0.0.1 --directory app/public
 ```
 
-That server is fine for the renderer, which reads the scene assets start to finish. To watch
-the finished film in a browser, serve it with `node app/scripts/serve-static.mjs` instead:
+Optional providers remain available: `--voice` uses Edge synthesis;
+`--local-review-voice` uses a macOS system voice for explicitly authorised
+temporary review only. Neither is required for George.
+The range-capable server is required for reviewing the finished film:
 `python3 -m http.server` ignores Range requests, and Chromium will not let you seek in a video
 served without them.
 
 In another terminal:
 
 ```sh
-node scripts/render_monsoon_film.mjs
-node scripts/render_monsoon_film.mjs --portrait
+FILM_BASE_URL=http://127.0.0.1:4179 node scripts/render_monsoon_film.mjs
+FILM_BASE_URL=http://127.0.0.1:4179 node scripts/render_monsoon_film.mjs --portrait
 python3 -m pytest
 ```
+
+Only after explicit full-film native-speaker approval, run
+`python3 scripts/prepare_monsoon_film.py --approve-reviewed-cut`, then re-render
+both formats. This preserves the approved audio, rejects source or audio drift,
+and changes the media revision to invalidate cached review-cut videos. New
+synthesis always resets approval to pending.
 
 The renderer currently uses macOS Metal. For another host, adjust its Chromium
 graphics backend. Each scene is checked at 15%, 55% and 90% for text overflow,
 nonblank canvas pixels, and motion where expected. Preview frames and results
 are saved under `dist/monsoon-film`. The player browser tests are in
 `app/e2e/monsoon-film.spec.ts` and run under Playwright's `film` project.
+
+Preparation hashes all seven source JSON files and the current site colour tokens.
+The renderer re-reads sources before and after encoding and refuses source drift.
+Sequential maps use `SEQ_RAMP`; drought screening uses `CATEGORY_META`; the
+background follows `--band-navy`. Numbers do not count through fabricated values.
+Each source file's hash is retained in the manifest. The per-format render record
+binds the MP4 to its source hash, duration and narration. Weekly data changes must
+not fail fixed-edition consistency tests; the page instead reports changed evidence.
+George's model, voice bundle and final audio hashes are retained in the manifest.
+`mediaVersion` also includes narration, scene timings and approval; player media, posters,
+captions and downloads use that revision so old Eddy assets cannot be reused
+under an unchanged URL. The renderer verifies the served narration revision.
+
+ONI (+2.16 C, JAS 2026, ERSST v6) and forecast RONI (+2.74 C median peak,
+OND 2026, issued October 8) are explicitly different indices. The monthly globe
+uses ERSST v5 and is labelled separately. The summer projection starts in
+September; its published 2019-2026 backtest used August starts. The exact
+32.5% beyond-record success rate and 1.63 m median error are displayed, not a
+claim of forecast certainty. Population is the 2020 WorldPop estimate, not
+today's census or a count of people certain to be affected.
 
 ## Generated imagery
 
@@ -125,14 +188,11 @@ The exact generation prompt is recorded in `monsoon_urban_image_prompt.txt`.
 
 ## Verification
 
-The current export contains 15 scenes and runs 178.440 seconds. Landscape is
-1920 x 1080 (81.6 MB); portrait is 1080 x 1920 (90.4 MB). Both are H.264/AAC at
-30 fps. All 90 scene samples passed overflow, nonblank-image and applicable
-motion checks. Eight narrated-location checks passed across the two formats.
-Desktop (1440 px) and phone (390 px) playback, decoded chapter seeking, source
-links, captions, downloads and the Pacific explorer were verified. Seven browser
-tests, including the three existing Pacific-panel regressions, passed. The Python
-suite passed 219 tests and the Next.js production build passed.
+The new edition has 20 chapters, under the 210-second limit, in 1920 x 1080
+and 1080 x 1920, H.264/AAC at 30 fps. Exact duration and per-format provenance
+are in the generated manifest and render records. Key-frame evidence and final
+test results are recorded in the PR; older edition verification counts are not
+evidence for this edition.
 
 ## Briefing assessment
 
@@ -152,5 +212,5 @@ Merging this work into `main` triggers the repository's GitHub Pages workflow.
 It validates the data contract and builds the static site with the
 `/ap-groundwater-fusion` base path. Confirm that the deployment succeeds and that
 both video formats play on the published Monsoon Watch page before announcing
-the release. The film is a dated August 2026 snapshot; refreshing dashboard data
+the release. The film is an October 2026 edition with September well data; refreshing dashboard data
 requires regenerating and rechecking the film.

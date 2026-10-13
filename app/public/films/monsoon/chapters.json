@@ -1,0 +1,122 @@
+[
+  {
+    "id": "connection",
+    "title": "A connected planet",
+    "start": 0,
+    "text": "Andhra Pradesh's monsoon has a distant connection: the Pacific Ocean."
+  },
+  {
+    "id": "normal",
+    "title": "The Pacific engine",
+    "start": 6.129,
+    "text": "Normally, trade winds push warm surface water towards Indonesia. Cold water rises near South America."
+  },
+  {
+    "id": "nino",
+    "title": "El Ni\u00f1o / When the pattern shifts",
+    "start": 15.043,
+    "text": "During El Nino, trade winds weaken. Warmth spreads east and tropical rainfall shifts."
+  },
+  {
+    "id": "history",
+    "title": "A pattern with a history",
+    "start": 22.357,
+    "text": "Major events: nineteen ninety seven; twenty fifteen."
+  },
+  {
+    "id": "ocean",
+    "title": "The ocean now / observed and forecast",
+    "start": 27.239,
+    "text": "NOAA's July to September ocean index is plus 2.16 degrees. Its October eighth outlook projects a relative-index peak of 2.74 degrees. Strong to very strong conditions remain over eighty three percent likely through March. This is not an Andhra Pradesh rainfall forecast."
+  },
+  {
+    "id": "india",
+    "title": "The India connection",
+    "start": 48.6,
+    "text": "India's summer monsoon can weaken. The Indian Ocean and local weather also matter."
+  },
+  {
+    "id": "ap-history",
+    "title": "Andhra Pradesh / 45 years of rain",
+    "start": 55.679,
+    "text": "5 of 7 El Nino summer monsoons were below average in Andhra Pradesh, averaging 13 percent below."
+  },
+  {
+    "id": "rain",
+    "title": "Andhra Pradesh / rainfall",
+    "start": 64.956,
+    "text": "June to August 2026 rainfall was 41.5 percent below average. Rank 1 driest in 46 years."
+  },
+  {
+    "id": "northeast",
+    "title": "October-December / northeast monsoon",
+    "start": 76.025,
+    "text": "Historically, El Nino northeast monsoons averaged 7.7 percent below normal: 9 of 15 years. The north coast fared worst. This season has only just begun."
+  },
+  {
+    "id": "recharge",
+    "title": "From rain to groundwater",
+    "start": 89.608,
+    "text": "Rain infiltrates soil and fractured rock. Pumping and geology shape what remains."
+  },
+  {
+    "id": "mandals",
+    "title": "Andhra Pradesh / well readings",
+    "start": 96.697,
+    "text": "By September, 54.3 percent of compared mandals were deeper than in May. 85.7 percent were short of their own ten year normal."
+  },
+  {
+    "id": "districts",
+    "title": "Districts / change against own history",
+    "start": 107.724,
+    "text": "District shortfalls differ. These are medians of observations, not predictions."
+  },
+  {
+    "id": "state-wells",
+    "title": "The State's own wells / measured snapshot",
+    "start": 114.334,
+    "text": "The State's 1746 station network reads 11.43 metres below ground on September ninth, 3.18 metres deeper than a year earlier."
+  },
+  {
+    "id": "well",
+    "title": "A closer look / Orvakal",
+    "start": 127.537,
+    "text": "Orvakal reads 29.68 metres. Water is 14.61 metres deeper this season, instead of its usual 2.36 metre rise."
+  },
+  {
+    "id": "outlook",
+    "title": "Possible outcomes / conditional",
+    "start": 139.204,
+    "text": "Less recharge and continued pumping can increase pressure on wells."
+  },
+  {
+    "id": "summer",
+    "title": "May 2027 / projection from past winters",
+    "start": 145.079,
+    "text": "Past winters project 126 mandals beyond their deepest May. 76 are already over ten metres deep, home to about sixty seven lakh people in twenty twenty. Historically, only 32.5 percent of beyond-record calls materialised."
+  },
+  {
+    "id": "drought",
+    "title": "Drought manual / evidence as of 2026-10-10",
+    "start": 163.871,
+    "text": "As of October tenth, 477 mandals meet the rainfall trigger. 30 read severe, 325 moderate. This is manual evidence, not a drought declaration."
+  },
+  {
+    "id": "prepare",
+    "title": "Preparedness / homes, farms and communities",
+    "start": 177.861,
+    "text": "For a possible dry spell: protect drinking water. Use drip irrigation and mulch where suitable. Agree a village contingency plan with local teams."
+  },
+  {
+    "id": "cities",
+    "title": "Cities / reduce the impact",
+    "start": 189.399,
+    "text": "Cities cannot stop El Nino. Fix leaks, protect lakes, reuse safely treated water for non-drinking needs."
+  },
+  {
+    "id": "close",
+    "title": "A proposed state review",
+    "start": 198.399,
+    "text": "Keep observations, NOAA's forecast and summer projections separate. None forecasts Andhra Pradesh rainfall. Verify locally. Assign action."
+  }
+]
