@@ -25,6 +25,7 @@ try{
   await page.waitForFunction(()=>window.filmReady===true,null,{timeout:60000});
   const data=JSON.parse(await readFile(path.join(out,'manifest.json'),'utf8'));
   if(await page.evaluate(()=>window.filmManifest.sourceHash)!==data.sourceHash)throw new Error('Preview server is serving a different film snapshot');
+  if(await page.evaluate(()=>window.filmManifest.mediaVersion)!==data.mediaVersion)throw new Error('Preview server is serving a different narration revision');
   if(!preview&&data.narration?.status==='pending')throw new Error('Narration is pending; only --preview is allowed');
   if(data.duration>210)throw new Error('Film exceeds 3:30; edit narration before rendering');
   const checks=[];
@@ -56,7 +57,7 @@ try{
       await page.screenshot({path:path.join(evidence,scene.id+'-'+cue.label.toLowerCase().replaceAll(' ','-')+'.png')});
     }
   }
-  await writeFile(path.join(evidence,'checks.json'),JSON.stringify({sourceHash:data.sourceHash,format,errors,checks,locationChecks,narration:data.narration},null,2));
+  await writeFile(path.join(evidence,'checks.json'),JSON.stringify({sourceHash:data.sourceHash,mediaVersion:data.mediaVersion,format,errors,checks,locationChecks,narration:data.narration},null,2));
   const moving=new Set(['connection','normal','nino','india','recharge','mandals','districts','well','outlook','prepare','cities','close','ocean','summer','drought']);
   for(const id of ['northeast','state-wells']){
     if(!checks.some(c=>c.id===id&&c.changedFraction>.001))throw new Error('Chart reveal is static: '+id);
@@ -85,7 +86,7 @@ try{
     sourceCheck();
     if((await stat(temporary)).size>100*1024*1024)throw new Error('MP4 exceeds GitHub per-file limit; adjust encoding');
     await rename(temporary,movie);
-    await writeFile(path.join(out,`render-${format}.json`),JSON.stringify({sourceHash:data.sourceHash,renderedAt:new Date().toISOString(),duration:data.duration,format,narration:data.narration},null,2));
+    await writeFile(path.join(out,`render-${format}.json`),JSON.stringify({sourceHash:data.sourceHash,mediaVersion:data.mediaVersion,renderedAt:new Date().toISOString(),duration:data.duration,format,narration:data.narration},null,2));
     console.log('Rendered '+movie);
   }
 }finally{await browser.close();}

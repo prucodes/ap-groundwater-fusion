@@ -9,21 +9,17 @@ checked-in source: the rainfall chapter still covers June-August 2026.
 
 ## Review gate
 
-**Not approved for publication.** Microsoft Edge synthesis with
-`en-IN-PrabhatNeural` returned HTTP 403 on both the film and a short test using
-edge-tts 7.2.8. The user does not require an Indian English voice; the intended
-neutral narration is `en-GB-RyanNeural`, which still needs a successful synthesis
-and listening review. A matching compatibility issue is recorded at
-https://github.com/rany2/edge-tts/discussions/489. No access-control workaround
-was attempted. The user selected macOS `Eddy (English (UK))` for a temporary
-review cut only. Both videos and the player visibly identify it as
-a review cut. `review.publishApproved` remains false. Open the PR as a draft;
-do not merge/deploy until the intended narration and native-speaker review are complete.
+**Not approved for publication.** The user selected Kokoro's George (`bm_george`,
+British English) after listening to neural voice auditions. George replaces
+the temporary macOS Eddy narration. Local neural synthesis is working; a
+Microsoft voice is no longer a release prerequisite. Both videos and the player
+identify this as a review cut. `review.publishApproved` remains false until a
+native English speaker reviews the complete narration, not just the audition.
+Keep the PR draft until that review and the domain review are recorded.
 
-The Telugu edition is deferred: the requested neural voice's quality could
-not be assessed while synthesis is unavailable. Do not equate a successful
-technical render with approval of pronunciation or translation. English and
-Telugu each require a native speaker's review before publication.
+The Telugu edition is deferred. Kokoro George is English, not a Telugu voice.
+A Telugu edition needs an appropriate voice, translated captions and a separate
+native-speaker review. Automated checks do not approve pronunciation or translation.
 
 ## Assets and implementation
 
@@ -58,9 +54,10 @@ in `chapters.json`, not manually copied into production notes.
 Globe motion follows speech-derived timings for Andhra Pradesh, the Pacific,
 Indonesia and South America. The renderer checks each location's front-facing
 projection and frame bounds at its narrated cue in both formats. The normal-state
-caption follows the spoken passage. In the local review voice, location words
-start separate audio chunks, so their cues use actual audio durations rather
-than guessed fractions of a scene. Cold upwelling is shown in the ocean
+caption follows the spoken passage. George is synthesized in complete scenes
+to preserve sentence flow. The timing-enabled model supplies phoneme durations;
+place cues are aligned to those durations, not guessed fractions of a scene.
+Ambiguous or missing alignments fail preparation. Cold upwelling is shown in the ocean
 cross-section, not as horizontal motion along the coast.
 
 Groundwater particles follow distance-parameterized fracture paths. Rain ends at
@@ -68,8 +65,9 @@ the surface with small splash rings; separate paths depict soil infiltration.
 Pumping is upward inside the illustrated borewell, never rain poured down it.
 These movements are conceptual, not calibrated groundwater simulation.
 
-The intended narration uses `en-GB-RyanNeural` at normal rate. The temporary
-offline review uses macOS Eddy (English UK) at 165 words/minute, with no playback speed-up.
+The selected narration uses Kokoro-82M v1.0 George at speed 1.0, matching the
+audition, with no playback speed-up. History and city narration are concise so
+the complete edition fits below 3:30 without accelerating the voice.
 The spoken alias "El Neen-yo" guides the English synthesizer; captions retain the
 ordinary spelling. Indonesia is passed as the standard word to this voice.
 The narration remains synthetic; accent and pronunciation should be reviewed by
@@ -104,16 +102,27 @@ city performance, savings target or funded project is asserted.
 
 ## Regeneration
 
-From the repository root, with ffmpeg, ffprobe, the project's Python dependencies,
-edge-tts and the app's Playwright Chromium installed:
+From the repository root, with ffmpeg, ffprobe, the project's Python dependencies
+and the app's Playwright Chromium installed. The isolated ignored environment
+`dist/voice-auditions/.venv` contains `kokoro-onnx==0.6.1`,
+`soundfile==0.14.0`, `espeakng-loader==0.2.4`, `phonemizer==3.4.0` and
+`numpy==2.4.6`; it uses ONNX Runtime 1.26.0. No application dependencies change.
+
+Download the [timing-enabled v1.0 model](https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.0.onnx)
+as `dist/voice-auditions/kokoro-v1.0-timed.onnx`, and the
+[v1.0 voices](https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin)
+as `dist/voice-auditions/voices-v1.0.bin`. Model weights are Apache-2.0;
+the [ONNX wrapper](https://github.com/thewh1teagle/kokoro-onnx) is MIT.
+The old export without phoneme durations is rejected.
 
 ```sh
-PYTHONPATH=.video-python python3 scripts/prepare_monsoon_film.py --voice
+dist/voice-auditions/.venv/bin/python scripts/prepare_monsoon_film.py --kokoro
 node app/scripts/serve-static.mjs --port 4179 --bind 127.0.0.1 --directory app/public
 ```
 
-For explicitly authorised offline review only, prepare with
-`python3 scripts/prepare_monsoon_film.py --local-review-voice` instead.
+Optional providers remain available: `--voice` uses Edge synthesis;
+`--local-review-voice` uses a macOS system voice for explicitly authorised
+temporary review only. Neither is required for George.
 The range-capable server is required for reviewing the finished film:
 `python3 -m http.server` ignores Range requests, and Chromium will not let you seek in a video
 served without them.
@@ -139,6 +148,10 @@ background follows `--band-navy`. Numbers do not count through fabricated values
 Each source file's hash is retained in the manifest. The per-format render record
 binds the MP4 to its source hash, duration and narration. Weekly data changes must
 not fail fixed-edition consistency tests; the page instead reports changed evidence.
+George's model, voice bundle and final audio hashes are retained in the manifest.
+`mediaVersion` also includes narration and scene timings; player media, posters,
+captions and downloads use that revision so old Eddy assets cannot be reused
+under an unchanged URL. The renderer verifies the served narration revision.
 
 ONI (+2.16 C, JAS 2026, ERSST v6) and forecast RONI (+2.74 C median peak,
 OND 2026, issued October 8) are explicitly different indices. The monthly globe

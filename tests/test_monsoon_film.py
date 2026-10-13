@@ -3,6 +3,9 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
+from types import SimpleNamespace
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("prepare_monsoon_film", ROOT / "scripts/prepare_monsoon_film.py")
@@ -68,6 +71,20 @@ def test_pronunciation_changes_speech_not_captions():
     assert film.TEMPO == 1.0
 
 
+def test_phoneme_alignment_uses_audio_timing_and_ignores_stress_spacing():
+    marks = [SimpleNamespace(phoneme="abc ", start=.1),
+             SimpleNamespace(phoneme="de", start=2.1),
+             SimpleNamespace(phoneme="f.", start=2.7)]
+    assert film.phrase_time(marks, "d\u02c8e f") == 2.45
+
+
+@pytest.mark.parametrize("phrase", ["", "xyz", "abc"])
+def test_phoneme_alignment_rejects_missing_or_ambiguous_cues(phrase):
+    marks = [SimpleNamespace(phoneme="abc abc", start=1)]
+    with pytest.raises(ValueError, match="no unique phoneme match"):
+        film.phrase_time(marks, phrase)
+
+
 def test_city_actions_and_state_review_are_not_official_directives():
     timeline = film.snapshot(*inputs())["scenes"]
     scenes = {s["id"]: s for s in timeline}
@@ -103,6 +120,8 @@ def test_published_movie_snapshot_and_timeline_are_consistent():
     manifest = json.loads((ROOT / "app/public/films/monsoon/manifest.json").read_text())
     metadata = json.loads((ROOT / "app/data/monsoon_film.json").read_text())
     assert metadata["sourceHash"] == manifest["sourceHash"]
+    assert metadata["mediaVersion"] == manifest["mediaVersion"]
+    assert metadata["narration"] == manifest["narration"]
     assert metadata["snapshot"] == manifest["snapshot"]
     assert metadata["narrated"] == film.narrated_figures(manifest)
     assert [c["text"] for c in metadata["chapters"]] == [s["voice"] for s in manifest["scenes"]]
@@ -172,3 +191,5 @@ def test_fixed_edition_assets_are_internally_consistent_and_under_limit():
         record = json.loads((ROOT / f"app/public/films/monsoon/render-{orientation}.json").read_text())
         assert record["sourceHash"] == data["sourceHash"]
         assert record["duration"] == data["duration"]
+        assert record["mediaVersion"] == data["mediaVersion"]
+        assert record["narration"] == data["narration"]

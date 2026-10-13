@@ -1,11 +1,12 @@
 {
   "sourceHash": "d709b8ba814469956636186d38523e91dd8eba7f5cafa413dd7bbded8fab1bd2",
+  "mediaVersion": "f3d8965ad874e4a6",
   "format": "landscape",
   "errors": [],
   "checks": [
     {
       "id": "connection",
-      "time": 0.82065,
+      "time": 0.9193499999999999,
       "overflow": [],
       "geography": [
         {
@@ -21,23 +22,23 @@
     },
     {
       "id": "connection",
-      "time": 3.0090500000000002,
+      "time": 3.37095,
       "overflow": [],
       "geography": [
         {
           "label": "PACIFIC OCEAN",
-          "x": 1474.7096601793282,
-          "y": 719.8498169634162,
+          "x": 1448.6372694786646,
+          "y": 721.1430100135524,
           "visible": true,
           "inFrame": true
         }
       ],
       "contrast": 250,
-      "changedFraction": 0.4989495798319328
+      "changedFraction": 0.4951680672268908
     },
     {
       "id": "connection",
-      "time": 4.923900000000001,
+      "time": 5.5161,
       "overflow": [],
       "geography": [
         {
@@ -49,11 +50,11 @@
         }
       ],
       "contrast": 250,
-      "changedFraction": 0.30798319327731094
+      "changedFraction": 0.29411764705882354
     },
     {
       "id": "normal",
-      "time": 6.6896,
+      "time": 7.466099999999999,
       "overflow": [],
       "geography": [
         {
@@ -69,23 +70,23 @@
     },
     {
       "id": "normal",
-      "time": 9.9392,
+      "time": 11.0317,
       "overflow": [],
       "geography": [
         {
           "label": "INDONESIA",
-          "x": 1116.892014315292,
-          "y": 625.4299979793152,
+          "x": 1041.240240523191,
+          "y": 610.7971343733152,
           "visible": true,
           "inFrame": true
         }
       ],
       "contrast": 255,
-      "changedFraction": 0.11596638655462185
+      "changedFraction": 0.4092436974789916
     },
     {
       "id": "normal",
-      "time": 12.7826,
+      "time": 14.1516,
       "overflow": [],
       "geography": [
         {
@@ -97,11 +98,11 @@
         }
       ],
       "contrast": 255,
-      "changedFraction": 0.5091736694677871
+      "changedFraction": 0.5116246498599439
     },
     {
       "id": "nino",
-      "time": 14.58125,
+      "time": 16.1401,
       "overflow": [],
       "geography": [],
       "contrast": 255,
@@ -109,23 +110,23 @@
     },
     {
       "id": "nino",
-      "time": 17.21125,
+      "time": 19.0657,
       "overflow": [],
       "geography": [],
       "contrast": 255,
-      "changedFraction": 0.444047619047619
+      "changedFraction": 0.44642857142857145
     },
     {
       "id": "nino",
-      "time": 19.512500000000003,
+      "time": 21.6256,
       "overflow": [],
       "geography": [],
       "contrast": 255,
-      "changedFraction": 0.47556022408963583
+      "changedFraction": 0.47913165266106444
     },
     {
       "id": "history",
-      "time": 20.874250000000004,
+      "time": 23.089299999999998,
       "overflow": [],
       "geography": [],
       "contrast": 224,
@@ -133,7 +134,7 @@
     },
     {
       "id": "history",
-      "time": 22.752250000000004,
+      "time": 25.042099999999998,
       "overflow": [],
       "geography": [],
       "contrast": 253,
@@ -141,7 +142,7 @@
     },
     {
       "id": "history",
-      "time": 24.395500000000002,
+      "time": 26.750799999999998,
       "overflow": [],
       "geography": [],
       "contrast": 253,
@@ -149,7 +150,7 @@
     },
     {
       "id": "ocean",
-      "time": 27.756549999999997,
+      "time": 30.44315,
       "overflow": [],
       "geography": [],
       "contrast": 250,
@@ -157,7 +158,7 @@
     },
     {
       "id": "ocean",
-      "time": 35.467349999999996,
+      "time": 38.98755,
       "overflow": [],
       "geography": [],
       "contrast": 250,
@@ -165,7 +166,7 @@
     },
     {
       "id": "ocean",
-      "time": 42.2143,
+      "time": 46.4639,
       "overflow": [],
       "geography": [],
       "contrast": 250,
@@ -173,7 +174,7 @@
     },
     {
       "id": "india",
-      "time": 45.042,
+      "time": 49.66185,
       "overflow": [],
       "geography": [
         {
@@ -189,23 +190,23 @@
     },
     {
       "id": "india",
-      "time": 47.442,
+      "time": 52.49345,
       "overflow": [],
       "geography": [
         {
           "label": "ANDHRA PRADESH",
-          "x": 1202.9159513654058,
+          "x": 1202.9159513654063,
           "y": 589.5026483802744,
           "visible": true,
           "inFrame": true
         }
       ],
       "contrast": 250,
-      "changedFraction": 0.5294817927170868
+      "changedFraction": 0.5295518207282913
     },
     {
       "id": "india",
-      "time": 49.542,
+      "time": 54.9711,
       "overflow": [],
       "geography": [
         {
@@ -217,11 +218,11 @@
         }
       ],
       "contrast": 249,
-      "changedFraction": 0.5275210084033614
+      "changedFraction": 0.5276610644257703
     },
     {
       "id": "ap-history",
-      "time": 51.342000000000006,
+      "time": 57.070550000000004,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -229,7 +230,7 @@
     },
     {
       "id": "ap-history",
-      "time": 54.542,
+      "time": 60.78135,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -237,7 +238,7 @@
     },
     {
       "id": "ap-history",
-      "time": 57.342000000000006,
+      "time": 64.0283,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -245,7 +246,7 @@
     },
     {
       "id": "rain",
-      "time": 59.588150000000006,
+      "time": 66.61635,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -253,23 +254,23 @@
     },
     {
       "id": "rain",
-      "time": 63.44455000000001,
+      "time": 71.04395000000001,
       "overflow": [],
       "geography": [],
       "contrast": 248,
-      "changedFraction": 0.08718487394957983
+      "changedFraction": 0.08802521008403362
     },
     {
       "id": "rain",
-      "time": 66.8189,
+      "time": 74.91810000000001,
       "overflow": [],
       "geography": [],
       "contrast": 248,
-      "changedFraction": 0.009873949579831932
+      "changedFraction": 0.009453781512605041
     },
     {
       "id": "northeast",
-      "time": 69.6553,
+      "time": 78.06245000000001,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -277,7 +278,7 @@
     },
     {
       "id": "northeast",
-      "time": 74.6481,
+      "time": 83.49565000000001,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -285,7 +286,7 @@
     },
     {
       "id": "northeast",
-      "time": 79.0168,
+      "time": 88.2497,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -293,7 +294,7 @@
     },
     {
       "id": "recharge",
-      "time": 81.19035,
+      "time": 90.67135,
       "overflow": [],
       "geography": [],
       "contrast": 246,
@@ -301,23 +302,23 @@
     },
     {
       "id": "recharge",
-      "time": 83.65795,
+      "time": 93.50695,
       "overflow": [],
       "geography": [],
-      "contrast": 248,
-      "changedFraction": 0.5831232492997199
+      "contrast": 247,
+      "changedFraction": 0.5823529411764706
     },
     {
       "id": "recharge",
-      "time": 85.8171,
+      "time": 95.9881,
       "overflow": [],
       "geography": [],
       "contrast": 244,
-      "changedFraction": 0.582703081232493
+      "changedFraction": 0.5817927170868348
     },
     {
       "id": "mandals",
-      "time": 87.934,
+      "time": 98.35105,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -325,23 +326,23 @@
     },
     {
       "id": "mandals",
-      "time": 91.934,
+      "time": 102.76185000000001,
       "overflow": [],
       "geography": [],
       "contrast": 248,
-      "changedFraction": 0.04285714285714286
+      "changedFraction": 0.04292717086834734
     },
     {
       "id": "mandals",
-      "time": 95.434,
+      "time": 106.6213,
       "overflow": [],
       "geography": [],
       "contrast": 248,
-      "changedFraction": 0.03991596638655462
+      "changedFraction": 0.039705882352941174
     },
     {
       "id": "districts",
-      "time": 97.37855,
+      "time": 108.7155,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -349,7 +350,7 @@
     },
     {
       "id": "districts",
-      "time": 99.89735,
+      "time": 111.3595,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -357,7 +358,7 @@
     },
     {
       "id": "districts",
-      "time": 102.1013,
+      "time": 113.673,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -365,7 +366,7 @@
     },
     {
       "id": "state-wells",
-      "time": 104.49364999999999,
+      "time": 116.31445000000001,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -373,7 +374,7 @@
     },
     {
       "id": "state-wells",
-      "time": 109.19404999999999,
+      "time": 121.59565,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -381,7 +382,7 @@
     },
     {
       "id": "state-wells",
-      "time": 113.3069,
+      "time": 126.2167,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -389,7 +390,7 @@
     },
     {
       "id": "well",
-      "time": 116.13545,
+      "time": 129.28705,
       "overflow": [],
       "geography": [],
       "contrast": 255,
@@ -397,23 +398,23 @@
     },
     {
       "id": "well",
-      "time": 120.54465,
+      "time": 133.95385000000002,
       "overflow": [],
       "geography": [],
       "contrast": 254,
-      "changedFraction": 0.5832633053221289
+      "changedFraction": 0.5835434173669468
     },
     {
       "id": "well",
-      "time": 124.4027,
+      "time": 138.03730000000002,
       "overflow": [],
       "geography": [],
       "contrast": 255,
-      "changedFraction": 0.5818627450980393
+      "changedFraction": 0.5825630252100841
     },
     {
       "id": "outlook",
-      "time": 126.255,
+      "time": 140.08525,
       "overflow": [],
       "geography": [],
       "contrast": 255,
@@ -421,23 +422,23 @@
     },
     {
       "id": "outlook",
-      "time": 128.255,
+      "time": 142.43525,
       "overflow": [],
       "geography": [],
       "contrast": 255,
-      "changedFraction": 0.5871148459383754
+      "changedFraction": 0.5866946778711485
     },
     {
       "id": "outlook",
-      "time": 130.005,
+      "time": 144.4915,
       "overflow": [],
       "geography": [],
       "contrast": 255,
-      "changedFraction": 0.5852240896358544
+      "changedFraction": 0.5853641456582633
     },
     {
       "id": "summer",
-      "time": 133.07915,
+      "time": 147.89780000000002,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -445,7 +446,7 @@
     },
     {
       "id": "summer",
-      "time": 139.94355,
+      "time": 155.4146,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -453,7 +454,7 @@
     },
     {
       "id": "summer",
-      "time": 145.94989999999999,
+      "time": 161.9918,
       "overflow": [],
       "geography": [],
       "contrast": 248,
@@ -461,7 +462,7 @@
     },
     {
       "id": "drought",
-      "time": 149.60325,
+      "time": 165.9695,
       "overflow": [],
       "geography": [],
       "contrast": 243,
@@ -469,7 +470,7 @@
     },
     {
       "id": "drought",
-      "time": 154.76925,
+      "time": 171.56550000000001,
       "overflow": [],
       "geography": [],
       "contrast": 243,
@@ -477,7 +478,7 @@
     },
     {
       "id": "drought",
-      "time": 159.2895,
+      "time": 176.46200000000002,
       "overflow": [],
       "geography": [],
       "contrast": 243,
@@ -485,7 +486,7 @@
     },
     {
       "id": "prepare",
-      "time": 162.123,
+      "time": 179.5917,
       "overflow": [],
       "geography": [],
       "contrast": 250,
@@ -493,23 +494,23 @@
     },
     {
       "id": "prepare",
-      "time": 166.23499999999999,
+      "time": 184.2069,
       "overflow": [],
       "geography": [],
       "contrast": 253,
-      "changedFraction": 0.7287114845938375
+      "changedFraction": 0.7285714285714285
     },
     {
       "id": "prepare",
-      "time": 169.833,
+      "time": 188.24519999999998,
       "overflow": [],
       "geography": [],
       "contrast": 253,
-      "changedFraction": 0.7061624649859944
+      "changedFraction": 0.705952380952381
     },
     {
       "id": "cities",
-      "time": 172.3886,
+      "time": 190.749,
       "overflow": [],
       "geography": [],
       "contrast": 252,
@@ -517,23 +518,23 @@
     },
     {
       "id": "cities",
-      "time": 176.4622,
+      "time": 194.349,
       "overflow": [],
       "geography": [],
       "contrast": 253,
-      "changedFraction": 0.7352941176470589
+      "changedFraction": 0.7364845938375351
     },
     {
       "id": "cities",
-      "time": 180.0266,
+      "time": 197.499,
       "overflow": [],
       "geography": [],
-      "contrast": 254,
-      "changedFraction": 0.7225490196078431
+      "contrast": 253,
+      "changedFraction": 0.7232492997198879
     },
     {
       "id": "close",
-      "time": 182.83075,
+      "time": 200.06565,
       "overflow": [],
       "geography": [
         {
@@ -549,7 +550,7 @@
     },
     {
       "id": "close",
-      "time": 187.59275,
+      "time": 204.51005,
       "overflow": [],
       "geography": [
         {
@@ -561,11 +562,11 @@
         }
       ],
       "contrast": 250,
-      "changedFraction": 0.43935574229691876
+      "changedFraction": 0.4391456582633053
     },
     {
       "id": "close",
-      "time": 191.75949999999997,
+      "time": 208.3989,
       "overflow": [],
       "geography": [
         {
@@ -577,14 +578,14 @@
         }
       ],
       "contrast": 254,
-      "changedFraction": 0.4238795518207283
+      "changedFraction": 0.4242997198879552
     }
   ],
   "locationChecks": [
     {
       "scene": "connection",
       "cue": "ANDHRA PRADESH",
-      "time": 0.44999999999999996,
+      "time": 0.59,
       "label": "ANDHRA PRADESH",
       "x": 1137.2992890900332,
       "y": 485.59321474357574,
@@ -594,7 +595,7 @@
     {
       "scene": "connection",
       "cue": "PACIFIC OCEAN",
-      "time": 3.9010000000000002,
+      "time": 4.239999999999999,
       "label": "PACIFIC OCEAN",
       "x": 1344,
       "y": 723.4203872270467,
@@ -604,7 +605,7 @@
     {
       "scene": "normal",
       "cue": "INDONESIA",
-      "time": 9.465,
+      "time": 10.269,
       "label": "INDONESIA",
       "x": 1117.8707253705065,
       "y": 625.604914721838,
@@ -614,7 +615,7 @@
     {
       "scene": "normal",
       "cue": "SOUTH AMERICA",
-      "time": 11.987,
+      "time": 13.368999999999998,
       "label": "SOUTH AMERICA",
       "x": 1622.416085731504,
       "y": 541.1624731316022,
@@ -623,11 +624,20 @@
     }
   ],
   "narration": {
-    "voice": "macOS Eddy (English (UK))",
-    "requestedVoice": "en-GB-RyanNeural",
+    "voice": "George (British English)",
+    "voiceId": "bm_george",
+    "engine": "Kokoro-82M v1.0",
+    "runtime": "kokoro-onnx 0.6.1",
     "synthetic": true,
-    "status": "temporary-local-review",
-    "rateWpm": 165,
-    "tempo": 1
+    "status": "neural-review",
+    "speed": 1,
+    "tempo": 1,
+    "modelSha256": "beb0d1848dee9a49da392cc3df26958d46cfa35d321edf434f52949153f0df3a",
+    "voicesSha256": "bca610b8308e8d99f32e6fe4197e7ec01679264efed0cac9140fe9c29f1fbf7d",
+    "modelSource": "https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.1",
+    "pronunciation": {
+      "El Nino": "El Neen-yo"
+    },
+    "audioSha256": "b1479fe316ced5aa87b33b2150e23caedd8f3cf86b9ad8e9062eaf1d8e2a420c"
   }
 }

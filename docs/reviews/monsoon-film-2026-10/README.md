@@ -1,10 +1,10 @@
 # October 2026 film review
 
-**Draft review cut, not publication-approved.** Edge neural voice synthesis
-returned HTTP 403. The user selected macOS Eddy (English UK) for review only.
-The intended neural voice and native-speaker approval remain outstanding. The
-conditional Telugu edition is deferred, not represented as complete. No changes
-were pushed to `main`.
+**Draft review cut, not publication-approved.** The user selected neural George
+(Kokoro, British English) after voice auditions. George replaces temporary macOS
+Eddy; synthesis is complete, while full-film native-speaker approval remains
+outstanding. The conditional Telugu edition is deferred, not represented as
+complete. No changes were pushed to `main`.
 
 Prepared from the October 12 data refresh and rechecked on the rendering day,
 October 13 UTC. September groundwater snapshot; June-August rainfall because
@@ -34,19 +34,22 @@ boundaries. Ambiguous joins remain missing instead of silently selecting a recor
 
 ## Verification
 
-- Full Python suite: **460 passed**.
-- Production `npm run build`: **passed** after installing existing lockfile dependencies.
+- Full Python suite: **464 passed**.
+- Production/static build: **passed** as part of the film Playwright run.
 - Playwright film project: **5 passed**, desktop 1440px and phone 390px.
 - Landscape and portrait: **60 sampled frames each**, no text overflow or blank frames.
 - **8 narrated-location checks** across both formats; Indonesia, South America, AP and Pacific front-facing and in frame at their audio-derived cues.
 - Source hash rechecked before and after both MP4 encodes; no source drift.
 - `data-testid="film-since"` absent in the built Monsoon page; review warning present.
-- Long film: **192.9 seconds**, 20 chapters, H.264/AAC 30 fps.
-- Both formats were regenerated with macOS Eddy (English UK) for review only.
+- Long film: **209.51 seconds**, 20 chapters, H.264/AAC 30 fps.
+- Both formats regenerated with neural George (British English), speed 1.0.
+- Location cues follow neural phoneme durations; full scenes retain continuous speech.
+- Versioned player, caption, poster and download URLs prevent reusing cached Eddy media.
 - Captions, chapter JSON, transcript, posters, narration, both MP4s and render records regenerated.
 - 60-second script and generator updated; local caption-led MP4 rendered at exactly 60 seconds, through September 2026 ERSST. Its generated file stays in ignored `dist/el-nino-october-2026/` per the existing workflow.
 
 Source hash: `d709b8ba814469956636186d38523e91dd8eba7f5cafa413dd7bbded8fab1bd2`.
+Media revision: `f3d8965ad874e4a6`. Narration peak: -1.5 dBFS (no clipping).
 Machine-readable checks are beside this file. The existing lockfile's package
 audit reports six advisories (one moderate, four high, one critical); dependency
 upgrades are outside this film change. No dependency manifest or lockfile was changed.
@@ -63,8 +66,7 @@ upgrades are outside this film change. No dependency manifest or lockfile was ch
 
 ## Before publication
 
-- Restore the intended neural narration when the service works; re-render both formats and rerun checks.
-- Have a native English speaker review place names, El Nino, Indonesia, numbers and pacing.
+- Have a native English speaker review the complete George narration: place names, El Nino, Indonesia, numbers and pacing.
 - If the voice quality is approved, prepare Telugu narration/captions and obtain a separate Telugu native-speaker review.
 - Have a domain reviewer sign off the observation/forecast/projection distinctions, dates and boundary limitations.
 - Keep the PR draft until those reviews are recorded. Do not infer approval from automated test results.

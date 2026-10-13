@@ -121,7 +121,7 @@ def snapshot(watch, geometry, pacific, **extras):
         dict(id="nino", chapter="El Niño / When the pattern shifts", title="Winds weaken.\nWarmth spreads east.",
              voice="During El Nino, trade winds weaken. Warmth spreads east and tropical rainfall shifts.", source=f"NOAA ERSST v5 through {pacific['months'][-1]['month']} | 1991-2020 baseline | Winds schematic", minSeconds=6),
         dict(id="history", chapter="A pattern with a history", title="It has happened\nbefore.",
-             voice="Major events include nineteen ninety seven and twenty fifteen.", source="NOAA historical ENSO record | 1997-98 and 2015-16", minSeconds=4),
+             voice="Major events: nineteen ninety seven; twenty fifteen.", source="NOAA historical ENSO record | 1997-98 and 2015-16", minSeconds=4),
         dict(id="ocean", chapter="The ocean now / observed and forecast", title="The Pacific outlook.\nNot AP's rainfall outlook.",
              voice=f"NOAA's July to September ocean index is plus {watch['enso']['oniC']} degrees. Its October eighth outlook projects a relative-index peak of {ocean['peak']['medianC']} degrees. Strong to very strong conditions remain over eighty three percent likely through March. This is not an Andhra Pradesh rainfall forecast.",
              source=f"NOAA CPC | Observed ONI: Jul-Sep {yr} | Forecast RONI: issued {ocean['issued']} | Different indices", minSeconds=17),
@@ -156,9 +156,9 @@ def snapshot(watch, geometry, pacific, **extras):
         dict(id="prepare", chapter="Preparedness / homes, farms and communities", title="Conserve today.\nPrepare for a dry spell.",
              voice="For a possible dry spell: protect drinking water. Use drip irrigation and mulch where suitable. Agree a village contingency plan with local teams.", source="NIDM / ICAR / Jal Shakti guidance | AI illustration | Local advice, not a drought forecast", minSeconds=10),
         dict(id="cities", chapter="Cities / reduce the impact", title="Cities cannot stop El Niño.\nThey can reduce water stress.",
-             voice="Cities cannot stop El Nino. Repair mains. Reuse safely treated water for non-drinking needs. Protect lakes and essential supplies.", source="MoHUA AMRUT 2.0 / NIDM guidance | AI urban illustration, not completed works", minSeconds=9),
+             voice="Cities cannot stop El Nino. Fix leaks, protect lakes, reuse safely treated water for non-drinking needs.", source="MoHUA AMRUT 2.0 / NIDM guidance | AI urban illustration, not completed works", minSeconds=9),
         dict(id="close", chapter="A proposed state review", title="Protect supplies.\nReview local evidence.",
-             voice="Read observations, NOAA's Pacific forecast, and the summer projection separately. None forecasts Andhra Pradesh rainfall. Verify locally. Assign action.", source=f"Proposed review, not an official directive | Well snapshot: {latest} | Synthetic narration; review pending", minSeconds=9),
+             voice="Keep observations, NOAA's forecast and summer projections separate. None forecasts Andhra Pradesh rainfall. Verify locally. Assign action.", source=f"Proposed review, not an official directive | Well snapshot: {latest} | Synthetic narration; review pending", minSeconds=9),
     ]
     by_boundary = {}
     for m in watch["mandals"]:
@@ -299,6 +299,65 @@ def narrate_local_review(data, voice):
     data["review"]["status"] = "temporary-voice-and-native-review-pending"
 
 
+def phrase_time(timings, phonemes):
+    """Locate one spoken phrase in the model's phoneme-to-audio alignment."""
+    ignored = set(" \t\n.,:;!?\u02c8\u02cc")
+    aligned = [(char, mark.start) for mark in timings for char in mark.phoneme if char not in ignored]
+    spoken = "".join(char for char, _ in aligned)
+    needle = "".join(char for char in phonemes if char not in ignored)
+    if not needle or spoken.count(needle) != 1:
+        raise ValueError(f"Narrated phrase has no unique phoneme match: {phonemes!r}")
+    return round(.35 + aligned[spoken.index(needle)][1], 3)
+
+
+def narrate_kokoro(data, model_path, voices_path):
+    import importlib.metadata
+    import numpy as np
+    import soundfile as sf
+    from kokoro_onnx import Kokoro
+
+    engine = Kokoro(str(model_path), str(voices_path))
+    if not engine.has_timings:
+        raise ValueError("Use the timing-enabled Kokoro v1.0 export from model-files-v1.1")
+    locations = {"normal": [("Indonesia", "INDONESIA", 120, -3), ("South America", "SOUTH AMERICA", -78, -8)],
+                 "connection": [("Andhra Pradesh", "ANDHRA PRADESH", 80.6, 16.4), ("Pacific", "PACIFIC OCEAN", 195, 0)]}
+    cursor = 0
+    with tempfile.TemporaryDirectory(prefix="monsoon-george-") as tmp:
+        for i, scene in enumerate(data["scenes"]):
+            samples, rate, marks = engine.create_timed(speech_text(scene["voice"]), voice="bm_george", lang="en-gb", speed=1.0)
+            if not marks or len(samples) < rate or not np.isfinite(samples).all():
+                raise ValueError(f"Invalid neural audio or alignment for {scene['id']}")
+            wav = Path(tmp) / "scene.wav"
+            sf.write(wav, samples, rate)
+            audio = OUT / f"voice-{i:02d}.mp3"
+            subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(wav),
+                            "-c:a", "libmp3lame", "-b:a", "192k", str(audio)], check=True)
+            (OUT/f"voice-{i:02d}.sha256").unlink(missing_ok=True)
+            length = duration(audio)
+            scene.update(start=round(cursor, 3), duration=round(max(scene["minSeconds"], length+1), 3), speechDuration=length)
+            if scene["id"] in locations:
+                scene["locationCues"] = [dict(label=label, lon=lon, lat=lat,
+                    time=phrase_time(marks, engine.tokenizer.phonemize(phrase, "en-gb")))
+                    for phrase, label, lon, lat in locations[scene["id"]]]
+                scene["locationTimingSource"] = "neural-phoneme-duration"
+            if scene["id"] == "normal":
+                first, second = scene["voice"].split(". ", 1)
+                scene["captionCues"] = [dict(time=.35, text=first+"."),
+                    dict(time=phrase_time(marks, engine.tokenizer.phonemize("Cold", "en-gb")), text=second)]
+            cursor += scene["duration"]
+            print(f"George scene {i+1}: {scene['duration']:.1f}s", flush=True)
+    with model_path.open("rb") as f:
+        model_hash = hashlib.file_digest(f, "sha256").hexdigest()
+    with voices_path.open("rb") as f:
+        voices_hash = hashlib.file_digest(f, "sha256").hexdigest()
+    data["duration"] = round(cursor, 3)
+    data["narration"] = dict(voice="George (British English)", voiceId="bm_george", engine="Kokoro-82M v1.0",
+        runtime="kokoro-onnx " + importlib.metadata.version("kokoro-onnx"), synthetic=True,
+        status="neural-review", speed=1.0, tempo=1.0, modelSha256=model_hash, voicesSha256=voices_hash,
+        modelSource="https://github.com/thewh1teagle/kokoro-onnx/releases/tag/model-files-v1.1",
+        pronunciation={"El Nino": "El Neen-yo"})
+
+
 def vtt(data):
     def stamp(t):
         return f"{int(t)//3600:02}:{int(t)//60%60:02}:{t%60:06.3f}"
@@ -311,11 +370,15 @@ def vtt(data):
 def main():
     global VOICE
     parser=argparse.ArgumentParser()
-    parser.add_argument("--voice",action="store_true")
+    synthesis = parser.add_mutually_exclusive_group()
+    synthesis.add_argument("--voice",action="store_true")
+    synthesis.add_argument("--local-review-voice", action="store_true")
+    synthesis.add_argument("--kokoro", action="store_true", help="Local neural George narration with speech-derived timing")
     parser.add_argument("--check-sources", action="store_true", help="Fail if app/data or site colour tokens changed after preparation")
     parser.add_argument("--voice-name", default=VOICE)
-    parser.add_argument("--local-review-voice", action="store_true")
     parser.add_argument("--review-voice", default="Eddy (English (UK))", help="macOS voice name used only for a review cut")
+    parser.add_argument("--kokoro-model", type=Path, default=ROOT / "dist/voice-auditions/kokoro-v1.0-timed.onnx")
+    parser.add_argument("--kokoro-voices", type=Path, default=ROOT / "dist/voice-auditions/voices-v1.0.bin")
     args=parser.parse_args()
     VOICE = args.voice_name
     if args.check_sources:
@@ -323,8 +386,8 @@ def main():
         assert saved["sourceHashes"] == current_source_hashes(), "Film sources changed: re-prepare and re-render both formats"
         print("Film source snapshot matches current app/data and site tokens")
         return
-    if not (args.voice or args.local_review_voice):
-        parser.error("Choose --voice or --local-review-voice; never replace film metadata without matching narration")
+    if not (args.voice or args.local_review_voice or args.kokoro):
+        parser.error("Choose --voice, --kokoro or --local-review-voice; never replace film metadata without matching narration")
     OUT.mkdir(parents=True,exist_ok=True)
     data=snapshot(**load_inputs())
     shutil.copy(ROOT/"viz-src/three.min.js",OUT/"three.min.js")
@@ -333,16 +396,22 @@ def main():
         shutil.copy(cache,OUT/"earth.jpg")
     elif not (OUT/"earth.jpg").exists():
         subprocess.run(["curl","-fL","https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73909/world.topo.bathy.200412.3x5400x2700.jpg","-o",str(OUT/"earth.jpg")],check=True)
-    if args.voice or args.local_review_voice:
-        if args.local_review_voice:
+    if args.voice or args.local_review_voice or args.kokoro:
+        if args.kokoro:
+            narrate_kokoro(data, args.kokoro_model, args.kokoro_voices)
+        elif args.local_review_voice:
             narrate_local_review(data, args.review_voice)
         else:
             asyncio.run(narrate(data))
         assert data["duration"] <= 210, f"Edit the script, not the playback speed: {data['duration']:.1f}s exceeds 3:30"
         soundtrack(data)
+    with (OUT/"narration.m4a").open("rb") as f:
+        data["narration"]["audioSha256"] = hashlib.file_digest(f, "sha256").hexdigest()
+    data["mediaVersion"] = digest({"source": data["sourceHash"], "narration": data["narration"], "scenes": data["scenes"]})[:16]
     vtt(data)
     (OUT/"manifest.json").write_text(json.dumps(data,separators=(",",":")))
     metadata={"title":data["title"],"snapshot":data["snapshot"],"edition":data["edition"],"review":data["review"],"sourceHash":data["sourceHash"],"duration":data["duration"],
+              "narration":data["narration"],"mediaVersion":data["mediaVersion"],
               # The figures the narration speaks, so the page can say where the
               # live record has since moved away from this fixed edition.
               "narrated":narrated_figures(data),

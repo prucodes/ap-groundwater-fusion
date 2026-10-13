@@ -44,7 +44,7 @@
   function header(scene,index,p){
     dot(margin,57,6,MINT);text('AP / GROUNDWATER INTELLIGENCE',margin+22,66,portrait?23:22,MUTED,600);
     text(String(index+1).padStart(2,'0')+' / '+String(D.scenes.length).padStart(2,'0'),W-margin,66,22,MUTED,500,'right');
-    if(!D.review.publishApproved)text('REVIEW CUT / TEMPORARY VOICE',portrait?margin:W-margin-160,portrait?101:65,16,WARM,500,portrait?'left':'right');
+    if(!D.review.publishApproved)text('REVIEW CUT / NARRATION REVIEW',portrait?margin:W-margin-160,portrait?101:65,16,WARM,500,portrait?'left':'right');
     c.save();c.globalAlpha=ease(p*10);const dy=18*(1-ease(p*10));
     text(scene.chapter.toUpperCase(),margin,portrait?166+dy:147+dy,portrait?25:22,MINT,600);
     const size=portrait?70:60;

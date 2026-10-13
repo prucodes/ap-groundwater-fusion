@@ -65,6 +65,7 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
   const [vertical, setVertical] = useState(false);
   const resume = useRef({ time: 0, playing: false });
   const assets = `${basePath}/films/monsoon`;
+  const revision = `?v=${film.mediaVersion}`;
   useEffect(() => {
     const media = window.matchMedia("(max-width: 760px)");
     const update = () => {
@@ -99,8 +100,8 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
         controls
         playsInline
         preload="metadata"
-        poster={`${assets}/${vertical ? "poster-portrait" : "poster"}.jpg`}
-        src={`${assets}/pacific-to-ap-${vertical ? "portrait" : "landscape"}.mp4`}
+        poster={`${assets}/${vertical ? "poster-portrait" : "poster"}.jpg${revision}`}
+        src={`${assets}/pacific-to-ap-${vertical ? "portrait" : "landscape"}.mp4${revision}`}
         aria-label="El Nino explained: history, India's monsoon, and Andhra Pradesh groundwater"
         onError={() => setFailed(true)}
         // onPlay rather than a click handler: the film uses the browser's own controls.
@@ -116,7 +117,7 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
           setActive(Math.max(0, film.chapters.findLastIndex((chapter) => chapter.start <= time)));
         }}
       >
-        <track kind="captions" src={`${assets}/captions.vtt`} srcLang="en" label="English" />
+        <track kind="captions" src={`${assets}/captions.vtt${revision}`} srcLang="en" label="English" />
         Your browser does not support video. The download and transcript are available below.
       </video>
       {failed ? <p role="alert">The video could not load. Use the download link or read the transcript below.</p> : null}
@@ -141,11 +142,11 @@ export function MonsoonFilm({ live = null }: { live?: FilmLiveFigures }) {
           Rebuilt State outlines with prototype fallback, not certified boundaries. Synthetic narration.
           NOAA&apos;s Pacific outlook and the historical-winter summer projection are labelled separately; neither forecasts AP rainfall.
           This is a fixed research edition, not a live feed or an official drought declaration.
-          {!film.review.publishApproved ? <strong data-testid="film-review"> Review cut only: temporary local English voice. Final narration and native-speaker approval pending.</strong> : null}
+          {!film.review.publishApproved ? <strong data-testid="film-review"> Review cut only: {film.narration.voice} narration. Native-speaker approval pending.</strong> : null}
           {since.length ? <span className={styles.since} data-testid="film-since"><strong>Since this edition:</strong> {since.join("; ")}. The figures elsewhere on this page are current.</span> : null}</p>
         <div className={styles.downloads}>
-          <a href={`${assets}/pacific-to-ap-landscape.mp4`} download onClick={() => countEvent("monsoon/film-download", "Monsoon film: downloaded")}>Download film</a>
-          <a href={`${assets}/pacific-to-ap-portrait.mp4`} download onClick={() => countEvent("monsoon/film-share", "Monsoon film: took the vertical cut to share")}>Vertical / WhatsApp</a>
+          <a href={`${assets}/pacific-to-ap-landscape.mp4${revision}`} download onClick={() => countEvent("monsoon/film-download", "Monsoon film: downloaded")}>Download film</a>
+          <a href={`${assets}/pacific-to-ap-portrait.mp4${revision}`} download onClick={() => countEvent("monsoon/film-share", "Monsoon film: took the vertical cut to share")}>Vertical / WhatsApp</a>
         </div>
       </div>
       <details className={styles.transcript} onToggle={event => { if (event.currentTarget.open) countEvent("monsoon/film-transcript", "Monsoon film: opened the transcript"); }}>

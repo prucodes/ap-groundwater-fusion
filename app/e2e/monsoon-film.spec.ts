@@ -51,7 +51,10 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     await section.scrollIntoViewIfNeeded();
     const expectedChanges = sinceThisEdition(currentFilmFigures(), film.narrated);
     await expect(section.getByTestId("film-since")).toHaveCount(expectedChanges.length ? 1 : 0);
-    if (!film.review.publishApproved) await expect(section.getByTestId("film-review")).toContainText("Review cut only");
+    if (!film.review.publishApproved) {
+      await expect(section.getByTestId("film-review")).toContainText("Review cut only");
+      await expect(section.getByTestId("film-review")).toContainText(film.narration.voice);
+    }
     const video = section.locator("video");
     await expect(video).toBeVisible();
     await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState)).toBeGreaterThanOrEqual(2);
@@ -70,9 +73,13 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     await video.evaluate((v: HTMLVideoElement) => v.pause());
     if (viewport.width < 760) await expect(section.getByRole("combobox", { name: "Film chapter" })).toHaveValue("2");
     else await expect(section.getByRole("button", { name: /El Niño/ })).toHaveAttribute("aria-current", "step");
-    await expect(section.getByRole("link", { name: "Download film" })).toHaveAttribute("href", /landscape\.mp4$/);
-    await expect(section.getByRole("link", { name: "Vertical / WhatsApp" })).toHaveAttribute("href", /portrait\.mp4$/);
+    const landscape = new RegExp(`landscape\\.mp4\\?v=${film.mediaVersion}$`);
+    const portrait = new RegExp(`portrait\\.mp4\\?v=${film.mediaVersion}$`);
+    await expect(video).toHaveAttribute("src", viewport.width < 760 ? portrait : landscape);
+    await expect(section.getByRole("link", { name: "Download film" })).toHaveAttribute("href", landscape);
+    await expect(section.getByRole("link", { name: "Vertical / WhatsApp" })).toHaveAttribute("href", portrait);
     const captionUrl = await video.locator("track").getAttribute("src");
+    expect(new URL(captionUrl!, page.url()).searchParams.get("v")).toBe(film.mediaVersion);
     const captions = await page.request.get(captionUrl!);
     expect(captions.ok()).toBe(true);
     expect(await captions.text()).toContain("WEBVTT");
