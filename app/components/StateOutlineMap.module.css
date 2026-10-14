@@ -15,10 +15,9 @@
   background: var(--card); border: 1px solid var(--line); box-shadow: var(--shadow-pop); font-size: 11.5px; color: var(--ink-soft); }
 .tooltip span { font: 600 9.5px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .tooltip strong { font: 600 14px var(--font-display); color: var(--ink); }
-.tooltip em { font-style: normal; line-height: 1.45; }
+.tooltip em { font-style: normal; line-height: 1.45; color: var(--map-status-ink, var(--ink)); }
 :global(:root[data-theme="dark"]) .frame path[data-key] { stroke: rgba(7, 29, 53, .7); }
-:global(:root[data-theme="dark"]) .frame path[data-key="i"] { fill: #2a3c55; }
-:global(:root[data-theme="dark"]) .frame path[data-key="n"] { fill: #1b2a3e; }
+:global(:root[data-theme="dark"]) .figure { --map-insufficient: #2a3c55; --map-held: var(--map-held-dark, #1b2a3e); }
 :global(:root[data-theme="dark"]) .districts { stroke: #0b1d33; }
 :global(:root[data-theme="dark"]) .frame path[data-mark] { stroke: color-mix(in srgb, var(--ink) 85%, transparent); }
 @media (prefers-reduced-motion: reduce) { .placeholder { animation: none; } .frame path[data-key] { transition: none; } }

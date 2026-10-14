@@ -28,6 +28,7 @@ import type {
   ScenePerformance,
 } from "./types";
 import styles from "./living-water-table.module.css";
+import { mapTooltipStyle } from "../../lib/mapTooltip";
 
 const LivingWaterTableScene = dynamic(
   () =>
@@ -96,6 +97,7 @@ function HoverTooltip({
     <div
       className={styles.tooltip}
       style={{
+        ...mapTooltipStyle(feature.fill, "#071626"),
         left: Math.min(hover.x + 16, 620),
         top: Math.max(hover.y - 8, 12),
       }}
@@ -124,6 +126,7 @@ function DistrictHoverTooltip({
     <div
       className={styles.tooltip}
       style={{
+        ...mapTooltipStyle(aggregate.fill, "#071626"),
         left: Math.min(hover.x + 16, 620),
         top: Math.max(hover.y - 8, 12),
       }}

@@ -30,6 +30,7 @@ import {
   type MandalLevelEstimate,
 } from "../../lib/data";
 import { brief } from "../../lib/pageBriefs";
+import { mapTooltipStyle } from "../../lib/mapTooltip";
 
 /** Match the python norm() so map-geometry names join to estimate mkeys. */
 function norm(name: string): string {
@@ -176,7 +177,7 @@ export default function EstimatesPage() {
               <span className="estLegendTicks">0 m · 10 m · 20 m+</span>
             </div>
             {hover ? (
-              <div className="estHoverCard">
+              <div className="estHoverCard" style={mapTooltipStyle(depthColor(hover.estimate_mbgl))}>
                 <div className="estHoverTitle">{titleCase(hover.mandal)}</div>
                 <div className="estHoverSub">{titleCase(hover.district)} · {AQ_LABEL[hover.aquifer] ?? hover.aquifer}</div>
                 <div className="estHoverRow"><span>Modelled nowcast</span><strong>{hover.estimate_mbgl} m</strong></div>

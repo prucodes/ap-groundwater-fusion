@@ -2607,6 +2607,33 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
 :root[data-theme="dark"] .codeBlock { background: #06121f; }
 
 .liveMapWrap { position: relative; width: 100%; border-radius: 16px; }
+.mapExpandButton { position: absolute; right: 12px; bottom: 28px; z-index: 500; }
+.mapExpandButton, .mapExpandedDialog header button {
+  display: grid; place-items: center; width: 40px; height: 40px; padding: 0;
+  border: 1px solid var(--line-strong); border-radius: 6px; background: var(--card); color: var(--ink); cursor: pointer;
+}
+.mapExpandButton:hover, .mapExpandedDialog header button:hover { border-color: var(--teal); color: var(--teal); }
+.mapExpandButton svg, .mapExpandedDialog header button svg { width: 18px; height: 18px; }
+.mapExpandedDialog {
+  position: fixed; inset: 0; width: calc(100vw - 32px); height: calc(100dvh - 32px);
+  max-width: none; max-height: none; margin: auto; padding: 0; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--card); color: var(--ink); overflow: hidden;
+}
+.mapExpandedDialog[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.mapExpandedDialog::backdrop { background: rgb(0 12 24 / 72%); }
+.mapExpandedDialog header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px; }
+.mapExpandedDialog header strong { display: block; font-size: 16px; font-weight: 600; }
+.mapExpandedDialog header span { display: block; font-size: 12px; color: var(--muted); margin-top: 3px; }
+.mapExpandedDialog header button { flex: none; }
+.mapExpandedCanvas { min-height: 0; }
+.mapExpandedDialog .liveMap, .mapExpandedDialog .liveMapWrap::after { border-radius: 0; }
+.mapExpandedDialog footer { padding: 10px 16px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 11px; color: var(--muted); }
+.mapExpandedDialog footer a { display: inline-flex; align-items: center; gap: 8px; color: var(--teal); }
+.mapExpandedDialog footer svg { width: 15px; height: 15px; }
+@media (max-width: 600px) {
+  .mapExpandedDialog { width: 100vw; height: 100dvh; border: 0; border-radius: 0; }
+  .mapExpandButton, .mapExpandedDialog header button { width: 44px; height: 44px; }
+}
 
 /* Premium framing: soft vignette + inner highlight + teal edge glow over the basemap */
 .liveMapWrap::after {
@@ -2696,16 +2723,18 @@ div.leaflet-container {
   animation: haloPulse 2.6s var(--ease) infinite;
 }
 
-/* Tooltip — rich mandal card */
+/* One concise summary on every Leaflet map; full evidence stays in the detail panel. */
 .leaflet-tooltip.liveTip {
-  width: 284px;
+  width: 256px;
+  max-width: calc(100vw - 48px);
+  box-sizing: border-box;
   white-space: normal;
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
   border: 1px solid var(--line-strong);
-  border-radius: 14px;
+  border-radius: 8px;
   box-shadow: var(--shadow-pop);
-  padding: 13px 14px;
+  padding: 10px 12px;
   color: var(--ink);
   font-size: 11.5px;
   line-height: 1.4;
@@ -2745,6 +2774,9 @@ div.leaflet-container {
 .liveTip .tipRow { display: flex; justify-content: space-between; gap: 16px; padding: 2px 0; }
 .liveTip .tipRow i { color: var(--muted); font-style: normal; }
 .liveTip .tipRow b { font-weight: 600; }
+.liveTip .tipRow b { text-align: right; max-width: 58%; overflow-wrap: anywhere; }
+.liveTip .tipActive { padding: 6px 0; margin-bottom: 4px; border-bottom: 1px solid color-mix(in srgb, var(--map-status-color) 24%, var(--line)); }
+.liveTip .tipActive b { color: var(--map-status-ink, var(--ink)); }
 .liveTip .tipPrimary {
   margin: 3px -4px;
   padding: 5px 4px;
@@ -2753,7 +2785,7 @@ div.leaflet-container {
 }
 .liveTip .tipPrimary i,
 .liveTip .tipPrimary b { color: var(--teal); }
-.liveTip .tipFoot { display: block; margin-top: 9px; padding-top: 8px; border-top: 1px solid var(--hairline); color: var(--teal); font-weight: 600; font-size: 11px; }
+.liveTip .tipFoot { display: block; margin-top: 7px; padding-top: 6px; border-top: 1px solid var(--hairline); color: var(--muted); font-weight: 400; font-size: 10px; }
 
 .leaflet-control-attribution {
   background: rgba(255, 255, 255, 0.7) !important;
@@ -4284,6 +4316,7 @@ pre.jsonBody {
 .estLegendTicks { font-size: 10px; color: var(--muted-2); font-family: var(--font-mono); margin-left: auto; }
 .estHoverCard {
   position: absolute;
+  pointer-events: none;
   top: 14px; right: 14px;
   width: 230px;
   background: var(--card);
@@ -4296,6 +4329,7 @@ pre.jsonBody {
 .estHoverSub { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
 .estHoverRow { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; border-top: 1px dashed var(--hairline); }
 .estHoverRow span:first-child { color: var(--muted); }
+.estHoverRow strong, .mapStatusValue { color: var(--map-status-ink, var(--ink)); }
 .estHoverHint {
   position: absolute; bottom: 16px; left: 16px;
   display: inline-flex; align-items: center; gap: 6px;
@@ -5287,18 +5321,15 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
   padding: 8px 10px;
   max-width: min(230px, calc(100% - 16px));
   border-radius: 6px;
-  border: 1px solid color-mix(in srgb, var(--recharge-tone) 35%, var(--line-strong));
-  border-top: 2px solid var(--recharge-tone);
-  background: color-mix(in srgb, var(--recharge-tone) 6%, var(--card));
+  border: 1px solid var(--line-strong);
+  background: var(--card);
   box-shadow: 0 6px 20px rgba(7, 29, 53, 0.16);
   font-size: 12px;
   line-height: 1.4;
 }
 .rechargeTip strong { font-size: 13px; color: var(--ink); }
 .rechargeTip span { color: var(--muted); }
-.rechargeTip em { font-style: normal; font-weight: 600; }
-.rechargeTip em.bad { color: var(--st-verify); }
-.rechargeTip em.good { color: var(--st-normal-ink); }
+.rechargeTip em { font-style: normal; font-weight: 600; color: var(--map-status-ink, var(--ink)); }
 
 .rechargeMapSide { display: flex; flex-direction: column; gap: 14px; position: sticky; top: 16px; }
 .rechargeLegend { display: flex; flex-direction: column; gap: 6px; font-size: 11.5px; color: var(--muted); }

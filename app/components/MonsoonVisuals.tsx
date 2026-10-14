@@ -1,9 +1,10 @@
 "use client";
 
-import { useId, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import { useId, useLayoutEffect, useRef, useState } from "react";
 import { MAP_VIEW, mandalToPath, mapGeometry, monsoonWatch } from "../lib/data";
 import { countEvent } from "../lib/visit-counter";
 import { Callout, ChartData } from "./chart/ChartKit";
+import { mapTooltipStyle } from "../lib/mapTooltip";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -144,13 +145,13 @@ export function RechargeMap() {
           <div
             className="rechargeTip"
             ref={tip} id={tipId}
-            style={{ ...position, "--recharge-tone": active ? fillFor(stops, view === "metres" ? active.shortfallM : active.shortfallMm3) : "var(--muted)" } as CSSProperties}
+            style={{ ...position, ...mapTooltipStyle(fillFor(stops, view === "metres" ? active?.shortfallM : active?.shortfallMm3)) }}
             role="tooltip"
           >
             <strong>{active ? active.mandal : activeFeature.m}</strong>
             <span>{active ? active.district : activeFeature.d}</span>
             {active ? (
-              <em className={active.shortfallM > 0 ? "bad" : "good"}>
+              <em>
                 {view === "metres" || active.shortfallMm3 === null ? (
                   <>
                     {active.shortfallM > 0 ? "+" : ""}
