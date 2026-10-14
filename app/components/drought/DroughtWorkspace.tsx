@@ -9,6 +9,7 @@ import {
 import { DroughtDownload } from "./DroughtDownload";
 import { MandalMatrix } from "./MandalMatrix";
 import styles from "./Drought.module.css";
+import { mapTooltipStyle } from "../../lib/mapTooltip";
 
 const LAYERS: DroughtLayer[] = ["outcome", "rain", "dry", "spi", "vci", "pasm", "gwdi"];
 const RANK = Object.fromEntries(CATEGORY_ORDER.map((key, index) => [key, index]));
@@ -96,10 +97,10 @@ export function DroughtWorkspace({ mandals, weeks, sowing, sowingAsOf, changes, 
             })}
           </svg>
           {hovered ? (
-            <div className={styles.mapHover} aria-live="polite">
+            <div className={styles.mapHover} aria-live="polite" style={mapTooltipStyle(layerColor(layer, hovered, light))}>
               <strong>{place(hovered.m)}</strong>
               <span>{place(hovered.d)}</span>
-              <div>{meta.label}: <b>{layerText(layer, hovered, light)}</b></div>
+              <div>{meta.label}: <b className="mapStatusValue">{layerText(layer, hovered, light)}</b></div>
               {layer !== "outcome" ? <div>Outcome: <b>{CATEGORY_META[light ? hovered.categoryLight : hovered.category].label}</b></div> : null}
             </div>
           ) : null}

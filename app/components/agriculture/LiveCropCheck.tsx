@@ -14,6 +14,7 @@ import { IconArrowRight, IconCloudRain, IconDroplet, IconLeaf, IconSun } from ".
 import { day, placeName } from "./waterContextFormat";
 import styles from "./LiveCropCheck.module.css";
 import { ChartData } from "../chart/ChartKit";
+import { mapTooltipStyle } from "../../lib/mapTooltip";
 
 export type LabPreset = { crop: CropKey; stage: number; eto: number; rain: number; reserve: number; place: string; window: string; key: number };
 
@@ -321,9 +322,9 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
         {hover && evidence.mandals[hover.index] ? (() => {
           const row = evidence.mandals[hover.index], result = results[hover.index] ?? null;
           const width = figure.current?.clientWidth ?? 600;
-          return <div className={styles.tooltip} role="tooltip" style={{ left: Math.min(hover.x + 16, width - 236), top: hover.y + 14 }}>
+          return <div className={styles.tooltip} role="tooltip" style={{ ...mapTooltipStyle(fillOf(result)), left: Math.max(4, Math.min(hover.x + 16, width - 236)), top: hover.y + 14 }}>
             <span>{placeName(row.district)}</span><strong>{placeName(row.mandal)}</strong>
-            <em style={{ color: fillOf(result) === CROP_WATER_STATES.ok.color ? "#3f7f63" : fillOf(result) }}>{CROP_WATER_STATES[stateOf(result)].label}</em>
+            <em className="mapStatusValue">{CROP_WATER_STATES[stateOf(result)].label}</em>
             {result ? <dl>
               <div><dt>Easily usable water</dt><dd>{mm(result.reserve)}</dd></div>
               <div><dt>Water use / day</dt><dd>{(result.kc * result.etoMean).toFixed(1)} mm</dd></div>

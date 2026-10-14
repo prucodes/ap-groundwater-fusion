@@ -70,7 +70,8 @@
 .moves :global(.weekMoveMap) figure { background:var(--field); border-radius:4px; padding:10px; }
 .moves :global(.weekMoveMap) figure > div { max-height:340px; }
 .moves :global(.segBtn.active) { color:var(--week-accent); }
-:global(:root[data-theme="dark"]) .moves path[data-key="n"] { fill:#34485e; stroke:#20354a; }
+:global(:root[data-theme="dark"]) .moves { --map-held-dark:#34485e; }
+:global(:root[data-theme="dark"]) .moves path[data-key="n"] { stroke:#20354a; }
 :global(:root[data-theme="dark"]) .moves :global(.weekMoveHeld) { background:#34485e; }
 .movesList { margin-top:14px; border-top:1px solid var(--line); }
 .movesList > summary, .steadyRegister > summary { display:flex; align-items:center; flex-wrap:wrap; gap:8px 14px; list-style:none; padding:14px 0; cursor:pointer; font-size:12px; color:var(--ink); }

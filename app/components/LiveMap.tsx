@@ -6,21 +6,21 @@ import { useRouter } from "next/navigation";
 import type { GeoJsonObject } from "geojson";
 import type { GeoJSON, Layer, Map as LeafletMap, PathOptions } from "leaflet";
 import {
-  agreementMeta,
   districtGeometry,
   mandalByMapKey,
   mandalHeatColor,
-  mandalHeatStatus,
   mandalHeatValue,
   mandals,
   mapGeometry,
   statusMeta,
   titleCase,
 } from "../lib/data";
-import { isWaterLayer, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
+import { isWaterLayer, WATER_LAYER_META, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
 import type { MandalHeatLayerKey } from "../lib/types";
 import { useIsDark } from "./useIsDark";
 import { addVectorBasemap } from "./vectorBasemap";
+import { applyMapTooltipStyle } from "../lib/mapTooltip";
+import { MapExpand } from "./MapExpand";
 
 type Mode = "status" | "single";
 
@@ -35,6 +35,8 @@ type SeedProps = {
   surface: number | null;
   rain: number | null;
   median: number | null;
+  latest: number | null;
+  period: string | null;
   estimate: number | null;
   estimateLow: number | null;
   estimateHigh: number | null;
@@ -49,70 +51,29 @@ type SeedProps = {
 
 // The basemap is vector, in the platform's palette, with names above the data (vectorBasemap.ts).
 
-const tooltipOpts = { sticky: true, className: "liveTip", direction: "auto" as const, opacity: 1, offset: [8, 0] as [number, number] };
+const tooltipOpts = { className: "liveTip", direction: "center" as const, opacity: 1, offset: [0, 0] as [number, number] };
 
 function isDark() {
   return typeof document !== "undefined" && document.documentElement.dataset.theme === "dark";
 }
 
-function bar(value: number | null, color: string) {
-  const v = Math.max(0, Math.min(100, value ?? 0));
-  return (
-    `<span class="tipBar"><span class="tipBarFill" style="width:${v}%;background:${color}"></span></span>` +
-    `<span class="tipVal">${value === null ? "—" : value}</span>`
-  );
+function activeLayerRow(p: SeedProps, layer: MandalHeatLayerKey | WaterMandalLayer | null) {
+  if (!layer) return `<span class="tipRow tipActive"><i>Fusion status</i><b>${p.bucket ? statusMeta(p.bucket).label : "No fused record"}</b></span>`;
+  const label = isWaterLayer(layer) ? WATER_LAYER_META[layer].label : layer === "rainfall_mm" ? "Rainfall (CHIRPS)" : "Water balance";
+  const value = isWaterLayer(layer) ? waterLayerText(layer, p.d, p.m) ?? "No unique record"
+    : mandalHeatValue(p.d, p.m, layer) === null ? "No value" : `${mandalHeatValue(p.d, p.m, layer)} mm`;
+  return `<span class="tipRow tipActive"><i>${label}</i><b>${value}</b></span>`;
 }
 
-function balColor(status: string) {
-  if (status === "Surplus") return "#5e9b6b";
-  if (status === "Balanced") return "#1f8a8a";
-  if (status === "Deficit") return "#c65a46";
-  return "#98a2b3";
-}
-
-/** Gauge rain and soil moisture for this mandal, when the context has a unique record. */
-function seasonRows(p: { d: string; m: string }) {
-  const rain = waterLayerText("gauge_rain_dev", p.d, p.m);
-  const soil = waterLayerText("soil_pct", p.d, p.m);
-  if (!rain && !soil) return "";
+function tooltipHtml(p: SeedProps, layer: MandalHeatLayerKey | WaterMandalLayer | null = null) {
   return (
-    `<span class="tipSection">This season</span>` +
-    (rain ? `<span class="tipRow"><i>Gauge rain</i><b>${rain}</b></span>` : "") +
-    (soil ? `<span class="tipRow"><i>Soil moisture 30 cm</i><b>${soil}</b></span>` : "")
-  );
-}
-
-function tooltipHtml(p: SeedProps) {
-  const meta = statusMeta(p.bucket);
-  const agree = agreementMeta(p.agreement);
-  const agreeColor = agree.className === "strong" ? "#c65a46" : agree.className === "agree" ? "#5e9b6b" : "#d79b2e";
-  return (
-    `<span class="tipHead" style="border-left:3px solid ${meta.color};padding-left:8px;background:${meta.color}0d"><b>${titleCase(p.m)}</b>` +
-    `<span class="tipPill" style="color:${meta.color};background:${meta.color}22">${meta.label}</span></span>` +
+    `<span class="tipHead"><b>${titleCase(p.m)}</b></span>` +
     `<span class="tipDist">${titleCase(p.d)} District</span>` +
-    `<span class="tipExplain">Different evidence layers — not duplicate readings. Depth is in m below ground; satellite values are 0–100 wetness percentiles.</span>` +
-    `<span class="tipSection">Satellite / climate context</span>` +
-    `<span class="tipMetric"><i>GRACE GW %ile</i>${bar(p.gw, "#12b5cb")}</span>` +
-    `<span class="tipMetric"><i>Root-zone %ile</i>${bar(p.root, "#5e9b6b")}</span>` +
-    `<span class="tipMetric"><i>Surface %ile</i>${bar(p.surface, "#3f86d6")}</span>` +
-    (p.rain !== null ? `<span class="tipRow"><i>Rainfall (CHIRPS)</i><b>${p.rain} mm</b></span>` : "") +
-    `<span class="tipSection">Groundwater depth</span>` +
-    `<span class="tipRow"><i>Observed median history</i><b>${p.median ?? "—"} mbgl</b></span>` +
-    (p.estimate !== null
-      ? `<span class="tipRow tipPrimary"><i>Calculated level β</i><b>${p.estimate} mbgl</b></span>`
-      : "") +
-    (p.estimateLow !== null && p.estimateHigh !== null
-      ? `<span class="tipRow"><i>Model band P10–P90</i><b>${p.estimateLow}–${p.estimateHigh} mbgl</b></span>`
-      : "") +
-    (p.outsideBand && p.bandExcess !== null
-      ? `<span class="tipRow"><i>Outside the model band by</i><b style="color:#c65a46">${p.bandExcess} m</b></span>`
-      : "") +
-    (p.balance !== null
-      ? `<span class="tipRow"><i>Water balance</i><b style="color:${balColor(p.balanceStatus)}">${p.balanceStatus} (${p.balance > 0 ? "+" : ""}${p.balance} mm)</b></span>`
-      : "") +
-    seasonRows(p) +
-    `<span class="tipRow"><i>Agreement</i><b style="color:${agreeColor}">${agree.label}</b></span>` +
-    `<span class="tipFoot">Click to inspect →</span>`
+    activeLayerRow(p, layer) +
+    `<span class="tipRow"><i>Latest recorded depth</i><b>${p.latest === null ? "Unavailable" : `${p.latest} m bgl`}</b></span>` +
+    `<span class="tipRow"><i>Observation</i><b>${p.period ?? "Not supplied"}</b></span>` +
+    `<span class="tipRow"><i>NASA GW percentile</i><b>${p.gw ?? "Unavailable"}</b></span>` +
+    `<span class="tipFoot">Prototype snapshot · NASA percentile is not depth</span>`
   );
 }
 
@@ -154,21 +115,6 @@ function featureStyle(
   };
 }
 
-function baseTooltipHtml(p: SeedProps) {
-  const rain = mandalHeatValue(p.d, p.m, "rainfall_mm");
-  const bal = mandalHeatValue(p.d, p.m, "water_balance_mm");
-  const status = mandalHeatStatus(p.d, p.m);
-  return (
-    `<span class="tipHead"><b>${titleCase(p.m)}</b></span><span class="tipDist">${titleCase(p.d)} District</span>` +
-    (rain !== null ? `<span class="tipRow"><i>Rainfall (CHIRPS)</i><b>${rain} mm</b></span>` : "") +
-    (bal !== null
-      ? `<span class="tipRow"><i>Water balance</i><b style="color:${balColor(status)}">${status} (${bal > 0 ? "+" : ""}${bal} mm)</b></span>`
-      : "") +
-    seasonRows(p) +
-    `<span class="tipFoot">Satellite/model context</span>`
-  );
-}
-
 export function LiveMap({
   mode = "status",
   mandalId,
@@ -177,19 +123,22 @@ export function LiveMap({
   navigateOnClick = false,
   height = 460,
   heatLayer = null,
+  expandedView = false,
 }: {
   mode?: Mode;
   mandalId?: string;
   selectedId?: string;
   onSelect?: (id: string) => void;
   navigateOnClick?: boolean;
-  height?: number;
+  height?: number | string;
   heatLayer?: MandalHeatLayerKey | WaterMandalLayer | null;
+  expandedView?: boolean;
 }) {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<LeafletMap | null>(null);
   const geoRef = useRef<GeoJSON | null>(null);
+  const tipsRef = useRef<Array<{ layer: Layer; props: SeedProps }>>([]);
   const layersById = useRef<Record<string, Layer>>({});
   const selectedRef = useRef<string | undefined>(selectedId);
   selectedRef.current = selectedId;
@@ -208,6 +157,30 @@ export function LiveMap({
 
     (async () => {
       const L = (await import("leaflet")).default;
+      const bindTip = (target: Layer, props: SeedProps) => {
+        const content = () => tooltipHtml(props, heatRef.current);
+        target.bindTooltip(content, tooltipOpts);
+        const placeTip = (event?: { originalEvent?: MouseEvent }) => {
+          const tip = target.getTooltip(), element = tip?.getElement();
+          if (!map || !tip || !element) return;
+          const size = map.getSize();
+          element.style.width = `${Math.min(256, size.x - 24)}px`;
+          const point = event?.originalEvent ? map.mouseEventToContainerPoint(event.originalEvent)
+            : map.latLngToContainerPoint(tip.getLatLng() ?? map.getCenter());
+          const w = element.offsetWidth, h = element.offsetHeight;
+          const preferred = point.x + w + 18 < size.x ? point.x + w / 2 + 14 : point.x - w / 2 - 14;
+          const x = Math.max(w / 2 + 10, Math.min(size.x - w / 2 - 10, preferred));
+          const y = Math.max(h / 2 + 10, Math.min(size.y - h / 2 - 24, point.y));
+          tip.setLatLng(map.containerPointToLatLng([x, y]));
+        };
+        target.on("tooltipopen", () => {
+          applyMapTooltipStyle(target.getTooltip()?.getElement(),
+            featureStyle(props, { heatLayer: heatRef.current, dark: isDark(), selected: false }).fillColor ?? "#98a2b3");
+          placeTip();
+        });
+        target.on("mousemove", placeTip);
+        tipsRef.current.push({ layer: target, props });
+      };
       if (cancelled || !containerRef.current) return;
 
       // Build GeoJSON from the map outlines (official where rebuilt, prototype elsewhere; lon/lat rings).
@@ -228,6 +201,8 @@ export function LiveMap({
               surface: rec?.surface_percentile ?? null,
               rain: rec?.rainfall_mm ?? null,
               median: rec?.median_groundwater_mbgl ?? null,
+              latest: rec?.display_mbgl ?? null,
+              period: rec?.latest_observation_period ?? null,
               estimate: rec?.estimate_mbgl ?? null,
               estimateLow: rec?.estimate_band_p10 ?? null,
               estimateHigh: rec?.estimate_band_p90 ?? null,
@@ -249,12 +224,12 @@ export function LiveMap({
 
       const dark = isDark();
       map = L.map(containerRef.current, {
-        zoomControl: mode === "status",
+        zoomControl: mode === "status" || expandedView,
         attributionControl: true,
         scrollWheelZoom: false,
-        dragging: mode === "status",
-        doubleClickZoom: mode === "status",
-        boxZoom: mode === "status",
+        dragging: mode === "status" || expandedView,
+        doubleClickZoom: mode === "status" || expandedView,
+        boxZoom: mode === "status" || expandedView,
         keyboard: false,
         zoomSnap: 0.25, maxBoundsViscosity: 1 });
       mapRef.current = map;
@@ -284,7 +259,7 @@ export function LiveMap({
         interactive: false,
         className: "apMask",
       });
-      mask = L.polygon([maskOuter, ...apHoles], maskStyle(dark)).addTo(map);
+      if (mode === "status") mask = L.polygon([maskOuter, ...apHoles], maskStyle(dark)).addTo(map);
 
       const geo: GeoJSON = L.geoJSON(fc as GeoJsonObject, {
         style: (feat) => {
@@ -296,14 +271,14 @@ export function LiveMap({
           const path = layer as unknown as { setStyle: (s: PathOptions) => void };
           const restore = () =>
             path.setStyle(
-              featureStyle(p, { heatLayer: heatRef.current, dark, selected: !!p.id && p.id === selectedRef.current }),
+              featureStyle(p, { heatLayer: heatRef.current, dark: isDark(), selected: !!p.id && p.id === selectedRef.current }),
             );
 
           if (p.id) {
-            // every real mandal: rich tooltip, hover lift, click-through.
+            // Compact summary on hover; full evidence is in the selected-place panel/page.
             const id = p.id;
             layersById.current[id] = layer;
-            layer.bindTooltip(tooltipHtml(p), tooltipOpts);
+            bindTip(layer, p);
             layer.on("mouseover", () => path.setStyle({ fillOpacity: 0.95, weight: 2.2 }));
             layer.on("mouseout", restore);
             layer.on("click", () => {
@@ -312,7 +287,7 @@ export function LiveMap({
             });
           } else if (mode !== "single") {
             // Mandals without a record yet: satellite/model heat context only.
-            layer.bindTooltip(baseTooltipHtml(p), tooltipOpts);
+            bindTip(layer, p);
             layer.on("mouseover", () => {
               if (heatRef.current) path.setStyle({ weight: 1.4, fillOpacity: 0.96 });
             });
@@ -328,15 +303,15 @@ export function LiveMap({
         .forEach((f) => {
           const p = f.properties as SeedProps;
           const c = f.properties.centroid as number[];
-          const meta = statusMeta(p.bucket);
+          const color = featureStyle(p, { heatLayer: heatRef.current, dark: isDark(), selected: false }).fillColor;
           const icon = L.divIcon({
             className: "liveMarkerWrap",
-            html: `<span class="liveMarker" style="--c:${meta.color}"><span class="lmHalo"></span><span class="lmDot"></span></span>`,
+            html: `<span class="liveMarker" style="--c:${color}"><span class="lmHalo"></span><span class="lmDot"></span></span>`,
             iconSize: [18, 18],
             iconAnchor: [9, 9],
           });
           const marker = L.marker([c[1], c[0]], { icon, riseOnHover: true });
-          marker.bindTooltip(tooltipHtml(p), tooltipOpts);
+          bindTip(marker, p);
           const polygon = p.id ? layersById.current[p.id] : undefined;
           const path = polygon as unknown as { setStyle: (s: PathOptions) => void } | undefined;
           marker.on("mouseover", () => path?.setStyle({ fillOpacity: 0.88, weight: 2.2 }));
@@ -394,11 +369,12 @@ export function LiveMap({
       resizeObs?.disconnect();
       stopBasemap?.();
       layersById.current = {};
+      tipsRef.current = [];
       geoRef.current = null;
       if (map) map.remove();
       mapRef.current = null;
     };
-  }, [mode, mandalId, navigateOnClick, router]);
+  }, [mode, mandalId, navigateOnClick, expandedView, router]);
 
   // Re-style all features on selection, heat-layer or theme change.
   const themeDark = useIsDark();
@@ -412,6 +388,13 @@ export function LiveMap({
       if (!p) return;
       path.setStyle(featureStyle(p, { heatLayer, dark, selected: !!p.id && p.id === selectedId }));
     });
+    tipsRef.current.forEach(({ layer, props }) => {
+      layer.setTooltipContent(tooltipHtml(props, heatLayer));
+      applyMapTooltipStyle(layer.getTooltip()?.getElement(), featureStyle(props, { heatLayer, dark, selected: false }).fillColor ?? "#98a2b3");
+      // Centroid markers are alternate targets for the same active map layer.
+      const marker = (layer as { getElement?: () => HTMLElement }).getElement?.()?.querySelector<HTMLElement>(".liveMarker");
+      marker?.style.setProperty("--c", featureStyle(props, { heatLayer, dark, selected: false }).fillColor ?? "#98a2b3");
+    });
   }, [heatLayer, selectedId, themeDark]);
 
   // Real coverage — mandals with a fused record (not the legacy 10 seed flags).
@@ -420,6 +403,12 @@ export function LiveMap({
   return (
     <div className="liveMapWrap" style={{ height }}>
       <div ref={containerRef} className="liveMap" style={{ height }} />
+      {!expandedView && <MapExpand title={mode === "single" ? "Mandal location & context" : "Statewide mandal status"}
+        detailsHref={mode === "status" && selectedId ? `/mandals/${selectedId}/` : undefined}
+        subtitle={heatLayer ? (isWaterLayer(heatLayer) ? WATER_LAYER_META[heatLayer].label : heatLayer === "rainfall_mm" ? "Rainfall (CHIRPS)" : "Water balance") : "Fusion status · prototype evidence"}>
+        <LiveMap mode={mode} mandalId={mandalId} selectedId={selectedId} onSelect={onSelect}
+          navigateOnClick={navigateOnClick} heatLayer={heatLayer} height="100%" expandedView />
+      </MapExpand>}
       {mode === "status" && (
         <div className="liveBadge">
           <span className="liveBadgeDot" /> SNAPSHOT

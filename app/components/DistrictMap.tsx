@@ -7,6 +7,7 @@ import type { GeoJSON, Map as LeafletMap, PathOptions } from "leaflet";
 import { districtGeometry, districtLayerColor, formatNumber, formatPeriod, titleCase } from "../lib/data";
 import type { DistrictFeature, DistrictLayerKey } from "../lib/types";
 import { addVectorBasemap } from "./vectorBasemap";
+import { applyMapTooltipStyle } from "../lib/mapTooltip";
 
 // The basemap is vector, in the platform's palette, with names above the data (vectorBasemap.ts).
 
@@ -18,17 +19,24 @@ function isDark() {
  *  white outlined every district in glare. Matches the mandal map's dark edges. */
 const edgeColor = () => (isDark() ? "rgba(255,255,255,0.45)" : "#ffffff");
 
-function tooltipHtml(p: DistrictFeature) {
+function fillFor(p: DistrictFeature | undefined, layer: DistrictLayerKey, scenario?: Record<string, number | null>, override?: Record<string, string>) {
+  if (p && override?.[p.d]) return override[p.d];
+  if (p && scenario) return districtLayerColor("water_balance_mm", scenario[p.d] ?? null, isDark());
+  return districtLayerColor(layer, p ? p[layer] as number | null : null, isDark());
+}
+
+function tooltipHtml(p: DistrictFeature, layer: DistrictLayerKey, scenario?: Record<string, number | null>, override?: Record<string, string>) {
   const bal = p.water_balance_mm;
-  const balColor = p.water_balance_status === "Surplus" ? "#5e9b6b" : p.water_balance_status === "Deficit" ? "#c65a46" : "#1f8a8a";
+  const row = (key: DistrictLayerKey | "annual_et_mm", label: string, value: string) => `<span class="tipRow${!scenario && !override?.[p.d] && layer === key ? " tipActive" : ""}"><i>${label}</i><b>${value}</b></span>`;
   return (
     `<span class="tipHead"><b>${titleCase(p.d)}</b><span class="tipPill" style="color:#2a6f97;background:#2a6f9722">${p.mandal_count} mandals</span></span>` +
     `<span class="tipDist">District zonal mean · satellite/model</span>` +
-    `<span class="tipRow"><i>NASA Groundwater %ile</i><b>${p.gw_percentile ?? "—"}</b></span>` +
-    `<span class="tipRow"><i>Rainfall (CHIRPS)</i><b>${p.rainfall_mm ?? "—"} mm</b></span>` +
-    `<span class="tipRow"><i>Actual ET (annual)</i><b>${p.annual_et_mm ?? "—"} mm</b></span>` +
+    (scenario ? `<span class="tipRow tipActive"><i>Scenario balance</i><b>${scenario[p.d] ?? "Unavailable"}${scenario[p.d] == null ? "" : " mm"}</b></span>` : "") +
+    row("gw_percentile", "NASA Groundwater %ile", `${p.gw_percentile ?? "—"}`) +
+    row("rainfall_mm", "Rainfall (CHIRPS)", `${p.rainfall_mm ?? "—"} mm`) +
+    row("annual_et_mm", "Actual ET (annual)", `${p.annual_et_mm ?? "—"} mm`) +
     (bal !== null
-      ? `<span class="tipRow"><i>Water balance</i><b style="color:${balColor}">${p.water_balance_status} (${bal > 0 ? "+" : ""}${bal} mm)</b></span>`
+      ? row("water_balance_mm", "Water balance", `${p.water_balance_status} (${bal > 0 ? "+" : ""}${bal} mm)`)
       : "") +
     `<span class="tipFoot">Regional context — not groundwater depth</span>`
   );
@@ -80,24 +88,16 @@ export function DistrictMap({
 
       const styleFor = (feat?: { properties?: DistrictFeature }): PathOptions => {
         const p = feat?.properties as DistrictFeature;
-        const co = colorRef.current;
-        if (co && p && co[p.d]) {
-          return { weight: 1, color: edgeColor(), fillColor: co[p.d], fillOpacity: 0.85 };
-        }
-        const sc = scenarioRef.current;
-        if (sc && p) {
-          const v = sc[p.d] ?? null;
-          return { weight: 1, color: edgeColor(), fillColor: districtLayerColor("water_balance_mm", v, isDark()), fillOpacity: 0.86 };
-        }
-        const value = p ? (p[layerRef.current] as number | null) : null;
-        return { weight: 1, color: edgeColor(), fillColor: districtLayerColor(layerRef.current, value, isDark()), fillOpacity: 0.82 };
+        return { weight: 1, color: edgeColor(), fillColor: fillFor(p, layerRef.current, scenarioRef.current, colorRef.current),
+          fillOpacity: colorRef.current?.[p?.d] ? 0.85 : scenarioRef.current ? 0.86 : 0.82 };
       };
 
       const geo: GeoJSON = L.geoJSON(fc as GeoJsonObject, {
         style: styleFor,
         onEachFeature: (feat, lyr) => {
           const p = feat.properties as DistrictFeature;
-          lyr.bindTooltip(tooltipHtml(p), { sticky: true, className: "liveTip", direction: "top", opacity: 1 });
+          lyr.bindTooltip(() => tooltipHtml(p, layerRef.current, scenarioRef.current, colorRef.current), { sticky: true, className: "liveTip", direction: "auto", opacity: 1 });
+          lyr.on("tooltipopen", () => applyMapTooltipStyle(lyr.getTooltip()?.getElement(), fillFor(p, layerRef.current, scenarioRef.current, colorRef.current)));
           const path = lyr as unknown as { setStyle: (s: PathOptions) => void };
           lyr.on("mouseover", () => path.setStyle({ weight: 2.4, fillOpacity: 0.95 }));
           lyr.on("mouseout", () => path.setStyle({ weight: 1, fillOpacity: 0.82 }));
@@ -151,17 +151,18 @@ export function DistrictMap({
     geo.eachLayer((lyr) => {
       const path = lyr as unknown as { feature?: { properties?: DistrictFeature }; setStyle: (s: PathOptions) => void };
       const p = path.feature?.properties;
+      const fill = fillFor(p, layer, scenarioValues, colorOverride);
+      if (p) lyr.setTooltipContent(tooltipHtml(p, layer, scenarioValues, colorOverride));
+      applyMapTooltipStyle(lyr.getTooltip()?.getElement(), fill);
       if (colorOverride && p && colorOverride[p.d]) {
-        path.setStyle({ fillColor: colorOverride[p.d], fillOpacity: 0.85, weight: 1, color: edgeColor() });
+        path.setStyle({ fillColor: fill, fillOpacity: 0.85, weight: 1, color: edgeColor() });
         return;
       }
       if (scenarioValues && p) {
-        const v = scenarioValues[p.d] ?? null;
-        path.setStyle({ fillColor: districtLayerColor("water_balance_mm", v, isDark()), fillOpacity: 0.86, weight: 1, color: edgeColor() });
+        path.setStyle({ fillColor: fill, fillOpacity: 0.86, weight: 1, color: edgeColor() });
         return;
       }
-      const value = p ? (p[layer] as number | null) : null;
-      path.setStyle({ fillColor: districtLayerColor(layer, value, isDark()), fillOpacity: 0.82, weight: 1, color: edgeColor() });
+      path.setStyle({ fillColor: fill, fillOpacity: 0.82, weight: 1, color: edgeColor() });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layer, scenarioSig, colorSig, theme]);

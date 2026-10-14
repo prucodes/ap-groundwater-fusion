@@ -14,6 +14,7 @@ import { day } from "./waterContextFormat";
 import styles from "./AgricultureWorkspace.module.css";
 import { PageBriefBand } from "../PageBrief";
 import type { PageBrief } from "../../lib/pageBriefs";
+import { mapTooltipStyle } from "../../lib/mapTooltip";
 
 const assetRoot = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/assets`;
 function label(value: string) {
@@ -166,7 +167,7 @@ function MandalMap({ evidence, rows, active, mapView, onSelect, colorBy }: { evi
         }} />)}
     </svg>
     <span className={styles.seaLabel}>BAY OF BENGAL</span><span className={styles.north}>N ↑</span>
-    {hover && <div ref={tooltip} id={tooltipId} role="tooltip" className={styles.mapTooltip} data-signal={hover.row.signal} style={{ ...position, "--status-color": WATER_SIGNALS[hover.row.signal].color } as CSSProperties}>
+    {hover && <div ref={tooltip} id={tooltipId} role="tooltip" className={styles.mapTooltip} data-signal={hover.row.signal} style={{ ...position, ...mapTooltipStyle(WATER_SIGNALS[hover.row.signal].color) }}>
       <div className={styles.tooltipHeading}><span>{label(hover.row.district)} district</span><strong>{label(hover.row.mandal)}</strong></div>
       <span className={styles.tableSignal}><i style={{ background: WATER_SIGNALS[hover.row.signal].color }} />{WATER_SIGNALS[hover.row.signal].label}</span>
       {hover.row.signal === "unavailable" ? <p className={styles.tooltipMissing}>{hover.row.reason || "Comparable groundwater evidence is not available."}</p> : <dl>

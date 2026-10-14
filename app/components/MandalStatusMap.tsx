@@ -19,6 +19,7 @@ import {
 import type { MandalHeatLayerKey } from "../lib/types";
 import { isWaterLayer, WATER_LAYER_META, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
 import { FIELD_LAYER_META, fieldLayerColor, fieldLayerText, isFieldLayer, type FieldLayer } from "../lib/fieldSignals";
+import { mapTooltipStyle } from "../lib/mapTooltip";
 
 type HoverState = { d: string; m: string; id?: string };
 
@@ -41,6 +42,12 @@ export function MandalStatusMap({
   const [focusIndex, setFocusIndex] = useState(0);
 
   const hoverRec = hover ? mandalByMapKey(hover.d, hover.m) : undefined;
+  const fillFor = (d: string, m: string) => {
+    if (layer) return isWaterLayer(layer) ? waterLayerColor(layer, d, m, dark)
+      : isFieldLayer(layer) ? fieldLayerColor(layer, d, m) : mandalHeatColor(layer, d, m, dark);
+    const record = mandalByMapKey(d, m);
+    return record?.status_bucket ? statusMeta(record.status_bucket).color : "var(--field)";
+  };
 
   return (
     <div className="estMapWrap">
@@ -57,11 +64,7 @@ export function MandalStatusMap({
       >
         {mapGeometry.mandals.map((m, i) => {
           const rec = mandalByMapKey(m.d, m.m);
-          const fill = layer
-            ? isWaterLayer(layer) ? waterLayerColor(layer, m.d, m.m, dark) : isFieldLayer(layer) ? fieldLayerColor(layer, m.d, m.m) : mandalHeatColor(layer, m.d, m.m, dark)
-            : rec?.status_bucket
-              ? statusMeta(rec.status_bucket).color
-              : "var(--field)";
+          const fill = fillFor(m.d, m.m);
           const selected = !!rec && rec.id === selectedId;
           const active = !!hover && hover.d === m.d && hover.m === m.m;
           return (
@@ -99,7 +102,7 @@ export function MandalStatusMap({
       </svg>
 
       {hover ? (
-        <div className="estHoverCard" style={{ borderLeft: `3px solid ${hoverRec ? statusMeta(hoverRec.status_bucket).color : "var(--muted)"}` }} aria-live="polite">
+        <div className="estHoverCard" style={mapTooltipStyle(fillFor(hover.d, hover.m))} aria-live="polite">
           <div className="estHoverTitle">{titleCase(hover.m)}</div>
           <div className="estHoverSub">{titleCase(hover.d)} District</div>
           {layer && isWaterLayer(layer) ? (
@@ -121,7 +124,7 @@ export function MandalStatusMap({
             <>
               <div className="estHoverRow">
                 <span>Status</span>
-                <strong style={{ color: statusMeta(hoverRec.status_bucket).color }}>
+                <strong>
                   {statusMeta(hoverRec.status_bucket).label}
                 </strong>
               </div>

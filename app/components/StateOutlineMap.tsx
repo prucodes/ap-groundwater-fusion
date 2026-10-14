@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import styles from "./StateOutlineMap.module.css";
+import { mapTooltipStyle } from "../lib/mapTooltip";
 
 /* A whole-State mandal map whose outlines load after the page: the page passes
    one colour key per mandal and a sentence per mandal for the tooltip, and the
@@ -38,9 +39,13 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
   const [hover, setHover] = useState<{ index: number; x: number; y: number } | null>(null);
   const frame = useRef<HTMLDivElement>(null);
   const marked = marks?.length ? new Set(marks) : null;
+  const colorFor = (index: number) => {
+    const key = keys[index], color = colors[key] ?? colors.n ?? "var(--field)";
+    return key === "n" ? `var(--map-held, ${color})` : key === "i" ? `var(--map-insufficient, ${color})` : color;
+  };
   // Marked mandals draw after the district lines, so their ring is never cut by one.
   const shape = (index: number) => <path key={index} d={outlines?.mandals[index]} data-key={keys[index]} data-mark={marked?.has(index) ? "" : undefined}
-    fill={colors[keys[index]] ?? colors.n}
+    fill={colorFor(index)}
     onPointerMove={event => { const box = frame.current?.getBoundingClientRect(); if (box && event.pointerType !== "touch") setHover({ index, x: event.clientX - box.left, y: event.clientY - box.top }); }} />;
   useEffect(() => {
     let live = true;
@@ -58,7 +63,7 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
       {hover && outlines ? (() => {
         const [district, mandal] = outlines.names[hover.index] ?? ["", ""];
         const width = frame.current?.clientWidth ?? 600;
-        return <div className={styles.tooltip} role="tooltip" style={{ left: Math.min(hover.x + 14, width - 230), top: hover.y + 12 }}>
+        return <div className={styles.tooltip} role="tooltip" style={{ ...mapTooltipStyle(colorFor(hover.index)), left: Math.max(4, Math.min(hover.x + 14, width - 230)), top: hover.y + 12 }}>
           <span>{title(district)}</span><strong>{title(mandal)}</strong><em>{notes[hover.index]}</em>
         </div>;
       })() : null}

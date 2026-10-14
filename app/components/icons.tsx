@@ -28,6 +28,12 @@ export const IconX = (p: IconProps) => (
   </svg>
 );
 
+export const IconExpand = (p: IconProps) => (
+  <svg {...base(p)}>
+    <path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5" />
+  </svg>
+);
+
 export const IconGlobe = (p: IconProps) => (
   <svg {...base(p)}>
     <circle cx="12" cy="12" r="9" />

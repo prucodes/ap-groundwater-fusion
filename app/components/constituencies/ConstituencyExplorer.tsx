@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { METRICS, metricColor, metricLegend, metricText, type ConstituencyRow, type MetricKey } from "../../lib/constituencies";
 import styles from "./Constituencies.module.css";
+import { mapTooltipStyle } from "../../lib/mapTooltip";
 
 type SortKey = "ac" | "pc" | "mandals" | "stressShare" | "medianDepthM" | "sinceMayM" | "droughtShare" | "rainPct";
 
@@ -90,7 +91,7 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
             <ul>{metricLegend(metric).map(item => <li key={item.label}><i style={{ background: item.color }} />{item.label}</li>)}</ul>
           </figcaption>
         </figure>
-        <aside className={styles.panel} aria-live="polite" data-testid="constituency-panel">
+        <aside className={styles.panel} aria-live="polite" data-testid="constituency-panel" style={row ? mapTooltipStyle(metricColor(metric, row[metric])) : undefined}>
           {row ? (
             <>
               {selected ? (

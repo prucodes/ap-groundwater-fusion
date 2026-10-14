@@ -246,7 +246,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
                   Location &amp; Context
                 </div>
               </div>
-              <LiveMap mode="single" mandalId={mandal.id} height={220} />
+              <LiveMap mode="single" mandalId={mandal.id} height={300} />
               <div className="mapHint">
                 <IconMap style={{ width: 13, height: 13 }} /> {`Basemap © OpenFreeMap · OSM · ${boundaryLabel(geometryForMandal(mandal.id))}`}
               </div>

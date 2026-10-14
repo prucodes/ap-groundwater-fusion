@@ -441,7 +441,8 @@
   button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
   .seg button{border-radius:5px;letter-spacing:0}
   .seg button[aria-pressed="true"]{background:#173a48;box-shadow:inset 0 -2px #7bdacb}
-  #tip{border-top:2px solid var(--cyan);background:rgba(4,19,29,.97)}
+  #tip,#mCard{--map-status-color:var(--cyan);--map-status-ink:color-mix(in srgb,var(--map-status-color) 55%,#edf7fc);--map-status-graph:color-mix(in srgb,var(--map-status-color) 65%,#edf7fc);border:1px solid color-mix(in srgb,var(--map-status-color) 38%,var(--line));border-top:3px solid var(--map-status-color);background:color-mix(in srgb,var(--map-status-color) 9%,#04131d)}
+  #tipVal b,#mcV{color:var(--map-status-ink)}
   #snapPanel{position:static;transform:none;width:auto;margin-top:14px;padding:12px 0 0;
     border:0;border-top:1px solid var(--line);border-radius:0;background:none;box-shadow:none;backdrop-filter:none}
   #snapPanel .snapLegend{flex-wrap:wrap;gap:5px 9px}
@@ -1563,6 +1564,7 @@ canvas.addEventListener("pointercancel",endTouch);
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(-2,-2);
 let mousePX=0,mousePY=0;
 const tip=document.getElementById("tip");
+const tipTone=new THREE.Color();
 const fmt1=v=>v.toFixed(1);
 function sparkSVG(m){
   const w=200,h=30,p=2;
@@ -1576,11 +1578,13 @@ function sparkSVG(m){
   }
   const [cx,cy]=xy(year);
   return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">
-    <path d="${dObs}" fill="none" stroke="#7fe4ff" stroke-width="1.6" opacity=".9"/>
-    ${isGap(m,year)?"":`<circle cx="${cx}" cy="${cy}" r="2.6" fill="#fff"/>`}</svg>`;
+    <path d="${dObs}" fill="none" stroke="var(--map-status-graph,#7fe4ff)" stroke-width="1.6" opacity=".9"/>
+    ${isGap(m,year)?"":`<circle cx="${cx}" cy="${cy}" r="2.6" fill="var(--map-status-graph,#7fe4ff)" stroke="#edf7fc" stroke-width=".7"/>`}</svg>`;
 }
 function showTip(f,px,py){
   const m=M[f];
+  // Use the scene's target colour, including district aggregation and the active time/layer.
+  tip.style.setProperty("--map-status-color","#"+tipTone.setRGB(toC[f*3],toC[f*3+1],toC[f*3+2]).getHexString());
   tip.classList.toggle("compact",pinned>=0);
   document.getElementById("tipName").textContent=m.n;
   document.getElementById("tipDist").textContent=m.d+" district";
@@ -1600,13 +1604,13 @@ function showTip(f,px,py){
   document.getElementById("tipYears").style.display=gran==="district"?"none":"flex";
   if(mode==="level"&&onNow&&gran!=="district"){
     const k=nowClass(m);
-    cEl.style.display="inline-block"; cEl.textContent=NOW_LBL[k]; cEl.style.color=NOW_HEX[k];
+    cEl.style.display="inline-block"; cEl.textContent=NOW_LBL[k]; cEl.style.color="var(--map-status-ink)";
     document.getElementById("tipVal").innerHTML=m.c?`<b>${fmt1(m.c.v)}</b> m below ground \u00B7 ${NOW_MONTH} ${NOW_YEAR}`:`No ${NOW_MONTH} ${NOW_YEAR} reading`;
     dEl.innerHTML=nowDelta(m);
   }
   if(mode==="outlook"){
     const k=olClass(m);
-    cEl.style.display="inline-block"; cEl.textContent=OUT_LBL[k]; cEl.style.color=RIM_HEX[k]||OUT_HEX[k];
+    cEl.style.display="inline-block"; cEl.textContent=OUT_LBL[k]; cEl.style.color="var(--map-status-ink)";
     if(m.o&&proj){
       const p=projD(m), d=p-m.o.r;
       document.getElementById("tipVal").innerHTML=`<b>${fmt1(p)}</b> m below ground \u00B7 May ${TARGET_YEAR}, projected`;
@@ -1660,7 +1664,7 @@ function snapshotSVG(m){
   g+=`<line x1="${X(year)}" y1="${pt}" x2="${X(year)}" y2="${H-pb}" stroke="rgba(223,246,255,.35)"/>`;
   if(dist) g+=line(dist.lvlMean,"#9db8cc",1.3,"4 3");
   g+=line(meanByYear,"#5f7890",1.3,"2 3");
-  g+=line(m.lvl.map((v,i)=>isGap(m,i)?null:v),"#7fe4ff",2,"");
+  g+=line(m.lvl.map((v,i)=>isGap(m,i)?null:v),"var(--map-status-graph,#7fe4ff)",2,"");
   if(!isGap(m,year)&&!onNow)g+=`<circle cx="${X(year)}" cy="${Y(m.lvl[year])}" r="3" fill="#fff"/>`;
   if(NOW&&m.c){
     /* The latest reading where its month falls after the last May: a different season, so a diamond, not a point on the line. */
@@ -1722,6 +1726,7 @@ function updateSnapshot(fi){
     return;
   }
   document.getElementById("snapLegend").innerHTML=SNAP_LEGEND;
+  document.querySelector("#snapLegend i").style.background="var(--map-status-graph,#7fe4ff)";
   document.getElementById("snapHeading").textContent="Recorded May depth / m bgl";
   document.getElementById("snapLegend").style.display="flex";
   document.getElementById("snapChart").innerHTML=snapshotSVG(m);
@@ -1743,9 +1748,9 @@ function wellSVG(v,districtDepth){
     <rect x="51" y="26" width="27" height="97" fill="url(#wellGlass)" stroke="#658991" stroke-width=".7"/>
     ${[0,.5,1].map(t=>`<path d="M34 ${26+t*88}H43" stroke="#5e7b8b"/><text x="29" y="${29+t*88}" text-anchor="end" fill="#9db8cc" font-size="9">${fmt1(t*scale)}</text>`).join("")}
     <rect x="52" y="${waterY}" width="25" height="${123-waterY}" fill="url(#wellWater)"/>
-    <path d="M47 ${waterY}H114" stroke="#aef3ed" stroke-width="1.3"/>
-    <circle cx="65" cy="${waterY}" r="2.4" fill="#d9fffa"/>
-    <text x="120" y="${Math.min(126,waterY+4)}" fill="#d2fcf5" font-size="13">${fmt1(v)} m</text>
+    <path d="M47 ${waterY}H114" stroke="var(--map-status-graph,#aef3ed)" stroke-width="1.3"/>
+    <circle cx="65" cy="${waterY}" r="2.4" fill="var(--map-status-graph,#d9fffa)"/>
+    <text x="120" y="${Math.min(126,waterY+4)}" fill="var(--map-status-ink,#d2fcf5)" font-size="13">${fmt1(v)} m</text>
     ${districtDepth==null?"":`<path d="M84 ${26+districtDepth/scale*88}H109" stroke="#ddc38c" stroke-dasharray="2 3"/><text x="120" y="139" fill="#ddc38c" font-size="8">District mean ${fmt1(districtDepth)} m</text>`}
     <text x="5" y="149" fill="#91a9b5" font-size="8">Schematic borehole / not yield or water volume</text></svg>`;
 }
@@ -1779,6 +1784,7 @@ function updateNowCard(fi){
 }
 function updateMandalCard(fi){
   const m=M[fi], v=m.lvl[year];
+  mCard.style.setProperty("--map-status-color","#"+tipTone.setRGB(toC[fi*3],toC[fi*3+1],toC[fi*3+2]).getHexString());
   document.getElementById("mcName").textContent=m.n;
   document.getElementById("mcDist").textContent=m.d+" district";
   const cEl=document.getElementById("mcCat");
@@ -2138,6 +2144,7 @@ function setGran(g){
   document.getElementById("gMandal").setAttribute("aria-pressed",g==="mandal");
   document.getElementById("gDistrict").setAttribute("aria-pressed",g==="district");
   targetsFor(year,mode); beginTween(560); refreshHUD();
+  if(pinned>=0) updateMandalCard(pinned);
 }
 document.getElementById("gMandal").onclick=()=>setGran("mandal");
 document.getElementById("gDistrict").onclick=()=>setGran("district");
