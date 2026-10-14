@@ -4920,13 +4920,13 @@ pre.jsonBody {
 /* The map sits inside .liveMapWrap, so that is the child that has to grow —
    targeting .liveMap directly did nothing. Growing it means a rail taller than
    the map turns into a larger map instead of white space. */
-.overviewMapColumn .overviewMapLead .liveMapWrap {
+.overviewMapColumn .overviewMapLead > .liveMapWrap {
   flex: 1 1 auto;
   min-height: 500px;
   /* Enough to use the space without turning the overview into one huge map. */
   max-height: 760px;
 }
-.overviewMapColumn .overviewMapLead .liveMapWrap .liveMap { height: 100%; }
+.overviewMapColumn .overviewMapLead > .liveMapWrap > .liveMap { height: 100%; }
 @media (min-width: 1081px) {
   .overviewCockpit { align-items: stretch; }
   /* The rail's content no longer sets the row's height: the map column does,
