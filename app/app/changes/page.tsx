@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HeaderHero } from "../../components/HeaderHero";
+import { PageBriefList } from "../../components/PageBrief";
+import { IconArrowRight, IconCalendar, IconFile, IconTarget } from "../../components/icons";
 import changesJson from "../../data/weekly_changes.json";
 import { CATEGORY_CODE, CATEGORY_META, place, shortDate } from "../../lib/drought";
 import { droughtWatch } from "../../lib/droughtWatch";
@@ -105,7 +106,8 @@ function moveStory() {
 
 export default function ChangesPage() {
   const items = changes.items;
-  const first = items.every(item => item.before === null || item.direction === "same");
+  const first = items.every(item => item.before === null);
+  const priorityCount = fieldPriority().rows.filter(r => r.lit >= 4).length;
   // Moved figures lead, worse first; the ones that held steady follow as a slim row.
   const ORDER: Record<string, number> = { worse: 0, better: 1, moved: 2, new: 3, same: 4 };
   const rank = (item: Item) => ORDER[item.direction ?? "new"];
@@ -116,58 +118,59 @@ export default function ChangesPage() {
 
   return (
     <div className={`pageWrap ${styles.page}`}>
-      <HeaderHero
-        title="This Week"
-        brief={brief("/changes", first ? <>The first week-on-week comparison lands with the next Monday refresh; <b>{fieldPriority().rows.filter(r => r.lit >= 4).length} mandals</b> have four or more stress signals at once.</> : <>{changes.counts.worse} headlines worse and {changes.counts.better} better since last week; <b>{fieldPriority().rows.filter(r => r.lit >= 4).length} mandals</b> have four or more stress signals at once.</>)}
-        showChips={false}
-        variant="compact"
-      />
-
-      <section className={styles.summary} aria-label="Week at a glance">
-        <div className={styles.summaryText}>
-          <span className={styles.kicker}>Refresh of {shortDate(changes.generatedAt, true)}</span>
-          <p>Compared with {changes.comparedWith.label}{changes.comparedWith.commit ? ` (commit ${changes.comparedWith.commit}${changes.comparedWith.committedAt ? `, ${shortDate(changes.comparedWith.committedAt, true)}` : ""})` : ""}.</p>
-          <Link href="/digest/" className={styles.digestLink} data-testid="digest-link">This week on one A4 page: the digest →</Link>
+      <header className={styles.masthead}>
+        <div>
+          <span className={styles.kicker}>Andhra Pradesh / Weekly water briefing · Prototype</span>
+          <h1>This Week<span className={styles.issueDate}><IconCalendar />{shortDate(changes.generatedAt, true)}</span></h1>
+          <p>The changes. The places. The next field check.</p>
         </div>
-        <ul className={styles.tally}>
+        <Link href="/digest/" className={styles.digestLink} data-testid="digest-link"><IconFile />One-page digest<IconArrowRight /></Link>
+      </header>
+      <div className={styles.brief}>
+        <PageBriefList brief={brief("/changes", first ? <>No earlier headline snapshot to compare yet; <b>{priorityCount} mandals</b> have four or more stress signals.</> : <>{changes.counts.worse} headlines worse and {changes.counts.better} better since the previous refresh; <b>{priorityCount} mandals</b> have four or more stress signals.</>)} />
+      </div>
+      <section className={styles.summary} aria-label="Week at a glance">
+        <span className={styles.summaryText}>Headline changes <small>since the previous refresh</small></span>
+        <ul className={styles.tally} aria-label="Headline comparison counts">
           <li data-tone="worse"><b>{changes.counts.worse}</b>worse</li>
           <li data-tone="better"><b>{changes.counts.better}</b>better</li>
           <li data-tone="same"><b>{changes.counts.same}</b>unchanged</li>
           <li data-tone="unknown"><b>{changes.counts.unknown}</b>new</li>
         </ul>
+        {steady.length ? <a href="#weekly-register" className={styles.registerLink}>Source register <IconArrowRight /></a> : null}
       </section>
-
       <section className={styles.headlines} aria-label="Headlines this week" data-testid="weekly-changes">
+      <div className={styles.briefingGrid}>
+        <div className={styles.leadColumn}>
         {moved.length ? (
           <>
-            <h2 className={styles.groupHead}>Moved this week <span>{moved.length}</span></h2>
+            <h2 className={styles.groupHead}>01 / Moved this week <span>{moved.length} headline{moved.length === 1 ? "" : "s"}</span></h2>
             <div className={styles.cards}>
               {moved.map(item => <ChangeCard item={item} key={item.key} />)}
             </div>
           </>
-        ) : null}
-        {steady.length ? (
-          <>
-            <h2 className={styles.groupHead}>Held steady <span>{steady.length}</span></h2>
-            <div className={`${styles.cards} ${styles.cardsSteady}`}>
-              {steady.map(item => <ChangeCard item={item} key={item.key} />)}
-            </div>
-          </>
-        ) : null}
-      </section>
-
+        ) : <p className={styles.empty}>No headline changed in this comparison. A retained figure is not evidence that conditions are safe.</p>}
+          {priorityCount > 0 ? <a href="#field-teams" className={styles.priority} data-testid="weekly-field-priority">
+            <span className={styles.priorityIcon}><IconTarget /></span>
+            <span><span className={styles.kicker}>Next / Verify in the field</span><strong>{priorityCount}<small>mandals with 4+ stress signals</small></strong><span>Overlapping signals, not independent confirmations. Start with a verification visit.</span></span>
+            <IconArrowRight />
+          </a> : null}
+          <p className={styles.scopeNote}>Prototype briefing. Dated source readings and derived screening, not live telemetry or a drought declaration.</p>
+        </div>
       <section className={styles.moves} aria-labelledby="week-moves-title" data-testid="week-moves">
         <header className={styles.movesHead}>
-          <span className={`${styles.kicker} ${styles.kickerOnCard}`}>Where it moved</span>
+          <span className={styles.kicker}>02 / Where it moved</span>
           <h2 id="week-moves-title">{droughtMoves.length
             ? <>{changes.drought.worse.length} mandals read worse on the drought manual this week, {changes.drought.better.length} better</>
             : <>No mandal changed its drought manual reading this week</>}</h2>
           {droughtMoves.length ? <p>{moveStory()}</p> : null}
+          <p className={styles.basis}>Mandal comparison: one week of rain earlier. Separate from the headline refresh above.</p>
         </header>
         <div className={styles.movesGrid}>
           <WeekMoveMap {...weekMoves()} aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height}
             label={`Drought manual reading by mandal: ${changes.drought.worse.length} worse and ${changes.drought.better.length} better than last week.`} />
-          <div className={styles.movesList}>
+          <details className={styles.movesList}>
+            <summary>Readings that moved <b>{droughtMoves.length} mandals</b><span>View register</span></summary>
             <div className={styles.listHead}>
               <h3>Readings that moved</h3>
               <span>{changes.drought.basis.charAt(0).toUpperCase() + changes.drought.basis.slice(1)}</span>
@@ -186,8 +189,18 @@ export default function ChangesPage() {
               </RowFold>
             ) : <p className={styles.empty}>No mandal changed its reading this week.</p>}
             <Link href="/drought" className={styles.more}>Open the Drought Watch →</Link>
-          </div>
+          </details>
         </div>
+      </section>
+      </div>
+        {steady.length ? (
+          <details className={styles.steadyRegister} id="weekly-register">
+            <summary><span>03 / Held steady</span><b>{steady.length} headline{steady.length === 1 ? "" : "s"}</b><span>Same figure does not mean a new reading</span></summary>
+            <div className={`${styles.cards} ${styles.cardsSteady}`}>
+              {steady.map(item => <ChangeCard item={item} key={item.key} />)}
+            </div>
+          </details>
+        ) : null}
       </section>
 
       <FieldTeams />
@@ -223,6 +236,7 @@ export default function ChangesPage() {
       </div>
 
       <p className={styles.foot}>
+        Compared with {changes.comparedWith.label}{changes.comparedWith.commit ? ` (commit ${changes.comparedWith.commit}${changes.comparedWith.committedAt ? `, ${shortDate(changes.comparedWith.committedAt, true)}` : ""})` : ""}.{" "}
         Built each Monday by the weekly refresh, after every source has been fetched and before anything is published. A feed that failed or looked
         mid-revision keeps last week&rsquo;s figure, and its date above says so. Rain, soil and reservoirs: APWRIMS. Drought readings: this site&rsquo;s reading
         of the national drought manual, not a declaration. Groundwater: APWRIMS monthly series. El Niño: NOAA CPC.
@@ -233,8 +247,12 @@ export default function ChangesPage() {
 
 /** One headline: its figure now, which way it moved, what it was, and the dates of both readings. */
 function ChangeCard({ item }: { item: Item }) {
+  const comparable = item.before !== null && item.after !== null && Number.isFinite(item.before) && Number.isFinite(item.after) && item.direction !== "same";
+  const low = Math.min(0, item.before ?? 0, item.after ?? 0);
+  const high = Math.max(0, item.before ?? 0, item.after ?? 0);
+  const position = (value: number) => 4 + 92 * (value - low) / (high - low || 1);
   return (
-    <Link href={item.href} className={styles.card} data-direction={item.direction ?? "new"}>
+    <Link href={item.href} className={styles.card} data-direction={item.direction ?? "new"} data-key={item.key}>
       <span className={styles.cardLabel}>{item.label}</span>
       <strong className={styles.value}>{format(item.after, item.unit)}</strong>
       <span className={styles.status}>
@@ -242,13 +260,24 @@ function ChangeCard({ item }: { item: Item }) {
           {item.direction ? DIRECTION_TEXT[item.direction] : "First reading"}
           {delta(item) && item.direction !== "same" ? ` · ${delta(item)}` : ""}
         </span>
-        {item.before !== null && item.direction !== "same" ? <span className={styles.was}>was {format(item.before, item.unit)}</span> : null}
       </span>
-      <span className={styles.dates}>
+      {comparable ? <span className={styles.comparison} data-testid="weekly-comparison" role="img"
+        aria-label={`Previous ${format(item.before, item.unit)}; current ${format(item.after, item.unit)}. Two snapshots, not a trend.`}>
+        <span className={styles.comparisonLabels}><span><i className={styles.previousKey} />Previous <b>{format(item.before, item.unit)}</b></span><span><i className={styles.currentKey} />Current <b>{format(item.after, item.unit)}</b></span></span>
+        <span className={styles.comparisonTrack}>
+          <i className={styles.changeRange} style={{ left: `${Math.min(position(item.before!), position(item.after!))}%`, width: `${Math.abs(position(item.before!) - position(item.after!))}%` }} />
+          <i className={styles.beforePoint} style={{ left: `${position(item.before!)}%` }} />
+          <i className={styles.afterPoint} style={{ left: `${position(item.after!)}%` }} />
+        </span>
+        <span className={styles.comparisonAxis}><span>{format(low, item.unit)}</span><span>{format(high, item.unit)}</span></span>
+        <span className={styles.comparisonDates}><span>{asOf(item.beforeAsOf)}</span><span>{asOf(item.afterAsOf)}</span></span>
+      </span> : null}
+      {!comparable || item.refreshed === false ? <span className={styles.dates}>
         {item.beforeAsOf && item.beforeAsOf !== item.afterAsOf ? `${asOf(item.beforeAsOf)} → ${asOf(item.afterAsOf)}` : `As of ${asOf(item.afterAsOf)}`}
         {item.refreshed === false ? " · source has not updated" : ""}
-      </span>
+      </span> : null}
       {item.note ? <span className={styles.note}>{item.note}</span> : null}
+      <span className={styles.cardLink}>Open evidence <IconArrowRight /></span>
     </Link>
   );
 }
@@ -264,7 +293,7 @@ function FieldTeams() {
     <section className={styles.teams} id="field-teams" aria-labelledby="field-teams-title" data-testid="field-teams">
       <div className={styles.teamsHead}>
         <div>
-          <span className={`${styles.kicker} ${styles.kickerOnCard}`}>Where field teams would learn most this week</span>
+          <span className={styles.kicker}>Where field teams would learn most this week</span>
           <h2 id="field-teams-title">Mandals where most signals point to water stress at once</h2>
           <p>Six published signals, each a stated test on a figure this site already shows. Where four or more agree, a visit can confirm or rule out stress quickly. A list for verification visits: not a ranking of need, an allocation or a declaration. The signals are not all independent: soil moisture is modelled from rain, and the crop check starts from the soil moisture.</p>
         </div>

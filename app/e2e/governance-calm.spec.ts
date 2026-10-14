@@ -54,7 +54,7 @@ test("printing a page shows every folded row and note", async ({ page }) => {
 
 test("This Week leads with what moved, worse first, and keeps the steady figures beneath", async ({ page }) => {
   await page.goto("/changes/");
-  const directions = await page.getByTestId("weekly-changes").getByRole("link")
+  const directions = await page.getByTestId("weekly-changes").locator("a[data-direction]")
     .evaluateAll(cards => cards.map(card => (card as HTMLElement).dataset.direction ?? ""));
   expect(directions).toHaveLength(changes.items.length);
   const rank: Record<string, number> = { worse: 0, better: 1, moved: 2, new: 3, same: 4 };
