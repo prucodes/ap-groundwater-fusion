@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
+import { EvidenceComparison } from "../../components/EvidenceComparison";
 import {
   IconActivity,
   IconAlert,
@@ -68,7 +69,7 @@ export default function MonsoonPage() {
     <div className={`pageWrap ${styles.page}`}>
       <HeaderHero
         title={enso?.state === "el_nino" ? "Monsoon Watch — El Niño" : "Monsoon Watch"}
-        brief={brief("/monsoon", <>{rain ? <>June–August rain was <b>{Math.abs(Math.round(rain.anomalyPct))}% {rain.anomalyPct < 0 ? "below" : "above"} normal</b>{rain.rankDriest === 1 ? `, the driest of ${rain.ofYears} years` : ""}; </> : null}{formatNumber(r.fallingPct)}% of mandal series sit lower than in May.</>)}
+        brief={brief("/monsoon", <>{rain ? <>{MONTHS[Number(rain.months.slice(0, 2))]}–{MONTHS[Number(rain.months.slice(3))]} {w.season.year} rain was <b>{formatNumber(Math.abs(rain.anomalyPct))}% {rain.anomalyPct < 0 ? "below" : "above"} normal</b>{rain.rankDriest === 1 ? `, the driest of ${rain.ofYears} years` : ""}; </> : null}{formatNumber(r.fallingPct)}% of mandal series sit lower than in May.</>)}
         showChips={false}
         variant="compact"
       />
@@ -100,7 +101,7 @@ export default function MonsoonPage() {
         </div>
         {/* Four lines first: the ground, the State's wells, the rain and the reservoirs.
             Every other season figure is in the fold beneath, with how each is measured. */}
-        <div className="overviewHeadlines monsoonLead">
+        <div className="overviewHeadlines monsoonLead evidenceStrip">
           <div className="headlineCard headlineStatic">
             <span className="headlineKicker"><IconDroplet /> Groundwater</span>
             <strong>{formatNumber(r.fallingPct)}%<small>of mandal series lower than in May</small></strong>
@@ -110,6 +111,8 @@ export default function MonsoonPage() {
                 ? "."
                 : `; the previous ${prior.length} seasons ranged ${formatNumber(priorLow)} to ${formatNumber(priorHigh)}%.`}
             </span>
+            <EvidenceComparison label={`May to ${MONTHS[Number(w.season.latestMonth.slice(5, 7))]}`} value={r.fallingPct}
+              reference={priorHigh} referenceLabel="Past-season high" unit="%" maximum={100} />
           </div>
           {stateSummary.state && stateSummary.summary.withChange ? (
             <div className="headlineCard headlineStatic" data-testid="state-network-stat">
@@ -118,6 +121,8 @@ export default function MonsoonPage() {
               <span className="headlineText">
                 {`${stateSummary.summary.deeperThanYearAgo} deeper than a year ago. AWARE feed, one reading, ${stateSummary.state.stationsTotal.toLocaleString("en-IN")} stations.`}
               </span>
+              <EvidenceComparison label="State mean depth" value={stateSummary.state.currentM}
+                reference={stateSummary.state.yearAgoM} referenceLabel="A year ago" unit=" m" />
             </div>
           ) : null}
           {rain ? (
@@ -125,9 +130,11 @@ export default function MonsoonPage() {
               <span className="headlineKicker"><IconCloudRain /> Rain, {MONTHS[Number(rain.months.slice(0, 2))]} to {MONTHS[Number(rain.months.slice(3))]}</span>
               <strong>{formatNumber(rain.anomalyPct)}%<small>against normal{rain.rankDriest === 1 ? `, driest of ${rain.ofYears} years` : ""}</small></strong>
               <span className="headlineText">
-                {formatNumber(rain.mm)} mm against {formatNumber(rain.normalMm)} mm ({rain.product.split(" monthly")[0]}).
+                {rain.product.split(" monthly")[0]}.
                 {gauges ? ` State gauges since 1 June: ${formatNumber(gauges.deviationPct)}% to ${day(gauges.end)}.` : ""}
               </span>
+              <EvidenceComparison label="Satellite rain" value={rain.mm} reference={rain.normalMm}
+                referenceLabel="Normal" unit=" mm" />
             </div>
           ) : null}
           {storage ? (
@@ -135,6 +142,8 @@ export default function MonsoonPage() {
               <span className="headlineKicker"><IconWaves /> Reservoirs</span>
               <strong>{formatNumber(storage.storagePct)}%<small>of capacity on {day(storage.asOf)}</small></strong>
               <span className="headlineText">{formatNumber(storage.lastYearPct)}% a year ago, across {storage.count} reservoirs.</span>
+              <EvidenceComparison label="Stored / capacity" value={storage.storagePct} reference={storage.lastYearPct}
+                referenceLabel="A year ago" unit="%" maximum={100} />
             </div>
           ) : null}
         </div>

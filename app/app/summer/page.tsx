@@ -45,12 +45,12 @@ export default function SummerPage() {
         variant="compact"
       />
 
-      <section className={`${shared.hero} ${styles.hero}`} aria-label="Summer outlook in figures" data-testid="summer-summary">
-        <div className={shared.heroText}>
-          <span className={shared.kicker}>Summer {o.targetMay.slice(0, 4)} · from the {month(o.anchor)} readings</span>
+      <section className={styles.hero} aria-label="Summer outlook in figures" data-testid="summer-summary">
+        <div>
+          <span className={styles.kicker}>Summer {o.targetMay.slice(0, 4)} · from the {month(o.anchor)} readings</span>
           <p>Each mandal against its own record: the depth at which a well fails depends on how deep it was drilled, which no public record gives.</p>
         </div>
-        <ul className={shared.tiles}>
+        <ul className={styles.summaryTiles}>
           {ORDER.map(tier => <li key={tier}><span>{SUMMER_TIERS[tier].short}</span><b data-tone={tier === "beyond" ? "bad" : undefined}>{s[tier]}<small> mandals</small></b><em>{tier === "beyond"
             ? `typical winter · ${s.beyondDeep} more than ${o.deepM} m down${people ? `, home to ${lakhs(people.beyondDeep)}` : ""}`
             : tier === "dry" ? `only in a winter as dry as their driest · ${s.dryDeep} more than ${o.deepM} m down${people ? `, home to ${lakhs(people.dryDeep)}` : ""}`

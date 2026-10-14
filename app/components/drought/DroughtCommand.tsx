@@ -68,7 +68,7 @@ export function DroughtCommand({ data, builtDays }: {
           <div className={styles.ringWrap}>
             <svg className={styles.ring} viewBox="0 0 150 150" role="img"
               aria-label={`${worse} of ${ringTotal} triggered mandals moderate or worse on the impact indicators`}>
-              <circle cx="75" cy="75" r={radius} stroke="rgba(255,255,255,.1)" strokeWidth="14" />
+              <circle cx="75" cy="75" r={radius} stroke="var(--chart-track)" strokeWidth="14" />
               {RING.map(key => {
                 const length = (state.counts[key] / ringTotal) * circumference;
                 const dash = drawn ? `${Math.max(0, length - 1.5)} ${circumference}` : `0 ${circumference}`;
@@ -93,7 +93,7 @@ export function DroughtCommand({ data, builtDays }: {
           <span className={styles.tileLabel}>Step 3 · declaration window</span>
           <div className={styles.clock}>
             <svg viewBox="0 0 132 132" role="img" aria-label={`${days} days to the ${shortDate(season.declareBy, true)} declaration deadline`}>
-              <circle cx="66" cy="66" r={clockRadius} fill="none" stroke="rgba(255,255,255,.1)" strokeWidth="10" />
+              <circle cx="66" cy="66" r={clockRadius} fill="none" stroke="var(--chart-track)" strokeWidth="10" />
               <circle cx="66" cy="66" r={clockRadius} fill="none" stroke="url(#droughtClock)" strokeWidth="10" strokeLinecap="round"
                 strokeDasharray={`${(drawn ? elapsed : 0) * clockLength} ${clockLength}`} transform="rotate(-90 66 66)" className={styles.ringSeg} />
               <defs>

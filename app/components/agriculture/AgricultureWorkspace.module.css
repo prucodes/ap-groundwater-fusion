@@ -16,6 +16,12 @@
 .workspace .hero h1 { font-size: 34px; font-weight: 600; line-height: 1.13; margin: 12px 0; color: white; }
 .heroCopy p { font-size: 12px; line-height: 1.6; color: #e0efe8; }
 .heroCredit { position: absolute; right: 13px; bottom: 12px; color: white; background: #163b2ac9; padding: 4px 7px; font-size: 9px; }
+.workspace :global(.pageBriefBand) { margin: 0; padding: 17px 0; border-radius: 0; border-bottom: 1px solid var(--line); background: transparent; box-shadow: none; }
+.workspace :global(.heroBrief dt) { color: var(--ag-green); }
+.workspace :global(.heroBrief dd), .workspace :global(.heroBrief .heroBriefNow dd) { color: var(--ink-soft); }
+.workspace :global(.heroBrief .heroBriefNow dd b), .workspace :global(.heroBrief .heroBriefNow dd strong) { color: var(--ink); }
+.workspace :global(.briefMoreLabel) { color: var(--ag-green); }
+:global(:root[data-theme="dark"]) .workspace :global(.heroBrief dt), :global(:root[data-theme="dark"]) .workspace :global(.briefMoreLabel) { color: #8fd2a1; }
 .notice { display: flex; align-items: flex-start; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 11px; line-height: 1.65; color: var(--muted); }
 .notice > svg { width: 17px; height: 17px; flex-shrink: 0; margin-top: 1px; color: var(--ag-green); }
 .notice strong { color: var(--ink-soft); font-weight: 600; }
