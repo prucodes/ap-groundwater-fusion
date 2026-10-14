@@ -1,0 +1,50 @@
+[
+  {
+    "route": "overview",
+    "width": 1440,
+    "theme": "light",
+    "overflow": false
+  },
+  {
+    "route": "monsoon",
+    "width": 1440,
+    "theme": "light",
+    "overflow": false
+  },
+  {
+    "route": "drought",
+    "width": 1440,
+    "theme": "light",
+    "overflow": false
+  },
+  {
+    "route": "agriculture",
+    "width": 1440,
+    "theme": "light",
+    "overflow": false
+  },
+  {
+    "route": "summer",
+    "width": 1440,
+    "theme": "light",
+    "overflow": false
+  },
+  {
+    "route": "overview",
+    "width": 390,
+    "theme": "light",
+    "overflow": false
+  },
+  {
+    "route": "drought",
+    "width": 390,
+    "theme": "dark",
+    "overflow": false
+  },
+  {
+    "route": "summer",
+    "width": 390,
+    "theme": "dark",
+    "overflow": false
+  }
+]

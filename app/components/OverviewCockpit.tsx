@@ -117,7 +117,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null }: {
 
       {/* Four lines first: what moved in the ground, the rain, the manual and the
           summer ahead, one figure each. The full set of numbers waits below. */}
-      <section className="overviewHeadlines" aria-label="This week in four lines">
+      <section className="overviewHeadlines evidenceStrip" aria-label="This week in four lines">
         <Link className="headlineCard" href="/map/">
           <span className="headlineKicker"><IconDroplet /> Groundwater</span>
           <strong>{stateSummary.state?.currentM != null ? <>{stateSummary.state.currentM.toFixed(1)}<small>m below ground</small></> : "No reading"}</strong>
@@ -130,7 +130,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null }: {
           <span className="headlineKicker"><IconCloudRain /> Monsoon</span>
           <strong>{formatNumber(watch.recharge.fallingPct)}%<small>of mandal series lower than in May</small></strong>
           <span className="headlineText">
-            {watch.rainfall ? `Rain ${Math.abs(watch.rainfall.anomalyPct).toFixed(0)}% ${watch.rainfall.anomalyPct < 0 ? "below" : "above"} normal, the ${watch.rainfall.rankDriest === 1 ? "driest" : `${watch.rainfall.rankDriest}${watch.rainfall.rankDriest === 2 ? "nd" : watch.rainfall.rankDriest === 3 ? "rd" : "th"} driest`} of ${watch.rainfall.ofYears} years.` : "The season's recharge, mandal by mandal."}
+            {watch.rainfall ? `Rain ${formatNumber(Math.abs(watch.rainfall.anomalyPct))}% ${watch.rainfall.anomalyPct < 0 ? "below" : "above"} normal, the ${watch.rainfall.rankDriest === 1 ? "driest" : `${watch.rainfall.rankDriest}${watch.rainfall.rankDriest === 2 ? "nd" : watch.rainfall.rankDriest === 3 ? "rd" : "th"} driest`} of ${watch.rainfall.ofYears} years.` : "The season's recharge, mandal by mandal."}
             {seasonFailing ? ` More than any past season, which ranged ${formatNumber(priorFallingLow)} to ${formatNumber(priorFallingHigh)}%.` : ""}
           </span>
           <span className="headlineGo">Monsoon Watch <IconArrowRight /></span>

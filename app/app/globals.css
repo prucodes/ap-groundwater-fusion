@@ -5728,16 +5728,20 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
    Page brief: what the screen is, what it says now, what to do with it.
    Replaces the hero subtitle; the middle line is written from the data.
    ============================================================ */
+.hero.heroCompact { border-radius: 8px; box-shadow: none; }
+.hero.heroCompact .heroInner { padding: 18px 24px; gap: 20px; }
+.hero.heroCompact h1 { font-size: 30px; line-height: 1.15; letter-spacing: 0; }
+.hero.heroCompact .heroEyebrow { font-size: 10px; letter-spacing: 0; margin-bottom: 8px; }
 .heroBrief {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px;
-  margin: 12px 0 0; padding: 12px 0 0; border-top: 1px solid rgba(170, 198, 224, 0.18); max-width: 1080px;
+  margin: 10px 0 0; padding: 10px 0 0; border-top: 1px solid rgba(170, 198, 224, 0.18); max-width: 1080px;
 }
 .heroCompact .heroLeft:has(.heroBrief) { max-width: 1080px; }
 .heroBrief div { min-width: 0; }
-.heroBrief dt { font: 600 9.5px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #6fb5d4; margin-bottom: 4px; }
-.heroBrief dd { margin: 0; font-size: 12.5px; line-height: 1.5; color: #b9d0e6; text-wrap: pretty; }
+.heroBrief dt { font: 600 9.5px var(--font-mono); letter-spacing: 0; text-transform: uppercase; color: #83ced9; margin-bottom: 4px; }
+.heroBrief dd { margin: 0; font-size: 12px; line-height: 1.45; color: #b9d0e6; text-wrap: pretty; }
 .heroBrief .heroBriefNow dt { color: #f2c46d; }
-.heroBrief .heroBriefNow dd { font-size: 13.5px; font-weight: 500; color: #ffffff; }
+.heroBrief .heroBriefNow dd { font-size: 13px; font-weight: 500; color: #ffffff; }
 .heroBrief .heroBriefNow dd b, .heroBrief .heroBriefNow dd strong { color: #ffd38a; font-weight: 650; }
 @media (max-width: 900px) {
   .heroBrief { grid-template-columns: minmax(0, 1fr); gap: 10px; }
@@ -5747,6 +5751,8 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
 /* Phones: every page's first screen should reach its content. The hero keeps its
    title and what it says now; what the page is and what to do open on request. */
 @media (max-width: 640px) {
+  .hero.heroCompact .heroInner { padding: 17px 16px; gap: 14px; }
+  .hero.heroCompact h1 { font-size: 24px; line-height: 1.2; }
   .hero .heroEyebrow { display: none; }
   .heroBriefWrap .briefMore { display: none; }
   .briefToggle { display: block; position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
@@ -5802,11 +5808,36 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
 .headlineText { font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
 .headlineGo { margin-top: auto; padding-top: 6px; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--teal); }
 .headlineGo svg { width: 12px; height: 12px; }
+.overviewHeadlines.evidenceStrip { gap: 0; margin: 16px 0 18px; border-block: 1px solid var(--line-strong); background: var(--card); }
+.evidenceStrip .headlineCard { min-width: 0; gap: 7px; padding: 16px 18px; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
+.evidenceStrip .headlineCard + .headlineCard { border-left: 1px solid var(--line); }
+.evidenceStrip .headlineCard:hover { transform: none; }
+.evidenceStrip a.headlineCard:hover { background: var(--row-hover); }
+.evidenceStrip .headlineKicker { font-size: 10px; letter-spacing: 0; }
+:root[data-theme="dark"] .evidenceStrip .headlineKicker { color: #83ced9; }
+.evidenceStrip .headlineKicker svg { flex: none; }
+.evidenceStrip .headlineCard strong { font-size: 30px; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.evidenceStrip .headlineCard strong small { font-size: 12px; line-height: 1.35; }
+.evidenceStrip .headlineText { font-size: 12px; line-height: 1.5; }
+.evidenceStrip .headlineGo { padding-top: 8px; }
 @media (max-width: 1180px) { .overviewHeadlines { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 641px) and (max-width: 1180px) {
+  .evidenceStrip .headlineCard:nth-child(odd) { border-left: 0; }
+  .evidenceStrip .headlineCard:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
 @media (max-width: 640px) {
   .overviewHeadlines { grid-template-columns: minmax(0, 1fr); gap: 10px; margin-top: 12px; }
   .headlineCard { padding: 14px 15px 12px; }
   .headlineCard strong { font-size: 26px; }
+  .evidenceStrip .headlineCard { padding: 14px 16px; }
+  .evidenceStrip .headlineCard + .headlineCard { border-left: 0; border-top: 1px solid var(--line); }
+  .evidenceStrip .headlineCard strong { font-size: 28px; }
+}
+@media (min-width: 381px) and (max-width: 640px) {
+  .overviewHeadlines.evidenceStrip:not(.monsoonLead) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .evidenceStrip:not(.monsoonLead) .headlineCard { padding: 14px 12px; }
+  .evidenceStrip:not(.monsoonLead) .headlineCard:nth-child(2) { border-top: 0; }
+  .evidenceStrip:not(.monsoonLead) .headlineCard:nth-child(even) { border-left: 1px solid var(--line); }
 }
 .overviewMore { margin: 18px 0; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--card); box-shadow: var(--shadow-card); }
 .overviewMore > summary, .foldMore > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; padding: 14px 18px; cursor: pointer; list-style: none; font-size: 13px; color: var(--ink-soft); }
