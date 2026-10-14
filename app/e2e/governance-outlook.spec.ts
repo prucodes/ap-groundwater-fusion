@@ -22,7 +22,11 @@ test("this week lists every headline with its dates and is reachable from the si
   await page.goto("/");
   await page.getByRole("link", { name: /This Week/ }).first().click();
   await expect(page.getByRole("heading", { level: 1 })).toContainText("This Week");
-  await expect(page.getByTestId("weekly-changes").getByRole("link")).toHaveCount(changes.items.length);
+  await page.locator("#weekly-register > summary").click();
+  await expect(page.getByTestId("weekly-changes").locator("a[data-direction]")).toHaveCount(changes.items.length);
+  for (const item of changes.items) {
+    await expect(page.locator(`a[data-key="${item.key}"]`)).toBeVisible();
+  }
   await expect(page.getByTestId("week-moves")).toBeVisible();
   await expect(page.getByRole("region", { name: "Groundwater status that moved" })).toBeVisible();
 });
