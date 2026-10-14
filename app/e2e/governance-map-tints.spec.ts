@@ -200,7 +200,7 @@ test("Atlas real pointer hover colours its graph without changing direction labe
 
 for (const width of [390, 1440]) {
   test(`Overview and mandal maps have compact summaries and accessible expansion at ${width}px`, async ({ page }, testInfo) => {
-    await page.setViewportSize({ width, height: 900 });
+    await page.setViewportSize({ width, height: width === 390 ? 740 : 1000 });
     for (const route of ["/", "/mandals/ap-temp-mandal-kakinada-pithapuram-147/"]) {
       await page.goto(route);
       const expand = page.getByRole("button", { name: "Expand map", exact: true });
@@ -219,6 +219,8 @@ for (const width of [390, 1440]) {
       expect(box.height).toBeLessThan(270);
       expect(box.width).toBeLessThanOrEqual(260);
       const mapBox = (await dialog.locator('.liveMap').boundingBox())!;
+      const slot = (await dialog.locator('.mapExpandedCanvas').boundingBox())!;
+      expect(Math.abs(mapBox.height - slot.height)).toBeLessThan(2);
       expect(box.x).toBeGreaterThanOrEqual(mapBox.x);
       expect(box.x + box.width).toBeLessThanOrEqual(mapBox.x + mapBox.width);
       expect(box.y).toBeGreaterThanOrEqual(mapBox.y);
