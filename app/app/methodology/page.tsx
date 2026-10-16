@@ -101,7 +101,7 @@ export default function MethodologyPage() {
         actions={
           <>
             <a className="heroAction heroActionLead" href={`${basePath}/brief/ap-water-intelligence-brief.pdf`} download="AP-Water-Intelligence-brief.pdf" data-testid="methodology-brief-pdf">
-              <span className="heroActionLabel">Download the six-page brief</span>
+              <span className="heroActionLabel">Download the seven-page brief</span>
               <span className="heroActionSub">Sources, model and this week&rsquo;s maps (PDF)</span>
             </a>
             <Link className="heroAction" href="/brief/">
