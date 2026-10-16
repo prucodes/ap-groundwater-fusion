@@ -35,6 +35,8 @@ export type DatasetManifestV2 = {
   counts: {
     boundaryFeatureCount: number;
     rawSourceSeriesCount: number;
+    seriesWithoutBoundaryCount: number;
+    seriesSharingBoundaryCount: number;
     observationRowCount: number;
     historySeriesCount: number;
     modelledRecordCount: number;

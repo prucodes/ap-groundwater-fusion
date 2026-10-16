@@ -8,16 +8,20 @@ import watchJson from "../../data/monsoon_watch.json";
 import crossNetwork from "../../data/cross_network_check.json";
 import drinking from "../../data/drinking_water.json";
 import tanks from "../../data/tank_fill.json";
+import fieldSignals from "../../data/field_signals_mandals.json";
+import waterContext from "../../data/water_context_summary.json";
+import cropRecord from "../../data/crop_water_record.json";
+import cropScore from "../../data/crop_water_scorecard.json";
 import { basePath, datasetManifest, mapGeometry } from "../../lib/data";
 import { summerOutlook } from "../../lib/summer";
 import styles from "./Brief.module.css";
 
 export const metadata: Metadata = {
   title: "Project brief",
-  description: "The platform's data sources and groundwater model in seven A4 pages, rebuilt from each week's data.",
+  description: "The platform's data sources and groundwater model in eight A4 pages, rebuilt from each week's data.",
 };
 
-/* The seven-page brief: what the platform is, its sources, its model, this week's
+/* The eight-page brief: what the platform is, its sources, its model, this week's
    maps and the open questions. Every figure and map is read from the published
    data at build time; the deploy prints this page to brief/ap-water-intelligence-brief.pdf
    (scripts/print-brief.mjs), which also writes the 3D renders and site
@@ -27,6 +31,7 @@ const BRIEF_PDF = "ap-water-intelligence-brief.pdf";
 
 type Band = { band: string; sampleCount: number; maeM: number; lastReadingMaeM: number };
 type Terrain = Record<"alluvial" | "coastal" | "hard_rock", { maeM: number }>;
+type FieldSignals = { codes: { vciClass: string[]; category: string[] }; values: Record<string, Array<number | null>> };
 type Card = {
   evaluations: {
     temporalNowcast: { sampleCount: number; model: { maeM: number }; lastReadingBaseline: { maeM: number; skillPct: number }; depthBands: Band[]; terrainCohorts: Terrain; intervalEvaluation: { sampleCount: number; empiricalCoveragePct: number; meanWidthM: number } };
@@ -90,6 +95,11 @@ const NOW_COL = { shal: "#3f9fd0", near: "#a9bccb", deep: "#e7a33e", rec: "#c241
 const MON_COL = { severe: "#c2412d", short: "#e7a33e", normal: "#7fb8a4", n: "#e3e8ee" };
 const DRO_COL: Record<string, string> = { severe: "#a8322a", "moderate|severe": "#cf6a35", moderate: "#e7a33e", "normal|moderate": "#e9cf8e", normal: "#8fbfa6", noTrigger: "#cfe3d8", insufficient: "#e3e8ee", n: "#e3e8ee" };
 const SUM_COL = { xd: "#a33b2c", xs: "#e7a69a", dry: "#e0a24a", within: "#8fbfa6", n: "#e3e8ee" };
+
+/* Crop condition now, and the official annual assessment: two instruments answering
+   different questions, drawn on the same outlines so the difference is visible. */
+const VCI_COL: Record<string, string> = { normal: "#2f7d6b", moderate: "#d79b2e", severe: "#b4442e", n: "#e7ecf2" };
+const GEC_COL: Record<string, string> = { safe: "#2f7d6b", semi_critical: "#d7c04a", critical: "#d7772e", over_exploited: "#9c2f23", salinity: "#5b7fa6", n: "#e7ecf2" };
 
 /* ---------- static exhibits ---------- */
 function Pipeline() {
@@ -197,7 +207,7 @@ function Band({ num, title, lede }: { num: string; title: string; lede: ReactNod
   return <div className={styles.band}><div className={styles.eyebrow}>{num}</div><h2>{title}</h2><p className={styles.lede}>{lede}</p></div>;
 }
 function Foot({ n }: { n: number }) {
-  return <div className={styles.pfoot}><span><b>AP Water Intelligence</b> · data sources and model · prucodes.github.io/ap-groundwater-fusion</span><span className={styles.mono}>{n} / 7</span></div>;
+  return <div className={styles.pfoot}><span><b>AP Water Intelligence</b> · data sources and model · prucodes.github.io/ap-groundwater-fusion</span><span className={styles.mono}>{n} / 8</span></div>;
 }
 
 type ImdExperiment = { window: { first: string; last: string }; gainPct: number; results: Record<"chirps" | "imd", { maeM: number; rows: number }> };
@@ -231,6 +241,23 @@ export default function BriefPage() {
     if (!held || rank[row.status] > rank[held]) monsoon.set(row.boundaryIndex, row.status);
   }
   const droughtClasses = new Map(drought.mandals.map(m => [m.i, m.category] as [number, string]));
+  // The outlines carry their own district and mandal names, so every feature finds its row.
+  // Crosswalking through the groundwater series instead placed only 472 of them.
+  const signals = fieldSignals as FieldSignals;
+  const vciClasses = new Map<number, string>();
+  const gecClasses = new Map<number, string>();
+  mapGeometry.mandals.forEach((feature, index) => {
+    const row = signals.values[`${feature.d}|${feature.m}`.toUpperCase().replace(/_/g, " ")];
+    if (!row) return;
+    const vc = row[1], gec = row[2];
+    if (vc != null && signals.codes.vciClass[vc]) vciClasses.set(index, signals.codes.vciClass[vc]);
+    if (gec != null && signals.codes.category[gec]) gecClasses.set(index, signals.codes.category[gec]);
+  });
+  const vciCounts = tally(vciClasses), gecCounts = tally(gecClasses);
+  const irrigated = Object.values(signals.values).map(row => row[4] ?? 0).sort((a, b) => a - b);
+  const medianIrrigated = irrigated[Math.floor(irrigated.length / 2)];
+  const rain = waterContext.rain;
+  const ne = rain.neMonsoon;
   const summerClasses = new Map<number, string>();
   summer.mandals.forEach((row, i) => {
     if (!row) return;
@@ -248,7 +275,7 @@ export default function BriefPage() {
     <div className="pageWrap">
       <div className={styles.viewer}>
         <div className={styles.toolbar}>
-          <p>The seven-page brief on the platform&rsquo;s sources and model, rebuilt from this week&rsquo;s data.</p>
+          <p>The eight-page brief on the platform&rsquo;s sources and model, rebuilt from this week&rsquo;s data.</p>
           <a className={styles.download} href={`${basePath}/brief/${BRIEF_PDF}`} download="AP-Water-Intelligence-brief.pdf" data-testid="brief-pdf">Download PDF</a>
         </div>
         <div className={styles.scroller}>
@@ -272,8 +299,9 @@ export default function BriefPage() {
               <div><b>02</b><span>Data sources</span><small>{WATER.length + CLIMATE.length + LAND.length} sources, what each gives and does</small></div>
               <div><b>03</b><span>The model</span><small>method, tests, release rule</small></div>
               <div><b>04</b><span>This week</span><small>four maps of {mapGeometry.mandals.length} mandals</small></div>
-              <div><b>05</b><span>Open questions</span><small>limits, and where review helps</small></div>
-              <div><b>06</b><span>Closing the gap</span><small>six inputs, and what each moves</small></div>
+              <div><b>05</b><span>Agriculture</span><small>the crop, the season, the check</small></div>
+              <div><b>06</b><span>Open questions</span><small>limits, and where review helps</small></div>
+              <div><b>07</b><span>Closing the gap</span><small>six inputs, and what each moves</small></div>
             </div>
             <div className={styles.foot}><span>prucodes.github.io/ap-groundwater-fusion</span><span>Prototype · not an official measurement</span></div>
           </section>
@@ -361,8 +389,48 @@ export default function BriefPage() {
             <Foot n={5} />
           </section>
 
+
           <section className={styles.page} data-testid="brief-sheet">
-            <Band num="05 · Limits and open questions" title="Where a hydrogeologist's view would help most" lede="The model knows depth well and storage, aquifers and pumping poorly. These are the questions we would most value a review on." />
+            <Band num="05 · Agriculture and water" title="What the season has done to the crop" lede={<>Groundwater matters here because of what grows above it. <b>{cropRecord.rainfed.mandals} of {cropRecord.rainfed.of} mandals</b> are mostly rainfed, and across the State under a quarter of mapped cropland is irrigated — so for most of Andhra Pradesh the monsoon is the irrigation.</>} />
+            <div className={styles.body}>
+              <div className={styles.twocol}>
+                <div className={styles.mapcard}>
+                  <div className={styles.k}>Crop condition · NOAA VHP, weighted to cropland</div>
+                  <h3>How the crop reads this week</h3>
+                  <div className={styles.big}>{vciCounts.get("severe") ?? 0}<small>mandals severe; {vciCounts.get("moderate") ?? 0} moderate</small></div>
+                  <p className={styles.how}>Vegetation Condition Index against each cell&rsquo;s own record, weighted by cropland share. The drought manual&rsquo;s Table 3.4 classes: 60–100 normal, 40–60 moderate, under 40 severe.</p>
+                  <MandalMap classes={vciClasses} colours={VCI_COL} />
+                  <Legend counts={vciCounts} items={[["normal", "Normal", VCI_COL.normal], ["moderate", "Moderate", VCI_COL.moderate], ["severe", "Severe", VCI_COL.severe]]} />
+                </div>
+                <div className={styles.mapcard}>
+                  <div className={styles.k}>Official assessment · CGWB and the State, via INGRES</div>
+                  <h3>What the annual balance says</h3>
+                  <div className={styles.big}>{gecCounts.get("safe") ?? 0}<small>mandals safe; {gecCounts.get("over_exploited") ?? 0} over-exploited</small></div>
+                  <p className={styles.how}>The 2025–26 Dynamic Ground Water Resources assessment, GEC-2015: a year&rsquo;s recharge against a year&rsquo;s draft. It is not a reading of this week, and the two maps are not in competition.</p>
+                  <MandalMap classes={gecClasses} colours={GEC_COL} />
+                  <Legend counts={gecCounts} items={[["safe", "Safe", GEC_COL.safe], ["semi_critical", "Semi-critical", GEC_COL.semi_critical], ["critical", "Critical", GEC_COL.critical], ["over_exploited", "Over-exploited", GEC_COL.over_exploited], ["salinity", "Salinity", GEC_COL.salinity]]} />
+                </div>
+              </div>
+              <div className={styles.sec}>The season the crop is standing in</div>
+              <div className={styles.figs}>
+                <div className={styles.fig}><b>{ne.deviationPct}%</b><span>north-east monsoon so far: {ne.meanActualMm} mm against {ne.meanNormalMm} mm normal, {day(ne.start).replace(/ \d{4}$/, "")} to {day(ne.end)}</span></div>
+                <div className={styles.fig}><b>{rain.categories.deficient + rain.categories.scanty}</b><span>of {rain.mandals} mandals deficient or scanty on {rain.gauges.toLocaleString("en-IN")} department gauges since June; {rain.deviationPct}% overall</span></div>
+                <div className={styles.fig}><b>{Math.round((100 * tanks.wetHaNow) / Math.max(tanks.wetHaUsual, 1))}%</b><span>of their usual water in {tanks.tankBodies.toLocaleString("en-IN")} tank beds, read by Sentinel-2; {tanks.emptier} mandals emptier than usual, {tanks.fuller} fuller</span></div>
+                <div className={styles.fig}><b>{cropRecord.rainfed.stateIrrigatedPct}%</b><span>of mapped cropland detected as irrigated statewide in one rabi season; the median mandal {medianIrrigated.toFixed(0)}%</span></div>
+              </div>
+              <div className={styles.sec}>The crop water check, and how it is being scored</div>
+              <div className={styles.twocol}>
+                <p className={styles.para}>Each week the check compares a mandal&rsquo;s rain and reference evapotranspiration, from the ECMWF open forecast, with what its crop would need. <b>Every call is frozen the day it is made</b> and scored three weeks later against the vegetation that followed — Sentinel-2 NDVI over rainfed cropland at {cropRecord.sentinel.resolutionM} m, and the vegetation index. {cropScore.frozen} weeks are on the record, <b>none scored yet</b>; the first verdict falls due on {day(cropScore.nextDue)}.</p>
+                <div className={styles.stack}>
+                  <div className={styles.note}><b>A negative result, kept on the record.</b> Pooled across mandals the check does not separate vegetation at all: the places called short most often are the chronically dry ones. It is therefore scored within a mandal and season, against that same mandal when it was called comfortable.</div>
+                </div>
+              </div>
+              <div className={`${styles.note} ${styles.teal}`}><b>What is missing, and it is the heart of it.</b> Sown area, crop and stage, and what the canals actually delivered to a field are all held by the State and not released. Until they are, the check runs on FAO-56 reference coefficients and a stated assumption about the crop — not on the mandal&rsquo;s own sown record. That single release would turn a water platform into an agricultural one.</div>
+            </div>
+            <Foot n={6} />
+          </section>
+          <section className={styles.page} data-testid="brief-sheet">
+            <Band num="06 · Limits and open questions" title="Where a hydrogeologist's view would help most" lede="The model knows depth well and storage, aquifers and pumping poorly. These are the questions we would most value a review on." />
             <div className={styles.body}>
               <div className={styles.banner}><img src={`${basePath}/brief/outlook3d.jpg`} alt="May outlook in 3D" /><div className={styles.cap}><b>May {summer.targetMay.slice(0, 4)} in a dry winter</b>, from the 3D view: glowing rims mark each mandal&rsquo;s deepest May on record where the projected water falls below it.</div></div>
               <div className={styles.sec}>Known limits</div>
@@ -370,6 +438,7 @@ export default function BriefPage() {
                 <div className={styles.lim}><b>Aquifer properties are coarse.</b> Aquifer type is a district proxy; for 259 of 688 series the measured specific yield disagrees with the label.</div>
                 <div className={styles.lim}><b>Depth is not storage.</b> A metre lost in hard rock holds far less water than in the delta; volumes are under review.</div>
                 <div className={styles.lim}><b>Pumping is unobserved.</b> Extraction enters only through the official stage-of-extraction figure.</div>
+                <div className={styles.lim}><b>{mapGeometry.mandals.length} outlines, {datasetManifest.counts.rawSourceSeriesCount} mandals.</b> The State&rsquo;s record lists {datasetManifest.counts.rawSourceSeriesCount}; the public sub-district map predates the latest splits, so {datasetManifest.counts.seriesSharingBoundaryCount} newer town mandals share their former town&rsquo;s outline and {datasetManifest.counts.seriesWithoutBoundaryCount} have none. All are still measured and estimated — only the map is short.</div>
                 <div className={styles.lim}><b>Mandal averages.</b> APWRIMS reports a mandal&rsquo;s mean across piezometers; a village&rsquo;s wells can differ.</div>
                 <div className={styles.lim}><b>Ungauged mandals are hard.</b> Estimating from neighbours alone errs by {spatial.reportedMetric.maeM.toFixed(1)} m, so it is not released.</div>
                 <div className={styles.lim}><b>Data status.</b> Research sample pending authorization; some series await an official location crosswalk.</div>
@@ -392,11 +461,11 @@ export default function BriefPage() {
                 <div><b>Methods</b> Manual for Drought Management 2020 · FAO-56 (Allen et al., 1998) · scikit-learn</div>
               </div>
             </div>
-            <Foot n={6} />
+            <Foot n={7} />
           </section>
 
           <section className={styles.page} data-testid="brief-sheet">
-            <Band num="06 · Closing the gap" title="Six inputs, and the number each one moves" lede={<>In an ordinary season the forecast is already at the practical ceiling for any method. Almost all of the headroom that remains sits in seasons that break the pattern — when the water table is set by what is pumped rather than by what fell, and <b>pumping is the one driver the model cannot see</b>.</>} />
+            <Band num="07 · Closing the gap" title="Six inputs, and the number each one moves" lede={<>In an ordinary season the forecast is already at the practical ceiling for any method. Almost all of the headroom that remains sits in seasons that break the pattern — when the water table is set by what is pumped rather than by what fell, and <b>pumping is the one driver the model cannot see</b>.</>} />
             <div className={styles.body}>
               <div className={styles.sec}>Ranked by the error each would reduce</div>
               <div className={styles.qs}>
@@ -417,7 +486,7 @@ export default function BriefPage() {
               <div className={styles.note}><b>What that would build.</b> With the first three in place, this same weekly machine — {WATER.length + CLIMATE.length + LAND.length} sources, {mapGeometry.mandals.length} mandals, every Monday — would estimate a level where no well stands, inside real aquifers rather than a district proxy. The pipeline already runs; what it lacks is the department&rsquo;s measurement, not the method.</div>
 
             </div>
-            <Foot n={7} />
+            <Foot n={8} />
           </section>
 
         </div>

@@ -30,7 +30,7 @@ const folder = join(directory, "brief");
 const output = join(folder, "ap-water-intelligence-brief.pdf");
 const origin = `http://127.0.0.1:${port}${base}`;
 /** One sheet per <section> in app/app/brief/page.tsx. A mismatch means a section overflowed. */
-const SHEETS = 7;
+const SHEETS = 8;
 
 const server = spawn(process.execPath, [join(APP_DIR, "scripts/serve-static.mjs"), "--port", String(port), "--bind", "127.0.0.1", "--directory", directory, "--base", base || "/"], { stdio: "inherit" });
 const stop = () => { if (!server.killed) server.kill(); };
@@ -48,14 +48,14 @@ async function ready(url, tries = 50) {
 }
 
 /** The 3D view with its panels hidden, zoomed in, cropped to the state. */
-async function render3d(browser, query, dry, file, clip) {
+async function render3d(browser, query, dry, file, clip, zooms = 2) {
   const page = await browser.newPage({ viewport: { width: 1700, height: 1000 }, deviceScaleFactor: 1.5 });
   try {
     await page.goto(`${origin}/water-crystal-3d.html${query}`, { waitUntil: "load" });
     await page.waitForTimeout(5500);
     if (await page.locator("#fallback").isVisible()) throw new Error("WebGL unavailable");
     if (dry) { await page.getByRole("button", { name: "Dry winter" }).click(); await page.waitForTimeout(3000); }
-    for (let i = 0; i < 2; i++) { await page.getByRole("button", { name: "Zoom in" }).click(); await page.waitForTimeout(300); }
+    for (let i = 0; i < zooms; i++) { await page.getByRole("button", { name: "Zoom in" }).click(); await page.waitForTimeout(300); }
     await page.waitForTimeout(900);
     await page.locator("#focusBtn").click();
     await page.evaluate(() => { for (const id of ["compass", "focusBtn", "probeTag", "probeLeader"]) { const el = document.getElementById(id); if (el) el.style.display = "none"; } });
@@ -76,8 +76,12 @@ try {
   // SwiftShader stands in for a GPU on CI runners; the flag keeps it allowed.
   browser = await chromium.launch({ args: ["--ignore-gpu-blocklist", "--enable-unsafe-swiftshader"] });
   const shots = {
-    "cover3d.jpg": await render3d(browser, "", false, "cover3d.jpg", { x: 53, y: 153, width: 1594, height: 834 }),
-    "outlook3d.jpg": await render3d(browser, "?mode=outlook", true, "outlook3d.jpg", { x: 0, y: 280, width: 1700, height: 467 }),
+    // One zoom step out so the whole State is inside the frame: at two steps it ran past
+    // the crop and the hero lost its western edge and southern tip.
+    "cover3d.jpg": await render3d(browser, "", false, "cover3d.jpg", { x: 180, y: 155, width: 1440, height: 680 }, 1),
+    // Also one step out, but framed wide with open water either side, so the banner does
+    // not read as the cover printed twice. At two steps it sliced the landmass in half.
+    "outlook3d.jpg": await render3d(browser, "?mode=outlook", true, "outlook3d.jpg", { x: 0, y: 170, width: 1700, height: 640 }, 1),
   };
   const desk = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   for (const [key, route] of [["monsoon", "/monsoon/"], ["drought", "/drought/"], ["map", "/map/"], ["summer", "/summer/"]]) {
