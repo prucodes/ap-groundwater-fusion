@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Print the six-page project brief (/brief/) to out/brief/ap-water-intelligence-brief.pdf,
+ * Print the seven-page project brief (/brief/) to out/brief/ap-water-intelligence-brief.pdf,
  * so every deploy publishes a brief with this week's maps and figures. Run after
  * `npm run build:static`:
  *
@@ -29,6 +29,8 @@ const port = Number(flag("port", 3292));
 const folder = join(directory, "brief");
 const output = join(folder, "ap-water-intelligence-brief.pdf");
 const origin = `http://127.0.0.1:${port}${base}`;
+/** One sheet per <section> in app/app/brief/page.tsx. A mismatch means a section overflowed. */
+const SHEETS = 7;
 
 const server = spawn(process.execPath, [join(APP_DIR, "scripts/serve-static.mjs"), "--port", String(port), "--bind", "127.0.0.1", "--directory", directory, "--base", base || "/"], { stdio: "inherit" });
 const stop = () => { if (!server.killed) server.kill(); };
@@ -104,8 +106,8 @@ try {
   await page.pdf({ path: output, format: "A4", printBackground: true, preferCSSPageSize: true, margin: { top: "0", right: "0", bottom: "0", left: "0" } });
   const pages = (readFileSync(output, "latin1").match(/\/Type\s*\/Page[^s]/g) ?? []).length;
   console.log(`Printed ${origin}/brief/ to ${output}: ${pages} page${pages === 1 ? "" : "s"}`);
-  if (pages !== 6) {
-    console.error("The brief no longer prints on six A4 sheets; a section has outgrown its page.");
+  if (pages !== SHEETS) {
+    console.error(`The brief no longer prints on ${SHEETS} A4 sheets; a section has outgrown its page.`);
     process.exitCode = 1;
   }
 } finally {

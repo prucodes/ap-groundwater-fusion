@@ -23,12 +23,12 @@
 .kpi { border: 1px solid rgba(127,228,255,.18); background: rgba(255,255,255,.04); border-radius: 10px; padding: 4mm 4mm 3.5mm; }
 .kpi b { display: block; font-family: var(--font-display); font-size: 22pt; font-weight: 600; color: #fff; line-height: 1; }
 .kpi span { display: block; font-size: 8pt; color: #a9c4da; margin-top: 2mm; line-height: 1.35; }
-.inside { position: absolute; left: 16mm; right: 16mm; bottom: 24mm; display: grid; grid-template-columns: 22mm repeat(5, 1fr); gap: 3mm; align-items: start; }
+.inside { position: absolute; left: 16mm; right: 16mm; bottom: 24mm; display: grid; grid-template-columns: 20mm repeat(6, 1fr); gap: 2.6mm; align-items: start; }
 .inside .ihead { font-size: 7.5pt; letter-spacing: .16em; text-transform: uppercase; color: #7fd3e0; padding-top: 1mm; }
 .inside div:not(.ihead) { border-top: 2px solid rgba(127,228,255,.35); padding-top: 2.5mm; }
 .inside b { display: block; font-family: var(--font-mono); font-size: 8pt; color: #7fe4ff; }
-.inside span { display: block; font-family: var(--font-display); font-size: 11pt; font-weight: 600; color: #fff; margin-top: 1mm; }
-.inside small { display: block; font-size: 7.4pt; color: #a9c4da; margin-top: 1mm; line-height: 1.35; }
+.inside span { display: block; font-family: var(--font-display); font-size: 9.6pt; font-weight: 600; color: #fff; margin-top: 1mm; }
+.inside small { display: block; font-size: 6.8pt; color: #a9c4da; margin-top: 1mm; line-height: 1.35; }
 .cover .foot { position: absolute; left: 16mm; right: 16mm; bottom: 12mm; display: flex; justify-content: space-between; font-size: 8pt; color: #7f9fbd; border-top: 1px solid rgba(127,228,255,.15); padding-top: 3mm; }
 /* inner pages */
 .band { background: var(--band-navy); color: #fff; padding: 8mm 15mm 6mm; position: relative; overflow: hidden; }

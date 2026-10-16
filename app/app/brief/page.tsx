@@ -14,10 +14,10 @@ import styles from "./Brief.module.css";
 
 export const metadata: Metadata = {
   title: "Project brief",
-  description: "The platform's data sources and groundwater model in six A4 pages, rebuilt from each week's data.",
+  description: "The platform's data sources and groundwater model in seven A4 pages, rebuilt from each week's data.",
 };
 
-/* The six-page brief: what the platform is, its sources, its model, this week's
+/* The seven-page brief: what the platform is, its sources, its model, this week's
    maps and the open questions. Every figure and map is read from the published
    data at build time; the deploy prints this page to brief/ap-water-intelligence-brief.pdf
    (scripts/print-brief.mjs), which also writes the 3D renders and site
@@ -26,12 +26,14 @@ export const metadata: Metadata = {
 const BRIEF_PDF = "ap-water-intelligence-brief.pdf";
 
 type Band = { band: string; sampleCount: number; maeM: number; lastReadingMaeM: number };
+type Terrain = Record<"alluvial" | "coastal" | "hard_rock", { maeM: number }>;
 type Card = {
   evaluations: {
-    temporalNowcast: { sampleCount: number; model: { maeM: number }; lastReadingBaseline: { maeM: number; skillPct: number }; depthBands: Band[]; intervalEvaluation: { sampleCount: number; empiricalCoveragePct: number; meanWidthM: number } };
+    temporalNowcast: { sampleCount: number; model: { maeM: number }; lastReadingBaseline: { maeM: number; skillPct: number }; depthBands: Band[]; terrainCohorts: Terrain; intervalEvaluation: { sampleCount: number; empiricalCoveragePct: number; meanWidthM: number } };
     rollingOriginNowcast: { sampleCount: number; maeM: number; lastReadingMaeM: number; skillVsLastReadingPct: number };
     directForecast: { horizons: Array<{ horizonMonths: number; rollingOrigin?: { sampleCount: number; maeM: number; baselines: { noChange: { maeM: number } } } }> };
-    spatialEstimation: { rowCount: number; reportedMetric: { maeM: number } };
+    spatialEstimation: { rowCount: number; reportedMetric: { maeM: number }; terrainCohortsForReportedMethod: Terrain };
+    crossNetworkComparison: { sampleCount: number; maximumDistanceKm: number; biasCgwbMinusApwrimsM: number; correlation: number };
   };
 };
 type Watch = { generatedAt: string; recharge: { mandals: number; fallingPct: number }; rainfall: { anomalyPct: number } | null; mandals: Array<{ boundaryIndex: number | null; status: "severe" | "short" | "normal" }> };
@@ -195,7 +197,7 @@ function Band({ num, title, lede }: { num: string; title: string; lede: ReactNod
   return <div className={styles.band}><div className={styles.eyebrow}>{num}</div><h2>{title}</h2><p className={styles.lede}>{lede}</p></div>;
 }
 function Foot({ n }: { n: number }) {
-  return <div className={styles.pfoot}><span><b>AP Water Intelligence</b> · data sources and model · prucodes.github.io/ap-groundwater-fusion</span><span className={styles.mono}>{n} / 6</span></div>;
+  return <div className={styles.pfoot}><span><b>AP Water Intelligence</b> · data sources and model · prucodes.github.io/ap-groundwater-fusion</span><span className={styles.mono}>{n} / 7</span></div>;
 }
 
 type ImdExperiment = { window: { first: string; last: string }; gainPct: number; results: Record<"chirps" | "imd", { maeM: number; rows: number }> };
@@ -214,6 +216,7 @@ export default function BriefPage() {
   const roll = card.evaluations.rollingOriginNowcast;
   const h3 = card.evaluations.directForecast.horizons.find(h => h.horizonMonths === 3)?.rollingOrigin;
   const spatial = card.evaluations.spatialEstimation;
+  const cross = card.evaluations.crossNetworkComparison;
   const interval = t.intervalEvaluation;
   const summer = summerOutlook;
 
@@ -245,7 +248,7 @@ export default function BriefPage() {
     <div className="pageWrap">
       <div className={styles.viewer}>
         <div className={styles.toolbar}>
-          <p>The six-page brief on the platform&rsquo;s sources and model, rebuilt from this week&rsquo;s data.</p>
+          <p>The seven-page brief on the platform&rsquo;s sources and model, rebuilt from this week&rsquo;s data.</p>
           <a className={styles.download} href={`${basePath}/brief/${BRIEF_PDF}`} download="AP-Water-Intelligence-brief.pdf" data-testid="brief-pdf">Download PDF</a>
         </div>
         <div className={styles.scroller}>
@@ -260,16 +263,17 @@ export default function BriefPage() {
             <p className={styles.caption}>Depth to water in {latestMonth}, each mandal against its own usual {latestMonth}, as the platform&rsquo;s 3D view draws it: blue shallower than usual, slate about usual, amber deeper, red deeper than any {latestMonth} on record.</p>
             <div className={styles.kpis}>
               <div className={styles.kpi}><b>{mapGeometry.mandals.length}</b><span>mandals mapped, each compared with its own history</span></div>
-              <div className={styles.kpi}><b>18</b><span>public and official data sources, combined every week</span></div>
+              <div className={styles.kpi}><b>{WATER.length + CLIMATE.length + LAND.length}</b><span>public and official data sources, combined every week</span></div>
               <div className={styles.kpi}><b>{roll.maeM.toFixed(2)} m</b><span>average nowcast error; {roll.skillVsLastReadingPct.toFixed(0)}% better than the last reading</span></div>
               <div className={styles.kpi}><b>Mon</b><span>automated refresh; publishes only if about 430 tests pass</span></div>
             </div>
             <div className={styles.inside}><div className={`${styles.ihead} ${styles.mono}`}>Inside</div>
               <div><b>01</b><span>What it is</span><small>the question, three rules, the pipeline</small></div>
-              <div><b>02</b><span>Data sources</span><small>18 sources, what each gives and does</small></div>
+              <div><b>02</b><span>Data sources</span><small>{WATER.length + CLIMATE.length + LAND.length} sources, what each gives and does</small></div>
               <div><b>03</b><span>The model</span><small>method, tests, release rule</small></div>
               <div><b>04</b><span>This week</span><small>four maps of {mapGeometry.mandals.length} mandals</small></div>
               <div><b>05</b><span>Open questions</span><small>limits, and where review helps</small></div>
+              <div><b>06</b><span>Closing the gap</span><small>six inputs, and what each moves</small></div>
             </div>
             <div className={styles.foot}><span>prucodes.github.io/ap-groundwater-fusion</span><span>Prototype · not an official measurement</span></div>
           </section>
@@ -325,7 +329,7 @@ export default function BriefPage() {
                 <tr><td>Nowcast, retrained every month</td><td className={styles.num}>{roll.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{roll.maeM.toFixed(2)} m</td><td className={styles.num}>{roll.lastReadingMaeM.toFixed(2)} m last</td><td className={`${styles.num} ${styles.gain}`}>{roll.skillVsLastReadingPct.toFixed(0)}%</td></tr>
                 {h3 ? <tr><td>Forecast 3 months ahead, rolling origins</td><td className={styles.num}>{h3.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{h3.maeM.toFixed(2)} m</td><td className={styles.num}>{h3.baselines.noChange.maeM.toFixed(2)} m no change</td><td className={`${styles.num} ${styles.gain}`}>{pct(h3.maeM, h3.baselines.noChange.maeM)}%</td></tr> : null}
                 <tr><td>80% band coverage</td><td className={styles.num}>{interval.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{interval.empiricalCoveragePct.toFixed(1)}%</td><td className={styles.num}>80% nominal</td><td className={styles.num}>±{(interval.meanWidthM / 2).toFixed(1)} m</td></tr>
-                <tr><td>Rise or fall on CGWB&rsquo;s wells, never trained on ({crossNetwork.years[0]}–{String(crossNetwork.years[crossNetwork.years.length - 1]).slice(2)})</td><td className={styles.num}>{crossNetwork.overall.clearMoves.toLocaleString("en-US")}</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.forecast! * 100)}% right</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.measured! * 100)}% State wells</td><td className={styles.num}>near ceiling</td></tr>
+                <tr><td>Rise or fall on CGWB&rsquo;s wells, never trained on ({crossNetwork.years[0]}–{String(crossNetwork.years[crossNetwork.years.length - 1]).slice(2)})</td><td className={styles.num}>{crossNetwork.overall.clearMoves.toLocaleString("en-US")}</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.forecast! * 100)}% right</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.measured! * 100)}% State wells</td><td className={styles.num}>{Math.round(crossNetwork.overall.bySeason.usual.forecast! * 100)}/{Math.round(crossNetwork.overall.bySeason.broke.forecast! * 100)}% by season</td></tr>
                 {imd ? <tr><td>IMD rain in place of CHIRPS, retrained every month ({imd.window.first.slice(0, 4)}–{imd.window.last.slice(2, 4)})</td><td className={styles.num}>{imd.results.imd.rows.toLocaleString("en-US")}</td><td className={styles.num}>{imd.results.imd.maeM.toFixed(2)} m</td><td className={styles.num}>{imd.results.chirps.maeM.toFixed(2)} m CHIRPS</td><td className={styles.num}>{Math.round(imd.gainPct)}%, a year late</td></tr> : null}
                 <tr><td>Ungauged mandal (whole mandal held out)</td><td className={styles.num}>{spatial.rowCount.toLocaleString("en-US")}</td><td className={styles.num}>{spatial.reportedMetric.maeM.toFixed(1)} m</td><td className={styles.num}>state average</td><td className={`${styles.num} ${styles.no}`}>not released</td></tr>
               </tbody></table>
@@ -389,6 +393,31 @@ export default function BriefPage() {
               </div>
             </div>
             <Foot n={6} />
+          </section>
+
+          <section className={styles.page} data-testid="brief-sheet">
+            <Band num="06 · Closing the gap" title="Six inputs, and the number each one moves" lede={<>In an ordinary season the forecast is already at the practical ceiling for any method. Almost all of the headroom that remains sits in seasons that break the pattern — when the water table is set by what is pumped rather than by what fell, and <b>pumping is the one driver the model cannot see</b>.</>} />
+            <div className={styles.body}>
+              <div className={styles.sec}>Ranked by the error each would reduce</div>
+              <div className={styles.qs}>
+                <div className={styles.q}><b>Station-level DWLR history, with coordinates.</b> An ungauged mandal is interpolated between mandal means today and errs by {spatial.reportedMetric.maeM.toFixed(1)} m, five times the nowcast. Well locations would let it run between wells inside aquifer structure, and let an estimate be made below mandal scale.</div>
+                <div className={styles.q}><b>The NAQUIM aquifer framework — boundaries, thickness, specific yield, transmissivity.</b> Aquifer type is a district proxy, contradicted by the measured specific yield in 259 of 688 series. Hard rock is the worst terrain in both tests: {t.terrainCohorts.hard_rock.maeM.toFixed(2)} m against {t.terrainCohorts.coastal.maeM.toFixed(2)} m on the coast for the nowcast, {spatial.terrainCohortsForReportedMethod.hard_rock.maeM.toFixed(1)} m against {spatial.terrainCohortsForReportedMethod.coastal.maeM.toFixed(1)} m when a mandal is ungauged. Real aquifer properties would also make depth-to-storage defensible.</div>
+                <div className={styles.q}><b>Agricultural feeder supply hours, and the pump-set census.</b> Extraction reaches the model only through the official stage-of-extraction figure, which is annual. Feeder supply hours against connected load would give a weekly, mandal-scale proxy for what is actually drawn — the one input aimed squarely at the regime where the forecast fails.</div>
+                <div className={styles.q}><b>DWLR telemetry, not only the history.</b> Readings are monthly, so even a perfect estimate is a month behind. Telemetry would make instrumented mandals measured and current rather than modelled, and turn a backtest into continuous validation.</div>
+                <div className={styles.q}><b>An authorized APWRIMS export, full history.</b> Training begins June 2015; a longer authorized record is accuracy at no modelling cost. It is also the gate on any official use, since the present series is a research sample pending authorization.</div>
+                <div className={styles.q}><b>Field verification on twenty to thirty mandals.</b> Every figure in this brief is a backtest. Measuring a small sample after an estimate has been published, then comparing, is the one step that turns validation into verification. There is no field ground truth today.</div>
+              </div>
+              <div className={`${styles.note} ${styles.teal}`}><b>Which of these reaches the ceiling.</b> In an ordinary season the forecast calls direction right {Math.round(crossNetwork.overall.bySeason.usual.forecast! * 100)}%, ahead of the {Math.round(crossNetwork.overall.bySeason.usual.measured! * 100)}% that the State&rsquo;s own wells and CGWB&rsquo;s agree with each other — the practical ceiling for any method. All the headroom left is in the pattern-breaking season, where it falls to {Math.round(crossNetwork.overall.bySeason.broke.forecast! * 100)}% against the measured wells&rsquo; {Math.round(crossNetwork.overall.bySeason.broke.measured! * 100)}%. <b>The first and third — well locations and a pumping proxy — are aimed at that regime.</b></div>
+              <div className={styles.sec}>What this project can give back</div>
+              <div className={styles.limits}>
+                <div className={styles.lim}><b>A systematic gap between the two well networks.</b> Over {cross.sampleCount.toLocaleString("en-US")} readings paired within {cross.maximumDistanceKm} km and the same month, CGWB&rsquo;s wells read {Math.abs(cross.biasCgwbMinusApwrimsM).toFixed(1)} m {cross.biasCgwbMinusApwrimsM < 0 ? "shallower" : "deeper"} than the State&rsquo;s, correlating {cross.correlation.toFixed(2)}.</div>
+                <div className={styles.lim}><b>259 series whose aquifer label its own specific yield contradicts</b>, already listed mandal by mandal and ready to hand over.</div>
+                <div className={styles.lim}><b>Quality control on the State&rsquo;s own record.</b> The same model that estimates a level also flags a reading inconsistent with that well&rsquo;s history and its neighbours — which is how a drifting recorder or a transcription error is found across a network of this size.</div>
+              </div>
+              <div className={styles.note}><b>What that would build.</b> With the first three in place, this same weekly machine — {WATER.length + CLIMATE.length + LAND.length} sources, {mapGeometry.mandals.length} mandals, every Monday — would estimate a level where no well stands, inside real aquifers rather than a district proxy. The pipeline already runs; what it lacks is the department&rsquo;s measurement, not the method.</div>
+
+            </div>
+            <Foot n={7} />
           </section>
 
         </div>
