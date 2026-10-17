@@ -131,14 +131,14 @@ function Pipeline() {
 
 function ErrorByDepth({ bands }: { bands: Band[] }) {
   const peak = Math.max(...bands.map(b => b.lastReadingMaeM));
-  const bottom = 34 + bands.length * 40;
+  const bottom = 34 + bands.length * 34;
   return (
     <svg viewBox={`0 0 320 ${bottom + 6}`} className={styles.chart} role="img" aria-label="Average error by depth band, the model against the last reading carried forward">
       <rect x="76" y="6" width="10" height="10" rx="2" fill="#1f8a8a" /><text x="91" y="15" className={styles.cl}>Model</text>
       <rect x="132" y="6" width="10" height="10" rx="2" fill="#c9d3de" /><text x="147" y="15" className={styles.cl}>Last reading carried forward</text>
       <line x1="76" x2="76" y1="28" y2={bottom} stroke="#9aa9ba" />
       {bands.map((b, i) => {
-        const y = 34 + i * 40, wl = 196 * b.lastReadingMaeM / peak, wm = 196 * b.maeM / peak;
+        const y = 34 + i * 34, wl = 196 * b.lastReadingMaeM / peak, wm = 196 * b.maeM / peak;
         const label = b.band.replace("m+", " m+").replace(/(\d)m$/, "$1 m");
         return (
           <g key={b.band}>
@@ -357,7 +357,7 @@ export default function BriefPage() {
                 <tr><td>Nowcast, retrained every month</td><td className={styles.num}>{roll.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{roll.maeM.toFixed(2)} m</td><td className={styles.num}>{roll.lastReadingMaeM.toFixed(2)} m last</td><td className={`${styles.num} ${styles.gain}`}>{roll.skillVsLastReadingPct.toFixed(0)}%</td></tr>
                 {h3 ? <tr><td>Forecast 3 months ahead, rolling origins</td><td className={styles.num}>{h3.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{h3.maeM.toFixed(2)} m</td><td className={styles.num}>{h3.baselines.noChange.maeM.toFixed(2)} m no change</td><td className={`${styles.num} ${styles.gain}`}>{pct(h3.maeM, h3.baselines.noChange.maeM)}%</td></tr> : null}
                 <tr><td>80% band coverage</td><td className={styles.num}>{interval.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{interval.empiricalCoveragePct.toFixed(1)}%</td><td className={styles.num}>80% nominal</td><td className={styles.num}>±{(interval.meanWidthM / 2).toFixed(1)} m</td></tr>
-                <tr><td>Rise or fall on CGWB&rsquo;s wells, never trained on ({crossNetwork.years[0]}–{String(crossNetwork.years[crossNetwork.years.length - 1]).slice(2)})</td><td className={styles.num}>{crossNetwork.overall.clearMoves.toLocaleString("en-US")}</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.forecast! * 100)}% right</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.measured! * 100)}% State wells</td><td className={styles.num}>{Math.round(crossNetwork.overall.bySeason.usual.forecast! * 100)}/{Math.round(crossNetwork.overall.bySeason.broke.forecast! * 100)}% by season</td></tr>
+                <tr><td>Rise or fall on CGWB&rsquo;s wells, never trained on ({crossNetwork.years[0]}–{String(crossNetwork.years[crossNetwork.years.length - 1]).slice(2)})</td><td className={styles.num}>{crossNetwork.overall.clearMoves.toLocaleString("en-US")}</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.forecast! * 100)}% right</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.measured! * 100)}% State wells</td><td className={styles.num}>{Math.round(crossNetwork.overall.bySeason.usual.forecast! * 100)} / {Math.round(crossNetwork.overall.bySeason.broke.forecast! * 100)}%</td></tr>
                 {imd ? <tr><td>IMD rain in place of CHIRPS, retrained every month ({imd.window.first.slice(0, 4)}–{imd.window.last.slice(2, 4)})</td><td className={styles.num}>{imd.results.imd.rows.toLocaleString("en-US")}</td><td className={styles.num}>{imd.results.imd.maeM.toFixed(2)} m</td><td className={styles.num}>{imd.results.chirps.maeM.toFixed(2)} m CHIRPS</td><td className={styles.num}>{Math.round(imd.gainPct)}%, a year late</td></tr> : null}
                 <tr><td>Ungauged mandal (whole mandal held out)</td><td className={styles.num}>{spatial.rowCount.toLocaleString("en-US")}</td><td className={styles.num}>{spatial.reportedMetric.maeM.toFixed(1)} m</td><td className={styles.num}>state average</td><td className={`${styles.num} ${styles.no}`}>not released</td></tr>
               </tbody></table>
