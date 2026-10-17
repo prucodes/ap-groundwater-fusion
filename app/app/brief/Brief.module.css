@@ -114,7 +114,7 @@ table.res td.no { color: #a33b2c; font-weight: 600; }
 .lg { display: flex; flex-wrap: wrap; gap: 1mm 3mm; font-size: 6.9pt; color: #33455c; margin-top: 1.5mm; }
 .lg i { display: inline-block; width: 2.6mm; height: 2.6mm; border-radius: 1px; margin-right: 1mm; vertical-align: -.3mm; }
 .lg b { color: #0d2138; }
-.banner { border-radius: 10px; overflow: hidden; position: relative; max-width: 115mm; margin-inline: auto; }
+.banner { border-radius: 10px; overflow: hidden; position: relative; max-width: 100mm; margin-inline: auto; }
 .banner img { display: block; width: 100%; }
 .banner .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 3mm 4mm; background: linear-gradient(0deg, rgba(4,16,30,.92), rgba(4,16,30,0)); color: #dbe9f5; font-size: 8pt; }
 .banner .cap b { color: #ffd38a; }
