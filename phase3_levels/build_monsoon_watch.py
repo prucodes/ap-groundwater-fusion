@@ -511,9 +511,15 @@ def build():
         # stretch as the year being read against them.
         if elapsed:
             history = rainfall_history(rain, elapsed, oni)
-        sw_totals = seasonal_totals(rain, SW_MONSOON, "mm")
+        # The composites are the historical association the site and the film cite as
+        # precedent, so the season being reported cannot be one of their rows. Once this
+        # year's June-September rain completed it joined them, and the film began citing
+        # the present El Nino as evidence that El Ninos have done this before. Earlier
+        # years only, and the published window says where it stops.
+        past = lambda frame: frame[frame.year < year]
+        sw_totals = past(seasonal_totals(rain, SW_MONSOON, "mm"))
         sw = composite(sw_totals, "mm", oni, 6, district_of, season_share(rain, SW_MONSOON, district_of))
-        ne = composite(seasonal_totals(rain, NE_MONSOON, "mm"), "mm", oni, 10, district_of, season_share(rain, NE_MONSOON, district_of))
+        ne = composite(past(seasonal_totals(rain, NE_MONSOON, "mm")), "mm", oni, 10, district_of, season_share(rain, NE_MONSOON, district_of))
         after = after_el_nino(sw_totals, "mm", oni)
 
     return {
