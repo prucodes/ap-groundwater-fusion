@@ -324,7 +324,7 @@ export default function BriefPage() {
     <div className="pageWrap">
       <div className={styles.viewer}>
         <div className={styles.toolbar}>
-          <p>The eight-page brief on the platform&rsquo;s sources and model, rebuilt from this week&rsquo;s data.</p>
+          <p>The nine-page brief on the platform&rsquo;s sources and model, rebuilt from this week&rsquo;s data.</p>
           <a className={styles.download} href={`${basePath}/brief/${BRIEF_PDF}`} download="AP-Water-Intelligence-brief.pdf" data-testid="brief-pdf">Download PDF</a>
         </div>
         <div className={styles.scroller}>
