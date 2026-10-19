@@ -5991,3 +5991,13 @@ html { scroll-padding-top: 64px; }
   .signalGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
 }
 @media print { .sideMoreToggle ~ [data-phone-fold] { display: block !important; } .sideMoreLabel { display: none !important; } }
+
+/* Touch targets on a phone. Measured on the live site at 375px: the map's layer tabs
+   stood 27px tall and the inline "Details" and "Watchlist" links 18px, against the 44px
+   a fingertip needs. They grow by taking the space rather than by an invisible overlay,
+   which would have reached into the row above and below in a compact table. */
+@media (max-width: 760px) {
+  .segBtn { min-height: 44px; }
+  .linkAction { padding-block: 12px; }
+  .dataTable button.linkAction { padding-block: 12px; }
+}

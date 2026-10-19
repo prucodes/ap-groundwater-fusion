@@ -18,6 +18,9 @@ const load = () => (pending ??= fetch(`${BASE}/geo/mandal-outlines.json`).then(r
   return r.json() as Promise<Outlines>;
 }));
 
+/** How long the west-to-east wash takes to cross the State. */
+const SWEEP_MS = 420;
+
 const title = (value: string) => (/[a-z]/.test(value) ? value : value.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase()));
 
 export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, testId, marks }: {
@@ -43,8 +46,19 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
     const key = keys[index], color = colors[key] ?? colors.n ?? "var(--field)";
     return key === "n" ? `var(--map-held, ${color})` : key === "i" ? `var(--map-insufficient, ${color})` : color;
   };
+  /* The choropleth lands west to east, the way the monsoon crosses the State, rather than
+     all at once. The delay per mandal comes from the first point of its own outline, so it
+     needs no extra data; the whole wash is under three quarters of a second and the CSS
+     turns it off for a reader who asked for less motion. */
+  const sweep = (path: string | undefined) => {
+    const at = path?.match(/^M\s*(-?[\d.]+)/);
+    if (!at || !outlines) return undefined;
+    const across = Math.min(1, Math.max(0, Number(at[1]) / outlines.view.width));
+    return `${Math.round(across * SWEEP_MS)}ms`;
+  };
   // Marked mandals draw after the district lines, so their ring is never cut by one.
   const shape = (index: number) => <path key={index} d={outlines?.mandals[index]} data-key={keys[index]} data-mark={marked?.has(index) ? "" : undefined}
+    style={{ "--sweep": sweep(outlines?.mandals[index]) } as React.CSSProperties}
     fill={colorFor(index)}
     onPointerMove={event => { const box = frame.current?.getBoundingClientRect(); if (box && event.pointerType !== "touch") setHover({ index, x: event.clientX - box.left, y: event.clientY - box.top }); }} />;
   useEffect(() => {
