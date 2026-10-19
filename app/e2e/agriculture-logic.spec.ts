@@ -7,8 +7,12 @@ import geometry from "../data/ap_map_geometry.json";
 import type { MonsoonWatch, WaterContext } from "../lib/data";
 import type { MandalGroundwaterRecordV2 } from "../lib/types";
 
-const watch = watchJson as MonsoonWatch;
-const records = recordsJson.records as MandalGroundwaterRecordV2[];
+// Through `unknown`, as lib/data.ts does. TypeScript infers the shape of a JSON import
+// from the values that happen to be in it: when a nullable field is null in every row one
+// week and a number in some the next, the inferred element type changes and a direct cast
+// stops overlapping. The weekly refresh failed its type-check on exactly that.
+const watch = watchJson as unknown as MonsoonWatch;
+const records = recordsJson.records as unknown as MandalGroundwaterRecordV2[];
 const water = waterJson as unknown as WaterContext;
 const features = geometry.mandals.map(feature => ({ d: feature.d, m: feature.m, path: "M0 0Z" }));
 const evidence = buildAgricultureEvidence(watch, records, features);
