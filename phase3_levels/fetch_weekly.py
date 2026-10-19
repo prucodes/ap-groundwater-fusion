@@ -116,6 +116,10 @@ STEPS = [
     # has just published. Optional: it is a standalone page and a front-page
     # strip, and last week's file stays readable if this fails.
     ("build monsoon watch", [PY, os.path.join(HERE, "build_monsoon_watch.py")], False, 1800),
+    # Twelve years of the water table as a byte per mandal-month, for the
+    # time-lapse. Reads the series the app data step has just written, so it runs
+    # after it. Optional: last week's file is a month short, not wrong.
+    ("build depth time-lapse", [PY, os.path.join(HERE, "build_depth_timelapse.py")], False, 900),
     # Every mandal through the national drought manual's two triggers: weekly
     # gauge rain and dry spells, SPI, NOAA's vegetation index, NRSC soil
     # moisture, the groundwater index, and reservoirs against ten years. After
