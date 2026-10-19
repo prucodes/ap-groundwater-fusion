@@ -1,8 +1,8 @@
 {
-  "checkedAt": "2026-10-12T17:26:46+00:00",
-  "onlineCheckedAt": "2026-10-12T17:26:46+00:00",
+  "checkedAt": "2026-10-19T15:23:22+00:00",
+  "onlineCheckedAt": "2026-10-19T15:23:22+00:00",
   "snapshotPeriod": "2026-09",
-  "snapshotHash": "a577b411e4fcdba32a0c041466e04b40e282fb63b45fd54881930c9fc271e6f2",
+  "snapshotHash": "57a177f2a7cb03243196f92c0a48af2f154d49e6fe6612d0ae45e99956af8445",
   "historyHash": "83790c630a9df3a150118761ba351f2f2b89b6eae1db0e66eed2706ba8930f83",
   "localReconciliation": {
     "checkedSeries": 580,
@@ -4902,7 +4902,7 @@
     "enso": {
       "status": "checked",
       "source": "https://psl.noaa.gov/data/correlation/oni.data",
-      "sha256": "db1cc95beb908ce307d89161c0b8796fc890a331a7ebe83bcd85a8f58202cef1",
+      "sha256": "7bdc80c08e8669492d922a6aebe30518b9654deca1e866f5cd1bfb0f2a8d453d",
       "latest": {
         "date": "2026-08",
         "season": "JAS",
@@ -4913,8 +4913,8 @@
     "rainfall": {
       "status": "availability_checked",
       "source": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global/tifs/",
-      "latest": "2026.08",
-      "snapshotMonthAvailable": false,
+      "latest": "2026.09",
+      "snapshotMonthAvailable": true,
       "scope": "Publisher file listing checked; historical raster pixel values not re-downloaded in this audit."
     },
     "groundwater": {

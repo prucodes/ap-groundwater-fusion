@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-19T05:50:02+00:00",
+  "generatedAt": "2026-10-19T15:08:16+00:00",
   "season": {
     "year": 2026,
     "preMonsoonMonth": "2026-05",
@@ -12,37 +12,37 @@
       {
         "date": "2024-09",
         "season": "ASO",
-        "oniC": -0.17
+        "oniC": -0.12
       },
       {
         "date": "2024-10",
         "season": "SON",
-        "oniC": -0.21
+        "oniC": -0.19
       },
       {
         "date": "2024-11",
         "season": "OND",
-        "oniC": -0.3
+        "oniC": -0.29
       },
       {
         "date": "2024-12",
         "season": "NDJ",
-        "oniC": -0.42
+        "oniC": -0.43
       },
       {
         "date": "2025-01",
         "season": "DJF",
-        "oniC": -0.45
+        "oniC": -0.46
       },
       {
         "date": "2025-02",
         "season": "JFM",
-        "oniC": -0.24
+        "oniC": -0.22
       },
       {
         "date": "2025-03",
         "season": "FMA",
-        "oniC": -0.06
+        "oniC": -0.08
       },
       {
         "date": "2025-04",
@@ -52,12 +52,12 @@
       {
         "date": "2025-05",
         "season": "AMJ",
-        "oniC": -0.02
+        "oniC": -0.04
       },
       {
         "date": "2025-06",
         "season": "MJJ",
-        "oniC": -0.04
+        "oniC": -0.02
       },
       {
         "date": "2025-07",
@@ -186,15 +186,15 @@
     "rule": "May-to-2026-09 change against the same mandal's median over the previous 10 years; flagged short at >= 1.0 m AND >= 2.0x its own year-to-year spread"
   },
   "banked": {
-    "mandals": 467,
+    "mandals": 535,
     "rising": 262,
-    "bankedMm3": 2961.0,
-    "rainMm3": 30118.0,
-    "sharePct": 9.8,
+    "bankedMm3": 3108.0,
+    "rainMm3": 57183.0,
+    "sharePct": 5.4,
     "medianSharePct": 0.0,
     "shareFloorMm": 100.0,
-    "thinRain": 73,
-    "aboveRain": 6,
+    "thinRain": 5,
+    "aboveRain": 1,
     "method": "Water-table fluctuation (GEC-2015): the May-to-latest rise times the mandal's specific yield times its area. Net of the season's own pumping, which no public source observes, so gross recharge is larger."
   },
   "seasons": [
@@ -203,49 +203,49 @@
       "mandals": 469,
       "medianChangeM": -1.83,
       "fallingPct": 25.2,
-      "oniJjaC": -0.31
+      "oniJjaC": -0.19
     },
     {
       "year": 2017,
       "mandals": 579,
       "medianChangeM": -2.185,
       "fallingPct": 17.6,
-      "oniJjaC": 0.19
+      "oniJjaC": 0.14
     },
     {
       "year": 2018,
       "mandals": 580,
       "medianChangeM": -0.766,
       "fallingPct": 39.0,
-      "oniJjaC": 0.14
+      "oniJjaC": 0.2
     },
     {
       "year": 2019,
       "mandals": 580,
       "medianChangeM": -2.16,
       "fallingPct": 14.8,
-      "oniJjaC": 0.33
+      "oniJjaC": 0.38
     },
     {
       "year": 2020,
       "mandals": 580,
       "medianChangeM": -2.016,
       "fallingPct": 11.9,
-      "oniJjaC": -0.36
+      "oniJjaC": -0.29
     },
     {
       "year": 2023,
       "mandals": 578,
       "medianChangeM": -0.653,
       "fallingPct": 38.1,
-      "oniJjaC": 1.12
+      "oniJjaC": 1.0
     },
     {
       "year": 2024,
       "mandals": 580,
       "medianChangeM": -2.393,
       "fallingPct": 15.0,
-      "oniJjaC": 0.08
+      "oniJjaC": 0.06
     },
     {
       "year": 2025,
@@ -613,342 +613,340 @@
     }
   ],
   "rainfall": {
-    "months": "06-08",
-    "notYetPublished": [
-      "2026-09"
-    ],
-    "mm": 254.8,
-    "normalMm": 435.4,
-    "anomalyPct": -41.5,
-    "rankDriest": 1,
+    "months": "06-09",
+    "notYetPublished": [],
+    "mm": 472.9,
+    "normalMm": 599.2,
+    "anomalyPct": -21.1,
+    "rankDriest": 6,
     "ofYears": 46,
     "firstYear": 1981,
     "source": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global",
     "product": "CHIRPS v3.0 monthly, 0.05 degrees, mandal mean"
   },
   "rainfallHistory": {
-    "months": "06-08",
-    "meanMm": 431.5,
+    "months": "06-09",
+    "meanMm": 596.4,
     "years": [
       {
         "year": 1981,
-        "mm": 394.8,
-        "anomalyPct": -8.5,
-        "oniJjaC": -0.3,
+        "mm": 617.6,
+        "anomalyPct": 3.5,
+        "oniJjaC": -0.28,
         "state": "neutral"
       },
       {
         "year": 1982,
-        "mm": 345.3,
-        "anomalyPct": -20.0,
-        "oniJjaC": 0.79,
+        "mm": 475.1,
+        "anomalyPct": -20.3,
+        "oniJjaC": 0.78,
         "state": "el_nino"
       },
       {
         "year": 1983,
-        "mm": 492.2,
-        "anomalyPct": 14.1,
-        "oniJjaC": 0.31,
+        "mm": 712.6,
+        "anomalyPct": 19.5,
+        "oniJjaC": 0.25,
         "state": "neutral"
       },
       {
         "year": 1984,
-        "mm": 319.7,
-        "anomalyPct": -25.9,
-        "oniJjaC": -0.3,
+        "mm": 456.0,
+        "anomalyPct": -23.6,
+        "oniJjaC": -0.39,
         "state": "neutral"
       },
       {
         "year": 1985,
-        "mm": 456.9,
-        "anomalyPct": 5.9,
-        "oniJjaC": -0.49,
+        "mm": 579.5,
+        "anomalyPct": -2.8,
+        "oniJjaC": -0.44,
         "state": "neutral"
       },
       {
         "year": 1986,
-        "mm": 393.7,
-        "anomalyPct": -8.7,
-        "oniJjaC": 0.22,
+        "mm": 520.5,
+        "anomalyPct": -12.7,
+        "oniJjaC": 0.24,
         "state": "neutral"
       },
       {
         "year": 1987,
-        "mm": 336.7,
-        "anomalyPct": -22.0,
-        "oniJjaC": 1.51,
+        "mm": 419.0,
+        "anomalyPct": -29.7,
+        "oniJjaC": 1.3,
         "state": "el_nino"
       },
       {
         "year": 1988,
-        "mm": 587.0,
-        "anomalyPct": 36.1,
+        "mm": 844.1,
+        "anomalyPct": 41.5,
         "oniJjaC": -1.3,
         "state": "la_nina"
       },
       {
         "year": 1989,
-        "mm": 552.8,
-        "anomalyPct": 28.1,
-        "oniJjaC": -0.31,
-        "state": "neutral"
-      },
-      {
-        "year": 1990,
-        "mm": 384.7,
-        "anomalyPct": -10.8,
-        "oniJjaC": 0.33,
-        "state": "neutral"
-      },
-      {
-        "year": 1991,
-        "mm": 422.1,
-        "anomalyPct": -2.2,
-        "oniJjaC": 0.73,
-        "state": "el_nino"
-      },
-      {
-        "year": 1992,
-        "mm": 451.8,
-        "anomalyPct": 4.7,
-        "oniJjaC": 0.37,
-        "state": "neutral"
-      },
-      {
-        "year": 1993,
-        "mm": 316.3,
-        "anomalyPct": -26.7,
-        "oniJjaC": 0.32,
-        "state": "neutral"
-      },
-      {
-        "year": 1994,
-        "mm": 506.0,
-        "anomalyPct": 17.3,
-        "oniJjaC": 0.44,
-        "state": "neutral"
-      },
-      {
-        "year": 1995,
-        "mm": 485.3,
-        "anomalyPct": 12.5,
-        "oniJjaC": -0.24,
-        "state": "neutral"
-      },
-      {
-        "year": 1996,
-        "mm": 538.2,
-        "anomalyPct": 24.7,
-        "oniJjaC": -0.27,
-        "state": "neutral"
-      },
-      {
-        "year": 1997,
-        "mm": 343.0,
-        "anomalyPct": -20.5,
-        "oniJjaC": 1.6,
-        "state": "el_nino"
-      },
-      {
-        "year": 1998,
-        "mm": 495.4,
-        "anomalyPct": 14.8,
-        "oniJjaC": -0.78,
-        "state": "la_nina"
-      },
-      {
-        "year": 1999,
-        "mm": 343.5,
-        "anomalyPct": -20.4,
-        "oniJjaC": -1.1,
-        "state": "la_nina"
-      },
-      {
-        "year": 2000,
-        "mm": 576.2,
-        "anomalyPct": 33.6,
-        "oniJjaC": -0.55,
-        "state": "la_nina"
-      },
-      {
-        "year": 2001,
-        "mm": 355.8,
-        "anomalyPct": -17.5,
-        "oniJjaC": -0.08,
-        "state": "neutral"
-      },
-      {
-        "year": 2002,
-        "mm": 317.3,
-        "anomalyPct": -26.5,
-        "oniJjaC": 0.79,
-        "state": "el_nino"
-      },
-      {
-        "year": 2003,
-        "mm": 385.9,
-        "anomalyPct": -10.5,
-        "oniJjaC": 0.08,
-        "state": "neutral"
-      },
-      {
-        "year": 2004,
-        "mm": 353.9,
-        "anomalyPct": -18.0,
-        "oniJjaC": 0.47,
-        "state": "neutral"
-      },
-      {
-        "year": 2005,
-        "mm": 347.7,
-        "anomalyPct": -19.4,
-        "oniJjaC": -0.06,
-        "state": "neutral"
-      },
-      {
-        "year": 2006,
-        "mm": 430.2,
-        "anomalyPct": -0.3,
-        "oniJjaC": 0.1,
-        "state": "neutral"
-      },
-      {
-        "year": 2007,
-        "mm": 597.2,
-        "anomalyPct": 38.4,
-        "oniJjaC": -0.56,
-        "state": "la_nina"
-      },
-      {
-        "year": 2008,
-        "mm": 464.1,
-        "anomalyPct": 7.6,
+        "mm": 725.7,
+        "anomalyPct": 21.7,
         "oniJjaC": -0.37,
         "state": "neutral"
       },
       {
-        "year": 2009,
-        "mm": 327.9,
-        "anomalyPct": -24.0,
-        "oniJjaC": 0.45,
+        "year": 1990,
+        "mm": 513.9,
+        "anomalyPct": -13.8,
+        "oniJjaC": 0.26,
         "state": "neutral"
       },
       {
-        "year": 2010,
-        "mm": 593.2,
-        "anomalyPct": 37.5,
-        "oniJjaC": -1.05,
-        "state": "la_nina"
+        "year": 1991,
+        "mm": 622.7,
+        "anomalyPct": 4.4,
+        "oniJjaC": 0.77,
+        "state": "el_nino"
       },
       {
-        "year": 2011,
-        "mm": 387.1,
-        "anomalyPct": -10.3,
-        "oniJjaC": -0.43,
+        "year": 1992,
+        "mm": 559.4,
+        "anomalyPct": -6.2,
+        "oniJjaC": 0.35,
         "state": "neutral"
       },
       {
-        "year": 2012,
-        "mm": 432.4,
-        "anomalyPct": 0.2,
+        "year": 1993,
+        "mm": 507.5,
+        "anomalyPct": -14.9,
+        "oniJjaC": 0.28,
+        "state": "neutral"
+      },
+      {
+        "year": 1994,
+        "mm": 592.9,
+        "anomalyPct": -0.6,
         "oniJjaC": 0.3,
         "state": "neutral"
       },
       {
+        "year": 1995,
+        "mm": 674.8,
+        "anomalyPct": 13.1,
+        "oniJjaC": -0.3,
+        "state": "neutral"
+      },
+      {
+        "year": 1996,
+        "mm": 676.3,
+        "anomalyPct": 13.4,
+        "oniJjaC": -0.22,
+        "state": "neutral"
+      },
+      {
+        "year": 1997,
+        "mm": 590.0,
+        "anomalyPct": -1.1,
+        "oniJjaC": 1.48,
+        "state": "el_nino"
+      },
+      {
+        "year": 1998,
+        "mm": 703.4,
+        "anomalyPct": 17.9,
+        "oniJjaC": -0.63,
+        "state": "la_nina"
+      },
+      {
+        "year": 1999,
+        "mm": 470.6,
+        "anomalyPct": -21.1,
+        "oniJjaC": -0.9,
+        "state": "la_nina"
+      },
+      {
+        "year": 2000,
+        "mm": 698.4,
+        "anomalyPct": 17.1,
+        "oniJjaC": -0.48,
+        "state": "neutral"
+      },
+      {
+        "year": 2001,
+        "mm": 541.3,
+        "anomalyPct": -9.2,
+        "oniJjaC": -0.05,
+        "state": "neutral"
+      },
+      {
+        "year": 2002,
+        "mm": 383.8,
+        "anomalyPct": -35.7,
+        "oniJjaC": 0.57,
+        "state": "el_nino"
+      },
+      {
+        "year": 2003,
+        "mm": 502.2,
+        "anomalyPct": -15.8,
+        "oniJjaC": 0.09,
+        "state": "neutral"
+      },
+      {
+        "year": 2004,
+        "mm": 518.8,
+        "anomalyPct": -13.0,
+        "oniJjaC": 0.39,
+        "state": "neutral"
+      },
+      {
+        "year": 2005,
+        "mm": 650.6,
+        "anomalyPct": 9.1,
+        "oniJjaC": -0.04,
+        "state": "neutral"
+      },
+      {
+        "year": 2006,
+        "mm": 600.6,
+        "anomalyPct": 0.7,
+        "oniJjaC": 0.12,
+        "state": "neutral"
+      },
+      {
+        "year": 2007,
+        "mm": 827.5,
+        "anomalyPct": 38.7,
+        "oniJjaC": -0.49,
+        "state": "neutral"
+      },
+      {
+        "year": 2008,
+        "mm": 602.6,
+        "anomalyPct": 1.0,
+        "oniJjaC": -0.33,
+        "state": "neutral"
+      },
+      {
+        "year": 2009,
+        "mm": 468.5,
+        "anomalyPct": -21.5,
+        "oniJjaC": 0.5,
+        "state": "el_nino"
+      },
+      {
+        "year": 2010,
+        "mm": 787.8,
+        "anomalyPct": 32.1,
+        "oniJjaC": -0.98,
+        "state": "la_nina"
+      },
+      {
+        "year": 2011,
+        "mm": 473.5,
+        "anomalyPct": -20.6,
+        "oniJjaC": -0.37,
+        "state": "neutral"
+      },
+      {
+        "year": 2012,
+        "mm": 619.1,
+        "anomalyPct": 3.8,
+        "oniJjaC": 0.28,
+        "state": "neutral"
+      },
+      {
         "year": 2013,
-        "mm": 461.6,
-        "anomalyPct": 7.0,
-        "oniJjaC": -0.35,
+        "mm": 646.0,
+        "anomalyPct": 8.3,
+        "oniJjaC": -0.45,
         "state": "neutral"
       },
       {
         "year": 2014,
-        "mm": 392.3,
-        "anomalyPct": -9.1,
-        "oniJjaC": 0.1,
+        "mm": 535.9,
+        "anomalyPct": -10.2,
+        "oniJjaC": 0.07,
         "state": "neutral"
       },
       {
         "year": 2015,
-        "mm": 447.9,
-        "anomalyPct": 3.8,
-        "oniJjaC": 1.57,
+        "mm": 630.4,
+        "anomalyPct": 5.7,
+        "oniJjaC": 1.44,
         "state": "el_nino"
       },
       {
         "year": 2016,
-        "mm": 446.5,
-        "anomalyPct": 3.5,
-        "oniJjaC": -0.31,
+        "mm": 601.7,
+        "anomalyPct": 0.9,
+        "oniJjaC": -0.19,
         "state": "neutral"
       },
       {
         "year": 2017,
-        "mm": 509.1,
-        "anomalyPct": 18.0,
-        "oniJjaC": 0.19,
-        "state": "neutral"
-      },
-      {
-        "year": 2018,
-        "mm": 489.5,
-        "anomalyPct": 13.4,
+        "mm": 663.1,
+        "anomalyPct": 11.2,
         "oniJjaC": 0.14,
         "state": "neutral"
       },
       {
+        "year": 2018,
+        "mm": 607.8,
+        "anomalyPct": 1.9,
+        "oniJjaC": 0.2,
+        "state": "neutral"
+      },
+      {
         "year": 2019,
-        "mm": 397.9,
-        "anomalyPct": -7.8,
-        "oniJjaC": 0.33,
+        "mm": 583.7,
+        "anomalyPct": -2.1,
+        "oniJjaC": 0.38,
         "state": "neutral"
       },
       {
         "year": 2020,
-        "mm": 526.6,
-        "anomalyPct": 22.0,
-        "oniJjaC": -0.36,
+        "mm": 757.4,
+        "anomalyPct": 27.0,
+        "oniJjaC": -0.29,
         "state": "neutral"
       },
       {
         "year": 2021,
-        "mm": 447.1,
-        "anomalyPct": 3.6,
+        "mm": 655.4,
+        "anomalyPct": 9.9,
         "oniJjaC": -0.35,
         "state": "neutral"
       },
       {
         "year": 2022,
-        "mm": 484.5,
-        "anomalyPct": 12.3,
-        "oniJjaC": -0.76,
+        "mm": 646.7,
+        "anomalyPct": 8.4,
+        "oniJjaC": -0.7,
         "state": "la_nina"
       },
       {
         "year": 2023,
-        "mm": 371.9,
-        "anomalyPct": -13.8,
-        "oniJjaC": 1.12,
+        "mm": 527.4,
+        "anomalyPct": -11.6,
+        "oniJjaC": 1.0,
         "state": "el_nino"
       },
       {
         "year": 2024,
-        "mm": 522.3,
-        "anomalyPct": 21.1,
-        "oniJjaC": 0.08,
+        "mm": 673.3,
+        "anomalyPct": 12.9,
+        "oniJjaC": 0.06,
         "state": "neutral"
       },
       {
         "year": 2025,
-        "mm": 360.9,
-        "anomalyPct": -16.4,
+        "mm": 498.2,
+        "anomalyPct": -16.5,
         "oniJjaC": -0.11,
         "state": "neutral"
       },
       {
         "year": 2026,
-        "mm": 254.8,
-        "anomalyPct": -40.9,
+        "mm": 472.9,
+        "anomalyPct": -20.7,
         "oniJjaC": 1.8,
         "state": "el_nino"
       }
@@ -959,12 +957,12 @@
       "years": 45,
       "firstYear": 1981,
       "lastYear": 2025,
-      "elNinoYears": 7,
-      "elNinoAnomalyPct": -13.0,
-      "laNinaYears": 7,
-      "laNinaAnomalyPct": 18.7,
+      "elNinoYears": 8,
+      "elNinoAnomalyPct": -14.1,
+      "laNinaYears": 5,
+      "laNinaAnomalyPct": 15.2,
       "meanMm": 599.2,
-      "elNinoBelowNormal": 5,
+      "elNinoBelowNormal": 6,
       "belowNormalAllYears": 21,
       "allYears": 45,
       "elNinoRangePct": [
@@ -998,6 +996,11 @@
           "anomalyPct": -35.9
         },
         {
+          "year": 2009,
+          "mm": 468.5,
+          "anomalyPct": -21.8
+        },
+        {
           "year": 2015,
           "mm": 630.4,
           "anomalyPct": 5.2
@@ -1011,227 +1014,227 @@
       "byDistrict": [
         {
           "district": "KURNOOL",
-          "elNinoAnomalyPct": -23.5,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -21.0,
+          "elNinoYears": 8,
           "meanMm": 490.7,
-          "elNinoBelowNormal": 7,
+          "elNinoBelowNormal": 8,
           "shareOfAnnualPct": 69.7
         },
         {
+          "district": "ANNAMAYYA",
+          "elNinoAnomalyPct": -19.4,
+          "elNinoYears": 8,
+          "meanMm": 366.1,
+          "elNinoBelowNormal": 7,
+          "shareOfAnnualPct": 49.3
+        },
+        {
           "district": "ANANTHAPURAMU",
-          "elNinoAnomalyPct": -22.7,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -19.3,
+          "elNinoYears": 8,
           "meanMm": 344.2,
           "elNinoBelowNormal": 7,
           "shareOfAnnualPct": 57.4
         },
         {
+          "district": "Y.S.R KADAPA",
+          "elNinoAnomalyPct": -19.3,
+          "elNinoYears": 8,
+          "meanMm": 423.0,
+          "elNinoBelowNormal": 7,
+          "shareOfAnnualPct": 55.9
+        },
+        {
+          "district": "NANDYAL",
+          "elNinoAnomalyPct": -18.1,
+          "elNinoYears": 8,
+          "meanMm": 570.8,
+          "elNinoBelowNormal": 8,
+          "shareOfAnnualPct": 69.7
+        },
+        {
+          "district": "EAST GODAVARI",
+          "elNinoAnomalyPct": -17.0,
+          "elNinoYears": 8,
+          "meanMm": 852.0,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 68.0
+        },
+        {
+          "district": "KAKINADA",
+          "elNinoAnomalyPct": -17.0,
+          "elNinoYears": 8,
+          "meanMm": 751.8,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 63.3
+        },
+        {
           "district": "SRI SATHYA SAI",
-          "elNinoAnomalyPct": -19.2,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -16.8,
+          "elNinoYears": 8,
           "meanMm": 345.8,
           "elNinoBelowNormal": 6,
           "shareOfAnnualPct": 54.0
         },
         {
-          "district": "ANNAMAYYA",
-          "elNinoAnomalyPct": -18.7,
-          "elNinoYears": 7,
-          "meanMm": 366.1,
+          "district": "TIRUPATI",
+          "elNinoAnomalyPct": -16.3,
+          "elNinoYears": 8,
+          "meanMm": 430.0,
           "elNinoBelowNormal": 6,
-          "shareOfAnnualPct": 49.3
-        },
-        {
-          "district": "NANDYAL",
-          "elNinoAnomalyPct": -18.6,
-          "elNinoYears": 7,
-          "meanMm": 570.8,
-          "elNinoBelowNormal": 7,
-          "shareOfAnnualPct": 69.7
-        },
-        {
-          "district": "Y.S.R KADAPA",
-          "elNinoAnomalyPct": -18.4,
-          "elNinoYears": 7,
-          "meanMm": 423.0,
-          "elNinoBelowNormal": 6,
-          "shareOfAnnualPct": 55.9
-        },
-        {
-          "district": "KAKINADA",
-          "elNinoAnomalyPct": -16.4,
-          "elNinoYears": 7,
-          "meanMm": 751.8,
-          "elNinoBelowNormal": 5,
-          "shareOfAnnualPct": 63.3
-        },
-        {
-          "district": "EAST GODAVARI",
-          "elNinoAnomalyPct": -15.9,
-          "elNinoYears": 7,
-          "meanMm": 852.0,
-          "elNinoBelowNormal": 5,
-          "shareOfAnnualPct": 68.0
+          "shareOfAnnualPct": 37.7
         },
         {
           "district": "POLAVARAM",
-          "elNinoAnomalyPct": -15.2,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -16.1,
+          "elNinoYears": 8,
           "meanMm": 943.3,
-          "elNinoBelowNormal": 6,
+          "elNinoBelowNormal": 7,
           "shareOfAnnualPct": 70.2
         },
         {
           "district": "KONASEEMA",
-          "elNinoAnomalyPct": -14.6,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -15.4,
+          "elNinoYears": 8,
           "meanMm": 819.8,
-          "elNinoBelowNormal": 4,
+          "elNinoBelowNormal": 5,
           "shareOfAnnualPct": 63.3
         },
         {
-          "district": "TIRUPATI",
-          "elNinoAnomalyPct": -14.5,
-          "elNinoYears": 7,
-          "meanMm": 430.0,
-          "elNinoBelowNormal": 5,
-          "shareOfAnnualPct": 37.7
+          "district": "MARKAPURAM",
+          "elNinoAnomalyPct": -15.1,
+          "elNinoYears": 8,
+          "meanMm": 421.3,
+          "elNinoBelowNormal": 7,
+          "shareOfAnnualPct": 53.4
         },
         {
           "district": "SRI POTTI SRIRAMULU NELLORE",
-          "elNinoAnomalyPct": -13.4,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -15.1,
+          "elNinoYears": 8,
           "meanMm": 352.2,
-          "elNinoBelowNormal": 5,
+          "elNinoBelowNormal": 6,
           "shareOfAnnualPct": 35.5
         },
         {
           "district": "WEST GODAVARI",
-          "elNinoAnomalyPct": -13.2,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -14.6,
+          "elNinoYears": 8,
           "meanMm": 822.2,
-          "elNinoBelowNormal": 4,
+          "elNinoBelowNormal": 5,
           "shareOfAnnualPct": 67.3
         },
         {
-          "district": "MARKAPURAM",
-          "elNinoAnomalyPct": -13.1,
-          "elNinoYears": 7,
-          "meanMm": 421.3,
-          "elNinoBelowNormal": 6,
-          "shareOfAnnualPct": 53.4
-        },
-        {
-          "district": "CHITTOOR",
-          "elNinoAnomalyPct": -12.2,
-          "elNinoYears": 7,
-          "meanMm": 477.3,
-          "elNinoBelowNormal": 5,
-          "shareOfAnnualPct": 47.5
-        },
-        {
           "district": "ELURU",
-          "elNinoAnomalyPct": -12.2,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -14.5,
+          "elNinoYears": 8,
           "meanMm": 861.8,
-          "elNinoBelowNormal": 5,
+          "elNinoBelowNormal": 6,
           "shareOfAnnualPct": 72.4
         },
         {
           "district": "NTR",
-          "elNinoAnomalyPct": -12.0,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -14.3,
+          "elNinoYears": 8,
           "meanMm": 772.2,
-          "elNinoBelowNormal": 5,
+          "elNinoBelowNormal": 6,
           "shareOfAnnualPct": 70.6
         },
         {
-          "district": "VISAKHAPATNAM",
-          "elNinoAnomalyPct": -11.3,
-          "elNinoYears": 7,
-          "meanMm": 655.0,
-          "elNinoBelowNormal": 5,
-          "shareOfAnnualPct": 58.9
-        },
-        {
           "district": "PALNADU",
-          "elNinoAnomalyPct": -11.0,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -13.0,
+          "elNinoYears": 8,
           "meanMm": 550.4,
-          "elNinoBelowNormal": 5,
+          "elNinoBelowNormal": 6,
           "shareOfAnnualPct": 62.5
         },
         {
-          "district": "ALLURI SITHARAMA RAJU",
-          "elNinoAnomalyPct": -10.5,
-          "elNinoYears": 7,
-          "meanMm": 972.4,
+          "district": "CHITTOOR",
+          "elNinoAnomalyPct": -12.8,
+          "elNinoYears": 8,
+          "meanMm": 477.3,
           "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 47.5
+        },
+        {
+          "district": "VISAKHAPATNAM",
+          "elNinoAnomalyPct": -12.5,
+          "elNinoYears": 8,
+          "meanMm": 655.0,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 58.9
+        },
+        {
+          "district": "ALLURI SITHARAMA RAJU",
+          "elNinoAnomalyPct": -11.8,
+          "elNinoYears": 8,
+          "meanMm": 972.4,
+          "elNinoBelowNormal": 7,
           "shareOfAnnualPct": 67.4
         },
         {
           "district": "ANAKAPALLI",
-          "elNinoAnomalyPct": -10.3,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -11.7,
+          "elNinoYears": 8,
           "meanMm": 757.8,
-          "elNinoBelowNormal": 5,
+          "elNinoBelowNormal": 6,
           "shareOfAnnualPct": 61.9
         },
         {
-          "district": "PARVATHIPURAM MANYAM",
-          "elNinoAnomalyPct": -9.1,
-          "elNinoYears": 7,
-          "meanMm": 944.0,
-          "elNinoBelowNormal": 5,
-          "shareOfAnnualPct": 69.3
-        },
-        {
-          "district": "SRIKAKULAM",
-          "elNinoAnomalyPct": -8.7,
-          "elNinoYears": 7,
-          "meanMm": 718.3,
-          "elNinoBelowNormal": 5,
-          "shareOfAnnualPct": 62.9
-        },
-        {
           "district": "PRAKASAM",
-          "elNinoAnomalyPct": -8.6,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -11.0,
+          "elNinoYears": 8,
           "meanMm": 453.6,
-          "elNinoBelowNormal": 4,
+          "elNinoBelowNormal": 5,
           "shareOfAnnualPct": 48.7
         },
         {
-          "district": "VIZIANAGARAM",
-          "elNinoAnomalyPct": -8.3,
-          "elNinoYears": 7,
-          "meanMm": 744.0,
-          "elNinoBelowNormal": 6,
-          "shareOfAnnualPct": 63.5
-        },
-        {
           "district": "KRISHNA",
-          "elNinoAnomalyPct": -8.2,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -10.4,
+          "elNinoYears": 8,
           "meanMm": 747.8,
-          "elNinoBelowNormal": 3,
+          "elNinoBelowNormal": 4,
           "shareOfAnnualPct": 63.9
         },
         {
-          "district": "BAPATLA",
-          "elNinoAnomalyPct": -6.6,
-          "elNinoYears": 7,
-          "meanMm": 619.7,
-          "elNinoBelowNormal": 3,
-          "shareOfAnnualPct": 57.9
+          "district": "PARVATHIPURAM MANYAM",
+          "elNinoAnomalyPct": -10.3,
+          "elNinoYears": 8,
+          "meanMm": 944.0,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 69.3
+        },
+        {
+          "district": "VIZIANAGARAM",
+          "elNinoAnomalyPct": -9.8,
+          "elNinoYears": 8,
+          "meanMm": 744.0,
+          "elNinoBelowNormal": 7,
+          "shareOfAnnualPct": 63.5
         },
         {
           "district": "GUNTUR",
-          "elNinoAnomalyPct": -6.6,
-          "elNinoYears": 7,
+          "elNinoAnomalyPct": -9.5,
+          "elNinoYears": 8,
           "meanMm": 679.3,
-          "elNinoBelowNormal": 3,
+          "elNinoBelowNormal": 4,
           "shareOfAnnualPct": 64.6
+        },
+        {
+          "district": "SRIKAKULAM",
+          "elNinoAnomalyPct": -9.5,
+          "elNinoYears": 8,
+          "meanMm": 718.3,
+          "elNinoBelowNormal": 6,
+          "shareOfAnnualPct": 62.9
+        },
+        {
+          "district": "BAPATLA",
+          "elNinoAnomalyPct": -9.3,
+          "elNinoYears": 8,
+          "meanMm": 619.7,
+          "elNinoBelowNormal": 4,
+          "shareOfAnnualPct": 57.9
         }
       ]
     },
@@ -1241,8 +1244,8 @@
       "lastYear": 2025,
       "elNinoYears": 15,
       "elNinoAnomalyPct": -7.7,
-      "laNinaYears": 18,
-      "laNinaAnomalyPct": 2.3,
+      "laNinaYears": 17,
+      "laNinaAnomalyPct": 6.4,
       "meanMm": 304.0,
       "elNinoBelowNormal": 9,
       "belowNormalAllYears": 23,
@@ -1577,105 +1580,105 @@
         {
           "year": 1983,
           "afterWinter": 1982,
-          "oniOndC": 2.18,
+          "oniOndC": 2.03,
           "mm": 712.6,
           "anomalyPct": 18.9
         },
         {
           "year": 1987,
           "afterWinter": 1986,
-          "oniOndC": 1.14,
+          "oniOndC": 1.06,
           "mm": 419.0,
           "anomalyPct": -30.1
         },
         {
           "year": 1988,
           "afterWinter": 1987,
-          "oniOndC": 1.25,
+          "oniOndC": 1.2,
           "mm": 844.1,
           "anomalyPct": 40.9
         },
         {
           "year": 1992,
           "afterWinter": 1991,
-          "oniOndC": 1.21,
+          "oniOndC": 1.18,
           "mm": 559.4,
           "anomalyPct": -6.6
         },
         {
           "year": 1995,
           "afterWinter": 1994,
-          "oniOndC": 1.01,
+          "oniOndC": 0.93,
           "mm": 674.8,
           "anomalyPct": 12.6
         },
         {
           "year": 1998,
           "afterWinter": 1997,
-          "oniOndC": 2.4,
+          "oniOndC": 2.34,
           "mm": 703.4,
           "anomalyPct": 17.4
         },
         {
           "year": 2003,
           "afterWinter": 2002,
-          "oniOndC": 1.31,
+          "oniOndC": 1.19,
           "mm": 502.2,
           "anomalyPct": -16.2
         },
         {
           "year": 2005,
           "afterWinter": 2004,
-          "oniOndC": 0.66,
+          "oniOndC": 0.64,
           "mm": 650.6,
           "anomalyPct": 8.6
         },
         {
           "year": 2007,
           "afterWinter": 2006,
-          "oniOndC": 0.94,
+          "oniOndC": 0.88,
           "mm": 827.5,
           "anomalyPct": 38.1
         },
         {
           "year": 2010,
           "afterWinter": 2009,
-          "oniOndC": 1.36,
+          "oniOndC": 1.31,
           "mm": 787.8,
           "anomalyPct": 31.5
         },
         {
           "year": 2015,
           "afterWinter": 2014,
-          "oniOndC": 0.71,
+          "oniOndC": 0.7,
           "mm": 630.4,
           "anomalyPct": 5.2
         },
         {
           "year": 2016,
           "afterWinter": 2015,
-          "oniOndC": 2.64,
+          "oniOndC": 2.45,
           "mm": 601.7,
           "anomalyPct": 0.4
         },
         {
           "year": 2019,
           "afterWinter": 2018,
-          "oniOndC": 0.97,
+          "oniOndC": 1.04,
           "mm": 583.7,
           "anomalyPct": -2.6
         },
         {
           "year": 2020,
           "afterWinter": 2019,
-          "oniOndC": 0.58,
+          "oniOndC": 0.72,
           "mm": 757.4,
           "anomalyPct": 26.4
         },
         {
           "year": 2024,
           "afterWinter": 2023,
-          "oniOndC": 1.99,
+          "oniOndC": 1.9,
           "mm": 673.3,
           "anomalyPct": 12.4
         }
@@ -1928,7 +1931,7 @@
       "status": "severe",
       "riseM": -7.39,
       "bankedMm3": 0.0,
-      "seasonRainMm": 224.9,
+      "seasonRainMm": 377.2,
       "bankedSharePct": 0.0
     },
     {
@@ -1950,7 +1953,7 @@
       "status": "severe",
       "riseM": -4.7,
       "bankedMm3": 0.0,
-      "seasonRainMm": 184.8,
+      "seasonRainMm": 315.1,
       "bankedSharePct": 0.0
     },
     {
@@ -1972,7 +1975,7 @@
       "status": "severe",
       "riseM": -8.73,
       "bankedMm3": 0.0,
-      "seasonRainMm": 112.5,
+      "seasonRainMm": 230.8,
       "bankedSharePct": 0.0
     },
     {
@@ -1994,8 +1997,8 @@
       "status": "severe",
       "riseM": -8.04,
       "bankedMm3": 0.0,
-      "seasonRainMm": 93.7,
-      "bankedSharePct": null
+      "seasonRainMm": 179.5,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "5b557fb5-da4c-434f-978a-127c39e177c2",
@@ -2016,7 +2019,7 @@
       "status": "severe",
       "riseM": -7.82,
       "bankedMm3": 0.0,
-      "seasonRainMm": 382.6,
+      "seasonRainMm": 604.6,
       "bankedSharePct": 0.0
     },
     {
@@ -2038,7 +2041,7 @@
       "status": "severe",
       "riseM": -0.13,
       "bankedMm3": 0.0,
-      "seasonRainMm": 474.1,
+      "seasonRainMm": 710.6,
       "bankedSharePct": 0.0
     },
     {
@@ -2082,8 +2085,8 @@
       "status": "severe",
       "riseM": 0.53,
       "bankedMm3": 6.93,
-      "seasonRainMm": 336.2,
-      "bankedSharePct": 18.9
+      "seasonRainMm": 638.3,
+      "bankedSharePct": 10.0
     },
     {
       "mandalUuid": "5eb0e871-8dce-4f46-a014-78402f196baa",
@@ -2104,7 +2107,7 @@
       "status": "severe",
       "riseM": -4.83,
       "bankedMm3": 0.0,
-      "seasonRainMm": 418.2,
+      "seasonRainMm": 649.1,
       "bankedSharePct": 0.0
     },
     {
@@ -2126,7 +2129,7 @@
       "status": "severe",
       "riseM": -14.61,
       "bankedMm3": 0.0,
-      "seasonRainMm": 141.4,
+      "seasonRainMm": 256.5,
       "bankedSharePct": 0.0
     },
     {
@@ -2148,7 +2151,7 @@
       "status": "severe",
       "riseM": -2.56,
       "bankedMm3": 0.0,
-      "seasonRainMm": 110.5,
+      "seasonRainMm": 214.8,
       "bankedSharePct": 0.0
     },
     {
@@ -2170,8 +2173,8 @@
       "status": "severe",
       "riseM": 0.08,
       "bankedMm3": 0.23,
-      "seasonRainMm": 336.1,
-      "bankedSharePct": 0.5
+      "seasonRainMm": 778.5,
+      "bankedSharePct": 0.2
     },
     {
       "mandalUuid": "3431a2d5-97d5-4d86-851b-291969a66913",
@@ -2192,8 +2195,8 @@
       "status": "severe",
       "riseM": 0.77,
       "bankedMm3": 3.58,
-      "seasonRainMm": 438.3,
-      "bankedSharePct": 4.0
+      "seasonRainMm": 652.4,
+      "bankedSharePct": 2.7
     },
     {
       "mandalUuid": "a6d6621e-0830-4757-aae3-0791053ccfcd",
@@ -2214,8 +2217,8 @@
       "status": "severe",
       "riseM": 0.01,
       "bankedMm3": 0.04,
-      "seasonRainMm": 247.3,
-      "bankedSharePct": 0.1
+      "seasonRainMm": 575.8,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "0e8dbb74-cc0c-4c86-82d7-e2c2f6214922",
@@ -2236,7 +2239,7 @@
       "status": "severe",
       "riseM": -9.89,
       "bankedMm3": 0.0,
-      "seasonRainMm": 220.9,
+      "seasonRainMm": 391.5,
       "bankedSharePct": 0.0
     },
     {
@@ -2258,7 +2261,7 @@
       "status": "severe",
       "riseM": -1.74,
       "bankedMm3": 0.0,
-      "seasonRainMm": 367.9,
+      "seasonRainMm": 859.6,
       "bankedSharePct": 0.0
     },
     {
@@ -2280,7 +2283,7 @@
       "status": "severe",
       "riseM": -1.26,
       "bankedMm3": 0.0,
-      "seasonRainMm": 190.7,
+      "seasonRainMm": 347.6,
       "bankedSharePct": 0.0
     },
     {
@@ -2302,8 +2305,8 @@
       "status": "severe",
       "riseM": 0.69,
       "bankedMm3": 1.77,
-      "seasonRainMm": 385.1,
-      "bankedSharePct": 4.1
+      "seasonRainMm": 854.7,
+      "bankedSharePct": 1.9
     },
     {
       "mandalUuid": "0f6215d8-c44f-4542-9dae-bf9782428738",
@@ -2324,8 +2327,8 @@
       "status": "severe",
       "riseM": 1.82,
       "bankedMm3": 22.87,
-      "seasonRainMm": 278.0,
-      "bankedSharePct": 52.4
+      "seasonRainMm": 649.4,
+      "bankedSharePct": 22.4
     },
     {
       "mandalUuid": "fc753dc3-1d6a-465c-afef-e5fb7b7de6f0",
@@ -2346,7 +2349,7 @@
       "status": "severe",
       "riseM": -0.63,
       "bankedMm3": 0.0,
-      "seasonRainMm": 377.2,
+      "seasonRainMm": 628.7,
       "bankedSharePct": 0.0
     },
     {
@@ -2368,8 +2371,8 @@
       "status": "severe",
       "riseM": 0.23,
       "bankedMm3": 0.85,
-      "seasonRainMm": 407.0,
-      "bankedSharePct": 1.3
+      "seasonRainMm": 607.8,
+      "bankedSharePct": 0.9
     },
     {
       "mandalUuid": "5d774342-5a6b-4f48-9da3-f28f57f79797",
@@ -2390,8 +2393,8 @@
       "status": "severe",
       "riseM": 0.72,
       "bankedMm3": 6.73,
-      "seasonRainMm": 622.9,
-      "bankedSharePct": 2.7
+      "seasonRainMm": 1009.1,
+      "bankedSharePct": 1.6
     },
     {
       "mandalUuid": "f092e1c3-c3f3-4456-859f-1f74d7293c12",
@@ -2412,7 +2415,7 @@
       "status": "severe",
       "riseM": -1.58,
       "bankedMm3": 0.0,
-      "seasonRainMm": 347.3,
+      "seasonRainMm": 631.5,
       "bankedSharePct": 0.0
     },
     {
@@ -2434,8 +2437,8 @@
       "status": "severe",
       "riseM": 0.33,
       "bankedMm3": 4.12,
-      "seasonRainMm": 440.2,
-      "bankedSharePct": 2.1
+      "seasonRainMm": 816.7,
+      "bankedSharePct": 1.1
     },
     {
       "mandalUuid": "ee014bb3-9af0-4356-860d-2c9464421453",
@@ -2456,8 +2459,8 @@
       "status": "severe",
       "riseM": 0.58,
       "bankedMm3": 3.16,
-      "seasonRainMm": 470.4,
-      "bankedSharePct": 4.7
+      "seasonRainMm": 680.3,
+      "bankedSharePct": 3.2
     },
     {
       "mandalUuid": "c2fd48fd-f51f-48ac-888a-0d2fb7f60309",
@@ -2478,8 +2481,8 @@
       "status": "severe",
       "riseM": 0.11,
       "bankedMm3": 0.36,
-      "seasonRainMm": 326.0,
-      "bankedSharePct": 0.8
+      "seasonRainMm": 532.4,
+      "bankedSharePct": 0.5
     },
     {
       "mandalUuid": "6d6e4494-4e40-4895-83e0-cb63be62e7a1",
@@ -2500,7 +2503,7 @@
       "status": "severe",
       "riseM": -2.47,
       "bankedMm3": 0.0,
-      "seasonRainMm": 107.3,
+      "seasonRainMm": 222.1,
       "bankedSharePct": 0.0
     },
     {
@@ -2522,7 +2525,7 @@
       "status": "severe",
       "riseM": 0.0,
       "bankedMm3": 0.0,
-      "seasonRainMm": 347.0,
+      "seasonRainMm": 823.6,
       "bankedSharePct": 0.0
     },
     {
@@ -2544,7 +2547,7 @@
       "status": "severe",
       "riseM": -0.69,
       "bankedMm3": 0.0,
-      "seasonRainMm": 296.8,
+      "seasonRainMm": 728.7,
       "bankedSharePct": 0.0
     },
     {
@@ -2566,8 +2569,8 @@
       "status": "severe",
       "riseM": -2.77,
       "bankedMm3": 0.0,
-      "seasonRainMm": 65.6,
-      "bankedSharePct": null
+      "seasonRainMm": 165.2,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "3a746041-a5e4-4c03-b324-c4eba262c311",
@@ -2588,8 +2591,8 @@
       "status": "severe",
       "riseM": 1.87,
       "bankedMm3": 6.6,
-      "seasonRainMm": 356.8,
-      "bankedSharePct": 12.1
+      "seasonRainMm": 777.0,
+      "bankedSharePct": 5.5
     },
     {
       "mandalUuid": "8031d1b3-30c1-43a9-8230-5d8698333883",
@@ -2610,7 +2613,7 @@
       "status": "severe",
       "riseM": -1.99,
       "bankedMm3": 0.0,
-      "seasonRainMm": 107.1,
+      "seasonRainMm": 221.7,
       "bankedSharePct": 0.0
     },
     {
@@ -2632,7 +2635,7 @@
       "status": "severe",
       "riseM": -1.05,
       "bankedMm3": 0.0,
-      "seasonRainMm": 160.2,
+      "seasonRainMm": 300.1,
       "bankedSharePct": 0.0
     },
     {
@@ -2654,7 +2657,7 @@
       "status": "severe",
       "riseM": -1.76,
       "bankedMm3": 0.0,
-      "seasonRainMm": 358.0,
+      "seasonRainMm": 802.2,
       "bankedSharePct": 0.0
     },
     {
@@ -2676,7 +2679,7 @@
       "status": "severe",
       "riseM": -0.3,
       "bankedMm3": 0.0,
-      "seasonRainMm": 427.5,
+      "seasonRainMm": 648.0,
       "bankedSharePct": 0.0
     },
     {
@@ -2698,7 +2701,7 @@
       "status": "severe",
       "riseM": -1.1,
       "bankedMm3": 0.0,
-      "seasonRainMm": 349.4,
+      "seasonRainMm": 570.2,
       "bankedSharePct": 0.0
     },
     {
@@ -2720,7 +2723,7 @@
       "status": "short",
       "riseM": -1.09,
       "bankedMm3": 0.0,
-      "seasonRainMm": 128.0,
+      "seasonRainMm": 261.7,
       "bankedSharePct": 0.0
     },
     {
@@ -2742,7 +2745,7 @@
       "status": "severe",
       "riseM": -10.27,
       "bankedMm3": 0.0,
-      "seasonRainMm": 107.8,
+      "seasonRainMm": 192.9,
       "bankedSharePct": 0.0
     },
     {
@@ -2764,8 +2767,8 @@
       "status": "severe",
       "riseM": 0.22,
       "bankedMm3": 0.72,
-      "seasonRainMm": 419.8,
-      "bankedSharePct": 1.2
+      "seasonRainMm": 904.8,
+      "bankedSharePct": 0.6
     },
     {
       "mandalUuid": "7d3aee43-6187-407a-ba33-c97c2559c411",
@@ -2786,8 +2789,8 @@
       "status": "severe",
       "riseM": 1.48,
       "bankedMm3": 6.06,
-      "seasonRainMm": 384.8,
-      "bankedSharePct": 13.7
+      "seasonRainMm": 752.1,
+      "bankedSharePct": 7.0
     },
     {
       "mandalUuid": "143250eb-2d92-4304-b178-db4bb5a0ea00",
@@ -2808,7 +2811,7 @@
       "status": "short",
       "riseM": -0.46,
       "bankedMm3": 0.0,
-      "seasonRainMm": 245.0,
+      "seasonRainMm": 522.5,
       "bankedSharePct": 0.0
     },
     {
@@ -2830,7 +2833,7 @@
       "status": "severe",
       "riseM": -4.05,
       "bankedMm3": 0.0,
-      "seasonRainMm": 268.5,
+      "seasonRainMm": 380.4,
       "bankedSharePct": 0.0
     },
     {
@@ -2852,7 +2855,7 @@
       "status": "severe",
       "riseM": -2.6,
       "bankedMm3": 0.0,
-      "seasonRainMm": 139.5,
+      "seasonRainMm": 324.6,
       "bankedSharePct": 0.0
     },
     {
@@ -2874,7 +2877,7 @@
       "status": "severe",
       "riseM": -0.51,
       "bankedMm3": 0.0,
-      "seasonRainMm": 406.3,
+      "seasonRainMm": 663.1,
       "bankedSharePct": 0.0
     },
     {
@@ -2896,7 +2899,7 @@
       "status": "severe",
       "riseM": -1.94,
       "bankedMm3": 0.0,
-      "seasonRainMm": 452.0,
+      "seasonRainMm": 730.9,
       "bankedSharePct": 0.0
     },
     {
@@ -2918,8 +2921,8 @@
       "status": "severe",
       "riseM": 1.4,
       "bankedMm3": 3.65,
-      "seasonRainMm": 329.0,
-      "bankedSharePct": 9.8
+      "seasonRainMm": 796.7,
+      "bankedSharePct": 4.0
     },
     {
       "mandalUuid": "75807165-110b-4301-9fd2-fda3a4ad27a9",
@@ -2940,7 +2943,7 @@
       "status": "severe",
       "riseM": -1.49,
       "bankedMm3": 0.0,
-      "seasonRainMm": 210.9,
+      "seasonRainMm": 330.8,
       "bankedSharePct": 0.0
     },
     {
@@ -2962,7 +2965,7 @@
       "status": "severe",
       "riseM": -2.54,
       "bankedMm3": 0.0,
-      "seasonRainMm": 423.1,
+      "seasonRainMm": 673.5,
       "bankedSharePct": 0.0
     },
     {
@@ -2984,8 +2987,8 @@
       "status": "severe",
       "riseM": 1.6,
       "bankedMm3": 4.25,
-      "seasonRainMm": 262.1,
-      "bankedSharePct": 14.0
+      "seasonRainMm": 638.5,
+      "bankedSharePct": 5.8
     },
     {
       "mandalUuid": "be33b37c-c776-4e25-90d2-1dc2942e674f",
@@ -3006,7 +3009,7 @@
       "status": "severe",
       "riseM": -12.1,
       "bankedMm3": 0.0,
-      "seasonRainMm": 192.4,
+      "seasonRainMm": 312.8,
       "bankedSharePct": 0.0
     },
     {
@@ -3028,8 +3031,8 @@
       "status": "short",
       "riseM": 0.01,
       "bankedMm3": 0.05,
-      "seasonRainMm": 358.1,
-      "bankedSharePct": 0.1
+      "seasonRainMm": 544.4,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "93ff3954-7cf9-42c3-a43d-32503a9bc1d2",
@@ -3072,7 +3075,7 @@
       "status": "severe",
       "riseM": -9.22,
       "bankedMm3": 0.0,
-      "seasonRainMm": 25.5,
+      "seasonRainMm": 99.8,
       "bankedSharePct": null
     },
     {
@@ -3094,7 +3097,7 @@
       "status": "severe",
       "riseM": -2.07,
       "bankedMm3": 0.0,
-      "seasonRainMm": 354.1,
+      "seasonRainMm": 661.5,
       "bankedSharePct": 0.0
     },
     {
@@ -3116,7 +3119,7 @@
       "status": "severe",
       "riseM": -3.04,
       "bankedMm3": 0.0,
-      "seasonRainMm": 133.5,
+      "seasonRainMm": 247.9,
       "bankedSharePct": 0.0
     },
     {
@@ -3138,7 +3141,7 @@
       "status": "severe",
       "riseM": -9.38,
       "bankedMm3": 0.0,
-      "seasonRainMm": 121.0,
+      "seasonRainMm": 223.7,
       "bankedSharePct": 0.0
     },
     {
@@ -3160,7 +3163,7 @@
       "status": "severe",
       "riseM": -5.39,
       "bankedMm3": 0.0,
-      "seasonRainMm": 125.1,
+      "seasonRainMm": 273.0,
       "bankedSharePct": 0.0
     },
     {
@@ -3182,8 +3185,8 @@
       "status": "severe",
       "riseM": -1.82,
       "bankedMm3": 0.0,
-      "seasonRainMm": 94.0,
-      "bankedSharePct": null
+      "seasonRainMm": 234.1,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "2a30f939-edec-4481-a9c4-8ee8bfc634da",
@@ -3226,7 +3229,7 @@
       "status": "severe",
       "riseM": -1.23,
       "bankedMm3": 0.0,
-      "seasonRainMm": 288.1,
+      "seasonRainMm": 732.0,
       "bankedSharePct": 0.0
     },
     {
@@ -3248,7 +3251,7 @@
       "status": "severe",
       "riseM": -1.43,
       "bankedMm3": 0.0,
-      "seasonRainMm": 230.5,
+      "seasonRainMm": 637.3,
       "bankedSharePct": 0.0
     },
     {
@@ -3270,8 +3273,8 @@
       "status": "severe",
       "riseM": -0.63,
       "bankedMm3": 0.0,
-      "seasonRainMm": 95.7,
-      "bankedSharePct": null
+      "seasonRainMm": 203.7,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "2e43f973-2804-4f6a-9122-8e20ae75404e",
@@ -3292,8 +3295,8 @@
       "status": "severe",
       "riseM": -2.62,
       "bankedMm3": 0.0,
-      "seasonRainMm": 97.8,
-      "bankedSharePct": null
+      "seasonRainMm": 185.0,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "3170512b-4202-4f09-aac2-1dad09004f64",
@@ -3314,8 +3317,8 @@
       "status": "severe",
       "riseM": 1.33,
       "bankedMm3": 10.39,
-      "seasonRainMm": 628.4,
-      "bankedSharePct": 4.9
+      "seasonRainMm": 1054.5,
+      "bankedSharePct": 2.9
     },
     {
       "mandalUuid": "0401e626-cc6b-4c84-a8dd-5b183b83a55d",
@@ -3336,7 +3339,7 @@
       "status": "severe",
       "riseM": -1.08,
       "bankedMm3": 0.0,
-      "seasonRainMm": 289.4,
+      "seasonRainMm": 616.6,
       "bankedSharePct": 0.0
     },
     {
@@ -3358,8 +3361,8 @@
       "status": "severe",
       "riseM": 0.07,
       "bankedMm3": 0.53,
-      "seasonRainMm": 408.4,
-      "bankedSharePct": 2.0
+      "seasonRainMm": 727.8,
+      "bankedSharePct": 1.1
     },
     {
       "mandalUuid": "9d1cbdd5-9b8f-4613-8acf-995667a44d56",
@@ -3380,7 +3383,7 @@
       "status": "severe",
       "riseM": -0.51,
       "bankedMm3": 0.0,
-      "seasonRainMm": 321.6,
+      "seasonRainMm": 777.5,
       "bankedSharePct": 0.0
     },
     {
@@ -3402,7 +3405,7 @@
       "status": "severe",
       "riseM": -0.43,
       "bankedMm3": 0.0,
-      "seasonRainMm": 517.4,
+      "seasonRainMm": 808.1,
       "bankedSharePct": 0.0
     },
     {
@@ -3446,8 +3449,8 @@
       "status": "severe",
       "riseM": -22.19,
       "bankedMm3": 0.0,
-      "seasonRainMm": 58.5,
-      "bankedSharePct": null
+      "seasonRainMm": 142.2,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "9b84f7f0-759e-4fb2-836b-13025abdcb7e",
@@ -3468,8 +3471,8 @@
       "status": "severe",
       "riseM": 0.06,
       "bankedMm3": 1.29,
-      "seasonRainMm": 598.5,
-      "bankedSharePct": 0.4
+      "seasonRainMm": 878.7,
+      "bankedSharePct": 0.3
     },
     {
       "mandalUuid": "f291d014-dc85-4789-8620-0fe554be78fa",
@@ -3490,8 +3493,8 @@
       "status": "short",
       "riseM": 1.25,
       "bankedMm3": 5.6,
-      "seasonRainMm": 435.1,
-      "bankedSharePct": 6.4
+      "seasonRainMm": 606.3,
+      "bankedSharePct": 4.6
     },
     {
       "mandalUuid": "0549201e-ba84-44ce-b524-1faaa9a0425b",
@@ -3512,8 +3515,8 @@
       "status": "short",
       "riseM": 0.06,
       "bankedMm3": 0.54,
-      "seasonRainMm": 284.7,
-      "bankedSharePct": 2.7
+      "seasonRainMm": 599.7,
+      "bankedSharePct": 1.3
     },
     {
       "mandalUuid": "0c1b8cec-30a2-4c89-9f65-f45bfc4a6e96",
@@ -3534,7 +3537,7 @@
       "status": "severe",
       "riseM": -2.16,
       "bankedMm3": 0.0,
-      "seasonRainMm": 420.1,
+      "seasonRainMm": 683.6,
       "bankedSharePct": 0.0
     },
     {
@@ -3556,7 +3559,7 @@
       "status": "severe",
       "riseM": -1.35,
       "bankedMm3": 0.0,
-      "seasonRainMm": 193.7,
+      "seasonRainMm": 306.1,
       "bankedSharePct": 0.0
     },
     {
@@ -3578,7 +3581,7 @@
       "status": "severe",
       "riseM": -1.32,
       "bankedMm3": 0.0,
-      "seasonRainMm": 126.6,
+      "seasonRainMm": 265.1,
       "bankedSharePct": 0.0
     },
     {
@@ -3600,8 +3603,8 @@
       "status": "severe",
       "riseM": 1.31,
       "bankedMm3": 3.61,
-      "seasonRainMm": 275.1,
-      "bankedSharePct": 11.0
+      "seasonRainMm": 641.9,
+      "bankedSharePct": 4.7
     },
     {
       "mandalUuid": "ad802a2d-35cf-40d0-9cf4-5d2342446dad",
@@ -3622,7 +3625,7 @@
       "status": "short",
       "riseM": -0.01,
       "bankedMm3": 0.0,
-      "seasonRainMm": 591.1,
+      "seasonRainMm": 1087.1,
       "bankedSharePct": 0.0
     },
     {
@@ -3644,7 +3647,7 @@
       "status": "short",
       "riseM": -0.74,
       "bankedMm3": 0.0,
-      "seasonRainMm": 276.0,
+      "seasonRainMm": 532.1,
       "bankedSharePct": 0.0
     },
     {
@@ -3666,7 +3669,7 @@
       "status": "severe",
       "riseM": -1.12,
       "bankedMm3": 0.0,
-      "seasonRainMm": 144.1,
+      "seasonRainMm": 264.6,
       "bankedSharePct": 0.0
     },
     {
@@ -3688,7 +3691,7 @@
       "status": "severe",
       "riseM": -7.8,
       "bankedMm3": 0.0,
-      "seasonRainMm": 155.5,
+      "seasonRainMm": 243.1,
       "bankedSharePct": 0.0
     },
     {
@@ -3732,7 +3735,7 @@
       "status": "severe",
       "riseM": -10.8,
       "bankedMm3": 0.0,
-      "seasonRainMm": 207.6,
+      "seasonRainMm": 378.2,
       "bankedSharePct": 0.0
     },
     {
@@ -3754,8 +3757,8 @@
       "status": "severe",
       "riseM": 4.13,
       "bankedMm3": 37.38,
-      "seasonRainMm": 602.1,
-      "bankedSharePct": 15.8
+      "seasonRainMm": 1032.1,
+      "bankedSharePct": 9.2
     },
     {
       "mandalUuid": "73f81c93-3183-4936-ae81-1fb1554fa7b9",
@@ -3776,8 +3779,8 @@
       "status": "short",
       "riseM": 0.84,
       "bankedMm3": 9.86,
-      "seasonRainMm": 319.6,
-      "bankedSharePct": 30.1
+      "seasonRainMm": 603.1,
+      "bankedSharePct": 16.0
     },
     {
       "mandalUuid": "4ea6cf25-5128-4004-94e6-b106a949ef75",
@@ -3798,7 +3801,7 @@
       "status": "severe",
       "riseM": -4.04,
       "bankedMm3": 0.0,
-      "seasonRainMm": 111.0,
+      "seasonRainMm": 239.8,
       "bankedSharePct": 0.0
     },
     {
@@ -3820,8 +3823,8 @@
       "status": "severe",
       "riseM": 1.12,
       "bankedMm3": 8.72,
-      "seasonRainMm": 411.8,
-      "bankedSharePct": 11.8
+      "seasonRainMm": 732.4,
+      "bankedSharePct": 6.7
     },
     {
       "mandalUuid": "75f07057-70cc-4b8f-8ae9-ea688cfe7868",
@@ -3842,7 +3845,7 @@
       "status": "severe",
       "riseM": -0.14,
       "bankedMm3": 0.0,
-      "seasonRainMm": 417.6,
+      "seasonRainMm": 634.6,
       "bankedSharePct": 0.0
     },
     {
@@ -3864,7 +3867,7 @@
       "status": "severe",
       "riseM": -3.48,
       "bankedMm3": 0.0,
-      "seasonRainMm": 159.6,
+      "seasonRainMm": 299.9,
       "bankedSharePct": 0.0
     },
     {
@@ -3886,8 +3889,8 @@
       "status": "short",
       "riseM": 0.64,
       "bankedMm3": 3.37,
-      "seasonRainMm": 338.8,
-      "bankedSharePct": 4.3
+      "seasonRainMm": 517.9,
+      "bankedSharePct": 2.8
     },
     {
       "mandalUuid": "37e3ff10-31bc-45d7-8721-34cc15362092",
@@ -3908,8 +3911,8 @@
       "status": "severe",
       "riseM": 0.23,
       "bankedMm3": 1.29,
-      "seasonRainMm": 322.7,
-      "bankedSharePct": 1.6
+      "seasonRainMm": 760.3,
+      "bankedSharePct": 0.7
     },
     {
       "mandalUuid": "dfac8f90-d3b8-4dca-a920-aee17e7ed0c8",
@@ -3952,7 +3955,7 @@
       "status": "short",
       "riseM": -0.18,
       "bankedMm3": 0.0,
-      "seasonRainMm": 393.9,
+      "seasonRainMm": 612.1,
       "bankedSharePct": 0.0
     },
     {
@@ -3974,7 +3977,7 @@
       "status": "severe",
       "riseM": -1.09,
       "bankedMm3": 0.0,
-      "seasonRainMm": 318.4,
+      "seasonRainMm": 444.7,
       "bankedSharePct": 0.0
     },
     {
@@ -3996,8 +3999,8 @@
       "status": "severe",
       "riseM": 0.36,
       "bankedMm3": 2.14,
-      "seasonRainMm": 350.2,
-      "bankedSharePct": 2.3
+      "seasonRainMm": 510.2,
+      "bankedSharePct": 1.6
     },
     {
       "mandalUuid": "bbde84c5-d4bc-4ec0-bd61-874fc3642112",
@@ -4018,7 +4021,7 @@
       "status": "severe",
       "riseM": -5.5,
       "bankedMm3": 0.0,
-      "seasonRainMm": 207.8,
+      "seasonRainMm": 274.0,
       "bankedSharePct": 0.0
     },
     {
@@ -4040,7 +4043,7 @@
       "status": "short",
       "riseM": -1.0,
       "bankedMm3": 0.0,
-      "seasonRainMm": 138.3,
+      "seasonRainMm": 318.5,
       "bankedSharePct": 0.0
     },
     {
@@ -4062,8 +4065,8 @@
       "status": "short",
       "riseM": 0.78,
       "bankedMm3": 8.68,
-      "seasonRainMm": 341.7,
-      "bankedSharePct": 28.1
+      "seasonRainMm": 679.7,
+      "bankedSharePct": 14.1
     },
     {
       "mandalUuid": "a58cb588-b7fd-4969-ac28-3fde04a76feb",
@@ -4084,7 +4087,7 @@
       "status": "severe",
       "riseM": -0.57,
       "bankedMm3": 0.0,
-      "seasonRainMm": 174.7,
+      "seasonRainMm": 359.9,
       "bankedSharePct": 0.0
     },
     {
@@ -4106,8 +4109,8 @@
       "status": "severe",
       "riseM": 0.16,
       "bankedMm3": 3.49,
-      "seasonRainMm": 497.7,
-      "bankedSharePct": 0.7
+      "seasonRainMm": 883.2,
+      "bankedSharePct": 0.4
     },
     {
       "mandalUuid": "56422198-07e8-43af-ae1d-6421dc37357b",
@@ -4128,8 +4131,8 @@
       "status": "short",
       "riseM": 2.84,
       "bankedMm3": 30.87,
-      "seasonRainMm": 315.6,
-      "bankedSharePct": 117.0
+      "seasonRainMm": 641.8,
+      "bankedSharePct": 57.5
     },
     {
       "mandalUuid": "6b219d0a-95ef-49d1-a33e-46b7048262e3",
@@ -4150,8 +4153,8 @@
       "status": "severe",
       "riseM": -11.57,
       "bankedMm3": 0.0,
-      "seasonRainMm": 68.3,
-      "bankedSharePct": null
+      "seasonRainMm": 162.6,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "92ae1357-0424-4321-be5c-c319118b605d",
@@ -4172,7 +4175,7 @@
       "status": "severe",
       "riseM": -0.67,
       "bankedMm3": 0.0,
-      "seasonRainMm": 197.8,
+      "seasonRainMm": 339.8,
       "bankedSharePct": 0.0
     },
     {
@@ -4216,7 +4219,7 @@
       "status": "severe",
       "riseM": -9.02,
       "bankedMm3": 0.0,
-      "seasonRainMm": 126.4,
+      "seasonRainMm": 265.4,
       "bankedSharePct": 0.0
     },
     {
@@ -4238,7 +4241,7 @@
       "status": "short",
       "riseM": -0.49,
       "bankedMm3": 0.0,
-      "seasonRainMm": 191.4,
+      "seasonRainMm": 300.4,
       "bankedSharePct": 0.0
     },
     {
@@ -4260,7 +4263,7 @@
       "status": "severe",
       "riseM": -2.9,
       "bankedMm3": 0.0,
-      "seasonRainMm": 111.4,
+      "seasonRainMm": 211.5,
       "bankedSharePct": 0.0
     },
     {
@@ -4282,8 +4285,8 @@
       "status": "severe",
       "riseM": -6.49,
       "bankedMm3": 0.0,
-      "seasonRainMm": 93.9,
-      "bankedSharePct": null
+      "seasonRainMm": 200.5,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "c538a1ca-6153-42c5-ba93-699b7d819727",
@@ -4304,7 +4307,7 @@
       "status": "short",
       "riseM": -0.13,
       "bankedMm3": 0.0,
-      "seasonRainMm": 256.6,
+      "seasonRainMm": 536.9,
       "bankedSharePct": 0.0
     },
     {
@@ -4326,8 +4329,8 @@
       "status": "severe",
       "riseM": -8.25,
       "bankedMm3": 0.0,
-      "seasonRainMm": 96.0,
-      "bankedSharePct": null
+      "seasonRainMm": 193.9,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "e09ff2f3-2a13-4d89-b3f7-9414f41dcaf6",
@@ -4348,7 +4351,7 @@
       "status": "severe",
       "riseM": -1.21,
       "bankedMm3": 0.0,
-      "seasonRainMm": 239.4,
+      "seasonRainMm": 412.1,
       "bankedSharePct": 0.0
     },
     {
@@ -4370,7 +4373,7 @@
       "status": "severe",
       "riseM": -1.75,
       "bankedMm3": 0.0,
-      "seasonRainMm": 139.5,
+      "seasonRainMm": 324.6,
       "bankedSharePct": 0.0
     },
     {
@@ -4392,7 +4395,7 @@
       "status": "short",
       "riseM": -0.55,
       "bankedMm3": 0.0,
-      "seasonRainMm": 343.7,
+      "seasonRainMm": 561.1,
       "bankedSharePct": 0.0
     },
     {
@@ -4436,8 +4439,8 @@
       "status": "severe",
       "riseM": 0.07,
       "bankedMm3": 1.54,
-      "seasonRainMm": 635.2,
-      "bankedSharePct": 0.3
+      "seasonRainMm": 952.4,
+      "bankedSharePct": 0.2
     },
     {
       "mandalUuid": "ad87fb1f-8daa-4801-8bad-6d398612c6ce",
@@ -4458,8 +4461,8 @@
       "status": "severe",
       "riseM": 0.99,
       "bankedMm3": 8.59,
-      "seasonRainMm": 437.6,
-      "bankedSharePct": 9.3
+      "seasonRainMm": 654.0,
+      "bankedSharePct": 6.2
     },
     {
       "mandalUuid": "27d41f9d-2526-4152-ab6e-39818b05a2bd",
@@ -4502,8 +4505,8 @@
       "status": "severe",
       "riseM": 0.95,
       "bankedMm3": 15.7,
-      "seasonRainMm": 296.7,
-      "bankedSharePct": 31.9
+      "seasonRainMm": 571.9,
+      "bankedSharePct": 16.6
     },
     {
       "mandalUuid": "ecb7b40b-27a1-4538-bffd-d5934d0ce025",
@@ -4524,7 +4527,7 @@
       "status": "severe",
       "riseM": -5.98,
       "bankedMm3": 0.0,
-      "seasonRainMm": 121.2,
+      "seasonRainMm": 249.6,
       "bankedSharePct": 0.0
     },
     {
@@ -4546,8 +4549,8 @@
       "status": "severe",
       "riseM": 0.32,
       "bankedMm3": 4.23,
-      "seasonRainMm": 478.5,
-      "bankedSharePct": 4.1
+      "seasonRainMm": 774.2,
+      "bankedSharePct": 2.5
     },
     {
       "mandalUuid": "61007ebb-a187-4bbe-9b31-4728497a5eeb",
@@ -4568,8 +4571,8 @@
       "status": "severe",
       "riseM": 0.31,
       "bankedMm3": 6.57,
-      "seasonRainMm": 563.5,
-      "bankedSharePct": 2.5
+      "seasonRainMm": 844.2,
+      "bankedSharePct": 1.7
     },
     {
       "mandalUuid": "4c8f88ba-0b92-4836-8b2c-beaa66b8d22b",
@@ -4590,7 +4593,7 @@
       "status": "severe",
       "riseM": -2.05,
       "bankedMm3": 0.0,
-      "seasonRainMm": 144.0,
+      "seasonRainMm": 269.2,
       "bankedSharePct": 0.0
     },
     {
@@ -4612,8 +4615,8 @@
       "status": "severe",
       "riseM": 0.08,
       "bankedMm3": 0.32,
-      "seasonRainMm": 489.6,
-      "bankedSharePct": 0.4
+      "seasonRainMm": 747.0,
+      "bankedSharePct": 0.2
     },
     {
       "mandalUuid": "0547e41e-e81b-4d4a-af6b-f07754d4fcd3",
@@ -4634,7 +4637,7 @@
       "status": "severe",
       "riseM": -3.32,
       "bankedMm3": 0.0,
-      "seasonRainMm": 193.6,
+      "seasonRainMm": 298.2,
       "bankedSharePct": 0.0
     },
     {
@@ -4656,7 +4659,7 @@
       "status": "severe",
       "riseM": -4.74,
       "bankedMm3": 0.0,
-      "seasonRainMm": 421.1,
+      "seasonRainMm": 675.2,
       "bankedSharePct": 0.0
     },
     {
@@ -4678,7 +4681,7 @@
       "status": "severe",
       "riseM": -3.69,
       "bankedMm3": 0.0,
-      "seasonRainMm": 150.6,
+      "seasonRainMm": 274.0,
       "bankedSharePct": 0.0
     },
     {
@@ -4700,8 +4703,8 @@
       "status": "short",
       "riseM": 0.68,
       "bankedMm3": 4.57,
-      "seasonRainMm": 342.2,
-      "bankedSharePct": 11.3
+      "seasonRainMm": 580.1,
+      "bankedSharePct": 6.7
     },
     {
       "mandalUuid": "be08af1b-93eb-4d33-bc0b-57d40b17778b",
@@ -4722,7 +4725,7 @@
       "status": "severe",
       "riseM": -0.19,
       "bankedMm3": 0.0,
-      "seasonRainMm": 273.7,
+      "seasonRainMm": 418.3,
       "bankedSharePct": 0.0
     },
     {
@@ -4744,7 +4747,7 @@
       "status": "severe",
       "riseM": -4.23,
       "bankedMm3": 0.0,
-      "seasonRainMm": 118.8,
+      "seasonRainMm": 229.1,
       "bankedSharePct": 0.0
     },
     {
@@ -4766,8 +4769,8 @@
       "status": "short",
       "riseM": 0.18,
       "bankedMm3": 0.71,
-      "seasonRainMm": 241.9,
-      "bankedSharePct": 1.7
+      "seasonRainMm": 590.1,
+      "bankedSharePct": 0.7
     },
     {
       "mandalUuid": "c4b43404-f1b5-4a8a-95d4-215cfa9442fc",
@@ -4788,8 +4791,8 @@
       "status": "severe",
       "riseM": 0.06,
       "bankedMm3": 0.18,
-      "seasonRainMm": 208.8,
-      "bankedSharePct": 0.5
+      "seasonRainMm": 368.6,
+      "bankedSharePct": 0.3
     },
     {
       "mandalUuid": "841b79d1-e0ac-491f-abb5-93ff661d8fc5",
@@ -4810,7 +4813,7 @@
       "status": "short",
       "riseM": -0.61,
       "bankedMm3": 0.0,
-      "seasonRainMm": 153.4,
+      "seasonRainMm": 261.3,
       "bankedSharePct": 0.0
     },
     {
@@ -4832,7 +4835,7 @@
       "status": "severe",
       "riseM": -3.28,
       "bankedMm3": 0.0,
-      "seasonRainMm": 110.5,
+      "seasonRainMm": 202.6,
       "bankedSharePct": 0.0
     },
     {
@@ -4854,8 +4857,8 @@
       "status": "severe",
       "riseM": 0.68,
       "bankedMm3": 5.56,
-      "seasonRainMm": 331.8,
-      "bankedSharePct": 26.6
+      "seasonRainMm": 622.5,
+      "bankedSharePct": 14.2
     },
     {
       "mandalUuid": "d34fac4f-a819-4f4d-92ff-04d3ca76a37a",
@@ -4876,7 +4879,7 @@
       "status": "short",
       "riseM": -0.22,
       "bankedMm3": 0.0,
-      "seasonRainMm": 342.4,
+      "seasonRainMm": 539.2,
       "bankedSharePct": 0.0
     },
     {
@@ -4898,8 +4901,8 @@
       "status": "short",
       "riseM": 1.23,
       "bankedMm3": 14.65,
-      "seasonRainMm": 556.6,
-      "bankedSharePct": 17.7
+      "seasonRainMm": 1051.0,
+      "bankedSharePct": 9.4
     },
     {
       "mandalUuid": "80e52e6e-95b0-4c32-b9bf-7c04e8d94179",
@@ -4920,7 +4923,7 @@
       "status": "short",
       "riseM": -1.0,
       "bankedMm3": 0.0,
-      "seasonRainMm": 104.7,
+      "seasonRainMm": 252.2,
       "bankedSharePct": 0.0
     },
     {
@@ -4942,7 +4945,7 @@
       "status": "severe",
       "riseM": -5.42,
       "bankedMm3": 0.0,
-      "seasonRainMm": 150.7,
+      "seasonRainMm": 281.7,
       "bankedSharePct": 0.0
     },
     {
@@ -4964,8 +4967,8 @@
       "status": "short",
       "riseM": 2.05,
       "bankedMm3": 6.51,
-      "seasonRainMm": 553.1,
-      "bankedSharePct": 8.5
+      "seasonRainMm": 1044.7,
+      "bankedSharePct": 4.5
     },
     {
       "mandalUuid": "79fd8a8f-a4b2-461e-bb2a-2f1b367969a3",
@@ -4986,8 +4989,8 @@
       "status": "severe",
       "riseM": -2.68,
       "bankedMm3": 0.0,
-      "seasonRainMm": 96.1,
-      "bankedSharePct": null
+      "seasonRainMm": 203.2,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "87def732-030e-40b5-a67e-c795ffa607e7",
@@ -5030,7 +5033,7 @@
       "status": "normal",
       "riseM": -0.16,
       "bankedMm3": 0.0,
-      "seasonRainMm": 466.0,
+      "seasonRainMm": 918.0,
       "bankedSharePct": 0.0
     },
     {
@@ -5052,8 +5055,8 @@
       "status": "normal",
       "riseM": 0.34,
       "bankedMm3": 0.92,
-      "seasonRainMm": 453.3,
-      "bankedSharePct": 1.7
+      "seasonRainMm": 912.6,
+      "bankedSharePct": 0.9
     },
     {
       "mandalUuid": "7a0889d3-537a-40aa-b72c-0446e003eb9e",
@@ -5074,8 +5077,8 @@
       "status": "normal",
       "riseM": -1.14,
       "bankedMm3": 0.0,
-      "seasonRainMm": 51.0,
-      "bankedSharePct": null
+      "seasonRainMm": 155.3,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "b1db113c-2272-498d-8776-a05c914a1207",
@@ -5096,8 +5099,8 @@
       "status": "normal",
       "riseM": 0.05,
       "bankedMm3": 0.61,
-      "seasonRainMm": 199.8,
-      "bankedSharePct": 1.8
+      "seasonRainMm": 418.2,
+      "bankedSharePct": 0.8
     },
     {
       "mandalUuid": "ee63a0eb-a6b9-44f5-a2e9-4122cf6b1cf6",
@@ -5118,7 +5121,7 @@
       "status": "normal",
       "riseM": -8.48,
       "bankedMm3": 0.0,
-      "seasonRainMm": 111.6,
+      "seasonRainMm": 226.2,
       "bankedSharePct": 0.0
     },
     {
@@ -5140,7 +5143,7 @@
       "status": "normal",
       "riseM": -0.55,
       "bankedMm3": 0.0,
-      "seasonRainMm": 162.5,
+      "seasonRainMm": 274.8,
       "bankedSharePct": 0.0
     },
     {
@@ -5184,7 +5187,7 @@
       "status": "normal",
       "riseM": -1.41,
       "bankedMm3": 0.0,
-      "seasonRainMm": 164.4,
+      "seasonRainMm": 313.1,
       "bankedSharePct": 0.0
     },
     {
@@ -5206,7 +5209,7 @@
       "status": "normal",
       "riseM": -1.19,
       "bankedMm3": 0.0,
-      "seasonRainMm": 224.9,
+      "seasonRainMm": 377.2,
       "bankedSharePct": 0.0
     },
     {
@@ -5228,7 +5231,7 @@
       "status": "normal",
       "riseM": -2.39,
       "bankedMm3": 0.0,
-      "seasonRainMm": 126.0,
+      "seasonRainMm": 218.7,
       "bankedSharePct": 0.0
     },
     {
@@ -5294,7 +5297,7 @@
       "status": "normal",
       "riseM": -4.23,
       "bankedMm3": 0.0,
-      "seasonRainMm": 112.0,
+      "seasonRainMm": 238.7,
       "bankedSharePct": 0.0
     },
     {
@@ -5316,7 +5319,7 @@
       "status": "normal",
       "riseM": -5.21,
       "bankedMm3": 0.0,
-      "seasonRainMm": 181.7,
+      "seasonRainMm": 316.6,
       "bankedSharePct": 0.0
     },
     {
@@ -5338,7 +5341,7 @@
       "status": "normal",
       "riseM": -2.08,
       "bankedMm3": 0.0,
-      "seasonRainMm": 177.2,
+      "seasonRainMm": 386.5,
       "bankedSharePct": 0.0
     },
     {
@@ -5360,7 +5363,7 @@
       "status": "normal",
       "riseM": -2.47,
       "bankedMm3": 0.0,
-      "seasonRainMm": 104.7,
+      "seasonRainMm": 241.1,
       "bankedSharePct": 0.0
     },
     {
@@ -5382,7 +5385,7 @@
       "status": "normal",
       "riseM": -2.67,
       "bankedMm3": 0.0,
-      "seasonRainMm": 138.5,
+      "seasonRainMm": 306.4,
       "bankedSharePct": 0.0
     },
     {
@@ -5404,7 +5407,7 @@
       "status": "normal",
       "riseM": -0.82,
       "bankedMm3": 0.0,
-      "seasonRainMm": 362.3,
+      "seasonRainMm": 598.5,
       "bankedSharePct": 0.0
     },
     {
@@ -5426,8 +5429,8 @@
       "status": "normal",
       "riseM": -4.27,
       "bankedMm3": 0.0,
-      "seasonRainMm": 99.2,
-      "bankedSharePct": null
+      "seasonRainMm": 206.8,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "0707c7f1-5f97-44ce-977d-6ba1752a1796",
@@ -5448,7 +5451,7 @@
       "status": "normal",
       "riseM": -4.76,
       "bankedMm3": 0.0,
-      "seasonRainMm": 171.9,
+      "seasonRainMm": 272.9,
       "bankedSharePct": 0.0
     },
     {
@@ -5470,8 +5473,8 @@
       "status": "normal",
       "riseM": 0.28,
       "bankedMm3": 1.47,
-      "seasonRainMm": 342.9,
-      "bankedSharePct": 1.9
+      "seasonRainMm": 510.8,
+      "bankedSharePct": 1.3
     },
     {
       "mandalUuid": "127230f9-73e0-453a-b462-80329f0ea063",
@@ -5492,7 +5495,7 @@
       "status": "normal",
       "riseM": -5.71,
       "bankedMm3": 0.0,
-      "seasonRainMm": 293.8,
+      "seasonRainMm": 407.1,
       "bankedSharePct": 0.0
     },
     {
@@ -5514,7 +5517,7 @@
       "status": "normal",
       "riseM": -4.25,
       "bankedMm3": 0.0,
-      "seasonRainMm": 134.3,
+      "seasonRainMm": 308.4,
       "bankedSharePct": 0.0
     },
     {
@@ -5536,8 +5539,8 @@
       "status": "normal",
       "riseM": 0.51,
       "bankedMm3": 6.97,
-      "seasonRainMm": 310.1,
-      "bankedSharePct": 18.9
+      "seasonRainMm": 584.8,
+      "bankedSharePct": 10.0
     },
     {
       "mandalUuid": "c24552d6-c8a4-4de8-b230-1aba55161667",
@@ -5558,7 +5561,7 @@
       "status": "normal",
       "riseM": -7.62,
       "bankedMm3": 0.0,
-      "seasonRainMm": 402.7,
+      "seasonRainMm": 643.5,
       "bankedSharePct": 0.0
     },
     {
@@ -5580,7 +5583,7 @@
       "status": "normal",
       "riseM": -2.7,
       "bankedMm3": 0.0,
-      "seasonRainMm": 145.9,
+      "seasonRainMm": 238.7,
       "bankedSharePct": 0.0
     },
     {
@@ -5602,7 +5605,7 @@
       "status": "normal",
       "riseM": -0.51,
       "bankedMm3": 0.0,
-      "seasonRainMm": 267.2,
+      "seasonRainMm": 417.0,
       "bankedSharePct": 0.0
     },
     {
@@ -5624,7 +5627,7 @@
       "status": "normal",
       "riseM": -0.33,
       "bankedMm3": 0.0,
-      "seasonRainMm": 303.0,
+      "seasonRainMm": 617.6,
       "bankedSharePct": 0.0
     },
     {
@@ -5646,8 +5649,8 @@
       "status": "normal",
       "riseM": 1.87,
       "bankedMm3": 6.45,
-      "seasonRainMm": 241.9,
-      "bankedSharePct": 17.8
+      "seasonRainMm": 572.4,
+      "bankedSharePct": 7.5
     },
     {
       "mandalUuid": "6447b6a2-07e0-4ec5-b275-9b750bdc3250",
@@ -5668,7 +5671,7 @@
       "status": "normal",
       "riseM": -0.76,
       "bankedMm3": 0.0,
-      "seasonRainMm": 212.3,
+      "seasonRainMm": 321.8,
       "bankedSharePct": 0.0
     },
     {
@@ -5690,7 +5693,7 @@
       "status": "normal",
       "riseM": -0.4,
       "bankedMm3": 0.0,
-      "seasonRainMm": 308.3,
+      "seasonRainMm": 743.6,
       "bankedSharePct": 0.0
     },
     {
@@ -5712,7 +5715,7 @@
       "status": "normal",
       "riseM": -0.82,
       "bankedMm3": 0.0,
-      "seasonRainMm": 152.3,
+      "seasonRainMm": 229.6,
       "bankedSharePct": 0.0
     },
     {
@@ -5734,8 +5737,8 @@
       "status": "normal",
       "riseM": 0.54,
       "bankedMm3": 7.71,
-      "seasonRainMm": 292.0,
-      "bankedSharePct": 24.0
+      "seasonRainMm": 615.2,
+      "bankedSharePct": 11.4
     },
     {
       "mandalUuid": "930c3efb-a22e-49b6-9fb4-938997003505",
@@ -5756,8 +5759,8 @@
       "status": "normal",
       "riseM": -2.05,
       "bankedMm3": 0.0,
-      "seasonRainMm": 90.9,
-      "bankedSharePct": null
+      "seasonRainMm": 178.1,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "b8e2a828-15b5-413b-9b45-4091080673f1",
@@ -5778,8 +5781,8 @@
       "status": "normal",
       "riseM": 0.43,
       "bankedMm3": 2.71,
-      "seasonRainMm": 152.2,
-      "bankedSharePct": 6.5
+      "seasonRainMm": 266.1,
+      "bankedSharePct": 3.7
     },
     {
       "mandalUuid": "e19a3768-0fae-439a-9615-f3ae5c4d77bf",
@@ -5800,7 +5803,7 @@
       "status": "normal",
       "riseM": -0.56,
       "bankedMm3": 0.0,
-      "seasonRainMm": 407.7,
+      "seasonRainMm": 866.4,
       "bankedSharePct": 0.0
     },
     {
@@ -5822,8 +5825,8 @@
       "status": "normal",
       "riseM": 1.15,
       "bankedMm3": 6.13,
-      "seasonRainMm": 403.6,
-      "bankedSharePct": 6.6
+      "seasonRainMm": 597.6,
+      "bankedSharePct": 4.4
     },
     {
       "mandalUuid": "549d8da4-00ca-49df-b28b-cead6e241d70",
@@ -5844,8 +5847,8 @@
       "status": "normal",
       "riseM": 0.12,
       "bankedMm3": 1.93,
-      "seasonRainMm": 285.5,
-      "bankedSharePct": 5.5
+      "seasonRainMm": 635.4,
+      "bankedSharePct": 2.5
     },
     {
       "mandalUuid": "68027f00-d5a6-44f8-8fb5-c22b9d70a897",
@@ -5866,7 +5869,7 @@
       "status": "normal",
       "riseM": -1.23,
       "bankedMm3": 0.0,
-      "seasonRainMm": 192.9,
+      "seasonRainMm": 325.0,
       "bankedSharePct": 0.0
     },
     {
@@ -5888,7 +5891,7 @@
       "status": "normal",
       "riseM": -0.49,
       "bankedMm3": 0.0,
-      "seasonRainMm": 233.0,
+      "seasonRainMm": 491.9,
       "bankedSharePct": 0.0
     },
     {
@@ -5910,8 +5913,8 @@
       "status": "normal",
       "riseM": 0.98,
       "bankedMm3": 12.27,
-      "seasonRainMm": 347.4,
-      "bankedSharePct": 31.6
+      "seasonRainMm": 658.4,
+      "bankedSharePct": 16.7
     },
     {
       "mandalUuid": "1f5c77f8-92ee-457a-8069-774c4a02b16e",
@@ -5932,7 +5935,7 @@
       "status": "normal",
       "riseM": -1.16,
       "bankedMm3": 0.0,
-      "seasonRainMm": 187.7,
+      "seasonRainMm": 328.1,
       "bankedSharePct": 0.0
     },
     {
@@ -5954,7 +5957,7 @@
       "status": "normal",
       "riseM": -1.99,
       "bankedMm3": 0.0,
-      "seasonRainMm": 203.2,
+      "seasonRainMm": 340.2,
       "bankedSharePct": 0.0
     },
     {
@@ -5976,8 +5979,8 @@
       "status": "normal",
       "riseM": -1.33,
       "bankedMm3": 0.0,
-      "seasonRainMm": 88.9,
-      "bankedSharePct": null
+      "seasonRainMm": 182.3,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "e2d7220d-728c-4a00-a0bd-0e848a966980",
@@ -5998,7 +6001,7 @@
       "status": "normal",
       "riseM": -3.52,
       "bankedMm3": 0.0,
-      "seasonRainMm": 144.2,
+      "seasonRainMm": 307.8,
       "bankedSharePct": 0.0
     },
     {
@@ -6020,8 +6023,8 @@
       "status": "normal",
       "riseM": -1.64,
       "bankedMm3": 0.0,
-      "seasonRainMm": 99.9,
-      "bankedSharePct": null
+      "seasonRainMm": 242.7,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "97aece32-48ae-463a-8789-9a02fbc6a334",
@@ -6042,7 +6045,7 @@
       "status": "normal",
       "riseM": -1.7,
       "bankedMm3": 0.0,
-      "seasonRainMm": 12.7,
+      "seasonRainMm": 83.6,
       "bankedSharePct": null
     },
     {
@@ -6064,7 +6067,7 @@
       "status": "normal",
       "riseM": -6.65,
       "bankedMm3": 0.0,
-      "seasonRainMm": 210.5,
+      "seasonRainMm": 358.0,
       "bankedSharePct": 0.0
     },
     {
@@ -6086,8 +6089,8 @@
       "status": "normal",
       "riseM": 1.37,
       "bankedMm3": 15.07,
-      "seasonRainMm": 418.4,
-      "bankedSharePct": 25.3
+      "seasonRainMm": 648.8,
+      "bankedSharePct": 16.3
     },
     {
       "mandalUuid": "59b1cba7-18ca-43f5-a0d7-a2890d9cd649",
@@ -6108,7 +6111,7 @@
       "status": "normal",
       "riseM": -0.1,
       "bankedMm3": 0.0,
-      "seasonRainMm": 260.7,
+      "seasonRainMm": 443.6,
       "bankedSharePct": 0.0
     },
     {
@@ -6152,8 +6155,8 @@
       "status": "normal",
       "riseM": 0.32,
       "bankedMm3": 8.35,
-      "seasonRainMm": 277.6,
-      "bankedSharePct": 13.8
+      "seasonRainMm": 587.3,
+      "bankedSharePct": 6.5
     },
     {
       "mandalUuid": "fe5f6216-77de-4e35-96c7-0eab75c0528f",
@@ -6174,8 +6177,8 @@
       "status": "normal",
       "riseM": 0.43,
       "bankedMm3": 11.22,
-      "seasonRainMm": 211.8,
-      "bankedSharePct": 21.1
+      "seasonRainMm": 486.7,
+      "bankedSharePct": 9.2
     },
     {
       "mandalUuid": "76fa9279-79b6-4f52-8a4a-fc787daefb18",
@@ -6196,8 +6199,8 @@
       "status": "normal",
       "riseM": 0.82,
       "bankedMm3": 5.71,
-      "seasonRainMm": 536.2,
-      "bankedSharePct": 3.5
+      "seasonRainMm": 1015.5,
+      "bankedSharePct": 1.9
     },
     {
       "mandalUuid": "a78240fe-37ba-4430-8bbf-c78290577a30",
@@ -6218,7 +6221,7 @@
       "status": "normal",
       "riseM": -2.19,
       "bankedMm3": 0.0,
-      "seasonRainMm": 205.1,
+      "seasonRainMm": 276.4,
       "bankedSharePct": 0.0
     },
     {
@@ -6240,7 +6243,7 @@
       "status": "normal",
       "riseM": -2.45,
       "bankedMm3": 0.0,
-      "seasonRainMm": 130.5,
+      "seasonRainMm": 227.2,
       "bankedSharePct": 0.0
     },
     {
@@ -6262,7 +6265,7 @@
       "status": "normal",
       "riseM": -0.73,
       "bankedMm3": 0.0,
-      "seasonRainMm": 482.8,
+      "seasonRainMm": 704.3,
       "bankedSharePct": 0.0
     },
     {
@@ -6284,7 +6287,7 @@
       "status": "normal",
       "riseM": -4.32,
       "bankedMm3": 0.0,
-      "seasonRainMm": 187.0,
+      "seasonRainMm": 334.2,
       "bankedSharePct": 0.0
     },
     {
@@ -6306,7 +6309,7 @@
       "status": "normal",
       "riseM": -2.75,
       "bankedMm3": 0.0,
-      "seasonRainMm": 105.0,
+      "seasonRainMm": 224.2,
       "bankedSharePct": 0.0
     },
     {
@@ -6328,7 +6331,7 @@
       "status": "normal",
       "riseM": -1.61,
       "bankedMm3": 0.0,
-      "seasonRainMm": 226.2,
+      "seasonRainMm": 423.7,
       "bankedSharePct": 0.0
     },
     {
@@ -6350,8 +6353,8 @@
       "status": "normal",
       "riseM": 0.42,
       "bankedMm3": 3.0,
-      "seasonRainMm": 458.5,
-      "bankedSharePct": 10.1
+      "seasonRainMm": 688.1,
+      "bankedSharePct": 6.7
     },
     {
       "mandalUuid": "9beff766-1eea-4e4e-9c16-7d80a6398abe",
@@ -6372,7 +6375,7 @@
       "status": "normal",
       "riseM": -1.08,
       "bankedMm3": 0.0,
-      "seasonRainMm": 150.7,
+      "seasonRainMm": 360.1,
       "bankedSharePct": 0.0
     },
     {
@@ -6394,7 +6397,7 @@
       "status": "normal",
       "riseM": -0.89,
       "bankedMm3": 0.0,
-      "seasonRainMm": 154.1,
+      "seasonRainMm": 336.3,
       "bankedSharePct": 0.0
     },
     {
@@ -6416,7 +6419,7 @@
       "status": "normal",
       "riseM": -3.5,
       "bankedMm3": 0.0,
-      "seasonRainMm": 127.4,
+      "seasonRainMm": 224.5,
       "bankedSharePct": 0.0
     },
     {
@@ -6438,8 +6441,8 @@
       "status": "normal",
       "riseM": -2.8,
       "bankedMm3": 0.0,
-      "seasonRainMm": 57.9,
-      "bankedSharePct": null
+      "seasonRainMm": 163.6,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "0c6a9b03-b77b-4601-9e8c-e996ef7ea47e",
@@ -6482,7 +6485,7 @@
       "status": "normal",
       "riseM": -0.87,
       "bankedMm3": 0.0,
-      "seasonRainMm": 300.4,
+      "seasonRainMm": 725.8,
       "bankedSharePct": 0.0
     },
     {
@@ -6504,8 +6507,8 @@
       "status": "normal",
       "riseM": 0.18,
       "bankedMm3": 2.42,
-      "seasonRainMm": 286.3,
-      "bankedSharePct": 7.6
+      "seasonRainMm": 634.1,
+      "bankedSharePct": 3.4
     },
     {
       "mandalUuid": "d1a104bb-2cd2-4649-b658-dc3569253dc4",
@@ -6526,7 +6529,7 @@
       "status": "normal",
       "riseM": -2.58,
       "bankedMm3": 0.0,
-      "seasonRainMm": 190.6,
+      "seasonRainMm": 315.4,
       "bankedSharePct": 0.0
     },
     {
@@ -6548,8 +6551,8 @@
       "status": "normal",
       "riseM": 1.17,
       "bankedMm3": 8.28,
-      "seasonRainMm": 372.3,
-      "bankedSharePct": 7.2
+      "seasonRainMm": 829.6,
+      "bankedSharePct": 3.2
     },
     {
       "mandalUuid": "4d0d8890-c13e-420a-be8d-410916e21c3a",
@@ -6592,7 +6595,7 @@
       "status": "normal",
       "riseM": -6.16,
       "bankedMm3": 0.0,
-      "seasonRainMm": 192.9,
+      "seasonRainMm": 326.7,
       "bankedSharePct": 0.0
     },
     {
@@ -6614,8 +6617,8 @@
       "status": "normal",
       "riseM": 0.59,
       "bankedMm3": 5.75,
-      "seasonRainMm": 460.8,
-      "bankedSharePct": 5.3
+      "seasonRainMm": 663.7,
+      "bankedSharePct": 3.7
     },
     {
       "mandalUuid": "53cfedb7-1be1-4726-925b-24263c725809",
@@ -6636,7 +6639,7 @@
       "status": "normal",
       "riseM": -0.14,
       "bankedMm3": 0.0,
-      "seasonRainMm": 335.5,
+      "seasonRainMm": 688.5,
       "bankedSharePct": 0.0
     },
     {
@@ -6658,8 +6661,8 @@
       "status": "normal",
       "riseM": 0.23,
       "bankedMm3": 4.32,
-      "seasonRainMm": 283.4,
-      "bankedSharePct": 10.1
+      "seasonRainMm": 575.0,
+      "bankedSharePct": 5.0
     },
     {
       "mandalUuid": "ccdb7b8b-c3e3-42c0-a1e5-c6d5ac79c843",
@@ -6680,8 +6683,8 @@
       "status": "normal",
       "riseM": 0.7,
       "bankedMm3": 8.91,
-      "seasonRainMm": 374.7,
-      "bankedSharePct": 22.3
+      "seasonRainMm": 610.5,
+      "bankedSharePct": 13.7
     },
     {
       "mandalUuid": "fc1f82fe-d48c-4c6b-8dd7-bda457b9f71c",
@@ -6702,7 +6705,7 @@
       "status": "normal",
       "riseM": -2.61,
       "bankedMm3": 0.0,
-      "seasonRainMm": 429.3,
+      "seasonRainMm": 706.1,
       "bankedSharePct": 0.0
     },
     {
@@ -6724,8 +6727,8 @@
       "status": "normal",
       "riseM": 0.55,
       "bankedMm3": 1.84,
-      "seasonRainMm": 343.5,
-      "bankedSharePct": 3.7
+      "seasonRainMm": 767.3,
+      "bankedSharePct": 1.6
     },
     {
       "mandalUuid": "858f5a64-eb3d-4826-8f54-dbd81cf27594",
@@ -6746,7 +6749,7 @@
       "status": "normal",
       "riseM": -0.85,
       "bankedMm3": 0.0,
-      "seasonRainMm": 508.8,
+      "seasonRainMm": 787.6,
       "bankedSharePct": 0.0
     },
     {
@@ -6768,7 +6771,7 @@
       "status": "normal",
       "riseM": -3.66,
       "bankedMm3": 0.0,
-      "seasonRainMm": 142.3,
+      "seasonRainMm": 233.1,
       "bankedSharePct": 0.0
     },
     {
@@ -6790,7 +6793,7 @@
       "status": "normal",
       "riseM": -3.2,
       "bankedMm3": 0.0,
-      "seasonRainMm": 124.3,
+      "seasonRainMm": 214.8,
       "bankedSharePct": 0.0
     },
     {
@@ -6812,7 +6815,7 @@
       "status": "normal",
       "riseM": -8.72,
       "bankedMm3": 0.0,
-      "seasonRainMm": 163.0,
+      "seasonRainMm": 313.9,
       "bankedSharePct": 0.0
     },
     {
@@ -6856,8 +6859,8 @@
       "status": "normal",
       "riseM": 1.04,
       "bankedMm3": 3.23,
-      "seasonRainMm": 273.7,
-      "bankedSharePct": 8.7
+      "seasonRainMm": 695.1,
+      "bankedSharePct": 3.4
     },
     {
       "mandalUuid": "4c9ebc66-54f6-42ac-91bc-a732f892e3a9",
@@ -6878,8 +6881,8 @@
       "status": "normal",
       "riseM": 0.19,
       "bankedMm3": 3.7,
-      "seasonRainMm": 401.0,
-      "bankedSharePct": 5.6
+      "seasonRainMm": 636.5,
+      "bankedSharePct": 3.5
     },
     {
       "mandalUuid": "8002ca6e-7b95-4a0d-bd69-16de5938c50a",
@@ -6900,7 +6903,7 @@
       "status": "normal",
       "riseM": -3.49,
       "bankedMm3": 0.0,
-      "seasonRainMm": 202.4,
+      "seasonRainMm": 342.7,
       "bankedSharePct": 0.0
     },
     {
@@ -6922,8 +6925,8 @@
       "status": "normal",
       "riseM": 2.12,
       "bankedMm3": 162.12,
-      "seasonRainMm": 567.1,
-      "bankedSharePct": 29.9
+      "seasonRainMm": 933.5,
+      "bankedSharePct": 18.2
     },
     {
       "mandalUuid": "67db1559-8eb6-422c-a975-1c26b274db5d",
@@ -6944,8 +6947,8 @@
       "status": "normal",
       "riseM": 0.48,
       "bankedMm3": 1.81,
-      "seasonRainMm": 425.2,
-      "bankedSharePct": 2.5
+      "seasonRainMm": 604.4,
+      "bankedSharePct": 1.8
     },
     {
       "mandalUuid": "65bc5ffa-74fb-4434-88f7-fe83e92014e6",
@@ -6966,8 +6969,8 @@
       "status": "normal",
       "riseM": 3.18,
       "bankedMm3": 101.16,
-      "seasonRainMm": 378.7,
-      "bankedSharePct": 102.7
+      "seasonRainMm": 701.3,
+      "bankedSharePct": 55.5
     },
     {
       "mandalUuid": "e1a0e8ec-fffd-4969-b92e-2089f8d37c88",
@@ -6988,7 +6991,7 @@
       "status": "normal",
       "riseM": -0.43,
       "bankedMm3": 0.0,
-      "seasonRainMm": 262.8,
+      "seasonRainMm": 456.8,
       "bankedSharePct": 0.0
     },
     {
@@ -7010,8 +7013,8 @@
       "status": "normal",
       "riseM": 0.53,
       "bankedMm3": 11.04,
-      "seasonRainMm": 452.2,
-      "bankedSharePct": 8.8
+      "seasonRainMm": 660.6,
+      "bankedSharePct": 6.0
     },
     {
       "mandalUuid": "29e74ceb-159c-4601-8664-695f980af455",
@@ -7032,7 +7035,7 @@
       "status": "normal",
       "riseM": -0.7,
       "bankedMm3": 0.0,
-      "seasonRainMm": 162.2,
+      "seasonRainMm": 267.1,
       "bankedSharePct": 0.0
     },
     {
@@ -7054,8 +7057,8 @@
       "status": "normal",
       "riseM": 0.84,
       "bankedMm3": 6.65,
-      "seasonRainMm": 270.0,
-      "bankedSharePct": 10.9
+      "seasonRainMm": 701.1,
+      "bankedSharePct": 4.2
     },
     {
       "mandalUuid": "529c2ac2-3113-496d-ae38-491b9369cc1b",
@@ -7076,7 +7079,7 @@
       "status": "normal",
       "riseM": -1.04,
       "bankedMm3": 0.0,
-      "seasonRainMm": 122.3,
+      "seasonRainMm": 249.5,
       "bankedSharePct": 0.0
     },
     {
@@ -7098,8 +7101,8 @@
       "status": "normal",
       "riseM": -7.13,
       "bankedMm3": 0.0,
-      "seasonRainMm": 96.9,
-      "bankedSharePct": null
+      "seasonRainMm": 175.2,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "251bb8ec-ac41-422f-bca9-a9b848c98b16",
@@ -7120,8 +7123,8 @@
       "status": "normal",
       "riseM": 0.83,
       "bankedMm3": 10.2,
-      "seasonRainMm": 374.5,
-      "bankedSharePct": 26.2
+      "seasonRainMm": 639.7,
+      "bankedSharePct": 15.3
     },
     {
       "mandalUuid": "d5b99fbe-619e-4625-a7dc-ea611eea0a16",
@@ -7142,7 +7145,7 @@
       "status": "normal",
       "riseM": -1.08,
       "bankedMm3": 0.0,
-      "seasonRainMm": 201.0,
+      "seasonRainMm": 335.1,
       "bankedSharePct": 0.0
     },
     {
@@ -7164,8 +7167,8 @@
       "status": "normal",
       "riseM": -6.67,
       "bankedMm3": 0.0,
-      "seasonRainMm": 70.8,
-      "bankedSharePct": null
+      "seasonRainMm": 175.2,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "98aa48f3-6abd-430a-aba0-3031d65241e1",
@@ -7186,8 +7189,8 @@
       "status": "normal",
       "riseM": 1.15,
       "bankedMm3": 12.3,
-      "seasonRainMm": 505.6,
-      "bankedSharePct": 5.2
+      "seasonRainMm": 812.0,
+      "bankedSharePct": 3.3
     },
     {
       "mandalUuid": "b19c12e2-eb8c-4d92-a8d7-22b46e87b86a",
@@ -7208,7 +7211,7 @@
       "status": "normal",
       "riseM": -1.08,
       "bankedMm3": 0.0,
-      "seasonRainMm": 189.2,
+      "seasonRainMm": 265.0,
       "bankedSharePct": 0.0
     },
     {
@@ -7230,7 +7233,7 @@
       "status": "normal",
       "riseM": -1.81,
       "bankedMm3": 0.0,
-      "seasonRainMm": 143.7,
+      "seasonRainMm": 221.7,
       "bankedSharePct": 0.0
     },
     {
@@ -7274,7 +7277,7 @@
       "status": "normal",
       "riseM": 0.0,
       "bankedMm3": 0.0,
-      "seasonRainMm": 261.1,
+      "seasonRainMm": 599.9,
       "bankedSharePct": 0.0
     },
     {
@@ -7296,7 +7299,7 @@
       "status": "normal",
       "riseM": -3.05,
       "bankedMm3": 0.0,
-      "seasonRainMm": 136.1,
+      "seasonRainMm": 226.6,
       "bankedSharePct": 0.0
     },
     {
@@ -7318,7 +7321,7 @@
       "status": "normal",
       "riseM": -4.86,
       "bankedMm3": 0.0,
-      "seasonRainMm": 154.3,
+      "seasonRainMm": 294.4,
       "bankedSharePct": 0.0
     },
     {
@@ -7340,8 +7343,8 @@
       "status": "normal",
       "riseM": 1.44,
       "bankedMm3": 4.53,
-      "seasonRainMm": 360.4,
-      "bankedSharePct": 9.2
+      "seasonRainMm": 810.5,
+      "bankedSharePct": 4.1
     },
     {
       "mandalUuid": "4bff0591-0cbd-4efa-8c77-399e93b8f97e",
@@ -7362,7 +7365,7 @@
       "status": "normal",
       "riseM": -2.85,
       "bankedMm3": 0.0,
-      "seasonRainMm": 204.2,
+      "seasonRainMm": 308.6,
       "bankedSharePct": 0.0
     },
     {
@@ -7384,8 +7387,8 @@
       "status": "normal",
       "riseM": 2.12,
       "bankedMm3": 28.93,
-      "seasonRainMm": 478.4,
-      "bankedSharePct": 10.2
+      "seasonRainMm": 893.5,
+      "bankedSharePct": 5.5
     },
     {
       "mandalUuid": "9a0e85b3-8ff7-4c78-8a6e-18f28852d293",
@@ -7406,8 +7409,8 @@
       "status": "normal",
       "riseM": -3.44,
       "bankedMm3": 0.0,
-      "seasonRainMm": 52.1,
-      "bankedSharePct": null
+      "seasonRainMm": 123.6,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "34a915b1-b309-44c3-ac8c-b16f3ad3baca",
@@ -7428,7 +7431,7 @@
       "status": "normal",
       "riseM": -0.5,
       "bankedMm3": 0.0,
-      "seasonRainMm": 388.1,
+      "seasonRainMm": 640.8,
       "bankedSharePct": 0.0
     },
     {
@@ -7450,7 +7453,7 @@
       "status": "normal",
       "riseM": -4.27,
       "bankedMm3": 0.0,
-      "seasonRainMm": 145.5,
+      "seasonRainMm": 220.3,
       "bankedSharePct": 0.0
     },
     {
@@ -7472,7 +7475,7 @@
       "status": "normal",
       "riseM": -0.46,
       "bankedMm3": 0.0,
-      "seasonRainMm": 334.6,
+      "seasonRainMm": 588.6,
       "bankedSharePct": 0.0
     },
     {
@@ -7494,8 +7497,8 @@
       "status": "normal",
       "riseM": 0.36,
       "bankedMm3": 2.53,
-      "seasonRainMm": 193.7,
-      "bankedSharePct": 3.7
+      "seasonRainMm": 306.1,
+      "bankedSharePct": 2.4
     },
     {
       "mandalUuid": "a1ed1458-340e-46c4-88ca-a50acaff36e0",
@@ -7516,7 +7519,7 @@
       "status": "normal",
       "riseM": -1.15,
       "bankedMm3": 0.0,
-      "seasonRainMm": 104.8,
+      "seasonRainMm": 188.4,
       "bankedSharePct": 0.0
     },
     {
@@ -7538,8 +7541,8 @@
       "status": "normal",
       "riseM": -6.77,
       "bankedMm3": 0.0,
-      "seasonRainMm": 70.1,
-      "bankedSharePct": null
+      "seasonRainMm": 172.1,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "1cdc0963-8371-459b-bfff-2f4c61e130a9",
@@ -7560,8 +7563,8 @@
       "status": "normal",
       "riseM": -1.23,
       "bankedMm3": 0.0,
-      "seasonRainMm": 90.4,
-      "bankedSharePct": null
+      "seasonRainMm": 238.0,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "d8da8a39-4b53-4f06-bc14-716250ee9f05",
@@ -7604,7 +7607,7 @@
       "status": "normal",
       "riseM": -2.51,
       "bankedMm3": 0.0,
-      "seasonRainMm": 154.2,
+      "seasonRainMm": 258.0,
       "bankedSharePct": 0.0
     },
     {
@@ -7626,7 +7629,7 @@
       "status": "normal",
       "riseM": -0.21,
       "bankedMm3": 0.0,
-      "seasonRainMm": 313.0,
+      "seasonRainMm": 654.6,
       "bankedSharePct": 0.0
     },
     {
@@ -7648,8 +7651,8 @@
       "status": "normal",
       "riseM": 0.05,
       "bankedMm3": 0.29,
-      "seasonRainMm": 502.1,
-      "bankedSharePct": 1.1
+      "seasonRainMm": 725.6,
+      "bankedSharePct": 0.8
     },
     {
       "mandalUuid": "aedb595b-b7af-42cb-8b64-22cb193cd9cd",
@@ -7670,8 +7673,8 @@
       "status": "normal",
       "riseM": 1.42,
       "bankedMm3": 2.15,
-      "seasonRainMm": 202.5,
-      "bankedSharePct": 16.1
+      "seasonRainMm": 610.1,
+      "bankedSharePct": 5.4
     },
     {
       "mandalUuid": "a10f6e18-1cde-4180-bcd4-5b6410a17115",
@@ -7692,7 +7695,7 @@
       "status": "normal",
       "riseM": -0.31,
       "bankedMm3": 0.0,
-      "seasonRainMm": 132.3,
+      "seasonRainMm": 238.2,
       "bankedSharePct": 0.0
     },
     {
@@ -7714,7 +7717,7 @@
       "status": "normal",
       "riseM": -2.28,
       "bankedMm3": 0.0,
-      "seasonRainMm": 226.4,
+      "seasonRainMm": 294.2,
       "bankedSharePct": 0.0
     },
     {
@@ -7736,7 +7739,7 @@
       "status": "normal",
       "riseM": -1.47,
       "bankedMm3": 0.0,
-      "seasonRainMm": 219.8,
+      "seasonRainMm": 306.4,
       "bankedSharePct": 0.0
     },
     {
@@ -7758,7 +7761,7 @@
       "status": "normal",
       "riseM": -0.99,
       "bankedMm3": 0.0,
-      "seasonRainMm": 117.1,
+      "seasonRainMm": 218.1,
       "bankedSharePct": 0.0
     },
     {
@@ -7780,7 +7783,7 @@
       "status": "normal",
       "riseM": -2.29,
       "bankedMm3": 0.0,
-      "seasonRainMm": 102.2,
+      "seasonRainMm": 194.3,
       "bankedSharePct": 0.0
     },
     {
@@ -7802,7 +7805,7 @@
       "status": "normal",
       "riseM": -0.11,
       "bankedMm3": 0.0,
-      "seasonRainMm": 215.8,
+      "seasonRainMm": 338.9,
       "bankedSharePct": 0.0
     },
     {
@@ -7824,8 +7827,8 @@
       "status": "normal",
       "riseM": -8.16,
       "bankedMm3": 0.0,
-      "seasonRainMm": 93.0,
-      "bankedSharePct": null
+      "seasonRainMm": 176.4,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "ec1ebf5b-a909-4f80-8494-ef628625e665",
@@ -7846,7 +7849,7 @@
       "status": "normal",
       "riseM": -1.76,
       "bankedMm3": 0.0,
-      "seasonRainMm": 180.1,
+      "seasonRainMm": 327.3,
       "bankedSharePct": 0.0
     },
     {
@@ -7868,7 +7871,7 @@
       "status": "normal",
       "riseM": -11.17,
       "bankedMm3": 0.0,
-      "seasonRainMm": 111.1,
+      "seasonRainMm": 229.1,
       "bankedSharePct": 0.0
     },
     {
@@ -7890,7 +7893,7 @@
       "status": "normal",
       "riseM": -0.22,
       "bankedMm3": 0.0,
-      "seasonRainMm": 157.2,
+      "seasonRainMm": 426.6,
       "bankedSharePct": 0.0
     },
     {
@@ -7912,8 +7915,8 @@
       "status": "normal",
       "riseM": 0.19,
       "bankedMm3": 1.27,
-      "seasonRainMm": 433.7,
-      "bankedSharePct": 1.7
+      "seasonRainMm": 652.9,
+      "bankedSharePct": 1.1
     },
     {
       "mandalUuid": "5ced6a9f-065d-4938-8b9c-6da7ce0b409c",
@@ -7934,8 +7937,8 @@
       "status": "normal",
       "riseM": -4.89,
       "bankedMm3": 0.0,
-      "seasonRainMm": 94.5,
-      "bankedSharePct": null
+      "seasonRainMm": 183.1,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "5fffd8a5-efcb-4267-b669-6082e9fd1f52",
@@ -7956,8 +7959,8 @@
       "status": "normal",
       "riseM": 2.4,
       "bankedMm3": 6.97,
-      "seasonRainMm": 300.6,
-      "bankedSharePct": 18.4
+      "seasonRainMm": 687.4,
+      "bankedSharePct": 8.0
     },
     {
       "mandalUuid": "4056173c-5c19-40f4-8396-d3e28f287c48",
@@ -7978,7 +7981,7 @@
       "status": "normal",
       "riseM": -3.45,
       "bankedMm3": 0.0,
-      "seasonRainMm": 109.2,
+      "seasonRainMm": 222.8,
       "bankedSharePct": 0.0
     },
     {
@@ -8000,7 +8003,7 @@
       "status": "normal",
       "riseM": -3.87,
       "bankedMm3": 0.0,
-      "seasonRainMm": 148.7,
+      "seasonRainMm": 255.5,
       "bankedSharePct": 0.0
     },
     {
@@ -8022,8 +8025,8 @@
       "status": "normal",
       "riseM": -3.16,
       "bankedMm3": 0.0,
-      "seasonRainMm": 89.2,
-      "bankedSharePct": null
+      "seasonRainMm": 189.6,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "6a6010f2-f5ef-4916-acb0-469568e39bf6",
@@ -8044,8 +8047,8 @@
       "status": "normal",
       "riseM": -2.66,
       "bankedMm3": 0.0,
-      "seasonRainMm": 82.8,
-      "bankedSharePct": null
+      "seasonRainMm": 182.5,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "7c4ebbcf-a2b0-42c4-aa36-02b73fbac27e",
@@ -8066,7 +8069,7 @@
       "status": "normal",
       "riseM": -0.07,
       "bankedMm3": 0.0,
-      "seasonRainMm": 378.9,
+      "seasonRainMm": 604.2,
       "bankedSharePct": 0.0
     },
     {
@@ -8088,7 +8091,7 @@
       "status": "normal",
       "riseM": -2.23,
       "bankedMm3": 0.0,
-      "seasonRainMm": 120.5,
+      "seasonRainMm": 266.0,
       "bankedSharePct": 0.0
     },
     {
@@ -8110,7 +8113,7 @@
       "status": "normal",
       "riseM": -0.46,
       "bankedMm3": 0.0,
-      "seasonRainMm": 130.5,
+      "seasonRainMm": 258.9,
       "bankedSharePct": 0.0
     },
     {
@@ -8132,8 +8135,8 @@
       "status": "normal",
       "riseM": 0.89,
       "bankedMm3": 12.35,
-      "seasonRainMm": 349.4,
-      "bankedSharePct": 33.1
+      "seasonRainMm": 619.2,
+      "bankedSharePct": 18.7
     },
     {
       "mandalUuid": "101590b9-7f3a-45a2-8ba2-a36637a6bfc0",
@@ -8154,7 +8157,7 @@
       "status": "normal",
       "riseM": -0.85,
       "bankedMm3": 0.0,
-      "seasonRainMm": 154.5,
+      "seasonRainMm": 248.7,
       "bankedSharePct": 0.0
     },
     {
@@ -8176,8 +8179,8 @@
       "status": "normal",
       "riseM": 3.83,
       "bankedMm3": 14.97,
-      "seasonRainMm": 220.1,
-      "bankedSharePct": 56.2
+      "seasonRainMm": 651.7,
+      "bankedSharePct": 19.0
     },
     {
       "mandalUuid": "c2b446e6-1d1f-4134-bc68-4e06c44724e4",
@@ -8198,7 +8201,7 @@
       "status": "normal",
       "riseM": -1.67,
       "bankedMm3": 0.0,
-      "seasonRainMm": 356.0,
+      "seasonRainMm": 579.6,
       "bankedSharePct": 0.0
     },
     {
@@ -8220,8 +8223,8 @@
       "status": "normal",
       "riseM": 0.43,
       "bankedMm3": 2.52,
-      "seasonRainMm": 502.1,
-      "bankedSharePct": 9.4
+      "seasonRainMm": 725.6,
+      "bankedSharePct": 6.5
     },
     {
       "mandalUuid": "4cb38050-bb72-4c1a-89c9-a15b23518a71",
@@ -8242,7 +8245,7 @@
       "status": "normal",
       "riseM": -1.29,
       "bankedMm3": 0.0,
-      "seasonRainMm": 101.6,
+      "seasonRainMm": 215.0,
       "bankedSharePct": 0.0
     },
     {
@@ -8264,8 +8267,8 @@
       "status": "normal",
       "riseM": 0.39,
       "bankedMm3": 1.16,
-      "seasonRainMm": 325.2,
-      "bankedSharePct": 2.8
+      "seasonRainMm": 765.0,
+      "bankedSharePct": 1.2
     },
     {
       "mandalUuid": "dd9e80fb-7347-4742-b6dc-f794a45acd2a",
@@ -8286,8 +8289,8 @@
       "status": "normal",
       "riseM": 0.78,
       "bankedMm3": 23.73,
-      "seasonRainMm": 366.0,
-      "bankedSharePct": 27.7
+      "seasonRainMm": 651.0,
+      "bankedSharePct": 15.6
     },
     {
       "mandalUuid": "cb2f8b94-b3a5-4c26-b821-803d0c6bec9c",
@@ -8308,8 +8311,8 @@
       "status": "normal",
       "riseM": 3.62,
       "bankedMm3": 44.07,
-      "seasonRainMm": 219.9,
-      "bankedSharePct": 29.6
+      "seasonRainMm": 390.1,
+      "bankedSharePct": 16.7
     },
     {
       "mandalUuid": "188d6658-8510-45fe-8477-1bbac7226197",
@@ -8330,7 +8333,7 @@
       "status": "normal",
       "riseM": -2.17,
       "bankedMm3": 0.0,
-      "seasonRainMm": 280.4,
+      "seasonRainMm": 387.6,
       "bankedSharePct": 0.0
     },
     {
@@ -8352,8 +8355,8 @@
       "status": "normal",
       "riseM": -7.61,
       "bankedMm3": 0.0,
-      "seasonRainMm": 88.4,
-      "bankedSharePct": null
+      "seasonRainMm": 178.3,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "c419fd09-c596-499b-af9f-97408ba49b88",
@@ -8374,7 +8377,7 @@
       "status": "normal",
       "riseM": -2.24,
       "bankedMm3": 0.0,
-      "seasonRainMm": 194.2,
+      "seasonRainMm": 319.9,
       "bankedSharePct": 0.0
     },
     {
@@ -8396,7 +8399,7 @@
       "status": "normal",
       "riseM": -0.54,
       "bankedMm3": 0.0,
-      "seasonRainMm": 227.0,
+      "seasonRainMm": 317.9,
       "bankedSharePct": 0.0
     },
     {
@@ -8418,7 +8421,7 @@
       "status": "normal",
       "riseM": -1.85,
       "bankedMm3": 0.0,
-      "seasonRainMm": 144.1,
+      "seasonRainMm": 247.9,
       "bankedSharePct": 0.0
     },
     {
@@ -8440,8 +8443,8 @@
       "status": "normal",
       "riseM": -5.61,
       "bankedMm3": 0.0,
-      "seasonRainMm": 75.5,
-      "bankedSharePct": null
+      "seasonRainMm": 172.1,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "c84e81fa-1b67-4c41-ae35-8aa27f132a9f",
@@ -8462,8 +8465,8 @@
       "status": "normal",
       "riseM": 0.35,
       "bankedMm3": 1.0,
-      "seasonRainMm": 305.5,
-      "bankedSharePct": 2.6
+      "seasonRainMm": 475.3,
+      "bankedSharePct": 1.7
     },
     {
       "mandalUuid": "fa645350-ee3e-43bf-aac5-f7db9a0b5b81",
@@ -8484,7 +8487,7 @@
       "status": "normal",
       "riseM": -7.28,
       "bankedMm3": 0.0,
-      "seasonRainMm": 102.2,
+      "seasonRainMm": 187.7,
       "bankedSharePct": 0.0
     },
     {
@@ -8506,7 +8509,7 @@
       "status": "normal",
       "riseM": -0.81,
       "bankedMm3": 0.0,
-      "seasonRainMm": 247.7,
+      "seasonRainMm": 624.1,
       "bankedSharePct": 0.0
     },
     {
@@ -8528,7 +8531,7 @@
       "status": "normal",
       "riseM": -0.82,
       "bankedMm3": 0.0,
-      "seasonRainMm": 182.8,
+      "seasonRainMm": 302.2,
       "bankedSharePct": 0.0
     },
     {
@@ -8550,7 +8553,7 @@
       "status": "normal",
       "riseM": -0.62,
       "bankedMm3": 0.0,
-      "seasonRainMm": 474.6,
+      "seasonRainMm": 825.2,
       "bankedSharePct": 0.0
     },
     {
@@ -8572,8 +8575,8 @@
       "status": "normal",
       "riseM": -0.99,
       "bankedMm3": 0.0,
-      "seasonRainMm": 66.2,
-      "bankedSharePct": null
+      "seasonRainMm": 162.8,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "1615959b-b996-4415-95e0-c1fb2a5f2b3a",
@@ -8594,8 +8597,8 @@
       "status": "normal",
       "riseM": 1.1,
       "bankedMm3": 5.85,
-      "seasonRainMm": 83.7,
-      "bankedSharePct": null
+      "seasonRainMm": 181.9,
+      "bankedSharePct": 13.8
     },
     {
       "mandalUuid": "32bec69c-fc45-4f77-a44c-e65556bbae0f",
@@ -8616,8 +8619,8 @@
       "status": "normal",
       "riseM": 3.79,
       "bankedMm3": 11.36,
-      "seasonRainMm": 315.0,
-      "bankedSharePct": 27.7
+      "seasonRainMm": 723.4,
+      "bankedSharePct": 12.0
     },
     {
       "mandalUuid": "ed6b5ad9-9b9f-4822-96c9-32b361f6b60d",
@@ -8660,8 +8663,8 @@
       "status": "normal",
       "riseM": -4.93,
       "bankedMm3": 0.0,
-      "seasonRainMm": 53.9,
-      "bankedSharePct": null
+      "seasonRainMm": 141.9,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "183552f1-8870-4b03-ad98-af0ce5843b16",
@@ -8682,8 +8685,8 @@
       "status": "normal",
       "riseM": 1.07,
       "bankedMm3": 23.58,
-      "seasonRainMm": 643.0,
-      "bankedSharePct": 3.8
+      "seasonRainMm": 911.7,
+      "bankedSharePct": 2.7
     },
     {
       "mandalUuid": "b85af7e3-d6ba-4b78-a998-5962eb8da4a7",
@@ -8704,7 +8707,7 @@
       "status": "normal",
       "riseM": -1.34,
       "bankedMm3": 0.0,
-      "seasonRainMm": 183.0,
+      "seasonRainMm": 267.7,
       "bankedSharePct": 0.0
     },
     {
@@ -8726,7 +8729,7 @@
       "status": "normal",
       "riseM": -1.76,
       "bankedMm3": 0.0,
-      "seasonRainMm": 190.6,
+      "seasonRainMm": 375.0,
       "bankedSharePct": 0.0
     },
     {
@@ -8748,8 +8751,8 @@
       "status": "normal",
       "riseM": 1.2,
       "bankedMm3": 3.86,
-      "seasonRainMm": 378.4,
-      "bankedSharePct": 7.3
+      "seasonRainMm": 565.1,
+      "bankedSharePct": 4.9
     },
     {
       "mandalUuid": "453af372-387e-464e-910c-d050c506595c",
@@ -8792,8 +8795,8 @@
       "status": "normal",
       "riseM": 0.84,
       "bankedMm3": 7.04,
-      "seasonRainMm": 293.7,
-      "bankedSharePct": 6.5
+      "seasonRainMm": 438.3,
+      "bankedSharePct": 4.4
     },
     {
       "mandalUuid": "18834ee4-d598-4412-99a7-be15d90b144e",
@@ -8814,7 +8817,7 @@
       "status": "normal",
       "riseM": -1.02,
       "bankedMm3": 0.0,
-      "seasonRainMm": 208.8,
+      "seasonRainMm": 278.0,
       "bankedSharePct": 0.0
     },
     {
@@ -8836,7 +8839,7 @@
       "status": "normal",
       "riseM": -0.99,
       "bankedMm3": 0.0,
-      "seasonRainMm": 252.0,
+      "seasonRainMm": 371.1,
       "bankedSharePct": 0.0
     },
     {
@@ -8858,8 +8861,8 @@
       "status": "normal",
       "riseM": 1.7,
       "bankedMm3": 11.09,
-      "seasonRainMm": 300.3,
-      "bankedSharePct": 62.3
+      "seasonRainMm": 636.5,
+      "bankedSharePct": 29.4
     },
     {
       "mandalUuid": "9b8c41a6-23da-4ef4-a033-bca38cc7f154",
@@ -8880,7 +8883,7 @@
       "status": "normal",
       "riseM": -0.95,
       "bankedMm3": 0.0,
-      "seasonRainMm": 462.2,
+      "seasonRainMm": 659.8,
       "bankedSharePct": 0.0
     },
     {
@@ -8902,7 +8905,7 @@
       "status": "normal",
       "riseM": -0.88,
       "bankedMm3": 0.0,
-      "seasonRainMm": 168.6,
+      "seasonRainMm": 297.8,
       "bankedSharePct": 0.0
     },
     {
@@ -8924,8 +8927,8 @@
       "status": "normal",
       "riseM": 0.24,
       "bankedMm3": 0.66,
-      "seasonRainMm": 114.6,
-      "bankedSharePct": 4.1
+      "seasonRainMm": 214.3,
+      "bankedSharePct": 2.2
     },
     {
       "mandalUuid": "766c4ecd-46d9-45c1-aaf3-012ed9f28063",
@@ -8946,7 +8949,7 @@
       "status": "normal",
       "riseM": -0.26,
       "bankedMm3": 0.0,
-      "seasonRainMm": 244.1,
+      "seasonRainMm": 390.0,
       "bankedSharePct": 0.0
     },
     {
@@ -8990,7 +8993,7 @@
       "status": "normal",
       "riseM": -4.58,
       "bankedMm3": 0.0,
-      "seasonRainMm": 124.5,
+      "seasonRainMm": 252.6,
       "bankedSharePct": 0.0
     },
     {
@@ -9012,8 +9015,8 @@
       "status": "normal",
       "riseM": 1.95,
       "bankedMm3": 18.04,
-      "seasonRainMm": 576.5,
-      "bankedSharePct": 7.8
+      "seasonRainMm": 994.5,
+      "bankedSharePct": 4.5
     },
     {
       "mandalUuid": "6d3f1283-447f-46a5-826e-df92820ba6a6",
@@ -9034,8 +9037,8 @@
       "status": "normal",
       "riseM": -1.58,
       "bankedMm3": 0.0,
-      "seasonRainMm": 91.9,
-      "bankedSharePct": null
+      "seasonRainMm": 176.8,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "b67e9518-3a79-4dc3-bd85-27ddbb7a79c0",
@@ -9056,8 +9059,8 @@
       "status": "normal",
       "riseM": 0.14,
       "bankedMm3": 3.33,
-      "seasonRainMm": 253.5,
-      "bankedSharePct": 7.0
+      "seasonRainMm": 534.1,
+      "bankedSharePct": 3.3
     },
     {
       "mandalUuid": "e7d72d0e-efe3-42e5-b263-119b4651d77b",
@@ -9078,8 +9081,8 @@
       "status": "normal",
       "riseM": 2.2,
       "bankedMm3": 20.1,
-      "seasonRainMm": 277.6,
-      "bankedSharePct": 63.4
+      "seasonRainMm": 619.2,
+      "bankedSharePct": 28.4
     },
     {
       "mandalUuid": "d8d4e78e-3240-457f-a6fc-84d07203312b",
@@ -9100,8 +9103,8 @@
       "status": "normal",
       "riseM": 1.03,
       "bankedMm3": 8.06,
-      "seasonRainMm": 81.8,
-      "bankedSharePct": null
+      "seasonRainMm": 184.4,
+      "bankedSharePct": 12.8
     },
     {
       "mandalUuid": "bf28866e-f299-4521-84a9-2807ab441d17",
@@ -9122,8 +9125,8 @@
       "status": "normal",
       "riseM": -1.36,
       "bankedMm3": 0.0,
-      "seasonRainMm": 91.9,
-      "bankedSharePct": null
+      "seasonRainMm": 179.1,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "df66e44b-0da4-4204-a664-aa00f788e226",
@@ -9144,7 +9147,7 @@
       "status": "normal",
       "riseM": -0.04,
       "bankedMm3": 0.0,
-      "seasonRainMm": 362.3,
+      "seasonRainMm": 598.5,
       "bankedSharePct": 0.0
     },
     {
@@ -9166,8 +9169,8 @@
       "status": "normal",
       "riseM": 1.71,
       "bankedMm3": 7.73,
-      "seasonRainMm": 408.5,
-      "bankedSharePct": 9.6
+      "seasonRainMm": 743.3,
+      "bankedSharePct": 5.3
     },
     {
       "mandalUuid": "9f9af309-331c-4a8f-9eaf-f6e23928b916",
@@ -9188,8 +9191,8 @@
       "status": "normal",
       "riseM": 0.42,
       "bankedMm3": 3.88,
-      "seasonRainMm": 171.3,
-      "bankedSharePct": 5.6
+      "seasonRainMm": 295.2,
+      "bankedSharePct": 3.3
     },
     {
       "mandalUuid": "f00b62d1-93d5-4d6f-9047-39ebed05e5d0",
@@ -9210,7 +9213,7 @@
       "status": "normal",
       "riseM": -1.62,
       "bankedMm3": 0.0,
-      "seasonRainMm": 244.8,
+      "seasonRainMm": 355.0,
       "bankedSharePct": 0.0
     },
     {
@@ -9232,8 +9235,8 @@
       "status": "normal",
       "riseM": 0.57,
       "bankedMm3": 3.78,
-      "seasonRainMm": 656.2,
-      "bankedSharePct": 2.0
+      "seasonRainMm": 1110.0,
+      "bankedSharePct": 1.2
     },
     {
       "mandalUuid": "7e298ad9-4507-4b8e-b79d-a4463a581e24",
@@ -9254,8 +9257,8 @@
       "status": "normal",
       "riseM": 2.11,
       "bankedMm3": 5.91,
-      "seasonRainMm": 321.2,
-      "bankedSharePct": 15.1
+      "seasonRainMm": 751.3,
+      "bankedSharePct": 6.5
     },
     {
       "mandalUuid": "3182cec4-7df9-41a3-8a49-c99a3d688b4d",
@@ -9276,7 +9279,7 @@
       "status": "normal",
       "riseM": -0.83,
       "bankedMm3": 0.0,
-      "seasonRainMm": 196.0,
+      "seasonRainMm": 349.0,
       "bankedSharePct": 0.0
     },
     {
@@ -9298,8 +9301,8 @@
       "status": "normal",
       "riseM": 2.52,
       "bankedMm3": 6.8,
-      "seasonRainMm": 424.9,
-      "bankedSharePct": 13.6
+      "seasonRainMm": 686.2,
+      "bankedSharePct": 8.4
     },
     {
       "mandalUuid": "e9a71342-f142-4daf-9eff-f17779f38e03",
@@ -9320,8 +9323,8 @@
       "status": "normal",
       "riseM": -3.94,
       "bankedMm3": 0.0,
-      "seasonRainMm": 72.9,
-      "bankedSharePct": null
+      "seasonRainMm": 167.8,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "45943240-4dd7-4917-b7ec-d027d2604ade",
@@ -9342,8 +9345,8 @@
       "status": "normal",
       "riseM": 0.57,
       "bankedMm3": 16.81,
-      "seasonRainMm": 230.5,
-      "bankedSharePct": 32.1
+      "seasonRainMm": 581.1,
+      "bankedSharePct": 12.8
     },
     {
       "mandalUuid": "599c1100-ea1e-4060-a7fc-70c6b81148a0",
@@ -9364,8 +9367,8 @@
       "status": "normal",
       "riseM": 1.23,
       "bankedMm3": 13.66,
-      "seasonRainMm": 341.7,
-      "bankedSharePct": 41.3
+      "seasonRainMm": 625.5,
+      "bankedSharePct": 22.5
     },
     {
       "mandalUuid": "8535efa8-ff48-4296-9e46-08fdfe8dd4e3",
@@ -9386,8 +9389,8 @@
       "status": "normal",
       "riseM": 0.46,
       "bankedMm3": 7.44,
-      "seasonRainMm": 348.6,
-      "bankedSharePct": 17.2
+      "seasonRainMm": 698.6,
+      "bankedSharePct": 8.6
     },
     {
       "mandalUuid": "b3b458e7-c0f2-40cc-8c13-68c5b87fa3ed",
@@ -9408,7 +9411,7 @@
       "status": "normal",
       "riseM": -1.22,
       "bankedMm3": 0.0,
-      "seasonRainMm": 117.8,
+      "seasonRainMm": 245.0,
       "bankedSharePct": 0.0
     },
     {
@@ -9452,8 +9455,8 @@
       "status": "normal",
       "riseM": 0.86,
       "bankedMm3": 20.59,
-      "seasonRainMm": 311.6,
-      "bankedSharePct": 35.9
+      "seasonRainMm": 561.2,
+      "bankedSharePct": 19.9
     },
     {
       "mandalUuid": "5719d3ba-ca19-4ef3-ad5b-9cba6aed4711",
@@ -9474,7 +9477,7 @@
       "status": "normal",
       "riseM": -2.0,
       "bankedMm3": 0.0,
-      "seasonRainMm": 146.1,
+      "seasonRainMm": 273.0,
       "bankedSharePct": 0.0
     },
     {
@@ -9496,8 +9499,8 @@
       "status": "normal",
       "riseM": 1.36,
       "bankedMm3": 4.54,
-      "seasonRainMm": 348.8,
-      "bankedSharePct": 9.0
+      "seasonRainMm": 502.5,
+      "bankedSharePct": 6.2
     },
     {
       "mandalUuid": "d7d2377c-6743-4dff-8da6-d01bb506b3f7",
@@ -9518,8 +9521,8 @@
       "status": "normal",
       "riseM": 4.31,
       "bankedMm3": 14.04,
-      "seasonRainMm": 393.9,
-      "bankedSharePct": 25.2
+      "seasonRainMm": 712.0,
+      "bankedSharePct": 13.9
     },
     {
       "mandalUuid": "822c2af5-c57b-491b-b30f-588d315973a9",
@@ -9540,8 +9543,8 @@
       "status": "normal",
       "riseM": -5.65,
       "bankedMm3": 0.0,
-      "seasonRainMm": 53.6,
-      "bankedSharePct": null
+      "seasonRainMm": 128.6,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "842655a7-2a0e-4bad-b7e1-a986d309ee8f",
@@ -9562,8 +9565,8 @@
       "status": "normal",
       "riseM": 0.25,
       "bankedMm3": 8.98,
-      "seasonRainMm": 249.6,
-      "bankedSharePct": 12.4
+      "seasonRainMm": 537.9,
+      "bankedSharePct": 5.8
     },
     {
       "mandalUuid": "00dbb599-15c6-4edc-a35c-7d9c704eae1e",
@@ -9584,8 +9587,8 @@
       "status": "normal",
       "riseM": -0.08,
       "bankedMm3": 0.0,
-      "seasonRainMm": 81.1,
-      "bankedSharePct": null
+      "seasonRainMm": 190.3,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "d8f14f52-fb2e-4635-9755-1b72ebeb467b",
@@ -9606,7 +9609,7 @@
       "status": "normal",
       "riseM": -0.42,
       "bankedMm3": 0.0,
-      "seasonRainMm": 221.6,
+      "seasonRainMm": 287.4,
       "bankedSharePct": 0.0
     },
     {
@@ -9628,7 +9631,7 @@
       "status": "normal",
       "riseM": -2.04,
       "bankedMm3": 0.0,
-      "seasonRainMm": 116.9,
+      "seasonRainMm": 210.0,
       "bankedSharePct": 0.0
     },
     {
@@ -9650,7 +9653,7 @@
       "status": "normal",
       "riseM": -2.31,
       "bankedMm3": 0.0,
-      "seasonRainMm": 100.2,
+      "seasonRainMm": 202.6,
       "bankedSharePct": 0.0
     },
     {
@@ -9672,8 +9675,8 @@
       "status": "normal",
       "riseM": 1.2,
       "bankedMm3": 7.63,
-      "seasonRainMm": 407.3,
-      "bankedSharePct": 10.5
+      "seasonRainMm": 765.1,
+      "bankedSharePct": 5.6
     },
     {
       "mandalUuid": "161b2e5b-f04c-489d-a304-ee9e0b403a1c",
@@ -9694,7 +9697,7 @@
       "status": "normal",
       "riseM": -0.66,
       "bankedMm3": 0.0,
-      "seasonRainMm": 109.3,
+      "seasonRainMm": 222.4,
       "bankedSharePct": 0.0
     },
     {
@@ -9716,8 +9719,8 @@
       "status": "normal",
       "riseM": 0.25,
       "bankedMm3": 2.22,
-      "seasonRainMm": 335.7,
-      "bankedSharePct": 9.5
+      "seasonRainMm": 670.2,
+      "bankedSharePct": 4.8
     },
     {
       "mandalUuid": "6f35d4b0-b70d-4c05-8e84-ca1acb1f5f5a",
@@ -9738,8 +9741,8 @@
       "status": "normal",
       "riseM": 2.32,
       "bankedMm3": 24.33,
-      "seasonRainMm": 321.8,
-      "bankedSharePct": 78.4
+      "seasonRainMm": 665.6,
+      "bankedSharePct": 37.9
     },
     {
       "mandalUuid": "d07a3752-d0fd-4b9e-ba75-9a1c6cc3ab4a",
@@ -9760,8 +9763,8 @@
       "status": "normal",
       "riseM": 1.86,
       "bankedMm3": 5.96,
-      "seasonRainMm": 350.1,
-      "bankedSharePct": 24.2
+      "seasonRainMm": 716.0,
+      "bankedSharePct": 11.8
     },
     {
       "mandalUuid": "4e9f5439-f050-4285-b80c-eeae36041479",
@@ -9782,8 +9785,8 @@
       "status": "normal",
       "riseM": -1.24,
       "bankedMm3": 0.0,
-      "seasonRainMm": 85.2,
-      "bankedSharePct": null
+      "seasonRainMm": 195.7,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "f9074956-b52a-4fab-be0c-856c5a85a90e",
@@ -9804,7 +9807,7 @@
       "status": "normal",
       "riseM": -2.62,
       "bankedMm3": 0.0,
-      "seasonRainMm": 187.7,
+      "seasonRainMm": 328.1,
       "bankedSharePct": 0.0
     },
     {
@@ -9826,7 +9829,7 @@
       "status": "normal",
       "riseM": -0.45,
       "bankedMm3": 0.0,
-      "seasonRainMm": 233.9,
+      "seasonRainMm": 318.8,
       "bankedSharePct": 0.0
     },
     {
@@ -9848,7 +9851,7 @@
       "status": "normal",
       "riseM": 0.02,
       "bankedMm3": 0.04,
-      "seasonRainMm": 256.2,
+      "seasonRainMm": 408.6,
       "bankedSharePct": 0.1
     },
     {
@@ -9870,7 +9873,7 @@
       "status": "normal",
       "riseM": -7.43,
       "bankedMm3": 0.0,
-      "seasonRainMm": 137.8,
+      "seasonRainMm": 272.3,
       "bankedSharePct": 0.0
     },
     {
@@ -9892,7 +9895,7 @@
       "status": "normal",
       "riseM": -0.1,
       "bankedMm3": 0.0,
-      "seasonRainMm": 343.7,
+      "seasonRainMm": 569.0,
       "bankedSharePct": 0.0
     },
     {
@@ -9914,8 +9917,8 @@
       "status": "normal",
       "riseM": -0.51,
       "bankedMm3": 0.0,
-      "seasonRainMm": 89.1,
-      "bankedSharePct": null
+      "seasonRainMm": 176.2,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "9bfe7c91-5bb2-4b9a-8232-6ca06179e9bf",
@@ -9936,8 +9939,8 @@
       "status": "normal",
       "riseM": 1.01,
       "bankedMm3": 9.69,
-      "seasonRainMm": 306.0,
-      "bankedSharePct": 42.9
+      "seasonRainMm": 657.3,
+      "bankedSharePct": 20.0
     },
     {
       "mandalUuid": "cc8d1c38-c5f1-4fc4-8a2d-9eb67ad478a4",
@@ -9980,8 +9983,8 @@
       "status": "normal",
       "riseM": 2.01,
       "bankedMm3": 5.15,
-      "seasonRainMm": 294.1,
-      "bankedSharePct": 15.7
+      "seasonRainMm": 687.2,
+      "bankedSharePct": 6.7
     },
     {
       "mandalUuid": "f0f559c5-55ef-448d-aabd-7b2a305fc18c",
@@ -10002,7 +10005,7 @@
       "status": "normal",
       "riseM": -2.45,
       "bankedMm3": 0.0,
-      "seasonRainMm": 138.2,
+      "seasonRainMm": 217.5,
       "bankedSharePct": 0.0
     },
     {
@@ -10024,8 +10027,8 @@
       "status": "normal",
       "riseM": -0.69,
       "bankedMm3": 0.0,
-      "seasonRainMm": 73.5,
-      "bankedSharePct": null
+      "seasonRainMm": 173.1,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "1c0f9a77-3583-403b-a7f3-c83a4a04b97e",
@@ -10046,7 +10049,7 @@
       "status": "normal",
       "riseM": -4.19,
       "bankedMm3": 0.0,
-      "seasonRainMm": 137.7,
+      "seasonRainMm": 273.6,
       "bankedSharePct": 0.0
     },
     {
@@ -10068,8 +10071,8 @@
       "status": "normal",
       "riseM": 1.61,
       "bankedMm3": 22.63,
-      "seasonRainMm": 343.1,
-      "bankedSharePct": 57.3
+      "seasonRainMm": 578.5,
+      "bankedSharePct": 34.0
     },
     {
       "mandalUuid": "e9467991-fbb0-465b-955e-9469a29c6170",
@@ -10112,8 +10115,8 @@
       "status": "normal",
       "riseM": 3.02,
       "bankedMm3": 14.15,
-      "seasonRainMm": 281.5,
-      "bankedSharePct": 24.2
+      "seasonRainMm": 428.8,
+      "bankedSharePct": 15.9
     },
     {
       "mandalUuid": "0c329af1-c303-4fdf-bf10-8e16660b9cee",
@@ -10134,7 +10137,7 @@
       "status": "normal",
       "riseM": -0.22,
       "bankedMm3": 0.0,
-      "seasonRainMm": 282.6,
+      "seasonRainMm": 385.5,
       "bankedSharePct": 0.0
     },
     {
@@ -10156,7 +10159,7 @@
       "status": "normal",
       "riseM": -1.18,
       "bankedMm3": 0.0,
-      "seasonRainMm": 208.8,
+      "seasonRainMm": 335.9,
       "bankedSharePct": 0.0
     },
     {
@@ -10178,8 +10181,8 @@
       "status": "normal",
       "riseM": 0.77,
       "bankedMm3": 16.52,
-      "seasonRainMm": 400.2,
-      "bankedSharePct": 21.2
+      "seasonRainMm": 607.4,
+      "bankedSharePct": 13.9
     },
     {
       "mandalUuid": "6a54c010-9d08-440b-866f-2fcebcaf5d00",
@@ -10200,8 +10203,8 @@
       "status": "normal",
       "riseM": 1.5,
       "bankedMm3": 11.14,
-      "seasonRainMm": 591.3,
-      "bankedSharePct": 5.8
+      "seasonRainMm": 1017.3,
+      "bankedSharePct": 3.4
     },
     {
       "mandalUuid": "80f63e45-117b-40ca-b130-d5eb56c3cf54",
@@ -10222,8 +10225,8 @@
       "status": "normal",
       "riseM": -0.11,
       "bankedMm3": 0.0,
-      "seasonRainMm": 58.9,
-      "bankedSharePct": null
+      "seasonRainMm": 145.0,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "34459a27-adbb-4885-b088-5aa76744cbbc",
@@ -10266,7 +10269,7 @@
       "status": "normal",
       "riseM": -0.21,
       "bankedMm3": 0.0,
-      "seasonRainMm": 128.6,
+      "seasonRainMm": 229.9,
       "bankedSharePct": 0.0
     },
     {
@@ -10288,7 +10291,7 @@
       "status": "normal",
       "riseM": -2.65,
       "bankedMm3": 0.0,
-      "seasonRainMm": 191.3,
+      "seasonRainMm": 262.4,
       "bankedSharePct": 0.0
     },
     {
@@ -10310,8 +10313,8 @@
       "status": "normal",
       "riseM": -10.37,
       "bankedMm3": 0.0,
-      "seasonRainMm": 48.9,
-      "bankedSharePct": null
+      "seasonRainMm": 130.5,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "7b36a6cd-4481-4e20-83dd-e13a335231d7",
@@ -10332,7 +10335,7 @@
       "status": "normal",
       "riseM": -0.09,
       "bankedMm3": 0.0,
-      "seasonRainMm": 343.9,
+      "seasonRainMm": 670.2,
       "bankedSharePct": 0.0
     },
     {
@@ -10354,8 +10357,8 @@
       "status": "normal",
       "riseM": -1.34,
       "bankedMm3": 0.0,
-      "seasonRainMm": 77.3,
-      "bankedSharePct": null
+      "seasonRainMm": 173.5,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "898d2321-da3d-4730-8ac9-77e47ec076e6",
@@ -10398,8 +10401,8 @@
       "status": "normal",
       "riseM": 2.68,
       "bankedMm3": 10.97,
-      "seasonRainMm": 263.6,
-      "bankedSharePct": 23.4
+      "seasonRainMm": 615.6,
+      "bankedSharePct": 10.0
     },
     {
       "mandalUuid": "17284a50-d99a-4f44-8042-975c58895d66",
@@ -10420,8 +10423,8 @@
       "status": "normal",
       "riseM": 0.5,
       "bankedMm3": 9.39,
-      "seasonRainMm": 551.4,
-      "bankedSharePct": 2.1
+      "seasonRainMm": 957.9,
+      "bankedSharePct": 1.2
     },
     {
       "mandalUuid": "8ec07b4d-ae96-4094-9f6e-8020ef9e7898",
@@ -10464,7 +10467,7 @@
       "status": "normal",
       "riseM": -3.79,
       "bankedMm3": 0.0,
-      "seasonRainMm": 160.0,
+      "seasonRainMm": 273.1,
       "bankedSharePct": 0.0
     },
     {
@@ -10486,8 +10489,8 @@
       "status": "normal",
       "riseM": 0.31,
       "bankedMm3": 10.44,
-      "seasonRainMm": 203.2,
-      "bankedSharePct": 19.8
+      "seasonRainMm": 557.1,
+      "bankedSharePct": 7.2
     },
     {
       "mandalUuid": "3910ae3c-7958-45a4-98b4-e272d1d8abdb",
@@ -10530,8 +10533,8 @@
       "status": "normal",
       "riseM": 0.52,
       "bankedMm3": 1.91,
-      "seasonRainMm": 270.7,
-      "bankedSharePct": 3.5
+      "seasonRainMm": 422.9,
+      "bankedSharePct": 2.2
     },
     {
       "mandalUuid": "9b06799c-0744-4c83-b747-885a361d47fc",
@@ -10552,7 +10555,7 @@
       "status": "normal",
       "riseM": -0.95,
       "bankedMm3": 0.0,
-      "seasonRainMm": 192.7,
+      "seasonRainMm": 343.8,
       "bankedSharePct": 0.0
     },
     {
@@ -10574,8 +10577,8 @@
       "status": "normal",
       "riseM": 1.2,
       "bankedMm3": 12.01,
-      "seasonRainMm": 327.5,
-      "bankedSharePct": 40.3
+      "seasonRainMm": 628.8,
+      "bankedSharePct": 21.0
     },
     {
       "mandalUuid": "281c1560-f836-4a40-9fc4-b80c62990a0d",
@@ -10596,8 +10599,8 @@
       "status": "normal",
       "riseM": -1.2,
       "bankedMm3": 0.0,
-      "seasonRainMm": 29.4,
-      "bankedSharePct": null
+      "seasonRainMm": 126.8,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "0c5a574d-1328-4e74-bce0-eee96333cc3a",
@@ -10618,7 +10621,7 @@
       "status": "normal",
       "riseM": -1.95,
       "bankedMm3": 0.0,
-      "seasonRainMm": 138.7,
+      "seasonRainMm": 249.0,
       "bankedSharePct": 0.0
     },
     {
@@ -10640,7 +10643,7 @@
       "status": "normal",
       "riseM": -1.64,
       "bankedMm3": 0.0,
-      "seasonRainMm": 186.9,
+      "seasonRainMm": 292.7,
       "bankedSharePct": 0.0
     },
     {
@@ -10662,8 +10665,8 @@
       "status": "normal",
       "riseM": -1.74,
       "bankedMm3": 0.0,
-      "seasonRainMm": 96.8,
-      "bankedSharePct": null
+      "seasonRainMm": 198.6,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "724b8f41-79a8-4a4b-ad36-33a310c51d0b",
@@ -10684,7 +10687,7 @@
       "status": "normal",
       "riseM": -4.52,
       "bankedMm3": 0.0,
-      "seasonRainMm": 143.5,
+      "seasonRainMm": 214.5,
       "bankedSharePct": 0.0
     },
     {
@@ -10706,7 +10709,7 @@
       "status": "normal",
       "riseM": -0.31,
       "bankedMm3": 0.0,
-      "seasonRainMm": 188.8,
+      "seasonRainMm": 260.6,
       "bankedSharePct": 0.0
     },
     {
@@ -10728,8 +10731,8 @@
       "status": "normal",
       "riseM": -1.12,
       "bankedMm3": 0.0,
-      "seasonRainMm": 82.3,
-      "bankedSharePct": null
+      "seasonRainMm": 187.4,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "c91349a1-9a74-4fa8-97f9-5abd3ea58940",
@@ -10750,8 +10753,8 @@
       "status": "normal",
       "riseM": 0.12,
       "bankedMm3": 3.04,
-      "seasonRainMm": 353.6,
-      "bankedSharePct": 3.7
+      "seasonRainMm": 596.2,
+      "bankedSharePct": 2.2
     },
     {
       "mandalUuid": "404501cf-ec66-4da7-b255-65f6db248238",
@@ -10772,8 +10775,8 @@
       "status": "normal",
       "riseM": -5.28,
       "bankedMm3": 0.0,
-      "seasonRainMm": 79.3,
-      "bankedSharePct": null
+      "seasonRainMm": 193.9,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "91763692-1a4f-45dd-9eb7-c193ce31d498",
@@ -10794,8 +10797,8 @@
       "status": "normal",
       "riseM": 1.16,
       "bankedMm3": 2.99,
-      "seasonRainMm": 305.6,
-      "bankedSharePct": 8.7
+      "seasonRainMm": 762.8,
+      "bankedSharePct": 3.5
     },
     {
       "mandalUuid": "b6b3ba9f-065b-48ab-a607-4b9bcc16af16",
@@ -10816,8 +10819,8 @@
       "status": "normal",
       "riseM": 0.27,
       "bankedMm3": 5.88,
-      "seasonRainMm": 248.5,
-      "bankedSharePct": 14.1
+      "seasonRainMm": 598.9,
+      "bankedSharePct": 5.9
     },
     {
       "mandalUuid": "c64308f3-95a9-4aff-ad68-fb66b70983d9",
@@ -10838,7 +10841,7 @@
       "status": "normal",
       "riseM": -1.05,
       "bankedMm3": 0.0,
-      "seasonRainMm": 124.5,
+      "seasonRainMm": 209.6,
       "bankedSharePct": 0.0
     },
     {
@@ -10860,8 +10863,8 @@
       "status": "normal",
       "riseM": -1.41,
       "bankedMm3": 0.0,
-      "seasonRainMm": 93.4,
-      "bankedSharePct": null
+      "seasonRainMm": 205.5,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "f7ac1823-8863-4a5a-9a4a-27b6a14d1582",
@@ -10882,7 +10885,7 @@
       "status": "normal",
       "riseM": -3.63,
       "bankedMm3": 0.0,
-      "seasonRainMm": 147.8,
+      "seasonRainMm": 228.6,
       "bankedSharePct": 0.0
     },
     {
@@ -10904,8 +10907,8 @@
       "status": "normal",
       "riseM": 0.27,
       "bankedMm3": 2.94,
-      "seasonRainMm": 219.9,
-      "bankedSharePct": 2.5
+      "seasonRainMm": 329.9,
+      "bankedSharePct": 1.6
     },
     {
       "mandalUuid": "a37b2e1b-1987-4e3d-91a6-b6873d856d7f",
@@ -10926,8 +10929,8 @@
       "status": "normal",
       "riseM": -3.42,
       "bankedMm3": 0.0,
-      "seasonRainMm": 38.7,
-      "bankedSharePct": null
+      "seasonRainMm": 121.2,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "f9d97f05-c04c-4f47-aa31-8230a43d47f2",
@@ -10948,8 +10951,8 @@
       "status": "normal",
       "riseM": 4.64,
       "bankedMm3": 12.24,
-      "seasonRainMm": 458.2,
-      "bankedSharePct": 23.3
+      "seasonRainMm": 952.6,
+      "bankedSharePct": 11.2
     },
     {
       "mandalUuid": "32334fda-35a5-45b1-afe0-02d438b4ca9a",
@@ -10970,8 +10973,8 @@
       "status": "normal",
       "riseM": -0.89,
       "bankedMm3": 0.0,
-      "seasonRainMm": 76.7,
-      "bankedSharePct": null
+      "seasonRainMm": 179.1,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "1078933b-c353-4521-8d36-974a5cd6985b",
@@ -10992,7 +10995,7 @@
       "status": "normal",
       "riseM": -0.42,
       "bankedMm3": 0.0,
-      "seasonRainMm": 356.6,
+      "seasonRainMm": 558.5,
       "bankedSharePct": 0.0
     },
     {
@@ -11036,8 +11039,8 @@
       "status": "normal",
       "riseM": 1.92,
       "bankedMm3": 24.21,
-      "seasonRainMm": 303.3,
-      "bankedSharePct": 11.4
+      "seasonRainMm": 433.5,
+      "bankedSharePct": 8.0
     },
     {
       "mandalUuid": "b4770314-bc8f-44d1-8a86-57dcc5a2c293",
@@ -11058,8 +11061,8 @@
       "status": "normal",
       "riseM": 2.24,
       "bankedMm3": 7.47,
-      "seasonRainMm": 445.7,
-      "bankedSharePct": 11.6
+      "seasonRainMm": 893.2,
+      "bankedSharePct": 5.8
     },
     {
       "mandalUuid": "2ceca0e3-3d2f-4bb6-b5e5-5eeb2a7b8252",
@@ -11080,8 +11083,8 @@
       "status": "normal",
       "riseM": 2.31,
       "bankedMm3": 9.34,
-      "seasonRainMm": 298.9,
-      "bankedSharePct": 17.8
+      "seasonRainMm": 642.2,
+      "bankedSharePct": 8.3
     },
     {
       "mandalUuid": "8098b2ab-fcac-421e-af8a-5f60750ea4df",
@@ -11102,8 +11105,8 @@
       "status": "normal",
       "riseM": 2.65,
       "bankedMm3": 33.83,
-      "seasonRainMm": 734.9,
-      "bankedSharePct": 8.3
+      "seasonRainMm": 1157.6,
+      "bankedSharePct": 5.3
     },
     {
       "mandalUuid": "c5957599-303e-4179-8995-dabf25ac1983",
@@ -11124,8 +11127,8 @@
       "status": "normal",
       "riseM": 1.37,
       "bankedMm3": 14.23,
-      "seasonRainMm": 349.8,
-      "bankedSharePct": 50.9
+      "seasonRainMm": 669.0,
+      "bankedSharePct": 26.6
     },
     {
       "mandalUuid": "86d2de3e-0861-421f-99e2-00fb7437f4ff",
@@ -11146,7 +11149,7 @@
       "status": "normal",
       "riseM": -1.05,
       "bankedMm3": 0.0,
-      "seasonRainMm": 130.4,
+      "seasonRainMm": 266.6,
       "bankedSharePct": 0.0
     },
     {
@@ -11168,8 +11171,8 @@
       "status": "normal",
       "riseM": -2.38,
       "bankedMm3": 0.0,
-      "seasonRainMm": 89.5,
-      "bankedSharePct": null
+      "seasonRainMm": 229.3,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "e474aa14-6f58-4f60-813b-6f9e65e068eb",
@@ -11190,7 +11193,7 @@
       "status": "normal",
       "riseM": -0.35,
       "bankedMm3": 0.0,
-      "seasonRainMm": 194.7,
+      "seasonRainMm": 253.5,
       "bankedSharePct": 0.0
     },
     {
@@ -11212,8 +11215,8 @@
       "status": "normal",
       "riseM": 0.65,
       "bankedMm3": 1.98,
-      "seasonRainMm": 242.6,
-      "bankedSharePct": 6.2
+      "seasonRainMm": 623.1,
+      "bankedSharePct": 2.4
     },
     {
       "mandalUuid": "294bb600-0bed-4d15-a843-cf05666e4aed",
@@ -11234,8 +11237,8 @@
       "status": "normal",
       "riseM": 1.03,
       "bankedMm3": 12.64,
-      "seasonRainMm": 422.6,
-      "bankedSharePct": 27.2
+      "seasonRainMm": 675.3,
+      "bankedSharePct": 17.0
     },
     {
       "mandalUuid": "7ec14913-ffee-49c8-9e65-e9731d297dd0",
@@ -11256,8 +11259,8 @@
       "status": "normal",
       "riseM": -2.26,
       "bankedMm3": 0.0,
-      "seasonRainMm": 78.7,
-      "bankedSharePct": null
+      "seasonRainMm": 175.3,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "6cd405ca-47e3-4401-a7ea-83bf8965c82d",
@@ -11278,8 +11281,8 @@
       "status": "normal",
       "riseM": 2.17,
       "bankedMm3": 19.75,
-      "seasonRainMm": 325.7,
-      "bankedSharePct": 86.6
+      "seasonRainMm": 665.5,
+      "bankedSharePct": 42.4
     },
     {
       "mandalUuid": "1479a122-0010-4100-bd61-90243ef4bcdf",
@@ -11300,7 +11303,7 @@
       "status": "normal",
       "riseM": -0.95,
       "bankedMm3": 0.0,
-      "seasonRainMm": 343.7,
+      "seasonRainMm": 670.8,
       "bankedSharePct": 0.0
     },
     {
@@ -11322,7 +11325,7 @@
       "status": "normal",
       "riseM": -2.47,
       "bankedMm3": 0.0,
-      "seasonRainMm": 146.4,
+      "seasonRainMm": 225.4,
       "bankedSharePct": 0.0
     },
     {
@@ -11344,8 +11347,8 @@
       "status": "normal",
       "riseM": 2.94,
       "bankedMm3": 13.55,
-      "seasonRainMm": 280.8,
-      "bankedSharePct": 24.1
+      "seasonRainMm": 613.9,
+      "bankedSharePct": 11.0
     },
     {
       "mandalUuid": "9287e75c-5e32-4dea-b6d2-5af7f8debdd9",
@@ -11366,8 +11369,8 @@
       "status": "normal",
       "riseM": 0.96,
       "bankedMm3": 11.67,
-      "seasonRainMm": 530.5,
-      "bankedSharePct": 14.6
+      "seasonRainMm": 832.7,
+      "bankedSharePct": 9.3
     },
     {
       "mandalUuid": "936dc381-04c0-41b3-ac3d-5d5931c56e78",
@@ -11388,8 +11391,8 @@
       "status": "normal",
       "riseM": -2.68,
       "bankedMm3": 0.0,
-      "seasonRainMm": 99.3,
-      "bankedSharePct": null
+      "seasonRainMm": 213.3,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "c04290bf-4a4b-45f6-bab0-736a39f38de4",
@@ -11410,8 +11413,8 @@
       "status": "normal",
       "riseM": 0.91,
       "bankedMm3": 3.75,
-      "seasonRainMm": 158.1,
-      "bankedSharePct": 13.2
+      "seasonRainMm": 248.0,
+      "bankedSharePct": 8.4
     },
     {
       "mandalUuid": "1601db3c-9bfc-4737-8bb6-83e91f833e20",
@@ -11432,8 +11435,8 @@
       "status": "normal",
       "riseM": 1.28,
       "bankedMm3": 14.51,
-      "seasonRainMm": 267.5,
-      "bankedSharePct": 62.2
+      "seasonRainMm": 632.9,
+      "bankedSharePct": 26.3
     },
     {
       "mandalUuid": "2d461eb2-abac-4d56-96aa-4dddc5836841",
@@ -11454,7 +11457,7 @@
       "status": "normal",
       "riseM": -0.88,
       "bankedMm3": 0.0,
-      "seasonRainMm": 134.0,
+      "seasonRainMm": 250.7,
       "bankedSharePct": 0.0
     },
     {
@@ -11498,8 +11501,8 @@
       "status": "normal",
       "riseM": 0.18,
       "bankedMm3": 4.6,
-      "seasonRainMm": 313.9,
-      "bankedSharePct": 7.5
+      "seasonRainMm": 596.9,
+      "bankedSharePct": 3.9
     },
     {
       "mandalUuid": "d88c7e9d-fe40-4297-b292-06231bbaf5f4",
@@ -11520,8 +11523,8 @@
       "status": "normal",
       "riseM": 0.55,
       "bankedMm3": 8.65,
-      "seasonRainMm": 315.1,
-      "bankedSharePct": 22.4
+      "seasonRainMm": 646.7,
+      "bankedSharePct": 10.9
     },
     {
       "mandalUuid": "d2d9ebf3-71e3-4c5d-b492-4a73e6eca5fc",
@@ -11542,8 +11545,8 @@
       "status": "normal",
       "riseM": 0.39,
       "bankedMm3": 4.99,
-      "seasonRainMm": 247.1,
-      "bankedSharePct": 20.5
+      "seasonRainMm": 594.5,
+      "bankedSharePct": 8.5
     },
     {
       "mandalUuid": "7f30f25d-01fe-4947-9def-e923e3afa40f",
@@ -11564,7 +11567,7 @@
       "status": "normal",
       "riseM": -0.31,
       "bankedMm3": 0.0,
-      "seasonRainMm": 211.7,
+      "seasonRainMm": 288.1,
       "bankedSharePct": 0.0
     },
     {
@@ -11608,8 +11611,8 @@
       "status": "normal",
       "riseM": 2.39,
       "bankedMm3": 29.47,
-      "seasonRainMm": 308.6,
-      "bankedSharePct": 97.4
+      "seasonRainMm": 612.2,
+      "bankedSharePct": 49.1
     },
     {
       "mandalUuid": "3115594c-3680-4e77-a4cd-84534c361f09",
@@ -11630,8 +11633,8 @@
       "status": "normal",
       "riseM": 0.31,
       "bankedMm3": 5.84,
-      "seasonRainMm": 358.3,
-      "bankedSharePct": 11.2
+      "seasonRainMm": 632.0,
+      "bankedSharePct": 6.4
     },
     {
       "mandalUuid": "fa504fc3-1fd3-4397-9ce9-f7afd0b2d1a1",
@@ -11652,7 +11655,7 @@
       "status": "normal",
       "riseM": -3.13,
       "bankedMm3": 0.0,
-      "seasonRainMm": 114.3,
+      "seasonRainMm": 245.5,
       "bankedSharePct": 0.0
     },
     {
@@ -11674,8 +11677,8 @@
       "status": "normal",
       "riseM": 2.12,
       "bankedMm3": 20.6,
-      "seasonRainMm": 415.4,
-      "bankedSharePct": 16.7
+      "seasonRainMm": 629.9,
+      "bankedSharePct": 11.0
     },
     {
       "mandalUuid": "6284286a-8c85-429e-b34c-fa56d590adbb",
@@ -11696,8 +11699,8 @@
       "status": "normal",
       "riseM": 2.98,
       "bankedMm3": 25.29,
-      "seasonRainMm": 649.7,
-      "bankedSharePct": 10.5
+      "seasonRainMm": 1046.9,
+      "bankedSharePct": 6.5
     },
     {
       "mandalUuid": "c62baeba-f69b-437b-9bf4-62942f4fa396",
@@ -11740,8 +11743,8 @@
       "status": "normal",
       "riseM": 0.96,
       "bankedMm3": 8.81,
-      "seasonRainMm": 318.6,
-      "bankedSharePct": 39.2
+      "seasonRainMm": 676.4,
+      "bankedSharePct": 18.5
     },
     {
       "mandalUuid": "db73a229-d192-491f-b664-06c3ae4023a9",
@@ -11762,7 +11765,7 @@
       "status": "normal",
       "riseM": -1.48,
       "bankedMm3": 0.0,
-      "seasonRainMm": 8.9,
+      "seasonRainMm": 86.7,
       "bankedSharePct": null
     },
     {
@@ -11784,7 +11787,7 @@
       "status": "normal",
       "riseM": -0.83,
       "bankedMm3": 0.0,
-      "seasonRainMm": 145.8,
+      "seasonRainMm": 223.8,
       "bankedSharePct": 0.0
     },
     {
@@ -11806,8 +11809,8 @@
       "status": "normal",
       "riseM": 1.12,
       "bankedMm3": 3.07,
-      "seasonRainMm": 309.9,
-      "bankedSharePct": 8.3
+      "seasonRainMm": 743.0,
+      "bankedSharePct": 3.5
     },
     {
       "mandalUuid": "2378f5dc-0411-4589-9600-24a632357744",
@@ -11828,7 +11831,7 @@
       "status": "normal",
       "riseM": -1.71,
       "bankedMm3": 0.0,
-      "seasonRainMm": 101.3,
+      "seasonRainMm": 229.8,
       "bankedSharePct": 0.0
     },
     {
@@ -11850,8 +11853,8 @@
       "status": "normal",
       "riseM": -0.94,
       "bankedMm3": 0.0,
-      "seasonRainMm": 57.4,
-      "bankedSharePct": null
+      "seasonRainMm": 147.9,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "faa08eab-6c6e-4e29-b5d1-d482bce9424c",
@@ -11872,8 +11875,8 @@
       "status": "normal",
       "riseM": 1.64,
       "bankedMm3": 14.6,
-      "seasonRainMm": 336.7,
-      "bankedSharePct": 63.3
+      "seasonRainMm": 640.6,
+      "bankedSharePct": 33.3
     },
     {
       "mandalUuid": "112c236a-6f63-4757-9ef7-6ad1ab22d324",
@@ -11894,8 +11897,8 @@
       "status": "normal",
       "riseM": 3.78,
       "bankedMm3": 9.55,
-      "seasonRainMm": 403.0,
-      "bankedSharePct": 21.6
+      "seasonRainMm": 816.5,
+      "bankedSharePct": 10.6
     },
     {
       "mandalUuid": "0b26b5ca-74ca-4f7c-9cbb-80637943da0b",
@@ -11916,7 +11919,7 @@
       "status": "normal",
       "riseM": -0.62,
       "bankedMm3": 0.0,
-      "seasonRainMm": 148.7,
+      "seasonRainMm": 293.2,
       "bankedSharePct": 0.0
     },
     {
@@ -11938,7 +11941,7 @@
       "status": "normal",
       "riseM": -0.19,
       "bankedMm3": 0.0,
-      "seasonRainMm": 119.0,
+      "seasonRainMm": 277.3,
       "bankedSharePct": 0.0
     },
     {
@@ -11960,8 +11963,8 @@
       "status": "normal",
       "riseM": 0.39,
       "bankedMm3": 9.68,
-      "seasonRainMm": 336.1,
-      "bankedSharePct": 15.1
+      "seasonRainMm": 634.2,
+      "bankedSharePct": 8.0
     },
     {
       "mandalUuid": "e541e9fc-9308-42d4-8823-a9f05e6663a9",
@@ -11982,8 +11985,8 @@
       "status": "normal",
       "riseM": 3.08,
       "bankedMm3": 9.32,
-      "seasonRainMm": 248.6,
-      "bankedSharePct": 28.5
+      "seasonRainMm": 603.7,
+      "bankedSharePct": 11.7
     },
     {
       "mandalUuid": "4660294b-fa03-4d43-9597-162823c9fdb4",
@@ -12004,8 +12007,8 @@
       "status": "normal",
       "riseM": -0.17,
       "bankedMm3": 0.0,
-      "seasonRainMm": 96.8,
-      "bankedSharePct": null
+      "seasonRainMm": 209.6,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "ccc8313b-8677-4041-afba-0ffd855287da",
@@ -12026,7 +12029,7 @@
       "status": "normal",
       "riseM": -0.55,
       "bankedMm3": 0.0,
-      "seasonRainMm": 114.2,
+      "seasonRainMm": 211.5,
       "bankedSharePct": 0.0
     },
     {
@@ -12048,7 +12051,7 @@
       "status": "normal",
       "riseM": -1.58,
       "bankedMm3": 0.0,
-      "seasonRainMm": 138.1,
+      "seasonRainMm": 221.3,
       "bankedSharePct": 0.0
     },
     {
@@ -12070,8 +12073,8 @@
       "status": "normal",
       "riseM": 4.4,
       "bankedMm3": 165.51,
-      "seasonRainMm": 595.5,
-      "bankedSharePct": 59.1
+      "seasonRainMm": 1021.8,
+      "bankedSharePct": 34.4
     },
     {
       "mandalUuid": "e79a9098-3c5c-4db3-9ab6-f6b153192e0c",
@@ -12092,8 +12095,8 @@
       "status": "normal",
       "riseM": 1.34,
       "bankedMm3": 6.42,
-      "seasonRainMm": 239.9,
-      "bankedSharePct": 12.8
+      "seasonRainMm": 695.9,
+      "bankedSharePct": 4.4
     },
     {
       "mandalUuid": "cc8e4683-9124-487b-8d3e-97aad08bf378",
@@ -12114,7 +12117,7 @@
       "status": "normal",
       "riseM": -1.23,
       "bankedMm3": 0.0,
-      "seasonRainMm": 383.9,
+      "seasonRainMm": 635.2,
       "bankedSharePct": 0.0
     },
     {
@@ -12136,7 +12139,7 @@
       "status": "normal",
       "riseM": -3.86,
       "bankedMm3": 0.0,
-      "seasonRainMm": 115.5,
+      "seasonRainMm": 208.0,
       "bankedSharePct": 0.0
     },
     {
@@ -12158,8 +12161,8 @@
       "status": "normal",
       "riseM": 1.46,
       "bankedMm3": 14.63,
-      "seasonRainMm": 322.0,
-      "bankedSharePct": 58.9
+      "seasonRainMm": 636.6,
+      "bankedSharePct": 29.8
     },
     {
       "mandalUuid": "379f8a00-e4fc-4815-ae36-f219105fb204",
@@ -12180,8 +12183,8 @@
       "status": "normal",
       "riseM": 0.51,
       "bankedMm3": 2.22,
-      "seasonRainMm": 281.7,
-      "bankedSharePct": 6.0
+      "seasonRainMm": 526.4,
+      "bankedSharePct": 3.2
     },
     {
       "mandalUuid": "a3bd2f7d-d810-402a-aeb7-6a7c936596b5",
@@ -12202,7 +12205,7 @@
       "status": "normal",
       "riseM": -3.31,
       "bankedMm3": 0.0,
-      "seasonRainMm": 157.1,
+      "seasonRainMm": 299.1,
       "bankedSharePct": 0.0
     },
     {
@@ -12224,8 +12227,8 @@
       "status": "normal",
       "riseM": -4.15,
       "bankedMm3": 0.0,
-      "seasonRainMm": 86.8,
-      "bankedSharePct": null
+      "seasonRainMm": 189.8,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "6d5ae874-eefe-46b0-93ea-ebd01fa91b56",
@@ -12246,8 +12249,8 @@
       "status": "normal",
       "riseM": 0.87,
       "bankedMm3": 16.41,
-      "seasonRainMm": 369.1,
-      "bankedSharePct": 29.0
+      "seasonRainMm": 614.2,
+      "bankedSharePct": 17.4
     },
     {
       "mandalUuid": "1114eff9-37c6-4b6b-88d2-85c3efb7db8a",
@@ -12268,8 +12271,8 @@
       "status": "normal",
       "riseM": 0.56,
       "bankedMm3": 10.12,
-      "seasonRainMm": 523.5,
-      "bankedSharePct": 9.2
+      "seasonRainMm": 862.5,
+      "bankedSharePct": 5.6
     },
     {
       "mandalUuid": "b3d4966e-08e5-43d4-ae0f-b275ccf5ad2d",
@@ -12290,7 +12293,7 @@
       "status": "normal",
       "riseM": -0.58,
       "bankedMm3": 0.0,
-      "seasonRainMm": 117.6,
+      "seasonRainMm": 249.1,
       "bankedSharePct": 0.0
     },
     {
@@ -12312,8 +12315,8 @@
       "status": "normal",
       "riseM": 1.24,
       "bankedMm3": 9.55,
-      "seasonRainMm": 85.1,
-      "bankedSharePct": null
+      "seasonRainMm": 208.0,
+      "bankedSharePct": 11.0
     },
     {
       "mandalUuid": "d777652c-59f8-4958-b937-18b31123cf18",
@@ -12334,8 +12337,8 @@
       "status": "normal",
       "riseM": 3.87,
       "bankedMm3": 34.06,
-      "seasonRainMm": 179.3,
-      "bankedSharePct": 44.7
+      "seasonRainMm": 295.8,
+      "bankedSharePct": 27.1
     },
     {
       "mandalUuid": "d929e5ec-db0a-406f-80a2-376f2af7d3c9",
@@ -12356,8 +12359,8 @@
       "status": "normal",
       "riseM": 0.12,
       "bankedMm3": 1.89,
-      "seasonRainMm": 387.5,
-      "bankedSharePct": 4.0
+      "seasonRainMm": 655.3,
+      "bankedSharePct": 2.4
     },
     {
       "mandalUuid": "375bff52-1d4e-4199-8290-93a38cb01de5",
@@ -12378,8 +12381,8 @@
       "status": "normal",
       "riseM": 1.15,
       "bankedMm3": 3.1,
-      "seasonRainMm": 323.5,
-      "bankedSharePct": 8.2
+      "seasonRainMm": 603.6,
+      "bankedSharePct": 4.4
     },
     {
       "mandalUuid": "5a20863d-27ee-4d43-9ad8-b1c144f2eda3",
@@ -12400,7 +12403,7 @@
       "status": "normal",
       "riseM": -0.11,
       "bankedMm3": 0.0,
-      "seasonRainMm": 514.0,
+      "seasonRainMm": 748.1,
       "bankedSharePct": 0.0
     },
     {
@@ -12422,8 +12425,8 @@
       "status": "normal",
       "riseM": 3.14,
       "bankedMm3": 11.41,
-      "seasonRainMm": 341.4,
-      "bankedSharePct": 21.2
+      "seasonRainMm": 810.9,
+      "bankedSharePct": 8.9
     },
     {
       "mandalUuid": "b3ff3c1d-ae0a-41c3-9514-a59730fa78c7",
@@ -12444,7 +12447,7 @@
       "status": "normal",
       "riseM": -0.0,
       "bankedMm3": -0.0,
-      "seasonRainMm": 157.9,
+      "seasonRainMm": 231.3,
       "bankedSharePct": -0.0
     },
     {
@@ -12466,8 +12469,8 @@
       "status": "normal",
       "riseM": 3.69,
       "bankedMm3": 14.49,
-      "seasonRainMm": 243.3,
-      "bankedSharePct": 28.2
+      "seasonRainMm": 395.6,
+      "bankedSharePct": 17.3
     },
     {
       "mandalUuid": "ce03aaa6-63e4-432f-877e-b688be2e8759",
@@ -12488,8 +12491,8 @@
       "status": "normal",
       "riseM": 0.92,
       "bankedMm3": 6.14,
-      "seasonRainMm": 282.3,
-      "bankedSharePct": 38.7
+      "seasonRainMm": 569.3,
+      "bankedSharePct": 19.2
     },
     {
       "mandalUuid": "2a3816a9-2f9b-43bf-a2b3-253ec67e87d7",
@@ -12510,7 +12513,7 @@
       "status": "normal",
       "riseM": -0.02,
       "bankedMm3": 0.0,
-      "seasonRainMm": 353.2,
+      "seasonRainMm": 685.8,
       "bankedSharePct": 0.0
     },
     {
@@ -12532,8 +12535,8 @@
       "status": "normal",
       "riseM": 0.74,
       "bankedMm3": 8.37,
-      "seasonRainMm": 337.1,
-      "bankedSharePct": 28.5
+      "seasonRainMm": 705.8,
+      "bankedSharePct": 13.6
     },
     {
       "mandalUuid": "464570aa-bd91-4bfa-8cc4-26dde11a0ef1",
@@ -12554,8 +12557,8 @@
       "status": "normal",
       "riseM": 4.25,
       "bankedMm3": 55.5,
-      "seasonRainMm": 306.6,
-      "bankedSharePct": 155.1
+      "seasonRainMm": 671.3,
+      "bankedSharePct": 70.8
     },
     {
       "mandalUuid": "89c6c9ae-0138-4831-9c21-ec86b5d11937",
@@ -12576,7 +12579,7 @@
       "status": "normal",
       "riseM": -0.38,
       "bankedMm3": 0.0,
-      "seasonRainMm": 152.0,
+      "seasonRainMm": 227.9,
       "bankedSharePct": 0.0
     },
     {
@@ -12598,8 +12601,8 @@
       "status": "normal",
       "riseM": 2.37,
       "bankedMm3": 16.04,
-      "seasonRainMm": 394.7,
-      "bankedSharePct": 21.7
+      "seasonRainMm": 624.3,
+      "bankedSharePct": 13.7
     },
     {
       "mandalUuid": "690f6064-e9ab-4a51-9bab-a5bf8488ad62",
@@ -12620,7 +12623,7 @@
       "status": "normal",
       "riseM": -0.04,
       "bankedMm3": 0.0,
-      "seasonRainMm": 193.8,
+      "seasonRainMm": 274.4,
       "bankedSharePct": 0.0
     },
     {
@@ -12642,7 +12645,7 @@
       "status": "normal",
       "riseM": -0.7,
       "bankedMm3": 0.0,
-      "seasonRainMm": 100.7,
+      "seasonRainMm": 210.5,
       "bankedSharePct": 0.0
     },
     {
@@ -12664,7 +12667,7 @@
       "status": "normal",
       "riseM": -1.44,
       "bankedMm3": 0.0,
-      "seasonRainMm": 148.7,
+      "seasonRainMm": 281.7,
       "bankedSharePct": 0.0
     },
     {
@@ -12686,8 +12689,8 @@
       "status": "normal",
       "riseM": 1.15,
       "bankedMm3": 1.75,
-      "seasonRainMm": 388.8,
-      "bankedSharePct": 6.8
+      "seasonRainMm": 831.6,
+      "bankedSharePct": 3.2
     },
     {
       "mandalUuid": "98577883-b59a-495d-b0f5-26404fb27fb4",
@@ -12708,8 +12711,8 @@
       "status": "normal",
       "riseM": 0.34,
       "bankedMm3": 3.89,
-      "seasonRainMm": 458.7,
-      "bankedSharePct": 7.8
+      "seasonRainMm": 702.0,
+      "bankedSharePct": 5.1
     },
     {
       "mandalUuid": "7dd7eaf5-aeda-464f-95e1-9193230825e8",
@@ -12730,8 +12733,8 @@
       "status": "normal",
       "riseM": 2.08,
       "bankedMm3": 20.23,
-      "seasonRainMm": 330.5,
-      "bankedSharePct": 50.4
+      "seasonRainMm": 753.1,
+      "bankedSharePct": 22.1
     },
     {
       "mandalUuid": "095c405f-ccaf-4d01-8bd4-884279173303",
@@ -12752,8 +12755,8 @@
       "status": "normal",
       "riseM": 2.21,
       "bankedMm3": 6.66,
-      "seasonRainMm": 376.7,
-      "bankedSharePct": 13.5
+      "seasonRainMm": 867.5,
+      "bankedSharePct": 5.9
     },
     {
       "mandalUuid": "2ece002f-ccca-4abf-b9bd-f19c1fa0a07b",
@@ -12774,8 +12777,8 @@
       "status": "normal",
       "riseM": 0.39,
       "bankedMm3": 2.37,
-      "seasonRainMm": 138.1,
-      "bankedSharePct": 5.2
+      "seasonRainMm": 252.1,
+      "bankedSharePct": 2.8
     },
     {
       "mandalUuid": "b8e17707-1cf9-49aa-9da5-823da9d4756e",
@@ -12796,8 +12799,8 @@
       "status": "normal",
       "riseM": 1.03,
       "bankedMm3": 9.45,
-      "seasonRainMm": 101.8,
-      "bankedSharePct": 20.4
+      "seasonRainMm": 234.4,
+      "bankedSharePct": 8.9
     },
     {
       "mandalUuid": "586cc703-176f-49a4-9b69-4588dd527a3a",
@@ -12818,8 +12821,8 @@
       "status": "normal",
       "riseM": 0.29,
       "bankedMm3": 1.72,
-      "seasonRainMm": 120.3,
-      "bankedSharePct": 4.8
+      "seasonRainMm": 230.4,
+      "bankedSharePct": 2.5
     },
     {
       "mandalUuid": "5b93e4bd-7f87-4136-b8ff-244e73bcf5f1",
@@ -12840,7 +12843,7 @@
       "status": "normal",
       "riseM": -0.18,
       "bankedMm3": 0.0,
-      "seasonRainMm": 146.8,
+      "seasonRainMm": 212.6,
       "bankedSharePct": 0.0
     },
     {
@@ -12884,8 +12887,8 @@
       "status": "normal",
       "riseM": 1.66,
       "bankedMm3": 8.99,
-      "seasonRainMm": 125.0,
-      "bankedSharePct": 30.5
+      "seasonRainMm": 208.8,
+      "bankedSharePct": 18.3
     },
     {
       "mandalUuid": "d97f2a0c-d2a7-4fb5-a265-79ec3a53b8b9",
@@ -12906,7 +12909,7 @@
       "status": "normal",
       "riseM": -2.36,
       "bankedMm3": 0.0,
-      "seasonRainMm": 175.2,
+      "seasonRainMm": 256.1,
       "bankedSharePct": 0.0
     },
     {
@@ -12928,8 +12931,8 @@
       "status": "normal",
       "riseM": 1.45,
       "bankedMm3": 13.33,
-      "seasonRainMm": 312.2,
-      "bankedSharePct": 60.4
+      "seasonRainMm": 604.9,
+      "bankedSharePct": 31.2
     },
     {
       "mandalUuid": "cdec201d-74ce-4c38-8dd6-80ef2e1c050c",
@@ -12950,8 +12953,8 @@
       "status": "normal",
       "riseM": 0.93,
       "bankedMm3": 8.68,
-      "seasonRainMm": 159.9,
-      "bankedSharePct": 13.4
+      "seasonRainMm": 294.8,
+      "bankedSharePct": 7.3
     },
     {
       "mandalUuid": "75c1f82b-cd5b-4559-b6de-e0397d3b62b3",
@@ -12972,7 +12975,7 @@
       "status": "normal",
       "riseM": -0.1,
       "bankedMm3": 0.0,
-      "seasonRainMm": 108.1,
+      "seasonRainMm": 264.6,
       "bankedSharePct": 0.0
     },
     {
@@ -12994,7 +12997,7 @@
       "status": "normal",
       "riseM": -2.03,
       "bankedMm3": 0.0,
-      "seasonRainMm": 14.7,
+      "seasonRainMm": 84.5,
       "bankedSharePct": null
     },
     {
@@ -13016,7 +13019,7 @@
       "status": "normal",
       "riseM": -0.06,
       "bankedMm3": 0.0,
-      "seasonRainMm": 148.4,
+      "seasonRainMm": 371.9,
       "bankedSharePct": 0.0
     },
     {
@@ -13038,8 +13041,8 @@
       "status": "normal",
       "riseM": 0.62,
       "bankedMm3": 2.96,
-      "seasonRainMm": 129.7,
-      "bankedSharePct": 8.8
+      "seasonRainMm": 281.6,
+      "bankedSharePct": 4.1
     },
     {
       "mandalUuid": "78f60b9a-7a23-4769-a8e8-06950aa85839",
@@ -13060,7 +13063,7 @@
       "status": "normal",
       "riseM": -0.07,
       "bankedMm3": 0.0,
-      "seasonRainMm": 145.7,
+      "seasonRainMm": 224.3,
       "bankedSharePct": 0.0
     },
     {
@@ -13082,8 +13085,8 @@
       "status": "normal",
       "riseM": 0.22,
       "bankedMm3": 1.53,
-      "seasonRainMm": 127.6,
-      "bankedSharePct": 4.0
+      "seasonRainMm": 247.8,
+      "bankedSharePct": 2.0
     },
     {
       "mandalUuid": "289f9216-502e-4f04-8b6e-3a10e4754d39",
@@ -13104,7 +13107,7 @@
       "status": "normal",
       "riseM": -0.02,
       "bankedMm3": 0.0,
-      "seasonRainMm": 212.8,
+      "seasonRainMm": 286.0,
       "bankedSharePct": 0.0
     },
     {
@@ -13126,8 +13129,8 @@
       "status": "normal",
       "riseM": 0.62,
       "bankedMm3": 7.3,
-      "seasonRainMm": 62.8,
-      "bankedSharePct": null
+      "seasonRainMm": 169.4,
+      "bankedSharePct": 8.4
     },
     {
       "mandalUuid": "48b65c4a-e1f2-4862-b313-c5acc7afe3ab",
@@ -13148,8 +13151,8 @@
       "status": "normal",
       "riseM": -0.82,
       "bankedMm3": 0.0,
-      "seasonRainMm": 86.2,
-      "bankedSharePct": null
+      "seasonRainMm": 219.6,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "5d8ceb6f-4d12-4ec5-bbb2-61cd17e68c01",
@@ -13170,7 +13173,7 @@
       "status": "normal",
       "riseM": -0.36,
       "bankedMm3": 0.0,
-      "seasonRainMm": 376.1,
+      "seasonRainMm": 641.0,
       "bankedSharePct": 0.0
     },
     {
@@ -13192,8 +13195,8 @@
       "status": "normal",
       "riseM": 0.07,
       "bankedMm3": 0.42,
-      "seasonRainMm": 260.7,
-      "bankedSharePct": 2.1
+      "seasonRainMm": 619.0,
+      "bankedSharePct": 0.9
     },
     {
       "mandalUuid": "bc24b3fc-6483-4aee-b9c3-586257a0e1b8",
@@ -13214,8 +13217,8 @@
       "status": "normal",
       "riseM": 0.46,
       "bankedMm3": 3.36,
-      "seasonRainMm": 325.7,
-      "bankedSharePct": 18.4
+      "seasonRainMm": 657.0,
+      "bankedSharePct": 9.1
     },
     {
       "mandalUuid": "3e7f8704-30b8-42e3-bfb2-f894a77c4cf1",
@@ -13236,8 +13239,8 @@
       "status": "normal",
       "riseM": 3.02,
       "bankedMm3": 9.0,
-      "seasonRainMm": 301.9,
-      "bankedSharePct": 23.0
+      "seasonRainMm": 735.6,
+      "bankedSharePct": 9.4
     },
     {
       "mandalUuid": "7e21faf2-e725-461c-a954-2475881edb3e",
@@ -13258,8 +13261,8 @@
       "status": "normal",
       "riseM": 0.08,
       "bankedMm3": 2.74,
-      "seasonRainMm": 108.3,
-      "bankedSharePct": 5.9
+      "seasonRainMm": 241.0,
+      "bankedSharePct": 2.7
     },
     {
       "mandalUuid": "1c291902-8518-4eac-9b21-b268e5b91fac",
@@ -13280,8 +13283,8 @@
       "status": "normal",
       "riseM": 0.66,
       "bankedMm3": 6.94,
-      "seasonRainMm": 349.9,
-      "bankedSharePct": 20.7
+      "seasonRainMm": 595.8,
+      "bankedSharePct": 12.2
     },
     {
       "mandalUuid": "71a987f6-27a6-4c47-9582-e5d772861423",
@@ -13302,8 +13305,8 @@
       "status": "normal",
       "riseM": 0.27,
       "bankedMm3": 1.6,
-      "seasonRainMm": 120.3,
-      "bankedSharePct": 4.5
+      "seasonRainMm": 230.4,
+      "bankedSharePct": 2.3
     },
     {
       "mandalUuid": "f62abe72-4ee7-4c9f-847a-a5de163c8bb9",
@@ -13346,8 +13349,8 @@
       "status": "normal",
       "riseM": 2.31,
       "bankedMm3": 7.77,
-      "seasonRainMm": 483.5,
-      "bankedSharePct": 11.0
+      "seasonRainMm": 963.6,
+      "bankedSharePct": 5.5
     },
     {
       "mandalUuid": "5e6b2ed8-4cef-49a3-84f4-156120714541",
@@ -13390,8 +13393,8 @@
       "status": "normal",
       "riseM": 0.02,
       "bankedMm3": 0.12,
-      "seasonRainMm": 86.5,
-      "bankedSharePct": null
+      "seasonRainMm": 200.6,
+      "bankedSharePct": 0.2
     },
     {
       "mandalUuid": "cbf2afa2-fba0-4a1c-8b57-76775d774bdf",
@@ -13434,8 +13437,8 @@
       "status": "normal",
       "riseM": 1.85,
       "bankedMm3": 32.59,
-      "seasonRainMm": 350.6,
-      "bankedSharePct": 68.6
+      "seasonRainMm": 700.6,
+      "bankedSharePct": 34.3
     },
     {
       "mandalUuid": "9313cf61-d194-4573-b17c-18b487e228e0",
@@ -13478,8 +13481,8 @@
       "status": "normal",
       "riseM": 3.91,
       "bankedMm3": 20.81,
-      "seasonRainMm": 613.8,
-      "bankedSharePct": 14.7
+      "seasonRainMm": 1084.7,
+      "bankedSharePct": 8.3
     },
     {
       "mandalUuid": "0484c56e-9564-4dd1-ad0a-92ca67dffb13",
@@ -13500,8 +13503,8 @@
       "status": "normal",
       "riseM": 1.6,
       "bankedMm3": 5.88,
-      "seasonRainMm": 433.2,
-      "bankedSharePct": 8.5
+      "seasonRainMm": 865.9,
+      "bankedSharePct": 4.2
     },
     {
       "mandalUuid": "be738fec-0f30-422a-b4e2-d9a441d7f7e6",
@@ -13522,8 +13525,8 @@
       "status": "normal",
       "riseM": 0.88,
       "bankedMm3": 7.21,
-      "seasonRainMm": 317.8,
-      "bankedSharePct": 36.0
+      "seasonRainMm": 655.5,
+      "bankedSharePct": 17.5
     },
     {
       "mandalUuid": "9c69ed4d-1b08-4cf1-816e-e6b2d884d34d",
@@ -13544,8 +13547,8 @@
       "status": "normal",
       "riseM": 4.39,
       "bankedMm3": 13.27,
-      "seasonRainMm": 416.9,
-      "bankedSharePct": 24.2
+      "seasonRainMm": 865.1,
+      "bankedSharePct": 11.7
     },
     {
       "mandalUuid": "8d82ff77-17fb-4cfa-8b79-910ed64daa3d",
@@ -13566,8 +13569,8 @@
       "status": "normal",
       "riseM": 2.79,
       "bankedMm3": 35.76,
-      "seasonRainMm": 296.4,
-      "bankedSharePct": 122.4
+      "seasonRainMm": 652.8,
+      "bankedSharePct": 55.6
     },
     {
       "mandalUuid": "6e0cc489-ffda-4170-9fe6-45f865d10fcf",
@@ -13588,7 +13591,7 @@
       "status": "normal",
       "riseM": -0.25,
       "bankedMm3": 0.0,
-      "seasonRainMm": 102.9,
+      "seasonRainMm": 213.6,
       "bankedSharePct": 0.0
     },
     {
@@ -13610,8 +13613,8 @@
       "status": "normal",
       "riseM": 0.6,
       "bankedMm3": 3.87,
-      "seasonRainMm": 211.1,
-      "bankedSharePct": 6.5
+      "seasonRainMm": 289.6,
+      "bankedSharePct": 4.8
     },
     {
       "mandalUuid": "5c6f746c-8116-4b5e-b2b2-e78fe1a6eb43",
@@ -13632,8 +13635,8 @@
       "status": "normal",
       "riseM": 0.54,
       "bankedMm3": 2.19,
-      "seasonRainMm": 108.8,
-      "bankedSharePct": 10.8
+      "seasonRainMm": 243.1,
+      "bankedSharePct": 4.8
     },
     {
       "mandalUuid": "64a84a16-fd85-4ab5-a9ea-3a95f6935564",
@@ -13654,8 +13657,8 @@
       "status": "normal",
       "riseM": 1.17,
       "bankedMm3": 14.02,
-      "seasonRainMm": 280.2,
-      "bankedSharePct": 45.9
+      "seasonRainMm": 646.7,
+      "bankedSharePct": 19.9
     },
     {
       "mandalUuid": "2ddfc1ed-bbba-43ea-a34d-6003c9cf6e8c",
@@ -13676,8 +13679,8 @@
       "status": "normal",
       "riseM": 4.09,
       "bankedMm3": 15.86,
-      "seasonRainMm": 397.4,
-      "bankedSharePct": 23.7
+      "seasonRainMm": 821.6,
+      "bankedSharePct": 11.4
     },
     {
       "mandalUuid": "0ecff39f-84e8-4ec4-9bbf-cd6da36d7052",
@@ -13698,8 +13701,8 @@
       "status": "normal",
       "riseM": 1.58,
       "bankedMm3": 22.51,
-      "seasonRainMm": 306.7,
-      "bankedSharePct": 67.0
+      "seasonRainMm": 659.4,
+      "bankedSharePct": 31.2
     },
     {
       "mandalUuid": "1866f8ef-7ba7-4c46-8d44-e93236a24b74",
@@ -13720,8 +13723,8 @@
       "status": "normal",
       "riseM": 0.5,
       "bankedMm3": 3.42,
-      "seasonRainMm": 494.2,
-      "bankedSharePct": 8.8
+      "seasonRainMm": 837.3,
+      "bankedSharePct": 5.2
     },
     {
       "mandalUuid": "f54481de-39de-4bfb-ab10-9692a09cd814",
@@ -13742,8 +13745,8 @@
       "status": "normal",
       "riseM": 1.37,
       "bankedMm3": 20.52,
-      "seasonRainMm": 361.7,
-      "bankedSharePct": 49.2
+      "seasonRainMm": 628.3,
+      "bankedSharePct": 28.3
     },
     {
       "mandalUuid": "8a00be4d-b4eb-4444-9097-b4680244fc2c",
@@ -13764,8 +13767,8 @@
       "status": "normal",
       "riseM": 0.25,
       "bankedMm3": 0.9,
-      "seasonRainMm": 69.1,
-      "bankedSharePct": null
+      "seasonRainMm": 157.3,
+      "bankedSharePct": 3.7
     },
     {
       "mandalUuid": "19cf5dff-2e61-4bb3-adbf-ca3f258a5e3d",
@@ -13786,8 +13789,8 @@
       "status": "normal",
       "riseM": 3.36,
       "bankedMm3": 17.23,
-      "seasonRainMm": 455.2,
-      "bankedSharePct": 17.0
+      "seasonRainMm": 872.9,
+      "bankedSharePct": 8.9
     },
     {
       "mandalUuid": "7df1fbdf-ea26-4dba-8f27-88a951d3e332",
@@ -13808,8 +13811,8 @@
       "status": "normal",
       "riseM": 0.75,
       "bankedMm3": 2.96,
-      "seasonRainMm": 61.9,
-      "bankedSharePct": null
+      "seasonRainMm": 182.9,
+      "bankedSharePct": 9.4
     },
     {
       "mandalUuid": "8adef9ed-a21d-446c-a9f2-d73d07445b85",
@@ -13830,8 +13833,8 @@
       "status": "normal",
       "riseM": 3.67,
       "bankedMm3": 18.22,
-      "seasonRainMm": 415.5,
-      "bankedSharePct": 20.3
+      "seasonRainMm": 712.4,
+      "bankedSharePct": 11.8
     },
     {
       "mandalUuid": "84196691-4762-480a-98f0-3a03a843d7ba",
@@ -13874,7 +13877,7 @@
       "status": "normal",
       "riseM": -0.26,
       "bankedMm3": 0.0,
-      "seasonRainMm": 165.6,
+      "seasonRainMm": 244.7,
       "bankedSharePct": 0.0
     },
     {
@@ -13896,8 +13899,8 @@
       "status": "normal",
       "riseM": 0.23,
       "bankedMm3": 0.93,
-      "seasonRainMm": 111.9,
-      "bankedSharePct": 4.6
+      "seasonRainMm": 203.0,
+      "bankedSharePct": 2.6
     },
     {
       "mandalUuid": "074cd2a2-561b-4801-9baf-0d9a6637936e",
@@ -13918,8 +13921,8 @@
       "status": "normal",
       "riseM": 2.06,
       "bankedMm3": 24.26,
-      "seasonRainMm": 334.2,
-      "bankedSharePct": 80.1
+      "seasonRainMm": 617.2,
+      "bankedSharePct": 43.4
     },
     {
       "mandalUuid": "c746e90d-682c-44d1-a0e8-7fcd25600589",
@@ -13940,8 +13943,8 @@
       "status": "normal",
       "riseM": 2.04,
       "bankedMm3": 6.78,
-      "seasonRainMm": 354.6,
-      "bankedSharePct": 13.2
+      "seasonRainMm": 790.8,
+      "bankedSharePct": 5.9
     },
     {
       "mandalUuid": "280bcc72-63e5-4e0f-b394-5c052c764673",
@@ -13962,8 +13965,8 @@
       "status": "normal",
       "riseM": 3.19,
       "bankedMm3": 11.72,
-      "seasonRainMm": 387.3,
-      "bankedSharePct": 18.9
+      "seasonRainMm": 828.1,
+      "bankedSharePct": 8.9
     },
     {
       "mandalUuid": "520ad93f-d6fd-4e6f-823e-3d17ca979e67",
@@ -13984,8 +13987,8 @@
       "status": "normal",
       "riseM": 4.04,
       "bankedMm3": 15.4,
-      "seasonRainMm": 364.6,
-      "bankedSharePct": 25.5
+      "seasonRainMm": 804.7,
+      "bankedSharePct": 11.5
     },
     {
       "mandalUuid": "52d21240-7287-4e9c-82cb-dfaa06c7cfe6",
@@ -14006,8 +14009,8 @@
       "status": "normal",
       "riseM": 1.39,
       "bankedMm3": 14.93,
-      "seasonRainMm": 356.7,
-      "bankedSharePct": 50.7
+      "seasonRainMm": 635.2,
+      "bankedSharePct": 28.4
     },
     {
       "mandalUuid": "34781e01-74da-4453-9dee-51615c1e6c31",
@@ -14028,8 +14031,8 @@
       "status": "normal",
       "riseM": 5.12,
       "bankedMm3": 16.96,
-      "seasonRainMm": 575.7,
-      "bankedSharePct": 20.5
+      "seasonRainMm": 1049.2,
+      "bankedSharePct": 11.2
     },
     {
       "mandalUuid": "cd665f90-d82a-4332-acac-7171af3a6ce7",
@@ -14050,8 +14053,8 @@
       "status": "normal",
       "riseM": 2.29,
       "bankedMm3": 6.5,
-      "seasonRainMm": 314.2,
-      "bankedSharePct": 16.8
+      "seasonRainMm": 716.7,
+      "bankedSharePct": 7.3
     },
     {
       "mandalUuid": "ca478743-03fe-49ea-abf9-73bd3bac2b28",
@@ -14072,8 +14075,8 @@
       "status": "normal",
       "riseM": 2.1,
       "bankedMm3": 6.47,
-      "seasonRainMm": 112.7,
-      "bankedSharePct": 34.3
+      "seasonRainMm": 220.8,
+      "bankedSharePct": 17.5
     },
     {
       "mandalUuid": "afec623b-4534-4570-9b19-248c3ad1ca92",
@@ -14094,8 +14097,8 @@
       "status": "normal",
       "riseM": 5.08,
       "bankedMm3": 38.08,
-      "seasonRainMm": 400.1,
-      "bankedSharePct": 69.3
+      "seasonRainMm": 747.1,
+      "bankedSharePct": 37.1
     },
     {
       "mandalUuid": "e335dbd6-029c-4be4-bf87-8953ba09e6e8",
@@ -14116,8 +14119,8 @@
       "status": "normal",
       "riseM": 3.58,
       "bankedMm3": 9.7,
-      "seasonRainMm": 311.8,
-      "bankedSharePct": 26.4
+      "seasonRainMm": 724.2,
+      "bankedSharePct": 11.4
     },
     {
       "mandalUuid": "ccf028b5-254d-4dfe-a9bc-d62504d5ea57",
@@ -14138,8 +14141,8 @@
       "status": "normal",
       "riseM": -0.02,
       "bankedMm3": 0.0,
-      "seasonRainMm": 42.8,
-      "bankedSharePct": null
+      "seasonRainMm": 139.9,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "6c9973d2-138a-4920-a40f-ec305ebc256f",
@@ -14160,8 +14163,8 @@
       "status": "normal",
       "riseM": 0.81,
       "bankedMm3": 8.81,
-      "seasonRainMm": 85.2,
-      "bankedSharePct": null
+      "seasonRainMm": 195.6,
+      "bankedSharePct": 9.5
     },
     {
       "mandalUuid": "43bea361-78f2-419b-beda-deeac728af5e",
@@ -14182,8 +14185,8 @@
       "status": "normal",
       "riseM": 2.45,
       "bankedMm3": 35.98,
-      "seasonRainMm": 502.9,
-      "bankedSharePct": 39.5
+      "seasonRainMm": 724.4,
+      "bankedSharePct": 27.4
     },
     {
       "mandalUuid": "23ae76b0-7108-4706-9b93-b3126c67021c",
@@ -14204,8 +14207,8 @@
       "status": "normal",
       "riseM": 1.01,
       "bankedMm3": 5.8,
-      "seasonRainMm": 129.5,
-      "bankedSharePct": 17.9
+      "seasonRainMm": 199.8,
+      "bankedSharePct": 11.6
     },
     {
       "mandalUuid": "0f86ede4-8a8b-44e7-b625-c27821d9765d",
@@ -14226,8 +14229,8 @@
       "status": "normal",
       "riseM": 1.87,
       "bankedMm3": 8.49,
-      "seasonRainMm": 98.1,
-      "bankedSharePct": null
+      "seasonRainMm": 231.4,
+      "bankedSharePct": 15.1
     },
     {
       "mandalUuid": "b6b6dd73-7fcd-4ead-8ba4-f0d5e1cece32",
@@ -14248,8 +14251,8 @@
       "status": "normal",
       "riseM": 1.08,
       "bankedMm3": 6.89,
-      "seasonRainMm": 76.2,
-      "bankedSharePct": null
+      "seasonRainMm": 191.5,
+      "bankedSharePct": 13.0
     },
     {
       "mandalUuid": "411b2bb1-7001-4cc6-929b-62daece2bcf6",
@@ -14270,8 +14273,8 @@
       "status": "normal",
       "riseM": 5.37,
       "bankedMm3": 26.85,
-      "seasonRainMm": 388.9,
-      "bankedSharePct": 31.8
+      "seasonRainMm": 759.3,
+      "bankedSharePct": 16.3
     },
     {
       "mandalUuid": "0399a83d-8c2c-421e-9c98-5680c12de597",
@@ -14292,8 +14295,8 @@
       "status": "normal",
       "riseM": 6.89,
       "bankedMm3": 31.27,
-      "seasonRainMm": 339.3,
-      "bankedSharePct": 46.7
+      "seasonRainMm": 751.7,
+      "bankedSharePct": 21.1
     },
     {
       "mandalUuid": "d4d6ee30-8f22-4fa3-b24c-3d1a8969fc7f",
@@ -14314,8 +14317,8 @@
       "status": "normal",
       "riseM": 4.73,
       "bankedMm3": 16.05,
-      "seasonRainMm": 443.3,
-      "bankedSharePct": 24.5
+      "seasonRainMm": 899.2,
+      "bankedSharePct": 12.1
     },
     {
       "mandalUuid": "87820ced-e383-42af-bdb6-1811fabe6b3b",
@@ -14336,8 +14339,8 @@
       "status": "normal",
       "riseM": 4.54,
       "bankedMm3": 19.11,
-      "seasonRainMm": 324.0,
-      "bankedSharePct": 32.2
+      "seasonRainMm": 653.4,
+      "bankedSharePct": 16.0
     },
     {
       "mandalUuid": "c918d31f-532a-4099-8662-334e2a61efb8",
@@ -14358,8 +14361,8 @@
       "status": "normal",
       "riseM": 2.49,
       "bankedMm3": 30.26,
-      "seasonRainMm": 414.5,
-      "bankedSharePct": 48.1
+      "seasonRainMm": 896.6,
+      "bankedSharePct": 22.2
     },
     {
       "mandalUuid": "d1154a62-bcf6-4ab1-8c86-b9c80358b3d2",
@@ -14380,8 +14383,8 @@
       "status": "normal",
       "riseM": 3.74,
       "bankedMm3": 11.12,
-      "seasonRainMm": 348.3,
-      "bankedSharePct": 24.7
+      "seasonRainMm": 781.0,
+      "bankedSharePct": 11.0
     },
     {
       "mandalUuid": "9f763556-bccd-40f2-bd49-e8544525b868",
@@ -14402,8 +14405,8 @@
       "status": "normal",
       "riseM": 4.24,
       "bankedMm3": 14.55,
-      "seasonRainMm": 574.5,
-      "bankedSharePct": 17.0
+      "seasonRainMm": 988.4,
+      "bankedSharePct": 9.9
     },
     {
       "mandalUuid": "ccdf8be0-4a7b-49fb-bb1c-1283ef65518a",
@@ -14424,8 +14427,8 @@
       "status": "normal",
       "riseM": 3.33,
       "bankedMm3": 37.88,
-      "seasonRainMm": 362.7,
-      "bankedSharePct": 119.3
+      "seasonRainMm": 723.2,
+      "bankedSharePct": 59.9
     },
     {
       "mandalUuid": "4df6187e-7e58-4d58-b41e-fbd2134e3f28",
@@ -14446,8 +14449,8 @@
       "status": "normal",
       "riseM": 1.21,
       "bankedMm3": 9.49,
-      "seasonRainMm": 53.0,
-      "bankedSharePct": null
+      "seasonRainMm": 136.5,
+      "bankedSharePct": 20.4
     },
     {
       "mandalUuid": "e25eba69-f28b-4810-b985-5b96682f52ff",
@@ -14468,8 +14471,8 @@
       "status": "normal",
       "riseM": 7.34,
       "bankedMm3": 80.8,
-      "seasonRainMm": 539.0,
-      "bankedSharePct": 31.3
+      "seasonRainMm": 977.2,
+      "bankedSharePct": 17.3
     },
     {
       "mandalUuid": "b2342c1c-26e0-45ea-b3eb-25e47dcbfdc8",
@@ -14490,8 +14493,8 @@
       "status": "normal",
       "riseM": 4.38,
       "bankedMm3": 55.19,
-      "seasonRainMm": 157.1,
-      "bankedSharePct": 74.4
+      "seasonRainMm": 281.4,
+      "bankedSharePct": 41.6
     },
     {
       "mandalUuid": "5a427d48-cfb6-4510-b89b-6ef2422e4fda",
@@ -14512,8 +14515,8 @@
       "status": "normal",
       "riseM": 3.69,
       "bankedMm3": 24.58,
-      "seasonRainMm": 162.7,
-      "bankedSharePct": 52.2
+      "seasonRainMm": 264.7,
+      "bankedSharePct": 32.1
     },
     {
       "mandalUuid": "c5ab6be6-26aa-402e-b3af-4e5805cbb082",
@@ -14534,8 +14537,8 @@
       "status": "normal",
       "riseM": 3.36,
       "bankedMm3": 22.91,
-      "seasonRainMm": 118.5,
-      "bankedSharePct": 55.3
+      "seasonRainMm": 255.4,
+      "bankedSharePct": 25.6
     },
     {
       "mandalUuid": "ca649eb8-c061-41d9-8a64-c91a85fbd401",
@@ -14556,8 +14559,8 @@
       "status": "normal",
       "riseM": 2.61,
       "bankedMm3": 8.48,
-      "seasonRainMm": 229.0,
-      "bankedSharePct": 26.2
+      "seasonRainMm": 302.4,
+      "bankedSharePct": 19.9
     },
     {
       "mandalUuid": "bff9cb90-8c08-4510-bfde-fa69bdd3774e",
@@ -14600,8 +14603,8 @@
       "status": "normal",
       "riseM": 2.47,
       "bankedMm3": 16.44,
-      "seasonRainMm": 59.6,
-      "bankedSharePct": null
+      "seasonRainMm": 158.9,
+      "bankedSharePct": 34.8
     },
     {
       "mandalUuid": "88aaa887-8788-42b2-ae12-1b806442ba2e",
@@ -14622,7 +14625,7 @@
       "status": "normal",
       "riseM": 2.82,
       "bankedMm3": 19.45,
-      "seasonRainMm": 8.9,
+      "seasonRainMm": 86.2,
       "bankedSharePct": null
     },
     {
@@ -14644,8 +14647,8 @@
       "status": "normal",
       "riseM": 7.36,
       "bankedMm3": 61.77,
-      "seasonRainMm": 41.4,
-      "bankedSharePct": null
+      "seasonRainMm": 135.7,
+      "bankedSharePct": 124.8
     },
     {
       "mandalUuid": "f441cc30-1c9a-4bdf-914f-6e31c29ea200",
@@ -14666,8 +14669,8 @@
       "status": "normal",
       "riseM": 15.01,
       "bankedMm3": 100.11,
-      "seasonRainMm": 393.5,
-      "bankedSharePct": 116.0
+      "seasonRainMm": 733.5,
+      "bankedSharePct": 62.2
     }
   ]
 }

@@ -1,8 +1,8 @@
 {
- "generatedAt": "2026-10-12T17:22:13+00:00",
+ "generatedAt": "2026-10-19T15:18:53+00:00",
  "method": "Each week's calls, made on that week's ECMWF forecast and frozen the day they were made, compared three weeks later with the NOAA STAR vegetation index over rainfed cropland, inside the same mandal and season, as the track record compares them. Seasons: kharif June-September, rabi October-May.",
  "rainfedMandals": 437,
- "frozen": 4,
+ "frozen": 5,
  "scored": 0,
  "firstFrozen": "2026-10-04",
  "nextDue": "2026-10-31",
@@ -51,6 +51,18 @@
     44
    ],
    "due": "2026-11-07",
+   "scored": false,
+   "fieldScored": false,
+   "fieldMandals": 0
+  },
+  {
+   "issued": "2026-10-19",
+   "season": "2026-27 rabi",
+   "outcomeWeek": [
+    2026,
+    45
+   ],
+   "due": "2026-11-14",
    "scored": false,
    "fieldScored": false,
    "fieldMandals": 0

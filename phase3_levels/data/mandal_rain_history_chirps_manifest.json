@@ -4,7 +4,7 @@
   "resolutionDeg": 0.05,
   "reduction": "mean of the 0.05-degree cells whose centres fall inside the mandal polygon; the cells it touches, for a polygon too small to contain a centre",
   "firstMonth": "1981-01",
-  "lastMonth": "2026-08",
-  "months": 548,
+  "lastMonth": "2026-09",
+  "months": 549,
   "rebuiltAt": "2026-10-03T22:59:49+00:00"
 }

@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "modelName": "AP Mandal Groundwater Temporal Nowcast",
   "modelVersion": "phase0-nowcast-3.0.0",
-  "buildTimestamp": "2026-10-12T17:03:46+00:00",
+  "buildTimestamp": "2026-10-19T14:59:45+00:00",
   "trainingPeriod": {
     "start": "2015-06",
     "end": "2026-08"
@@ -44,9 +44,9 @@
       },
       "sampleCount": 22448,
       "model": {
-        "maeM": 1.0278,
-        "rmseM": 2.269,
-        "r2": 0.9234
+        "maeM": 1.0241,
+        "rmseM": 2.2661,
+        "r2": 0.9235
       },
       "baseline": {
         "name": "same_month_previous_year",
@@ -55,37 +55,37 @@
       "lastReadingBaseline": {
         "name": "carry_last_reading_forward",
         "maeM": 1.1496,
-        "skillPct": 10.6
+        "skillPct": 10.91
       },
       "depthBands": [
         {
           "band": "0-5m",
           "sampleCount": 8926,
-          "maeM": 0.5876,
+          "maeM": 0.5808,
           "lastReadingMaeM": 0.6717
         },
         {
           "band": "5-10m",
           "sampleCount": 7281,
-          "maeM": 0.8227,
+          "maeM": 0.8198,
           "lastReadingMaeM": 0.9578
         },
         {
           "band": "10-20m",
           "sampleCount": 4496,
-          "maeM": 1.4186,
+          "maeM": 1.4195,
           "lastReadingMaeM": 1.5848
         },
         {
           "band": "20-30m",
           "sampleCount": 1029,
-          "maeM": 2.5837,
+          "maeM": 2.5785,
           "lastReadingMaeM": 2.7455
         },
         {
           "band": "30m+",
           "sampleCount": 716,
-          "maeM": 3.9112,
+          "maeM": 3.9118,
           "lastReadingMaeM": 4.032
         }
       ],
@@ -122,25 +122,25 @@
       "terrainCohorts": {
         "alluvial": {
           "sampleCount": 6570,
-          "maeM": 0.8489,
-          "empiricalCoveragePct": 79.41
+          "maeM": 0.8439,
+          "empiricalCoveragePct": 79.71
         },
         "coastal": {
           "sampleCount": 7703,
-          "maeM": 0.791,
-          "empiricalCoveragePct": 83.49
+          "maeM": 0.7843,
+          "empiricalCoveragePct": 83.9
         },
         "hard_rock": {
           "sampleCount": 8175,
-          "maeM": 1.3946,
-          "empiricalCoveragePct": 79.52
+          "maeM": 1.395,
+          "empiricalCoveragePct": 79.6
         }
       },
       "intervalEvaluation": {
         "intervalType": "conformalised_quantile_p10_p90",
         "nominalCoveragePct": 80,
-        "empiricalCoveragePct": 80.85,
-        "meanWidthM": 3.0893,
+        "empiricalCoveragePct": 81.11,
+        "meanWidthM": 3.1004,
         "sampleCount": 22448
       }
     },
@@ -153,13 +153,13 @@
         "end": "2026-09"
       },
       "sampleCount": 16328,
-      "maeM": 0.9113,
+      "maeM": 0.9067,
       "lastReadingMaeM": 1.0454,
-      "skillVsLastReadingPct": 12.83
+      "skillVsLastReadingPct": 13.27
     },
     "spatialEstimation": {
       "task": "whole_mandal_spatial_estimation",
-      "generatedAt": "2026-10-12T17:10:49+00:00",
+      "generatedAt": "2026-10-19T15:06:55+00:00",
       "validation": "5-fold GroupKFold with whole mandals held out",
       "rowCount": 82332,
       "mandalCount": 651,
@@ -221,7 +221,7 @@
     },
     "directForecast": {
       "task": "direct_multi_horizon_forecast",
-      "generatedAt": "2026-10-12T17:11:40+00:00",
+      "generatedAt": "2026-10-19T15:07:46+00:00",
       "featureTiming": "features available at forecast origin; no future rainfall",
       "baselineDefinitions": {
         "noChange": "the level at the forecast origin",
@@ -561,7 +561,7 @@
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",
-      "generatedAt": "2026-10-12T17:11:41+00:00",
+      "generatedAt": "2026-10-19T15:07:47+00:00",
       "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
       "overlapPeriod": {
         "start": "2014-06",
@@ -586,8 +586,8 @@
     "intervalEvaluation": {
       "intervalType": "conformalised_quantile_p10_p90",
       "nominalCoveragePct": 80,
-      "empiricalCoveragePct": 80.85,
-      "meanWidthM": 3.0893,
+      "empiricalCoveragePct": 81.11,
+      "meanWidthM": 3.1004,
       "sampleCount": 22448
     }
   },
@@ -631,7 +631,7 @@
     "climateBalance": "Rainfall minus actual evapotranspiration is a climatic water-balance indicator, not direct measured recharge.",
     "crossNetwork": "CGWB/APWRIMS results are a cross-network comparability diagnostic with site, aquifer, timing and aggregation limitations.",
     "officialUse": "Prototype results do not replace official field measurements or APWRIMS outputs.",
-    "rainfall": "663 estimates for 2026-09 were made before that month's satellite rain was published (CHIRPS posts about three weeks after a month ends; it runs to 2026-08). Measured on August 2026, a month without its rain raised the average error from 0.89 m to 1.04 m. They are remade when it arrives.",
+    "rainfall": "Every estimate reads rainfall for its own month; satellite rain (CHIRPS) runs to 2026-09.",
     "carriedForward": "Treated as missing: 2021-03, 2021-04, 2021-06, 2021-09, 2021-10, 2021-11, 2021-12. In those months nearly every mandal in the State's series repeats the month before to the centimetre, against about one in twenty in an ordinary month, so the readings are copies rather than measurements. The model does not learn from them, is not scored on them, and no page draws them.",
     "outlines": "The State's record lists 688 mandals; the map draws 670 outlines, from a public sub-district map made before the latest splits. 14 newer town mandals share their former town's outline, which shows the one with the longer record, and 5 have no outline yet; the model still estimates them. Official outlines for the split mandals would let the map draw every one."
   },
@@ -646,13 +646,13 @@
   },
   "inputHashes": {
     "apwrimsHistory": "83790c630a9df3a150118761ba351f2f2b89b6eae1db0e66eed2706ba8930f83",
-    "nowcasts": "805fe1513bc56cd9237aeaab57a4afacabe5acd569f3bbca160a647222b6f333",
+    "nowcasts": "9ad3747c544bb4f5c33ca06ee474b0d5d568390ae3efa8fec4d9a90a6a8f7239",
     "geometry": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0",
-    "districtSignals": "e9d397c10d706f85bbe614a9844bbba06d0a94158b43400afc3282ff3b24ae98",
-    "climateContext": "7aaf277a786e4a035898de3c3bae98ac5188308dd6729be0b767332422c595fd",
-    "graceProvenance": "b684342563f6edeaf0287bb74d5c91ff3ac816aae9786d92de5a66b35f7c2d62",
+    "districtSignals": "7c477a2d8a91b35f6738f61991ed257c0f31a40c1249be7a39bfad886b385558",
+    "climateContext": "f3f621464cf2f72f76b194fba4b2a76e3a0715d14bb762a986700c828a81aa5d",
+    "graceProvenance": "55bad6631f51305a7779b1729c5f856b3559cba33a07341ed9752d760039059c",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "c1d53e1ed2d008c67a8d513691e54454ca2019b4ec6a47a02be7e7419e570b5b"
+    "evaluations": "bbd651dfa78c2aa91fe146310ec2737b8d78728b9396d87ac63ca5eef82d32e4"
   },
-  "generatedAt": "2026-10-12T17:12:00+00:00"
+  "generatedAt": "2026-10-19T15:08:06+00:00"
 }

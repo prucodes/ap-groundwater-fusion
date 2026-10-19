@@ -1,27 +1,27 @@
 {
-  "checkedAt": "2026-10-12T17:22:12+00:00",
+  "checkedAt": "2026-10-19T15:18:51+00:00",
   "status": "refreshed",
   "sections": {
     "weather": {
       "status": "refreshed",
-      "seconds": 146.8
+      "seconds": 144.8
     },
     "vegetation": {
       "status": "refreshed",
-      "seconds": 9.7
+      "seconds": 8.6
     },
     "assessment": {
       "status": "refreshed",
-      "seconds": 161.9
+      "seconds": 164.6
     }
   },
-  "weatherIssued": "2026-10-12",
+  "weatherIssued": "2026-10-19",
   "vegetationWeeks": [
-    "2026-09-10",
     "2026-09-17",
     "2026-09-24",
-    "2026-10-01"
+    "2026-10-01",
+    "2026-10-08"
   ],
   "assessmentYear": "2025-2026",
-  "outputSha256": "e3d27f788f7f22211be657d43bf2c2d8d9148c2873fc39cffff89fd7152b8e8c"
+  "outputSha256": "6ad34c534ca2a2f119727e49c32ca98906b63cd420611bb0329465aee7448c95"
 }
