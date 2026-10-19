@@ -81,6 +81,42 @@ def committed_data_files():
     return set(re.findall(r"app/data/([A-Za-z0-9_]+\.json)", block))
 
 
+def fetched_public_payloads():
+    """Files under app/public that a component fetches at runtime.
+
+    These never appear in data.ts, so the import check below cannot see them. The
+    depth time-lapse was rebuilt by the weekly pipeline and left uncommitted, which
+    would have frozen it at the day it shipped while every figure beside it moved.
+    """
+    found = set()
+    for folder, _, names in os.walk(os.path.join(ROOT, "app", "components")):
+        if "node_modules" in folder:
+            continue
+        for name in names:
+            if not name.endswith((".ts", ".tsx")):
+                continue
+            with open(os.path.join(folder, name), encoding="utf-8") as handle:
+                found |= set(re.findall(r"fetch\(`\$\{BASE\}(/geo/[A-Za-z0-9_.-]+\.json)`", handle.read()))
+    return found
+
+
+def test_every_public_payload_a_component_fetches_is_committed():
+    workflow = open(WORKFLOW).read()
+    block = workflow[workflow.index("git add"):workflow.index("git commit")]
+    missing = set()
+    for path in fetched_public_payloads():
+        # A payload with a route handler is rebuilt by every export, so it cannot
+        # go stale and is never committed.
+        if os.path.isdir(os.path.join(ROOT, "app", "app", path.lstrip("/"))):
+            continue
+        if f"app/public{path}" not in block:
+            missing.add(path)
+    assert not missing, (
+        "a component fetches these at runtime and the weekly refresh does not commit them, "
+        f"so a rebuild would be discarded: {sorted(missing)}"
+    )
+
+
 def test_every_imported_data_file_is_committed_or_declared_static():
     missing = imported_data_files() - committed_data_files() - set(STATIC_BY_DESIGN)
     assert not missing, (

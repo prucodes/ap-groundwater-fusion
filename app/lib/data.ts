@@ -10,6 +10,7 @@ import districtGeometryJson from "../data/ap_district_geometry.json";
 import mandalHeatJson from "../data/ap_mandal_heat.json";
 import nasaProvenanceJson from "../data/nasa_provenance.json";
 import monsoonWatchJson from "../data/monsoon_watch.json";
+import assessmentTrajectoryJson from "../data/assessment_trajectory.json";
 import pacificEnsoJson from "../data/enso_pacific.json";
 import apTemperatureJson from "../data/ap_temperature.json";
 import type {
@@ -300,6 +301,29 @@ export type AfterElNino = {
 };
 
 export const monsoonWatch = monsoonWatchJson as unknown as MonsoonWatch;
+
+export type TrajectoryBand = "deepening" | "steady" | "rising";
+export type TrajectoryMandal = {
+  district: string; mandal: string; boundaryIndex: number | null;
+  category: string; stagePct: number | null;
+  driftMPerYear: number; band: TrajectoryBand;
+  years: number; firstYear: number; lastYear: number;
+};
+export type AssessmentTrajectory = {
+  assessmentYear: string;
+  previousYear: string | null;
+  rule: string;
+  mandalsScored: number;
+  counts: Record<string, Record<TrajectoryBand, number>>;
+  officialMovement: {
+    units: number; changedCategory: number; medianSwingPct: number | null;
+    overTwentyPoints: number; overFortyPoints: number;
+    examples: Array<{ unit: string; from: string; to: string; fromPct: number; toPct: number; changePct: number }>;
+  };
+  review: TrajectoryMandal[];
+  recovering: TrajectoryMandal[];
+};
+export const assessmentTrajectory = assessmentTrajectoryJson as unknown as AssessmentTrajectory;
 
 /** Context beside the groundwater, from APWRIMS's other public dashboards.
  * Each section carries its own as-of date and may be null if never fetched. */
