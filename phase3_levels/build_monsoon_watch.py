@@ -64,6 +64,8 @@ SHORTFALL_Z = 2.0
 # divide its way to an alarming score.
 MIN_SPREAD_M = 0.30
 SEVERE_M = 2.0
+# Below this much season rain, banked-over-rain is a ratio of its denominator.
+MIN_SHARE_RAIN_MM = 100.0
 
 EL_NINO = 0.5
 LA_NINA = -0.5
@@ -477,6 +479,7 @@ def build():
     # file the weekly refresh appends to. The composites want all 45 years.
     rain_paths = history_paths()
     rainfall = sw = ne = history = after = None
+    season_rain = {}
     if rain_paths:
         rain = pd.concat([pd.read_csv(path) for path in rain_paths], ignore_index=True)
         rain["year"] = rain.date.str.slice(0, 4).astype(int)
@@ -489,6 +492,7 @@ def build():
         elapsed = tuple(itertools.takewhile(lambda m: m in covered, (m for m in SW_MONSOON if m <= target_mm)))
         if elapsed:
             totals = seasonal_totals(rain, elapsed, "mm")
+            season_rain = totals[totals.year == year].set_index("boundary_index")["mm"].to_dict()
             yearly = totals.groupby("year")["mm"].mean()
             if year in yearly.index and len(yearly) > 5:
                 other = yearly.drop(year)
@@ -515,6 +519,8 @@ def build():
         sw = composite(sw_totals, "mm", oni, 6, district_of, season_share(rain, SW_MONSOON, district_of))
         ne = composite(seasonal_totals(rain, NE_MONSOON, "mm"), "mm", oni, 10, district_of, season_share(rain, NE_MONSOON, district_of))
         after = after_el_nino(sw_totals, "mm", oni)
+
+    banked = water_banked(mandals, season_rain)
 
     return {
         "contractVersion": CONTRACT_VERSION,
@@ -553,6 +559,7 @@ def build():
                      f"previous {LOOKBACK_YEARS} years; flagged short at >= {SHORTFALL_M} m AND "
                      f">= {SHORTFALL_Z}x its own year-to-year spread"),
         },
+        "banked": banked,
         "seasons": seasons,
         "trajectory": trajectory,
         "rainfall": rainfall,
@@ -560,6 +567,75 @@ def build():
         "elNinoRainfall": {"swMonsoon": sw, "neMonsoon": ne, "afterElNino": after},
         "districts": sorted(districts, key=lambda row: -row["shortfallM"]),
         "mandals": mandals,
+    }
+
+
+def water_banked(mandals, season_rain):
+    """What the season actually put into the ground, by water-table fluctuation.
+
+    GEC-2015's own method: a rise in the water table times the specific yield
+    times the area is the water stored. The site already published the mirror of
+    this as a shortfall volume; this is the side that says what did arrive, and
+    what share of the rain that fell on the mandal it represents.
+
+    It is a NET figure and says so. The rise is what remained after the season's
+    own pumping, so gross recharge is larger by whatever was drawn while it
+    rained, which no public source observes. A mandal whose table fell banked
+    nothing by this measure, which is the honest reading: the water that arrived
+    did not stay.
+    """
+    banked_total = rain_total = 0.0
+    shares, rising, counted, thin = [], 0, 0, 0
+    for row in mandals:
+        rise = -row["thisSeasonM"]
+        row["riseM"] = round(rise, 2)
+        if rise > 0:
+            rising += 1
+        yield_, area = row["specificYield"], row["areaKm2"]
+        if yield_ is None or area is None:
+            row["bankedMm3"] = row["seasonRainMm"] = row["bankedSharePct"] = None
+            continue
+        # metre x km2 = 1 Mm3; mm x km2 = 0.001 Mm3.
+        banked = max(rise, 0.0) * yield_ * area
+        row["bankedMm3"] = round(banked, 2)
+        mm = season_rain.get(row["boundaryIndex"]) if row["boundaryIndex"] is not None else None
+        if mm is None:
+            row["seasonRainMm"] = row["bankedSharePct"] = None
+            continue
+        row["seasonRainMm"] = round(float(mm), 1)
+        # A share of almost no rain is not a share. Under this floor the ratio is
+        # governed by its denominator: two hard-rock mandals that saw 9 mm and 41 mm
+        # came out at 732% and 409%, which says nothing about recharge.
+        if float(mm) < MIN_SHARE_RAIN_MM:
+            row["bankedSharePct"] = None
+            thin += 1
+            continue
+        fell = float(mm) * area * 1e-3
+        row["bankedSharePct"] = round(100 * banked / fell, 1) if fell > 0 else None
+        if fell > 0:
+            banked_total += banked
+            rain_total += fell
+            shares.append(row["bankedSharePct"])
+            counted += 1
+    if not counted:
+        return None
+    shares.sort()
+    return {
+        "mandals": counted,
+        "rising": rising,
+        "bankedMm3": round(banked_total, 0),
+        "rainMm3": round(rain_total, 0),
+        "sharePct": round(100 * banked_total / rain_total, 1) if rain_total else None,
+        "medianSharePct": shares[len(shares) // 2],
+        "shareFloorMm": MIN_SHARE_RAIN_MM,
+        "thinRain": thin,
+        # Rain alone cannot fill these: the balance is canal seepage and irrigation
+        # return flow, which GEC counts as its own recharge component and which no
+        # released dataset measures. Every one of them is in the Godavari delta.
+        "aboveRain": sum(1 for share in shares if share > 100),
+        "method": ("Water-table fluctuation (GEC-2015): the May-to-latest rise times the mandal's "
+                   "specific yield times its area. Net of the season's own pumping, which no public "
+                   "source observes, so gross recharge is larger."),
     }
 
 

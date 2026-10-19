@@ -172,6 +172,21 @@ export type MonsoonWatch = {
     }>;
     rule: string;
   };
+  /** What the season put into the ground, by water-table fluctuation (GEC-2015). */
+  banked: {
+    mandals: number;
+    rising: number;
+    bankedMm3: number;
+    rainMm3: number;
+    sharePct: number | null;
+    medianSharePct: number;
+    /** Below this much season rain a share is a ratio of its denominator, so none is published. */
+    shareFloorMm: number;
+    thinRain: number;
+    /** Mandals that banked more than their rain: canal seepage and return flow, not rainfall. */
+    aboveRain: number;
+    method: string;
+  } | null;
   seasons: Array<{
     year: number;
     mandals: number;
@@ -233,6 +248,11 @@ export type MonsoonWatch = {
     specificYield: number | null;
     areaKm2: number | null;
     shortfallMm3: number | null;
+    /** Rise since May: positive where the table came up. */
+    riseM: number;
+    bankedMm3: number | null;
+    seasonRainMm: number | null;
+    bankedSharePct: number | null;
     spreadM: number;
     latestDepthM: number;
     comparableYears: number;
