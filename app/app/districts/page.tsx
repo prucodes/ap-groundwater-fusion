@@ -14,6 +14,7 @@ import { DistrictTrendGrid } from "../../components/DistrictTrendGrid";
 import { DistrictProfile } from "../../components/governance/DistrictProfile";
 import styles from "../../components/governance/Governance.module.css";
 import { brief } from "../../lib/pageBriefs";
+import { AssessmentTrajectory } from "../../components/AssessmentTrajectory";
 import { districtsNow } from "../../lib/pageNow";
 
 export default function DistrictsPage() {
@@ -92,6 +93,17 @@ export default function DistrictsPage() {
           <span className="cardSub">measured history · steepest deepening first</span>
         </div>
         <DistrictTrendGrid series={trendSeries} selected={selected} onSelect={setSelected} />
+      </section>
+
+      <section className="card" id="assessment-trajectory">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconDroplet /></span>
+            Where the decade disagrees with the assessment
+          </div>
+          <span className="cardSub">official category against twelve years of measured pre-monsoon depth</span>
+        </div>
+        <AssessmentTrajectory />
       </section>
 
       <section className="card">

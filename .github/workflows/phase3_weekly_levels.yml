@@ -93,6 +93,8 @@ jobs:
             app/data/forecast_reliability.json \
             app/data/nasa_provenance.json \
             app/data/satellite_station_samples.json \
+            app/data/assessment_trajectory.json \
+            app/public/geo/depth-timelapse.json \
             app/public/water-crystal-3d.html \
             reports/watch-source-audit.json
           if [ -d data/refresh_receipts ]; then
