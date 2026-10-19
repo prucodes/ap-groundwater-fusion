@@ -31,7 +31,7 @@ const BRIEF_PDF = "ap-water-intelligence-brief.pdf";
 
 type Band = { band: string; sampleCount: number; maeM: number; lastReadingMaeM: number };
 type Terrain = Record<"alluvial" | "coastal" | "hard_rock", { maeM: number }>;
-type FieldSignals = { codes: { vciClass: string[]; category: string[] }; values: Record<string, Array<number | null>> };
+type FieldSignals = { codes: { vciClass: string[]; category: string[] }; values: Record<string, Array<number | null>>; vegetation: { averaged: Array<{ approxStart: string; approxEnd: string }> } };
 type Card = {
   evaluations: {
     temporalNowcast: { sampleCount: number; model: { maeM: number }; lastReadingBaseline: { maeM: number; skillPct: number }; depthBands: Band[]; terrainCohorts: Terrain; intervalEvaluation: { sampleCount: number; empiricalCoveragePct: number; meanWidthM: number } };
@@ -256,6 +256,7 @@ export default function BriefPage() {
   const vciCounts = tally(vciClasses), gecCounts = tally(gecClasses);
   const irrigated = Object.values(signals.values).map(row => row[4] ?? 0).sort((a, b) => a - b);
   const medianIrrigated = irrigated[Math.floor(irrigated.length / 2)];
+  const vciWindow = signals.vegetation.averaged;
   const rain = waterContext.rain;
   const ne = rain.neMonsoon;
   const summerClasses = new Map<number, string>();
@@ -396,9 +397,9 @@ export default function BriefPage() {
               <div className={styles.twocol}>
                 <div className={styles.mapcard}>
                   <div className={styles.k}>Crop condition · NOAA VHP, weighted to cropland</div>
-                  <h3>How the crop reads this week</h3>
+                  <h3>How the crop has read these four weeks</h3>
                   <div className={styles.big}>{vciCounts.get("severe") ?? 0}<small>mandals severe; {vciCounts.get("moderate") ?? 0} moderate</small></div>
-                  <p className={styles.how}>Vegetation Condition Index against each cell&rsquo;s own record, weighted by cropland share. The drought manual&rsquo;s Table 3.4 classes: 60–100 normal, 40–60 moderate, under 40 severe.</p>
+                  <p className={styles.how}>Vegetation Condition Index against each cell&rsquo;s own record, weighted by cropland share, averaged over the four weeks to {day(vciWindow[vciWindow.length - 1].approxEnd)}. Table 3.4 of the drought manual: 60–100 normal, 40–60 moderate, under 40 severe.</p>
                   <MandalMap classes={vciClasses} colours={VCI_COL} />
                   <Legend counts={vciCounts} items={[["normal", "Normal", VCI_COL.normal], ["moderate", "Moderate", VCI_COL.moderate], ["severe", "Severe", VCI_COL.severe]]} />
                 </div>
