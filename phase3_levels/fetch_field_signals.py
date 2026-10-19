@@ -342,12 +342,24 @@ def total(node, key="total"):
     return float(value) if isinstance(value, (int, float)) else None
 
 
+def stage_of_extraction(row):
+    """Stage of extraction, or None where INGRES did not assess one.
+
+    A salinity-affected unit has no stage: INGRES returns a sentinel (-100000)
+    rather than a share, for all 39 of them in Andhra Pradesh. Passed through it
+    reached the mandal pages as "-100000% of the extractable groundwater drawn".
+    Any negative share is meaningless, so none of them is published.
+    """
+    value = r1(total(row.get("stageOfExtraction")))
+    return None if value is not None and value < 0 else value
+
+
 def unit_record(row):
     draft = row.get("draftData") or {}
     return {
         "unit": row.get("locationName"),
         "cat": (row.get("category") or {}).get("total"),
-        "stage": r1(total(row.get("stageOfExtraction"))),
+        "stage": stage_of_extraction(row),
         "resource": r1(total(row.get("currentAvailabilityForAllPurposes"))),
         "extraction": r1(total(draft.get("total"))),
         "irrigation": r1(total(draft.get("agriculture"))),

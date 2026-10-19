@@ -38,11 +38,14 @@ type FieldSignals = {
 export const fieldSignals = fieldJson as unknown as FieldSignals;
 
 const vegetationRow = (row: VegRow): MandalVegetation | null => row ? { vci: row.v, cls: row.cls, allVci: row.all, croplandPct: row.crop, fewFields: row.few, weeks: row.weeks } : null;
+/** A salinity unit has no stage of extraction: INGRES returns a sentinel instead of a
+ *  share, so a negative value means "not assessed" and never reaches a page as a number. */
+const stage = (value: number | null) => (value === null || value < 0 ? null : value);
 const assessmentRow = (row: GwRow): MandalAssessment | null => row ? {
-  unit: row.unit, cat: row.cat, stagePct: row.stage, resourceHam: row.resource, extractionHam: row.extraction,
+  unit: row.unit, cat: row.cat, stagePct: stage(row.stage), resourceHam: row.resource, extractionHam: row.extraction,
   irrigationHam: row.irrigation, domesticHam: row.domestic, industryHam: row.industry, futureHam: row.future,
-  prev: row.prev ? { cat: row.prev.cat, stagePct: row.prev.stage } : null, match: row.match,
-  others: row.others.map(other => ({ unit: other.unit, cat: other.cat, stagePct: other.stage })),
+  prev: row.prev ? { cat: row.prev.cat, stagePct: stage(row.prev.stage) } : null, match: row.match,
+  others: row.others.map(other => ({ unit: other.unit, cat: other.cat, stagePct: stage(other.stage) })),
 } : null;
 
 /** Vegetation and assessment by boundary index, with the statewide summaries, for buildAgricultureEvidence.
