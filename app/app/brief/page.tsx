@@ -52,7 +52,7 @@ type Village = {
   spread: { medianVillageSpreadM: number; proxyPoor: number; proxyFair: number; proxyPoorThresholdM: number };
   validation: {
     persistence: { wellsScored: number; persistentSharePct: number; betweenWellOffsetSdM: number; withinWellScatterSdM: number };
-    splitHalf: { wellsScored: number; pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number };
+    splitHalf: { wellsScored: number; pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number; byAquifer: Array<{ aquifer: string; wells: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number }> };
     doseResponse: Dose[];
     staticCovariateNull: { mandalMeanMaeM: number; predictedOffsetMaeM: number; predictedOffsetR2: number; wellsScored: number };
     crossNetworkOffset: { persistentSharePct: number; pastPredictsFutureR: number; withLearnedOffsetMaeM: number; villagesReached: number } | null;
