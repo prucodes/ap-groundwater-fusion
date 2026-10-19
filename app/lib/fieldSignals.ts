@@ -48,7 +48,9 @@ export function fieldForMandal(district: string, mandal: string) {
   if (!row) return null;
   return {
     vci: row[0], vciClass: row[1] === null ? null : fieldMandals.codes.vciClass[row[1]] ?? null,
-    category: row[2] === null ? null : fieldMandals.codes.category[row[2]] ?? null, stagePct: row[3],
+    category: row[2] === null ? null : fieldMandals.codes.category[row[2]] ?? null,
+    // A salinity unit has no stage: INGRES sends a sentinel rather than a share.
+    stagePct: row[3] === null || row[3] < 0 ? null : row[3],
   };
 }
 
