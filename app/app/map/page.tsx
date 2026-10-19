@@ -8,6 +8,7 @@ import { DistrictMap, districtLayerMeta } from "../../components/DistrictMap";
 import { MapLegend } from "../../components/MapLegend";
 import { StatusSummaryCard } from "../../components/StatusSummaryCard";
 import { StatusLegend } from "../../components/StatusLegend";
+import { DepthTimeLapse } from "../../components/DepthTimeLapse";
 import { SelectedMandalPanel } from "../../components/SelectedMandalPanel";
 import { IconGlobe, IconGrid, IconInfo, IconMap } from "../../components/icons";
 import {
@@ -101,6 +102,17 @@ export default function MapPage() {
         showChips={false}
         variant="compact"
       />
+
+      <section className="card" id="time-lapse" aria-label="Twelve years of the water table">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconMap /></span>
+            Twelve years, month by month
+          </div>
+          <span className="cardSub">every mandal against its own usual for that month</span>
+        </div>
+        <DepthTimeLapse />
+      </section>
 
       <div className="mapWorkspace">
       <section className="card mapCard">
