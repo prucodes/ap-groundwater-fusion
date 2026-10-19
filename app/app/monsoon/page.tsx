@@ -18,6 +18,7 @@ import { PacificEnso } from "../../components/PacificEnso";
 import { MonsoonFilm } from "../../components/MonsoonFilm";
 import { EnsoOutlook } from "../../components/monsoon/EnsoOutlook";
 import { TemperatureRecord } from "../../components/TemperatureRecord";
+import { WaterBanked } from "../../components/WaterBanked";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { CountedReach } from "../../components/CountedReach";
 import { RowFold, foldAt } from "../../components/RowFold";
@@ -87,7 +88,7 @@ export default function MonsoonPage() {
       </div>
 
       <WatchEvidenceStatus />
-      <nav className={`${styles.nav} jumpNav`} aria-label="Monsoon sections"><a href="#season-evidence">Season evidence</a><a href="#monsoon-film-title">Film brief</a><a href="#enso-outlook">El Niño outlook</a><a href="#pacific-evidence">Pacific record</a><a href="#monsoon-map">Groundwater map</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
+      <nav className={`${styles.nav} jumpNav`} aria-label="Monsoon sections"><a href="#season-evidence">Season evidence</a>{w.banked ? <a href="#water-banked">What it banked</a> : null}<a href="#monsoon-film-title">Film brief</a><a href="#enso-outlook">El Niño outlook</a><a href="#pacific-evidence">Pacific record</a><a href="#monsoon-map">Groundwater map</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
 
       <section className={styles.season} id="season-evidence" aria-label="Season evidence">
         <div className="cardHead">
@@ -210,6 +211,17 @@ export default function MonsoonPage() {
           <p className="cardNote">{r.rule}. Source-series totals are not unique boundary counts; the Agriculture review uses reconciled boundary units. Baseline review pending.</p>
         </details>
       </section>
+      {w.banked ? <section className="card" id="water-banked" aria-label="What the season banked">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconDroplet /></span>
+            What the season banked
+          </div>
+          <span className="cardSub">water-table fluctuation · the method the official assessment uses</span>
+        </div>
+        <WaterBanked />
+      </section> : null}
+
       <MonsoonFilm live={currentFilmFigures()} />
 
       <EnsoOutlook />
