@@ -11,6 +11,7 @@ import mandalHeatJson from "../data/ap_mandal_heat.json";
 import nasaProvenanceJson from "../data/nasa_provenance.json";
 import monsoonWatchJson from "../data/monsoon_watch.json";
 import assessmentTrajectoryJson from "../data/assessment_trajectory.json";
+import seawaterWatchJson from "../data/seawater_watch.json";
 import pacificEnsoJson from "../data/enso_pacific.json";
 import apTemperatureJson from "../data/ap_temperature.json";
 import type {
@@ -324,6 +325,24 @@ export type AssessmentTrajectory = {
   recovering: TrajectoryMandal[];
 };
 export const assessmentTrajectory = assessmentTrajectoryJson as unknown as AssessmentTrajectory;
+
+/** Ground elevation minus depth to water: where the table stands below sea level,
+ * and how that sits against the official salinity classification. */
+export type SeawaterRow = {
+  district: string; mandal: string; depthM: number; groundM: number;
+  groundP10M: number; reliefM: number; headM: number; headP10M: number; category: string | null;
+};
+export type SeawaterWatch = {
+  generatedAt: string; observationPeriod: string | null; scored: number;
+  method: string; elevationSource: string; classificationSource: string; caveat: string;
+  deepWellThresholdM: number; belowSeaLevel: number; salinityUnits: number;
+  medianHeadSalinityM: number | null; medianHeadOtherM: number | null;
+  bands: Array<{ band: string; mandals: number; salinity: number; salinityPct: number | null }>;
+  confirmed: Array<Pick<SeawaterRow, "district" | "mandal" | "depthM" | "groundM" | "headM" | "category">>;
+  setAsideDeepWells: Array<Pick<SeawaterRow, "district" | "mandal" | "depthM" | "headM" | "category">>;
+  watch: SeawaterRow[];
+};
+export const seawaterWatch = seawaterWatchJson as unknown as SeawaterWatch;
 
 /** Context beside the groundwater, from APWRIMS's other public dashboards.
  * Each section carries its own as-of date and may be null if never fetched. */
