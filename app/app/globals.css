@@ -1897,7 +1897,19 @@ table.verifyTable thead th { position: sticky; top: 0; z-index: 1; padding: 10px
 }
 .mapLower > .card { height: 100%; }
 .mapLower .donutWrap { height: 100%; }
-@media (max-width: 1080px) {
+/* Stacked at 1260 rather than 1080, because the viewport is not what constrains
+   this map: the shell's 264px sidebar is. At a 1100px window the workspace is only
+   784px, the rail holds its 380px, and the State was drawn 318px wide -- half the
+   634px it gets at 1440, and smaller than the time-lapse above it. The map took the
+   whole of every pixel the window lost while the rail gave up none.
+
+   The map column tracks the window one pixel for one, since the rail is fixed, so
+   measuring it gives the threshold: at 1261 the map came out 468px, and 1360 is where
+   it clears 550 and reads at about the size of the time-lapse above it. Below that the
+   rail goes under the map and the map takes the full width instead. A map that is
+   larger on a narrower window is the ordinary cost of stacking; a map at half size on
+   a window only 340px narrower was not. */
+@media (max-width: 1359.98px) {
   .mapWorkspace { grid-template-columns: 1fr; }
   .mapRail { position: static; }
   .mapLower { grid-template-columns: 1fr; }
@@ -4297,6 +4309,18 @@ pre.jsonBody {
 }
 .estMapCard { overflow: hidden; }
 .estMapWrap { position: relative; padding: 4px 4px 0; }
+
+/* Stacked, the status map had the same fault the time-lapse did: at 1280x800 it drew
+   the State 854x730 in an 800px window, so the map ran past the fold. Capped by height
+   here, and only here -- /estimates uses .estMapWrap too and its own card is narrow
+   enough already. 1.26 is the outline's width over its height, divided by the 93% of
+   the wrap the svg takes, so it is the window that limits the map rather than the card.
+   The time-lapse above it is capped by the same 66vh, which is what keeps the two the
+   same size at every width. */
+.mapWorkspace .estMapWrap {
+  max-width: min(100%, calc(66vh * 1.26));
+  margin-inline: auto;
+}
 .estMapSvg {
   width: 100%;
   height: auto;
