@@ -12,6 +12,7 @@ import nasaProvenanceJson from "../data/nasa_provenance.json";
 import monsoonWatchJson from "../data/monsoon_watch.json";
 import assessmentTrajectoryJson from "../data/assessment_trajectory.json";
 import seawaterWatchJson from "../data/seawater_watch.json";
+import fieldQueueJson from "../data/field_queue.json";
 import pacificEnsoJson from "../data/enso_pacific.json";
 import apTemperatureJson from "../data/ap_temperature.json";
 import type {
@@ -343,6 +344,25 @@ export type SeawaterWatch = {
   watch: SeawaterRow[];
 };
 export const seawaterWatch = seawaterWatchJson as unknown as SeawaterWatch;
+
+/** Where a reading would be worth most: the interval width, the people and the
+ * irrigated area, each as a rank among all mandals, multiplied. */
+export type FieldQueueRow = {
+  rank: number; index: number; district: string; mandal: string;
+  intervalWidthM: number; people: number; irrigatedKm2: number; irrigatedPct: number;
+  stagePct: number | null; category: string | null; confidence: string | null;
+  belowSeaLevel: boolean; disagrees: string | null;
+  rankParts: { uncertainty: number; people: number; irrigated: number };
+};
+export type FieldQueue = {
+  generatedAt: string; method: string; caveat: string;
+  scored: number; published: number; minIrrigatedKm2: number;
+  populationSource: string; populationCaveat: string;
+  totals: { peopleInTopTwenty: number; irrigatedKm2InTopTwenty: number;
+            belowSeaLevelInTop: number; disagreeInTop: number };
+  queue: FieldQueueRow[];
+};
+export const fieldQueue = fieldQueueJson as unknown as FieldQueue;
 
 /** Context beside the groundwater, from APWRIMS's other public dashboards.
  * Each section carries its own as-of date and may be null if never fetched. */

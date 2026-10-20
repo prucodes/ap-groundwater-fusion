@@ -16,6 +16,7 @@ import styles from "../../components/governance/Governance.module.css";
 import { brief } from "../../lib/pageBriefs";
 import { AssessmentTrajectory } from "../../components/AssessmentTrajectory";
 import { SeawaterWatch } from "../../components/SeawaterWatch";
+import { FieldQueue } from "../../components/FieldQueue";
 import { districtsNow } from "../../lib/pageNow";
 
 export default function DistrictsPage() {
@@ -116,6 +117,17 @@ export default function DistrictsPage() {
           <span className="cardSub">ground elevation minus measured depth, against the official salinity map</span>
         </div>
         <SeawaterWatch />
+      </section>
+
+      <section className="card" id="field-queue">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconActivity /></span>
+            Where a visit would be worth most
+          </div>
+          <span className="cardSub">interval width, population and irrigated area, each ranked against every mandal</span>
+        </div>
+        <FieldQueue />
       </section>
 
       <section className="card">

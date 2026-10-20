@@ -125,6 +125,7 @@ STEPS = [
     # them. Optional: last week's file names the same places.
     ("build assessment trajectory", [PY, os.path.join(HERE, "build_assessment_trajectory.py")], False, 900),
     ("build seawater watch", [PY, os.path.join(HERE, "build_seawater_watch.py")], False, 900),
+    ("build field queue", [PY, os.path.join(HERE, "build_field_queue.py")], False, 900),
     # Every mandal through the national drought manual's two triggers: weekly
     # gauge rain and dry spells, SPI, NOAA's vegetation index, NRSC soil
     # moisture, the groundwater index, and reservoirs against ten years. After
