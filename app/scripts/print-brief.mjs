@@ -30,7 +30,7 @@ const folder = join(directory, "brief");
 const output = join(folder, "ap-water-intelligence-brief.pdf");
 const origin = `http://127.0.0.1:${port}${base}`;
 /** One sheet per <section> in app/app/brief/page.tsx. A mismatch means a section overflowed. */
-const SHEETS = 8;
+const SHEETS = 9;
 
 const server = spawn(process.execPath, [join(APP_DIR, "scripts/serve-static.mjs"), "--port", String(port), "--bind", "127.0.0.1", "--directory", directory, "--base", base || "/"], { stdio: "inherit" });
 const stop = () => { if (!server.killed) server.kill(); };

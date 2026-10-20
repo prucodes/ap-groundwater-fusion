@@ -26,9 +26,9 @@ test("the overview opens on four headline cards, with the full figures folded", 
   await expect(more).toContainText("Accuracy by depth");
 });
 
-test("the project brief is a six-sheet page with this week's maps, and Methodology offers its PDF", async ({ page }) => {
+test("the project brief is a nine-sheet page with this week's maps, and Methodology offers its PDF", async ({ page }) => {
   await page.goto("/brief/");
-  await expect(page.getByTestId("brief-sheet")).toHaveCount(8);
+  await expect(page.getByTestId("brief-sheet")).toHaveCount(9);
   await expect(page.locator("svg[aria-hidden='true'] path").first()).toBeAttached();
   await expect(page.getByTestId("brief-sheet").nth(4)).toContainText(`${summer.summary.beyond}mandals past their deepest May`);
   await expect(page.getByTestId("brief-pdf")).toHaveAttribute("href", /\/brief\/ap-water-intelligence-brief\.pdf$/);

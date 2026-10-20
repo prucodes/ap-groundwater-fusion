@@ -12,16 +12,17 @@ import fieldSignals from "../../data/field_signals_mandals.json";
 import waterContext from "../../data/water_context_summary.json";
 import cropRecord from "../../data/crop_water_record.json";
 import cropScore from "../../data/crop_water_scorecard.json";
+import villageJson from "../../data/village_offsets.json";
 import { basePath, datasetManifest, mapGeometry } from "../../lib/data";
 import { summerOutlook } from "../../lib/summer";
 import styles from "./Brief.module.css";
 
 export const metadata: Metadata = {
   title: "Project brief",
-  description: "The platform's data sources and groundwater model in eight A4 pages, rebuilt from each week's data.",
+  description: "The platform's data sources and groundwater model in nine A4 pages, rebuilt from each week's data.",
 };
 
-/* The eight-page brief: what the platform is, its sources, its model, this week's
+/* The nine-page brief: what the platform is, its sources, its model, this week's
    maps and the open questions. Every figure and map is read from the published
    data at build time; the deploy prints this page to brief/ap-water-intelligence-brief.pdf
    (scripts/print-brief.mjs), which also writes the 3D renders and site
@@ -44,10 +45,25 @@ type Card = {
 type Watch = { generatedAt: string; recharge: { mandals: number; fallingPct: number }; rainfall: { anomalyPct: number } | null; mandals: Array<{ boundaryIndex: number | null; status: "severe" | "short" | "normal" }> };
 type Drought = { state: { assessed: number; trigger1: number; trigger1Spi: number; drySpell: number; counts: Record<string, number> }; mandals: Array<{ i: number; category: string }> };
 type Latest = { v: number; u?: number; r?: number } | null;
+type Dose = { readings: number; residualErrorM: number; wells: number };
+type Village = {
+  source: { apWells: number; apReadings: number; period: string };
+  coverage: { villages: number; villagesPinned: number; mandals: number; mandalsWithSpread: number };
+  spread: { medianVillageSpreadM: number; proxyPoor: number; proxyFair: number; proxyPoorThresholdM: number };
+  validation: {
+    persistence: { wellsScored: number; persistentSharePct: number; betweenWellOffsetSdM: number; withinWellScatterSdM: number };
+    splitHalf: { wellsScored: number; pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number; byAquifer: Array<{ aquifer: string; wells: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number }> };
+    doseResponse: Dose[];
+    staticCovariateNull: { mandalMeanMaeM: number; predictedOffsetMaeM: number; predictedOffsetR2: number; wellsScored: number };
+    crossNetworkOffset: { persistentSharePct: number; pastPredictsFutureR: number; withLearnedOffsetMaeM: number; villagesReached: number } | null;
+    byWellType: Array<{ wellType: string; wells: number; persistence: { persistentSharePct: number }; splitHalf: { pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number }; doseResponse: Dose[] }>;
+  };
+};
 
 const card = cardJson as unknown as Card;
 const watch = watchJson as unknown as Watch;
 const drought = droughtJson as unknown as Drought;
+const village = villageJson as unknown as Village;
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const day = (iso: string) => { const [y, m, d] = iso.slice(0, 10).split("-").map(Number); return `${d} ${MONTHS[m - 1]} ${y}`; };
@@ -155,6 +171,36 @@ function ErrorByDepth({ bands }: { bands: Band[] }) {
   );
 }
 
+/** What each extra reading at a village buys, dug wells against bores. */
+function DoseCurve({ series }: { series: Array<{ label: string; colour: string; dose: Dose[]; below?: boolean }> }) {
+  const steps = series[0].dose.map(d => d.readings);
+  const peak = Math.max(...series.flatMap(s => s.dose.map(d => d.residualErrorM)));
+  const W = 320, H = 150, L = 26, R = 6, T = 20, B = 24;
+  const x = (i: number) => L + i * (W - L - R) / (steps.length - 1);
+  const y = (v: number) => T + (H - T - B) * (1 - v / peak);
+  const mandalBand = y(card.evaluations.temporalNowcast.model.maeM);
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className={styles.chart} role="img" aria-label="Village error against the number of readings taken there, for dug wells and bore wells">
+      <line x1={L} x2={W - R} y1={mandalBand} y2={mandalBand} stroke="#1f8a8a" strokeWidth="1" strokeDasharray="3 2" />
+      <line x1={W - R - 14} x2={W - R} y1="9" y2="9" stroke="#1f8a8a" strokeWidth="1" strokeDasharray="3 2" />
+      <text x={W - R - 19} y="12" textAnchor="end" className={styles.cs}>the mandal nowcast&rsquo;s own error, {card.evaluations.temporalNowcast.model.maeM.toFixed(2)} m</text>
+      <line x1={L} x2={L} y1={T - 6} y2={H - B} stroke="#9aa9ba" />
+      <line x1={L} x2={W - R} y1={H - B} y2={H - B} stroke="#9aa9ba" />
+      {steps.map((n, i) => <text key={n} x={x(i)} y={H - B + 11} textAnchor="middle" className={styles.cs}>{n}</text>)}
+      <text x={(L + W) / 2} y={H - 2} textAnchor="middle" className={styles.cs}>readings taken at the village</text>
+      {series.map(s => (
+        <g key={s.label}>
+          <polyline fill="none" stroke={s.colour} strokeWidth="1.8" strokeLinejoin="round"
+            points={s.dose.map((d, i) => `${x(i).toFixed(1)},${y(d.residualErrorM).toFixed(1)}`).join(" ")} />
+          {s.dose.map((d, i) => <circle key={d.readings} cx={x(i)} cy={y(d.residualErrorM)} r="2.1" fill={s.colour} />)}
+          <text x={x(0) + 4} y={y(s.dose[0].residualErrorM) - 6} className={styles.cv} fill={s.colour}>{s.label}</text>
+          <text x={x(s.dose.length - 1)} y={y(s.dose[s.dose.length - 1].residualErrorM) + (s.below ? 13 : -7)} textAnchor="end" className={styles.cv} fill={s.colour}>{s.dose[s.dose.length - 1].residualErrorM.toFixed(2)} m</text>
+        </g>
+      ))}
+    </svg>
+  );
+}
+
 const ICON: Record<string, ReactNode> = {
   drop: <svg viewBox="0 0 24 24"><path d="M12 3c3.5 4.2 6 7.6 6 10.8A6 6 0 0 1 6 13.8C6 10.6 8.5 7.2 12 3z" /></svg>,
   cloud: <svg viewBox="0 0 24 24"><path d="M7 16a4 4 0 0 1-.4-8 5.5 5.5 0 0 1 10.6 1.5A3.3 3.3 0 0 1 17 16z" /><path d="M8 19l-1 2M12 19l-1 2M16 19l-1 2" /></svg>,
@@ -207,7 +253,7 @@ function Band({ num, title, lede }: { num: string; title: string; lede: ReactNod
   return <div className={styles.band}><div className={styles.eyebrow}>{num}</div><h2>{title}</h2><p className={styles.lede}>{lede}</p></div>;
 }
 function Foot({ n }: { n: number }) {
-  return <div className={styles.pfoot}><span><b>AP Water Intelligence</b> · data sources and model · prucodes.github.io/ap-groundwater-fusion</span><span className={styles.mono}>{n} / 8</span></div>;
+  return <div className={styles.pfoot}><span><b>AP Water Intelligence</b> · data sources and model · prucodes.github.io/ap-groundwater-fusion</span><span className={styles.mono}>{n} / 9</span></div>;
 }
 
 type ImdExperiment = { window: { first: string; last: string }; gainPct: number; results: Record<"chirps" | "imd", { maeM: number; rows: number }> };
@@ -222,6 +268,8 @@ function imdExperiment(): ImdExperiment | null {
 }
 
 export default function BriefPage() {
+  const dug = village.validation.byWellType.find(row => row.wellType === "Dug well");
+  const bore = village.validation.byWellType.find(row => row.wellType === "Bore well");
   const t = card.evaluations.temporalNowcast;
   const roll = card.evaluations.rollingOriginNowcast;
   const h3 = card.evaluations.directForecast.horizons.find(h => h.horizonMonths === 3)?.rollingOrigin;
@@ -276,7 +324,7 @@ export default function BriefPage() {
     <div className="pageWrap">
       <div className={styles.viewer}>
         <div className={styles.toolbar}>
-          <p>The eight-page brief on the platform&rsquo;s sources and model, rebuilt from this week&rsquo;s data.</p>
+          <p>The nine-page brief on the platform&rsquo;s sources and model, rebuilt from this week&rsquo;s data.</p>
           <a className={styles.download} href={`${basePath}/brief/${BRIEF_PDF}`} download="AP-Water-Intelligence-brief.pdf" data-testid="brief-pdf">Download PDF</a>
         </div>
         <div className={styles.scroller}>
@@ -488,6 +536,51 @@ export default function BriefPage() {
 
             </div>
             <Foot n={8} />
+          </section>
+
+          <section className={styles.page} data-testid="brief-sheet">
+            <Band num="08 · Below the mandal" title="A village needs three readings, not a piezometer" lede={<>The department asked whether a level can be given per village at the error the model reaches per mandal. Not as it stands. The reason is not resolution. What is missing is a target: <b>APWRIMS publishes levels already averaged to mandal</b>, so nothing below mandal scale has ever been trained or tested. Measured below on {village.source.apWells.toLocaleString("en-US")} CGWB wells, {village.source.apReadings.toLocaleString("en-US")} readings, {village.source.period}.</>} />
+            <div className={styles.body}>
+              <div className={styles.figs}>
+                <div className={styles.fig}><b>{village.spread.medianVillageSpreadM.toFixed(2)} m</b><span>the median village stands this far from its mandal&rsquo;s mean, more than the whole mandal-level error</span></div>
+                <div className={styles.fig}><b>{village.validation.persistence.persistentSharePct.toFixed(0)}%</b><span>of that gap is fixed to the place, not month-to-month scatter</span></div>
+                <div className={styles.fig}><b>{village.validation.splitHalf.pastPredictsFutureR.toFixed(3)}</b><span>a well&rsquo;s past offset against its future one, {village.validation.splitHalf.wellsScored} wells, split-half</span></div>
+                <div className={styles.fig}><b>{dug ? dug.doseResponse.find(d => d.readings === 3)!.residualErrorM.toFixed(2) : "—"} m</b><span>village error after three readings at a dug well, under the nowcast&rsquo;s own {card.evaluations.temporalNowcast.model.maeM.toFixed(2)} m</span></div>
+              </div>
+
+              <div className={styles.note}><b>The accuracy is borrowed from the well.</b> The nowcast errs by {card.evaluations.temporalNowcast.model.maeM.toFixed(2)} m because every mandal has its own history to carry forward. That history alone, with no model, already gives {card.evaluations.temporalNowcast.lastReadingBaseline.maeM.toFixed(2)} m. Take the local sensor away and hold out whole mandals and the error is <b>{card.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(2)} m</b>. A village without a well is that case at a finer scale.</div>
+
+              <div className={styles.twocol}>
+                <div className={styles.chartcard}>
+                  <h3>What each reading at a village buys</h3>
+                  <p>Held out against the rest of that well&rsquo;s own record. CGWB reads in January, May, August and November, so four readings is about a year of quarterly measurement. These wells have a fixed datum and are read at rest, so private wells, read before pumping and from a marked point, will be noisier than this.</p>
+                  {dug && bore && <DoseCurve series={[{ label: "Dug well", colour: "#1f8a8a", dose: dug.doseResponse, below: true }, { label: "Bore well", colour: "#c2412d", dose: bore.doseResponse }]} />}
+                </div>
+                <div>
+                  <div className={styles.para}>A village three metres deeper than its mandal stays about three metres deeper. Across wells the mean offset varies by {village.validation.persistence.betweenWellOffsetSdM.toFixed(1)} m, while one well&rsquo;s own offset moves by {village.validation.persistence.withinWellScatterSdM.toFixed(1)} m, so it need not be tracked, only pinned once, after which the mandal network carries the movement. That cuts village error from {village.validation.splitHalf.mandalMeanAppliedMaeM.toFixed(2)} m to {village.validation.splitHalf.withLearnedOffsetMaeM.toFixed(2)} m.</div>
+                  <table className={styles.res}><thead><tr><th>Readings</th><th>Dug well</th><th>Bore well</th></tr></thead><tbody>
+                    {dug && bore && [1, 3, 4, 8].map(n => {
+                      const d = dug.doseResponse.find(x => x.readings === n), b = bore.doseResponse.find(x => x.readings === n);
+                      if (!d || !b) return null;
+                      const good = d.residualErrorM <= card.evaluations.temporalNowcast.model.maeM;
+                      return <tr key={n}><td>{n === 4 ? "4 · a year quarterly" : n === 8 ? "8 · two years" : n}</td><td className={`${styles.num} ${good ? styles.gain : ""}`}>{d.residualErrorM.toFixed(2)} m</td><td className={styles.num}>{b.residualErrorM.toFixed(2)} m</td></tr>;
+                    })}
+                  </tbody></table>
+                </div>
+              </div>
+
+              <div className={styles.note}><b>It helps most where the need is greatest.</b> Distance from the village on the mandal figure alone, against the same once an offset is pinned: {village.validation.splitHalf.byAquifer.map((row, i, all) => <span key={row.aquifer}><b>{row.aquifer === "hard_rock" ? "hard rock" : row.aquifer}</b> {row.mandalMeanAppliedMaeM.toFixed(2)} &rarr; {row.withLearnedOffsetMaeM.toFixed(2)} m{i < all.length - 1 ? ", " : ". "}</span>)}Hard rock is the worst terrain in every other test on this platform, and the one a single reading repairs most.</div>
+
+              <div className={`${styles.note} ${styles.teal}`}><b>Measuring beats modelling, which is what sets the ask.</b> Predicting the offset instead, from position, well depth and type with whole mandals held out, gives {village.validation.staticCovariateNull.predictedOffsetMaeM.toFixed(2)} m at an R&sup2; of {village.validation.staticCovariateNull.predictedOffsetR2.toFixed(2)}, <b>worse than using the mandal mean</b> at {village.validation.staticCovariateNull.mandalMeanMaeM.toFixed(2)} m. One actual reading, at {village.validation.doseResponse[0].residualErrorM.toFixed(2)} m, beats the best model.</div>
+
+              <div className={styles.limits}>
+                <div className={styles.lim}><b>Several wells per mandal, not one.</b> Measured instead against the State network&rsquo;s mandal mean, the method keeps only {village.validation.crossNetworkOffset?.persistentSharePct.toFixed(0)}% of its persistence and leaves {village.validation.crossNetworkOffset?.withLearnedOffsetMaeM.toFixed(1)} m, because a CGWB bore and a State dug well read different water. A pilot needs a handful of one kind per mandal, forming their own reference.</div>
+                <div className={styles.lim}><b>Dug wells and bores kept apart</b>, or the aquifer&rsquo;s depth enters what should be the village&rsquo;s position. Dug wells are the steadier stratum ({dug?.splitHalf.pastPredictsFutureR.toFixed(3)} against {bore?.splitHalf.pastPredictsFutureR.toFixed(3)}) and the kind a village draws from.</div>
+              </div>
+
+              <div className={styles.note}><b>What can be done now.</b> On {village.coverage.villages} villages across {village.coverage.mandals} mandals the offset is computable today, and the mandal figure is a poor village proxy in {village.spread.proxyPoor} of the {village.coverage.mandalsWithSpread} mandals where it can be checked, which is itself a way to choose where to measure first. <b>The State&rsquo;s own well-level history would settle the rest:</b> the mandal means here are averages of individual wells, so releasing those wells with coordinates turns a mandal estimate into a village one statewide, at no modelling cost. That is the first ask on the previous page, with a number now attached.</div>
+            </div>
+            <Foot n={9} />
           </section>
 
         </div>

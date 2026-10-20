@@ -56,6 +56,13 @@ STATIC_BY_DESIGN = {
         "phase3_levels/build_crop_water_record.py when a season ends (about an hour of paced "
         "ERA5 downloads, cached), and dated in the file"
     ),
+    "village_offsets.json": (
+        "each village's fixed offset from its mandal, built by "
+        "phase3_levels/build_village_offsets.py from CGWB's quality-controlled well "
+        "records, which are git-ignored for size and end in 2023; the offsets are "
+        "~94% persistent, which is the finding the file exists to carry, so they do "
+        "not go stale on a weekly cadence -- re-run when newer well records arrive"
+    ),
     "monsoon_film.json": (
         "the narrated film's chapters and the figures it speaks; a fixed edition, rebuilt "
         "only when the film is re-narrated and re-rendered (scripts/prepare_monsoon_film.py), "
