@@ -7,7 +7,8 @@
    wide card the map, its scrubber and the timeline strip now take one column and
    the legend and note take the other, which fills the card, keeps the State on
    screen, and brings it back to about the size of the map below. Narrow cards
-   stack as before, where the height cap is what keeps it on screen.
+   stack as before, where the height cap is what keeps it on screen. The breakpoint
+   matches the status map's own, at 85rem, so the two switch layout together.
    1.17 is the outline's width over its height. */
 .wrap { display: grid; gap: 14px 26px; }
 .main { display: grid; gap: 14px; min-width: 0; max-width: min(100%, calc(66vh * 1.17)); }
@@ -40,7 +41,7 @@
 .stateTrack b[data-state="LaNina"] { background: #2d6f94; }
 .pacificNote { margin: 2px 0 0; font-size: 11px; line-height: 1.45; color: var(--muted); }
 .pacificNote b { color: var(--ink); font-weight: 600; }
-@media (min-width: 80rem) {
+@media (min-width: 85rem) {
   .wrap { grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); align-items: start; }
 }
 .stage { position: relative; width: 100%; border-radius: 12px; overflow: hidden;
