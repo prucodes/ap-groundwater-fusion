@@ -15,6 +15,7 @@ import { DistrictProfile } from "../../components/governance/DistrictProfile";
 import styles from "../../components/governance/Governance.module.css";
 import { brief } from "../../lib/pageBriefs";
 import { AssessmentTrajectory } from "../../components/AssessmentTrajectory";
+import { SeawaterWatch } from "../../components/SeawaterWatch";
 import { districtsNow } from "../../lib/pageNow";
 
 export default function DistrictsPage() {
@@ -104,6 +105,17 @@ export default function DistrictsPage() {
           <span className="cardSub">official category against twelve years of measured pre-monsoon depth</span>
         </div>
         <AssessmentTrajectory />
+      </section>
+
+      <section className="card" id="seawater-watch">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconDroplet /></span>
+            Where the water table sits below sea level
+          </div>
+          <span className="cardSub">ground elevation minus measured depth, against the official salinity map</span>
+        </div>
+        <SeawaterWatch />
       </section>
 
       <section className="card">

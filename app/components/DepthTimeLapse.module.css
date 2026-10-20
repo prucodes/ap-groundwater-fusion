@@ -1,4 +1,9 @@
-.wrap { display: grid; gap: 14px; }
+/* Andhra Pradesh is nearly as tall as it is wide, so a card the full width of a
+   1440px page drew the State 925px high: taller than the window, which left the
+   map cut off at the fold and the scrubber below it. The module is capped and
+   centred instead, by height as much as width, so the whole State and its
+   controls sit on screen together. 1.17 is the outline's width over its height. */
+.wrap { display: grid; gap: 14px; max-width: min(100%, 760px, calc(66vh * 1.17)); margin-inline: auto; }
 .stage { position: relative; width: 100%; border-radius: 12px; overflow: hidden;
   background: linear-gradient(180deg, var(--map-sea-a), var(--map-sea-b)); }
 .stage canvas { display: block; width: 100%; height: auto; }
