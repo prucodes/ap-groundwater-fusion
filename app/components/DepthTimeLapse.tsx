@@ -22,6 +22,9 @@ const MONTHS = ["January", "February", "March", "April", "May", "June",
 type Lapse = {
   months: string[]; mandals: number; stepM: number; zero: number;
   scaleM: Array<number | null>; deeperThanUsualPct: Array<number | null>;
+  pacific: { bestLagMonths: number; bestR: number; caveat: string;
+             byState: Array<{ state: string; months: number; medianDeeperPct: number }> } | null;
+  marks: Array<{ at: number; label: string; why: string }>;
   oniC: Array<number | null>; cells: string; rule: string;
 };
 type Outlines = { view: { width: number; height: number }; mandals: string[]; districts: string };
@@ -138,6 +141,7 @@ export function DepthTimeLapse() {
 
   return (
     <div className={styles.wrap}>
+      <div className={styles.main}>
       <div className={styles.stage}>
         <canvas ref={canvas} role="img" aria-label={`Water table against each mandal's own usual, ${label(month)}`} />
         <div className={styles.readout}>
@@ -161,6 +165,18 @@ export function DepthTimeLapse() {
           onChange={event => { setPlaying(false); setFrame(Number(event.target.value)); }} />
       </div>
 
+      {lapse.marks?.length ? (
+        <div className={styles.marks}>
+          {lapse.marks.map(mark => (
+            <button key={mark.at} type="button" className={styles.mark}
+              aria-pressed={frame === mark.at} title={mark.why}
+              onClick={() => { setPlaying(false); setFrame(mark.at); }}>
+              {mark.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
+
       <svg className={styles.strip} viewBox={`0 0 ${strip.W} ${strip.H}`} role="img"
         aria-label="Share of mandals deeper than usual each month, with El Niño months marked">
         {strip.warm.map(([from, to], index) => (
@@ -174,12 +190,39 @@ export function DepthTimeLapse() {
         <text x={0} y={strip.H - 1}>{lapse.months[0].slice(0, 4)}</text>
         <text x={strip.W} y={strip.H - 1} textAnchor="end">{lapse.months[lapse.months.length - 1].slice(0, 4)}</text>
       </svg>
+      </div>
 
+      <div className={styles.side}>
+      {lapse.pacific ? (
+        <div className={styles.pacific}>
+          <div className={styles.pacificHead}>The Pacific and the water table</div>
+          {lapse.pacific.byState.map(row => {
+            const widest = Math.max(...lapse.pacific!.byState.map(s => s.medianDeeperPct));
+            return (
+              <div className={styles.state} key={row.state}>
+                <i>{row.state}</i>
+                <div className={styles.stateTrack}>
+                  <b style={{ width: `${100 * row.medianDeeperPct / widest}%` }}
+                    data-state={row.state.replace(/\s+/g, "")} />
+                </div>
+                <span>{row.medianDeeperPct}%</span>
+              </div>
+            );
+          })}
+          <p className={styles.pacificNote}>
+            Median share of mandals deeper than their own usual, by the state of
+            Ni&ntilde;o 3.4 that month. The two move most closely about{" "}
+            <b>{lapse.pacific.bestLagMonths} months</b>{" "}after the Pacific does
+            (r&nbsp;{lapse.pacific.bestR.toFixed(2)}).{" "}{lapse.pacific.caveat}
+          </p>
+        </div>
+      ) : null}
       <div className={styles.legend}>
         <span>Higher than its usual</span><span className={styles.ramp} /><span>Deeper than its usual</span>
         <span>· shaded months are El Niño · the line is Niño 3.4</span>
       </div>
       <p className={styles.note}>{lapse.rule} Each mandal is scaled by its own range, so the colour reads as unusual for that mandal rather than as depth: hard rock moves tens of metres where the delta moves one.</p>
+      </div>
     </div>
   );
 }

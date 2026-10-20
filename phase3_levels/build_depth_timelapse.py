@@ -54,6 +54,103 @@ def boundary_of():
     return out, len(geo["mandals"])
 
 
+# ENSO states, by the threshold the Climate Prediction Center uses on Nino 3.4.
+EL_NINO_C, LA_NINA_C = 0.5, -0.5
+# Lags searched when asking how far the water table trails the Pacific.
+MAX_LAG_MONTHS = 14
+MIN_PAIRS = 60
+
+
+def correlation(left, right):
+    count = len(left)
+    if count < 2:
+        return 0.0
+    mean_l, mean_r = sum(left) / count, sum(right) / count
+    var_l = sum((x - mean_l) ** 2 for x in left)
+    var_r = sum((y - mean_r) ** 2 for y in right)
+    if var_l == 0 or var_r == 0:
+        return 0.0
+    return sum((x - mean_l) * (y - mean_r) for x, y in zip(left, right)) / (var_l ** 0.5 * var_r ** 0.5)
+
+
+def pacific(months, deeper, oni_by_month):
+    """What the Pacific has done to Andhra's water table over these twelve years.
+
+    Descriptive, not predictive. Both series move slowly -- a water table in one
+    month is most of the next month's -- so the effective sample is far smaller
+    than the month count, and no significance is claimed or implied anywhere this
+    is shown. The lag reported is simply where the correlation peaks.
+    """
+    paired = [(share, oni_by_month.get(month))
+              for month, share in zip(months, deeper)]
+    paired = [(share, value) for share, value in paired
+              if share is not None and value is not None]
+    if len(paired) < MIN_PAIRS:
+        return None
+
+    lags = []
+    for lag in range(MAX_LAG_MONTHS + 1):
+        leading = [value for _, value in paired[:len(paired) - lag]]
+        trailing = [share for share, _ in paired[lag:]]
+        if len(leading) < MIN_PAIRS:
+            break
+        lags.append({"lagMonths": lag, "r": round(correlation(leading, trailing), 3),
+                     "months": len(leading)})
+    best = max(lags, key=lambda row: abs(row["r"]))
+
+    def median_share(rows):
+        ordered = sorted(rows)
+        return round(ordered[len(ordered) // 2], 1) if ordered else None
+
+    states = []
+    for name, rows in (
+        ("El Nino", [s for s, v in paired if v >= EL_NINO_C]),
+        ("Neutral", [s for s, v in paired if LA_NINA_C < v < EL_NINO_C]),
+        ("La Nina", [s for s, v in paired if v <= LA_NINA_C]),
+    ):
+        if rows:
+            states.append({"state": name, "months": len(rows),
+                           "medianDeeperPct": median_share(rows)})
+    return {
+        "bestLagMonths": best["lagMonths"],
+        "bestR": best["r"],
+        "lags": lags,
+        "byState": states,
+        "rule": "Share of mandals deeper than their own usual, against Nino 3.4 in the "
+                "same month and at lags after it.",
+        "caveat": "A description of these twelve years, not a forecast. Both series move "
+                  "slowly, so far fewer than the month count are independent and no "
+                  "significance is claimed; the lag is where the correlation peaks.",
+    }
+
+
+def marks(months, deeper, oni_by_month):
+    """A few months worth jumping straight to."""
+    out = []
+    scored = [(index, share) for index, share in enumerate(deeper) if share is not None]
+    if scored:
+        deepest = max(scored, key=lambda row: row[1])
+        shallowest = min(scored, key=lambda row: row[1])
+        out.append({"at": deepest[0], "label": "Driest month",
+                    "why": f"{deepest[1]}% of mandals deeper than their own usual"})
+        out.append({"at": shallowest[0], "label": "Fullest month",
+                    "why": f"only {shallowest[1]}% deeper than usual"})
+    warm = [(index, oni_by_month.get(month)) for index, month in enumerate(months)
+            if oni_by_month.get(month) is not None]
+    if warm:
+        peak = max(warm, key=lambda row: row[1])
+        if peak[1] >= EL_NINO_C:
+            out.append({"at": peak[0], "label": "Strongest El Nino",
+                        "why": f"Nino 3.4 at +{peak[1]:.2f} C"})
+    out.append({"at": len(months) - 1, "label": "Now", "why": "the latest month on record"})
+    seen, unique = set(), []
+    for mark in out:
+        if mark["at"] not in seen:
+            seen.add(mark["at"])
+            unique.append(mark)
+    return sorted(unique, key=lambda mark: mark["at"])
+
+
 def build():
     series = load("mandal_observation_series_v2.json")["series"]
     place, mandal_count = boundary_of()
@@ -134,6 +231,8 @@ def build():
                       "floored at 0.5 m, so the colour reads as unusual for that mandal."),
         "deeperThanUsualPct": deeper,
         "oniC": [oni.get(month) for month in months],
+        "pacific": pacific(months, deeper, oni),
+        "marks": marks(months, deeper, oni),
         "placed": placed,
         "clipped": clipped,
         "cells": base64.b64encode(bytes(cells)).decode("ascii"),
