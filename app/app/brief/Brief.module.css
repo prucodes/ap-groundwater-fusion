@@ -139,6 +139,24 @@ table.res td.no { color: #a33b2c; font-weight: 600; }
 .toolbar p { font-size: 13px; color: var(--ink-soft); }
 .download { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border-radius: 999px; background: #0b2a4d; color: #fff !important; font-weight: 600; font-size: 13px; text-decoration: none; }
 .scroller { overflow-x: auto; padding-bottom: 8px; }
+/* On a phone the A4 sheet is 794px inside a 375px screen, so the cover used to read
+   "AP Water In" and every page had to be panned sideways to be read at all. Each sheet
+   is scaled to fit instead, showing the page whole and letting the reader pinch into
+   it, the way a PDF viewer behaves.
+
+   This uses `zoom` rather than `transform: scale()` on purpose. A transform does not
+   change the box an element reserves, so the nine sheets each left a screenful of blank
+   space behind them; compensating with negative margins collapsed the document to an
+   empty page. `zoom` reflows, so the sheets simply stack.
+
+   Screen only, and every width here sits below A4's own 794px, so printing and the PDF
+   never match these rules. */
+@media screen and (max-width: 860px) { .page { zoom: 0.84; } }
+@media screen and (max-width: 720px) { .page { zoom: 0.66; } }
+@media screen and (max-width: 560px) { .page { zoom: 0.52; } }
+@media screen and (max-width: 470px) { .page { zoom: 0.50; } }
+@media screen and (max-width: 400px) { .page { zoom: 0.45; } }
+
 @page { size: A4; margin: 0; }
 @media print {
   .toolbar { display: none !important; }
