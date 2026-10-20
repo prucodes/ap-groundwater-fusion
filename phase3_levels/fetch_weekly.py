@@ -120,6 +120,7 @@ STEPS = [
     # time-lapse. Reads the series the app data step has just written, so it runs
     # after it. Optional: last week's file is a month short, not wrong.
     ("build depth time-lapse", [PY, os.path.join(HERE, "build_depth_timelapse.py")], False, 900),
+    ("build mandal hydrographs", [PY, os.path.join(HERE, "build_mandal_hydrographs.py")], False, 900),
     # The official category against a decade of measured pre-monsoon depth. Reads
     # the series and the assessment the steps above have written, so it runs after
     # them. Optional: last week's file names the same places.

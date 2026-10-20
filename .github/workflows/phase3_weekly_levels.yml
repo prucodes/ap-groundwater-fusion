@@ -97,6 +97,7 @@ jobs:
             app/data/seawater_watch.json \
             app/data/field_queue.json \
             app/public/geo/depth-timelapse.json \
+            app/public/geo/mandal-hydrographs.json \
             app/public/water-crystal-3d.html \
             reports/watch-source-audit.json
           if [ -d data/refresh_receipts ]; then

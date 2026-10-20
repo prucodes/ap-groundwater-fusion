@@ -6001,3 +6001,10 @@ html { scroll-padding-top: 64px; }
   .linkAction { padding-block: 12px; }
   .dataTable button.linkAction { padding-block: 12px; }
 }
+
+/* The twelve-year hydrograph in the map tooltip. Depth runs downward, so the line
+   falling is the water table falling; the dot is the latest reading. */
+.estHoverSpark { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--hairline); color: var(--ink); }
+.estHoverSpark svg { display: block; width: 100%; height: auto; }
+.estHoverSparkFoot { display: flex; justify-content: space-between; gap: 8px;
+  margin-top: 3px; font-family: var(--font-mono); font-size: 9.5px; color: var(--muted); }

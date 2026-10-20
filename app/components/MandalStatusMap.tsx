@@ -20,8 +20,9 @@ import type { MandalHeatLayerKey } from "../lib/types";
 import { isWaterLayer, WATER_LAYER_META, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
 import { FIELD_LAYER_META, fieldLayerColor, fieldLayerText, isFieldLayer, type FieldLayer } from "../lib/fieldSignals";
 import { mapTooltipStyle } from "../lib/mapTooltip";
+import { HoverHydrograph } from "./HoverHydrograph";
 
-type HoverState = { d: string; m: string; id?: string };
+type HoverState = { d: string; m: string; id?: string; i: number };
 
 /** Crisp SVG status choropleth — same look as the Estimates map (no Leaflet basemap).
  *  mode "status" colours by fusion status bucket; otherwise by the heat layer. */
@@ -80,9 +81,9 @@ export function MandalStatusMap({
               fillOpacity={selected ? 1 : 0.9}
               stroke={selected || active ? "var(--ink)" : "var(--hairline)"}
               strokeWidth={selected ? 1.4 : active ? 1.1 : 0.3}
-              onMouseEnter={() => setHover({ d: m.d, m: m.m, id: rec?.id })}
+              onMouseEnter={() => setHover({ d: m.d, m: m.m, id: rec?.id, i })}
               onMouseLeave={() => setHover(null)}
-              onFocus={() => { setFocusIndex(i); setHover({ d: m.d, m: m.m, id: rec?.id }); }}
+              onFocus={() => { setFocusIndex(i); setHover({ d: m.d, m: m.m, id: rec?.id, i }); }}
               onKeyDown={event => {
                 if (event.key === "Escape") { setHover(null); return; }
                 if (event.key === "Enter" || event.key === " ") { event.preventDefault(); if (rec) onSelect(rec.id); return; }
@@ -134,6 +135,7 @@ export function MandalStatusMap({
               </div>
               <div className="estHoverRow"><span>Latest recorded</span><span>{formatNumber(hoverRec.display_mbgl)} m bgl</span></div>
               <div className="estHoverRow"><span>Observation period</span><span>{hoverRec.latest_observation_period || "Not supplied"}</span></div>
+              <HoverHydrograph index={hover.i} />
               <div className="estHoverSub">{`${boundaryLabel(mapGeometry.mandals.find((f) => f.d === hover?.d && f.m === hover?.m))} · not an official result`}</div>
             </>
           ) : (
