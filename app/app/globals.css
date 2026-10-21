@@ -6032,3 +6032,24 @@ html { scroll-padding-top: 64px; }
 .estHoverSpark svg { display: block; width: 100%; height: auto; }
 .estHoverSparkFoot { display: flex; justify-content: space-between; gap: 8px;
   margin-top: 3px; font-family: var(--font-mono); font-size: 9.5px; color: var(--muted); }
+
+/* The recharge layer's one insight, under its legend: the aquifer a mandal sits on
+   barely moves how much of its rain is banked, and the coast is the outlier. The
+   map cannot show that -- it is a comparison of groups, not of places. */
+.rechargeAquifers { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 2px; }
+.rechargeAquifer { flex: 1 1 110px; min-width: 0; padding: 8px 10px; border: 1px solid var(--line);
+  border-radius: 10px; background: var(--card); }
+.rechargeAquifer b { display: block; font-family: var(--font-display); font-size: 19px;
+  font-weight: 600; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.rechargeAquifer span { display: block; margin-top: 3px; font-size: 11.5px; color: var(--ink-soft); }
+.rechargeAquifer i { display: block; font-style: normal; font-size: 10.5px; color: var(--muted); }
+
+.rechargeMethod { margin-top: 8px; font-size: 11.5px; color: var(--muted); }
+.rechargeMethod > summary { cursor: pointer; color: var(--ink-soft); font-weight: 600;
+  list-style: none; display: inline-flex; align-items: center; gap: 5px; }
+.rechargeMethod > summary::-webkit-details-marker { display: none; }
+.rechargeMethod > summary::before { content: "\25B8"; font-size: 9px; transition: transform .12s var(--ease); }
+.rechargeMethod[open] > summary::before { transform: rotate(90deg); }
+.rechargeMethod p { margin: 7px 0 0; line-height: 1.5; max-width: 72ch; }
+.rechargeMethod ul { margin: 6px 0 0; padding-left: 16px; display: grid; gap: 5px; }
+.rechargeMethod li { line-height: 1.45; max-width: 72ch; }

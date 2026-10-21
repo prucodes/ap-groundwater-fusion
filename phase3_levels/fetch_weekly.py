@@ -116,6 +116,7 @@ STEPS = [
     # has just published. Optional: it is a standalone page and a front-page
     # strip, and last week's file stays readable if this fails.
     ("build monsoon watch", [PY, os.path.join(HERE, "build_monsoon_watch.py")], False, 1800),
+    ("build recharge efficiency", [PY, os.path.join(HERE, "build_recharge_efficiency.py")], False, 1200),
     # Twelve years of the water table as a byte per mandal-month, for the
     # time-lapse. Reads the series the app data step has just written, so it runs
     # after it. Optional: last week's file is a month short, not wrong.

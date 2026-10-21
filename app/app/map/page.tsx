@@ -27,6 +27,7 @@ import {
 import type { DistrictLayerKey, MandalHeatLayerKey } from "../../lib/types";
 import { isWaterLayer, WATER_LAYER_META, waterLayerGradient, waterMandals, type WaterMandalLayer } from "../../lib/waterMandals";
 import { FIELD_LAYER_META, fieldLegend, isFieldLayer, type FieldLayer } from "../../lib/fieldSignals";
+import { RECHARGE_LAYER_META, isRechargeLayer, recharge, rechargeLegend, type RechargeLayer } from "../../lib/rechargeEfficiency";
 import { brief } from "../../lib/pageBriefs";
 import { groundwaterStressNow } from "../../lib/pageNow";
 import { useIsDark } from "../../components/useIsDark";
@@ -38,7 +39,7 @@ const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "rainfall_mm", label: "Rainfall" },
 ];
 
-type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer | FieldLayer;
+type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer;
 const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "status", label: "Fusion status" },
   { key: "water_balance_mm", label: "Water Balance" },
@@ -47,6 +48,7 @@ const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "soil_pct", label: "Soil moisture" },
   { key: "vci", label: "Crop vegetation" },
   { key: "gec_category", label: "Groundwater category" },
+  { key: "recharge_share", label: "Rain reaching the aquifer" },
 ];
 
 function legendGradient(layer: string, dark: boolean) {
@@ -123,7 +125,7 @@ export default function MapPage() {
                 </span>
                 {level === "district" ? "Andhra Pradesh — District Heat-Map"
                   : mandalView === "status" ? "Andhra Pradesh — Mandal Fusion Status"
-                    : `Andhra Pradesh — ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
+                    : `Andhra Pradesh — ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isRechargeLayer(mandalView) ? RECHARGE_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
                 {level === "mandal" && (isWaterLayer(mandalView) || isFieldLayer(mandalView)) ? (
                   <span className="dataAsOf">{isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].period : FIELD_LAYER_META[mandalView].period}</span>
                 ) : level === "mandal" && mandalView !== "status" ? (
@@ -185,6 +187,37 @@ export default function MapPage() {
                       series yet (shown grey).
                     </div>
                   </>
+                ) : isRechargeLayer(mandalView) ? (
+                  <div className="choroLegend" data-testid="recharge-layer-legend">
+                    <div className="choroHead">
+                      <span>{RECHARGE_LAYER_META[mandalView].label}</span>
+                      <span className="choroPeriod">{RECHARGE_LAYER_META[mandalView].period}</span>
+                    </div>
+                    <ul className="categoryLegend">
+                      {rechargeLegend().map(item => <li key={item.key}><i style={{ background: item.color }} />{item.label}<b>{item.count}</b></li>)}
+                      <li><i style={{ background: "#d3d9dc" }} />Too few years to score</li>
+                    </ul>
+                    <div className="rechargeAquifers">
+                      {recharge.byAquifer.map(row => (
+                        <div key={row.aquifer} className="rechargeAquifer">
+                          <b>{row.medianSharePct}%</b>
+                          <span>{row.aquifer === "hard_rock" ? "hard rock" : row.aquifer}</span>
+                          <i>{row.mandals} mandals</i>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mapHint">
+                      <IconInfo style={{ width: 13, height: 13 }} /> Hard rock banks about as much of its rain as the delta does, on a specific yield five times smaller and a water table that swings far further. The coast banks least.
+                    </div>
+                    {/* The method and its limits are the longest text on the page and
+                        the least often wanted, so they fold. What stays open is the one
+                        line a reader could not work out from the map. */}
+                    <details className="rechargeMethod">
+                      <summary>How this is measured, and what it cannot say</summary>
+                      <p>{RECHARGE_LAYER_META[mandalView].note}</p>
+                      <ul>{recharge.limits.map((limit, i) => <li key={i}>{limit}</li>)}</ul>
+                    </details>
+                  </div>
                 ) : isFieldLayer(mandalView) ? (
                   <div className="choroLegend" data-testid="field-layer-legend">
                     <div className="choroHead">

@@ -75,6 +75,7 @@ jobs:
             app/data/ap_district_geometry.json \
             app/data/ap_mandal_heat.json \
             app/data/monsoon_watch.json \
+            app/data/recharge_efficiency.json \
             app/data/water_context.json \
             app/data/water_context_summary.json \
             app/data/water_context_mandals.json \

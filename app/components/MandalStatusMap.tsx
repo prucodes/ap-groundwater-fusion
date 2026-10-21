@@ -19,6 +19,7 @@ import {
 import type { MandalHeatLayerKey } from "../lib/types";
 import { isWaterLayer, WATER_LAYER_META, waterLayerColor, waterLayerText, type WaterMandalLayer } from "../lib/waterMandals";
 import { FIELD_LAYER_META, fieldLayerColor, fieldLayerText, isFieldLayer, type FieldLayer } from "../lib/fieldSignals";
+import { RECHARGE_LAYER_META, isRechargeLayer, rechargeColor, rechargeText, type RechargeLayer } from "../lib/rechargeEfficiency";
 import { mapTooltipStyle } from "../lib/mapTooltip";
 import { HoverHydrograph } from "./HoverHydrograph";
 
@@ -34,7 +35,7 @@ export function MandalStatusMap({
 }: {
   selectedId?: string;
   onSelect: (id: string) => void;
-  layer?: MandalHeatLayerKey | WaterMandalLayer | FieldLayer | null;
+  layer?: MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | null;
   /** Cap height (px); omit to fill the container width and scale by aspect. */
   maxHeight?: number;
 }) {
@@ -45,6 +46,7 @@ export function MandalStatusMap({
   const hoverRec = hover ? mandalByMapKey(hover.d, hover.m) : undefined;
   const fillFor = (d: string, m: string) => {
     if (layer) return isWaterLayer(layer) ? waterLayerColor(layer, d, m, dark)
+      : isRechargeLayer(layer) ? rechargeColor(d, m)
       : isFieldLayer(layer) ? fieldLayerColor(layer, d, m) : mandalHeatColor(layer, d, m, dark);
     const record = mandalByMapKey(d, m);
     return record?.status_bucket ? statusMeta(record.status_bucket).color : "var(--field)";
@@ -110,6 +112,11 @@ export function MandalStatusMap({
             <div className="estHoverRow">
               <span>{WATER_LAYER_META[layer].label}</span>
               <strong>{waterLayerText(layer, hover.d, hover.m) ?? "No unique record"}</strong>
+            </div>
+          ) : layer && isRechargeLayer(layer) ? (
+            <div className="estHoverRow">
+              <span>{RECHARGE_LAYER_META[layer].label}</span>
+              <strong>{rechargeText(hover.d, hover.m) ?? "Not scored"}</strong>
             </div>
           ) : layer && isFieldLayer(layer) ? (
             <div className="estHoverRow">
