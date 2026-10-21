@@ -1,0 +1,3767 @@
+{
+  "contractVersion": "1.0.0",
+  "generatedAt": "2026-10-21T01:16:21Z",
+  "method": "GEC-2015 water-table fluctuation: the May to November rise times specific yield times area, as a share of June-September rainfall, for every year a mandal has both readings; the median of those years is published",
+  "window": {
+    "preMonsoonMonth": 5,
+    "postMonsoonMonth": 11,
+    "rainMonths": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "minYears": 5,
+    "minRainMm": 100.0
+  },
+  "scored": 574,
+  "ranked": 513,
+  "yearsAvailable": [
+    2015,
+    2026
+  ],
+  "counts": {
+    "set aside": 60,
+    "imports": 1,
+    "strong": 200,
+    "moderate": 268,
+    "weak": 45
+  },
+  "stateMedianSharePct": 11.7,
+  "byAquifer": [
+    {
+      "aquifer": "alluvial",
+      "mandals": 154,
+      "medianSharePct": 14.4
+    },
+    {
+      "aquifer": "coastal",
+      "mandals": 180,
+      "medianSharePct": 8.4
+    },
+    {
+      "aquifer": "hard_rock",
+      "mandals": 179,
+      "medianSharePct": 14.3
+    }
+  ],
+  "thresholds": {
+    "strongPct": 15.0,
+    "weakPct": 3.0,
+    "importsPct": 100.0,
+    "deepWellM": 20.0
+  },
+  "codes": {
+    "class": [
+      "weak",
+      "moderate",
+      "strong",
+      "imports",
+      "set aside"
+    ]
+  },
+  "fields": [
+    "medianSharePct",
+    "classCode",
+    "years",
+    "typicalDepthM"
+  ],
+  "values": {
+    "MARKAPURAM|GIDDALURU": [
+      253.9,
+      4,
+      6,
+      42.6
+    ],
+    "MARKAPURAM|BESTAVARIPETA": [
+      136.7,
+      4,
+      8,
+      37.5
+    ],
+    "KAKINADA|GOLLAPROLU": [
+      101.5,
+      3,
+      8,
+      13.3
+    ],
+    "ELURU|PEDAPADU": [
+      96.0,
+      4,
+      8,
+      25.5
+    ],
+    "MARKAPURAM|PEDAARAVEEDU": [
+      94.9,
+      4,
+      8,
+      33.4
+    ],
+    "MARKAPURAM|MARKAPUR": [
+      78.8,
+      4,
+      7,
+      30.3
+    ],
+    "ELURU|AGIRIPALLE": [
+      75.6,
+      2,
+      8,
+      14.1
+    ],
+    "EAST GODAVARI|NALLAJERLA": [
+      74.8,
+      4,
+      5,
+      48.7
+    ],
+    "ELURU|DENDULURU": [
+      73.4,
+      4,
+      6,
+      47.3
+    ],
+    "Y.S.R KADAPA|PORUMAMILLA": [
+      71.0,
+      4,
+      7,
+      22.0
+    ],
+    "Y.S.R KADAPA|T SUNDUPALLE": [
+      67.1,
+      2,
+      7,
+      17.5
+    ],
+    "MARKAPURAM|RACHERLA": [
+      66.7,
+      4,
+      8,
+      30.9
+    ],
+    "WEST GODAVARI|TADEPALLIGUDEM": [
+      63.9,
+      4,
+      8,
+      21.3
+    ],
+    "KRISHNA|GANNAVARAM": [
+      63.3,
+      2,
+      8,
+      11.4
+    ],
+    "ANANTHAPURAMU|YADIKI": [
+      62.5,
+      4,
+      8,
+      28.8
+    ],
+    "PALNADU|IPURU": [
+      60.8,
+      2,
+      8,
+      6.9
+    ],
+    "ANNAMAYYA|KAMBHAMVARIPALLE": [
+      58.9,
+      2,
+      7,
+      12.0
+    ],
+    "MARKAPURAM|PULLALACHERUVU": [
+      58.5,
+      4,
+      8,
+      34.6
+    ],
+    "ANANTHAPURAMU|GUMMAGATTA": [
+      58.4,
+      4,
+      7,
+      26.1
+    ],
+    "ANANTHAPURAMU|BRAHMASAMUDRAM": [
+      58.4,
+      4,
+      7,
+      20.8
+    ],
+    "ANANTHAPURAMU|KANEKAL": [
+      57.6,
+      2,
+      8,
+      16.7
+    ],
+    "GUNTUR|GUNTUR EAST": [
+      57.6,
+      2,
+      8,
+      5.6
+    ],
+    "KAKINADA|THONDANGI": [
+      56.5,
+      2,
+      8,
+      7.5
+    ],
+    "SRI SATHYA SAI|GUDIBANDA": [
+      53.6,
+      4,
+      8,
+      38.3
+    ],
+    "NTR|VIJAYAWADA CENTRAL": [
+      53.0,
+      2,
+      8,
+      8.5
+    ],
+    "BAPATLA|VEMURU": [
+      52.9,
+      2,
+      8,
+      4.4
+    ],
+    "VIZIANAGARAM|BHOGHAPURAM": [
+      50.8,
+      2,
+      8,
+      7.5
+    ],
+    "KAKINADA|SAMALKOTA": [
+      50.3,
+      4,
+      7,
+      22.5
+    ],
+    "PALNADU|BOLLAPALLE": [
+      50.2,
+      4,
+      8,
+      30.7
+    ],
+    "ANNAMAYYA|CHINNAMANDEM": [
+      49.1,
+      2,
+      7,
+      14.2
+    ],
+    "GUNTUR|TENALI": [
+      48.2,
+      2,
+      8,
+      3.6
+    ],
+    "MARKAPURAM|PODILI": [
+      47.6,
+      2,
+      8,
+      10.6
+    ],
+    "KRISHNA|CHALLAPALLE": [
+      47.5,
+      2,
+      8,
+      3.5
+    ],
+    "SRI SATHYA SAI|NAMBULIPULIKUNTA": [
+      47.2,
+      2,
+      8,
+      10.3
+    ],
+    "SRI SATHYA SAI|AMARAPURAM": [
+      46.8,
+      4,
+      8,
+      30.7
+    ],
+    "KONASEEMA|ALAMURU": [
+      45.9,
+      2,
+      8,
+      7.1
+    ],
+    "NANDYAL|PEAPALLY": [
+      45.7,
+      4,
+      8,
+      21.4
+    ],
+    "KRISHNA|PAMIDIMUKKALA": [
+      45.6,
+      2,
+      8,
+      4.0
+    ],
+    "ANNAMAYYA|LAKKIREDDIPALLE": [
+      45.2,
+      4,
+      8,
+      22.3
+    ],
+    "ANANTHAPURAMU|BOMMANAHAL": [
+      45.2,
+      2,
+      8,
+      8.2
+    ],
+    "EAST GODAVARI|BICCAVOLU": [
+      44.9,
+      2,
+      8,
+      10.8
+    ],
+    "KAKINADA|PEDDAPURAM": [
+      44.6,
+      4,
+      7,
+      26.2
+    ],
+    "Y.S.R KADAPA|VEERAPUNAYUNIPALLE": [
+      44.3,
+      2,
+      7,
+      8.4
+    ],
+    "GUNTUR|PONNUR": [
+      44.3,
+      2,
+      8,
+      3.6
+    ],
+    "Y.S.R KADAPA|S MYDUKUR": [
+      44.3,
+      2,
+      8,
+      7.9
+    ],
+    "ELURU|NUZVID": [
+      43.3,
+      2,
+      8,
+      18.8
+    ],
+    "SRIKAKULAM|KOTABOMMAL": [
+      42.3,
+      2,
+      6,
+      7.4
+    ],
+    "ELURU|CHATRAI": [
+      41.6,
+      2,
+      8,
+      12.7
+    ],
+    "NANDYAL|ALLAGADDA": [
+      41.5,
+      2,
+      8,
+      6.0
+    ],
+    "EAST GODAVARI|KADIAM": [
+      41.3,
+      2,
+      8,
+      5.4
+    ],
+    "ELURU|LINGAPALEM": [
+      41.1,
+      2,
+      8,
+      15.6
+    ],
+    "ANNAMAYYA|SAMBEPALLE": [
+      41.0,
+      2,
+      7,
+      11.1
+    ],
+    "BAPATLA|BHATTIPROLU": [
+      40.1,
+      2,
+      8,
+      5.1
+    ],
+    "PRAKASAM|KORISAPADU": [
+      40.0,
+      2,
+      8,
+      14.9
+    ],
+    "ANNAMAYYA|GALIVEEDU": [
+      39.9,
+      2,
+      8,
+      10.4
+    ],
+    "MARKAPURAM|YERRAGONDAPALEM": [
+      39.5,
+      4,
+      7,
+      32.3
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|NELLORE RURAL": [
+      39.4,
+      2,
+      8,
+      6.4
+    ],
+    "SRI SATHYA SAI|BATHALAPALLE": [
+      39.3,
+      2,
+      8,
+      17.6
+    ],
+    "PALNADU|EDLAPADU": [
+      39.1,
+      4,
+      8,
+      21.5
+    ],
+    "EAST GODAVARI|PERAVALI": [
+      39.0,
+      2,
+      8,
+      6.8
+    ],
+    "ELURU|JEELUGUMILLI": [
+      38.7,
+      2,
+      8,
+      18.0
+    ],
+    "KRISHNA|MOVVA": [
+      38.4,
+      2,
+      7,
+      3.7
+    ],
+    "KRISHNA|NANDIVADA": [
+      38.2,
+      2,
+      6,
+      16.7
+    ],
+    "ELURU|JANGAREDDIGUDEM": [
+      38.0,
+      2,
+      8,
+      14.5
+    ],
+    "SRI SATHYA SAI|GORANTLA": [
+      37.9,
+      2,
+      8,
+      14.7
+    ],
+    "SRI SATHYA SAI|GANDLAPENTA": [
+      37.7,
+      4,
+      7,
+      43.3
+    ],
+    "NANDYAL|CHAGALAMARRI": [
+      37.7,
+      2,
+      8,
+      10.6
+    ],
+    "PRAKASAM|ONGOLE_URBAN": [
+      37.6,
+      2,
+      8,
+      8.0
+    ],
+    "PRAKASAM|ONGOLE_RURAL": [
+      37.4,
+      2,
+      8,
+      4.0
+    ],
+    "PRAKASAM|NAGULUPPALAPADU": [
+      37.4,
+      2,
+      7,
+      4.1
+    ],
+    "ANNAMAYYA|PEDDA THIPPASAMUDRAM": [
+      37.3,
+      2,
+      7,
+      15.6
+    ],
+    "KRISHNA|THOTLAVALLURU": [
+      36.6,
+      2,
+      7,
+      6.9
+    ],
+    "PRAKASAM|SANTHANUTHALA PADU": [
+      36.2,
+      2,
+      8,
+      8.9
+    ],
+    "NANDYAL|MAHANANDI": [
+      35.1,
+      2,
+      8,
+      3.9
+    ],
+    "SRI SATHYA SAI|SOMANDEPALLE": [
+      35.0,
+      4,
+      7,
+      26.6
+    ],
+    "CHITTOOR|CHITTOOR_ RURAL": [
+      34.9,
+      2,
+      7,
+      7.8
+    ],
+    "ANANTHAPURAMU|YELLANUR": [
+      34.6,
+      2,
+      8,
+      10.1
+    ],
+    "GUNTUR|DUGGIRALA": [
+      34.5,
+      2,
+      8,
+      6.2
+    ],
+    "Y.S.R KADAPA|KHAJIPET": [
+      34.4,
+      2,
+      8,
+      8.9
+    ],
+    "BAPATLA|AMRUTHALUR": [
+      34.1,
+      2,
+      8,
+      4.6
+    ],
+    "SRI SATHYA SAI|DHARMAVARAM": [
+      34.0,
+      2,
+      8,
+      9.8
+    ],
+    "NANDYAL|RUDRAVARAM": [
+      33.9,
+      2,
+      8,
+      6.7
+    ],
+    "SRI SATHYA SAI|ROLLA": [
+      33.8,
+      4,
+      8,
+      20.4
+    ],
+    "PRAKASAM|JANAKAVARAMPANGULURU": [
+      33.3,
+      2,
+      8,
+      5.3
+    ],
+    "ELURU|ELURU_URBAN": [
+      33.3,
+      4,
+      8,
+      20.7
+    ],
+    "ELURU|ELURU_RURAL": [
+      33.3,
+      4,
+      8,
+      20.8
+    ],
+    "NTR|VISSANNAPET": [
+      33.2,
+      2,
+      8,
+      9.1
+    ],
+    "Y.S.R KADAPA|PULIVENDLA": [
+      32.8,
+      2,
+      7,
+      18.5
+    ],
+    "PALNADU|MACHERLA": [
+      32.8,
+      2,
+      8,
+      17.8
+    ],
+    "Y.S.R KADAPA|CHINTHA KOMMADINNE": [
+      32.6,
+      2,
+      5,
+      7.9
+    ],
+    "CHITTOOR|PUTHALAPATTU": [
+      32.2,
+      2,
+      7,
+      7.4
+    ],
+    "SRI SATHYA SAI|OBULADEVARACHERUVU": [
+      32.0,
+      2,
+      8,
+      11.7
+    ],
+    "CHITTOOR|PEDDA PANJANI": [
+      32.0,
+      2,
+      7,
+      9.5
+    ],
+    "BAPATLA|KOLLUR": [
+      31.6,
+      2,
+      8,
+      8.5
+    ],
+    "MARKAPURAM|PEDACHERLOPALLE": [
+      31.2,
+      2,
+      8,
+      9.9
+    ],
+    "KONASEEMA|ATREYAPURAM": [
+      31.1,
+      2,
+      8,
+      7.5
+    ],
+    "SRI SATHYA SAI|NALLACHERUVU": [
+      31.1,
+      2,
+      8,
+      18.5
+    ],
+    "KRISHNA|AVANIGADA": [
+      31.0,
+      2,
+      8,
+      4.4
+    ],
+    "TIRUPATI|YERPEDU": [
+      30.6,
+      2,
+      7,
+      8.5
+    ],
+    "GUNTUR|KOLLIPARA": [
+      30.5,
+      2,
+      8,
+      7.3
+    ],
+    "KONASEEMA|AMBAJIPETA": [
+      30.3,
+      2,
+      8,
+      2.9
+    ],
+    "WEST GODAVARI|TANUKU": [
+      30.1,
+      2,
+      8,
+      4.4
+    ],
+    "Y.S.R KADAPA|KALASAPADU": [
+      30.0,
+      2,
+      8,
+      15.2
+    ],
+    "Y.S.R KADAPA|VONTIMITTA": [
+      30.0,
+      2,
+      8,
+      8.8
+    ],
+    "ALLURI SITHARAMA RAJU|GUDEM KOTHAVEEDHI": [
+      29.9,
+      2,
+      8,
+      11.2
+    ],
+    "EAST GODAVARI|ANAPARTHI": [
+      29.4,
+      2,
+      8,
+      9.8
+    ],
+    "EAST GODAVARI|UNDRAJAVARAM": [
+      29.3,
+      2,
+      8,
+      4.9
+    ],
+    "Y.S.R KADAPA|SRI AVADHUTHA KASINAYANA": [
+      29.3,
+      2,
+      7,
+      19.0
+    ],
+    "PALNADU|SAVALYAPURAM": [
+      29.3,
+      2,
+      8,
+      1.4
+    ],
+    "ANANTHAPURAMU|PUTLUR": [
+      29.1,
+      2,
+      8,
+      19.8
+    ],
+    "SRI SATHYA SAI|TANAKAL": [
+      29.1,
+      4,
+      8,
+      20.3
+    ],
+    "ANNAMAYYA|RAYACHOTI": [
+      29.1,
+      2,
+      7,
+      10.1
+    ],
+    "SRI SATHYA SAI|KADIRI": [
+      28.9,
+      2,
+      8,
+      9.7
+    ],
+    "PALNADU|DURGI": [
+      28.6,
+      2,
+      8,
+      12.6
+    ],
+    "MARKAPURAM|CUMBUM": [
+      28.6,
+      2,
+      8,
+      17.0
+    ],
+    "PRAKASAM|THALLUR": [
+      28.6,
+      2,
+      8,
+      12.2
+    ],
+    "ANNAMAYYA|KALIKIRI": [
+      28.4,
+      4,
+      7,
+      20.3
+    ],
+    "ANANTHAPURAMU|KUNDURPI": [
+      28.0,
+      2,
+      8,
+      18.1
+    ],
+    "KRISHNA|GUDIVADA": [
+      27.4,
+      2,
+      8,
+      4.2
+    ],
+    "EAST GODAVARI|RAJAHMUNDRY (URBAN)": [
+      27.2,
+      2,
+      5,
+      18.2
+    ],
+    "ANAKAPALLI|PAYAKARAOPETA": [
+      27.0,
+      2,
+      8,
+      8.5
+    ],
+    "ANNAMAYYA|SOMALA": [
+      26.7,
+      2,
+      7,
+      8.3
+    ],
+    "NANDYAL|KOLIMIGUNDLA": [
+      26.6,
+      2,
+      8,
+      14.1
+    ],
+    "KONASEEMA|RAVULAPALEM": [
+      26.6,
+      2,
+      7,
+      5.9
+    ],
+    "Y.S.R KADAPA|ATLUR": [
+      26.6,
+      2,
+      8,
+      15.7
+    ],
+    "NTR|VIJAYAWADA EAST": [
+      26.5,
+      2,
+      8,
+      9.9
+    ],
+    "MARKAPURAM|CHANDRASEKHARA PURAM": [
+      26.3,
+      2,
+      8,
+      12.1
+    ],
+    "SRI SATHYA SAI|TALUPULA": [
+      25.9,
+      2,
+      8,
+      14.9
+    ],
+    "EAST GODAVARI|KOVVUR": [
+      25.8,
+      2,
+      8,
+      7.5
+    ],
+    "GUNTUR|THADEPALLE": [
+      25.8,
+      2,
+      8,
+      5.9
+    ],
+    "KRISHNA|MOPIDEVI": [
+      25.6,
+      2,
+      8,
+      2.4
+    ],
+    "NTR|A KONDURU": [
+      25.6,
+      2,
+      8,
+      6.0
+    ],
+    "TIRUPATI|K.V.B.PURAM": [
+      25.5,
+      2,
+      7,
+      9.2
+    ],
+    "NANDYAL|MIDTHUR": [
+      25.3,
+      2,
+      8,
+      9.2
+    ],
+    "CHITTOOR|IRALA": [
+      25.3,
+      2,
+      5,
+      11.4
+    ],
+    "NANDYAL|BANAGANAPALLE": [
+      25.2,
+      2,
+      8,
+      6.2
+    ],
+    "ANANTHAPURAMU|NARPALA": [
+      25.1,
+      2,
+      8,
+      9.7
+    ],
+    "PALNADU|NAKARIKALLU": [
+      24.8,
+      2,
+      8,
+      3.4
+    ],
+    "BAPATLA|KARLAPALEM": [
+      24.6,
+      2,
+      8,
+      2.4
+    ],
+    "ANAKAPALLI|PARAVADA": [
+      24.4,
+      2,
+      8,
+      9.9
+    ],
+    "MARKAPURAM|TRIPURANTHAKAM": [
+      24.4,
+      2,
+      8,
+      13.4
+    ],
+    "ELURU|T NARASAPURAM": [
+      24.4,
+      2,
+      8,
+      13.6
+    ],
+    "Y.S.R KADAPA|PENDLIMARRY": [
+      24.3,
+      2,
+      8,
+      18.5
+    ],
+    "PRAKASAM|DONAKONDA": [
+      24.1,
+      4,
+      8,
+      25.2
+    ],
+    "EAST GODAVARI|MANDAPETA": [
+      24.1,
+      2,
+      7,
+      4.0
+    ],
+    "SRI SATHYA SAI|LEPAKSHI": [
+      24.0,
+      4,
+      8,
+      35.8
+    ],
+    "KURNOOL|KALLUR": [
+      23.8,
+      2,
+      5,
+      8.6
+    ],
+    "GUNTUR|MANGALAGIRI": [
+      23.8,
+      2,
+      8,
+      2.3
+    ],
+    "Y.S.R KADAPA|B.KODUR": [
+      23.7,
+      2,
+      7,
+      12.7
+    ],
+    "PRAKASAM|MARRIPUDI": [
+      23.7,
+      2,
+      8,
+      8.3
+    ],
+    "Y.S.R KADAPA|SIDHOUT": [
+      23.3,
+      2,
+      7,
+      11.5
+    ],
+    "TIRUPATI|PULLAMPETA": [
+      23.1,
+      4,
+      7,
+      22.5
+    ],
+    "SRI SATHYA SAI|KANAGANAPALLE": [
+      22.9,
+      2,
+      8,
+      7.6
+    ],
+    "KONASEEMA|AINAVILLI": [
+      22.8,
+      2,
+      7,
+      4.1
+    ],
+    "KURNOOL|GONEGANDLA": [
+      22.7,
+      2,
+      7,
+      9.4
+    ],
+    "KAKINADA|KIRLAMPUDI": [
+      22.6,
+      2,
+      7,
+      5.1
+    ],
+    "BAPATLA|YEDDANAPUDI": [
+      22.5,
+      2,
+      8,
+      6.4
+    ],
+    "EAST GODAVARI|KAPILESWARAPURAM": [
+      22.3,
+      2,
+      8,
+      4.1
+    ],
+    "SRI SATHYA SAI|BUKKAPATNAM": [
+      22.0,
+      2,
+      8,
+      8.9
+    ],
+    "MARKAPURAM|KONAKANAMITLA": [
+      22.0,
+      2,
+      8,
+      17.1
+    ],
+    "Y.S.R KADAPA|MUDDANUR": [
+      21.8,
+      2,
+      8,
+      12.2
+    ],
+    "ANANTHAPURAMU|KALYANDURG": [
+      21.6,
+      4,
+      8,
+      20.7
+    ],
+    "BAPATLA|BAPATLA(M)": [
+      21.5,
+      2,
+      8,
+      2.8
+    ],
+    "Y.S.R KADAPA|LINGALA": [
+      21.4,
+      2,
+      8,
+      7.9
+    ],
+    "BAPATLA|CHINAGANJAM": [
+      21.4,
+      2,
+      8,
+      3.2
+    ],
+    "EAST GODAVARI|KORUKONDA": [
+      21.4,
+      2,
+      8,
+      15.3
+    ],
+    "CHITTOOR|VEDURU KUPPAM": [
+      21.3,
+      2,
+      7,
+      7.7
+    ],
+    "GUNTUR|PEDAKAKANI": [
+      21.3,
+      2,
+      8,
+      6.5
+    ],
+    "WEST GODAVARI|PENTAPADU": [
+      21.3,
+      2,
+      8,
+      3.7
+    ],
+    "Y.S.R KADAPA|SIMHADRIPURAM": [
+      21.2,
+      2,
+      7,
+      5.7
+    ],
+    "ANNAMAYYA|PEDDAMANDYAM": [
+      21.0,
+      2,
+      7,
+      8.4
+    ],
+    "TIRUPATI|VARADAIAHPALEM": [
+      20.9,
+      2,
+      7,
+      4.0
+    ],
+    "SRIKAKULAM|ETCHERLA": [
+      20.8,
+      2,
+      8,
+      11.2
+    ],
+    "Y.S.R KADAPA|NANDALUR": [
+      20.7,
+      2,
+      8,
+      11.1
+    ],
+    "ANNAMAYYA|KALAKADA": [
+      20.6,
+      2,
+      5,
+      19.4
+    ],
+    "MARKAPURAM|ARDHAVEEDU": [
+      20.6,
+      2,
+      7,
+      10.4
+    ],
+    "KURNOOL|TUGGALI": [
+      20.6,
+      2,
+      8,
+      8.3
+    ],
+    "Y.S.R KADAPA|VEERABALLE": [
+      20.3,
+      2,
+      7,
+      7.4
+    ],
+    "TIRUPATI|VADAMALAPETA": [
+      20.2,
+      2,
+      7,
+      4.0
+    ],
+    "NANDYAL|DHONE": [
+      20.2,
+      4,
+      8,
+      22.0
+    ],
+    "PALNADU|GURAZALA": [
+      20.0,
+      2,
+      8,
+      9.3
+    ],
+    "SRI SATHYA SAI|CHILAMATHUR": [
+      20.0,
+      2,
+      8,
+      16.8
+    ],
+    "SRI SATHYA SAI|PENU KONDA": [
+      19.8,
+      2,
+      8,
+      18.7
+    ],
+    "KRISHNA|KODURU": [
+      19.8,
+      2,
+      8,
+      1.5
+    ],
+    "NANDYAL|PAMULAPADU": [
+      19.6,
+      2,
+      8,
+      10.4
+    ],
+    "PRAKASAM|BALLIKURUVA": [
+      19.6,
+      2,
+      8,
+      6.8
+    ],
+    "PALNADU|DACHEPALLE": [
+      19.6,
+      2,
+      8,
+      12.6
+    ],
+    "SRIKAKULAM|PALASA": [
+      19.6,
+      2,
+      7,
+      7.4
+    ],
+    "ANNAMAYYA|MANDAPALLE": [
+      19.2,
+      2,
+      7,
+      8.5
+    ],
+    "EAST GODAVARI|RANGAMPETA": [
+      19.2,
+      4,
+      8,
+      24.9
+    ],
+    "BAPATLA|TSUNDUR": [
+      19.0,
+      2,
+      8,
+      5.1
+    ],
+    "TIRUPATI|PAKALA": [
+      19.0,
+      2,
+      7,
+      3.3
+    ],
+    "KRISHNA|NAGAYALANKA": [
+      18.7,
+      2,
+      8,
+      1.4
+    ],
+    "BAPATLA|CHERUKUPALLE": [
+      18.7,
+      2,
+      8,
+      1.8
+    ],
+    "SRI SATHYA SAI|TADIMARRI": [
+      18.7,
+      2,
+      8,
+      12.5
+    ],
+    "WEST GODAVARI|ATTILI": [
+      18.5,
+      2,
+      8,
+      1.7
+    ],
+    "ANANTHAPURAMU|SINGANAMALA": [
+      18.5,
+      2,
+      8,
+      9.4
+    ],
+    "Y.S.R KADAPA|BADVEL": [
+      18.5,
+      4,
+      8,
+      20.0
+    ],
+    "ANNAMAYYA|SODAM": [
+      18.5,
+      2,
+      7,
+      9.2
+    ],
+    "ANANTHAPURAMU|VAJRAKARUR": [
+      18.2,
+      2,
+      8,
+      9.8
+    ],
+    "NTR|VIJAYAWADA (RURAL)": [
+      18.2,
+      2,
+      8,
+      13.2
+    ],
+    "BAPATLA|NAGARAM": [
+      18.1,
+      2,
+      8,
+      1.5
+    ],
+    "CHITTOOR|PULICHERLA": [
+      18.1,
+      2,
+      7,
+      8.1
+    ],
+    "PARVATHIPURAM MANYAM|JIYYAMMA VALASA": [
+      18.0,
+      2,
+      8,
+      4.5
+    ],
+    "MARKAPURAM|HANUMANTHUNIPADU": [
+      17.8,
+      2,
+      8,
+      10.6
+    ],
+    "PRAKASAM|DARSI": [
+      17.8,
+      2,
+      8,
+      13.3
+    ],
+    "PALNADU|MACHAVARAM": [
+      17.4,
+      2,
+      8,
+      9.6
+    ],
+    "ANANTHAPURAMU|RAPTADU": [
+      17.4,
+      2,
+      8,
+      13.3
+    ],
+    "KURNOOL|ASPARI": [
+      17.4,
+      2,
+      7,
+      13.0
+    ],
+    "PARVATHIPURAM MANYAM|KURUPAM": [
+      17.4,
+      2,
+      8,
+      7.3
+    ],
+    "KRISHNA|KANKIPADU": [
+      17.3,
+      2,
+      8,
+      15.3
+    ],
+    "NANDYAL|PANYAM": [
+      17.3,
+      2,
+      8,
+      8.5
+    ],
+    "KAKINADA|TUNI": [
+      17.3,
+      2,
+      8,
+      3.9
+    ],
+    "SRI SATHYA SAI|MADAKASIRA": [
+      17.2,
+      4,
+      8,
+      25.6
+    ],
+    "PRAKASAM|CHIMAKURTHI": [
+      17.2,
+      2,
+      8,
+      12.1
+    ],
+    "ANANTHAPURAMU|URAVAKONDA": [
+      17.0,
+      2,
+      8,
+      4.8
+    ],
+    "ANANTHAPURAMU|GOOTY": [
+      17.0,
+      2,
+      8,
+      11.8
+    ],
+    "BAPATLA|PITTALAVANIPALEM": [
+      17.0,
+      2,
+      8,
+      2.0
+    ],
+    "Y.S.R KADAPA|VEMULA": [
+      16.8,
+      2,
+      7,
+      6.0
+    ],
+    "EAST GODAVARI|GOPALAPURAM": [
+      16.8,
+      2,
+      8,
+      13.2
+    ],
+    "BAPATLA|REPALLE": [
+      16.8,
+      2,
+      8,
+      2.0
+    ],
+    "MARKAPURAM|KOMAROLU": [
+      16.7,
+      2,
+      7,
+      19.6
+    ],
+    "CHITTOOR|KARVETINAGAR": [
+      16.5,
+      2,
+      7,
+      7.0
+    ],
+    "ANNAMAYYA|RAMAPURAM": [
+      16.5,
+      2,
+      7,
+      5.5
+    ],
+    "PARVATHIPURAM MANYAM|MAKKUVA": [
+      16.1,
+      2,
+      6,
+      5.6
+    ],
+    "SRI SATHYA SAI|PARIGI": [
+      16.1,
+      4,
+      8,
+      35.0
+    ],
+    "ANANTHAPURAMU|TADPATRI": [
+      16.1,
+      2,
+      8,
+      15.1
+    ],
+    "ELURU|KOYYALAGUDEM": [
+      16.0,
+      4,
+      8,
+      46.0
+    ],
+    "CHITTOOR|VIJAYAPURAM": [
+      15.9,
+      2,
+      7,
+      5.3
+    ],
+    "PRAKASAM|MUNDLAMURU": [
+      15.9,
+      2,
+      8,
+      9.1
+    ],
+    "Y.S.R KADAPA|VEMPALLE": [
+      15.9,
+      4,
+      7,
+      41.5
+    ],
+    "BAPATLA|NIZAMPATNAM": [
+      15.9,
+      2,
+      8,
+      1.0
+    ],
+    "CHITTOOR|GANGADHARA NELLORE": [
+      15.8,
+      2,
+      8,
+      8.7
+    ],
+    "PALNADU|ATCHAMPET": [
+      15.7,
+      2,
+      8,
+      5.5
+    ],
+    "SRIKAKULAM|RANASTALAM": [
+      15.5,
+      2,
+      8,
+      11.9
+    ],
+    "MARKAPURAM|PAMUR": [
+      15.4,
+      2,
+      8,
+      11.9
+    ],
+    "VISAKHAPATNAM|ANANDAPURAM": [
+      15.2,
+      2,
+      8,
+      8.1
+    ],
+    "WEST GODAVARI|IRAGAVARAM": [
+      15.2,
+      2,
+      8,
+      4.2
+    ],
+    "CHITTOOR|THAVANAMPALLE": [
+      15.1,
+      2,
+      7,
+      3.9
+    ],
+    "NANDYAL|OWK": [
+      15.0,
+      2,
+      8,
+      4.2
+    ],
+    "KURNOOL|KOWTHALAM": [
+      15.0,
+      2,
+      8,
+      11.8
+    ],
+    "VIZIANAGARAM|GARIVIDI": [
+      15.0,
+      2,
+      8,
+      6.8
+    ],
+    "SRI SATHYA SAI|AMADAGUR": [
+      14.9,
+      1,
+      8,
+      15.4
+    ],
+    "VIZIANAGARAM|VIZIANAGARAM URBAN": [
+      14.9,
+      1,
+      8,
+      2.4
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|BOGOLE": [
+      14.9,
+      1,
+      8,
+      7.7
+    ],
+    "CHITTOOR|SANTHIPURAM": [
+      14.8,
+      1,
+      7,
+      14.3
+    ],
+    "SRI SATHYA SAI|RAMAGIRI": [
+      14.8,
+      1,
+      8,
+      14.8
+    ],
+    "CHITTOOR|VENKATAGIRI KOTA": [
+      14.7,
+      4,
+      7,
+      22.2
+    ],
+    "NTR|G.KONDURU": [
+      14.6,
+      1,
+      8,
+      5.3
+    ],
+    "PALNADU|VINUKONDA": [
+      14.4,
+      1,
+      8,
+      6.1
+    ],
+    "EAST GODAVARI|RAYAVARAM": [
+      14.3,
+      1,
+      7,
+      2.6
+    ],
+    "CHITTOOR|YADAMARI": [
+      14.3,
+      1,
+      5,
+      8.6
+    ],
+    "SRIKAKULAM|SARAVAKOTA": [
+      14.1,
+      1,
+      6,
+      6.8
+    ],
+    "BAPATLA|MARTUR": [
+      14.0,
+      1,
+      8,
+      4.6
+    ],
+    "TIRUPATI|CHITTAMUR": [
+      14.0,
+      1,
+      8,
+      3.6
+    ],
+    "NTR|KANCHIKA CHERLA": [
+      14.0,
+      1,
+      8,
+      2.3
+    ],
+    "ELURU|KALIDINDI": [
+      14.0,
+      1,
+      8,
+      1.4
+    ],
+    "KAKINADA|JAGGAMPETA": [
+      13.9,
+      1,
+      8,
+      8.2
+    ],
+    "SRIKAKULAM|NARASANNAPETA": [
+      13.9,
+      1,
+      8,
+      6.4
+    ],
+    "VISAKHAPATNAM|VISAKHAPATNAM (RURAL)": [
+      13.9,
+      1,
+      7,
+      10.8
+    ],
+    "SRI SATHYA SAI|CHENNE KOTHAPALLE": [
+      13.9,
+      1,
+      8,
+      8.3
+    ],
+    "KONASEEMA|I POLAVARAM": [
+      13.8,
+      1,
+      7,
+      1.8
+    ],
+    "SRI SATHYA SAI|KOTHACHERUVU": [
+      13.7,
+      1,
+      8,
+      12.4
+    ],
+    "MARKAPURAM|TARLAPADU": [
+      13.7,
+      4,
+      8,
+      32.3
+    ],
+    "TIRUPATI|CHANDRAGIRI": [
+      13.5,
+      1,
+      8,
+      6.5
+    ],
+    "WEST GODAVARI|PODURU": [
+      13.5,
+      1,
+      8,
+      15.7
+    ],
+    "KRISHNA|BANTUMILLI": [
+      13.5,
+      1,
+      5,
+      12.4
+    ],
+    "PALNADU|BELLAMKONDA": [
+      13.4,
+      1,
+      8,
+      2.1
+    ],
+    "VIZIANAGARAM|DENKADA": [
+      13.4,
+      1,
+      8,
+      5.6
+    ],
+    "PRAKASAM|ADDANKI": [
+      13.4,
+      1,
+      8,
+      6.8
+    ],
+    "KRISHNA|PEDAPARUPUDI": [
+      13.3,
+      1,
+      8,
+      8.8
+    ],
+    "Y.S.R KADAPA|VALLUR": [
+      13.2,
+      1,
+      7,
+      5.6
+    ],
+    "EAST GODAVARI|TALLAPUDI": [
+      13.2,
+      1,
+      8,
+      10.4
+    ],
+    "TIRUPATI|RENIGUNTA": [
+      13.1,
+      1,
+      7,
+      6.6
+    ],
+    "NANDYAL|JUPADU BUNGALOW": [
+      13.0,
+      1,
+      8,
+      5.5
+    ],
+    "NTR|IBRAHIMPATNAM": [
+      13.0,
+      1,
+      8,
+      4.1
+    ],
+    "EAST GODAVARI|NIDADAVOLE": [
+      12.9,
+      1,
+      8,
+      12.8
+    ],
+    "PALNADU|KROSURU": [
+      12.8,
+      1,
+      8,
+      4.7
+    ],
+    "KURNOOL|KODUMUR": [
+      12.8,
+      1,
+      7,
+      7.8
+    ],
+    "PALNADU|KAREMPUDI": [
+      12.8,
+      1,
+      8,
+      8.7
+    ],
+    "ELURU|POLAVARAM (M)": [
+      12.8,
+      1,
+      8,
+      7.2
+    ],
+    "ANANTHAPURAMU|PEDDAPAPPUR": [
+      12.7,
+      1,
+      7,
+      3.6
+    ],
+    "KAKINADA|ROUTHULAPUDI": [
+      12.6,
+      1,
+      7,
+      3.7
+    ],
+    "TIRUPATI|BUCHINAIDU KANDRIGA": [
+      12.6,
+      1,
+      8,
+      10.4
+    ],
+    "Y.S.R KADAPA|BRAHMAMGARIMATTAM": [
+      12.5,
+      1,
+      8,
+      12.4
+    ],
+    "WEST GODAVARI|BHIMAVARAM": [
+      12.4,
+      1,
+      8,
+      5.4
+    ],
+    "TIRUPATI|THOTTAMBEDU": [
+      12.4,
+      1,
+      7,
+      5.1
+    ],
+    "BAPATLA|VETAPALEM": [
+      12.4,
+      1,
+      8,
+      4.6
+    ],
+    "KAKINADA|PITHAPURAM": [
+      12.4,
+      1,
+      7,
+      2.7
+    ],
+    "WEST GODAVARI|PALACOLE": [
+      12.3,
+      1,
+      8,
+      6.0
+    ],
+    "TIRUPATI|VAKADU": [
+      12.3,
+      1,
+      8,
+      5.2
+    ],
+    "WEST GODAVARI|PENUMANTRA": [
+      12.1,
+      1,
+      8,
+      1.9
+    ],
+    "NTR|NANDIGAMA": [
+      12.1,
+      1,
+      8,
+      4.6
+    ],
+    "ELURU|KAMAVARAPUKOTA": [
+      11.9,
+      4,
+      8,
+      28.7
+    ],
+    "KURNOOL|ORVAKAL": [
+      11.9,
+      1,
+      8,
+      13.8
+    ],
+    "TIRUPATI|SRIKALAHASTI": [
+      11.9,
+      1,
+      7,
+      6.9
+    ],
+    "CHITTOOR|BAIREDDI PALLE": [
+      11.9,
+      1,
+      7,
+      10.2
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|VENKATACHALAM": [
+      11.9,
+      1,
+      8,
+      4.2
+    ],
+    "ANANTHAPURAMU|BELUGUPPA": [
+      11.9,
+      4,
+      8,
+      20.0
+    ],
+    "KONASEEMA|RAZOLE": [
+      11.8,
+      1,
+      8,
+      1.7
+    ],
+    "BAPATLA|PARCHUR": [
+      11.8,
+      1,
+      8,
+      2.4
+    ],
+    "CHITTOOR|PALAMANER": [
+      11.8,
+      1,
+      7,
+      8.9
+    ],
+    "VIZIANAGARAM|DATTIRAJERU": [
+      11.7,
+      1,
+      8,
+      6.7
+    ],
+    "EAST GODAVARI|RAJAHMUNDRY (RURAL)": [
+      11.6,
+      4,
+      5,
+      41.8
+    ],
+    "KAKINADA|YELESWARAM": [
+      11.6,
+      1,
+      8,
+      5.0
+    ],
+    "NANDYAL|PAGIDYALA": [
+      11.6,
+      1,
+      7,
+      4.5
+    ],
+    "ANANTHAPURAMU|KAMBADUR": [
+      11.5,
+      1,
+      8,
+      14.8
+    ],
+    "ANAKAPALLI|SABBAVARAM": [
+      11.5,
+      1,
+      8,
+      5.6
+    ],
+    "ANAKAPALLI|BUTCHAYYAPETA": [
+      11.4,
+      1,
+      8,
+      6.5
+    ],
+    "WEST GODAVARI|GANAPAVARAM": [
+      11.4,
+      1,
+      8,
+      9.3
+    ],
+    "CHITTOOR|BANGARUPALEM": [
+      11.3,
+      1,
+      8,
+      15.3
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|CHILLAKUR": [
+      11.2,
+      1,
+      8,
+      5.2
+    ],
+    "TIRUPATI|NAGALAPURAM": [
+      11.2,
+      1,
+      7,
+      3.6
+    ],
+    "PALNADU|PIDUGURALLA": [
+      11.2,
+      1,
+      8,
+      6.0
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|SANGAM": [
+      11.1,
+      1,
+      7,
+      5.4
+    ],
+    "ANNAMAYYA|VALMIKIPURAM": [
+      11.0,
+      1,
+      7,
+      16.8
+    ],
+    "ELURU|BUTTAYAGUDEM": [
+      11.0,
+      1,
+      8,
+      6.2
+    ],
+    "KURNOOL|DEVANAKONDA": [
+      10.9,
+      1,
+      7,
+      4.4
+    ],
+    "NANDYAL|SANJAMALA": [
+      10.8,
+      1,
+      8,
+      5.9
+    ],
+    "ANANTHAPURAMU|GARLADINNE": [
+      10.8,
+      1,
+      8,
+      3.7
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|KALIGIRI": [
+      10.8,
+      1,
+      8,
+      9.0
+    ],
+    "Y.S.R KADAPA|KAMALAPURAM": [
+      10.8,
+      1,
+      8,
+      4.7
+    ],
+    "NANDYAL|NANDIKOTKUR": [
+      10.8,
+      1,
+      8,
+      17.9
+    ],
+    "ANAKAPALLI|ROLUGUNTA": [
+      10.7,
+      1,
+      7,
+      5.6
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|RAPUR": [
+      10.7,
+      1,
+      8,
+      6.8
+    ],
+    "ANAKAPALLI|RAVIKAMATHAM": [
+      10.7,
+      1,
+      8,
+      5.2
+    ],
+    "KAKINADA|PEDAPUDI": [
+      10.7,
+      1,
+      8,
+      2.3
+    ],
+    "SRIKAKULAM|LAVERU": [
+      10.6,
+      1,
+      8,
+      5.2
+    ],
+    "ANNAMAYYA|PILERU": [
+      10.6,
+      1,
+      7,
+      11.5
+    ],
+    "TIRUPATI|DORAVARISATRAM": [
+      10.5,
+      1,
+      8,
+      3.6
+    ],
+    "KONASEEMA|MALIKIPURAM": [
+      10.5,
+      1,
+      7,
+      1.1
+    ],
+    "SRI SATHYA SAI|MUDIGUBBA": [
+      10.4,
+      1,
+      8,
+      7.0
+    ],
+    "GUNTUR|GUNTUR WEST": [
+      10.4,
+      1,
+      5,
+      2.1
+    ],
+    "PARVATHIPURAM MANYAM|SEETHAMPETA": [
+      10.3,
+      1,
+      8,
+      6.5
+    ],
+    "KAKINADA|THALLAREVU": [
+      10.3,
+      1,
+      7,
+      2.2
+    ],
+    "KURNOOL|CHIPPAGIRI": [
+      10.2,
+      1,
+      8,
+      5.1
+    ],
+    "POLAVARAM|DEVIPATNAM": [
+      10.1,
+      1,
+      8,
+      4.0
+    ],
+    "KONASEEMA|MUMMIDIVARAM": [
+      10.1,
+      1,
+      8,
+      1.7
+    ],
+    "ANAKAPALLI|KOTAURATLA": [
+      10.1,
+      1,
+      8,
+      4.6
+    ],
+    "VISAKHAPATNAM|PEDAGANTYADA": [
+      10.1,
+      1,
+      7,
+      3.4
+    ],
+    "ANANTHAPURAMU|VIDAPANAKAL": [
+      10.1,
+      1,
+      8,
+      4.8
+    ],
+    "CHITTOOR|CHITTOOR_URBAN": [
+      10.1,
+      1,
+      7,
+      12.5
+    ],
+    "SRIKAKULAM|SRIKAKULAM MANDAL": [
+      10.0,
+      1,
+      8,
+      3.0
+    ],
+    "VIZIANAGARAM|SRUNGAVARAPUKOTA": [
+      10.0,
+      1,
+      8,
+      7.3
+    ],
+    "PALNADU|CHILAKALURIPET": [
+      10.0,
+      1,
+      8,
+      2.0
+    ],
+    "Y.S.R KADAPA|Y.S.R.KADAPA": [
+      10.0,
+      1,
+      5,
+      17.0
+    ],
+    "KONASEEMA|ALLAVARAM": [
+      9.9,
+      1,
+      8,
+      2.5
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|NELLORE URBAN": [
+      9.9,
+      1,
+      8,
+      3.2
+    ],
+    "PARVATHIPURAM MANYAM|PALAKONDA": [
+      9.9,
+      1,
+      8,
+      5.2
+    ],
+    "VIZIANAGARAM|BADANGI": [
+      9.8,
+      1,
+      8,
+      2.9
+    ],
+    "MARKAPURAM|KANIGIRI": [
+      9.8,
+      1,
+      8,
+      14.3
+    ],
+    "VISAKHAPATNAM|PADMANABHAM": [
+      9.8,
+      1,
+      8,
+      9.2
+    ],
+    "GUNTUR|VATTICHERUKURU": [
+      9.8,
+      1,
+      8,
+      1.3
+    ],
+    "PALNADU|SATTENAPALLE": [
+      9.8,
+      1,
+      8,
+      5.5
+    ],
+    "KONASEEMA|KATRENIKONA": [
+      9.8,
+      1,
+      7,
+      1.3
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|KAVALI": [
+      9.7,
+      1,
+      8,
+      5.7
+    ],
+    "VIZIANAGARAM|LAKKAVARAPUKOTA": [
+      9.6,
+      1,
+      8,
+      4.3
+    ],
+    "KURNOOL|ALUR": [
+      9.6,
+      1,
+      7,
+      5.3
+    ],
+    "EAST GODAVARI|GOKAVARAM": [
+      9.5,
+      1,
+      7,
+      4.0
+    ],
+    "NTR|TIRUVURU": [
+      9.5,
+      1,
+      8,
+      3.5
+    ],
+    "TIRUPATI|PICHATUR": [
+      9.4,
+      1,
+      7,
+      3.1
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|JALADANKI": [
+      9.4,
+      1,
+      8,
+      4.8
+    ],
+    "VISAKHAPATNAM|PENDURTHI": [
+      9.4,
+      1,
+      8,
+      5.4
+    ],
+    "SRIKAKULAM|POLAKI": [
+      9.4,
+      1,
+      8,
+      3.5
+    ],
+    "Y.S.R KADAPA|GOPAVARAM": [
+      9.3,
+      1,
+      8,
+      15.4
+    ],
+    "ANAKAPALLI|MUNAGAPAKA": [
+      9.2,
+      1,
+      8,
+      4.2
+    ],
+    "NTR|VEERULLAPADU": [
+      9.1,
+      1,
+      8,
+      4.0
+    ],
+    "SRIKAKULAM|AMADALAVALASA": [
+      9.1,
+      1,
+      6,
+      4.9
+    ],
+    "ELURU|KAIKALUR": [
+      9.1,
+      1,
+      8,
+      2.0
+    ],
+    "KURNOOL|KRISHNAGIRI": [
+      9.1,
+      1,
+      8,
+      3.5
+    ],
+    "KRISHNA|PENAMALURU": [
+      9.0,
+      1,
+      8,
+      18.3
+    ],
+    "CHITTOOR|PALASAMUDRAM": [
+      9.0,
+      1,
+      7,
+      9.0
+    ],
+    "SRIKAKULAM|NANDIGAM": [
+      9.0,
+      1,
+      8,
+      2.7
+    ],
+    "PARVATHIPURAM MANYAM|SALUR": [
+      9.0,
+      1,
+      8,
+      13.5
+    ],
+    "VIZIANAGARAM|MERAKAMUDIDAM": [
+      9.0,
+      1,
+      8,
+      7.2
+    ],
+    "ANNAMAYYA|PUNGANUR": [
+      8.8,
+      1,
+      7,
+      19.0
+    ],
+    "KONASEEMA|SAKHINETIPALLE": [
+      8.8,
+      1,
+      7,
+      0.6
+    ],
+    "ELURU|DWARAKA TIRUMALA": [
+      8.7,
+      4,
+      8,
+      50.0
+    ],
+    "PRAKASAM|VOLETIVARIPALEM": [
+      8.7,
+      1,
+      8,
+      9.4
+    ],
+    "KRISHNA|VUYYURU": [
+      8.7,
+      1,
+      8,
+      11.7
+    ],
+    "VIZIANAGARAM|RAJAM": [
+      8.6,
+      1,
+      8,
+      2.1
+    ],
+    "PRAKASAM|KONDAPI": [
+      8.6,
+      1,
+      6,
+      8.7
+    ],
+    "ALLURI SITHARAMA RAJU|PEDABAYALU": [
+      8.6,
+      1,
+      8,
+      6.5
+    ],
+    "SRIKAKULAM|SOMPETA": [
+      8.6,
+      1,
+      8,
+      7.9
+    ],
+    "TIRUPATI|DAKKILI": [
+      8.5,
+      1,
+      8,
+      4.3
+    ],
+    "KURNOOL|PATTIKANDA": [
+      8.4,
+      1,
+      7,
+      9.2
+    ],
+    "ALLURI SITHARAMA RAJU|KOYYURU": [
+      8.4,
+      1,
+      8,
+      12.9
+    ],
+    "TIRUPATI|TADA": [
+      8.4,
+      1,
+      8,
+      4.1
+    ],
+    "PRAKASAM|LINGASAMUDRAM": [
+      8.3,
+      1,
+      6,
+      8.4
+    ],
+    "SRI SATHYA SAI|PUTTAPARTHI": [
+      8.2,
+      1,
+      5,
+      8.0
+    ],
+    "ELURU|CHINTALAPUDI": [
+      8.2,
+      4,
+      8,
+      22.9
+    ],
+    "WEST GODAVARI|MOGALTHUR": [
+      8.2,
+      1,
+      8,
+      4.9
+    ],
+    "WEST GODAVARI|PALACODERU": [
+      8.1,
+      1,
+      8,
+      2.2
+    ],
+    "KURNOOL|MANTRALAYAM": [
+      8.1,
+      1,
+      8,
+      5.4
+    ],
+    "ANANTHAPURAMU|PEDDAVADUGUR": [
+      8.0,
+      1,
+      8,
+      6.8
+    ],
+    "SRIKAKULAM|PATHAPATNAM": [
+      8.0,
+      1,
+      7,
+      3.3
+    ],
+    "KURNOOL|KURNOOL RURAL": [
+      8.0,
+      1,
+      8,
+      6.1
+    ],
+    "NANDYAL|UYYALAWADA": [
+      8.0,
+      1,
+      8,
+      4.0
+    ],
+    "POLAVARAM|Y.RAMAVARAM": [
+      7.9,
+      1,
+      8,
+      10.5
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|SEETHARAMAPURAM": [
+      7.9,
+      1,
+      8,
+      15.6
+    ],
+    "TIRUPATI|PELLAKUR": [
+      7.9,
+      1,
+      8,
+      2.7
+    ],
+    "SRIKAKULAM|SANTHABOMMALI": [
+      7.9,
+      1,
+      8,
+      4.9
+    ],
+    "ANAKAPALLI|GOLUGONDA": [
+      7.9,
+      1,
+      8,
+      9.8
+    ],
+    "ANANTHAPURAMU|ANANTAPUR_URBAN": [
+      7.8,
+      1,
+      7,
+      13.7
+    ],
+    "ANAKAPALLI|K.KOTAPADU": [
+      7.8,
+      1,
+      8,
+      5.0
+    ],
+    "MARKAPURAM|VELIGANDLA": [
+      7.7,
+      1,
+      8,
+      14.0
+    ],
+    "NTR|JAGGAYYAPETA": [
+      7.7,
+      1,
+      8,
+      4.4
+    ],
+    "PALNADU|NADENDLA": [
+      7.7,
+      1,
+      8,
+      2.8
+    ],
+    "ANAKAPALLI|NAKKAPALLE": [
+      7.7,
+      1,
+      8,
+      5.1
+    ],
+    "TIRUPATI|NARAYANAVANAM": [
+      7.6,
+      1,
+      7,
+      7.3
+    ],
+    "CHITTOOR|RAMA KUPPAM": [
+      7.5,
+      1,
+      7,
+      15.4
+    ],
+    "Y.S.R KADAPA|YERRAGUNTLA": [
+      7.4,
+      1,
+      7,
+      5.1
+    ],
+    "POLAVARAM|RAJAVOMMANGI": [
+      7.3,
+      1,
+      8,
+      3.9
+    ],
+    "SRIKAKULAM|MANDASA": [
+      7.3,
+      1,
+      8,
+      3.5
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|MARRIPADU": [
+      7.3,
+      1,
+      8,
+      13.4
+    ],
+    "KONASEEMA|UPPALAGUPTAM": [
+      7.2,
+      1,
+      5,
+      1.2
+    ],
+    "SRI SATHYA SAI|RODDAM": [
+      7.2,
+      4,
+      8,
+      21.3
+    ],
+    "TIRUPATI|CHITVEL": [
+      7.1,
+      4,
+      6,
+      26.6
+    ],
+    "KONASEEMA|P.GANNAVARAM": [
+      7.1,
+      1,
+      7,
+      6.7
+    ],
+    "ANAKAPALLI|NATHAVARAM": [
+      7.1,
+      1,
+      8,
+      3.8
+    ],
+    "VIZIANAGARAM|REGIDIAMADALAVALASA": [
+      7.1,
+      1,
+      8,
+      1.9
+    ],
+    "PRAKASAM|KOTHA PATNAM": [
+      7.1,
+      1,
+      8,
+      3.9
+    ],
+    "Y.S.R KADAPA|CHENNUR": [
+      7.0,
+      1,
+      8,
+      6.5
+    ],
+    "VIZIANAGARAM|PUSAPATIREGA": [
+      7.0,
+      1,
+      6,
+      2.3
+    ],
+    "VIZIANAGARAM|CHEEPURUPALLE": [
+      7.0,
+      1,
+      8,
+      9.2
+    ],
+    "ANANTHAPURAMU|GUNTAKAL": [
+      7.0,
+      1,
+      8,
+      7.0
+    ],
+    "SRIKAKULAM|PONDURU": [
+      7.0,
+      1,
+      8,
+      4.6
+    ],
+    "POLAVARAM|ADDATEEGALA": [
+      6.9,
+      1,
+      8,
+      9.1
+    ],
+    "ANAKAPALLI|KASIMKOTA": [
+      6.9,
+      1,
+      8,
+      2.7
+    ],
+    "NTR|PENUGANCHIPROLU": [
+      6.9,
+      1,
+      8,
+      3.7
+    ],
+    "NTR|GAMPALAGUDEM": [
+      6.9,
+      1,
+      8,
+      4.2
+    ],
+    "PALNADU|NARASARAOPET": [
+      6.8,
+      1,
+      8,
+      2.8
+    ],
+    "KAKINADA|KOTANANDURU": [
+      6.8,
+      1,
+      8,
+      3.8
+    ],
+    "CHITTOOR|KUPPAM": [
+      6.8,
+      4,
+      7,
+      20.1
+    ],
+    "WEST GODAVARI|ACHANTA": [
+      6.7,
+      1,
+      8,
+      1.2
+    ],
+    "WEST GODAVARI|UNDI": [
+      6.6,
+      1,
+      8,
+      12.7
+    ],
+    "ANAKAPALLI|ANAKAPALLE": [
+      6.6,
+      1,
+      8,
+      4.2
+    ],
+    "GUNTUR|PEDANANDIPADU": [
+      6.5,
+      1,
+      8,
+      2.9
+    ],
+    "CHITTOOR|GUDIPALA": [
+      6.5,
+      1,
+      8,
+      8.8
+    ],
+    "NANDYAL|GOSPADU": [
+      6.4,
+      1,
+      8,
+      3.1
+    ],
+    "PALNADU|AMARAVATHI": [
+      6.4,
+      1,
+      8,
+      4.3
+    ],
+    "NTR|VATSAVAI": [
+      6.4,
+      1,
+      8,
+      3.0
+    ],
+    "PARVATHIPURAM MANYAM|GARUGUBILLI": [
+      6.3,
+      1,
+      8,
+      4.9
+    ],
+    "KRISHNA|KRUTHIVENNU": [
+      6.3,
+      1,
+      8,
+      1.0
+    ],
+    "PALNADU|MUPPALLA": [
+      6.3,
+      1,
+      8,
+      2.0
+    ],
+    "VIZIANAGARAM|THERLAM": [
+      6.2,
+      1,
+      8,
+      3.7
+    ],
+    "ANANTHAPURAMU|KUDAIR": [
+      6.2,
+      1,
+      8,
+      13.3
+    ],
+    "TIRUPATI|BALAYAPALLE": [
+      6.2,
+      1,
+      8,
+      4.8
+    ],
+    "VIZIANAGARAM|RAMABHADRAPURAM": [
+      6.2,
+      1,
+      8,
+      4.2
+    ],
+    "VIZIANAGARAM|GAJAPATHINAGARAM": [
+      6.1,
+      1,
+      8,
+      4.9
+    ],
+    "PALNADU|PEDAKURAPADU": [
+      6.0,
+      1,
+      8,
+      2.9
+    ],
+    "ANAKAPALLI|ATCHUTAPURAM": [
+      6.0,
+      1,
+      6,
+      18.5
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|DUTTALUR": [
+      5.9,
+      1,
+      8,
+      16.5
+    ],
+    "ALLURI SITHARAMA RAJU|ARAKU VALLEY": [
+      5.9,
+      1,
+      5,
+      5.5
+    ],
+    "TIRUPATI|OJILI": [
+      5.9,
+      1,
+      8,
+      7.6
+    ],
+    "VIZIANAGARAM|BOBBILI": [
+      5.8,
+      1,
+      8,
+      3.3
+    ],
+    "ELURU|KUKUNOOR": [
+      5.8,
+      1,
+      7,
+      4.8
+    ],
+    "Y.S.R KADAPA|PRODDATUR": [
+      5.7,
+      1,
+      7,
+      4.5
+    ],
+    "NANDYAL|NANDYAL_URBAN": [
+      5.7,
+      1,
+      8,
+      4.7
+    ],
+    "NTR|REDDIGUDEM": [
+      5.7,
+      1,
+      8,
+      12.5
+    ],
+    "KRISHNA|GHANTASALA": [
+      5.7,
+      1,
+      8,
+      9.0
+    ],
+    "KURNOOL|HALAHARVI": [
+      5.7,
+      1,
+      8,
+      4.9
+    ],
+    "KRISHNA|PEDANA": [
+      5.6,
+      1,
+      8,
+      11.9
+    ],
+    "PARVATHIPURAM MANYAM|GUMMALAKSHMIPURAM": [
+      5.6,
+      1,
+      8,
+      5.7
+    ],
+    "NANDYAL|DORNIPADU": [
+      5.6,
+      1,
+      7,
+      2.1
+    ],
+    "TIRUPATI|NAIDUPET": [
+      5.6,
+      1,
+      8,
+      8.4
+    ],
+    "NANDYAL|SIRVEL": [
+      5.6,
+      1,
+      7,
+      1.5
+    ],
+    "NTR|CHANDARLAPADU": [
+      5.5,
+      1,
+      8,
+      3.7
+    ],
+    "KURNOOL|C BELAGAL": [
+      5.5,
+      1,
+      8,
+      3.5
+    ],
+    "KURNOOL|ADONI 1": [
+      5.5,
+      1,
+      7,
+      10.0
+    ],
+    "VISAKHAPATNAM|GAJUWAKA": [
+      5.4,
+      1,
+      8,
+      6.5
+    ],
+    "VISAKHAPATNAM|BHEEMUNIPATNAM": [
+      5.4,
+      1,
+      7,
+      3.8
+    ],
+    "GUNTUR|THULLUR": [
+      5.4,
+      1,
+      8,
+      2.3
+    ],
+    "NANDYAL|NANDYAL_RURAL": [
+      5.3,
+      1,
+      8,
+      3.7
+    ],
+    "POLAVARAM|RAMPACHODAVARAM": [
+      5.3,
+      1,
+      8,
+      8.9
+    ],
+    "PRAKASAM|SANTHAMAGULURU": [
+      5.2,
+      1,
+      8,
+      3.0
+    ],
+    "PARVATHIPURAM MANYAM|PARVATHIPURAM": [
+      5.2,
+      1,
+      6,
+      3.1
+    ],
+    "PARVATHIPURAM MANYAM|BHAMINI": [
+      5.2,
+      1,
+      8,
+      4.6
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|KOTA": [
+      5.2,
+      1,
+      8,
+      3.6
+    ],
+    "ALLURI SITHARAMA RAJU|PADERU": [
+      5.1,
+      1,
+      8,
+      8.7
+    ],
+    "PALNADU|NUZENDLA": [
+      5.1,
+      1,
+      8,
+      4.0
+    ],
+    "ALLURI SITHARAMA RAJU|HUKUMPETA": [
+      5.1,
+      1,
+      8,
+      3.2
+    ],
+    "ANAKAPALLI|MAKAVARAPALEM": [
+      5.1,
+      1,
+      8,
+      1.9
+    ],
+    "KURNOOL|HOLAGUNDA": [
+      5.1,
+      1,
+      8,
+      12.4
+    ],
+    "ALLURI SITHARAMA RAJU|CHINTAPALLE": [
+      5.0,
+      1,
+      8,
+      9.4
+    ],
+    "SRIKAKULAM|KANCHILI": [
+      5.0,
+      1,
+      8,
+      13.3
+    ],
+    "ALLURI SITHARAMA RAJU|DUMBRIGUDA": [
+      4.9,
+      1,
+      8,
+      6.7
+    ],
+    "KURNOOL|ADONI 2": [
+      4.9,
+      1,
+      8,
+      3.7
+    ],
+    "VIZIANAGARAM|VEPADA": [
+      4.9,
+      1,
+      8,
+      3.1
+    ],
+    "ALLURI SITHARAMA RAJU|ANANTHAGIRI": [
+      4.8,
+      1,
+      8,
+      12.7
+    ],
+    "ANAKAPALLI|CHEEDIKADA": [
+      4.7,
+      1,
+      7,
+      1.8
+    ],
+    "TIRUPATI|VENKATAGIRI": [
+      4.7,
+      1,
+      8,
+      7.6
+    ],
+    "WEST GODAVARI|AKIVEEDU": [
+      4.6,
+      1,
+      8,
+      1.0
+    ],
+    "PRAKASAM|KURICHEDU": [
+      4.6,
+      1,
+      8,
+      4.7
+    ],
+    "Y.S.R KADAPA|THANDUR": [
+      4.6,
+      1,
+      7,
+      6.5
+    ],
+    "KRISHNA|MACHILIPATNAM_SOUTH": [
+      4.5,
+      1,
+      7,
+      0.6
+    ],
+    "GUNTUR|TADIKONDA": [
+      4.4,
+      1,
+      8,
+      2.3
+    ],
+    "NANDYAL|BANDI ATMAKUR": [
+      4.4,
+      1,
+      8,
+      1.4
+    ],
+    "SRI SATHYA SAI|NALLAMADA": [
+      4.2,
+      1,
+      8,
+      10.8
+    ],
+    "SRIKAKULAM|JALUMURU": [
+      4.0,
+      1,
+      8,
+      2.5
+    ],
+    "VIZIANAGARAM|JAMI": [
+      3.9,
+      1,
+      8,
+      2.9
+    ],
+    "ALLURI SITHARAMA RAJU|MUNCHINGI PUTTU": [
+      3.8,
+      1,
+      8,
+      11.0
+    ],
+    "VIZIANAGARAM|NELLIMARLA": [
+      3.8,
+      1,
+      8,
+      1.0
+    ],
+    "EAST GODAVARI|RAJANAGARAM": [
+      3.8,
+      4,
+      8,
+      29.8
+    ],
+    "VIZIANAGARAM|GANTYADA": [
+      3.7,
+      1,
+      8,
+      2.6
+    ],
+    "KAKINADA|KARAPA": [
+      3.7,
+      1,
+      7,
+      1.7
+    ],
+    "NANDYAL|KOILKUNTLA": [
+      3.6,
+      1,
+      8,
+      5.6
+    ],
+    "NANDYAL|VELGODE": [
+      3.6,
+      1,
+      8,
+      2.8
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|ANANTHASAGARAM": [
+      3.6,
+      1,
+      8,
+      3.0
+    ],
+    "TIRUPATI|TIRUPATI (RURAL)": [
+      3.6,
+      1,
+      8,
+      8.3
+    ],
+    "GUNTUR|PHIRANGIPURAM": [
+      3.6,
+      1,
+      8,
+      1.2
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|CHEJERLA": [
+      3.6,
+      1,
+      8,
+      4.5
+    ],
+    "ANAKAPALLI|NARSIPATNAM": [
+      3.6,
+      1,
+      8,
+      1.0
+    ],
+    "VIZIANAGARAM|BONDAPALLE": [
+      3.5,
+      1,
+      8,
+      3.2
+    ],
+    "POLAVARAM|MAREDUMILLI": [
+      3.4,
+      1,
+      8,
+      9.1
+    ],
+    "SRIKAKULAM|VAJRAPUKOTHURU": [
+      3.4,
+      1,
+      6,
+      7.0
+    ],
+    "SRIKAKULAM|MELIAPUTTI": [
+      3.3,
+      1,
+      7,
+      4.7
+    ],
+    "ANANTHAPURAMU|BUKKARAYA SAMUDRAM": [
+      3.3,
+      1,
+      8,
+      9.0
+    ],
+    "Y.S.R KADAPA|PEDDAMUDIUM": [
+      3.3,
+      1,
+      7,
+      6.1
+    ],
+    "VIZIANAGARAM|KOTHAVALASA": [
+      3.2,
+      1,
+      8,
+      6.2
+    ],
+    "PARVATHIPURAM MANYAM|PACHIPENTA": [
+      3.2,
+      1,
+      8,
+      8.0
+    ],
+    "WEST GODAVARI|KALLA": [
+      2.9,
+      4,
+      8,
+      20.2
+    ],
+    "KURNOOL|YEMMIGANUR": [
+      2.9,
+      0,
+      8,
+      9.7
+    ],
+    "NANDYAL|GADIVEMULA": [
+      2.8,
+      0,
+      8,
+      5.1
+    ],
+    "GUNTUR|MEDIKONDURU": [
+      2.7,
+      0,
+      8,
+      2.9
+    ],
+    "SRIKAKULAM|GARA": [
+      2.7,
+      0,
+      8,
+      2.4
+    ],
+    "PARVATHIPURAM MANYAM|KOMARADA": [
+      2.7,
+      0,
+      8,
+      6.3
+    ],
+    "KURNOOL|KURNOOL URBAN": [
+      2.7,
+      0,
+      8,
+      3.1
+    ],
+    "SRIKAKULAM|BURJA": [
+      2.6,
+      0,
+      8,
+      3.8
+    ],
+    "ANANTHAPURAMU|ANANTAPUR_RURAL": [
+      2.6,
+      0,
+      8,
+      9.4
+    ],
+    "ELURU|MANDAVALLI": [
+      2.6,
+      0,
+      8,
+      15.9
+    ],
+    "KURNOOL|KOSIGI": [
+      2.5,
+      4,
+      7,
+      33.2
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|KALUVOYA": [
+      2.5,
+      0,
+      8,
+      7.8
+    ],
+    "PARVATHIPURAM MANYAM|VEERAGHATTAM": [
+      2.5,
+      0,
+      8,
+      5.0
+    ],
+    "VIZIANAGARAM|SANTHAKAVITI": [
+      2.4,
+      0,
+      7,
+      1.0
+    ],
+    "PRAKASAM|GUDLURU": [
+      2.4,
+      0,
+      8,
+      9.3
+    ],
+    "TIRUPATI|SULLURPETA": [
+      2.4,
+      0,
+      8,
+      4.5
+    ],
+    "PRAKASAM|ULAVAPADU": [
+      2.3,
+      0,
+      8,
+      4.2
+    ],
+    "PRAKASAM|ZARUGUMILLI": [
+      2.3,
+      0,
+      8,
+      7.2
+    ],
+    "SRIKAKULAM|HIRAMANDALAM": [
+      2.2,
+      0,
+      8,
+      1.8
+    ],
+    "PALNADU|RENTACHINTALA": [
+      1.9,
+      0,
+      8,
+      1.3
+    ],
+    "ANAKAPALLI|MADUGULA": [
+      1.9,
+      0,
+      8,
+      4.9
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|SYDAPURAM": [
+      1.8,
+      0,
+      8,
+      4.7
+    ],
+    "KRISHNA|GUDLAVALLERU": [
+      1.8,
+      0,
+      8,
+      12.7
+    ],
+    "SRIKAKULAM|LAKSHMINARSUPETA": [
+      1.7,
+      0,
+      8,
+      1.5
+    ],
+    "KONASEEMA|KOTIPALLI GANGAVARAM": [
+      1.7,
+      0,
+      7,
+      1.3
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|MUTHUKUR": [
+      1.7,
+      0,
+      8,
+      2.4
+    ],
+    "WEST GODAVARI|NARASAPURAM": [
+      1.6,
+      0,
+      8,
+      11.0
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|UDAYAGIRI": [
+      1.5,
+      0,
+      8,
+      10.2
+    ],
+    "PRAKASAM|KANDUKUR": [
+      1.5,
+      0,
+      8,
+      2.8
+    ],
+    "PRAKASAM|PONNALURU": [
+      1.4,
+      0,
+      8,
+      10.9
+    ],
+    "TIRUPATI|CHINNAGOTTIGALLU": [
+      1.4,
+      0,
+      6,
+      13.5
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|DAGADARTHI": [
+      1.3,
+      0,
+      8,
+      7.9
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|VINJAMUR": [
+      1.1,
+      0,
+      8,
+      14.4
+    ],
+    "KAKINADA|KAKINADA (RURAL)": [
+      0.9,
+      0,
+      8,
+      5.9
+    ],
+    "WEST GODAVARI|PENUGONDA": [
+      0.7,
+      0,
+      8,
+      8.4
+    ],
+    "CHITTOOR|GUDI PALLE": [
+      0.7,
+      4,
+      7,
+      30.7
+    ],
+    "SRIKAKULAM|KAVITI": [
+      0.2,
+      0,
+      5,
+      18.5
+    ],
+    "MARKAPURAM|DORNALA": [
+      0.0,
+      4,
+      6,
+      31.4
+    ],
+    "ANNAMAYYA|B KOTHAKOTA": [
+      0.0,
+      0,
+      5,
+      15.8
+    ],
+    "KRISHNA|PAMARRU": [
+      0.0,
+      0,
+      8,
+      13.8
+    ],
+    "SRI SATHYA SAI|HINDUPUR": [
+      0.0,
+      4,
+      8,
+      24.0
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|VARIKUNTAPADU": [
+      0.0,
+      0,
+      8,
+      13.1
+    ],
+    "TIRUPATI|OBULAVARIPALLE": [
+      0.0,
+      4,
+      8,
+      24.7
+    ],
+    "ANANTHAPURAMU|RAYADURG": [
+      0.0,
+      4,
+      5,
+      21.6
+    ],
+    "ANANTHAPURAMU|SETTUR": [
+      0.0,
+      4,
+      8,
+      29.7
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|INDUKURPET": [
+      0.0,
+      0,
+      8,
+      7.7
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|VIDAVALUR": [
+      0.0,
+      0,
+      8,
+      10.3
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|PODLAKUR": [
+      0.0,
+      0,
+      8,
+      6.2
+    ],
+    "ANANTHAPURAMU|PAMIDI": [
+      0.0,
+      0,
+      8,
+      15.1
+    ],
+    "ELURU|NIDAMARRU": [
+      0.0,
+      0,
+      8,
+      5.4
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|ALLUR": [
+      0.0,
+      0,
+      8,
+      3.5
+    ],
+    "TIRUPATI|TIRUPATI (URBAN)": [
+      0.0,
+      0,
+      7,
+      17.4
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|KODAVALUR": [
+      0.0,
+      0,
+      8,
+      7.3
+    ]
+  },
+  "strongest": [
+    {
+      "district": "Eluru",
+      "mandal": "Agiripalle",
+      "aquifer": "alluvial",
+      "medianSharePct": 75.6,
+      "years": 8,
+      "typicalDepthM": 14.1,
+      "specificYield": 0.072,
+      "class": "strong"
+    },
+    {
+      "district": "Y.S.R Kadapa",
+      "mandal": "T Sundupalle",
+      "aquifer": "hard_rock",
+      "medianSharePct": 67.1,
+      "years": 7,
+      "typicalDepthM": 17.5,
+      "specificYield": 0.023,
+      "class": "strong"
+    },
+    {
+      "district": "Krishna",
+      "mandal": "Gannavaram",
+      "aquifer": "alluvial",
+      "medianSharePct": 63.3,
+      "years": 8,
+      "typicalDepthM": 11.4,
+      "specificYield": 0.089,
+      "class": "strong"
+    },
+    {
+      "district": "Palnadu",
+      "mandal": "IPURU",
+      "aquifer": "alluvial",
+      "medianSharePct": 60.8,
+      "years": 8,
+      "typicalDepthM": 6.9,
+      "specificYield": 0.11,
+      "class": "strong"
+    },
+    {
+      "district": "Annamayya",
+      "mandal": "Kambhamvaripalle",
+      "aquifer": "hard_rock",
+      "medianSharePct": 58.9,
+      "years": 7,
+      "typicalDepthM": 12.0,
+      "specificYield": 0.023,
+      "class": "strong"
+    },
+    {
+      "district": "Ananthapuramu",
+      "mandal": "Kanekal",
+      "aquifer": "hard_rock",
+      "medianSharePct": 57.6,
+      "years": 8,
+      "typicalDepthM": 16.7,
+      "specificYield": 0.023,
+      "class": "strong"
+    },
+    {
+      "district": "Guntur",
+      "mandal": "Guntur East",
+      "aquifer": "alluvial",
+      "medianSharePct": 57.6,
+      "years": 8,
+      "typicalDepthM": 5.6,
+      "specificYield": 0.11,
+      "class": "strong"
+    },
+    {
+      "district": "Kakinada",
+      "mandal": "Thondangi",
+      "aquifer": "coastal",
+      "medianSharePct": 56.5,
+      "years": 8,
+      "typicalDepthM": 7.5,
+      "specificYield": 0.091,
+      "class": "strong"
+    }
+  ],
+  "weakest": [
+    {
+      "district": "Annamayya",
+      "mandal": "B KOTHAKOTA",
+      "aquifer": "hard_rock",
+      "medianSharePct": 0.0,
+      "years": 5,
+      "typicalDepthM": 15.8,
+      "specificYield": 0.023,
+      "class": "weak"
+    },
+    {
+      "district": "Krishna",
+      "mandal": "Pamarru",
+      "aquifer": "alluvial",
+      "medianSharePct": 0.0,
+      "years": 8,
+      "typicalDepthM": 13.8,
+      "specificYield": 0.119,
+      "class": "weak"
+    },
+    {
+      "district": "Sri Potti Sriramulu Nellore",
+      "mandal": "Varikuntapadu",
+      "aquifer": "coastal",
+      "medianSharePct": 0.0,
+      "years": 8,
+      "typicalDepthM": 13.1,
+      "specificYield": 0.018,
+      "class": "weak"
+    },
+    {
+      "district": "Sri Potti Sriramulu Nellore",
+      "mandal": "Indukurpet",
+      "aquifer": "coastal",
+      "medianSharePct": 0.0,
+      "years": 8,
+      "typicalDepthM": 7.7,
+      "specificYield": 0.022,
+      "class": "weak"
+    },
+    {
+      "district": "Sri Potti Sriramulu Nellore",
+      "mandal": "Vidavalur",
+      "aquifer": "coastal",
+      "medianSharePct": 0.0,
+      "years": 8,
+      "typicalDepthM": 10.3,
+      "specificYield": 0.023,
+      "class": "weak"
+    },
+    {
+      "district": "Sri Potti Sriramulu Nellore",
+      "mandal": "PODLAKUR",
+      "aquifer": "coastal",
+      "medianSharePct": 0.0,
+      "years": 8,
+      "typicalDepthM": 6.2,
+      "specificYield": 0.08,
+      "class": "weak"
+    },
+    {
+      "district": "Ananthapuramu",
+      "mandal": "Pamidi",
+      "aquifer": "hard_rock",
+      "medianSharePct": 0.0,
+      "years": 8,
+      "typicalDepthM": 15.1,
+      "specificYield": 0.023,
+      "class": "weak"
+    },
+    {
+      "district": "Eluru",
+      "mandal": "Nidamarru",
+      "aquifer": "alluvial",
+      "medianSharePct": 0.0,
+      "years": 8,
+      "typicalDepthM": 5.4,
+      "specificYield": 0.13,
+      "class": "weak"
+    }
+  ],
+  "setAside": [
+    {
+      "district": "Markapuram",
+      "mandal": "GIDDALURU",
+      "aquifer": "coastal",
+      "medianSharePct": 253.9,
+      "years": 6,
+      "typicalDepthM": 42.6,
+      "specificYield": 0.08,
+      "class": "set aside"
+    },
+    {
+      "district": "Markapuram",
+      "mandal": "BESTAVARIPETA",
+      "aquifer": "coastal",
+      "medianSharePct": 136.7,
+      "years": 8,
+      "typicalDepthM": 37.5,
+      "specificYield": 0.08,
+      "class": "set aside"
+    },
+    {
+      "district": "Eluru",
+      "mandal": "Pedapadu",
+      "aquifer": "alluvial",
+      "medianSharePct": 96.0,
+      "years": 8,
+      "typicalDepthM": 25.5,
+      "specificYield": 0.116,
+      "class": "set aside"
+    },
+    {
+      "district": "Markapuram",
+      "mandal": "PEDAARAVEEDU",
+      "aquifer": "coastal",
+      "medianSharePct": 94.9,
+      "years": 8,
+      "typicalDepthM": 33.4,
+      "specificYield": 0.08,
+      "class": "set aside"
+    },
+    {
+      "district": "Markapuram",
+      "mandal": "Markapur",
+      "aquifer": "coastal",
+      "medianSharePct": 78.8,
+      "years": 7,
+      "typicalDepthM": 30.3,
+      "specificYield": 0.019,
+      "class": "set aside"
+    },
+    {
+      "district": "East Godavari",
+      "mandal": "Nallajerla",
+      "aquifer": "alluvial",
+      "medianSharePct": 74.8,
+      "years": 5,
+      "typicalDepthM": 48.7,
+      "specificYield": 0.117,
+      "class": "set aside"
+    },
+    {
+      "district": "Eluru",
+      "mandal": "Denduluru",
+      "aquifer": "alluvial",
+      "medianSharePct": 73.4,
+      "years": 6,
+      "typicalDepthM": 47.3,
+      "specificYield": 0.119,
+      "class": "set aside"
+    },
+    {
+      "district": "Y.S.R Kadapa",
+      "mandal": "Porumamilla",
+      "aquifer": "hard_rock",
+      "medianSharePct": 71.0,
+      "years": 7,
+      "typicalDepthM": 22.0,
+      "specificYield": 0.018,
+      "class": "set aside"
+    }
+  ],
+  "caveat": "Net of the season's own pumping, so a mandal that converts little may be recharging well and drawing it back out. The absolute share rests on specific yield, which is an aquifer-wide proxy where CGWB has not measured it, so the ranking within an aquifer is firmer than the number.",
+  "limits": [
+    "A deeper water table has more room to rise, and still scores higher after the deepest are set aside: share and depth correlate at 0.27 among the mandals ranked here, against 0.40 before. Compare mandals of similar depth and aquifer rather than across the whole table.",
+    "In a canal command a share can be lifted by irrigation return flow without ever passing 100%, and this cannot separate that from rain. Of the 32 mandals at or above 40%, seventeen are alluvial and ten are hard rock, so it is not simply the delta, but a high share in a commanded mandal is worth reading as water arriving rather than water converting.",
+    "A ranking to inform where to look, verified in the field before anything is built on it. The state median sits inside the 8 to 20% that GEC's own recharge coefficients give for most formations, which is the check that the method is behaving, not a licence to site a structure from a table."
+  ]
+}
