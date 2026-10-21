@@ -28,6 +28,7 @@ import type { DistrictLayerKey, MandalHeatLayerKey } from "../../lib/types";
 import { isWaterLayer, WATER_LAYER_META, waterLayerGradient, waterMandals, type WaterMandalLayer } from "../../lib/waterMandals";
 import { FIELD_LAYER_META, fieldLegend, isFieldLayer, type FieldLayer } from "../../lib/fieldSignals";
 import { RECHARGE_LAYER_META, isRechargeLayer, recharge, rechargeLegend, type RechargeLayer } from "../../lib/rechargeEfficiency";
+import { RAIN_LAYER_META, isRainLayer, rainGoverned, rainLegend, type RainLayer } from "../../lib/rainGoverned";
 import { brief } from "../../lib/pageBriefs";
 import { groundwaterStressNow } from "../../lib/pageNow";
 import { useIsDark } from "../../components/useIsDark";
@@ -39,7 +40,7 @@ const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "rainfall_mm", label: "Rainfall" },
 ];
 
-type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer;
+type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer;
 const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "status", label: "Fusion status" },
   { key: "water_balance_mm", label: "Water Balance" },
@@ -49,6 +50,7 @@ const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "vci", label: "Crop vegetation" },
   { key: "gec_category", label: "Groundwater category" },
   { key: "recharge_share", label: "Rain reaching the aquifer" },
+  { key: "rain_governed", label: "Does rain still drive it?" },
 ];
 
 function legendGradient(layer: string, dark: boolean) {
@@ -125,7 +127,7 @@ export default function MapPage() {
                 </span>
                 {level === "district" ? "Andhra Pradesh — District Heat-Map"
                   : mandalView === "status" ? "Andhra Pradesh — Mandal Fusion Status"
-                    : `Andhra Pradesh — ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isRechargeLayer(mandalView) ? RECHARGE_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
+                    : `Andhra Pradesh — ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isRechargeLayer(mandalView) ? RECHARGE_LAYER_META[mandalView].label : isRainLayer(mandalView) ? RAIN_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
                 {level === "mandal" && (isWaterLayer(mandalView) || isFieldLayer(mandalView)) ? (
                   <span className="dataAsOf">{isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].period : FIELD_LAYER_META[mandalView].period}</span>
                 ) : level === "mandal" && mandalView !== "status" ? (
@@ -187,6 +189,34 @@ export default function MapPage() {
                       series yet (shown grey).
                     </div>
                   </>
+                ) : isRainLayer(mandalView) ? (
+                  <div className="choroLegend" data-testid="rain-layer-legend">
+                    <div className="choroHead">
+                      <span>{RAIN_LAYER_META[mandalView].label}</span>
+                      <span className="choroPeriod">{RAIN_LAYER_META[mandalView].period}</span>
+                    </div>
+                    <ul className="categoryLegend">
+                      {rainLegend().map(item => <li key={item.key}><i style={{ background: item.color }} />{item.label}<b>{item.count}</b></li>)}
+                      <li><i style={{ background: "#d3d9dc" }} />Too few seasons to fit</li>
+                    </ul>
+                    <div className="rechargeAquifers">
+                      {rainGoverned.groups.map(group => (
+                        <div key={group.class} className="rechargeAquifer">
+                          <b>{group.medianIrrigatedPct}%</b>
+                          <span>irrigated, where {group.class === "rain governed" ? "rain drives it" : group.class === "partly" ? "rain is part of it" : "rain does not"}</span>
+                          <i>{group.medianRisePer100mm} m per 100 mm</i>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="mapHint">
+                      <IconInfo style={{ width: 13, height: 13 }} /> Where the monsoon still writes the water table there is half the irrigation, and the table answers rain forty times more strongly. Rain explains about an eighth of the median mandal&rsquo;s swing.
+                    </div>
+                    <details className="rechargeMethod">
+                      <summary>How this is measured, and what it cannot say</summary>
+                      <p>{RAIN_LAYER_META[mandalView].note}</p>
+                      <ul>{rainGoverned.limits.map((limit, i) => <li key={i}>{limit}</li>)}</ul>
+                    </details>
+                  </div>
                 ) : isRechargeLayer(mandalView) ? (
                   <div className="choroLegend" data-testid="recharge-layer-legend">
                     <div className="choroHead">
