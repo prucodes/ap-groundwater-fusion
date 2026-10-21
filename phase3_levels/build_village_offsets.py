@@ -59,6 +59,9 @@ from sklearn.metrics import mean_absolute_error, r2_score
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.path.join(ROOT, "app", "data")
 OUT = os.path.join(APP, "village_offsets.json")
+# The card on /districts needs a dozen figures, not 626 village rows. /districts is
+# a client page, so importing the full file would ship the lot to every browser.
+SUMMARY = os.path.join(APP, "village_offsets_summary.json")
 DEFAULT_SRC = os.path.join(
     ROOT, "phase3_levels", "cgwb_sy",
     "Quality_controlled_groundwater_levels_over_India", "Output",
@@ -494,6 +497,36 @@ def main():
     with open(OUT, "w", encoding="utf-8") as handle:
         json.dump(payload, handle, indent=2)
         handle.write("\n")
+
+    dug = next((row for row in payload["validation"]["byWellType"]
+                if row["wellType"] == "Dug well"), None)
+    bore = next((row for row in payload["validation"]["byWellType"]
+                 if row["wellType"] == "Bore well"), None)
+    summary = {
+        "contractVersion": "1.0.0",
+        "generatedAt": payload["generatedAt"],
+        "source": payload["source"],
+        "method": payload["method"],
+        "coverage": payload["coverage"],
+        "spread": payload["spread"],
+        "persistence": payload["validation"]["persistence"],
+        "splitHalf": {k: v for k, v in payload["validation"]["splitHalf"].items()
+                      if k != "byAquifer"},
+        "byAquifer": payload["validation"]["splitHalf"]["byAquifer"],
+        "staticCovariateNull": payload["validation"]["staticCovariateNull"],
+        "crossNetworkOffset": payload["validation"]["crossNetworkOffset"],
+        "dugWell": None if dug is None else
+            {"wells": dug["wells"], "persistence": dug["persistence"]["persistentSharePct"],
+             "r": dug["splitHalf"]["pastPredictsFutureR"], "dose": dug["doseResponse"]},
+        "boreWell": None if bore is None else
+            {"wells": bore["wells"], "r": bore["splitHalf"]["pastPredictsFutureR"],
+             "dose": bore["doseResponse"]},
+        "caveat": payload["source"]["caveat"],
+    }
+    with open(SUMMARY, "w", encoding="utf-8") as handle:
+        json.dump(summary, handle, indent=2)
+        handle.write("\n")
+    print(f"  summary -> {SUMMARY} ({os.path.getsize(SUMMARY) / 1024:.0f} KB)")
 
     coverage, spread = payload["coverage"], payload["spread"]
     persist = payload["validation"]["persistence"]

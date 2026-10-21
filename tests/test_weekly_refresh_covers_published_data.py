@@ -56,6 +56,11 @@ STATIC_BY_DESIGN = {
         "phase3_levels/build_crop_water_record.py when a season ends (about an hour of paced "
         "ERA5 downloads, cached), and dated in the file"
     ),
+    "village_offsets_summary.json": (
+        "the dozen figures the /districts card needs, written beside village_offsets.json "
+        "by the same hand-run builder and static for the same reason: the CGWB well records "
+        "it rests on end in 2023 and the offsets are persistent"
+    ),
     "village_offsets.json": (
         "each village's fixed offset from its mandal, built by "
         "phase3_levels/build_village_offsets.py from CGWB's quality-controlled well "
