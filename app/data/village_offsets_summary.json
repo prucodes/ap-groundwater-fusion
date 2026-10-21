@@ -1,0 +1,163 @@
+{
+  "contractVersion": "1.0.0",
+  "generatedAt": "2026-10-21T01:36:12Z",
+  "source": {
+    "name": "CGWB Quality controlled groundwater levels over India",
+    "period": "2000-2024, read in January, May, August and November",
+    "monthColumns": 100,
+    "apWells": 1518,
+    "apReadings": 61837,
+    "caveat": "observation wells with a fixed measuring point, read at rest; private irrigation wells will be noisier"
+  },
+  "method": "each well's leave-one-out distance from the other wells in its mandal that month, averaged over its record; added to the mandal nowcast",
+  "coverage": {
+    "villages": 626,
+    "villagesPinned": 534,
+    "mandals": 118,
+    "mandalsWithSpread": 100,
+    "tehsilsUnmatched": 5,
+    "mandalsInRecords": 670
+  },
+  "spread": {
+    "medianVillageSpreadM": 1.5,
+    "proxyPoorThresholdM": 2.0,
+    "proxyPoor": 41,
+    "proxyFair": 59
+  },
+  "persistence": {
+    "wellsScored": 681,
+    "betweenWellOffsetSdM": 6.792,
+    "withinWellScatterSdM": 1.778,
+    "persistentSharePct": 93.6
+  },
+  "splitHalf": {
+    "wellsScored": 646,
+    "pastPredictsFutureR": 0.986,
+    "mandalMeanAppliedMaeM": 3.893,
+    "withLearnedOffsetMaeM": 0.645,
+    "reductionPct": 83.4
+  },
+  "byAquifer": [
+    {
+      "aquifer": "alluvial",
+      "wells": 91,
+      "mandalMeanAppliedMaeM": 1.712,
+      "withLearnedOffsetMaeM": 0.455,
+      "reductionPct": 73.4
+    },
+    {
+      "aquifer": "coastal",
+      "wells": 157,
+      "mandalMeanAppliedMaeM": 2.284,
+      "withLearnedOffsetMaeM": 0.479,
+      "reductionPct": 79.0
+    },
+    {
+      "aquifer": "hard_rock",
+      "wells": 286,
+      "mandalMeanAppliedMaeM": 5.239,
+      "withLearnedOffsetMaeM": 0.888,
+      "reductionPct": 83.1
+    }
+  ],
+  "staticCovariateNull": {
+    "wellsScored": 681,
+    "features": [
+      "latitude",
+      "longitude",
+      "well depth",
+      "well type"
+    ],
+    "validation": "5-fold GroupKFold, whole mandals held out",
+    "mandalMeanMaeM": 4.022,
+    "predictedOffsetMaeM": 4.113,
+    "predictedOffsetR2": -0.099,
+    "verdict": "worse than using the mandal mean; the offset must be measured, not inferred"
+  },
+  "crossNetworkOffset": {
+    "reference": "APWRIMS mandal monthly mean",
+    "overlapWindow": "2014-08 to 2023-08",
+    "villagesReached": 597,
+    "mandalsReached": 129,
+    "wellsScored": 603,
+    "persistentSharePct": 77.9,
+    "pastPredictsFutureR": 0.831,
+    "mandalLevelAppliedMaeM": 12.386,
+    "withLearnedOffsetMaeM": 5.11,
+    "verdict": "weaker than offsets measured within one network, so village readings need a mandal reference built from the same kind of well; a pilot therefore needs several wells per mandal rather than one"
+  },
+  "dugWell": {
+    "wells": 547,
+    "persistence": 92.6,
+    "r": 0.992,
+    "dose": [
+      {
+        "readings": 1,
+        "residualErrorM": 1.729,
+        "wells": 476
+      },
+      {
+        "readings": 2,
+        "residualErrorM": 1.156,
+        "wells": 464
+      },
+      {
+        "readings": 3,
+        "residualErrorM": 0.928,
+        "wells": 462
+      },
+      {
+        "readings": 4,
+        "residualErrorM": 0.886,
+        "wells": 457
+      },
+      {
+        "readings": 6,
+        "residualErrorM": 0.701,
+        "wells": 446
+      },
+      {
+        "readings": 8,
+        "residualErrorM": 0.698,
+        "wells": 441
+      }
+    ]
+  },
+  "boreWell": {
+    "wells": 320,
+    "r": 0.979,
+    "dose": [
+      {
+        "readings": 1,
+        "residualErrorM": 3.564,
+        "wells": 228
+      },
+      {
+        "readings": 2,
+        "residualErrorM": 2.616,
+        "wells": 216
+      },
+      {
+        "readings": 3,
+        "residualErrorM": 2.027,
+        "wells": 200
+      },
+      {
+        "readings": 4,
+        "residualErrorM": 1.841,
+        "wells": 189
+      },
+      {
+        "readings": 6,
+        "residualErrorM": 1.336,
+        "wells": 178
+      },
+      {
+        "readings": 8,
+        "residualErrorM": 1.215,
+        "wells": 168
+      }
+    ]
+  },
+  "caveat": "observation wells with a fixed measuring point, read at rest; private irrigation wells will be noisier"
+}

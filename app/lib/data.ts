@@ -12,6 +12,7 @@ import nasaProvenanceJson from "../data/nasa_provenance.json";
 import monsoonWatchJson from "../data/monsoon_watch.json";
 import assessmentTrajectoryJson from "../data/assessment_trajectory.json";
 import seawaterWatchJson from "../data/seawater_watch.json";
+import villageOffsetsJson from "../data/village_offsets_summary.json";
 import fieldQueueJson from "../data/field_queue.json";
 import pacificEnsoJson from "../data/enso_pacific.json";
 import apTemperatureJson from "../data/ap_temperature.json";
@@ -344,6 +345,23 @@ export type SeawaterWatch = {
   watch: SeawaterRow[];
 };
 export const seawaterWatch = seawaterWatchJson as unknown as SeawaterWatch;
+
+/** Whether a level can be given per village: the summary the card needs, not the
+ * 626 village rows, which stay in village_offsets.json for the brief. */
+export type VillageDose = { readings: number; residualErrorM: number; wells: number };
+export type VillageOffsets = {
+  generatedAt: string; method: string; caveat: string;
+  source: { apWells: number; apReadings: number; period: string };
+  coverage: { villages: number; villagesPinned: number; mandals: number; mandalsWithSpread: number };
+  spread: { medianVillageSpreadM: number; proxyPoor: number; proxyFair: number };
+  persistence: { persistentSharePct: number; wellsScored: number };
+  splitHalf: { pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number };
+  byAquifer: Array<{ aquifer: string; wells: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number }>;
+  staticCovariateNull: { predictedOffsetMaeM: number; predictedOffsetR2: number; mandalMeanMaeM: number };
+  dugWell: { wells: number; persistence: number; r: number; dose: VillageDose[] } | null;
+  boreWell: { wells: number; r: number; dose: VillageDose[] } | null;
+};
+export const villageOffsets = villageOffsetsJson as unknown as VillageOffsets;
 
 /** Where a reading would be worth most: the interval width, the people and the
  * irrigated area, each as a rank among all mandals, multiplied. */

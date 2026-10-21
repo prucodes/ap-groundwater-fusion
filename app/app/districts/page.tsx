@@ -17,6 +17,7 @@ import { brief } from "../../lib/pageBriefs";
 import { AssessmentTrajectory } from "../../components/AssessmentTrajectory";
 import { SeawaterWatch } from "../../components/SeawaterWatch";
 import { FieldQueue } from "../../components/FieldQueue";
+import { VillageOffsets } from "../../components/VillageOffsets";
 import { districtsNow } from "../../lib/pageNow";
 
 export default function DistrictsPage() {
@@ -117,6 +118,17 @@ export default function DistrictsPage() {
           <span className="cardSub">ground elevation minus measured depth, against the official salinity map</span>
         </div>
         <SeawaterWatch />
+      </section>
+
+      <section className="card" id="village-offsets">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconDroplet /></span>
+            Can a level be given per village?
+          </div>
+          <span className="cardSub">asked by the department; answered on CGWB&rsquo;s own Andhra well records</span>
+        </div>
+        <VillageOffsets />
       </section>
 
       <section className="card" id="field-queue">
