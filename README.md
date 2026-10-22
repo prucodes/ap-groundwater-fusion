@@ -490,7 +490,7 @@ Roadmap: GRACE depletion trend + real time-series, and Sentinel-1 InSAR land sub
 ### Creator introduction
 
 The first visit to any app route opens **Beneath the Monsoon**, an animated SVG
-introduction to AP Water Intelligence, designed and built by **Pruthvi Yannam**.
+introduction to AP Water Intelligence, created by **Pruthvi Yannam**.
 On the home page, enter `PRUTHVI` (case-insensitive; the full name also works).
 A shared link to any other page, such as the brief, shows the same introduction
 once with a single **Continue** button that names the page, so a reader sent a

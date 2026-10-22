@@ -268,7 +268,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <button type="button" className="creatorCredit" onClick={showWelcome} title="About the creator · revisit the introduction">
           <span className="creatorMonogram" aria-hidden="true">py.</span>
-          <span className="creatorCreditText"><small>Designed &amp; built by</small><strong>{CREATOR_NAME}</strong></span>
+          <span className="creatorCreditText"><small>Created by</small><strong>{CREATOR_NAME}</strong></span>
         </button>
 
         <div className="sidebarStatus">
@@ -320,7 +320,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </button>
       </aside>
 
-      <main className="main" tabIndex={-1}><PageTransition>{children}</PageTransition><footer className="appCreatorFooter"><span>AP Water Intelligence · Designed and built by <strong>{CREATOR_NAME}</strong></span><button type="button" onClick={showWelcome}>The story behind the project <span aria-hidden="true">↗</span></button></footer></main>
+      <main className="main" tabIndex={-1}><PageTransition>{children}</PageTransition><footer className="appCreatorFooter"><span>AP Water Intelligence · Created by <strong>{CREATOR_NAME}</strong></span><button type="button" onClick={showWelcome}>The story behind the project <span aria-hidden="true">↗</span></button></footer></main>
       <CommandPalette />
     </div>
   );
