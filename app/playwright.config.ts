@@ -1,4 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
+import { WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE } from "./lib/creator";
+
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3100";
 
 /**
  * Layout regression tests.
@@ -24,13 +27,21 @@ export default defineConfig({
   retries: 0,
   reporter: process.env.CI ? "list" : "line",
   use: {
-    baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3100",
+    baseURL,
+    // Existing workspace suites model a returning reader. The welcome project
+    // starts fresh and exercises the entrance itself on every route.
+    storageState: { cookies: [], origins: [{ origin: new URL(baseURL).origin, localStorage: [{ name: WELCOME_STORAGE_KEY, value: WELCOME_STORAGE_VALUE }] }] },
     trace: "off",
     // CI runners have no GPU: SwiftShader draws the 3D view, and newer Chromium
     // only allows it with this flag.
     launchOptions: { args: ["--ignore-gpu-blocklist", "--enable-unsafe-swiftshader"] },
   },
   projects: [
+    {
+      name: "welcome",
+      testMatch: /welcome\.spec\.ts/,
+      use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 1000 }, storageState: { cookies: [], origins: [] } },
+    },
     {
       name: "governance",
       testMatch: /governance.*\.spec\.ts/,

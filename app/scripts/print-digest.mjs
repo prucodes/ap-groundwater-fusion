@@ -48,7 +48,10 @@ try {
   await ready(url);
   browser = await chromium.launch();
   const page = await browser.newPage();
+  // Report generation is a returning visit, not a screenshot of the welcome.
+  await page.addInitScript(() => localStorage.setItem("ap-gw-welcome-v1", "entered"));
   await page.goto(url, { waitUntil: "networkidle" });
+  await page.locator(".shell").waitFor();
   await page.emulateMedia({ media: "print" });
   await page.evaluate(() => document.fonts.ready);
   await page.pdf({ path: output, format: "A4", printBackground: true, preferCSSPageSize: true });

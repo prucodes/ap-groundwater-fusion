@@ -487,6 +487,30 @@ Roadmap: GRACE depletion trend + real time-series, and Sentinel-1 InSAR land sub
 
 ## Visit counting
 
+### Creator introduction
+
+The first visit to any app route opens **Beneath the Monsoon**, an animated SVG
+introduction to AP Water Intelligence, conceived and built by **Pruthvi Yannam**.
+Enter `PRUTHVI` (case-insensitive; the full name also works). This is a welcome
+ritual, **not authentication**: the static routes, downloaded data and repository
+remain public. The artwork uses a simplified prototype AP silhouette; its rain,
+layers and points are illustrative, not observations.
+
+The browser remembers entry with the local preference `ap-gw-welcome-v1=entered`.
+No identifier or name is stored, and entry still works if browser storage is
+unavailable. Links keep their path, query and fragment. The creator credit in the
+sidebar or page footer reopens the introduction. Motion can be paused and respects
+the device's reduced-motion preference. Print scripts and existing workspace tests
+set the returning-visit preference; `app/e2e/welcome.spec.ts` tests fresh visits.
+
+GoatCounter also records `ap-gw/welcome/viewed`, `ap-gw/welcome/entered`,
+`ap-gw/welcome/replayed`, `ap-gw/app/opened`, `ap-gw/report/download`,
+`ap-gw/report/pdf-download`, and `ap-gw/report/print`. Each records at most once per
+page load, under the existing opt-out rules. No entered text, identity, filename,
+or selected place is sent. A page visit records the requested URL even before
+entry; `app/opened` distinguishes a workspace that was actually opened. Downloads
+record initiation, not proof that the visitor saved a file.
+
 The hosted site counts visits with GoatCounter (`app/lib/visit-counter.ts`), which sets no
 cookies, stores no IP address and builds no cross-site profile. Figures appear at
 **https://prucodes.goatcounter.com** — the same site the other `prucodes` projects report into,

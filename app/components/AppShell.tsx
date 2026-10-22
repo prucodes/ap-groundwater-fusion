@@ -38,6 +38,9 @@ import { datasetManifest, formatPeriod } from "../lib/data";
 import { waterSummary } from "../lib/waterSummary";
 import { stateSummary } from "../lib/stateSummary";
 import { PageTransition } from "./PageTransition";
+import { useWelcome } from "./welcome/WelcomeGate";
+import { CREATOR_NAME } from "../lib/creator";
+import { countEvent } from "../lib/visit-counter";
 
 type NavItem = { href: string; label: string; Icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactNode; desc: string };
 
@@ -107,6 +110,7 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  const showWelcome = useWelcome();
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -129,6 +133,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   // On phones the sidebar is an off-canvas drawer. Navigating should dismiss it,
   // or the new page loads hidden behind the still-open menu.
   useEffect(() => setNavOpen(false), [pathname]);
+
+  // Delegation also covers server-rendered PDF links and generated CSV/JSON
+  // download anchors. Record only the action, never a filename or chosen place.
+  useEffect(() => {
+    const download = (event: MouseEvent) => {
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>("a[download]") : null;
+      if (!link) return;
+      if (link.download.toLowerCase().endsWith(".pdf")) countEvent("report/pdf-download", "Report: requested a PDF download");
+      else countEvent("report/download", "Report: started a data download");
+    };
+    const print = () => countEvent("report/print", "Report: opened the print dialog");
+    document.addEventListener("click", download);
+    window.addEventListener("beforeprint", print);
+    return () => {
+      document.removeEventListener("click", download);
+      window.removeEventListener("beforeprint", print);
+    };
+  }, []);
 
   // While the drawer is open it owns the screen: Escape closes it, and the page
   // behind must not scroll under the overlay.
@@ -244,6 +266,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <div className="sidebarSpacer" />
 
+        <button type="button" className="creatorCredit" onClick={showWelcome} title="About the creator · revisit the introduction">
+          <span className="creatorMonogram" aria-hidden="true">p.</span>
+          <span className="creatorCreditText"><small>Conceived &amp; built by</small><strong>{CREATOR_NAME}</strong></span>
+        </button>
+
         <div className="sidebarStatus">
           <h4>Data status</h4>
           <div className={`statusLive ${overdue ? "statusOverdue" : ""}`}>
@@ -293,7 +320,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </button>
       </aside>
 
-      <main className="main"><PageTransition>{children}</PageTransition></main>
+      <main className="main" tabIndex={-1}><PageTransition>{children}</PageTransition><footer className="appCreatorFooter"><span>AP Water Intelligence · Built by <strong>{CREATOR_NAME}</strong></span><button type="button" onClick={showWelcome}>The story behind the project <span aria-hidden="true">↗</span></button></footer></main>
       <CommandPalette />
     </div>
   );
