@@ -218,7 +218,7 @@ export default function MonsoonPage() {
             <span className="titleIcon"><IconDroplet /></span>
             What the season banked
           </div>
-          <span className="cardSub">water-table fluctuation · the method the official assessment uses</span>
+          <span className="cardSub">positive storage-change proxy · not gross recharge</span>
         </div>
         <WaterBanked />
       </section> : null}

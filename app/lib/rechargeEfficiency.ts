@@ -1,18 +1,9 @@
 import rechargeJson from "../data/recharge_efficiency.json";
 
-/* Where rain becomes groundwater, per mandal, over twelve years (~52 KB).
- *
- * The map layer's side of build_recharge_efficiency.py: the median share of a
- * monsoon's rain that showed up as storage, by GEC-2015's water-table
- * fluctuation. Shaped like the other mandal layers, keyed "DISTRICT|MANDAL", so
- * a fill is one lookup.
- *
- * Two classes are coloured apart rather than ranked. A mandal whose share passes
- * 100% banked more than fell on it, so the water came along a canal or from
- * upslope. A mandal whose own table sits deeper than the method's assumption
- * holds is set aside, because water-table fluctuation is for an unconfined
- * aquifer and a deep reading turns a head change into water that is not there.
- */
+/* Positive seasonal storage-change / rainfall proxy, keyed by mandal.
+ * The numerator and rainfall denominator cover different month windows.
+ * This does not isolate rain recharge or diagnose aquifer confinement/imports.
+ * Legacy class IDs are retained; labels describe the evidence conservatively. */
 
 export type RechargeClass = "weak" | "moderate" | "strong" | "imports" | "set aside";
 
@@ -43,7 +34,7 @@ export function isRechargeLayer(layer: string | null | undefined): layer is Rech
 
 export const RECHARGE_LAYER_META: Record<RechargeLayer, { label: string; period: string; note: string }> = {
   recharge_share: {
-    label: "Rain that reaches the aquifer",
+    label: "Seasonal storage-change / rainfall proxy",
     period: `${recharge.yearsAvailable[0]} to ${recharge.yearsAvailable[1]}, median of each mandal's years`,
     note: `${recharge.method}. ${recharge.caveat}`,
   },
@@ -91,23 +82,23 @@ function ease(t: number): number {
 export function rechargeText(district: string, mandal: string): string | null {
   const row = rechargeForMandal(district, mandal);
   if (!row) return null;
-  if (row.klass === "imports") return `${row.sharePct}% · more than fell on it`;
+  if (row.klass === "imports") return `${row.sharePct}% ratio · attribution unresolved`;
   if (row.klass === "set aside") return `set aside · water table ${row.depthM} m down`;
-  return `${row.sharePct}% of monsoon rain banked · ${row.years} years`;
+  return `${row.sharePct}% storage/rainfall proxy · ${row.years} years`;
 }
 
 export function rechargeLegend() {
   const mid = recharge.stateMedianSharePct ?? 12;
   const counts = recharge.counts;
   return [
-    { key: "strong", label: `Above ${recharge.thresholds.strongPct}% reaches the aquifer`,
+    { key: "strong", label: `Proxy ≥ ${recharge.thresholds.strongPct}%`,
       color: rampAt(ease(0.85)), count: counts.strong ?? 0 },
-    { key: "moderate", label: `Around the State median, ${mid}%`,
+    { key: "moderate", label: `Proxy ${recharge.thresholds.weakPct}% to < ${recharge.thresholds.strongPct}% · median ${mid}%`,
       color: rampAt(0.5), count: counts.moderate ?? 0 },
-    { key: "weak", label: `Under ${recharge.thresholds.weakPct}% reaches it`,
+    { key: "weak", label: `Proxy < ${recharge.thresholds.weakPct}%`,
       color: rampAt(ease(0.1)), count: counts.weak ?? 0 },
-    { key: "imports", label: "Banked more than fell on it", color: IMPORTS, count: counts.imports ?? 0 },
-    { key: "set aside", label: `Table below ${recharge.thresholds.deepWellM} m; method does not hold`,
+    { key: "imports", label: "Ratio > 100%; attribution unresolved", color: IMPORTS, count: counts.imports ?? 0 },
+    { key: "set aside", label: `Depth > ${recharge.thresholds.deepWellM} m; precautionary exclusion`,
       color: SET_ASIDE, count: counts["set aside"] ?? 0 },
   ];
 }

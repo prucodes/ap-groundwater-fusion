@@ -10,8 +10,7 @@
 .twocol { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
 @media (max-width: 760px) { .twocol { grid-template-columns: minmax(0, 1fr); } }
 
-/* What each reading buys. The dashed line is the mandal model's own error, so the
-   point lands without a sentence: three readings at a dug well cross below it. */
+/* Future offset error, in metres, on a fixed evaluation cohort. */
 .chart { width: 100%; display: block; margin-top: 8px; }
 .chart .gl { stroke: var(--line); stroke-width: 1; }
 .chart .ref { stroke: #1f8a8a; stroke-width: 1; stroke-dasharray: 3 2; }

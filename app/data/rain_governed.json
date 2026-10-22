@@ -1,7 +1,7 @@
 {
   "contractVersion": "1.0.0",
   "generatedAt": "2026-10-21T01:30:31Z",
-  "method": "each mandal's May-to-November change in depth fitted against that season's June-September rainfall, over every season it has both readings",
+  "method": "In-sample linear association between May-to-November depth change and June-September rainfall for each mandal. R\u00b2 describes fitted historical variance, not causation or forecast skill",
   "window": {
     "preMonsoonMonth": 5,
     "postMonsoonMonth": 11,
@@ -3860,10 +3860,10 @@
       11.5
     ]
   },
-  "caveat": "Nothing here measures extraction, and the part rainfall does not explain is not pumping. A table that ignores the rain may be drawn down, fed by a canal, carrying last year forward, or noisy on eight points. The honest statement is the absence: rainfall is not the main explanation there.",
+  "caveat": "Nothing here measures extraction, and the unexplained variation is not pumping. Low R\u00b2 or an inverse slope does not establish that rain has no influence. October-November rain, lagged effects, other flows and observation differences are omitted.",
   "limits": [
-    "A single predictor on seven to eleven seasons is a thin instrument, so the groups are far firmer than any one mandal's R2.",
-    "The fit is within-season. A mandal that fills every monsoon and is emptied every summer reads as rain governed, which is correct: the monsoon does write its table.",
-    "Naming what moves the other mandals needs the feeder supply hours and the pump-set census the brief asks for. That this cannot be answered from open data is the argument for asking."
+    "A single predictor on seven to eleven seasons is a thin instrument. Individual fits and group comparisons need uncertainty estimates and independent validation.",
+    "The stronger class starts at R\u00b2 0.40 with a water-level rise associated with wetter years. This is a project threshold, not evidence that rain explains most variation or controls the aquifer.",
+    "Irrigated-area differences between groups are descriptive associations. They do not identify pumping as the cause or show that rainfall control has changed over time."
   ]
 }

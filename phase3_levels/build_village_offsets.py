@@ -1,46 +1,14 @@
 #!/usr/bin/env python3
-"""Village-level depth, by measuring a fixed offset rather than modelling it.
+"""Historical well offsets and a prospective calibration check.
 
-The department asked whether the model can give a village estimate at the error
-it already achieves per mandal (about 10%). It cannot, as it stands, and the
-reason is not resolution: APWRIMS publishes levels already averaged to mandal,
-with no well id, village or coordinate, so the training target has never carried
-a sub-mandal signal. Hold a whole mandal out and estimate it from its neighbours
--- a location with no sensor, which is what a village without a well is -- and
-error is 4.84 m against a 1.01 m mandal nowcast.
+An offset is a well's deviation from contemporaneous, same-type peers in its
+mandal. It is not a representative village depth. Split-half validation uses
+calendar order. The original random calibration curve estimates a later mean;
+the separate forward curve scores individual future offsets on one fixed cohort.
+Both rely on observed peer levels and exclude mandal-nowcast error.
 
-What makes it solvable is that a village's distance from its mandal mean is not
-scatter. On CGWB's quality-controlled Andhra records it is ~94% persistent: a
-well's past deviation predicts its future deviation at r~0.98. A village three
-metres deeper than its mandal stays about three metres deeper. So the offset is
-a fixed property to be measured once, after which the mandal network carries the
-month-to-month movement -- which is why a handful of readings, not a piezometer
-per village, is the actual requirement.
-
-This builds that offset for every Andhra village where CGWB has already read a
-well, validates it out of sample, and records the dose-response: what one, four
-or eight readings at a village buy. It also records the null result that matters
-for planning -- predicting the offset from position, elevation proxy, well depth
-and well type, with whole mandals held out, is WORSE than using the mandal mean.
-One measured reading beats the best model, so the ask is a measurement programme
-rather than more modelling.
-
-Two things this deliberately does NOT do.
-
-It does not claim these are village estimates in the sense of representing the
-whole village. Each offset is that observation well's position relative to its
-mandal; it speaks for the village only as far as the well does. A village with
-one dug well on a valley floor is not characterised by it.
-
-It does not publish absolute village depths as a product. The applied examples
-exist to show the method end to end against the live nowcast. Publishing a
-depth for 1,073 named villages is a governance decision about official numbers,
-not a build step, and the underlying well records end in 2023.
-
-Source: CGWB "Quality controlled groundwater levels over India" (2000-2024,
-Jan/May/Aug/Nov), which is git-ignored for size, so this is run by hand like
-validate_cross_network.py. The offsets are persistent, so they do not need the
-weekly job.
+Raw CGWB well records are supplied with --src and are not committed. Regenerate
+the full payload and browser summary together after any validation change.
 """
 import argparse
 import datetime
@@ -174,7 +142,8 @@ def persistence(long):
 def split_half(long, cohort_of):
     """Does the first half of a well's record predict the second half?"""
     rows = []
-    for station, sub in long.sort_values("month").groupby("Station Code"):
+    ordered = long.assign(_date=pd.to_datetime(long["month"], format="%b-%y", errors="raise")).sort_values("_date")
+    for station, sub in ordered.groupby("Station Code"):
         if len(sub) < 2 * (MIN_READINGS_FOR_OFFSET // 2) + 2:
             continue
         half = len(sub) // 2
@@ -183,6 +152,9 @@ def split_half(long, cohort_of):
                      sub["offset"].iloc[half:].mean()))
     frame = pd.DataFrame(rows, columns=["cohort", "past", "future"])
     out = {
+        "status": "validated",
+        "protocol": "chronological-month-v2",
+        "target": "later-half mean offset, not individual monthly depth",
         "wellsScored": int(len(frame)),
         "pastPredictsFutureR": round(float(frame["past"].corr(frame["future"])), 3),
         "mandalMeanAppliedMaeM": round(float(frame["future"].abs().mean()), 3),
@@ -224,6 +196,27 @@ def dose_response(long):
                           "residualErrorM": round(float(np.mean(errors)), 3),
                           "wells": int(len(errors))})
     return curve
+
+
+def forward_dose_response(long):
+    """Early readings predict individual later offsets, on one fixed well cohort.
+
+    Every k is scored on the same future tail after the largest calibration
+    window, so a changing evaluation cohort cannot manufacture an improvement.
+    Future peer means remain observed: this is not an end-to-end depth forecast.
+    """
+    ordered = long.assign(_date=pd.to_datetime(long["month"], format="%b-%y", errors="raise")).sort_values("_date")
+    cutoff = max(DOSE_STEPS)
+    series = [sub["offset"].to_numpy() for _, sub in ordered.groupby("Station Code")
+              if len(sub) >= cutoff + 4]
+    return [{
+        "readings": k,
+        "residualErrorM": round(float(np.mean([
+            np.abs(values[cutoff:] - values[:k].mean()).mean() for values in series
+        ])), 3),
+        "wells": len(series),
+        "futureReadings": sum(len(values) - cutoff for values in series),
+    } for k in DOSE_STEPS] if series else []
 
 
 def static_null(long, cohort_of):
@@ -344,6 +337,9 @@ def build(src):
         "persistence": persistence(long),
         "splitHalf": split_half(long, cohort_of),
         "doseResponse": dose_response(long),
+        "forwardDoseResponse": forward_dose_response(long),
+        "forwardDoseMethod": "First k readings predict individual later offsets after the first eight readings, on a common well cohort. Future same-type peer means are observed; nowcast and peer-reference errors are not included.",
+        "doseResponseMethod": "Randomly selected calibration readings versus the mean of remaining offsets; not a forward monthly-depth test. Peer-reference and nowcast errors are not included.",
         "staticCovariateNull": static_null(long, cohort_of),
         "crossNetworkOffset": cross_network(unfiltered, resolved),
         "byWellType": [],
@@ -360,6 +356,7 @@ def build(src):
             "persistence": persistence(sub),
             "splitHalf": {k: v for k, v in split_half(sub, cohort_of).items() if k != "byAquifer"},
             "doseResponse": dose_response(sub),
+            "forwardDoseResponse": forward_dose_response(sub),
         })
     validation["byWellType"].sort(key=lambda row: -row["wells"])
     curve = {row["readings"]: row["residualErrorM"] for row in validation["doseResponse"]}
@@ -388,7 +385,7 @@ def build(src):
             "offsetM": round(offset, 2),
             "readings": readings,
             "wells": int(sub["Station Code"].nunique()),
-            "lastRead": max(sub["month"]),
+            "lastRead": sub.loc[pd.to_datetime(sub["month"], format="%b-%y").idxmax(), "month"],
             "pinned": readings >= MIN_READINGS_FOR_OFFSET,
             "ownScatterM": round(scatter, 2) if scatter is not None else None,
             "cohortErrorM": expected_error(readings),
@@ -517,11 +514,13 @@ def main():
         "crossNetworkOffset": payload["validation"]["crossNetworkOffset"],
         "dugWell": None if dug is None else
             {"wells": dug["wells"], "persistence": dug["persistence"]["persistentSharePct"],
-             "r": dug["splitHalf"]["pastPredictsFutureR"], "dose": dug["doseResponse"]},
+             "r": dug["splitHalf"]["pastPredictsFutureR"], "dose": dug["doseResponse"], "forwardDose": dug["forwardDoseResponse"]},
         "boreWell": None if bore is None else
             {"wells": bore["wells"], "r": bore["splitHalf"]["pastPredictsFutureR"],
-             "dose": bore["doseResponse"]},
+             "dose": bore["doseResponse"], "forwardDose": bore["forwardDoseResponse"]},
         "caveat": payload["source"]["caveat"],
+        "doseResponseMethod": payload["validation"]["doseResponseMethod"],
+        "forwardDoseMethod": payload["validation"]["forwardDoseMethod"],
     }
     with open(SUMMARY, "w", encoding="utf-8") as handle:
         json.dump(summary, handle, indent=2)

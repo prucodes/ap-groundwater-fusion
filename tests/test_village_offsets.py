@@ -105,3 +105,48 @@ def test_coverage_is_reported_against_the_whole_state():
     assert coverage["villages"] > 0
     # The gap between this and 670 is the point: most mandals have no peer wells.
     assert coverage["mandals"] < coverage["mandalsInRecords"]
+
+
+def builder_module():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("village_builder", BUILDER)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_split_half_uses_calendar_order_not_month_name_order():
+    import pandas as pd
+    months = [f"{month}-{year}" for year in (19, 20) for month in ("Jan", "May", "Aug", "Nov")]
+    frame = pd.DataFrame({"Station Code": ["a"] * 8 + ["b"] * 8,
+                          "tehsil": ["M"] * 16, "month": months * 2,
+                          "offset": [0] * 4 + [10] * 4 + [2] * 4 + [12] * 4})
+    result = builder_module().split_half(frame.sample(frac=1, random_state=3), lambda _: "hard_rock")
+    # Alphabetical sorting mixes both years in each half and falsely gives zero.
+    assert result["withLearnedOffsetMaeM"] == 10
+    assert result["protocol"] == "chronological-month-v2"
+
+
+def test_forward_curve_scores_individual_future_readings_on_a_fixed_cohort():
+    import pandas as pd
+    months = [f"{month}-{year}" for year in (19, 20, 21) for month in ("Jan", "May", "Aug", "Nov")]
+    frame = pd.DataFrame({"Station Code": ["a"] * 12 + ["b"] * 12 + ["short"] * 10,
+                          "month": months * 2 + months[:10],
+                          "offset": [0] * 8 + [-4, 4, -4, 4] + [2] * 8 + [6] * 4 + [100] * 10})
+    curve = builder_module().forward_dose_response(frame.sample(frac=1, random_state=4))
+    assert len(curve) == 6
+    for point in curve:
+        assert point["residualErrorM"] == 4  # not error against an averaged future target
+        assert point["wells"] == 2  # short series cannot enter just the early k values
+        assert point["futureReadings"] == 8
+
+
+def test_published_temporal_results_use_corrected_protocol():
+    data = load()["validation"]
+    for row in [data] + data["byWellType"]:
+        assert row["splitHalf"]["status"] == "validated"
+        assert row["splitHalf"]["protocol"] == "chronological-month-v2"
+        curve = row["forwardDoseResponse"]
+        assert len({p["wells"] for p in curve}) == 1
+        assert len({p["futureReadings"] for p in curve}) == 1
+        assert all(p["residualErrorM"] >= 0 for p in curve)

@@ -1,103 +1,69 @@
 import { villageOffsets } from "../lib/data";
 import styles from "./VillageOffsets.module.css";
 
-/* Whether a level can be given per village, which the department asked directly.
- *
- * Not at the mandal model's accuracy, and the reason is not resolution: the
- * published record is already averaged to mandal, so nothing below that scale has
- * ever been trained or tested. What makes it reachable is that a village's
- * distance from its mandal is a fixed property of the place rather than scatter,
- * so a handful of readings pin it and the mandal network carries the movement.
- *
- * The card leads with the number that decides the question -- three readings at a
- * dug well land under the mandal model's own error -- and keeps the null result
- * beside it, because "measuring beats modelling" is what turns this into a
- * measurement programme rather than more modelling.
- */
-
+/** Well-offset evidence: future errors use calendar order and observed peer wells.
+ * These are not end-to-end village depth forecasts or representative village means. */
 const W = 300, H = 132, L = 30, R = 10, T = 18, B = 24;
 
 export function VillageOffsets() {
   const data = villageOffsets;
   if (!data?.dugWell || !data.boreWell) return null;
   const dug = data.dugWell, bore = data.boreWell;
-  const steps = dug.dose.map(d => d.readings);
-  const peak = Math.max(...bore.dose.map(d => d.residualErrorM));
-  const x = (i: number) => L + (W - L - R) * i / Math.max(steps.length - 1, 1);
+  const steps = dug.forwardDose.map(d => d.readings);
+  const peak = Math.max(...[...dug.forwardDose, ...bore.forwardDose].map(d => d.residualErrorM), .1);
+  const x = (i: number) => L + (W - L - R) * (steps[i] - steps[0]) / Math.max(steps[steps.length - 1] - steps[0], 1);
   const y = (v: number) => T + (H - T - B) * (1 - v / peak);
-  const three = dug.dose.find(d => d.readings === 3)?.residualErrorM ?? null;
-  const line = (rows: typeof dug.dose) =>
+  const three = dug.forwardDose.find(d => d.readings === 3);
+  const line = (rows: typeof dug.forwardDose) =>
     rows.map((d, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(d.residualErrorM).toFixed(1)}`).join("");
+  const temporal = data.splitHalf.status === "validated" && data.splitHalf.protocol === "chronological-month-v2";
 
   return (
-    <div className={styles.wrap}>
+    <div className={styles.wrap} data-testid="village-offset-evidence">
       <div className={styles.heads}>
-        <div className={styles.head} data-tone="go">
-          <b>{three?.toFixed(2)} m</b>
-          <span>village error after <strong>three readings</strong> at a private dug well, under the {data.staticCovariateNull ? "" : ""}mandal model&rsquo;s own error</span>
+        <div className={styles.head}>
+          <b>{three?.residualErrorM.toFixed(2) ?? "—"} m</b>
+          <span>later-reading offset error after <strong>three early readings</strong> at a dug well; {three?.wells ?? 0} wells, with observed peer levels</span>
         </div>
         <div className={styles.head}>
-          <b>{data.persistence.persistentSharePct}%</b>
-          <span>of a village&rsquo;s distance from its mandal is fixed to the place, not month-to-month scatter (r&nbsp;{data.splitHalf.pastPredictsFutureR})</span>
+          <b>{temporal ? data.splitHalf.pastPredictsFutureR : "Pending"}</b>
+          <span>correlation between earlier- and later-half mean well offsets, in calendar order; not monthly-depth accuracy</span>
         </div>
         <div className={styles.head}>
           <b>{data.coverage.villages}</b>
-          <span>villages across {data.coverage.mandals} mandals already have a computable offset, from {data.source.apWells.toLocaleString("en-IN")} wells read {data.source.period}</span>
+          <span>village/well-type records across {data.coverage.mandals} mandals, from {data.source.apWells.toLocaleString("en-IN")} wells read {data.source.period}</span>
         </div>
       </div>
 
       <div className={styles.twocol}>
         <div>
-          <div className={styles.listHead}>What each reading at a village buys</div>
+          <div className={styles.listHead}>Early readings → later offset error</div>
           <svg viewBox={`0 0 ${W} ${H}`} className={styles.chart} role="img"
-            aria-label={`Village error against readings taken: a dug well reaches ${three} metres on three readings, a bore well far later`}>
+            aria-label="Mean absolute error of individual future well offsets after calibration on early readings, for dug wells and bore wells">
             <line className={styles.gl} x1={L} x2={W - R} y1={H - B} y2={H - B} />
             <line className={styles.gl} x1={L} x2={L} y1={T} y2={H - B} />
-            <line className={styles.ref} x1={L} x2={W - R} y1={y(1.02)} y2={y(1.02)} />
-            <line className={styles.ref} x1={W - R - 12} x2={W - R} y1="5" y2="5" />
-            <text className={styles.lab} x={W - R - 15} y="7.5" textAnchor="end">the mandal model&rsquo;s own error</text>
-            <path d={line(bore.dose)} fill="none" stroke="#c2412d" strokeWidth="1.6" strokeLinejoin="round" />
-            <path d={line(dug.dose)} fill="none" stroke="#1f8a8a" strokeWidth="1.8" strokeLinejoin="round" />
-            {dug.dose.map((d, i) => <circle key={d.readings} cx={x(i)} cy={y(d.residualErrorM)} r="2.2" fill="#1f8a8a" />)}
-            <text className={styles.val} x={x(0) + 4} y={y(bore.dose[0].residualErrorM) - 5} fill="#c2412d">Bore well</text>
-            <text className={styles.val} x={x(0) + 4} y={y(dug.dose[0].residualErrorM) - 5} fill="#1f8a8a">Dug well</text>
+            {[0, peak / 2, peak].map(n => <text key={n} className={styles.lab} x={L - 4} y={y(n) + 2} textAnchor="end">{n.toFixed(1)} m</text>)}
+            {[{name: "Bore well", color: "#c2412d", rows: bore.forwardDose}, {name: "Dug well", color: "#1f8a8a", rows: dug.forwardDose}].map(s => <g key={s.name}>
+              <path d={line(s.rows)} fill="none" stroke={s.color} strokeWidth="1.8" strokeLinejoin="round" />
+              {s.rows.map((d, i) => <circle key={d.readings} cx={x(i)} cy={y(d.residualErrorM)} r="2.2" fill={s.color} />)}
+              {s.rows[0] && <text className={styles.val} x={x(0) + 4} y={y(s.rows[0].residualErrorM) - 5} fill={s.color}>{s.name}</text>}
+            </g>)}
             {steps.map((n, i) => <text key={n} className={styles.lab} x={x(i)} y={H - B + 12} textAnchor="middle">{n}</text>)}
-            <text className={styles.lab} x={(L + W) / 2} y={H - 4} textAnchor="middle">readings taken at the village</text>
+            <text className={styles.lab} x={(L + W) / 2} y={H - 4} textAnchor="middle">early readings used to estimate the offset</text>
           </svg>
+          <p className={styles.method}>Every point uses the same wells and future readings, after the first eight observations. Errors are averaged equally across wells. No mandal-nowcast error is included.</p>
         </div>
-
         <div>
-          <div className={styles.listHead}>Measuring against modelling</div>
+          <div className={styles.listHead}>Can static inputs predict the offset?</div>
           <div className={styles.rows}>
-            <div className={styles.row}>
-              <div className={styles.what}>The mandal figure handed to a village<span>no reading taken there</span></div>
-              <div className={styles.num}>{data.splitHalf.mandalMeanAppliedMaeM} m</div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.what}>Predicting its offset instead<span>position, well depth and type, whole mandals held out</span></div>
-              <div className={styles.num}>{data.staticCovariateNull.predictedOffsetMaeM} m</div>
-            </div>
-            <div className={styles.row}>
-              <div className={styles.what}>One actual reading<span>at the village itself</span></div>
-              <div className={styles.num} data-good="true">{dug.dose[0].residualErrorM} m</div>
-            </div>
+            <div className={styles.row}><div className={styles.what}>Assume no local offset<span>baseline on the same held-out well cohort</span></div><div className={styles.num}>{data.staticCovariateNull.mandalMeanMaeM} m</div></div>
+            <div className={styles.row}><div className={styles.what}>Predict the mean offset<span>position, well depth and type; whole mandals held out</span></div><div className={styles.num}>{data.staticCovariateNull.predictedOffsetMaeM} m</div></div>
           </div>
-          <p className={styles.note} style={{ marginTop: 10 }}>
-            Predicting a village&rsquo;s offset returns an R&sup2; of{" "}
-            {data.staticCovariateNull.predictedOffsetR2}, <b>worse than using the mandal figure</b>.
-            One reading beats the best model, so this is a measurement question rather than
-            a modelling one.
-          </p>
+          <p className={styles.note} style={{ marginTop: 10 }}>The tested static model has R&sup2; {data.staticCovariateNull.predictedOffsetR2}. It {data.staticCovariateNull.predictedOffsetMaeM >= data.staticCovariateNull.mandalMeanMaeM ? "does not improve on" : "improves on"} its baseline. This is a different target and cohort from the future-reading curve.</p>
+          <p className={styles.note} style={{ marginTop: 10 }}><b>Useful for designing a measurement pilot.</b> A few readings can help estimate a well&rsquo;s local offset. They do not establish a village-wide level or guarantee future accuracy without continuing peer measurements.</p>
         </div>
       </div>
-
-      <p className={styles.method}>
-        Each well&rsquo;s leave-one-out distance from the other wells of its type in its mandal,
-        averaged over its record. {data.caveat}, so budget more readings than the curve shows. The mandal
-        figure stands in poorly for its villages in {data.spread.proxyPoor} of the{" "}
-        {data.coverage.mandalsWithSpread} mandals where that can be checked, the median village
-        sitting {data.spread.medianVillageSpreadM} m from its mandal&rsquo;s mean.
-      </p>
+      <p className={styles.method}>Each offset is measured against other wells of the same type in that mandal and month, excluding the target well. {data.caveat}. The median within-mandal spread of the village/well-type mean offsets is {data.spread.medianVillageSpreadM} m; {data.spread.proxyPoor} of {data.coverage.mandalsWithSpread} scored mandals exceed the project&rsquo;s 2 m spread threshold.</p>
     </div>
   );
 }

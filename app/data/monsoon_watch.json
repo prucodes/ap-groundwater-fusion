@@ -195,7 +195,7 @@
     "shareFloorMm": 100.0,
     "thinRain": 5,
     "aboveRain": 1,
-    "method": "Water-table fluctuation (GEC-2015): the May-to-latest rise times the mandal's specific yield times its area. Net of the season's own pumping, which no public source observes, so gross recharge is larger."
+    "method": "Water-table fluctuation proxy: positive May-to-latest rise times assumed specific yield and area. Net of pumping and other flows before negative changes are clipped to zero. Rain covers available June-September months, which may differ from the level window. This is not a GEC-2015 gross recharge assessment or a measured rainfall-recharge fraction."
   },
   "seasons": [
     {

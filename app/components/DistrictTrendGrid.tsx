@@ -103,7 +103,7 @@ export function DistrictTrendGrid({ series, selected, onSelect }: Props) {
         <span className="dtgKeyItem"><i className="dtgSwatch dtgSwatchMed" /> state median depth</span>
         <span className="dtgKeyItem dtgKeyNote">
           All 28 share one depth scale anchored at the ground surface, so tiles are directly comparable.
-          Slope is least squares over the measured record.
+          Slope is least squares over monthly district medians; contributing mandals can vary by month.
         </span>
       </div>
       <ChartData

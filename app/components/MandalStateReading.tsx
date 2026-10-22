@@ -36,7 +36,7 @@ export function MandalStateReading({ mandalId }: { mandalId: string }) {
         <div className="cardTitle" id="mandal-state-title">
           <span className="titleIcon"><IconDroplet /></span>The State network&rsquo;s latest reading
         </div>
-        <span className="cardSub">AWARE groundwater feed · one reading, not a monthly mean</span>
+        <span className="cardSub">AWARE groundwater feed · dated station aggregate, not a monthly mean</span>
       </div>
       {reading ? (
         <>
@@ -52,7 +52,7 @@ export function MandalStateReading({ mandalId }: { mandalId: string }) {
           </div>
           {reading.ourLatestMonth ? (
             <p className={styles.note}>
-              {`Our monthly series ends ${month(reading.ourLatestMonth)} at ${reading.ourLatestM?.toFixed(2)} m; the State reading is ${vsOurs.text === "no change" ? "the same" : vsOurs.text} since then. `}
+              {`Our monthly series ends ${month(reading.ourLatestMonth)} at ${reading.ourLatestM?.toFixed(2)} m; the State snapshot is ${vsOurs.text === "no change" ? "the same" : vsOurs.text} relative to that value. Different dates and contributing wells can affect the comparison. `}
               {reading.matchedBy && reading.matchedBy !== "district" ? `Matched to this mandal by ${reading.matchedBy} (${reading.feedName}). ` : ""}
               It is shown beside our series, not merged into it, and the model does not use it.
             </p>

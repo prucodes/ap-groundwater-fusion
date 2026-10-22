@@ -80,7 +80,7 @@ def test_the_residual_depth_bias_is_still_declared():
 def test_it_says_the_figure_is_net_of_pumping():
     data = load()
     assert "Net of the season" in data["caveat"]
-    assert "NET of the season" in read(BUILDER)
+    assert "NET of the season" in " ".join(read(BUILDER).split())
 
 
 def test_it_does_not_present_itself_as_a_siting_decision():

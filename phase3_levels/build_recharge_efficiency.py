@@ -1,50 +1,12 @@
 #!/usr/bin/env python3
-"""Where rain actually becomes groundwater: twelve years of it, mandal by mandal.
+"""Exploratory positive storage-change / rainfall ratio, not recharge efficiency.
 
-The monsoon watch says what this season banked. The question a department asks
-next is not about this season at all: if a percolation tank or a check dam is
-going to be built, where does rain reliably reach the aquifer, and where does it
-run off or evaporate instead? That is a property of the place, so it wants the
-whole record rather than one year.
-
-The method is the monsoon watch's own, which is GEC-2015's: the rise in the water
-table between the pre-monsoon May reading and the post-monsoon November one,
-times the mandal's specific yield, times its area, is the water stored; the rain
-that fell on it over June to September is what arrived. The share of one by the
-other is run for every year a mandal has both readings, and the median of those
-years is what is published. A median rather than a mean because one freak year,
-in either direction, should not describe a place.
-
-Mandals whose water table sits deeper than DEEP_WELL_M are set aside rather than
-ranked. Water-table fluctuation assumes an unconfined aquifer: the storage it
-infers is a head change times a specific yield. A reading twenty-five or forty
-metres down is likely in a confined or deep semi-confined zone, where the storage
-coefficient is orders of magnitude below specific yield, so the same arithmetic
-invents water. Unfiltered it showed: share and depth correlated at +0.40, and the
-mandals below twenty metres ran a median 11.2% against 24.1% for those above, with
-Pedapadu at 96% on a table 25 m down and a delta yield of 0.116. They are reported
-in their own list, because a deep reading is worth knowing about and is not worth
-ranking a recharge structure on.
-
-Four more things worth saying plainly.
-
-It is NET of the season's own pumping, because the rise is what remained after
-it. Gross recharge is larger by whatever was drawn while it rained, which no
-public source observes. A mandal that converts little may be recharging well and
-pumping it straight back out, and this cannot tell the two apart.
-
-A share above 100% is not an error and is not rain. More water arrived than the
-sky delivered, so it came along a canal, from upslope, or as return flow from
-irrigation. Those mandals are reported separately rather than at the top of the
-table, because siting a recharge structure on them would be reading somebody
-else's water as local performance.
-
-The absolute number rests on specific yield, which for many mandals is an
-aquifer-wide proxy rather than a measured value. The frame decides where CGWB's
-measured yield overrides that proxy, and this inherits the decision. The ranking
-between mandals of the same aquifer is firmer than the number itself.
-
-And a mandal needs several years before any of this is said about it.
+The numerator uses May-November water-level rise and assumed specific yield;
+the denominator uses June-September rain. The windows differ, and pumping,
+lateral flow, irrigation returns and yield error are not resolved. It is NET
+of the season's flows and clips negative storage changes to zero. Ratios over
+100% require investigation, not an automatic diagnosis of imported water.
+The 20 m depth exclusion is precautionary; depth does not establish confinement.
 """
 import datetime
 import json
@@ -63,12 +25,11 @@ OUT = os.path.join(APP, "recharge_efficiency.json")
 
 POST_MONSOON_MONTH = 11   # November, the reading the assessment itself uses
 MIN_YEARS = 5             # fewer than this describes a few seasons, not a place
-IMPORTS_PCT = 100.0       # above this the water did not fall on the mandal
-# Past this depth the water-table-fluctuation method's own assumption fails; the
-# same threshold the seawater watch uses, and for the same reason.
+IMPORTS_PCT = 100.0       # ratios above this need attribution checks
+# Precautionary project threshold; not a test of aquifer confinement.
 DEEP_WELL_M = 20.0
-STRONG_PCT = 15.0         # the share that marks a mandal worth building on
-WEAK_PCT = 3.0            # and the share that marks one that will not hold it
+STRONG_PCT = 15.0         # descriptive project threshold, not a siting rule
+WEAK_PCT = 3.0            # lower descriptive threshold
 
 
 def classify(share):
@@ -90,7 +51,7 @@ def build():
 
     levels = frame.pivot_table(index="mkey", columns="date", values="level_mbgl", aggfunc="last")
     # Each mandal's own typical depth, over its whole record rather than one month,
-    # which is what decides whether the unconfined assumption can stand.
+    # used only for the precautionary depth exclusion.
     typical_depth = levels.median(axis=1, skipna=True)
     meta = frame.drop_duplicates("mkey").set_index("mkey")[
         ["district", "mandal", "aquifer_type", "specific_yield"]]
@@ -189,9 +150,7 @@ def build():
         "contractVersion": "1.0.0",
         "generatedAt": datetime.datetime.now(datetime.timezone.utc)
             .replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-        "method": "GEC-2015 water-table fluctuation: the May to November rise times specific "
-                  "yield times area, as a share of June-September rainfall, for every year a "
-                  "mandal has both readings; the median of those years is published",
+        "method": 'Exploratory storage-change/rainfall proxy: positive May-to-November water-level rise times specific yield and area, divided by June-September rainfall volume; median across paired years. Negative changes are clipped to zero',
         "window": {"preMonsoonMonth": PRE_MONSOON_MONTH, "postMonsoonMonth": POST_MONSOON_MONTH,
                    "rainMonths": list(SW_MONSOON), "minYears": MIN_YEARS,
                    "minRainMm": MIN_SHARE_RAIN_MM},
@@ -214,25 +173,8 @@ def build():
         "setAside": [slim(r) for r in sorted(
             [r for r in rows if r["class"] == "set aside"],
             key=lambda r: -r["medianSharePct"])[:8]],
-        "caveat": "Net of the season's own pumping, so a mandal that converts little may be "
-                  "recharging well and drawing it back out. The absolute share rests on "
-                  "specific yield, which is an aquifer-wide proxy where CGWB has not measured "
-                  "it, so the ranking within an aquifer is firmer than the number.",
-        "limits": [
-            "A deeper water table has more room to rise, and still scores higher after the "
-            "deepest are set aside: share and depth correlate at 0.27 among the mandals "
-            "ranked here, against 0.40 before. Compare mandals of similar depth and aquifer "
-            "rather than across the whole table.",
-            "In a canal command a share can be lifted by irrigation return flow without ever "
-            "passing 100%, and this cannot separate that from rain. Of the 32 mandals at or "
-            "above 40%, seventeen are alluvial and ten are hard rock, so it is not simply the "
-            "delta, but a high share in a commanded mandal is worth reading as water arriving "
-            "rather than water converting.",
-            "A ranking to inform where to look, verified in the field before anything is built "
-            "on it. The state median sits inside the 8 to 20% that GEC's own recharge "
-            "coefficients give for most formations, which is the check that the method is "
-            "behaving, not a licence to site a structure from a table.",
-        ],
+        "caveat": "Net of the season's pumping and other flows, with an assumed specific yield. This is not gross recharge or a measured rainfall-recharge fraction. October-November rain is outside the denominator; a ratio above 100% does not prove imported water.",
+        "limits": ['Depth alone does not identify a confined aquifer. The 20 m exclusion is a project precaution, not a hydrogeological diagnosis; well construction and aquifer data are needed.', 'In the current snapshot, proxy and depth correlate at 0.27 after the exclusion versus 0.40 before. Compare similar depth and aquifer settings; these descriptive correlations require rechecking when data change.', 'Rainfall-window mismatch, irrigation return flows, lateral flows, pumping and specific-yield error can all change the ratio. Their contributions are not identified here.', 'Project thresholds describe the proxy, not validated recharge suitability. Any proposed structure must be verified in the field; agreement with a published recharge coefficient is not independent validation.'],
     }
 
 

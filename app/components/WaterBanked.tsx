@@ -1,14 +1,7 @@
 import { formatNumber, monsoonWatch } from "../lib/data";
 import styles from "./WaterBanked.module.css";
 
-/* What the season actually put into the ground.
- *
- * The rest of the page measures the water table in metres. A department works in
- * volumes, by the method its own assessment uses: a rise times the specific yield
- * times the area. This says what arrived and what share of the rain it represents,
- * and shows the distribution beside it, because the statewide tenth hides the fact
- * that more than half the mandals kept nothing at all.
- */
+/* Positive storage-change proxy; rainfall attribution is unresolved. */
 
 const BINS = 10;          // 0-10%, 10-20% ... 90-100%
 const OVER = BINS;        // one more column for the mandals that beat their rain
@@ -31,24 +24,24 @@ export function WaterBanked() {
     <div className={styles.wrap}>
       <div className={styles.lede}>
         <span className={styles.headline}>{banked.sharePct}%</span>
-        <p>of the rain that fell on Andhra Pradesh this season is still in the ground.</p>
+        <p>positive storage-change proxy relative to rainfall volume over the matched mandals; not the fraction of rain retained.</p>
       </div>
 
       <div className={styles.ribbon}>
-        <div className={styles.kept} style={{ width: `${Math.max(banked.sharePct, 0.6)}%` }} />
+        <div className={styles.kept} style={{ width: `${Math.min(100, Math.max(banked.sharePct, 0.6))}%` }} />
       </div>
       <div className={styles.ribbonLabels}>
-        <span><b>{formatNumber(banked.bankedMm3)} Mm³</b> stayed</span>
-        <span><b>{formatNumber(banked.rainMm3)} Mm³</b> fell</span>
+        <span><b>{formatNumber(banked.bankedMm3)} Mm³</b> positive storage proxy</span>
+        <span><b>{formatNumber(banked.rainMm3)} Mm³</b> rainfall volume</span>
       </div>
 
       <div className={styles.histWrap}>
         <div className={styles.histHead}>
-          <span>Every mandal, by the share of its rain it kept</span>
+          <span>Mandal storage-change / rainfall ratios</span>
           <span>{banked.mandals} mandals</span>
         </div>
         <svg className={styles.hist} viewBox={`0 0 ${W} ${H}`} role="img"
-          aria-label={`Distribution of the share of rain kept: the median mandal kept ${banked.medianSharePct}%, and ${banked.aboveRain} kept more than their rain.`}>
+          aria-label={`Distribution of storage-change / rainfall ratios: median ${banked.medianSharePct}%, with ${banked.aboveRain} above 100%.`}>
           <line x1={PAD} x2={W - PAD} y1={floor} y2={floor} />
           {counts.map((count, index) => {
             // A floor of three pixels, so six mandals in the last column are still a column.
@@ -63,16 +56,16 @@ export function WaterBanked() {
       </div>
 
       <div className={styles.stats}>
-        <div className={styles.stat}><b>{banked.rising}</b><span>mandals where the table rose at all, of {banked.mandals}</span></div>
-        <div className={styles.stat}><b>{banked.medianSharePct}%</b><span>kept by the median mandal</span></div>
-        <div className={styles.stat}><b>{banked.aboveRain}</b><span>kept more than their rain — every one in the Godavari delta</span></div>
+        <div className={styles.stat}><b>{monsoonWatch.mandals.filter(row => row.bankedSharePct !== null && (row.riseM ?? 0) > 0).length}</b><span>mandals with rising levels among the {banked.mandals} with a rainfall ratio</span></div>
+        <div className={styles.stat}><b>{banked.medianSharePct}%</b><span>median mandal ratio</span></div>
+        <div className={styles.stat}><b>{banked.aboveRain}</b><span>ratios above 100%; causes unresolved</span></div>
       </div>
 
       <p className={styles.note}>
-        A mandal cannot bank more rain than fell on it. Where it appears to, the water came from somewhere
-        else — <b>canal seepage and irrigation return flow</b>, which the official method counts as its own
-        recharge component and which no released dataset measures. That those {banked.aboveRain} mandals are all
-        in the delta is the method behaving as it should.
+        A ratio above 100% needs investigation. Canal seepage, return flow, lateral flow,
+        rainfall timing and specific-yield error can all contribute. <b>This calculation does not
+        identify their contributions.</b> Falling levels are clipped to zero, so the sum is of
+        positive changes rather than the net statewide storage change.
       </p>
       <p className={styles.method}>
         {banked.method} Shares are left out below {banked.shareFloorMm} mm of season rain, where the ratio is

@@ -635,13 +635,9 @@ def water_banked(mandals, season_rain):
         "medianSharePct": shares[len(shares) // 2],
         "shareFloorMm": MIN_SHARE_RAIN_MM,
         "thinRain": thin,
-        # Rain alone cannot fill these: the balance is canal seepage and irrigation
-        # return flow, which GEC counts as its own recharge component and which no
-        # released dataset measures. Every one of them is in the Godavari delta.
+        # Ratios above 100% need attribution checks; no cause is identified here.
         "aboveRain": sum(1 for share in shares if share > 100),
-        "method": ("Water-table fluctuation (GEC-2015): the May-to-latest rise times the mandal's "
-                   "specific yield times its area. Net of the season's own pumping, which no public "
-                   "source observes, so gross recharge is larger."),
+        "method": 'Water-table fluctuation proxy: positive May-to-latest rise times assumed specific yield and area. Net of pumping and other flows before negative changes are clipped to zero. Rain covers available June-September months, which may differ from the level window. This is not a GEC-2015 gross recharge assessment or a measured rainfall-recharge fraction.',
     }
 
 

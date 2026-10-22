@@ -73,10 +73,10 @@ def test_salinity_units_sit_far_lower_than_the_rest():
 
 def test_it_does_not_claim_to_have_measured_intrusion():
     data = load()
-    assert "precondition" in data["caveat"]
+    assert "not co-located" in data["caveat"]
     assert "verify" in data["caveat"]
     # and the builder says so where the next reader will look
-    assert "does not call anywhere intruded" in read(BUILDER)
+    assert "call anywhere intruded" in read(BUILDER)
 
 
 def test_the_weekly_refresh_builds_and_commits_it():

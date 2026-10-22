@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-21T01:36:12Z",
+  "generatedAt": "2026-10-22T12:28:41Z",
   "source": {
     "name": "CGWB Quality controlled groundwater levels over India",
     "period": "2000-2024, read in January, May, August and November",
@@ -31,33 +31,36 @@
     "persistentSharePct": 93.6
   },
   "splitHalf": {
+    "status": "validated",
+    "protocol": "chronological-month-v2",
+    "target": "later-half mean offset, not individual monthly depth",
     "wellsScored": 646,
-    "pastPredictsFutureR": 0.986,
-    "mandalMeanAppliedMaeM": 3.893,
-    "withLearnedOffsetMaeM": 0.645,
-    "reductionPct": 83.4
+    "pastPredictsFutureR": 0.841,
+    "mandalMeanAppliedMaeM": 4.12,
+    "withLearnedOffsetMaeM": 1.833,
+    "reductionPct": 55.5
   },
   "byAquifer": [
     {
       "aquifer": "alluvial",
       "wells": 91,
-      "mandalMeanAppliedMaeM": 1.712,
-      "withLearnedOffsetMaeM": 0.455,
-      "reductionPct": 73.4
+      "mandalMeanAppliedMaeM": 1.838,
+      "withLearnedOffsetMaeM": 0.589,
+      "reductionPct": 67.9
     },
     {
       "aquifer": "coastal",
       "wells": 157,
-      "mandalMeanAppliedMaeM": 2.284,
-      "withLearnedOffsetMaeM": 0.479,
-      "reductionPct": 79.0
+      "mandalMeanAppliedMaeM": 2.266,
+      "withLearnedOffsetMaeM": 1.227,
+      "reductionPct": 45.8
     },
     {
       "aquifer": "hard_rock",
       "wells": 286,
-      "mandalMeanAppliedMaeM": 5.239,
-      "withLearnedOffsetMaeM": 0.888,
-      "reductionPct": 83.1
+      "mandalMeanAppliedMaeM": 5.453,
+      "withLearnedOffsetMaeM": 2.431,
+      "reductionPct": 55.4
     }
   ],
   "staticCovariateNull": {
@@ -89,7 +92,7 @@
   "dugWell": {
     "wells": 547,
     "persistence": 92.6,
-    "r": 0.992,
+    "r": 0.97,
     "dose": [
       {
         "readings": 1,
@@ -121,11 +124,49 @@
         "residualErrorM": 0.698,
         "wells": 441
       }
+    ],
+    "forwardDose": [
+      {
+        "readings": 1,
+        "residualErrorM": 2.234,
+        "wells": 441,
+        "futureReadings": 15466
+      },
+      {
+        "readings": 2,
+        "residualErrorM": 2.058,
+        "wells": 441,
+        "futureReadings": 15466
+      },
+      {
+        "readings": 3,
+        "residualErrorM": 1.975,
+        "wells": 441,
+        "futureReadings": 15466
+      },
+      {
+        "readings": 4,
+        "residualErrorM": 1.947,
+        "wells": 441,
+        "futureReadings": 15466
+      },
+      {
+        "readings": 6,
+        "residualErrorM": 1.881,
+        "wells": 441,
+        "futureReadings": 15466
+      },
+      {
+        "readings": 8,
+        "residualErrorM": 1.835,
+        "wells": 441,
+        "futureReadings": 15466
+      }
     ]
   },
   "boreWell": {
     "wells": 320,
-    "r": 0.979,
+    "r": 0.729,
     "dose": [
       {
         "readings": 1,
@@ -157,7 +198,47 @@
         "residualErrorM": 1.215,
         "wells": 168
       }
+    ],
+    "forwardDose": [
+      {
+        "readings": 1,
+        "residualErrorM": 4.959,
+        "wells": 168,
+        "futureReadings": 6325
+      },
+      {
+        "readings": 2,
+        "residualErrorM": 4.972,
+        "wells": 168,
+        "futureReadings": 6325
+      },
+      {
+        "readings": 3,
+        "residualErrorM": 4.952,
+        "wells": 168,
+        "futureReadings": 6325
+      },
+      {
+        "readings": 4,
+        "residualErrorM": 4.922,
+        "wells": 168,
+        "futureReadings": 6325
+      },
+      {
+        "readings": 6,
+        "residualErrorM": 4.664,
+        "wells": 168,
+        "futureReadings": 6325
+      },
+      {
+        "readings": 8,
+        "residualErrorM": 4.448,
+        "wells": 168,
+        "futureReadings": 6325
+      }
     ]
   },
-  "caveat": "observation wells with a fixed measuring point, read at rest; private irrigation wells will be noisier"
+  "caveat": "observation wells with a fixed measuring point, read at rest; private irrigation wells will be noisier",
+  "doseResponseMethod": "Randomly selected calibration readings versus the mean of remaining offsets; not a forward monthly-depth test. Peer-reference and nowcast errors are not included.",
+  "forwardDoseMethod": "First k readings predict individual later offsets after the first eight readings, on a common well cohort. Future same-type peer means are observed; nowcast and peer-reference errors are not included."
 }
