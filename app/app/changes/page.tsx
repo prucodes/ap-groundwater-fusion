@@ -39,13 +39,13 @@ const changes = changesJson as unknown as Changes;
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 function asOf(value: string | null) {
-  if (!value) return "—";
+  if (!value) return "–";
   if (/^\d{4}-\d{2}$/.test(value)) return `${MONTHS[Number(value.slice(5, 7)) - 1]} ${value.slice(0, 4)}`;
   return shortDate(value, true);
 }
 
 function format(value: number | null, unit: string) {
-  if (value === null) return "—";
+  if (value === null) return "–";
   if (unit === "%") return `${value < 0 ? "−" : ""}${Math.abs(value).toFixed(1)}%`;
   if (unit === "°C") return `${value > 0 ? "+" : ""}${value.toFixed(2)} °C`;
   return String(value);

@@ -29,11 +29,11 @@ const drought = droughtJson as unknown as { season: { label?: string } | string;
 const DIGEST_PDF = "ap-water-weekly-digest.pdf";
 const place = (value: string) => (/[a-z]/.test(value) ? value : titleCase(value));
 const COLUMN: Record<string, string> = { groundwater: "Wells", rain: "Rain", soil: "Soil", crops: "Crops", vegetation: "Green", pressure: "Draw" };
-const pct = (value: number | null | undefined) => (value === null || value === undefined ? "—" : `${Math.round(value)}%`);
-const signed = (value: number | null | undefined) => (value === null || value === undefined ? "—" : `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(Math.round(value))}%`);
+const pct = (value: number | null | undefined) => (value === null || value === undefined ? "–" : `${Math.round(value)}%`);
+const signed = (value: number | null | undefined) => (value === null || value === undefined ? "–" : `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(Math.round(value))}%`);
 
 function moved(item: Item) {
-  if (item.after === null) return "—";
+  if (item.after === null) return "–";
   const unit = item.unit === "%" ? "%" : item.unit === "°C" ? " °C" : "";
   const value = item.unit === "°C" ? `+${item.after.toFixed(2)}` : item.unit === "%" ? item.after.toFixed(1) : String(item.after);
   return `${value}${unit}`;
@@ -77,7 +77,7 @@ export default function DigestPage() {
           <div><span>Drought manual</span><b data-tone={severe ? "bad" : undefined}>{severe}<small> severe</small></b><em>{moderate} moderate, of {drought.state.assessed} mandals assessed</em></div>
           {gw && gw.currentM !== null && gw.vsYearAgoM !== null ? <div><span>State wells</span><b>{gw.currentM.toFixed(1)}<small> m</small></b><em>{gw.vsYearAgoM >= 0 ? `${gw.vsYearAgoM.toFixed(1)} m deeper` : `${Math.abs(gw.vsYearAgoM).toFixed(1)} m shallower`} than a year ago · {gw.stationsTotal.toLocaleString("en-IN")} wells · {day(gw.date, false)}</em></div> : null}
           {mostShort !== null ? <div><span>Most crops short of water</span><b data-tone={mostShort > 50 ? "bad" : undefined}>{mostShort}<small> mandals</small></b><em>4 or more of 7 crops at mid-season · forecast from {day(week, false)}</em></div> : null}
-          <div><span>El Niño, Oct–Dec</span><b>{rabi.enso.ondElNinoPct !== null ? `${Math.round(rabi.enso.ondElNinoPct)}%` : "—"}</b><em>{rabi.enso.alert} · NOAA, {day(rabi.enso.issued, false)}</em></div>
+          <div><span>El Niño, Oct–Dec</span><b>{rabi.enso.ondElNinoPct !== null ? `${Math.round(rabi.enso.ondElNinoPct)}%` : "–"}</b><em>{rabi.enso.alert} · NOAA, {day(rabi.enso.issued, false)}</em></div>
         </section>
 
         <div className={styles.columns}>
@@ -148,7 +148,7 @@ export default function DigestPage() {
         </div>
 
         <footer className={styles.foot}>
-          AP Water Intelligence · Conceived and built by Pruthvi Yannam. {" "}
+          AP Water Intelligence · Built by Pruthvi Yannam. {" "}
           Sources: APWRIMS (reservoirs, gauge rain, NRSC soil moisture, State wells), the national drought manual&rsquo;s indicators (Drought Watch), ECMWF forecast via Open-Meteo, NOAA STAR vegetation health, CGWB/INGRES assessment, ESA WorldCereal, NOAA CPC. Each figure&rsquo;s own date is beside it. Full detail at prucodes.github.io/ap-groundwater-fusion.
         </footer>
       </article>

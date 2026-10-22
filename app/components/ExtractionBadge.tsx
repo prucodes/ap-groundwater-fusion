@@ -29,7 +29,7 @@ export function ExtractionBadge({
     <span
       className={`cgwbBadge ${size === "sm" ? "cgwbSm" : ""}`}
       style={{ ["--cgwb" as string]: meta.color }}
-      title={`${meta.label} — ${meta.note}`}
+      title={`${meta.label}: ${meta.note}`}
     >
       <span className="cgwbSource">CGWB 2024</span>
       <span className="cgwbLabel">{meta.label}</span>

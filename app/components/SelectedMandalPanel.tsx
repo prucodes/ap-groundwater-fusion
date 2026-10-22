@@ -74,7 +74,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         </div>
         <div className="kvRow">
           <span className="k">Observation period</span>
-          <span className="v">{mandal.latest_observation_period || "—"}</span>
+          <span className="v">{mandal.latest_observation_period || "–"}</span>
         </div>
         <div className="kvRow">
           <span className="k">Source</span>
@@ -109,7 +109,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         {mandal.series_regime_start && (
           <div className="sideCaveat" style={{ color: "var(--rust)", fontWeight: 600 }}>
             ⚠ This mandal&rsquo;s readings step to a new level at {mandal.series_regime_start} and stay there,
-            which a water table does not do — the well behind them appears to have changed. Its history before
+            which a water table does not do; the well behind them appears to have changed. Its history before
             that month describes a different well, and nothing is modelled across the step.
           </div>
         )}
@@ -138,7 +138,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         {mandal.obs_outside_band ? (
           <div className="sideCaveat" style={{ color: "var(--rust)", fontWeight: 600 }}>
             ⚠ The latest measured aggregate sits {formatNumber(mandal.obs_band_excess_m)} m outside the model&rsquo;s own
-            P10–P90 band — further apart than the model says it could be wrong — so review before use.
+            P10–P90 band, further apart than the model says it could be wrong, so review before use.
           </div>
         ) : (
           <div className="sideCaveat">
@@ -171,7 +171,7 @@ export function SelectedMandalPanel({ mandal }: { mandal: MandalGroundwaterView 
         )}
         <div className="kvRow">
           <span className="k">Sample / fetch date</span>
-          <span className="v">{sample?.satellite_sample_date_or_fetch_date || "—"}</span>
+          <span className="v">{sample?.satellite_sample_date_or_fetch_date || "–"}</span>
         </div>
         <div className="sideCaveat">
           GRACE-DA is regional model-assimilated wetness context, not a direct mandal groundwater-depth measurement.

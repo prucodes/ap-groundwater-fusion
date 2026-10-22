@@ -8,7 +8,7 @@ const cells = [
     name: "Regional GRACE-DA Wetness",
     cls: "gw",
     icon: <IconDroplet />,
-    range: "min 91.59 — max 100.0",
+    range: "min 91.59 to max 100.0",
     color: "#12b5cb",
   },
   {
@@ -16,7 +16,7 @@ const cells = [
     name: "Root-Zone Percentile",
     cls: "root",
     icon: <IconLeaf />,
-    range: "min 72.25 — max 98.09",
+    range: "min 72.25 to max 98.09",
     color: "#5e9b6b",
   },
   {
@@ -24,7 +24,7 @@ const cells = [
     name: "Surface Percentile",
     cls: "surface",
     icon: <IconWaves />,
-    range: "min 63.26 — max 100.0",
+    range: "min 63.26 to max 100.0",
     color: "#3f86d6",
   },
 ];

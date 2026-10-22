@@ -14,10 +14,10 @@
   display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; padding: 16px 28px 26px;
   background: radial-gradient(800px 260px at 100% 120%, rgba(18, 181, 203, .2), transparent 60%), linear-gradient(135deg, #2a1320 0%, #0b2a4d 55%, #123b66 100%);
 }
-.head h2 { margin: 6px 0 10px; font: 600 26px/1.2 var(--font-display); color: #fff; }
-.kicker { font: 600 10.5px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #ffb4a6; }
+.head h2 { margin: 6px 0 10px; font: 600 28px/1.2 var(--font-display); color: #fff; }
+.kicker { font: 600 11px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #ffb4a6; }
 .record .kicker { color: var(--accent, var(--teal)); }
-.head blockquote { margin: 0; max-width: 760px; padding-left: 14px; border-left: 3px solid #e9a15a; font-size: 15px; line-height: 1.55; color: #f3e6dc; }
+.head blockquote { margin: 0; max-width: 760px; padding-left: 14px; border-left: 3px solid #e9a15a; font-size: 16px; line-height: 1.55; color: #f3e6dc; }
 .head cite { display: block; margin-top: 6px; font: 500 11px var(--font-mono); font-style: normal; color: #b9a3a0; }
 .alert {
   display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; white-space: nowrap;
@@ -28,7 +28,7 @@
 @keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(255, 122, 92, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 122, 92, 0); } }
 
 .tile { min-width: 0; padding: 16px 16px 14px; border-radius: var(--radius); background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); }
-.tile p { margin: 8px 0 0; font-size: 12.5px; line-height: 1.55; color: #c4d6e8; }
+.tile p { margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: #c4d6e8; }
 .tile p b { color: #fff; }
 .tileLabel { display: block; font: 600 10px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: #9fb6cc; }
 .record .tileLabel { color: var(--muted); }
@@ -54,7 +54,7 @@
 /* strength bars */
 .bars { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 8px; align-items: end; height: 206px; margin-top: 12px; }
 .barCol { display: grid; grid-template-rows: auto 1fr auto; height: 100%; gap: 5px; text-align: center; min-width: 0; }
-.barTop { font: 600 10.5px var(--font-mono); color: #ffb4a6; }
+.barTop { font: 600 11px var(--font-mono); color: #ffb4a6; }
 .barTrack { display: flex; flex-direction: column; justify-content: flex-end; border-radius: 6px; overflow: hidden; background: rgba(255,255,255,.06); transform-origin: bottom; animation: rise 1s var(--ease) both; }
 .barTrack i { display: block; width: 100%; }
 .barCol:nth-child(2) .barTrack { animation-delay: .05s; } .barCol:nth-child(3) .barTrack { animation-delay: .1s; }
@@ -69,18 +69,18 @@
 
 /* the state's record */
 .record { padding: 22px 28px 6px; }
-.recordHead p { margin: 6px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); max-width: 820px; }
+.recordHead p { margin: 6px 0 0; font-size: 14px; line-height: 1.55; color: var(--ink-soft); max-width: 820px; }
 .recordGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 16px; }
 .fact { padding: 16px; border-radius: var(--radius); background: var(--field); border: 1px solid var(--line); min-width: 0; }
 .fact > strong { display: block; margin: 8px 0 2px; font: 600 38px/1.05 var(--font-display); font-variant-numeric: tabular-nums; }
-.fact p { margin: 6px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+.fact p { margin: 6px 0 0; font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
 .fact p b { color: var(--ink); }
 .bad { color: var(--rust); }
 .good { color: var(--teal); }
 .years { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 6px; }
 .years li { display: grid; grid-template-columns: 44px 62px minmax(0, 1fr); align-items: baseline; gap: 8px; }
 .years span { font: 600 14px var(--font-mono); color: var(--ink); }
-.years b { font: 600 15px var(--font-mono); }
+.years b { font: 600 16px var(--font-mono); }
 .years small { font-size: 11px; color: var(--muted); }
 
 .dependent { margin-top: 18px; padding: 16px; border-radius: var(--radius); border: 1px solid var(--line); }
@@ -89,7 +89,7 @@
 .dName { font-size: 13px; font-weight: 500; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dShare { position: relative; height: 18px; border-radius: 5px; background: var(--chart-track); overflow: hidden; }
 .dShare i { position: absolute; inset: 0 auto 0 0; background: linear-gradient(90deg, rgba(18, 181, 203, .35), rgba(18, 181, 203, .7)); }
-.dShare b { position: relative; padding-left: 6px; font: 600 10.5px/18px var(--font-mono); color: var(--ink); }
+.dShare b { position: relative; padding-left: 6px; font: 600 11px/18px var(--font-mono); color: var(--ink); }
 .dTrack { position: relative; height: 14px; border-radius: 4px; background: var(--chart-track); }
 .dTrack::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--line-strong); }
 .dTrack i { position: absolute; top: 0; bottom: 0; border-radius: 4px; }
@@ -100,15 +100,15 @@
 
 .soFar { display: grid; grid-template-columns: minmax(220px, 1fr) 2fr; gap: 16px; align-items: center; margin-top: 16px; padding: 16px; border-radius: var(--radius); background: var(--field); border: 1px dashed var(--line-strong); }
 .soFarHead strong { display: block; margin: 6px 0 2px; font: 600 28px var(--font-display); color: var(--ink); }
-.soFarHead em { font-size: 11.5px; font-style: normal; color: var(--muted); }
+.soFarHead em { font-size: 12px; font-style: normal; color: var(--muted); }
 .kickerDark { font: 600 10px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
-.soFarNote { margin: 14px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+.soFarNote { margin: 14px 0 0; font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
 .soFar .soFarNote { margin: 0; }
 .soFarList { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
 .soFarList li { display: grid; gap: 2px; padding: 8px 10px; border-radius: 8px; background: var(--card); border: 1px solid var(--line); }
 .soFarList span { font-size: 12px; color: var(--ink-soft); }
-.soFarList b { font: 600 15px var(--font-mono); color: var(--rust); }
-.soFarList small { font-size: 10.5px; color: var(--muted); }
+.soFarList b { font: 600 16px var(--font-mono); color: var(--rust); }
+.soFarList small { font-size: 11px; color: var(--muted); }
 
 .foot { margin: 0; padding: 14px 28px 20px; font-size: 11px; line-height: 1.6; color: var(--muted); }
 .foot a { color: var(--accent, var(--teal)); }
@@ -120,9 +120,9 @@
 @media (max-width: 640px) {
   .head, .grid, .record { padding-left: 16px; padding-right: 16px; }
   .foot { padding: 12px 16px 18px; }
-  .head h2 { font-size: 21px; }
+  .head h2 { font-size: 22px; }
   .bars { gap: 4px; height: 180px; }
-  .barTop, .barLabel { font-size: 9px; }
+  .barTop, .barLabel { font-size: 10px; }
   .diverging li { grid-template-columns: minmax(0, 1fr) 84px; row-gap: 4px; }
   .dShare { grid-column: 1 / -1; order: 3; }
   .dTrack { grid-column: 1 / -1; order: 4; }

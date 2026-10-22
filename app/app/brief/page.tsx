@@ -349,7 +349,7 @@ export default function BriefPage() {
               <div><b>06</b><span>Open questions</span><small>limits, and where review helps</small></div>
               <div><b>07</b><span>Closing the gap</span><small>six inputs, and what each moves</small></div>
             </div>
-            <div className={styles.foot}><span>Conceived and built by Pruthvi Yannam</span><span>Prototype · not an official measurement</span></div>
+            <div className={styles.foot}><span>Built by Pruthvi Yannam</span><span>Prototype · not an official measurement</span></div>
           </section>
 
           <section className={styles.page} data-testid="brief-sheet">
@@ -437,7 +437,7 @@ export default function BriefPage() {
 
 
           <section className={styles.page} data-testid="brief-sheet">
-            <Band num="05 · Agriculture and water" title="What the season has done to the crop" lede={<>Groundwater matters here because of what grows above it. <b>{cropRecord.rainfed.mandals} of {cropRecord.rainfed.of} mandals</b> are mostly rainfed, and across the State under a quarter of mapped cropland is irrigated — so for most of Andhra Pradesh the monsoon is the irrigation.</>} />
+            <Band num="05 · Agriculture and water" title="What the season has done to the crop" lede={<>Groundwater matters here because of what grows above it. <b>{cropRecord.rainfed.mandals} of {cropRecord.rainfed.of} mandals</b> are mostly rainfed, and across the State under a quarter of mapped cropland is irrigated, so for most of Andhra Pradesh the monsoon is the irrigation.</>} />
             <div className={styles.body}>
               <div className={styles.twocol}>
                 <div className={styles.mapcard}>
@@ -466,12 +466,12 @@ export default function BriefPage() {
               </div>
               <div className={styles.sec}>The crop water check, and how it is being scored</div>
               <div className={styles.twocol}>
-                <p className={styles.para}>Each week the check compares a mandal&rsquo;s rain and reference evapotranspiration, from the ECMWF open forecast, with what its crop would need. <b>Every call is frozen the day it is made</b> and scored three weeks later against the vegetation that followed — Sentinel-2 NDVI over rainfed cropland at {cropRecord.sentinel.resolutionM} m, and the vegetation index. {cropScore.frozen} weeks are on the record, <b>none scored yet</b>; the first verdict falls due on {day(cropScore.nextDue)}.</p>
+                <p className={styles.para}>Each week the check compares a mandal&rsquo;s rain and reference evapotranspiration, from the ECMWF open forecast, with what its crop would need. <b>Every call is frozen the day it is made</b> and scored three weeks later against the vegetation that followed: Sentinel-2 NDVI over rainfed cropland at {cropRecord.sentinel.resolutionM} m, and the vegetation index. {cropScore.frozen} weeks are on the record, <b>none scored yet</b>; the first verdict falls due on {day(cropScore.nextDue)}.</p>
                 <div className={styles.stack}>
                   <div className={styles.note}><b>A negative result, kept on the record.</b> Pooled across mandals the check does not separate vegetation at all: the places called short most often are the chronically dry ones. It is therefore scored within a mandal and season, against that same mandal when it was called comfortable.</div>
                 </div>
               </div>
-              <div className={`${styles.note} ${styles.teal}`}><b>What is missing, and it is the heart of it.</b> Sown area, crop and stage, and what the canals actually delivered to a field are all held by the State and not released. Until they are, the check runs on FAO-56 reference coefficients and a stated assumption about the crop — not on the mandal&rsquo;s own sown record. That single release would turn a water platform into an agricultural one.</div>
+              <div className={`${styles.note} ${styles.teal}`}><b>What is missing, and it is the heart of it.</b> Sown area, crop and stage, and what the canals actually delivered to a field are all held by the State and not released. Until they are, the check runs on FAO-56 reference coefficients and a stated assumption about the crop, not on the mandal&rsquo;s own sown record. That single release would turn a water platform into an agricultural one.</div>
             </div>
             <Foot n={6} />
           </section>
@@ -484,7 +484,7 @@ export default function BriefPage() {
                 <div className={styles.lim}><b>Aquifer properties are coarse.</b> Aquifer type is a district proxy; for 259 of 688 series the measured specific yield disagrees with the label.</div>
                 <div className={styles.lim}><b>Depth is not storage.</b> A metre lost in hard rock holds far less water than in the delta; volumes are under review.</div>
                 <div className={styles.lim}><b>Pumping is unobserved.</b> Extraction enters only through the official stage-of-extraction figure.</div>
-                <div className={styles.lim}><b>{mapGeometry.mandals.length} outlines, {datasetManifest.counts.rawSourceSeriesCount} mandals.</b> The State&rsquo;s record lists {datasetManifest.counts.rawSourceSeriesCount}; the public sub-district map predates the latest splits, so {datasetManifest.counts.seriesSharingBoundaryCount} newer town mandals share their former town&rsquo;s outline and {datasetManifest.counts.seriesWithoutBoundaryCount} have none. All are still measured and estimated — only the map is short.</div>
+                <div className={styles.lim}><b>{mapGeometry.mandals.length} outlines, {datasetManifest.counts.rawSourceSeriesCount} mandals.</b> The State&rsquo;s record lists {datasetManifest.counts.rawSourceSeriesCount}; the public sub-district map predates the latest splits, so {datasetManifest.counts.seriesSharingBoundaryCount} newer town mandals share their former town&rsquo;s outline and {datasetManifest.counts.seriesWithoutBoundaryCount} have none. All are still measured and estimated; only the map is short.</div>
                 <div className={styles.lim}><b>Mandal averages.</b> APWRIMS reports a mandal&rsquo;s mean across piezometers; a village&rsquo;s wells can differ.</div>
                 <div className={styles.lim}><b>Ungauged mandals are hard.</b> Estimating from neighbours alone errs by {spatial.reportedMetric.maeM.toFixed(1)} m, so it is not released.</div>
                 <div className={styles.lim}><b>Data status.</b> Research sample pending authorization; some series await an official location crosswalk.</div>
@@ -516,7 +516,7 @@ export default function BriefPage() {
               <div className={styles.sec}>Candidate inputs; gains require matched validation</div>
               <div className={styles.qs}>
                 <div className={styles.q}><b>Station-level DWLR history, with coordinates.</b> An ungauged mandal is interpolated between mandal means today and errs by {spatial.reportedMetric.maeM.toFixed(1)} m, five times the nowcast. Well locations would let it run between wells inside aquifer structure, and let an estimate be made below mandal scale.</div>
-                <div className={styles.q}><b>The NAQUIM aquifer framework — boundaries, thickness, specific yield, transmissivity.</b> Aquifer type is a district proxy, contradicted by the measured specific yield in 259 of 688 series. Hard rock is the worst terrain in both tests: {t.terrainCohorts.hard_rock.maeM.toFixed(2)} m against {t.terrainCohorts.coastal.maeM.toFixed(2)} m on the coast for the nowcast, {spatial.terrainCohortsForReportedMethod.hard_rock.maeM.toFixed(1)} m against {spatial.terrainCohortsForReportedMethod.coastal.maeM.toFixed(1)} m when a mandal is ungauged. Real aquifer properties would also make depth-to-storage defensible.</div>
+                <div className={styles.q}><b>The NAQUIM aquifer framework: boundaries, thickness, specific yield, transmissivity.</b> Aquifer type is a district proxy, contradicted by the measured specific yield in 259 of 688 series. Hard rock is the worst terrain in both tests: {t.terrainCohorts.hard_rock.maeM.toFixed(2)} m against {t.terrainCohorts.coastal.maeM.toFixed(2)} m on the coast for the nowcast, {spatial.terrainCohortsForReportedMethod.hard_rock.maeM.toFixed(1)} m against {spatial.terrainCohortsForReportedMethod.coastal.maeM.toFixed(1)} m when a mandal is ungauged. Real aquifer properties would also make depth-to-storage defensible.</div>
                 <div className={styles.q}><b>Agricultural feeder supply hours, and the pump-set census.</b> The annual extraction assessment supplies context, not measured monthly pumping. Supply hours and connected load could provide a pumping proxy, but conversion to volume needs pump efficiency, lift and field checks.</div>
                 <div className={styles.q}><b>DWLR telemetry, not only the history.</b> Readings are monthly, so even a perfect estimate is a month behind. Telemetry would make instrumented mandals measured and current rather than modelled, and turn a backtest into continuous validation.</div>
                 <div className={styles.q}><b>An authorized APWRIMS export, full history.</b> Training begins June 2015. A longer, quality-controlled record may improve seasonal coverage; any gain must be tested. Source authorization remains a gate on official use.</div>
@@ -527,7 +527,7 @@ export default function BriefPage() {
               <div className={styles.limits}>
                 <div className={styles.lim}><b>A systematic gap between the two well networks.</b> Over {cross.sampleCount.toLocaleString("en-US")} readings paired within {cross.maximumDistanceKm} km and the same month, CGWB&rsquo;s wells read {Math.abs(cross.biasCgwbMinusApwrimsM).toFixed(1)} m {cross.biasCgwbMinusApwrimsM < 0 ? "shallower" : "deeper"} than the State&rsquo;s, correlating {cross.correlation.toFixed(2)}.</div>
                 <div className={styles.lim}><b>259 series whose aquifer label its own specific yield contradicts</b>, already listed mandal by mandal and ready to hand over.</div>
-                <div className={styles.lim}><b>Quality control on the State&rsquo;s own record.</b> The same model that estimates a level also flags a reading inconsistent with that well&rsquo;s history and its neighbours — which is how a drifting recorder or a transcription error is found across a network of this size.</div>
+                <div className={styles.lim}><b>Quality control on the State&rsquo;s own record.</b> The same model that estimates a level also flags a reading inconsistent with that well&rsquo;s history and its neighbours, which is how a drifting recorder or a transcription error is found across a network of this size.</div>
               </div>
               <div className={styles.note}><b>What that would build.</b> With located wells and aquifer properties in place, this same weekly pipeline ({WATER.length + CLIMATE.length + LAND.length} sources, {mapGeometry.mandals.length} mandals, every Monday) could estimate a level where no well stands. It would be published only once it beats the current model on held-out places and dates.</div>
 
@@ -542,7 +542,7 @@ export default function BriefPage() {
                 <div className={styles.fig}><b>{village.spread.medianVillageSpreadM.toFixed(2)} m</b><span>the median village stands this far from its mandal&rsquo;s mean, more than the whole mandal-level error</span></div>
                 <div className={styles.fig}><b>{village.validation.persistence.persistentSharePct.toFixed(0)}%</b><span>of that gap stays with the place rather than moving season to season</span></div>
                 <div className={styles.fig}><b>{village.validation.splitHalf.pastPredictsFutureR.toFixed(3)}</b><span>a well&rsquo;s earlier gap against its later one, in date order, {village.validation.splitHalf.wellsScored} wells</span></div>
-                <div className={styles.fig}><b>{dug ? dug.forwardDoseResponse.find(d => d.readings === 3)!.residualErrorM.toFixed(2) : "—"} m</b><span>error on a later reading after three readings at a dug well{dug?.forwardBaselineM ? <>, against {dug.forwardBaselineM.toFixed(2)} m on the mandal figure alone</> : null}</span></div>
+                <div className={styles.fig}><b>{dug ? dug.forwardDoseResponse.find(d => d.readings === 3)!.residualErrorM.toFixed(2) : "–"} m</b><span>error on a later reading after three readings at a dug well{dug?.forwardBaselineM ? <>, against {dug.forwardBaselineM.toFixed(2)} m on the mandal figure alone</> : null}</span></div>
               </div>
 
               <div className={styles.note}><b>The accuracy is borrowed from the well.</b> The nowcast errs by {card.evaluations.temporalNowcast.model.maeM.toFixed(2)} m because every mandal has its own history to carry forward. That history alone, with no model, already gives {card.evaluations.temporalNowcast.lastReadingBaseline.maeM.toFixed(2)} m. Take the local sensor away and hold out whole mandals and the error is <b>{card.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(2)} m</b>. A village without a well is that case at a finer scale.</div>

@@ -10,7 +10,7 @@ function escape(value: string | number | boolean | null | undefined): string {
 /** Shared provenance banner prepended to every CSV export (audit requirement). */
 export function csvBanner(extra: string[] = []): string {
   return [
-    `# AP Groundwater Fusion — PROTOTYPE export (generated ${new Date().toISOString().slice(0, 10)})`,
+    `# AP Groundwater Fusion · PROTOTYPE export (generated ${new Date().toISOString().slice(0, 10)})`,
     `# AP Water Intelligence · ${CREATOR_CREDIT}. Data sources are credited separately below.`,
     `# Measured aggregates and modelled nowcasts are separate. Quantile ranges are not guaranteed confidence intervals.`,
     `# APWRIMS readings are a browser-session research sample (authorization pending). NASA values are GRACE-DA district storage percentile (0-100), not depth.`,

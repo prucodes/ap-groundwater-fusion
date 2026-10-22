@@ -156,7 +156,7 @@ export default function ScenarioPage() {
                 Reusing that seasonal anomaly to scale a whole reference year is an illustrative assumption, not an ENSO forecast.{" "}
               </>
             ) : null}
-            Tap a preset to model its effect on the statewide water balance — a modelled scenario over real
+            Tap a preset to model its effect on the statewide water balance: a modelled scenario over real
             TerraClimate data, not a prediction.
           </span>
         </div>
@@ -217,7 +217,7 @@ export default function ScenarioPage() {
           <IconInfo />
           <span>
             Press play to sweep the monsoon dial and watch districts shift toward deficit (deeper rust) and back. This is
-            a <strong>modeled what-if</strong> over real TerraClimate {districtGeometry.balance_year} balance — a planning
+            a <strong>modeled what-if</strong> over real TerraClimate {districtGeometry.balance_year} balance, a planning
             aid, not a forecast.
           </span>
         </div>

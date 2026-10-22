@@ -90,21 +90,21 @@ export function MandalMatrix({ row, weeks, light = false, sown, sowingAsOf, comp
         </div>
         <div className={styles.indicator}>
           <span>Rainfall vs normal</span>
-          <strong>{row.rain ? signedPct(row.rain.dev) : "—"}</strong>
+          <strong>{row.rain ? signedPct(row.rain.dev) : "–"}</strong>
           <small>
-            {row.rain ? <>{row.rain.mm.toFixed(0)} mm against {row.rain.normal.toFixed(0)} mm · {row.rain.cls ? RAIN_CLASS_META[row.rain.cls].label : "—"}. </> : "No unique gauge record. "}
+            {row.rain ? <>{row.rain.mm.toFixed(0)} mm against {row.rain.normal.toFixed(0)} mm · {row.rain.cls ? RAIN_CLASS_META[row.rain.cls].label : "–"}. </> : "No unique gauge record. "}
             {RULES.rain} Measured: AP DES gauges via APWRIMS.
           </small>
         </div>
         <div className={styles.indicator}>
           <span>Longest dry spell</span>
-          <strong>{row.dry ? `${row.dry.longest} wk` : "—"}</strong>
+          <strong>{row.dry ? `${row.dry.longest} wk` : "–"}</strong>
           <small>{RULES.drySpell}</small>
         </div>
         {!compact ? <RainBarcode row={row} weeks={weeks} spellWeeks={spellWeeks} /> : null}
         <div className={styles.indicator}>
           <span>SPI route (satellite)</span>
-          <strong>{row.spi ? signed(row.spi.v) : "—"}</strong>
+          <strong>{row.spi ? signed(row.spi.v) : "–"}</strong>
           <small>{row.spi ? `${SPI_LABEL[row.spi.cls]}; ${row.t1Spi ? "would set" : "would not set"} Trigger 1 on its own route. ` : ""}{RULES.spi} CHIRPS v3 since 1981.</small>
         </div>
         <small style={{ display: "block", marginTop: 6, fontSize: 11.5, color: "var(--ink-soft)" }}>
@@ -121,13 +121,13 @@ export function MandalMatrix({ row, weeks, light = false, sown, sowingAsOf, comp
         </div>
         <div className={styles.indicator}>
           <span>Remote sensing · VCI <Cls value={row.impact.rs} /></span>
-          <strong>{row.vci ? row.vci.v.toFixed(0) : "—"}</strong>
+          <strong>{row.vci ? row.vci.v.toFixed(0) : "–"}</strong>
           <small>{RULES.vci} NOAA STAR VHP, 4 km, last four weeks. Satellite index over all vegetation; coarser than the manual prefers.</small>
           {row.vci && !compact ? <Sparkline values={row.vci.weeks} /> : null}
         </div>
         <div className={styles.indicator}>
           <span>Soil moisture · PASM <Cls value={row.impact.sm} /></span>
-          <strong>{row.pasm ? `${row.pasm.v.toFixed(0)}%` : "—"}</strong>
+          <strong>{row.pasm ? `${row.pasm.v.toFixed(0)}%` : "–"}</strong>
           <small>
             {row.pasm?.usual !== null && row.pasm?.usual !== undefined ? `Usual for the date ${row.pasm.usual.toFixed(0)}%. ` : ""}
             {row.pasm?.severeYears !== null && row.pasm?.severeYears !== undefined ? `This date read Severe in ${row.pasm.severeYears} of ${row.pasm.years} earlier years. ` : ""}
@@ -136,7 +136,7 @@ export function MandalMatrix({ row, weeks, light = false, sown, sowingAsOf, comp
         </div>
         <div className={styles.indicator}>
           <span>Hydrology · GWDI <Cls value={row.impact.hy} /></span>
-          <strong>{row.gwdi ? signed(row.gwdi.v) : "—"}</strong>
+          <strong>{row.gwdi ? signed(row.gwdi.v) : "–"}</strong>
           <small>
             {row.gwdi ? `${HYDRO_LABEL[row.gwdi.band]}: ${row.gwdi.depth.toFixed(1)} m below ground against a ${row.gwdi.mean.toFixed(1)} m mean for the month, ${row.gwdi.years} years. ` : "Under 10 years of record for the month, or no series of its own. "}
             {RULES.gwdi} Measured: APWRIMS wells.
@@ -144,7 +144,7 @@ export function MandalMatrix({ row, weeks, light = false, sown, sowingAsOf, comp
         </div>
         <div className={styles.indicator}>
           <span>Agriculture · area sown <Cls value={sown?.cls ?? null} /></span>
-          <strong>{sown ? `${sown.pctOfNormal}%` : "—"}</strong>
+          <strong>{sown ? `${sown.pctOfNormal}%` : "–"}</strong>
           <small>
             {sown ? `District figure as reported${sowingAsOf ? ` for ${shortDate(sowingAsOf, true)}` : ""}; context only, not one of this mandal's three. ` : "Not published per mandal: the Agriculture department holds it. "}
             {RULES.sown}

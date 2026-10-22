@@ -190,7 +190,7 @@ def main():
     for i, m in enumerate(mg["mandals"]):
         m["d"] = mandal_new[i]
     mg["feature_count"] = len(mg["mandals"])
-    mg["district_structure"] = "AP 2022 reorganization (26/28 districts) — derived via APWRIMS mandal mapping"
+    mg["district_structure"] = "AP 2022 reorganization (26/28 districts), derived via APWRIMS mandal mapping"
     json.dump(mg, open(mg_path, "w"))
 
     # heat: re-key values using the resolved per-mandal assignment
@@ -211,7 +211,7 @@ def main():
     new_dg["district_structure"] = "AP 2022 reorganization (26/28 districts)"
     new_dg["caveat"] = ("Boundaries dissolved from mandal polygons grouped by APWRIMS district. "
                         "GRACE percentile & ET per district are the mean of constituent mandals' "
-                        "coarse (~25 km) values — an honest proxy, not a per-district GRACE re-extraction.")
+                        "coarse (~25 km) values: an honest proxy, not a per-district GRACE re-extraction.")
     json.dump(new_dg, open(dg_path, "w"))
 
     # fusion seed: relabel the sample mandals' district_name

@@ -1,6 +1,6 @@
 {
   "generated": "2026-06-16T23:08:40",
-  "label": "BETA \u2014 modelled estimate, not official APWRIMS data",
+  "label": "BETA: modelled estimate, not official APWRIMS data",
   "n_mandals": 632,
   "backtest": {
     "forecast_rmse_m": 2.54,

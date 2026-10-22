@@ -207,7 +207,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
           <div className="metricCardLabel">Data Completeness</div>
           <PercentileRing value={mandal.coverage_status === "modelled" ? 100 : mandal.coverage_status === "measured_only" ? 60 : 0} color="var(--amber)">
             <span className="v" style={{ fontSize: 15 }}>
-              {mandal.coverage_status === "modelled" ? "V2" : "—"}
+              {mandal.coverage_status === "modelled" ? "V2" : "–"}
             </span>
           </PercentileRing>
           <div className="metricSub">{mandal.confidence_label}</div>
@@ -322,7 +322,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
               )}
               <div className="sideCaveat" style={{ marginTop: 8 }}>
                 {hasRealDepth
-                  ? `APWRIMS-format monthly observations (m below ground). The dashed extension is the modelled nowcast — ${formatNumber(mandal.estimate_mbgl)} m, P10–P90 ${formatNumber(mandal.estimate_band_p10)}–${formatNumber(mandal.estimate_band_p90)} m — not a measurement.`
+                  ? `APWRIMS-format monthly observations (m below ground). The dashed extension is the modelled nowcast: ${formatNumber(mandal.estimate_mbgl)} m, P10–P90 ${formatNumber(mandal.estimate_band_p10)}–${formatNumber(mandal.estimate_band_p90)} m, not a measurement.`
                   : "No measured history is available. No history has been substituted or synthesized."}
               </div>
             </section>
@@ -356,11 +356,11 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
               </div>
               <div className="kvRow">
                 <span className="k">Latest observation period</span>
-                <span className="v">{mandal.latest_observation_period || "—"}</span>
+                <span className="v">{mandal.latest_observation_period || "–"}</span>
               </div>
               <div className="kvRow">
                 <span className="k">Satellite sample</span>
-                <span className="v">{sample?.satellite_sample_date_or_fetch_date || "—"}</span>
+                <span className="v">{sample?.satellite_sample_date_or_fetch_date || "–"}</span>
               </div>
               <div className="kvRow">
                 <span className="k">Measured label</span>
@@ -404,7 +404,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
                 </span>
                 <div className="readyBody">
                   <div className="readyLabel">NASA Satellite-Model (GRACE-DA)</div>
-                  <div className="readyMeta">Real percentiles 0–100 · {sample?.satellite_sample_date_or_fetch_date || "—"}</div>
+                  <div className="readyMeta">Real percentiles 0–100 · {sample?.satellite_sample_date_or_fetch_date || "–"}</div>
                 </div>
               </div>
               {mandal.rainfall_mm !== null && mandal.rainfall_mm !== undefined && (

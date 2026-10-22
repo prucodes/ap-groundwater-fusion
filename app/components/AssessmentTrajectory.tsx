@@ -68,7 +68,7 @@ export function AssessmentTrajectory() {
                 <span>{titleCase(row.district)} · {row.years} pre-monsoons, {row.firstYear}–{row.lastYear}</span>
               </div>
               <div className={styles.drift}>+{row.driftMPerYear.toFixed(2)} m/yr</div>
-              <div className={styles.stage}>{row.stagePct === null ? "—" : `${row.stagePct.toFixed(0)}% drawn`}</div>
+              <div className={styles.stage}>{row.stagePct === null ? "–" : `${row.stagePct.toFixed(0)}% drawn`}</div>
             </div>
           ))}
         </div>
@@ -78,7 +78,7 @@ export function AssessmentTrajectory() {
         <b>Nothing here is projected forward.</b>{" "}
         Between {data.previousYear} and {data.assessmentYear} the median unit moved {move.medianSwingPct} stage
         points, but <b>{move.overTwentyPoints} moved more than twenty</b> and {move.overFortyPoints} more than
-        forty{biggest ? <> — {titleCase(biggest.unit)} went from {biggest.fromPct}% to {biggest.toPct}%</> : null}.
+        forty{biggest ? <>; {titleCase(biggest.unit)} went from {biggest.fromPct}% to {biggest.toPct}%</> : null}.
         The measure&rsquo;s own year-to-year movement is larger than most units&rsquo; distance to a threshold, so a
         one-year extrapolation would be noise wearing a number. These are places to look at, not forecasts.
       </p>

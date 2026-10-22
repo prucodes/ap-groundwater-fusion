@@ -1,13 +1,13 @@
 .section { min-width: 0; padding: 22px 0; border-top: 1px solid var(--line); }
 .heading { display: flex; justify-content: space-between; align-items: start; gap: 18px; margin-bottom: 18px; }
-.heading h2 { margin: 4px 0 6px; font-size: 21px; line-height: 1.25; letter-spacing: 0; }
+.heading h2 { margin: 4px 0 6px; font-size: 22px; line-height: 1.25; letter-spacing: 0; }
 .heading p, .note { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
 .eyebrow { color: var(--teal); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0; }
 .metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line); margin: 12px 0 18px; }
 .metric { padding: 18px; border-right: 1px solid var(--line); min-width: 0; }
 .metric:first-child { padding-left: 0; }
 .metric:last-child { border: 0; }
-.metric strong { display: block; font-size: 30px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.3; }
+.metric strong { display: block; font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1.3; }
 .metric span { display: block; font-size: 12px; font-weight: 600; margin-top: 4px; }
 .metric small { display: block; color: var(--muted); font-size: 11px; margin-top: 6px; }
 .coverage { display: flex; height: 12px; gap: 3px; overflow: hidden; margin: 16px 0 10px; }
@@ -47,15 +47,15 @@
 .tab:focus-visible { outline: 2px solid var(--teal); outline-offset: -3px; }
 .queue { border-top: 1px solid var(--line); }
 .queueRow { display: grid; grid-template-columns: 62px minmax(0, 1fr) 155px; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--line); align-items: start; }
-.queueRank { font-family: var(--font-mono); font-size: 20px; color: var(--rust); }
+.queueRank { font-family: var(--font-mono); font-size: 22px; color: var(--rust); }
 .queueRank small { display: block; font: 10px var(--font-sans); color: var(--muted); margin-top: 5px; }
-.queueRow h3 { font-size: 15px; margin: 0 0 5px; }
+.queueRow h3 { font-size: 16px; margin: 0 0 5px; }
 .queueRow h3 a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .queueRow p { font-size: 12px; color: var(--muted); line-height: 1.6; margin: 0 0 8px; }
 .factors { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 11px; color: var(--ink-soft); }
 .factors b { color: var(--teal); }
 .queueValue { text-align: right; font-variant-numeric: tabular-nums; }
-.queueValue strong { display: block; font-size: 21px; font-weight: 600; }
+.queueValue strong { display: block; font-size: 22px; font-weight: 600; }
 .queueValue small { color: var(--muted); display: block; font-size: 10px; line-height: 1.7; }
 .paging { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 15px 0; font-size: 12px; color: var(--muted); }
 .paging div { display: flex; gap: 8px; }
@@ -64,7 +64,7 @@
 .paging svg { width: 16px; height: 16px; }
 .links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .link { padding: 20px 0; border-block: 1px solid var(--line); color: var(--ink); }
-.link strong { display: block; font-size: 17px; margin: 9px 0; }
+.link strong { display: block; font-size: 18px; margin: 9px 0; }
 .link p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
 .link svg { width: 20px; color: var(--teal); }
 .link:hover strong { color: var(--teal); }
@@ -73,16 +73,16 @@
   .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .metric { padding: 14px 10px; }
   .metric:first-child { padding-left: 10px; }
-  .metric strong { font-size: 26px; }
+  .metric strong { font-size: 28px; }
   .source { grid-template-columns: 1fr 1fr; gap: 12px; }
   .gates, .links { grid-template-columns: 1fr; gap: 0; }
   .tabs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .tab { padding: 12px 8px; }
-  .tab strong { font-size: 24px; }
+  .tab strong { font-size: 22px; }
   .toolbar label, .toolbar input, .toolbar select { width: 100%; min-width: 0; }
   .queueRow { grid-template-columns: 40px minmax(0, 1fr); gap: 10px; }
   .queueValue { grid-column: 2; text-align: left; }
-  .queueValue strong { font-size: 17px; }
+  .queueValue strong { font-size: 18px; }
   .selectedReadout { grid-template-columns: 1fr; }
 }
 .districtWorkspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 16px; align-items: stretch; }

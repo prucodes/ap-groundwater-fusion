@@ -64,7 +64,7 @@ export function DistrictTrendGrid({ series, selected, onSelect }: Props) {
               className={`dtgTile ${active ? "dtgActive" : ""}`}
               onClick={() => onSelect?.(s.district_name)}
               aria-pressed={active}
-              title={`${titleCase(s.district_name)} — latest ${last.value.toFixed(2)} m below ground`}
+              title={`${titleCase(s.district_name)}: latest ${last.value.toFixed(2)} m below ground`}
             >
               <span className="dtgName">{titleCase(s.district_name)}</span>
 
@@ -87,7 +87,7 @@ export function DistrictTrendGrid({ series, selected, onSelect }: Props) {
               <span className="dtgFoot">
                 <span className={`dtgTrend ${deepening ? "down" : "up"}`}>
                   {s.trendMPerYear === null
-                    ? "—"
+                    ? "–"
                     : `${deepening ? "▼" : "▲"} ${Math.abs(s.trendMPerYear).toFixed(2)} m/yr`}
                 </span>
                 <span className="dtgLatest">{last.value.toFixed(1)}<small> m</small></span>
@@ -112,7 +112,7 @@ export function DistrictTrendGrid({ series, selected, onSelect }: Props) {
         rows={[...usable].sort((a, b) => (b.trendMPerYear ?? -99) - (a.trendMPerYear ?? -99)).map((s) => [
           titleCase(s.district_name),
           s.points[s.points.length - 1].value.toFixed(2),
-          s.trendMPerYear === null ? "—" : `${s.trendMPerYear > 0 ? "+" : ""}${s.trendMPerYear.toFixed(2)}`,
+          s.trendMPerYear === null ? "–" : `${s.trendMPerYear > 0 ? "+" : ""}${s.trendMPerYear.toFixed(2)}`,
         ])}
       />
     </div>

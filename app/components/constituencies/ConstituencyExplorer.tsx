@@ -102,7 +102,7 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
               <p className={styles.panelDistricts}>{row.districts}</p>
               <dl className={styles.facts}>
                 <div><dt>Groundwater in stress</dt><dd>{`${row.stress} of ${row.assessed} mandals`}</dd></div>
-                <div><dt>Median depth</dt><dd>{row.medianDepthM === null ? "—" : `${row.medianDepthM.toFixed(1)} m`}</dd></div>
+                <div><dt>Median depth</dt><dd>{row.medianDepthM === null ? "–" : `${row.medianDepthM.toFixed(1)} m`}</dd></div>
                 <div><dt>State wells since May</dt><dd>{metricText("sinceMayM", row.sinceMayM)}</dd></div>
                 <div><dt>Drought manual</dt><dd>{`${row.droughtActive} moderate or severe · ${row.droughtSevere} severe`}</dd></div>
                 <div><dt>Gauge rain</dt><dd>{metricText("rainPct", row.rainPct)}</dd></div>
@@ -169,7 +169,7 @@ export function ConstituencyExplorer({ rows, width, height, districts }: { rows:
                 <td>{r.pc}</td>
                 <td>{r.mandals}</td>
                 <td><span className={styles.cell} style={{ background: metricColor("stressShare", r.stressShare) }} />{metricText("stressShare", r.stressShare)}</td>
-                <td>{r.medianDepthM === null ? "—" : `${r.medianDepthM.toFixed(1)} m`}</td>
+                <td>{r.medianDepthM === null ? "–" : `${r.medianDepthM.toFixed(1)} m`}</td>
                 <td><span className={styles.cell} style={{ background: metricColor("sinceMayM", r.sinceMayM) }} />{metricText("sinceMayM", r.sinceMayM)}</td>
                 <td><span className={styles.cell} style={{ background: metricColor("droughtShare", r.droughtShare) }} />{metricText("droughtShare", r.droughtShare)}</td>
                 <td><span className={styles.cell} style={{ background: metricColor("rainPct", r.rainPct) }} />{metricText("rainPct", r.rainPct)}</td>

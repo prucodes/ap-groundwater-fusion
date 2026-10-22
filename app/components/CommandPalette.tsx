@@ -43,7 +43,7 @@ const PAGES: Item[] = [
   { label: "Summer Water Outlook", sub: "May water table against each mandal's record", href: "/summer", kind: "page" },
   { label: "Modelled Groundwater Levels β", sub: "Calculated mandal depth in metres + model bands", href: "/estimates", kind: "page" },
   { label: "NASA Signals", sub: "Raw GRACE-DA context + provenance", href: "/nasa", kind: "page" },
-  { label: "Climate & Balance", sub: "Rainfall vs ET — the water budget", href: "/climate", kind: "page" },
+  { label: "Climate & Balance", sub: "Rainfall vs ET: the water budget", href: "/climate", kind: "page" },
   { label: "Data Readiness", sub: "Which sources are live vs pending", href: "/readiness", kind: "page" },
   { label: "Methodology", sub: "How fusion works and what not to claim", href: "/methodology", kind: "page" },
   { label: "Reports", sub: "Older exports: the weekly digest is the summary", href: "/reports", kind: "page" },

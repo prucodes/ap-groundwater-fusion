@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Crystal Water Table — Andhra Pradesh | Cinematic 3D",
+  title: "Crystal Water Table · Andhra Pradesh | Cinematic 3D",
   description:
-    "Cinematic liquid-map 3D view of measured pre-monsoon (May) depth to water, mandal by mandal — year-by-year time-lapse, the latest month against its usual, CGWB extraction-stress mode, district labels, and next May's outlook against each mandal's own record.",
+    "Cinematic liquid-map 3D view of measured pre-monsoon (May) depth to water, mandal by mandal: year-by-year time-lapse, the latest month against its usual, CGWB extraction-stress mode, district labels, and next May's outlook against each mandal's own record.",
 };
 
 // The cinematic view is a deliberately self-contained WebGL page (its own
@@ -24,7 +24,7 @@ export default function CrystalWaterTablePage() {
         // Next rewrites next/image and <Link> for basePath, but not a raw
         // iframe src, so prefix it explicitly or this 404s on GitHub Pages.
         src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/water-crystal-3d.html`}
-        title="Crystal Water Table — cinematic 3D view"
+        title="Crystal Water Table · cinematic 3D view"
         allow="fullscreen"
         className="crystalFrame"
       />

@@ -70,7 +70,7 @@ export default function MonsoonPage() {
   return (
     <div className={`pageWrap ${styles.page}`}>
       <HeaderHero
-        title={enso?.state === "el_nino" ? "Monsoon Watch — El Niño" : "Monsoon Watch"}
+        title={enso?.state === "el_nino" ? "Monsoon Watch · El Niño" : "Monsoon Watch"}
         brief={brief("/monsoon", <>{rain ? <>{MONTHS[Number(rain.months.slice(0, 2))]}–{MONTHS[Number(rain.months.slice(3))]} {w.season.year} rain was <b>{formatNumber(Math.abs(rain.anomalyPct))}% {rain.anomalyPct < 0 ? "below" : "above"} normal</b>{rain.rankDriest === 1 ? `, the driest of ${rain.ofYears} years` : ""}; </> : null}{formatNumber(r.fallingPct)}% of mandal series sit lower than in May.</>)}
         showChips={false}
         variant="compact"
@@ -257,8 +257,8 @@ export default function MonsoonPage() {
         <summary>Source and index notes</summary>
         <p className="cardNote">
           {pacificEnso.source}. Earth imagery: {pacificEnso.basemapSource}. The figure beside each month is that
-          <strong> single month&rsquo;s</strong> average anomaly in the Niño 3.4 box. The published index —{" "}
-          {enso ? `the ${enso.oniC > 0 ? "+" : ""}${enso.oniC.toFixed(2)} °C quoted above` : "the one quoted above"} — is a
+          <strong> single month&rsquo;s</strong> average anomaly in the Niño 3.4 box. The published index,{" "}
+          {enso ? `the ${enso.oniC > 0 ? "+" : ""}${enso.oniC.toFixed(2)} °C quoted above` : "the one quoted above"}, is a
           three-month running mean of the same box, so it lags a fast-rising month and reads lower. Computed here
           against a 1991–2020 baseline, the running mean lands within about 0.2 °C of NOAA&rsquo;s published
           value throughout this event.
@@ -352,7 +352,7 @@ export default function MonsoonPage() {
                 </span>
                 <span className="seasonBarValue">{formatNumber(s.fallingPct)}%</span>
                 <span className="seasonBarOni">
-                  {s.oniJjaC === null ? "—" : `${s.oniJjaC > 0 ? "+" : ""}${s.oniJjaC.toFixed(2)}`}
+                  {s.oniJjaC === null ? "–" : `${s.oniJjaC > 0 ? "+" : ""}${s.oniJjaC.toFixed(2)}`}
                 </span>
               </div>
             ))}
@@ -452,7 +452,7 @@ export default function MonsoonPage() {
             <span className="validationEyebrow"><IconInfo /> Why the index is context and never a prediction</span>
             <p>
               Adding the Oceanic Niño Index to the three-month forecast was tested on rolling origin and made it{" "}
-              <strong>worse</strong> — 1.776 m to 1.850 m mean error, and worse in every aquifer. Two El Niño
+              <strong>worse</strong>: 1.776 m to 1.850 m mean error, and worse in every aquifer. Two El Niño
               events inside the training record are not enough to learn a response from, so the model does not
               use it. Groundwater changes come from the readings and rainfall estimates from CHIRPS.
               ONI is used to group historical rainfall years for comparison, not to forecast local outcomes.
@@ -482,7 +482,7 @@ export default function MonsoonPage() {
         <p className="cardNote">
           Sources: {Object.values(apTemperature.records).map((r) => `${r.label} (${r.note})`).join("; ")}.
           Sampled by how much of each grid cell falls inside the state, weighted by latitude.{" "}
-          <strong>No rate is published as a single figure and nothing here is projected forward</strong> — this
+          <strong>No rate is published as a single figure and nothing here is projected forward</strong>. This
           site carries no climate model, and the same rule keeps the ocean index out of the groundwater
           forecast.
         </p>
@@ -578,7 +578,7 @@ export default function MonsoonPage() {
                   <td>{m.thisSeasonM > 0 ? "+" : ""}{formatNumber(m.thisSeasonM)} m</td>
                   <td>{m.typicalM > 0 ? "+" : ""}{formatNumber(m.typicalM)} m</td>
                   <td className="bad">+{formatNumber(m.shortfallM)} m</td>
-                  <td>{m.shortfallMm3 === null ? "—" : `${formatNumber(m.shortfallMm3)} Mm³`}</td>
+                  <td>{m.shortfallMm3 === null ? "–" : `${formatNumber(m.shortfallMm3)} Mm³`}</td>
                   <td>{formatNumber(m.latestDepthM)} m bgl</td>
                 </tr>
               ))}

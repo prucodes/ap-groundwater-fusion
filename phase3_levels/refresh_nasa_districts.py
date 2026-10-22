@@ -125,7 +125,7 @@ def main():
             "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
             "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
             "data_label": "satellite-model",
-            "notes": "GRACE-DA percentile (0-100), a stress/trend measure — not groundwater depth.",
+            "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth.",
         })
 
     json.dump(dgeo, open(os.path.join(APP, "ap_district_geometry.json"), "w"))

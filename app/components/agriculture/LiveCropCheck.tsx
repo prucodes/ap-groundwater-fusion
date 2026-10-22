@@ -352,7 +352,7 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
           </dl>
           <ChartData caption={`Root-zone water day by day for ${place}, mm the roots can draw (stress below ${mm(active.taw - active.raw)})`}
             columns={["Day", "Water the roots can draw", "Rain that counts", ""]}
-            rows={live.dates.map((date, i) => [`${weekday(date)} ${day(date, false)}`, mm(active.path[i]), active.rainEffective[i] > 0 ? mm(active.rainEffective[i]) : "—",
+            rows={live.dates.map((date, i) => [`${weekday(date)} ${day(date, false)}`, mm(active.path[i]), active.rainEffective[i] > 0 ? mm(active.rainEffective[i]) : "–",
               i === live.today ? "Today" : i < live.today ? "Past" : active.path[i] < active.taw - active.raw ? "Forecast · short" : "Forecast"])} />
           {irrigatedAt(selected) !== null ? <p className={styles.irrigatedNote} data-testid="field-week-irrigated-share">
             <b>{Math.round(irrigatedAt(selected)!)}%</b> of {place}&rsquo;s cropland was mapped irrigated in rabi 2020&ndash;21 ({irrigation!.source}).{" "}

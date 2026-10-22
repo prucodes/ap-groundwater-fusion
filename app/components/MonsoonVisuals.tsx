@@ -200,7 +200,7 @@ export function RechargeMap() {
               </span>
               {active.shortfallMm3 !== null && active.specificYield !== null ? (
                 <span className="rechargeReadoutMeta">
-                  {active.shortfallMm3.toFixed(1)} Mm³ storage proxy — {active.shortfallM.toFixed(2)} m over{" "}
+                  {active.shortfallMm3.toFixed(1)} Mm³ storage proxy, {active.shortfallM.toFixed(2)} m over{" "}
                   {active.areaKm2?.toFixed(0)} km² at a specific yield of {active.specificYield}
                 </span>
               ) : null}
@@ -316,7 +316,7 @@ export function RechargeTrajectory() {
         columns={["Month", String(current.year), "Median", "Lowest", "Highest"]}
         rows={band.map((b) => {
           const now = nowPoints.find((p) => p.month === b.month);
-          return [MONTHS[b.month], now ? signedM(now.value) : "—", signedM(b.mid), signedM(b.low), signedM(b.high)];
+          return [MONTHS[b.month], now ? signedM(now.value) : "–", signedM(b.mid), signedM(b.low), signedM(b.high)];
         })}
       />
     </div>

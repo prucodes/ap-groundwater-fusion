@@ -19,7 +19,7 @@ export function ReservoirPanel({ data }: { data: Pick<DroughtWatch, "reservoirs"
       <span className={styles.statChip}><b>{rsi.state.storageTmc.toFixed(0)}</b> TMC now</span>
       <span className={styles.statChip}><b>{rsi.state.averageTmc.toFixed(0)}</b> TMC usual</span>
       <span className={styles.statChip} style={{ borderColor: rsi.state.band ? BAND_COLOR[rsi.state.band] : undefined }}>
-        <b>{rsi.state.deficitPct === null ? "—" : `${rsi.state.deficitPct.toFixed(0)}%`}</b> short · {rsi.state.band ? HYDRO_LABEL[rsi.state.band] : "—"} deficit
+        <b>{rsi.state.deficitPct === null ? "–" : `${rsi.state.deficitPct.toFixed(0)}%`}</b> short · {rsi.state.band ? HYDRO_LABEL[rsi.state.band] : "–"} deficit
       </span>
       <div className={styles.bars} style={{ marginTop: 6 }}>
         {worst.map(r => {
@@ -31,7 +31,7 @@ export function ReservoirPanel({ data }: { data: Pick<DroughtWatch, "reservoirs"
                 <i style={{ width: `${share * 100}%`, background: r.band ? BAND_COLOR[r.band] : "var(--muted)" }} />
                 <em style={{ left: "calc(100% - 1px)" }} />
               </span>
-              <b>−{(r.deficitPct ?? 0).toFixed(0)}% · {r.band ? HYDRO_LABEL[r.band] : "—"}</b>
+              <b>−{(r.deficitPct ?? 0).toFixed(0)}% · {r.band ? HYDRO_LABEL[r.band] : "–"}</b>
             </div>
           );
         })}

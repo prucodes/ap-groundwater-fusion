@@ -33,10 +33,10 @@ export function AiBrief({ district: controlledDistrict, onDistrictChange }: { di
     if (process.env.NEXT_PUBLIC_STATIC_EXPORT === "1") {
       setText(
         "The AI briefing runs server-side and is not available in this static demo. " +
-          "Every figure it would cite is already on this page and in the model card — " +
+          "Every figure it would cite is already on this page and in the model card, " +
           "run the app with a server (npm run build && npm start) to enable it.",
       );
-      setNote("Static demo — server-backed feature disabled.");
+      setNote("Static demo: server-backed feature disabled.");
       setLoading(false);
       return;
     }
@@ -69,7 +69,7 @@ export function AiBrief({ district: controlledDistrict, onDistrictChange }: { di
         </select>
         <input
           className="aiInput"
-          placeholder="Ask anything — e.g. ‘most stressed mandals’, ‘pumping-pressure hotspots’, a mandal's level…"
+          placeholder="Ask anything, e.g. ‘most stressed mandals’, ‘pumping-pressure hotspots’, a mandal's level…"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter") run(question); }}
@@ -109,7 +109,7 @@ export function AiBrief({ district: controlledDistrict, onDistrictChange }: { di
         <IconInfo />
         <span>
           Numbers are <strong>computed deterministically</strong> from the fused district signals; only the wording is
-          AI-generated. The model is instructed to use only the given figures and never to invent a value — percentiles
+          AI-generated. The model is instructed to use only the given figures and never to invent a value. Percentiles
           are stress/trend, not depth.
         </span>
       </div>

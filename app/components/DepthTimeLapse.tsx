@@ -147,7 +147,7 @@ export function DepthTimeLapse() {
         <div className={styles.readout}>
           <span className={styles.month}>{label(month)}</span>
           <span className={styles.sub}>
-            <b>{share === null ? "—" : `${share}%`}</b> of mandals deeper than their own usual
+            <b>{share === null ? "–" : `${share}%`}</b> of mandals deeper than their own usual
             {oni === null ? "" : ` · Niño 3.4 ${oni > 0 ? "+" : ""}${oni.toFixed(2)} °C`}
           </span>
         </div>

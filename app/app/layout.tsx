@@ -9,7 +9,7 @@ import { WelcomeGate } from "../components/welcome/WelcomeGate";
 export const metadata: Metadata = {
   authors: [{ name: CREATOR_NAME }],
   creator: CREATOR_NAME,
-  title: "AP Water Intelligence — Groundwater, Monsoon & Agriculture (Prototype)",
+  title: "AP Water Intelligence · Groundwater, Monsoon & Agriculture (Prototype)",
   description:
     "Research prototype for Andhra Pradesh: measured APWRIMS groundwater (2014-2026), this water year's rain gauges, soil moisture and reservoirs, CHIRPS v3 rainfall since 1981, El Niño context and NASA/NDMC GRACE-DA signals. Not official results.",
 };

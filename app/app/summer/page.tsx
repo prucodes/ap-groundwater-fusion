@@ -216,7 +216,7 @@ function DrinkingWater({ beyondPeople }: { beyondPeople: number | null }) {
               {rows.map((row) => (
                 <tr key={row.name}>
                   <td>{row.name}</td>
-                  <td>{row.groundwaterShare === null ? "—" : pct(row.groundwaterShare)}</td>
+                  <td>{row.groundwaterShare === null ? "–" : pct(row.groundwaterShare)}</td>
                   <td>{row.beyond.mandals}</td>
                   <td>{count(row.beyond.sources)}</td>
                   <td>{count(row.beyond.chemical)}</td>

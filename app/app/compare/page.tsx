@@ -13,7 +13,7 @@ import type { MandalGroundwaterView } from "../../lib/types";
 import { brief } from "../../lib/pageBriefs";
 
 function BalanceCell({ m }: { m: MandalGroundwaterView }) {
-  if (m.water_balance_mm === null || m.water_balance_mm === undefined) return <>—</>;
+  if (m.water_balance_mm === null || m.water_balance_mm === undefined) return <>–</>;
   const meta = balanceMeta(m.water_balance_status);
   return (
     <span style={{ color: meta.color, fontWeight: 600 }}>
@@ -40,7 +40,7 @@ function MandalPicker({
         .filter((m) => m.id !== exclude)
         .map((m) => (
           <option key={m.id} value={m.id}>
-            {titleCase(m.mandal_name)} — {titleCase(m.district_name)}
+            {titleCase(m.mandal_name)} · {titleCase(m.district_name)}
           </option>
         ))}
     </select>
@@ -118,8 +118,8 @@ export default function ComparePage() {
           <Row label="Wetness vs own history" a={<WetnessTag value={a.measured_wetness_percentile ?? null} />} b={<WetnessTag value={b.measured_wetness_percentile ?? null} />} />
           <Row
             label="Evapotranspiration (annual)"
-            a={a.annual_et_mm !== null ? <><b>{formatNumber(a.annual_et_mm)}</b> mm</> : "—"}
-            b={b.annual_et_mm !== null ? <><b>{formatNumber(b.annual_et_mm)}</b> mm</> : "—"}
+            a={a.annual_et_mm !== null ? <><b>{formatNumber(a.annual_et_mm)}</b> mm</> : "–"}
+            b={b.annual_et_mm !== null ? <><b>{formatNumber(b.annual_et_mm)}</b> mm</> : "–"}
           />
           <Row
             label="Water balance (annual)"
@@ -148,7 +148,7 @@ export default function ComparePage() {
         <span className="bannerIcon"><IconColumns /></span>
         <span>
           Comparison uses real APWRIMS readings (2014-2026) and real NASA/NDMC GRACE-DA percentiles (0–100, not depth).
-          <strong> Prototype</strong> — not official results.
+          <strong> Prototype</strong>, not official results.
         </span>
       </div>
     </div>

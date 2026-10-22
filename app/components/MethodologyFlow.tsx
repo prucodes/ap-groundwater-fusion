@@ -21,7 +21,7 @@ const nodes = [
   },
   {
     title: "Quality & Evaluation Cohort",
-    desc: "History length, missing features and model quantile width produce a qualitative completeness class—not an accuracy score.",
+    desc: "History length, missing features and model quantile width produce a qualitative completeness class, not an accuracy score.",
     icon: <IconTarget />,
     bg: "linear-gradient(145deg, #5e9b6b, #467553)",
   },
