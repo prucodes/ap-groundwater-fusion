@@ -558,6 +558,17 @@ export default function MethodologyPage() {
           </p>
         </div>
       </section>
+
+      <section className="card" id="ownership" aria-labelledby="method-ownership" data-testid="method-ownership">
+        <div className="cardHead">
+          <div className="cardTitle" id="method-ownership"><span className="titleIcon"><IconInfo /></span>Ownership and reuse</div>
+        </div>
+        <p className="cardNote">
+          Text, design, code and analysis &copy; 2026 Pruthvi Yannam, all rights reserved. Source data belongs to
+          its providers and is used under their terms; each source is named on this page and beside the figures it
+          supports. Citing this work is welcome; reusing it beyond citation needs written permission.
+        </p>
+      </section>
     </div>
   );
 }
