@@ -6055,3 +6055,10 @@ html { scroll-padding-top: 64px; }
 .rechargeMethod p { margin: 7px 0 0; line-height: 1.5; max-width: 72ch; }
 .rechargeMethod ul { margin: 6px 0 0; padding-left: 16px; display: grid; gap: 5px; }
 .rechargeMethod li { line-height: 1.45; max-width: 72ch; }
+
+/* Chapter headings on long pages: a page reads as a few named parts rather than one
+   long run of cards. Directly under a jump menu the rule and gap would double up. */
+.pageChapter { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 40px 0 14px; padding-top: 18px; border-top: 1px solid var(--line); font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--ink); scroll-margin-top: 64px; }
+.pageChapter span { font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: var(--muted); }
+.jumpNav + .pageChapter { margin-top: 22px; padding-top: 0; border-top: 0; }
+@media (max-width: 760px) { .pageChapter { font-size: 18px; margin-top: 30px; } .pageChapter span { font-size: 12px; } }

@@ -11,3 +11,4 @@
 .page .season :global(.monsoonStat > em) { font-size: 10px; line-height: 1.6; }
 .page .season :global(.cardNote) { font-size: 11px; }
 @media (max-width: 760px) { .nav { gap: 10px 18px; } .nav a { font-size: 11px; } .nav a:last-child { margin-left: 0; } .page .season :global(.monsoonStat) { border-left: 0; border-top: 1px solid var(--line); padding: 10px 0; } .page .season :global(.monsoonHeadline) { grid-template-columns: repeat(2, minmax(0, 1fr)); } .page .season :global(.monsoonStat > strong) { font-size: 22px; } }
+

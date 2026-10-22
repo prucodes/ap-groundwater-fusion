@@ -250,7 +250,7 @@ function Band({ num, title, lede }: { num: string; title: string; lede: ReactNod
   return <div className={styles.band}><div className={styles.eyebrow}>{num}</div><h2>{title}</h2><p className={styles.lede}>{lede}</p></div>;
 }
 function Foot({ n }: { n: number }) {
-  return <div className={styles.pfoot}><span><b>AP Water Intelligence</b> · Built by Pruthvi Yannam · prucodes.github.io/ap-groundwater-fusion</span><span className={styles.mono}>{n} / 9</span></div>;
+  return <div className={styles.pfoot}><span><b>AP Water Intelligence</b> · Designed and built by Pruthvi Yannam · prucodes.github.io/ap-groundwater-fusion</span><span className={styles.mono}>{n} / 9</span></div>;
 }
 
 type ImdExperiment = { window: { first: string; last: string }; gainPct: number; results: Record<"chirps" | "imd", { maeM: number; rows: number }> };
@@ -349,7 +349,7 @@ export default function BriefPage() {
               <div><b>06</b><span>Open questions</span><small>limits, and where review helps</small></div>
               <div><b>07</b><span>Closing the gap</span><small>six inputs, and what each moves</small></div>
             </div>
-            <div className={styles.foot}><span>Built by Pruthvi Yannam</span><span>Prototype · not an official measurement</span></div>
+            <div className={styles.foot}><span>Designed and built by Pruthvi Yannam</span><span>Prototype · not an official measurement</span></div>
           </section>
 
           <section className={styles.page} data-testid="brief-sheet">

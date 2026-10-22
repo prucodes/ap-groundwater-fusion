@@ -86,7 +86,7 @@ test("entrance and export analytics never include entered text or report content
   await page.getByRole("button", { name: /Mandal fusion table/ }).click();
   const file = await download;
   const text = await readFile((await file.path())!, "utf8");
-  expect(text).toContain("Built by Pruthvi Yannam");
+  expect(text).toContain("Designed and built by Pruthvi Yannam");
   expect(text).toContain("APWRIMS");
   await expect.poll(() => page.evaluate(() => window.apgwCount?.pending?.map(row => row.name))).toContain("report/download");
   const pending = await page.evaluate(() => window.apgwCount?.pending);

@@ -7,7 +7,6 @@ import {
   IconCloudRain,
   IconDroplet,
   IconGlobe,
-  IconInfo,
   IconMap,
   IconShield,
   IconWaves,
@@ -89,8 +88,10 @@ export default function MonsoonPage() {
       </div>
 
       <WatchEvidenceStatus />
-      <nav className={`${styles.nav} jumpNav`} aria-label="Monsoon sections"><a href="#season-evidence">Season evidence</a>{w.banked ? <a href="#water-banked">What it banked</a> : null}<a href="#post-monsoon">Official window</a><a href="#monsoon-film-title">Film brief</a><a href="#enso-outlook">El Niño outlook</a><a href="#pacific-evidence">Pacific record</a><a href="#monsoon-map">Groundwater map</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
+      <nav className={`${styles.nav} jumpNav`} aria-label="Monsoon sections"><a href="#chapter-season">This season</a><a href="#monsoon-map">Groundwater map</a><a href="#monsoon-shortfall">Shortfall</a><a href="#monsoon-queue">Review queue</a>{w.banked ? <a href="#water-banked">What it banked</a> : null}<a href="#chapter-pacific">El Niño and the Pacific</a><a href="#enso-outlook">El Niño outlook</a><a href="#monsoon-film-title">Film brief</a><a href="#chapter-heat">Heat</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
 
+
+      <h2 className="pageChapter" id="chapter-season">This season in the ground<span>what the monsoon did to groundwater, and where to look</span></h2>
       <section className={styles.season} id="season-evidence" aria-label="Season evidence">
         <div className="cardHead">
           <div className="cardTitle">
@@ -212,76 +213,6 @@ export default function MonsoonPage() {
           <p className="cardNote">{r.rule}. Source-series totals are not unique boundary counts; the Agriculture review uses reconciled boundary units. Baseline review pending.</p>
         </details>
       </section>
-      {w.banked ? <section className="card" id="water-banked" aria-label="What the season banked">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconDroplet /></span>
-            What the season banked
-          </div>
-          <span className="cardSub">water-table fluctuation, the official assessment&rsquo;s method · net of pumping</span>
-        </div>
-        <WaterBanked />
-      </section> : null}
-
-      <section className="card" id="post-monsoon" aria-label="The official window">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconActivity /></span>
-            The official window closes in November
-          </div>
-          <span className="cardSub">pre-monsoon to post-monsoon, the comparison the assessment makes</span>
-        </div>
-        <PostMonsoonWindow />
-      </section>
-
-      <MonsoonFilm live={currentFilmFigures()} />
-
-      <EnsoOutlook />
-
-      <section className="card pacificEvidenceSection" id="pacific-evidence">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconWaves /></span>
-            Pacific evidence explorer
-          </div>
-          <span className="cardSub">monthly ocean reconstruction, {pacificEnso.months[0].month} to{" "}
-            {pacificEnso.months[pacificEnso.months.length - 1].month}</span>
-        </div>
-        <p className="cardLede">
-          El Niño is a recurring warming of the central and eastern equatorial Pacific, coupled with changes
-          in atmospheric circulation. The film explains the mechanism; this record shows how ocean
-          temperature anomalies evolved. Rainfall over India also depends on the Indian Ocean and local weather.
-        </p>
-        <PacificEnso />
-        <details className="pacificSourceNotes">
-        <summary>Source and index notes</summary>
-        <p className="cardNote">
-          {pacificEnso.source}. Earth imagery: {pacificEnso.basemapSource}. The figure beside each month is that
-          <strong> single month&rsquo;s</strong> average anomaly in the Niño 3.4 box. The published index,{" "}
-          {enso ? `the ${enso.oniC > 0 ? "+" : ""}${enso.oniC.toFixed(2)} °C quoted above` : "the one quoted above"}, is a
-          three-month running mean of the same box, so it lags a fast-rising month and reads lower. Computed here
-          against a 1991–2020 baseline, the running mean lands within about 0.2 °C of NOAA&rsquo;s published
-          value throughout this event.
-        </p>
-        </details>
-      </section>
-
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconGlobe /></span>
-            From ocean context to local groundwater evidence
-          </div>
-          <span className="cardSub">observations, association and derived estimates</span>
-        </div>
-        <ElNinoChain />
-        <p className="cardNote">
-          The ocean index, gridded rainfall estimates and groundwater source readings are different kinds
-          of evidence. The ocean-rain link is a historical statistical association,
-          not a mechanism this site models or a forecast for an individual district.
-          Groundwater movement also reflects pumping and local conditions.
-        </p>
-      </section>
 
       <section className="card mapCard" id="monsoon-map">
         <CountedReach event="monsoon/reached-map" title="Monsoon: reached the map of where the season failed" />
@@ -316,6 +247,134 @@ export default function MonsoonPage() {
         ) : null}
       </section>
 
+      <section className="card" id="monsoon-shortfall">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconAlert /></span>
+            Where the shortfall is
+          </div>
+          <span className="cardSub">district median, metres against own normal</span>
+        </div>
+        <RowFold id="monsoon-shortfall-rows" total={w.districts.length} visible={8} noun="districts">
+        <div className="tableWrap capped">
+          <table className="dataTable compact">
+            <thead>
+              <tr>
+                <th>District</th>
+                <th>Source series</th>
+                <th>This season</th>
+                <th>Typical</th>
+                <th>Shortfall</th>
+                <th>Flagged</th>
+              </tr>
+            </thead>
+            <tbody>
+              {w.districts.map((d, i) => (
+                <tr key={d.district} {...foldAt(i, 8)}>
+                  <td>{displayName(d.district)}</td>
+                  <td>{d.mandals}</td>
+                  <td>{d.thisSeasonM > 0 ? "+" : ""}{formatNumber(d.thisSeasonM)} m</td>
+                  <td>{d.typicalM > 0 ? "+" : ""}{formatNumber(d.typicalM)} m</td>
+                  <td className={d.shortfallM > 0 ? "bad" : "good"}>
+                    {d.shortfallM > 0 ? "+" : ""}{formatNumber(d.shortfallM)} m
+                  </td>
+                  <td>{d.shortMandals}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        </RowFold>
+        <p className="cardNote">
+          A positive depth change means the water table fell between May and {monthName(w.season.latestMonth)}.
+          These district medians summarise retained source-series comparisons; they are not area-weighted
+          recharge estimates. Historical-baseline approval remains pending.
+        </p>
+      </section>
+
+      <section className="card" id="monsoon-queue">
+        <CountedReach event="monsoon/reached-flagged" title="Monsoon: reached the flagged mandal list" />
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconDroplet /></span>
+            Provisional groundwater review queue
+          </div>
+          <span className="cardSub">
+            {r.flaggedShort} source series · {worst.length} shown, largest departure first
+          </span>
+        </div>
+        <div className="watchActions">
+          <ExportMonsoonWatchButton />
+          <span>
+            All {r.flaggedShort} source-series rows with their own numbers. Baseline and identity verification
+            are required before operational use; this is not an irrigation instruction.
+          </span>
+        </div>
+        <RowFold id="monsoon-queue-rows" total={worst.length} visible={8} noun="rows">
+        <div className="tableWrap capped">
+          <table className="dataTable compact">
+            <thead>
+              <tr>
+                <th>Mandal</th>
+                <th>District</th>
+                <th>Aquifer</th>
+                <th>This season</th>
+                <th>Typical</th>
+                <th>Shortfall</th>
+                <th title="Illustrative estimate: depth departure x specific yield x prototype area">Storage proxy</th>
+                <th>Recorded depth</th>
+              </tr>
+            </thead>
+            <tbody>
+              {worst.map((m, i) => (
+                <tr key={m.mandalUuid} {...foldAt(i, 8)}>
+                  <td>
+                    {displayName(m.mandal)}
+                    {m.status === "severe" ? <span className="sevPill">severe</span> : null}
+                  </td>
+                  <td>{displayName(m.district)}</td>
+                  <td>{m.aquifer.replace("_", " ")}</td>
+                  <td>{m.thisSeasonM > 0 ? "+" : ""}{formatNumber(m.thisSeasonM)} m</td>
+                  <td>{m.typicalM > 0 ? "+" : ""}{formatNumber(m.typicalM)} m</td>
+                  <td className="bad">+{formatNumber(m.shortfallM)} m</td>
+                  <td>{m.shortfallMm3 === null ? "–" : `${formatNumber(m.shortfallMm3)} Mm³`}</td>
+                  <td>{formatNumber(m.latestDepthM)} m bgl</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        </RowFold>
+        <p className="cardNote">
+          A mandal is flagged only when it misses its own normal by at least {formatNumber(1)} m{" "}
+          <strong>and</strong> by at least twice its own year-to-year spread. Either test alone fails: metres
+          alone flag every naturally swinging hard-rock mandal, and spread alone flags a delta mandal that moved
+          twenty centimetres more than usual. <Link href="/methodology">How this is built</Link>.
+        </p>
+      </section>
+
+      {w.banked ? <section className="card" id="water-banked" aria-label="What the season banked">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconDroplet /></span>
+            What the season banked
+          </div>
+          <span className="cardSub">water-table fluctuation, the official assessment&rsquo;s method · net of pumping</span>
+        </div>
+        <WaterBanked />
+      </section> : null}
+
+      <section className="card" id="post-monsoon" aria-label="The official window">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconActivity /></span>
+            The official window closes in November
+          </div>
+          <span className="cardSub">pre-monsoon to post-monsoon, the comparison the assessment makes</span>
+        </div>
+        <PostMonsoonWindow />
+      </section>
+
       <section className="card">
         <div className="cardHead">
           <div className="cardTitle">
@@ -331,6 +390,7 @@ export default function MonsoonPage() {
         </p>
       </section>
 
+      <h2 className="pageChapter" id="chapter-pacific">El Niño and the Pacific<span>the ocean behind the rain, as context and never as a forecast</span></h2>
       <div className="monsoonGrid">
         <section className="card">
           <div className="cardHead">
@@ -399,6 +459,55 @@ export default function MonsoonPage() {
         </section>
       </div>
 
+      <EnsoOutlook />
+
+      <MonsoonFilm live={currentFilmFigures()} />
+
+      <section className="card pacificEvidenceSection" id="pacific-evidence">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconWaves /></span>
+            Pacific evidence explorer
+          </div>
+          <span className="cardSub">monthly ocean reconstruction, {pacificEnso.months[0].month} to{" "}
+            {pacificEnso.months[pacificEnso.months.length - 1].month}</span>
+        </div>
+        <p className="cardLede">
+          El Niño is a recurring warming of the central and eastern equatorial Pacific, coupled with changes
+          in atmospheric circulation. The film explains the mechanism; this record shows how ocean
+          temperature anomalies evolved. Rainfall over India also depends on the Indian Ocean and local weather.
+        </p>
+        <PacificEnso />
+        <details className="pacificSourceNotes">
+        <summary>Source and index notes</summary>
+        <p className="cardNote">
+          {pacificEnso.source}. Earth imagery: {pacificEnso.basemapSource}. The figure beside each month is that
+          <strong> single month&rsquo;s</strong> average anomaly in the Niño 3.4 box. The published index,{" "}
+          {enso ? `the ${enso.oniC > 0 ? "+" : ""}${enso.oniC.toFixed(2)} °C quoted above` : "the one quoted above"}, is a
+          three-month running mean of the same box, so it lags a fast-rising month and reads lower. Computed here
+          against a 1991–2020 baseline, the running mean lands within about 0.2 °C of NOAA&rsquo;s published
+          value throughout this event.
+        </p>
+        </details>
+      </section>
+
+      <section className="card">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconGlobe /></span>
+            From ocean context to local groundwater evidence
+          </div>
+          <span className="cardSub">observations, association and derived estimates</span>
+        </div>
+        <ElNinoChain />
+        <p className="cardNote">
+          The ocean index, gridded rainfall estimates and groundwater source readings are different kinds
+          of evidence. The ocean-rain link is a historical statistical association,
+          not a mechanism this site models or a forecast for an individual district.
+          Groundwater movement also reflects pumping and local conditions.
+        </p>
+      </section>
+
       {sw && ne ? (
         <section className="card">
           <div className="cardHead">
@@ -448,20 +557,21 @@ export default function MonsoonPage() {
             not a count of independent confirmed events. Small samples and other climate influences limit
             interpretation. These averages are neither a local forecast nor evidence that El Niño caused a particular loss.
           </p>
-          <div className="ensoHonesty">
-            <span className="validationEyebrow"><IconInfo /> Why the index is context and never a prediction</span>
-            <p>
+          <details className="pacificSourceNotes">
+            <summary>Why the ocean index is context and never a prediction</summary>
+            <p className="cardNote">
               Adding the Oceanic Niño Index to the three-month forecast was tested on rolling origin and made it{" "}
               <strong>worse</strong>: 1.776 m to 1.850 m mean error, and worse in every aquifer. Two El Niño
               events inside the training record are not enough to learn a response from, so the model does not
               use it. Groundwater changes come from the readings and rainfall estimates from CHIRPS.
               ONI is used to group historical rainfall years for comparison, not to forecast local outcomes.
             </p>
-          </div>
+          </details>
         </section>
       ) : null}
 
-      <section className="card">
+      <h2 className="pageChapter" id="chapter-heat">Heat<span>the other cost of a dry year</span></h2>
+      <section className="card" id="monsoon-heat">
         <CountedReach event="monsoon/reached-heat" title="Monsoon: reached the temperature record" />
         <div className="cardHead">
           <div className="cardTitle">
@@ -479,6 +589,8 @@ export default function MonsoonPage() {
           or a forecast of crop water demand.
         </p>
         <TemperatureRecord />
+        <details className="pacificSourceNotes">
+        <summary>Sources and method</summary>
         <p className="cardNote">
           Sources: {Object.values(apTemperature.records).map((r) => `${r.label} (${r.note})`).join("; ")}.
           Sampled by how much of each grid cell falls inside the state, weighted by latitude.{" "}
@@ -486,112 +598,7 @@ export default function MonsoonPage() {
           site carries no climate model, and the same rule keeps the ocean index out of the groundwater
           forecast.
         </p>
-      </section>
-
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconAlert /></span>
-            Where the shortfall is
-          </div>
-          <span className="cardSub">district median, metres against own normal</span>
-        </div>
-        <RowFold id="monsoon-shortfall-rows" total={w.districts.length} visible={8} noun="districts">
-        <div className="tableWrap capped">
-          <table className="dataTable compact">
-            <thead>
-              <tr>
-                <th>District</th>
-                <th>Source series</th>
-                <th>This season</th>
-                <th>Typical</th>
-                <th>Shortfall</th>
-                <th>Flagged</th>
-              </tr>
-            </thead>
-            <tbody>
-              {w.districts.map((d, i) => (
-                <tr key={d.district} {...foldAt(i, 8)}>
-                  <td>{displayName(d.district)}</td>
-                  <td>{d.mandals}</td>
-                  <td>{d.thisSeasonM > 0 ? "+" : ""}{formatNumber(d.thisSeasonM)} m</td>
-                  <td>{d.typicalM > 0 ? "+" : ""}{formatNumber(d.typicalM)} m</td>
-                  <td className={d.shortfallM > 0 ? "bad" : "good"}>
-                    {d.shortfallM > 0 ? "+" : ""}{formatNumber(d.shortfallM)} m
-                  </td>
-                  <td>{d.shortMandals}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        </RowFold>
-        <p className="cardNote">
-          A positive depth change means the water table fell between May and {monthName(w.season.latestMonth)}.
-          These district medians summarise retained source-series comparisons; they are not area-weighted
-          recharge estimates. Historical-baseline approval remains pending.
-        </p>
-      </section>
-
-      <section className="card">
-        <CountedReach event="monsoon/reached-flagged" title="Monsoon: reached the flagged mandal list" />
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconDroplet /></span>
-            Provisional groundwater review queue
-          </div>
-          <span className="cardSub">
-            {r.flaggedShort} source series · {worst.length} shown, largest departure first
-          </span>
-        </div>
-        <div className="watchActions">
-          <ExportMonsoonWatchButton />
-          <span>
-            All {r.flaggedShort} source-series rows with their own numbers. Baseline and identity verification
-            are required before operational use; this is not an irrigation instruction.
-          </span>
-        </div>
-        <RowFold id="monsoon-queue-rows" total={worst.length} visible={8} noun="rows">
-        <div className="tableWrap capped">
-          <table className="dataTable compact">
-            <thead>
-              <tr>
-                <th>Mandal</th>
-                <th>District</th>
-                <th>Aquifer</th>
-                <th>This season</th>
-                <th>Typical</th>
-                <th>Shortfall</th>
-                <th title="Illustrative estimate: depth departure x specific yield x prototype area">Storage proxy</th>
-                <th>Recorded depth</th>
-              </tr>
-            </thead>
-            <tbody>
-              {worst.map((m, i) => (
-                <tr key={m.mandalUuid} {...foldAt(i, 8)}>
-                  <td>
-                    {displayName(m.mandal)}
-                    {m.status === "severe" ? <span className="sevPill">severe</span> : null}
-                  </td>
-                  <td>{displayName(m.district)}</td>
-                  <td>{m.aquifer.replace("_", " ")}</td>
-                  <td>{m.thisSeasonM > 0 ? "+" : ""}{formatNumber(m.thisSeasonM)} m</td>
-                  <td>{m.typicalM > 0 ? "+" : ""}{formatNumber(m.typicalM)} m</td>
-                  <td className="bad">+{formatNumber(m.shortfallM)} m</td>
-                  <td>{m.shortfallMm3 === null ? "–" : `${formatNumber(m.shortfallMm3)} Mm³`}</td>
-                  <td>{formatNumber(m.latestDepthM)} m bgl</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        </RowFold>
-        <p className="cardNote">
-          A mandal is flagged only when it misses its own normal by at least {formatNumber(1)} m{" "}
-          <strong>and</strong> by at least twice its own year-to-year spread. Either test alone fails: metres
-          alone flag every naturally swinging hard-rock mandal, and spread alone flags a delta mandal that moved
-          twenty centimetres more than usual. <Link href="/methodology">How this is built</Link>.
-        </p>
+        </details>
       </section>
     </div>
   );

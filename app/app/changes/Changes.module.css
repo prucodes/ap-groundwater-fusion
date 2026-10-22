@@ -26,7 +26,10 @@
 .registerLink { display:inline-flex; align-items:center; gap:6px; margin-left:auto; color:var(--week-accent); font-size:11px; }
 .registerLink svg, .cardLink svg, .priority > svg { width:15px; height:15px; flex:none; }
 .headlines { margin-top:24px; }
-.briefingGrid { display:grid; grid-template-columns:minmax(300px,.8fr) minmax(0,1.2fr); gap:32px; align-items:start; }
+/* The headline cards run across the page and the map of where it moved follows, so a
+   narrow column of cards no longer leaves the right half of the page empty. */
+.briefingGrid { display:grid; grid-template-columns:minmax(0,1fr); gap:34px; align-items:start; }
+.leadColumn .cards { grid-template-columns:repeat(3,minmax(0,1fr)); }
 .leadColumn { min-width:0; }
 .groupHead { display:flex; align-items:center; justify-content:space-between; gap:10px; font:600 10px var(--font-mono); color:var(--week-accent); text-transform:uppercase; margin:0 0 12px; }
 .groupHead span { color:var(--muted); font-weight:400; text-transform:none; }
@@ -61,7 +64,7 @@
 .priority strong small { font:500 12px var(--font-sans); color:var(--ink); }
 .priority > span > span:last-child { font-size:11px; line-height:1.5; color:var(--ink-soft); }
 .scopeNote { font-size:11px; color:var(--muted); line-height:1.6; margin:12px 0 0; }
-.moves { min-width:0; border-left:1px solid var(--line); padding-left:30px; }
+.moves { min-width:0; border-top:1px solid var(--line); padding-top:26px; }
 .movesHead h2 { font:600 22px/1.35 var(--font-display); margin:7px 0; color:var(--ink); }
 .movesHead p { font-size:12px; line-height:1.6; color:var(--ink-soft); margin:0; }
 .movesHead .basis { font-size:10px; color:var(--muted); margin-top:6px; }
@@ -136,8 +139,7 @@
 .report a { padding:6px 9px; border:1px solid var(--line-strong); border-radius:4px; color:var(--week-accent); font-size:11px; white-space:nowrap; }
 .srOnly { display:inline-block; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
 @media (max-width:1100px) {
- .briefingGrid { grid-template-columns:minmax(260px,.85fr) minmax(0,1.15fr); gap:20px; }
- .moves { padding-left:20px; }
+ .leadColumn .cards { grid-template-columns:repeat(2,minmax(0,1fr)); }
  .teamsHead { flex-direction:column; gap:8px; }
 }
 @media (max-width:760px) {
@@ -150,7 +152,8 @@
  .summaryText small { display:inline; margin-left:8px; }
  .tally { gap:14px; }
  .registerLink { margin-left:0; }
- .briefingGrid { grid-template-columns:minmax(0,1fr); gap:26px; }
+ .briefingGrid { gap:26px; }
+ .leadColumn .cards { grid-template-columns:minmax(0,1fr); }
  .moves { padding:22px 0 0; border:0; border-top:1px solid var(--line-strong); }
  .movesHead h2 { font-size:18px; }
  .card { padding:18px; }
@@ -166,5 +169,7 @@
 @media print {
  .digestLink, .registerLink { display:none; }
  .briefingGrid { grid-template-columns:1fr 1fr; }
+ .leadColumn .cards { grid-template-columns:minmax(0,1fr); }
+ .moves { border-top:0; padding-top:0; }
  .steadyRegister::details-content, .movesList::details-content { content-visibility:visible; display:contents; }
 }
