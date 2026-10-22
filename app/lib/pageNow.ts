@@ -12,7 +12,7 @@ const day = (iso: string | null | undefined) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? "");
   return m ? `${Number(m[3])} ${DAYS[Number(m[2]) - 1]}` : "";
 };
-const pct = (value: number | null | undefined) => (value === null || value === undefined ? "—" : `${Math.round(value)}%`);
+const pct = (value: number | null | undefined) => (value === null || value === undefined ? "–" : `${Math.round(value)}%`);
 const metres = (value: number) => `${value.toFixed(1)} m`;
 type Item = { key: string; after: number | null };
 const item = (key: string) => (changesJson as unknown as { items: Item[] }).items.find(i => i.key === key)?.after ?? null;
@@ -47,5 +47,5 @@ export function rainNow() {
   const rain = waterSummary.rain;
   const soil = waterSummary.soil as unknown as { belowOwnMedian: number; withBaseline: number } | null;
   const dev = rain?.deviationPct ?? null;
-  return `Gauge rain since 1 June is ${dev !== null ? `${Math.abs(Math.round(dev))}% ${dev < 0 ? "below" : "above"}` : "—"} normal${soil ? `; soil is drier than its usual for the date in ${soil.belowOwnMedian} of ${soil.withBaseline} mandals` : ""}.`;
+  return `Gauge rain since 1 June is ${dev !== null ? `${Math.abs(Math.round(dev))}% ${dev < 0 ? "below" : "above"}` : "–"} normal${soil ? `; soil is drier than its usual for the date in ${soil.belowOwnMedian} of ${soil.withBaseline} mandals` : ""}.`;
 }

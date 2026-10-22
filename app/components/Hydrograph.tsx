@@ -216,7 +216,7 @@ export function Hydrograph({ series, nowcast = null, height = 260, compact = fal
             <span className="hgKeyItem"><i className="hgSwatch hgSwatchLine" /> Measured (APWRIMS)</span>
             {nc ? <span className="hgKeyItem"><i className="hgSwatch hgSwatchModel" /> Modelled nowcast · p10–p90</span> : null}
             <span className="hgKeyItem"><i className="hgSwatch hgSwatchMonsoon" /> Monsoon (Jun–Sep)</span>
-            <span className="hgKeyItem hgKeyNote">Depth increases downward — a higher fill is a shallower water table.</span>
+            <span className="hgKeyItem hgKeyNote">Depth increases downward: a higher fill is a shallower water table.</span>
           </div>
           <ChartData
             caption="Depth to water by month, metres below ground (APWRIMS)"

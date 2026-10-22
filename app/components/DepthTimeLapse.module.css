@@ -17,7 +17,7 @@
 /* Jump straight to the months worth seeing, rather than hunting for them with
    the scrubber: the driest, the fullest, the strongest El Nino, and now. */
 .marks { display: flex; flex-wrap: wrap; gap: 6px; }
-.mark { font: 600 10.5px var(--font-mono); letter-spacing: .04em; text-transform: uppercase;
+.mark { font: 600 11px var(--font-mono); letter-spacing: .04em; text-transform: uppercase;
   padding: 5px 9px; border-radius: 999px; border: 1px solid var(--line);
   background: var(--card); color: var(--ink-soft); cursor: pointer;
   transition: border-color .12s, color .12s; }
@@ -29,7 +29,7 @@
    note underneath refuses to turn that into a forecast. */
 .pacific { display: grid; gap: 7px; padding: 12px 14px; border: 1px solid var(--line);
   border-radius: 12px; background: var(--card); }
-.pacificHead { font: 600 10.5px var(--font-mono); letter-spacing: .1em;
+.pacificHead { font: 600 11px var(--font-mono); letter-spacing: .1em;
   text-transform: uppercase; color: var(--muted); }
 .state { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr) 2.6rem; gap: 9px;
   align-items: center; font-size: 12px; }
@@ -50,7 +50,7 @@
 .readout { position: absolute; left: 14px; top: 12px; display: grid; gap: 2px; pointer-events: none; }
 .month { font-family: var(--font-display); font-size: clamp(22px, 3.4vw, 32px); font-weight: 600; line-height: 1;
   color: var(--ink); letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
-.sub { font: 500 11.5px var(--font-sans); color: var(--ink-soft); }
+.sub { font: 500 12px var(--font-sans); color: var(--ink-soft); }
 .sub b { color: var(--ink); font-variant-numeric: tabular-nums; }
 
 .controls { display: flex; align-items: center; gap: 12px; }
@@ -69,7 +69,7 @@
 .strip .warm { fill: color-mix(in srgb, #d79b2e 22%, transparent); }
 .strip .now { stroke: var(--ink); stroke-width: 1.2; }
 .strip text { font: 500 9.5px var(--font-sans); fill: var(--muted); }
-.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 11.5px; color: var(--ink-soft); }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; font-size: 12px; color: var(--ink-soft); }
 .ramp { width: 132px; height: 10px; border-radius: 3px;
   background: linear-gradient(90deg, #2b7fa3, #9dc4d4, #eef1f4, #dda36a, #a8402c); }
 .note { margin: 0; font-size: 12px; line-height: 1.5; color: var(--muted); }

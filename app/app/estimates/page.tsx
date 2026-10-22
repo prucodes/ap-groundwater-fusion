@@ -232,7 +232,7 @@ export default function EstimatesPage() {
               <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Model P10–P90 empirical coverage: <strong>{modelCard.evaluations.intervalEvaluation.empiricalCoveragePct}%</strong> over {modelCard.evaluations.intervalEvaluation.sampleCount.toLocaleString("en-IN")} eligible holdout rows.</span></li>
             </ul>
             <ul className="estCaveats">
-              <li><IconInfo /> A <strong>modelled estimate</strong> with uncertainty — not a replacement for an official reading.</li>
+              <li><IconInfo /> A <strong>modelled estimate</strong> with uncertainty, not a replacement for an official reading.</li>
               <li><IconInfo /> Best where a mandal has some history (nowcast/gap-fill). Hard-rock Rayalaseema is the weakest.</li>
               <li><IconInfo /> Temporal nowcast performance does not describe whole-mandal or no-history estimation.</li>
               <li><IconInfo /> The displayed interval is a <strong>model P10–P90 quantile range</strong>, not a guaranteed 80% confidence interval.</li>
@@ -283,13 +283,13 @@ export default function EstimatesPage() {
                   <td className="num muted">{m.band_p10}–{m.band_p90}</td>
                   <td className="num muted">{m.observed_mbgl}</td>
                   <td className="num" style={{ color: (m.trend_m_per_yr ?? 0) > 0 ? "var(--rust)" : (m.trend_m_per_yr ?? 0) < 0 ? "var(--green)" : "var(--muted)" }}>
-                    {m.trend_m_per_yr === null ? "—" : `${m.trend_m_per_yr > 0 ? "+" : ""}${m.trend_m_per_yr}`}
+                    {m.trend_m_per_yr === null ? "–" : `${m.trend_m_per_yr > 0 ? "+" : ""}${m.trend_m_per_yr}`}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {rows.length > 120 ? <div className="estTableMore">Showing top 120 of {rows.length} — refine with search.</div> : null}
+          {rows.length > 120 ? <div className="estTableMore">Showing top 120 of {rows.length}. Refine with search.</div> : null}
         </div>
       </section>
     </div>

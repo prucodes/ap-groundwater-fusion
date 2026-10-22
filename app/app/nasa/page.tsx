@@ -66,15 +66,15 @@ export default function NasaSignalsPage() {
   const districts = [...districtGeometry.districts].sort(
     (a, b) => (b.gw_percentile ?? 0) - (a.gw_percentile ?? 0),
   );
-  const sampleDate = nasaProvenance.fetch_date || satelliteSamples[0]?.satellite_sample_date_or_fetch_date || "—";
+  const sampleDate = nasaProvenance.fetch_date || satelliteSamples[0]?.satellite_sample_date_or_fetch_date || "–";
   const gwRange = districtGeometry.layers.gw_percentile;
   // Describe what the rasters read on this fetch; the signal swings with the season.
   const means = nasaProvenance.rasters.map((r) => r.mean).filter((m): m is number => m !== null);
   const signalRead =
     means.length && means.every((m) => m >= 70)
-      ? "All three signals read high this period — wetter than most years on record for this date."
+      ? "All three signals read high this period: wetter than most years on record for this date."
       : means.length && means.every((m) => m < 30)
-        ? "All three signals read low this period — drier than most years on record for this date."
+        ? "All three signals read low this period: drier than most years on record for this date."
         : `Signals are mixed this period: ${nasaProvenance.rasters
             .map((r) => `${r.label.toLowerCase()} ${wetnessLabel(r.mean).toLowerCase()}`)
             .join(", ")}.`;
@@ -82,7 +82,7 @@ export default function NasaSignalsPage() {
   return (
     <div className="pageWrap">
       <HeaderHero
-        title="NASA GRACE-DA — Raw Signal & Provenance"
+        title="NASA GRACE-DA · Raw Signal & Provenance"
         brief={brief("/nasa", <>Values as fetched on {datasetManifest.periods.graceFetchDate ?? "the last refresh"}; a fetch date is not the period the values describe.</>)}
         showChips={false}
         variant="compact"
@@ -126,7 +126,7 @@ export default function NasaSignalsPage() {
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconDroplet /></span>
-            District Groundwater Percentile — where the signal lands
+            District Groundwater Percentile: where the signal lands
           </div>
           <span className="cardSub">district-centroid sample / regional context</span>
         </div>
@@ -151,7 +151,7 @@ export default function NasaSignalsPage() {
       {/* Raster provenance — the unique "is this real?" layer */}
       <section className="card">
         <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconDatabase /></span>Source rasters — provenance &amp; integrity</div>
+          <div className="cardTitle"><span className="titleIcon"><IconDatabase /></span>Source rasters: provenance &amp; integrity</div>
           <span className="cardSub">downloaded GeoTIFFs · verifiable</span>
         </div>
         <div className="provGrid">
@@ -181,7 +181,7 @@ export default function NasaSignalsPage() {
         <div className="fusionNote" style={{ marginTop: 14 }}>
           <IconShield />
           <span>
-            Every value on this page traces to one of these open NASA files — with its source URL, resolution and a
+            Every value on this page traces to one of these open NASA files, with its source URL, resolution and a
             SHA-256 checksum to identify the retained input. Current-file URLs may later serve a different raster, so
             reproducibility requires retaining the original bytes. {nasaProvenance.data_label}.
           </span>
@@ -222,7 +222,7 @@ export default function NasaSignalsPage() {
             raster sample point and its coordinates. Collapsed so the provenance
             stays available without spending ~1,700px repeating numbers. */}
         <details className="rawTable">
-          <summary>Show the raw extraction — coordinates and sample points for all 28 districts</summary>
+          <summary>Show the raw extraction: coordinates and sample points for all 28 districts</summary>
         <div className="tableWrap">
           <table className="dataTable">
             <thead>

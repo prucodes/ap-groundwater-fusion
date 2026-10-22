@@ -206,12 +206,12 @@ export function daysBetween(fromIso: string, toIso: string) {
 }
 
 export function signedPct(value: number | null | undefined, digits = 0) {
-  if (value === null || value === undefined) return "—";
+  if (value === null || value === undefined) return "–";
   return `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(digits)}%`;
 }
 
 export function signed(value: number | null | undefined, digits = 2) {
-  if (value === null || value === undefined) return "—";
+  if (value === null || value === undefined) return "–";
   return `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(digits)}`;
 }
 
@@ -276,7 +276,7 @@ export function layerText(layer: DroughtLayer, row: DroughtMandal | undefined, l
     case "outcome":
       return CATEGORY_META[light ? row.categoryLight : row.category].label;
     case "rain":
-      return row.rain ? `${signedPct(row.rain.dev)} · ${row.rain.cls ? RAIN_CLASS_META[row.rain.cls].label : "—"}` : "No unique gauge record";
+      return row.rain ? `${signedPct(row.rain.dev)} · ${row.rain.cls ? RAIN_CLASS_META[row.rain.cls].label : "–"}` : "No unique gauge record";
     case "dry":
       return row.dry ? `${row.dry.longest} week${row.dry.longest === 1 ? "" : "s"} under 50% of normal` : "No unique gauge record";
     case "spi":

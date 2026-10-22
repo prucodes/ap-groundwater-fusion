@@ -41,7 +41,7 @@ const signedPct = (value: number | null | undefined) =>
   value === null || value === undefined ? "n/a" : `${value > 0 ? "+" : value < 0 ? "\u2212" : ""}${Math.abs(value).toFixed(1)}%`;
 const shortDay = (iso: string | null | undefined) => {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? "");
-  return match ? `${Number(match[3])} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][Number(match[2]) - 1]}` : "—";
+  return match ? `${Number(match[3])} ${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][Number(match[2]) - 1]}` : "–";
 };
 
 /** The summer outlook's headline, worked out on the server (the outlook file stays out of the browser). */
@@ -336,14 +336,14 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null }: {
         <KpiCard
           icon={<IconDroplet />}
           label="Median Modelled Nowcast"
-          value={<>{medianModelledDepth !== null ? formatNumber(medianModelledDepth) : "—"}<span className="unit">m</span></>}
+          value={<>{medianModelledDepth !== null ? formatNumber(medianModelledDepth) : "–"}<span className="unit">m</span></>}
           foot={`m below ground / targets ${datasetManifest.periods.modelTargetPeriodRange.start} to ${datasetManifest.periods.modelTargetPeriodRange.end}`}
           accent="var(--teal)"
         />
         <KpiCard
           icon={<IconActivity />}
           label="Deepest Modelled Mandal"
-          value={<>{deepestNowcast?.estimate_mbgl !== null && deepestNowcast?.estimate_mbgl !== undefined ? formatNumber(deepestNowcast.estimate_mbgl) : "—"}<span className="unit">m</span></>}
+          value={<>{deepestNowcast?.estimate_mbgl !== null && deepestNowcast?.estimate_mbgl !== undefined ? formatNumber(deepestNowcast.estimate_mbgl) : "–"}<span className="unit">m</span></>}
           foot={deepestNowcast ? `${titleCase(deepestNowcast.mandal_name)} · ${titleCase(deepestNowcast.district_name)}` : "No modelled row"}
           footAccent
           accent="var(--rust)"
@@ -351,7 +351,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null }: {
         <KpiCard
           icon={<IconShield />}
           label="Median Model Band"
-          value={<>{medianBandWidth !== null ? formatNumber(medianBandWidth) : "—"}<span className="unit">m</span></>}
+          value={<>{medianBandWidth !== null ? formatNumber(medianBandWidth) : "–"}<span className="unit">m</span></>}
           foot="typical P10–P90 width, not guaranteed confidence"
           accent="var(--amber)"
         />

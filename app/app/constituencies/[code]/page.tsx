@@ -68,9 +68,9 @@ function bounds(ringsList: number[][][][]) {
   return `${(minX - pad).toFixed(1)} ${(minY - pad).toFixed(1)} ${(maxX - minX + 2 * pad).toFixed(1)} ${(maxY - minY + 2 * pad).toFixed(1)}`;
 }
 
-const metres = (value: number | null | undefined, digits = 1) => (value === null || value === undefined ? "—" : `${value.toFixed(digits)} m`);
+const metres = (value: number | null | undefined, digits = 1) => (value === null || value === undefined ? "–" : `${value.toFixed(digits)} m`);
 const change = (value: number | null | undefined) =>
-  value === null || value === undefined ? "—" : value >= 0 ? `${value.toFixed(2)} m deeper` : `${Math.abs(value).toFixed(2)} m shallower`;
+  value === null || value === undefined ? "–" : value >= 0 ? `${value.toFixed(2)} m deeper` : `${Math.abs(value).toFixed(2)} m shallower`;
 
 export default async function ConstituencyBriefPage({ params }: { params: Promise<{ code: string }> }) {
   const c = find((await params).code);
@@ -158,11 +158,11 @@ export default async function ConstituencyBriefPage({ params }: { params: Promis
       </header>
 
       <section className={styles.tiles} aria-label="Headline figures">
-        <div><span>Groundwater in stress</span><strong>{stressShare === null ? "—" : `${stressShare}%`}</strong><em>{`${gw.stress} of ${gw.assessed} assessed mandals`}</em></div>
+        <div><span>Groundwater in stress</span><strong>{stressShare === null ? "–" : `${stressShare}%`}</strong><em>{`${gw.stress} of ${gw.assessed} assessed mandals`}</em></div>
         <div><span>Median depth</span><strong>{metres(gw.medianDepthM)}</strong><em>below ground, latest monthly reading</em></div>
-        <div><span>State wells since May</span><strong>{sr.medianSinceMayM === null ? "—" : `${sr.medianSinceMayM >= 0 ? "+" : "−"}${Math.abs(sr.medianSinceMayM).toFixed(2)} m`}</strong><em>{`${sr.medianSinceMayM !== null && sr.medianSinceMayM >= 0 ? "deeper" : "shallower"} · ${sr.stations} stations`}</em></div>
+        <div><span>State wells since May</span><strong>{sr.medianSinceMayM === null ? "–" : `${sr.medianSinceMayM >= 0 ? "+" : "−"}${Math.abs(sr.medianSinceMayM).toFixed(2)} m`}</strong><em>{`${sr.medianSinceMayM !== null && sr.medianSinceMayM >= 0 ? "deeper" : "shallower"} · ${sr.stations} stations`}</em></div>
         <div><span>Drought manual</span><strong>{`${dr.active} / ${dr.assessed}`}</strong><em>{`moderate or worse · ${dr.severe} severe`}</em></div>
-        <div><span>Gauge rain</span><strong>{c.rain.medianDeparturePct === null ? "—" : signedPct(c.rain.medianDeparturePct)}</strong><em>against normal since 1 June</em></div>
+        <div><span>Gauge rain</span><strong>{c.rain.medianDeparturePct === null ? "–" : signedPct(c.rain.medianDeparturePct)}</strong><em>against normal since 1 June</em></div>
       </section>
 
       {byCrop.length || vegKnown || gwCounts.length ? <section className={styles.field} aria-label="This week in the fields" data-testid="brief-field">
@@ -211,17 +211,17 @@ export default async function ConstituencyBriefPage({ params }: { params: Promis
             return (
               <tr key={r.mandal}>
                 <td><strong>{r.view ? <Link href={`/mandals/${r.view.id}`}>{name(r.mandal)}</Link> : name(r.mandal)}</strong><small>{name(r.district)}</small></td>
-                <td>{status ? <span className={styles.chip}><i style={{ background: status.color }} />{status.label}</span> : "—"}</td>
-                <td>{r.view ? <>{metres(r.view.display_mbgl ?? r.view.median_groundwater_mbgl, 2)}<small>{formatPeriod(r.view.latest_observation_period)}</small></> : "—"}</td>
+                <td>{status ? <span className={styles.chip}><i style={{ background: status.color }} />{status.label}</span> : "–"}</td>
+                <td>{r.view ? <>{metres(r.view.display_mbgl ?? r.view.median_groundwater_mbgl, 2)}<small>{formatPeriod(r.view.latest_observation_period)}</small></> : "–"}</td>
                 <td>{change(r.state?.sinceMayM)}{r.state ? <small>{`${r.state.stations} station${r.state.stations === 1 ? "" : "s"}`}</small> : null}</td>
-                <td>{category ? <span className={styles.chip}><i style={{ background: category.color }} />{category.short}</span> : "—"}</td>
-                <td>{r.drought?.rain?.dev !== null && r.drought?.rain?.dev !== undefined ? signedPct(r.drought.rain.dev) : "—"}</td>
+                <td>{category ? <span className={styles.chip}><i style={{ background: category.color }} />{category.short}</span> : "–"}</td>
+                <td>{r.drought?.rain?.dev !== null && r.drought?.rain?.dev !== undefined ? signedPct(r.drought.rain.dev) : "–"}</td>
                 <td>{r.view?.forecast_mbgl !== null && r.view?.forecast_mbgl !== undefined
                   ? <>{metres(r.view.forecast_mbgl, 2)}<small>{`${formatPeriod(r.view.forecast_target_period)}${r.trust && r.trust.verdict !== "beats" ? " · lower confidence" : ""}`}</small></>
-                  : "—"}</td>
-                <td>{r.crops.short !== null ? `${r.crops.short} of ${r.crops.known}` : "—"}</td>
-                <td>{r.vegetation ? <span className={styles.chip}><i style={{ background: VCI_CLASSES[r.vegetation.cls].color }} />{r.vegetation.vci.toFixed(0)}<small>{VCI_CLASSES[r.vegetation.cls].short}</small></span> : "—"}</td>
-                <td>{r.assessment ? <><span className={styles.chip}><i style={{ background: GEC_CATEGORIES[r.assessment.cat].color }} />{GEC_CATEGORIES[r.assessment.cat].label}</span>{r.assessment.stagePct !== null ? <small>{`${r.assessment.stagePct.toFixed(0)}% drawn`}</small> : null}</> : "—"}</td>
+                  : "–"}</td>
+                <td>{r.crops.short !== null ? `${r.crops.short} of ${r.crops.known}` : "–"}</td>
+                <td>{r.vegetation ? <span className={styles.chip}><i style={{ background: VCI_CLASSES[r.vegetation.cls].color }} />{r.vegetation.vci.toFixed(0)}<small>{VCI_CLASSES[r.vegetation.cls].short}</small></span> : "–"}</td>
+                <td>{r.assessment ? <><span className={styles.chip}><i style={{ background: GEC_CATEGORIES[r.assessment.cat].color }} />{GEC_CATEGORIES[r.assessment.cat].label}</span>{r.assessment.stagePct !== null ? <small>{`${r.assessment.stagePct.toFixed(0)}% drawn`}</small> : null}</> : "–"}</td>
               </tr>
             );
           })}

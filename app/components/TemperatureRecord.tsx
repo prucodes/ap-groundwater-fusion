@@ -82,7 +82,7 @@ export function TemperatureRecord() {
         columns={["Year", ...records.map((record) => record.label)]}
         rows={[...years].reverse().map((year) => [year, ...records.map((record) => {
           const point = record.series.find((p) => p.year === year);
-          return point ? `${point.anomalyC > 0 ? "+" : ""}${point.anomalyC.toFixed(2)}` : "—";
+          return point ? `${point.anomalyC > 0 ? "+" : ""}${point.anomalyC.toFixed(2)}` : "–";
         })])}
       />
 

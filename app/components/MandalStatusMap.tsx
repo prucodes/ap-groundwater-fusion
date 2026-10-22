@@ -155,7 +155,7 @@ export function MandalStatusMap({
           ) : (
             <div className="estHoverRow">
               <span>Status</span>
-              <span>{mandalHeatStatus(hover.d, hover.m) ? "—" : "No estimate yet"}</span>
+              <span>{mandalHeatStatus(hover.d, hover.m) ? "–" : "No estimate yet"}</span>
             </div>
           )}
         </div>

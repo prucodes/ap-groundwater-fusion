@@ -153,14 +153,14 @@ export default function IrrigationPage() {
                         {a.hasSensor ? "groundwater history + context" : "context only"}
                       </span>
                     </td>
-                    <td className="cellPct">{a.gw ?? "—"}</td>
+                    <td className="cellPct">{a.gw ?? "–"}</td>
                     <td className="cellPct" style={{ color: a.balanceStatus === "Deficit" ? "#c65a46" : "var(--text)" }}>
-                      {a.balance !== null ? `${a.balance > 0 ? "+" : ""}${formatNumber(a.balance)} mm` : "—"}
+                      {a.balance !== null ? `${a.balance > 0 ? "+" : ""}${formatNumber(a.balance)} mm` : "–"}
                     </td>
                     <td className="cellPct" style={{ whiteSpace: "nowrap" }}>
                       {a.season?.rainDeviationPct !== null && a.season?.rainDeviationPct !== undefined
                         ? <span style={{ color: a.season.rainDeviationPct <= -20 ? "#c65a46" : "var(--text)" }}>{a.season.rainDeviationPct > 0 ? "+" : ""}{formatNumber(a.season.rainDeviationPct)}% rain</span>
-                        : "—"}
+                        : "–"}
                       {a.season?.reservoirStoragePct !== null && a.season?.reservoirStoragePct !== undefined
                         ? <small style={{ display: "block", opacity: 0.75 }}>dams {formatNumber(a.season.reservoirStoragePct)}% · {formatNumber(a.season.reservoirLastYearPct)}% last yr</small>
                         : null}

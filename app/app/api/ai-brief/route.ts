@@ -23,7 +23,7 @@ function statewideContext(): string {
   const spatial = modelCard.evaluations.spatialEstimation;
   const cross = modelCard.evaluations.crossNetworkComparison;
   return [
-    `STATEWIDE — Andhra Pradesh groundwater prototype:`,
+    `STATEWIDE: Andhra Pradesh groundwater prototype:`,
     `Modelled nowcasts: ${datasetManifest.counts.modelledRecordCount}; measured-only: ${datasetManifest.counts.measuredOnlyCount}; boundary-only: ${datasetManifest.counts.boundaryOnlyCount}; districts: ${datasetManifest.counts.districtCount}.`,
     `Latest observation period: ${datasetManifest.periods.latestObservationPeriod ?? "not supplied"}. Model target period: ${datasetManifest.periods.modelTargetPeriodRange.end ?? "not supplied"}.`,
     `Status counts: ${Object.entries(byBucket).map(([k, v]) => `${k} ${v}`).join(", ")}.`,
@@ -72,7 +72,7 @@ function districtContext(name: string): string | null {
   if (!r) return null;
   const top = [...r.mandals].sort((a, b) => (b.estimate_mbgl ?? 0) - (a.estimate_mbgl ?? 0)).slice(0, 6);
   return [
-    `DISTRICT FOCUS — ${titleCase(r.district_name)}:`,
+    `DISTRICT FOCUS: ${titleCase(r.district_name)}:`,
     `${r.mandal_count} mandals; ${r.stress_count} in stress; avg estimated level ${f(r.avg_estimate_mbgl)} m; avg YoY ${f(r.avg_trend_m_per_yr)} m/yr; avg water balance ${f(r.avg_water_balance_mm)} mm (${r.deficit_count} in deficit).`,
     `Deepest mandals: ${top.map((m) => `${titleCase(m.mandal_name)} ${f(m.estimate_mbgl)}m (${m.status})`).join("; ")}.`,
     ...districtSeason(r.district_name),
@@ -93,16 +93,16 @@ function deterministicAnswer(question: string, district: string): string {
     }
     if (/(over.?extract|pumping|despite)/.test(q)) {
       const over = mandals.filter((x) => x.sensor_satellite_agreement === "declining_despite_positive_climate_balance").sort((a, b) => (b.trend_m_per_yr ?? 0) - (a.trend_m_per_yr ?? 0)).slice(0, 6);
-      return `Largest declines despite a positive climatic water balance (context mismatches to field-verify; no causal attribution):\n` + over.map((m) => `• ${titleCase(m.mandal_name)} (${titleCase(m.district_name)}) — nowcast ${f(m.estimate_mbgl)} m, measured trend ${f(m.trend_m_per_yr)} m/yr deepening`).join("\n");
+      return `Largest declines despite a positive climatic water balance (context mismatches to field-verify; no causal attribution):\n` + over.map((m) => `• ${titleCase(m.mandal_name)} (${titleCase(m.district_name)}): nowcast ${f(m.estimate_mbgl)} m, measured trend ${f(m.trend_m_per_yr)} m/yr deepening`).join("\n");
     }
     if (/(stress|worst|deep|critical|priority)/.test(q)) {
       const s = mandals.filter((x) => x.status_bucket === "Stress").sort((a, b) => (b.estimate_mbgl ?? 0) - (a.estimate_mbgl ?? 0)).slice(0, 6);
-      return `Most-stressed mandals (deepest / fastest-declining):\n` + s.map((m) => `• ${titleCase(m.mandal_name)} (${titleCase(m.district_name)}) — ${f(m.estimate_mbgl)} m, ${(m.trend_m_per_yr ?? 0) > 0 ? "falling" : "rising"} ${f(Math.abs(m.trend_m_per_yr ?? 0))} m/yr`).join("\n");
+      return `Most-stressed mandals (deepest / fastest-declining):\n` + s.map((m) => `• ${titleCase(m.mandal_name)} (${titleCase(m.district_name)}): ${f(m.estimate_mbgl)} m, ${(m.trend_m_per_yr ?? 0) > 0 ? "falling" : "rising"} ${f(Math.abs(m.trend_m_per_yr ?? 0))} m/yr`).join("\n");
     }
   }
   const r = districtRollups().find((x) => x.district_name.toUpperCase() === (district || "").toUpperCase());
   if (r) {
-    return `${titleCase(r.district_name)}: ${r.mandal_count} mandals, ${r.stress_count} in stress. Average estimated groundwater level ${f(r.avg_estimate_mbgl)} m below ground, year-on-year ${(r.avg_trend_m_per_yr ?? 0) > 0 ? "deepening" : "recovering"} ${f(Math.abs(r.avg_trend_m_per_yr ?? 0))} m/yr; ${r.deficit_count} mandals in rainfall deficit. Modelled estimate (β), calibrated to APWRIMS — not an official result.`;
+    return `${titleCase(r.district_name)}: ${r.mandal_count} mandals, ${r.stress_count} in stress. Average estimated groundwater level ${f(r.avg_estimate_mbgl)} m below ground, year-on-year ${(r.avg_trend_m_per_yr ?? 0) > 0 ? "deepening" : "recovering"} ${f(Math.abs(r.avg_trend_m_per_yr ?? 0))} m/yr; ${r.deficit_count} mandals in rainfall deficit. Modelled estimate (β), calibrated to APWRIMS, not an official result.`;
   }
   return statewideContext();
 }
@@ -139,7 +139,7 @@ function rateLimited(ip: string): boolean {
 export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
   if (rateLimited(ip)) {
-    return NextResponse.json({ error: "rate limited — try again shortly" }, { status: 429 });
+    return NextResponse.json({ error: "rate limited, try again shortly" }, { status: 429 });
   }
 
   let district = "";

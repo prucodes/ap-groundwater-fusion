@@ -132,9 +132,9 @@ export default function MapPage() {
                 <span className="titleIcon">
                   <IconMap />
                 </span>
-                {level === "district" ? "Andhra Pradesh — District Heat-Map"
-                  : mandalView === "status" ? "Andhra Pradesh — Mandal Fusion Status"
-                    : `Andhra Pradesh — ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isRechargeLayer(mandalView) ? RECHARGE_LAYER_META[mandalView].label : isRainLayer(mandalView) ? RAIN_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
+                {level === "district" ? "Andhra Pradesh · District Heat-Map"
+                  : mandalView === "status" ? "Andhra Pradesh · Mandal Fusion Status"
+                    : `Andhra Pradesh · ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isRechargeLayer(mandalView) ? RECHARGE_LAYER_META[mandalView].label : isRainLayer(mandalView) ? RAIN_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
                 {level === "mandal" && (isWaterLayer(mandalView) || isFieldLayer(mandalView)) ? (
                   <span className="dataAsOf">{isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].period : FIELD_LAYER_META[mandalView].period}</span>
                 ) : level === "mandal" && mandalView !== "status" ? (
@@ -329,7 +329,7 @@ export default function MapPage() {
                   </div>
                   <div className="mapHint">
                     <IconInfo style={{ width: 13, height: 13 }} /> District zonal means of real satellite/model
-                    layers over {districtGeometry.district_count} AP districts — regional context, not groundwater depth.
+                    layers over {districtGeometry.district_count} AP districts: regional context, not groundwater depth.
                   </div>
                 </div>
               </>

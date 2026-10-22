@@ -97,13 +97,13 @@
     },
     {
       "file": "ap_map_geometry.json",
-      "bytes": 192955,
-      "sha256": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0"
+      "bytes": 192949,
+      "sha256": "e729b948fc08a60cb90af9a3588977a52561a868d75cbe0cf7d61b27617997d6"
     },
     {
       "file": "ap_district_geometry.json",
-      "bytes": 151650,
-      "sha256": "7c477a2d8a91b35f6738f61991ed257c0f31a40c1249be7a39bfad886b385558"
+      "bytes": 151644,
+      "sha256": "b78aa3447b06b89ec4dca4fc353d39f1986ed06d7da1bddf6bfd8983dc87b317"
     },
     {
       "file": "ap_mandal_heat.json",
@@ -127,8 +127,8 @@
     },
     {
       "file": "satellite_station_samples.json",
-      "bytes": 18424,
-      "sha256": "65a97a3007d5fdc66626dc727f8b73497d524f7cf5d061a063b74e0a6845fea1"
+      "bytes": 18256,
+      "sha256": "f56ba2f02f5e6d4f68440c59b65cc5254944f47bfed4f90f5b8b2a3c0379a0b4"
     }
   ],
   "artifacts": {
@@ -158,15 +158,15 @@
         "file": "app/data/ap_map_geometry.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 192955,
-        "sha256": "96f9d6acd2bcc019b540d832737e4a55e8a4f33abcd8625db19846bcd6f5b8b0"
+        "bytes": 192949,
+        "sha256": "e729b948fc08a60cb90af9a3588977a52561a868d75cbe0cf7d61b27617997d6"
       },
       {
         "file": "app/data/ap_district_geometry.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 151650,
-        "sha256": "7c477a2d8a91b35f6738f61991ed257c0f31a40c1249be7a39bfad886b385558"
+        "bytes": 151644,
+        "sha256": "b78aa3447b06b89ec4dca4fc353d39f1986ed06d7da1bddf6bfd8983dc87b317"
       },
       {
         "file": "app/data/ap_mandal_heat.json",
@@ -200,8 +200,8 @@
         "file": "app/data/satellite_station_samples.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 18424,
-        "sha256": "65a97a3007d5fdc66626dc727f8b73497d524f7cf5d061a063b74e0a6845fea1"
+        "bytes": 18256,
+        "sha256": "f56ba2f02f5e6d4f68440c59b65cc5254944f47bfed4f90f5b8b2a3c0379a0b4"
       },
       {
         "file": "phase3_levels/outputs/mandal_nowcasts_v2.json",
@@ -223,7 +223,7 @@
         "file": "app/data/mandal_dataset.json",
         "status": "legacy_inactive",
         "exists": true,
-        "sha256": "14dceff1d6666ace9023d09504b440e29d78b1ae32ad6f0069cd546fc8b66530"
+        "sha256": "82ec2e0929f7f057ef30895863217281d8c51f967ab374bc5dab10286dbc5519"
       },
       {
         "file": "app/data/mandal_depth_series.json",
@@ -235,7 +235,7 @@
         "file": "app/data/mandal_levels_estimated.json",
         "status": "legacy_inactive",
         "exists": true,
-        "sha256": "030507067fb877042d1ed1132f20cbd2930ae504f32b7dcc0d2b77a49d46623b"
+        "sha256": "cb8c062f10b24daaf0714c2e19c264e0ad53767041155e9922e24dead8f9cc03"
       },
       {
         "file": "phase3_levels/outputs/mandal_levels_estimated.json",

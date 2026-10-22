@@ -79,7 +79,7 @@ const evidenceNav: NavItem[] = [
       { href: "/readiness", label: "Data Readiness", Icon: IconDatabase, desc: "Source periods, coverage and operational release gates." },
       { href: "/estimates", label: "Modelled Levels β", Icon: IconDroplet, desc: "Calculated mandal groundwater depth in metres with model bands." },
       { href: "/nasa", label: "NASA Signals", Icon: IconSatellite, desc: "Raw, unfused GRACE-DA satellite-model context with provenance." },
-      { href: "/climate", label: "Climate & Balance", Icon: IconWaves, desc: "Rainfall in vs ET out — the water budget behind groundwater." },
+      { href: "/climate", label: "Climate & Balance", Icon: IconWaves, desc: "Rainfall in vs ET out: the water budget behind groundwater." },
       { href: "/scenario", label: "Scenario Lab", Icon: IconCloudRain, desc: "Monsoon what-if: dial rainfall up/down and watch who tips into deficit." },
       { href: "/irrigation", label: "AWARE Preview", Icon: IconLeaf, desc: "Monitor, review and field-verify preview + the AWARE export bridge." },
       { href: "/settings", label: "Workspace", Icon: IconSettings, desc: "Appearance, dataset edition and data policy." },
@@ -89,7 +89,7 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 /** "2026-09-18T16:44:22+00:00" -> "18 Sep 2026". Deterministic, so server and client render alike. */
 function formatDay(iso: string | null | undefined) {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso ?? "");
-  return match ? `${Number(match[3])} ${MONTHS[Number(match[2]) - 1]} ${match[1]}` : "—";
+  return match ? `${Number(match[3])} ${MONTHS[Number(match[2]) - 1]} ${match[1]}` : "–";
 }
 
 // The weekly refresh runs every Monday; past this the published data is stale.
@@ -100,7 +100,7 @@ function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
   const { href, label, Icon, desc } = item;
   const active = href === "/" ? pathname === href : pathname.startsWith(href);
   return (
-    <Link className={`navItem ${active ? "active" : ""}`} href={href} title={`${label} — ${desc}`} aria-current={active ? "page" : undefined}>
+    <Link className={`navItem ${active ? "active" : ""}`} href={href} title={`${label}: ${desc}`} aria-current={active ? "page" : undefined}>
       <span className="navIcon" aria-hidden="true">
         <Icon />
       </span>
@@ -268,7 +268,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <button type="button" className="creatorCredit" onClick={showWelcome} title="About the creator · revisit the introduction">
           <span className="creatorMonogram" aria-hidden="true">py.</span>
-          <span className="creatorCreditText"><small>Conceived &amp; built by</small><strong>{CREATOR_NAME}</strong></span>
+          <span className="creatorCreditText"><small>Built by</small><strong>{CREATOR_NAME}</strong></span>
         </button>
 
         <div className="sidebarStatus">

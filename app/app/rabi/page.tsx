@@ -17,9 +17,9 @@ export const metadata: Metadata = {
   description: "What the rabi season starts with: reservoir storage for irrigated rabi, soil moisture in rainfed mandals against their own past, and the northeast monsoon under El Niño.",
 };
 
-const pct = (value: number | null | undefined, digits = 0) => (value === null || value === undefined ? "—" : `${value.toFixed(digits)}%`);
+const pct = (value: number | null | undefined, digits = 0) => (value === null || value === undefined ? "–" : `${value.toFixed(digits)}%`);
 const signed = (value: number | null | undefined, digits = 0) =>
-  value === null || value === undefined ? "—" : `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(digits)}%`;
+  value === null || value === undefined ? "–" : `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(digits)}%`;
 const tmc = (value: number) => (value >= 100 ? Math.round(value).toLocaleString("en-IN") : value.toFixed(1));
 const place = (value: string) => (/[a-z]/.test(value) ? value : titleCase(value));
 const CLASS_ORDER: SoilClass[] = ["record", "below", "above", "irrigated", "none"];
@@ -168,7 +168,7 @@ export default function RabiPage() {
         <div className={styles.facts}>
           <article>
             <span><IconGlobe /> NOAA outlook</span>
-            <b>{enso.ondElNinoPct !== null ? `${Math.round(enso.ondElNinoPct)}%` : "—"}</b>
+            <b>{enso.ondElNinoPct !== null ? `${Math.round(enso.ondElNinoPct)}%` : "–"}</b>
             <p>Chance of El Niño conditions through October–December ({enso.alert}, issued {day(enso.issued)}){enso.peak ? <>; NOAA&rsquo;s median for {enso.peak.label} is {enso.peak.medianC > 0 ? "+" : ""}{enso.peak.medianC.toFixed(1)} °C</> : null}.</p>
           </article>
           {enso.past ? <article>

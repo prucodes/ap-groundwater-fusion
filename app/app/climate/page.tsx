@@ -106,7 +106,7 @@ export default function ClimatePage() {
       {waterSummary.rain || waterSummary.soil ? (
         <section className="card" aria-labelledby="season-districts-title">
           <div className="cardHead">
-            <div className="cardTitle" id="season-districts-title"><span className="titleIcon"><IconCloudRain /></span>This water year by district — driest first</div>
+            <div className="cardTitle" id="season-districts-title"><span className="titleIcon"><IconCloudRain /></span>This water year by district, driest first</div>
             <span className="cardSub">
               {waterSummary.rain ? `gauges ${day(waterSummary.rain.start, false)} to ${day(waterSummary.rain.end)}` : ""}
               {waterSummary.soil ? ` · soil ${day(waterSummary.soil.asOf)}` : ""}
@@ -130,13 +130,13 @@ export default function ClimatePage() {
                   .map((d, i) => (
                     <tr key={d.key} {...foldAt(i, 10)}>
                       <td className="cellStrong">{titleCase(d.district)}</td>
-                      <td>{d.rain ? `${formatNumber(d.rain.actualMm)} mm` : "—"}</td>
-                      <td>{d.rain ? `${formatNumber(d.rain.normalMm)} mm` : "—"}</td>
+                      <td>{d.rain ? `${formatNumber(d.rain.actualMm)} mm` : "–"}</td>
+                      <td>{d.rain ? `${formatNumber(d.rain.normalMm)} mm` : "–"}</td>
                       <td className={d.rain?.category ? "cellPct toneText" : "cellPct"} style={d.rain?.category ? { "--tone": RAIN_COLOR[d.rain.category] } as CSSProperties : undefined}>
-                        {d.rain ? <>{signed(d.rain.deviationPct, 0)} <span className="wetTag toneText" style={{ "--tone": RAIN_COLOR[d.rain.category ?? "normal"], background: `${RAIN_COLOR[d.rain.category ?? "normal"]}1f` } as CSSProperties}>{RAIN_LABEL[d.rain.category ?? ""] ?? "—"}</span></> : "—"}
+                        {d.rain ? <>{signed(d.rain.deviationPct, 0)} <span className="wetTag toneText" style={{ "--tone": RAIN_COLOR[d.rain.category ?? "normal"], background: `${RAIN_COLOR[d.rain.category ?? "normal"]}1f` } as CSSProperties}>{RAIN_LABEL[d.rain.category ?? ""] ?? "–"}</span></> : "–"}
                       </td>
-                      <td>{d.soil ? `${formatNumber(d.soil.medianPct)}% median · ${d.soil.belowOwnMedian}/${d.soil.withBaseline} below usual` : "—"}</td>
-                      <td>{d.reservoirs ? `${d.reservoirs.count} · ${formatNumber(d.reservoirs.storagePct)}% (${formatNumber(d.reservoirs.lastYearPct)}% last year)` : "—"}</td>
+                      <td>{d.soil ? `${formatNumber(d.soil.medianPct)}% median · ${d.soil.belowOwnMedian}/${d.soil.withBaseline} below usual` : "–"}</td>
+                      <td>{d.reservoirs ? `${d.reservoirs.count} · ${formatNumber(d.reservoirs.storagePct)}% (${formatNumber(d.reservoirs.lastYearPct)}% last year)` : "–"}</td>
                     </tr>
                   ))}
               </tbody>
@@ -223,7 +223,7 @@ export default function ClimatePage() {
       {/* District table */}
       <section className="card">
         <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconWaves /></span>District water balance — ranked driest first</div>
+          <div className="cardTitle"><span className="titleIcon"><IconWaves /></span>District water balance, ranked driest first</div>
         </div>
         <RowFold id="climate-balance-rows" total={ranked.length} visible={10} noun="districts">
         <div className="tableWrap">

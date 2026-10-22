@@ -183,12 +183,12 @@ function StateInsights({
       {scenePerformance ? (
         <div className={styles.performanceReadout}>
           <span>
-            {scenePerformance.drawCalls ?? "—"} draw calls ·{" "}
+            {scenePerformance.drawCalls ?? "–"} draw calls ·{" "}
             {scenePerformance.surfaceVertexCount.toLocaleString("en-IN")} surface vertices
           </span>
           <span>
-            Initial scene {scenePerformance.initialLoadMs ?? "—"} ms ·{" "}
-            {scenePerformance.geometries ?? "—"} GPU geometries
+            Initial scene {scenePerformance.initialLoadMs ?? "–"} ms ·{" "}
+            {scenePerformance.geometries ?? "–"} GPU geometries
           </span>
         </div>
       ) : null}
@@ -479,7 +479,7 @@ export function LivingWaterTablePage() {
               value={feature.record.identity.mandalId}
               key={feature.record.identity.mandalId}
             >
-              {feature.record.identity.mandalName} —{" "}
+              {feature.record.identity.mandalName} ·{" "}
               {feature.record.identity.districtName} (
               {feature.record.identity.coverageStatus.replaceAll("_", " ")})
             </option>

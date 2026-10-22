@@ -9,7 +9,7 @@ export function PercentileBar({ value }: { value: number | null }) {
       <span className="pctBar">
         <span className="pctBarFill" style={{ width: `${v}%`, background: tier.color }} />
       </span>
-      <span className="pctNum">{value === null ? "—" : formatNumber(value)}</span>
+      <span className="pctNum">{value === null ? "–" : formatNumber(value)}</span>
     </span>
   );
 }

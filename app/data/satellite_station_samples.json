@@ -14,7 +14,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "anakapalli",
@@ -31,7 +31,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "ananthapuramu",
@@ -48,7 +48,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "annamayya",
@@ -65,7 +65,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "bapatla",
@@ -82,7 +82,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "chittoor",
@@ -99,7 +99,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "east-godavari",
@@ -116,7 +116,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "eluru",
@@ -133,7 +133,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "guntur",
@@ -150,7 +150,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "kakinada",
@@ -167,7 +167,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "konaseema",
@@ -184,7 +184,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "krishna",
@@ -201,7 +201,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "kurnool",
@@ -218,7 +218,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "markapuram",
@@ -235,7 +235,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "nandyal",
@@ -252,7 +252,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "ntr",
@@ -269,7 +269,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "palnadu",
@@ -286,7 +286,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "parvathipuram-manyam",
@@ -303,7 +303,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "polavaram",
@@ -320,7 +320,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "prakasam",
@@ -337,7 +337,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "sri-potti-sriramulu-nellore",
@@ -354,7 +354,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "sri-sathya-sai",
@@ -371,7 +371,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "srikakulam",
@@ -388,7 +388,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "tirupati",
@@ -405,7 +405,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "visakhapatnam",
@@ -422,7 +422,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "vizianagaram",
@@ -439,7 +439,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "west-godavari",
@@ -456,7 +456,7 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   },
   {
     "station_id": "y.s.r-kadapa",
@@ -473,6 +473,6 @@
     "rtzsm_source_file": "rtzsm_perc_025deg_GL.tif",
     "sfsm_source_file": "sfsm_perc_025deg_GL.tif",
     "data_label": "satellite-model",
-    "notes": "GRACE-DA percentile (0-100), a stress/trend measure \u2014 not groundwater depth."
+    "notes": "GRACE-DA percentile (0-100), a stress/trend measure, not groundwater depth."
   }
 ]

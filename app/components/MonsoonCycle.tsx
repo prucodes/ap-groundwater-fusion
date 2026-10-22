@@ -34,7 +34,7 @@ export function MonsoonCycle({ cycle }: { cycle: SeasonalYear[] }) {
         <div className="mcStat">
           <span className="mcStatLabel">Typical monsoon recovery</span>
           <span className="mcStatValue">
-            {median !== null ? `${median > 0 ? "+" : ""}${median.toFixed(2)}` : "—"}
+            {median !== null ? `${median > 0 ? "+" : ""}${median.toFixed(2)}` : "–"}
             <small> m</small>
           </span>
           <span className="mcStatNote">median across {usable.length} paired years</span>
@@ -42,7 +42,7 @@ export function MonsoonCycle({ cycle }: { cycle: SeasonalYear[] }) {
         <div className="mcStat">
           <span className="mcStatLabel">Weakest recovery</span>
           <span className="mcStatValue" style={{ color: "var(--st-verify)" }}>
-            {weakest.rechargeM !== null ? `${weakest.rechargeM > 0 ? "+" : ""}${weakest.rechargeM.toFixed(2)}` : "—"}
+            {weakest.rechargeM !== null ? `${weakest.rechargeM > 0 ? "+" : ""}${weakest.rechargeM.toFixed(2)}` : "–"}
             <small> m</small>
           </span>
           <span className="mcStatNote">in {weakest.year}</span>

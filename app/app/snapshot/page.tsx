@@ -41,11 +41,11 @@ export default function SnapshotPage() {
       : (yoy[yoy.length / 2 - 1] + yoy[yoy.length / 2]) / 2
     : null;
   const insights = [
-    `${mandals.filter((m) => m.status_bucket === "Normal").length} mandals are stable — shallower than 10 m, and no more than 0.3 m deeper than a year earlier.`,
-    `${verify} mandals show stress — 20 m or more below ground, or over 1.2 m deeper than a year earlier.`,
+    `${mandals.filter((m) => m.status_bucket === "Normal").length} mandals are stable: shallower than 10 m, and no more than 0.3 m deeper than a year earlier.`,
+    `${verify} mandals show stress: 20 m or more below ground, or over 1.2 m deeper than a year earlier.`,
     s.avg_groundwater_percentile === null
       ? `No NASA GRACE-DA groundwater reading was available on the latest fetch.`
-      : `NASA GRACE-DA groundwater averages percentile ${Math.round(s.avg_groundwater_percentile)} across ${graceDistrictCount} districts — ${wetnessLabel(s.avg_groundwater_percentile).toLowerCase()} for this time of year.`,
+      : `NASA GRACE-DA groundwater averages percentile ${Math.round(s.avg_groundwater_percentile)} across ${graceDistrictCount} districts, ${wetnessLabel(s.avg_groundwater_percentile).toLowerCase()} for this time of year.`,
     ...(s.avg_water_balance_mm !== null && s.avg_water_balance_mm !== undefined
       ? [
           `${s.deficit_mandals} prototype units carry the low climate-balance category (TerraClimate ${s.balance_year}); this is not measured aquifer depletion.`,
@@ -66,7 +66,7 @@ export default function SnapshotPage() {
       : []),
     ...(yoyMedian !== null
       ? [
-          `${yoyDeeper} of ${yoy.length} mandals (${Math.round((100 * yoyDeeper) / yoy.length)}%) read deeper than the same month a year earlier — median change ${yoyMedian > 0 ? "+" : ""}${formatNumber(yoyMedian)} m.`,
+          `${yoyDeeper} of ${yoy.length} mandals (${Math.round((100 * yoyDeeper) / yoy.length)}%) read deeper than the same month a year earlier, a median change of ${yoyMedian > 0 ? "+" : ""}${formatNumber(yoyMedian)} m.`,
         ]
       : []),
   ];
@@ -77,7 +77,7 @@ export default function SnapshotPage() {
       <div className="snapToolbar printHide">
         <div>
           <span className="eyebrow">Executive Snapshot</span>
-          <h1 style={{ fontSize: 22, marginTop: 4 }}>Mandal Groundwater Fusion — One-Page Summary</h1>
+          <h1 style={{ fontSize: 22, marginTop: 4 }}>Mandal Groundwater Fusion · One-Page Summary</h1>
         </div>
         <div style={{ display: "flex", gap: 10 }}>
           <ExportCsvButton rows={mandals} filename="ap_groundwater_snapshot.csv" />
@@ -139,7 +139,7 @@ export default function SnapshotPage() {
                     <td>{formatNumber(m.estimate_mbgl)}</td>
                     <td>{m.coverage_status.replaceAll("_", " ")}</td>
                     <td style={{ color: (m.trend_m_per_yr ?? 0) > 0 ? "var(--rust)" : (m.trend_m_per_yr ?? 0) < 0 ? "var(--green)" : "var(--muted)", fontWeight: 600, fontSize: 11.5 }}>
-                      {m.trend_m_per_yr == null ? "—" : `${m.trend_m_per_yr > 0 ? "+" : ""}${formatNumber(m.trend_m_per_yr)}`}
+                      {m.trend_m_per_yr == null ? "–" : `${m.trend_m_per_yr > 0 ? "+" : ""}${formatNumber(m.trend_m_per_yr)}`}
                     </td>
                     <td><PercentileBar value={m.groundwater_percentile} /></td>
                     <td><PercentileBar value={m.rootzone_percentile} /></td>
@@ -150,7 +150,7 @@ export default function SnapshotPage() {
                           {m.water_balance_status}
                         </span>
                       ) : (
-                        "—"
+                        "–"
                       )}
                     </td>
                     <td><WetnessTag value={m.measured_wetness_percentile ?? null} /></td>
@@ -161,7 +161,7 @@ export default function SnapshotPage() {
             </table>
           </div>
           <p className="snapRegisterNote printHide">
-            All {mandals.length} mandals are listed above — the frame scrolls so the sheet stays readable on
+            All {mandals.length} mandals are listed above; the frame scrolls so the sheet stays readable on
             screen. Printing or saving to PDF releases it and lays out every row, with the column headings
             repeated on each page.
           </p>

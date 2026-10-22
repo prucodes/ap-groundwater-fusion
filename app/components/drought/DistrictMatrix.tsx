@@ -65,8 +65,8 @@ export function DistrictMatrix({ districts }: { districts: DroughtDistrict[] }) 
                 </small>
               </td>
               <td><span className={styles.cellTag} style={tone(d.medianRainDev, -60, -20)}>{signedPct(d.medianRainDev)}</span></td>
-              <td><span className={styles.cellTag} style={tone(d.medianVci, 40, 60)}>{d.medianVci === null ? "—" : d.medianVci.toFixed(0)}</span></td>
-              <td><span className={styles.cellTag} style={tone(d.medianPasm, 51, 76)}>{d.medianPasm === null ? "—" : `${d.medianPasm.toFixed(0)}%`}</span></td>
+              <td><span className={styles.cellTag} style={tone(d.medianVci, 40, 60)}>{d.medianVci === null ? "–" : d.medianVci.toFixed(0)}</span></td>
+              <td><span className={styles.cellTag} style={tone(d.medianPasm, 51, 76)}>{d.medianPasm === null ? "–" : `${d.medianPasm.toFixed(0)}%`}</span></td>
               <td><span className={styles.cellTag} style={tone(d.medianGwdi, -0.45, -0.30)}>{signed(d.medianGwdi)}</span></td>
               <td>{d.sown ? <span className={styles.cellTag} style={{ background: `${IMPACT_META[d.sown.cls].color}22`, color: IMPACT_META[d.sown.cls].text }}>{d.sown.pctOfNormal}% · reported</span> : <span style={{ color: "var(--muted)", fontSize: 11 }}>not shared</span>}</td>
             </tr>

@@ -124,7 +124,7 @@ def build_legacy_v1():
         # status — groundwater STRESS triage for governance (depth + decline)
         deep, fast = est_mbgl >= 20, trend > 1.2
         if sensor_count < 18 or band_w > 8:
-            bucket, status = "Low Confidence", "Low Confidence — sparse history"
+            bucket, status = "Low Confidence", "Low Confidence: sparse history"
             action = "Collect more readings before acting."
         elif obs_model_gap is not None and obs_model_gap >= 8:
             bucket, status = "Verify", "Verify — sensor diverges from model"
@@ -133,19 +133,19 @@ def build_legacy_v1():
         elif deep or fast or (est_mbgl >= 12 and trend > 0.5):
             bucket = "Stress"
             if agreement == "over_extraction":
-                status = "Stress — pumping-pressure (verify)"
-                action = "Pumping-pressure hypothesis: water table deep & falling despite a healthy water balance — verify extraction in the field before demand-management action."
+                status = "Stress: pumping-pressure (verify)"
+                action = "Pumping-pressure hypothesis: water table deep & falling despite a healthy water balance; verify extraction in the field before demand-management action."
             else:
-                status = "Stress — deep / declining"
-                action = "Conserve — restrict new draw; water table deep or fast-falling."
+                status = "Stress: deep / declining"
+                action = "Conserve: restrict new draw; water table deep or fast-falling."
         elif trend > 0.3 or wbal_status == "Deficit" or est_mbgl >= 10:
-            bucket, status = "Watch", "Watch — monitor"
-            action = ("Monitor — falling despite a healthy water balance (possible early extraction pressure — verify)."
+            bucket, status = "Watch", "Watch: monitor"
+            action = ("Monitor: falling despite a healthy water balance (possible early extraction pressure; verify)."
                       if agreement == "over_extraction"
-                      else "Monitor — moderate decline, rainfall deficit, or deepening water table.")
+                      else "Monitor: moderate decline, rainfall deficit, or deepening water table.")
         else:
             bucket, status = "Normal", "Stable"
-            action = "Stable — routine monitoring."
+            action = "Stable: routine monitoring."
 
         records.append({
             "id": slug(e["district"], e["mandal"]),
@@ -193,7 +193,7 @@ def build_legacy_v1():
                 "district_name": du, "mandal_name": e["mandal"].upper(),
                 "status": status, "confidence_label": conf_label,
                 "recommended_action": action,
-                "source_caveat": "Modelled estimate calibrated to APWRIMS — not an official APWRIMS result.",
+                "source_caveat": "Modelled estimate calibrated to APWRIMS, not an official APWRIMS result.",
             },
         })
 
@@ -231,17 +231,17 @@ def build_legacy_v1():
         est_mbgl = latest
         deep, fast = est_mbgl >= 20, trend > 1.2
         if len(ser) < 18:
-            bucket, status = "Low Confidence", "Low Confidence — sparse history"
+            bucket, status = "Low Confidence", "Low Confidence: sparse history"
             action = "Collect more readings before acting."
         elif deep or fast or (est_mbgl >= 12 and trend > 0.5):
-            bucket, status = "Stress", "Stress — deep / declining"
-            action = "Conserve — restrict new draw; water table deep or fast-falling."
+            bucket, status = "Stress", "Stress: deep / declining"
+            action = "Conserve: restrict new draw; water table deep or fast-falling."
         elif trend > 0.3 or est_mbgl >= 10:
-            bucket, status = "Watch", "Watch — monitor"
-            action = "Monitor — moderate decline or deepening water table."
+            bucket, status = "Watch", "Watch: monitor"
+            action = "Monitor: moderate decline or deepening water table."
         else:
             bucket, status = "Normal", "Stable"
-            action = "Stable — routine monitoring."
+            action = "Stable: routine monitoring."
         du = g["d"].upper()
         dd = dgeo.get(du, {})
         hv = heat_by.get(key, {})
@@ -291,7 +291,7 @@ def build_legacy_v1():
                 "district_name": du, "mandal_name": g["m"].upper(),
                 "status": status, "confidence_label": conf_label,
                 "recommended_action": action,
-                "source_caveat": "Measured APWRIMS readings — not modelled, not an official APWRIMS result.",
+                "source_caveat": "Measured APWRIMS readings, not modelled and not an official APWRIMS result.",
             },
         })
         added.add(key)

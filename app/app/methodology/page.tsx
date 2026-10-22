@@ -14,7 +14,7 @@ import crossNetwork from "../../data/cross_network_check.json";
 const labels = [
   { code: "APWRIMS (AP-GWD)", text: "Recorded mandal depth history. Modelled nowcasts are separate derived values; neither is presented as a certified official output." },
   { code: "measured_public", text: "Public measured groundwater (e.g. NWIC). Labeled public, never official_apwrims." },
-  { code: "official_apwrims", text: "Official APWRIMS / AP government export. Pending — required for official results." },
+  { code: "official_apwrims", text: "Official APWRIMS / AP government export. Pending; required for official results." },
   { code: "satellite-model", text: "NASA/NDMC GRACE-DA percentiles (0–100). Real signal, not groundwater depth." },
   { code: "satellite-gauge-rainfall", text: "CHIRPS v3 monthly rainfall (mm), rebuilt from 1981. Climate context; not groundwater depth or direct measured recharge." },
   { code: "measured-gauge-rainfall", text: "AP DES mandal rain gauges via APWRIMS (mm), against the department's normal for the water year to date. Measured; not recharge or crop loss." },
@@ -150,7 +150,7 @@ export default function MethodologyPage() {
             <span className="titleIcon">
               <IconSatellite />
             </span>
-            What Each Signal Can — and Can&apos;t — Tell You
+            What Each Signal Can and Can&apos;t Tell You
           </div>
           <span className="cardSub">Only sensors give true depth; satellites add context &amp; verification</span>
         </div>
@@ -185,7 +185,7 @@ export default function MethodologyPage() {
             <span className="titleIcon">
               <IconCloudRain />
             </span>
-            Monsoon Watch — how the recharge figures are built
+            Monsoon Watch: how the recharge figures are built
           </div>
           <span className="cardSub">derived depth changes / baseline review pending</span>
         </div>
@@ -206,8 +206,8 @@ export default function MethodologyPage() {
             against a normal that is not yet established.
           </p>
           <p>
-            Rainfall context is CHIRPS at 0.05° averaged over each mandal polygon, walked back to <strong>1981</strong>
-            &nbsp;— 45 years and thirteen El Niño events, which is what makes the rainfall composite worth reporting at
+            Rainfall context is CHIRPS at 0.05° averaged over each mandal polygon, walked back to <strong>1981</strong>:
+            45 years and thirteen El Niño events, which is what makes the rainfall composite worth reporting at
             all. Since October 2026 the whole record is <strong>CHIRPS v3</strong>, rebuilt from 1981 rather than
             spliced: v2 production ends after December 2026, and v3 corrects gauges for wind undercatch and uses about
             four times the station sources, so the same month reads differently. The state&rsquo;s own rain gauges
@@ -216,7 +216,7 @@ export default function MethodologyPage() {
           </p>
           <p>
             <strong>ONI groups rainfall-history composites; it does not generate local groundwater predictions.</strong> Adding it to the three-month forecast was tested
-            on rolling origin and made the forecast worse — 1.776 m to 1.850 m mean error, and worse in every aquifer.
+            on rolling origin and made the forecast worse: 1.776 m to 1.850 m mean error, and worse in every aquifer.
             The groundwater forecast experiment remains research-only. Historical ENSO associations do not establish a local forecast or causation.
           </p>
           <p data-sourced="phase3_levels/data/mandal_rain_history_imd.csv reports/imd_rainfall_experiment.json">
@@ -263,7 +263,7 @@ export default function MethodologyPage() {
             <span className="titleIcon">
               <IconDroplet />
             </span>
-            Agriculture water watch — when the sources agree
+            Agriculture water watch: when the sources agree
           </div>
           <span className="cardSub">a count of stated tests / not a score</span>
         </div>
@@ -436,7 +436,7 @@ export default function MethodologyPage() {
             <span className="titleIcon">
               <IconDroplet />
             </span>
-            Drought Watch — the national drought manual, applied per mandal
+            Drought Watch: the national drought manual, applied per mandal
           </div>
           <span className="cardSub">steps 1–2 of 3 / not a declaration</span>
         </div>
@@ -537,7 +537,7 @@ export default function MethodologyPage() {
           <p>
             Visits are counted with <a href="https://www.goatcounter.com/" target="_blank" rel="noreferrer">
             GoatCounter</a>, which sets no cookies, stores no IP address and builds no profile across sites. What
-            is recorded is the page opened, and — on the Monsoon Watch page — whether a visit used the film, the
+            is recorded is the page opened and, on the Monsoon Watch page, whether a visit used the film, the
             Pacific map, the mandal map or the download, and which of the page&rsquo;s sections came into view.
             The introduction also counts when it is viewed or completed, and the workspace counts download
             requests and printing. Entered text, names and filenames are never sent. Each action is counted
@@ -560,7 +560,7 @@ export default function MethodologyPage() {
   );
 }
 
-const pct = (share: number | null) => (share === null ? "—" : `${Math.round(share * 100)}%`);
+const pct = (share: number | null) => (share === null ? "–" : `${Math.round(share * 100)}%`);
 
 /** The forecast on CGWB's wells, which the model never trained on (phase3_levels/validate_cross_network.py). */
 function CrossNetworkCheck() {

@@ -62,8 +62,8 @@ function seasonFacts(rows: HeatRow[]) {
   const last = d.timeline[d.timeline.length - 1];
   return [
     { label: "Ran a dry spell", value: `${d.state.drySpell}`, note: `of ${d.state.assessed} mandals; ${d.state.trigger1Light} on the 3-week light-soil rule` },
-    { label: "Typical longest spell", value: median === null ? "—" : `${median} weeks`, note: longest?.dry ? `longest: ${longest.dry.longest} weeks, ${place(longest.m)} (${place(longest.d)})` : "" },
-    { label: "Driest week", value: driest ? `${Math.round(100 * driest.share)}%` : "—", note: driest ? `of mandals under half of normal, ${shortDate(driest.week.start)}–${shortDate(driest.week.end)}` : "" },
+    { label: "Typical longest spell", value: median === null ? "–" : `${median} weeks`, note: longest?.dry ? `longest: ${longest.dry.longest} weeks, ${place(longest.m)} (${place(longest.d)})` : "" },
+    { label: "Driest week", value: driest ? `${Math.round(100 * driest.share)}%` : "–", note: driest ? `of mandals under half of normal, ${shortDate(driest.week.start)}–${shortDate(driest.week.end)}` : "" },
     { label: "Short for the season", value: `${last.classes.deficient + last.classes.largeDeficient + last.classes.noRain}`, note: `mandals deficient or worse to ${shortDate(last.end)}; ${last.classes.largeDeficient} large deficient` },
   ];
 }
@@ -76,7 +76,7 @@ export default function DroughtPage() {
   return (
     <div className={`pageWrap ${styles.page}`}>
       <HeaderHero
-        title={`Drought Watch — ${d.season.name}`}
+        title={`Drought Watch · ${d.season.name}`}
         brief={brief("/drought", droughtNow())}
         showChips={false}
         variant="compact"

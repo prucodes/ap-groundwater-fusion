@@ -37,7 +37,7 @@ export default function DistrictsPage() {
   return (
     <div className="pageWrap">
       <HeaderHero
-        title="Districts — Groundwater Levels & Stress"
+        title="Districts · Groundwater Levels & Stress"
         brief={brief("/districts", districtsNow())}
         showChips={false}
         variant="compact"
@@ -158,7 +158,7 @@ export default function DistrictsPage() {
           ~6,400px of a 6,500px page. Collapsed rather than removed: it carries
           mandal and in-stress counts the compact tiles do not. */}
       <details className="rawTable districtCards">
-        <summary>Show all {rollups.length} district cards — mandal counts, stress counts and average level</summary>
+        <summary>Show all {rollups.length} district cards: mandal counts, stress counts and average level</summary>
       <div className="reportGrid">
         {rollups.map((r) => {
           const meta = statusMeta(r.worst_bucket);
@@ -278,7 +278,7 @@ export default function DistrictsPage() {
                           {m.water_balance_status}
                         </span>
                       ) : (
-                        "—"
+                        "–"
                       )}
                     </td>
                     <td><StatusBadge bucket={m.status_bucket} /></td>

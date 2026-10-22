@@ -32,13 +32,13 @@ function tooltipHtml(p: DistrictFeature, layer: DistrictLayerKey, scenario?: Rec
     `<span class="tipHead"><b>${titleCase(p.d)}</b><span class="tipPill" style="color:#2a6f97;background:#2a6f9722">${p.mandal_count} mandals</span></span>` +
     `<span class="tipDist">District zonal mean · satellite/model</span>` +
     (scenario ? `<span class="tipRow tipActive"><i>Scenario balance</i><b>${scenario[p.d] ?? "Unavailable"}${scenario[p.d] == null ? "" : " mm"}</b></span>` : "") +
-    row("gw_percentile", "NASA Groundwater %ile", `${p.gw_percentile ?? "—"}`) +
-    row("rainfall_mm", "Rainfall (CHIRPS)", `${p.rainfall_mm ?? "—"} mm`) +
-    row("annual_et_mm", "Actual ET (annual)", `${p.annual_et_mm ?? "—"} mm`) +
+    row("gw_percentile", "NASA Groundwater %ile", `${p.gw_percentile ?? "–"}`) +
+    row("rainfall_mm", "Rainfall (CHIRPS)", `${p.rainfall_mm ?? "–"} mm`) +
+    row("annual_et_mm", "Actual ET (annual)", `${p.annual_et_mm ?? "–"} mm`) +
     (bal !== null
       ? row("water_balance_mm", "Water balance", `${p.water_balance_status} (${bal > 0 ? "+" : ""}${bal} mm)`)
       : "") +
-    `<span class="tipFoot">Regional context — not groundwater depth</span>`
+    `<span class="tipFoot">Regional context, not groundwater depth</span>`
   );
 }
 

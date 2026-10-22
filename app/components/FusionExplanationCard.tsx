@@ -8,7 +8,7 @@ export function FusionExplanationCard({ mandal }: { mandal: MandalGroundwaterVie
   const sig = mandal.sensor_satellite_agreement;
   const est = formatNumber(mandal.estimate_mbgl);
   const interval = `${formatNumber(mandal.estimate_band_p10)}–${formatNumber(mandal.estimate_band_p90)}`;
-  const climateBalance = mandal.water_balance_status || "—";
+  const climateBalance = mandal.water_balance_status || "–";
 
   const note =
     sig === "declining_despite_positive_climate_balance"

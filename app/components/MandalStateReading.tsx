@@ -11,7 +11,7 @@ const month = (period: string) => `${MONTHS[Number(period.slice(5, 7)) - 1]} ${p
 
 /** Metres below ground: a positive change means the water table fell. */
 function move(value: number | null | undefined) {
-  if (value === null || value === undefined) return { text: "—", tone: "" };
+  if (value === null || value === undefined) return { text: "–", tone: "" };
   if (Math.abs(value) < 0.05) return { text: "no change", tone: "" };
   return value > 0
     ? { text: `${value.toFixed(2)} m deeper`, tone: styles.worse }
@@ -41,10 +41,10 @@ export function MandalStateReading({ mandalId }: { mandalId: string }) {
       {reading ? (
         <>
           <div className={styles.grid} data-testid="state-reading">
-            <div><span>Latest reading</span><strong>{reading.currentM === null ? "—" : `${reading.currentM.toFixed(2)} m`}</strong>
+            <div><span>Latest reading</span><strong>{reading.currentM === null ? "–" : `${reading.currentM.toFixed(2)} m`}</strong>
               <em>below ground{reading.date ? `, ${shortDate(reading.date, true)}` : ""}{reading.band ? ` · State band ${reading.band.replace("m-", "–").replace("m", " m")}` : ""}</em></div>
             <div><span>Since May</span><strong className={sinceMay.tone}>{sinceMay.text}</strong>
-              <em>pre-monsoon {reading.preMonsoonM === null ? "—" : `${reading.preMonsoonM.toFixed(2)} m`}</em></div>
+              <em>pre-monsoon {reading.preMonsoonM === null ? "–" : `${reading.preMonsoonM.toFixed(2)} m`}</em></div>
             <div><span>Against a year ago</span><strong className={yearAgo.tone}>{yearAgo.text}</strong>
               <em>{reading.yearAgoM === null ? "no year-ago value" : `${reading.yearAgoM.toFixed(2)} m then`}</em></div>
             <div><span>Stations</span><strong>{reading.stations}</strong>

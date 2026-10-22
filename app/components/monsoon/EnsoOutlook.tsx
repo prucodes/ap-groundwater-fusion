@@ -124,7 +124,7 @@ function NeSoFar({ ne }: { ne: NeMonsoonSoFar | null | undefined }) {
         <span className={styles.kickerDark}>So far · AP DES gauges</span>
         <strong>{early ? `Day ${days} of 92` : signedPct(ne.deviationPct)}</strong>
         <em>
-          {shortDate(ne.start)} to {shortDate(ne.end, true)} · district mean {ne.meanActualMm ?? "—"} mm against {ne.meanNormalMm ?? "—"} mm normal
+          {shortDate(ne.start)} to {shortDate(ne.end, true)} · district mean {ne.meanActualMm ?? "–"} mm against {ne.meanNormalMm ?? "–"} mm normal
         </em>
       </div>
       {early ? (
@@ -241,7 +241,7 @@ export function EnsoOutlook() {
                       <i className={d.elNinoAnomalyPct < 0 ? styles.dNeg : styles.dPos}
                         style={d.elNinoAnomalyPct < 0 ? { right: "50%", width: `${width}%` } : { left: "50%", width: `${width}%` }} />
                     </span>
-                    <span className={styles.dValue}>{signedPct(d.elNinoAnomalyPct, 1)}<small>{d.elNinoBelowNormal ?? "—"}/{d.elNinoYears} below</small></span>
+                    <span className={styles.dValue}>{signedPct(d.elNinoAnomalyPct, 1)}<small>{d.elNinoBelowNormal ?? "–"}/{d.elNinoYears} below</small></span>
                   </li>
                 );
               })}

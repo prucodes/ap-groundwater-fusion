@@ -5,8 +5,8 @@
 .scene::after { content: none; }
 .sceneTitle { position: absolute; top: 16px; z-index: 1; pointer-events: none; color: var(--ink); }
 .sceneTitle { left: 22px; }
-.sceneTitle > span { display: block; font: 500 9px var(--font-mono); letter-spacing: .08em; color: var(--muted); }
-.sceneTitle strong { display: flex; align-items: baseline; gap: 10px; font-size: 23px; line-height: 1.5; font-weight: 500; }
+.sceneTitle > span { display: block; font: 500 10px var(--font-mono); letter-spacing: .08em; color: var(--muted); }
+.sceneTitle strong { display: flex; align-items: baseline; gap: 10px; font-size: 22px; line-height: 1.5; font-weight: 500; }
 .sceneTitle small { font-size: 11px; color: var(--muted); font-weight: 400; }
 .sceneReadouts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); background: var(--card); }
 .sceneReadouts button { display: flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 6px; min-width: 0; text-align: left; border: 0; border-right: 1px solid var(--line); border-radius: 0; background: transparent; color: var(--ink-soft); }
@@ -15,35 +15,35 @@
 .sceneReadouts svg { width: 20px; height: 20px; color: #2789af; flex-shrink: 0; }
 .sceneReadouts button:nth-child(2) svg { color: #448b64; }
 .sceneReadouts button:nth-child(3) svg { color: #ac852e; }
-.sceneReadouts span { font-size: 9px; }
+.sceneReadouts span { font-size: 10px; }
 .sceneReadouts strong { display: block; font-size: 18px; font-weight: 500; line-height: 1.5; font-variant-numeric: tabular-nums; }
 .sceneReadouts small { font-size: 10px; color: var(--muted); }
 .controls { padding: 20px; border-left: 1px solid var(--line); min-width: 0; }
 .activeStage { display: flex; align-items: center; gap: 9px; margin-top: 19px; padding: 15px 0; border-block: 1px solid var(--line); color: var(--ag-green); }
 .activeStage svg { width: 23px; height: 23px; }
-.activeStage span { font-size: 9px; color: var(--muted); display: block; }
+.activeStage span { font-size: 10px; color: var(--muted); display: block; }
 .activeStage strong { display: block; font-size: 14px; font-weight: 500; margin-top: 5px; }
 .activeStage b { margin-left: auto; font: 400 22px var(--font-mono); }
-.activeStage small { display: block; text-align: right; font: 9px var(--font-sans); color: var(--muted); }
+.activeStage small { display: block; text-align: right; font: 10px var(--font-sans); color: var(--muted); }
 .balanceSummary { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--line); }
-.balanceSummary > span { color: var(--ag-green); font-size: 9px; font-weight: 600; }
+.balanceSummary > span { color: var(--ag-green); font-size: 10px; font-weight: 600; }
 .balanceSummary > strong { display: block; font: 400 42px var(--font-mono); margin: 8px 0; color: var(--ink); }
 .balanceSummary strong small { font-size: 18px; color: var(--muted); }
 .balanceSummary p { font-size: 11px; line-height: 1.7; color: var(--ink-soft); }
-.balanceSummary > small { display: block; font-size: 9px; line-height: 1.5; color: var(--muted); margin-top: 10px; }
+.balanceSummary > small { display: block; font-size: 10px; line-height: 1.5; color: var(--muted); margin-top: 10px; }
 .stageTimeline { padding: 16px 16px 8px; }
 .timelineHead { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 13px; }
-.timelineHead > small { font-size: 9px; color: var(--muted); }
+.timelineHead > small { font-size: 10px; color: var(--muted); }
 .stageButtons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
 .stageButtons button { min-width: 0; border: 0; border-top: 2px solid var(--line); background: transparent; padding: 11px 9px; text-align: left; color: var(--muted); }
 .stageButtons button:hover { background: var(--field); }
 .stageButtons button[aria-pressed="true"] { border-color: var(--ag-green); color: var(--ag-green); background: color-mix(in srgb, var(--ag-green) 7%, var(--card)); }
 .stageName { display: flex; align-items: center; gap: 8px; }
-.stageName i { font: normal 9px var(--font-mono); opacity: .65; }
+.stageName i { font: normal 10px var(--font-mono); opacity: .65; }
 .stageName strong { font-size: 11px; font-weight: 600; }
-.stageDemand { display: block; font: 500 19px var(--font-mono); color: var(--ink); margin: 10px 0; }
-.stageDemand > small { font: 9px var(--font-sans); color: var(--muted); }
-.stageDemand em { font: normal 9px var(--font-sans); float: right; margin-top: 6px; color: var(--muted); }
+.stageDemand { display: block; font: 500 18px var(--font-mono); color: var(--ink); margin: 10px 0; }
+.stageDemand > small { font: 10px var(--font-sans); color: var(--muted); }
+.stageDemand em { font: normal 10px var(--font-sans); float: right; margin-top: 6px; color: var(--muted); }
 .stageTrack { display: flex; width: 100%; height: 5px; background: var(--line); }
 .stageTrack i { display: block; height: 100%; transition: width .3s; }
 :global([data-theme="dark"]) .scene { background: var(--card); }
@@ -62,11 +62,11 @@
 @media (max-width: 600px) {
   .scene { height: 470px; min-height: 0; aspect-ratio: auto; }
   .sceneTitle { top: 15px; left: 14px; }
-  .sceneTitle strong { display: block; font-size: 21px; }
+  .sceneTitle strong { display: block; font-size: 22px; }
   .sceneTitle small { display: block; font-size: 10px; }
   .sceneReadouts button { display: block; padding: 10px 5px; text-align: center; }
   .sceneReadouts svg { display: none; }
-  .sceneReadouts span { font-size: 8px; }
+  .sceneReadouts span { font-size: 10px; }
   .sceneReadouts strong { font-size: 16px; }
   .controls { display: block; padding: 16px; }
   .controls > div:first-child { margin-bottom: 15px; }
@@ -80,14 +80,14 @@
   .stageName { gap: 5px; }
   .stageName i { display: none; }
   .stageName strong { font-size: 10px; }
-  .stageDemand { font-size: 17px; }
-  .stageDemand em { margin-top: 3px; font-size: 8px; }
+  .stageDemand { font-size: 18px; }
+  .stageDemand em { margin-top: 3px; font-size: 10px; }
 }
 @media (prefers-reduced-motion: reduce) { .stageTrack i { transition: none; } }
 .standIn { font-size: 10px; line-height: 1.45; color: var(--muted); font-weight: 400; }
 .livePreset { display: flex; align-items: flex-start; gap: 10px; margin: -4px 0 12px; padding: 10px 14px; border: 1px solid color-mix(in srgb, #27745d 35%, var(--line)); border-left: 3px solid #27745d; background: color-mix(in srgb, #27745d 6%, var(--card)); }
 .livePreset > svg { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; color: #27745d; }
-.livePreset p { font-size: 11.5px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+.livePreset p { font-size: 12px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
 .livePreset p strong { color: var(--ink); font-weight: 600; }
 .livePreset button { flex-shrink: 0; white-space: nowrap; margin-top: 2px; }
 @media (max-width: 760px) { .livePreset { flex-wrap: wrap; } }

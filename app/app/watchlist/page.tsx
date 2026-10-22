@@ -22,15 +22,15 @@ const MAX_DEPTH = 25;
 
 function reasonFor(m: MandalGroundwaterView) {
   if (m.sensor_satellite_agreement === "declining_despite_positive_climate_balance") {
-    return "Measured decline despite a positive climatic water balance — context mismatch to verify";
+    return "Measured decline despite a positive climatic water balance: context mismatch to verify";
   }
   if (m.sensor_satellite_agreement === "declining_without_positive_climate_balance") {
-    return "Measured decline without a positive climatic water balance — review history";
+    return "Measured decline without a positive climatic water balance: review history";
   }
   if (["Limited", "Not Assessed"].includes(m.confidence_label)) {
-    return "Sparse history — collect more readings";
+    return "Sparse history: collect more readings";
   }
-  return "Deep or deepening water table — monitor";
+  return "Deep or deepening water table: monitor";
 }
 
 const summaryCards = [
@@ -240,7 +240,7 @@ export default function WatchlistPage() {
                             <span className="dot" /> {balanceMeta(m.water_balance_status).label}
                           </span>
                         ) : (
-                          <span style={{ color: "var(--muted-2)" }}>—</span>
+                          <span style={{ color: "var(--muted-2)" }}>–</span>
                         )}
                       </td>
                       <td>

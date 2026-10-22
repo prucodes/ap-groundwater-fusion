@@ -206,9 +206,9 @@ export function FieldReport({ calls, week }: { calls: SiteCall[]; week: string |
           <h3>{call.m}<small>{call.d}</small></h3>
           <dl>
             <div><dt>Stress signals lit</dt><dd><b>{call.lit}</b> of {call.known}</dd></div>
-            <div><dt>Crops short of water</dt><dd>{call.short === null ? "—" : <><b>{call.short}</b> of {call.of}</>}<small>mid-season, FAO-56 check</small></dd></div>
-            <div><dt>Crop vegetation</dt><dd>{call.vci === null ? "—" : <b>{call.vci}</b>}<small>VCI · under 40 is severe</small></dd></div>
-            <div><dt>Cropland irrigated</dt><dd>{call.irr === null ? "—" : <b>{call.irr}%</b>}<small>ESA WorldCereal</small></dd></div>
+            <div><dt>Crops short of water</dt><dd>{call.short === null ? "–" : <><b>{call.short}</b> of {call.of}</>}<small>mid-season, FAO-56 check</small></dd></div>
+            <div><dt>Crop vegetation</dt><dd>{call.vci === null ? "–" : <b>{call.vci}</b>}<small>VCI · under 40 is severe</small></dd></div>
+            <div><dt>Cropland irrigated</dt><dd>{call.irr === null ? "–" : <b>{call.irr}%</b>}<small>ESA WorldCereal</small></dd></div>
           </dl>
           <p>Note what you see, not what the site says: a report that disagrees is the most useful one.</p>
         </div> : null}
@@ -278,7 +278,7 @@ function Collector() {
               <td><b>{r.m}</b><small>{r.d}</small></td>
               <td>{r.crops.map((c, k) => <span key={k} className={styles.cropTag} data-k={c.k}>{c.c} · {c.k.toLowerCase()}{c.w !== "Rainfed" ? ` · ${c.w.toLowerCase()}` : ""}</span>)}</td>
               <td>Bores {r.bores.toLowerCase()}{r.tankers ? " · tankers" : ""}</td>
-              <td>{r.site ? <>{r.site.lit} of {r.site.known} lit{r.site.short !== null ? <small>{r.site.short} of {r.site.of} crops short</small> : null}</> : "—"}</td>
+              <td>{r.site ? <>{r.site.lit} of {r.site.known} lit{r.site.short !== null ? <small>{r.site.short} of {r.site.of} crops short</small> : null}</> : "–"}</td>
               <td><span className={styles.verdict} data-key={judged[i].key}>{judged[i].label}</span></td>
             </tr>)}
           </tbody>

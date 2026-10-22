@@ -1,12 +1,12 @@
 .hero { margin-top: 18px; padding: 18px 0 0; border-block: 1px solid var(--line-strong); color: var(--ink); }
-.kicker { font: 600 10.5px var(--font-mono); color: var(--teal); text-transform: uppercase; }
+.kicker { font: 600 11px var(--font-mono); color: var(--teal); text-transform: uppercase; }
 :global(:root[data-theme="dark"]) .kicker { color: #83ced9; }
 .hero p { margin: 5px 0 16px; max-width: 900px; font-size: 12px; line-height: 1.5; color: var(--ink-soft); }
 .summaryTiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; padding: 0; margin: 0; list-style: none; background: var(--card); border-top: 1px solid var(--line); }
 .summaryTiles li { display: grid; align-content: start; gap: 7px; min-width: 0; padding: 16px 18px; }
 .summaryTiles li + li { border-left: 1px solid var(--line); }
 .summaryTiles span { font: 600 10px var(--font-mono); text-transform: uppercase; color: var(--muted); }
-.summaryTiles b { font: 600 30px/1.1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.summaryTiles b { font: 600 28px/1.1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
 .summaryTiles b small { font: 500 12px var(--font-sans); color: var(--muted); }
 .summaryTiles b[data-tone="bad"] { color: #a33b2c; }
 .summaryTiles em { font-size: 12px; font-style: normal; line-height: 1.5; color: var(--ink-soft); }
@@ -23,7 +23,7 @@
 
 .stack { position: relative; display: flex; height: 6px; border-radius: 3px; overflow: hidden; background: var(--chart-track); }
 .stack i { display: block; height: 100%; }
-.context { display: flex; gap: 8px; align-items: flex-start; margin: 0; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--field); font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+.context { display: flex; gap: 8px; align-items: flex-start; margin: 0; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--field); font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
 .context svg { flex: none; width: 15px; height: 15px; margin-top: 2px; color: var(--teal); }
 .context b { color: var(--ink); }
 .context a { color: var(--teal); font-weight: 600; text-decoration: none; }
@@ -49,7 +49,7 @@
 .typical { background: #a33b2c; box-shadow: 0 0 0 3px color-mix(in srgb, #a33b2c 22%, transparent); }
 .record { position: absolute; top: 1px; bottom: 1px; width: 2px; margin-left: -1px; background: var(--ink); border-radius: 1px; }
 .value { text-align: right; font-variant-numeric: tabular-nums; }
-.value b { display: block; font: 600 15px var(--font-display); color: var(--ink); }
+.value b { display: block; font: 600 16px var(--font-display); color: var(--ink); }
 .value small { font-size: 11px; color: #a33b2c; }
 :global(:root[data-theme="dark"]) .value small { color: #ef9d8c; }
 .rangeKey { display: flex; flex-wrap: wrap; gap: 8px 18px; padding-top: 12px; font-size: 11px; color: var(--ink-soft); }
@@ -65,14 +65,14 @@
 .hits figcaption, .years figcaption { font: 600 13px var(--font-display); color: var(--ink); }
 .hits figcaption span, .years figcaption span { display: block; font: 400 11px var(--font-sans); color: var(--muted); }
 .hit { display: grid; grid-template-columns: 130px minmax(0, 1fr) 46px; gap: 12px; align-items: center; font-size: 12px; color: var(--ink-soft); }
-.hit b { text-align: right; font: 600 15px var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.hit b { text-align: right; font: 600 16px var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
 .hitTrack { position: relative; height: 12px; border-radius: 6px; background: var(--chart-track); }
 .hitTrack i { position: absolute; inset: 0 auto 0 0; border-radius: 6px; }
 .hitTrack u { position: absolute; top: -4px; bottom: -4px; width: 0; border-left: 1.5px dashed var(--ink); opacity: .6; text-decoration: none; }
-.hitNote { margin: 4px 0 0; font-size: 11.5px; line-height: 1.55; color: var(--muted); }
+.hitNote { margin: 4px 0 0; font-size: 12px; line-height: 1.55; color: var(--muted); }
 .year { display: grid; grid-template-columns: 70px minmax(0, 1fr) 44px; gap: 12px; align-items: center; font-size: 12px; color: var(--ink-soft); }
 .year[data-elnino] > span:first-child { font-weight: 700; color: var(--ink); }
-.year[data-elnino] > span:first-child::after { content: " · El Niño"; font-weight: 500; color: #a33b2c; font-size: 10.5px; }
+.year[data-elnino] > span:first-child::after { content: " · El Niño"; font-weight: 500; color: #a33b2c; font-size: 11px; }
 :global(:root[data-theme="dark"]) .year[data-elnino] > span:first-child::after { color: #ef9d8c; }
 .year em { font-style: normal; text-align: right; font: 600 13px var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
 .yearTrack { position: relative; height: 10px; border-radius: 5px; background: var(--chart-track); }

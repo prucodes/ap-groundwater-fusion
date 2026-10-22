@@ -35,7 +35,7 @@ export function VillageOffsets() {
     <div className={styles.wrap} data-testid="village-offset-evidence">
       <div className={styles.heads}>
         <div className={styles.head}>
-          <b>{three?.residualErrorM.toFixed(2) ?? "—"} m</b>
+          <b>{three?.residualErrorM.toFixed(2) ?? "–"} m</b>
           <span>error on a later reading after <strong>three readings</strong> at a dug well{base ? <>, against {base.toFixed(2)} m with the mandal figure alone</> : null} ({three?.wells ?? 0} wells)</span>
         </div>
         <div className={styles.head}>
