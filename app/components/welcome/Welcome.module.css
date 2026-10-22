@@ -12,7 +12,8 @@
   font-family: var(--font-sans);
   color-scheme: dark;
 }
-:global(html[data-ap-welcome="remembered"]) .welcome[data-phase="checking"] { visibility: hidden; }
+/* "open" too: the check marks the page open a moment before the entrance unmounts. */
+:global(html[data-ap-welcome="remembered"]) .welcome[data-phase="checking"], :global(html[data-ap-welcome="open"]) .welcome[data-phase="checking"] { display: none; }
 .welcome button, .welcome input { font: inherit; }
 .welcome button { cursor: pointer; }
 .welcome button:disabled { cursor: default; }
