@@ -34,7 +34,12 @@ export function HeaderHero({
   return (
     <>
       <header className={`hero ${variant === "compact" ? "heroCompact" : ""} fadeUp`}>
-        <div className="heroScan" aria-hidden="true" />
+        {/* Decorative strata, not a map or a measured groundwater surface. */}
+        <svg className="heroContours" viewBox="0 0 1000 300" preserveAspectRatio="xMaxYMid slice" aria-hidden="true" focusable="false">
+          {Array.from({ length: 12 }, (_, i) => (
+            <path key={i} d={`M ${360 + i * 11} -30 C ${190 + i * 18} 90, ${820 - i * 9} 40, ${690 + i * 12} 155 S ${440 + i * 19} 280, ${860 + i * 17} 340`} />
+          ))}
+        </svg>
         <div className="heroInner">
           <div className="heroLeft">
             <span className="heroEyebrow">Andhra Pradesh Groundwater Assessment</span>

@@ -14,6 +14,7 @@ export function DistrictProfile({ rows, selected, onSelect }: {
   const x = (depth: number) => 62 + depth / maxDepth * 470;
   const y = (trend: number) => 286 - (trend - minTrend) / (maxTrend - minTrend) * 235;
   const current = rows.find(row => row.district_name === selected);
+  const currentPoint = points.find(row => row.district_name === selected);
   return <div>
     <svg className={styles.chart} viewBox="0 0 575 344" aria-label="District profile: modelled depth versus measured year-on-year change">
       <text x="62" y="22">MEASURED YoY CHANGE / m</text>
@@ -29,6 +30,9 @@ export function DistrictProfile({ rows, selected, onSelect }: {
       })}
       <line x1="62" x2="532" y1={y(0)} y2={y(0)} stroke="var(--muted)" strokeDasharray="4 5" />
       <text x="532" y="333" textAnchor="end">MEAN MODELLED DEPTH / m bgl</text>
+      {currentPoint && <g className={styles.profileGuides} aria-hidden="true">
+        <path d={`M 62 ${y(currentPoint.avg_trend_m_per_yr!)} H ${x(currentPoint.avg_estimate_mbgl!)} V 286`} />
+      </g>}
       {points.map(row => {
         const active = selected === row.district_name;
         const color = row.avg_trend_m_per_yr! > .3 ? "var(--rust)" : "var(--teal)";
@@ -36,6 +40,7 @@ export function DistrictProfile({ rows, selected, onSelect }: {
           aria-label={`${titleCase(row.district_name)}: ${row.avg_estimate_mbgl} m modelled depth, ${row.avg_trend_m_per_yr} m year-on-year change`}
           aria-pressed={active} onClick={() => onSelect(row.district_name)} onPointerEnter={event => { if (event.pointerType === "mouse") onSelect(row.district_name); }}
           onKeyDown={event => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); onSelect(row.district_name); } }}>
+          <title>{titleCase(row.district_name)}</title>
           {active && <circle cx={x(row.avg_estimate_mbgl!)} cy={y(row.avg_trend_m_per_yr!)} r="15" fill="none" stroke={color} strokeWidth="1" />}
           <circle cx={x(row.avg_estimate_mbgl!)} cy={y(row.avg_trend_m_per_yr!)} r={active ? 8 : 6} fill={color} opacity={active ? 1 : .68} stroke="var(--card)" strokeWidth="2" />
         </g>;
@@ -43,6 +48,10 @@ export function DistrictProfile({ rows, selected, onSelect }: {
     </svg>
     <div className={styles.selectedReadout} aria-live="polite">
       <div><strong>{current ? titleCase(current.district_name) : "No district selected"}</strong>
+        {current && <dl className={styles.profileValues}>
+          <div><dt>Modelled depth</dt><dd>{formatNumber(current.avg_estimate_mbgl, " m bgl")}</dd></div>
+          <div><dt>Measured YoY</dt><dd>{current.avg_trend_m_per_yr != null && current.avg_trend_m_per_yr > 0 ? "+" : ""}{formatNumber(current.avg_trend_m_per_yr, " m")}</dd></div>
+        </dl>}
         <span>{current ? `${current.stress_count} stress flags / ${current.mandals.length} prototype units. ${current.mandals.filter(row => row.estimate_mbgl != null).length} modelled; ${current.mandals.filter(row => row.trend_m_per_yr != null).length} with YoY comparisons.` : "No comparable data."}</span>
       </div>
       {current && <Link href={`/watchlist?district=${encodeURIComponent(current.district_name)}`}>Review mandals</Link>}
