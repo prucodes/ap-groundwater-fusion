@@ -10,6 +10,8 @@ import shared from "../rabi/Rabi.module.css";
 import styles from "./Summer.module.css";
 import { brief } from "../../lib/pageBriefs";
 import drinking from "../../data/drinking_water.json";
+import { waterQuality } from "../../lib/waterQuality";
+import { titleCase } from "../../lib/data";
 
 export const metadata: Metadata = {
   title: "Summer Water Outlook | AP Water Intelligence",
@@ -207,6 +209,13 @@ function DrinkingWater({ beyondPeople }: { beyondPeople: number | null }) {
           <span className="headlineText">Sources in those mandals that tested above a permissible chemical limit; a supply plan should not lean on them.</span>
         </div>
       </div>
+      <p className={styles.unsafe} data-testid="summer-unsafe">
+        <b>Where the water itself is unsafe.</b>{" "}{waterQuality.totals.habitations} habitations are marked affected since
+        April {waterQuality.since.slice(0, 4)}, {waterQuality.totals.fluoride} for fluoride and {waterQuality.totals.salinity} for
+        salinity, home to {waterQuality.totals.households.toLocaleString("en-IN")} households. The fluoride is concentrated
+        in {waterQuality.fluorideTopMandals.slice(0, 3).map(t => `${titleCase(t.mandal)} (${t.habitations})`).join(", ")}.{" "}
+        <Link href="/map/">See every mandal on the Mandal Map</Link>, under &ldquo;Unsafe drinking water&rdquo;.
+      </p>
       <details className="foldMore">
         <summary><span>By district</span><span>Schemes on groundwater, mandals past the record and their sources</span></summary>
         <div className="tableWrap">

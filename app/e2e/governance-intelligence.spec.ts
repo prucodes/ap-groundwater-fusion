@@ -95,3 +95,13 @@ test("buried findings now sit where a reader looks for them", async ({ page }) =
   await expect(page.getByTestId("banked-typical")).toContainText("over the last twelve years");
   await expect(page.getByRole("region", { name: "Season evidence", exact: true })).toContainText("Village tanks hold");
 });
+
+test("the map shows where drinking water is unsafe, and Summer Outlook points to it", async ({ page }) => {
+  await page.goto("/map/");
+  await page.getByRole("button", { name: "Unsafe drinking water", exact: true }).click();
+  const legend = page.getByTestId("quality-layer-legend");
+  await expect(legend).toContainText("Fluoride, 5 or more habitations");
+  await expect(legend).toContainText("habitations are marked unsafe");
+  await page.goto("/summer/");
+  await expect(page.getByTestId("summer-unsafe")).toContainText("Where the water itself is unsafe");
+});

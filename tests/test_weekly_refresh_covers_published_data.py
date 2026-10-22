@@ -36,6 +36,11 @@ STATIC_BY_DESIGN = {
     ),
     "dashboard_summary.json": "a July 2026 snapshot; the UI derives its live figures in data.ts instead",
     "source_readiness.json": "hand-maintained description of which sources are live",
+    "water_quality.json": (
+        "habitations the Jal Jeevan Mission marks as quality affected; the public report encrypts its query, "
+        "so it is read through the page into phase3_levels/data/jjm_quality_affected_habitations.csv and "
+        "rebuilt by phase3_levels/build_water_quality.py by hand; the list changes slowly and is dated in the file"
+    ),
     "ap_temperature.json": (
         "the long temperature record; built by phase3_levels/build_temperature_record.py "
         "from 250 MB of sources that gain a month at a time, so it refreshes monthly "

@@ -1,0 +1,9 @@
+{
+ "source": "Jal Jeevan Mission WQMIS, Format L3: quality affected habitations reported on or after 01/04/2019 (Department of Drinking Water and Sanitation, Ministry of Jal Shakti)",
+ "url": "https://ejalshakti.gov.in/WQMIS/Report/quality_affected_habitation",
+ "since": "2019-04-01",
+ "readOn": "2026-10-22",
+ "tapConnectionsAsOf": "2026-10-21",
+ "method": "Read from the public report page, State then each district with any affected habitation, block rows with a non-zero count. The report's query parameters are encrypted in the page, so it is read through the page rather than called directly, and refreshed by hand.",
+ "stateTotals": {"habitations": 287, "households": 47822, "tapConnections": 33717, "arsenic": 0, "fluoride": 265, "iron": 0, "salinity": 22, "nitrate": 1, "heavyMetal": 0}
+}

@@ -28,6 +28,7 @@ import type { DistrictLayerKey, MandalHeatLayerKey } from "../../lib/types";
 import { isWaterLayer, WATER_LAYER_META, waterLayerGradient, waterMandals, type WaterMandalLayer } from "../../lib/waterMandals";
 import { FIELD_LAYER_META, fieldLegend, isFieldLayer, type FieldLayer } from "../../lib/fieldSignals";
 import { RECHARGE_LAYER_META, isRechargeLayer, recharge, rechargeLegend, type RechargeLayer } from "../../lib/rechargeEfficiency";
+import { QUALITY_LAYER_META, isQualityLayer, qualityLegend, waterQuality, type QualityLayer } from "../../lib/waterQuality";
 import { RAIN_LAYER_META, isRainLayer, rainGoverned, rainLegend, type RainLayer } from "../../lib/rainGoverned";
 import { brief } from "../../lib/pageBriefs";
 import { groundwaterStressNow } from "../../lib/pageNow";
@@ -40,7 +41,7 @@ const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "rainfall_mm", label: "Rainfall" },
 ];
 
-type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer;
+type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer | QualityLayer;
 const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "status", label: "Fusion status" },
   { key: "water_balance_mm", label: "Water Balance" },
@@ -51,6 +52,7 @@ const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "gec_category", label: "Groundwater category" },
   { key: "recharge_share", label: "Rain reaching the aquifer" },
   { key: "rain_governed", label: "Does rain still drive it?" },
+  { key: "water_quality", label: "Unsafe drinking water" },
 ];
 
 // The groups and aquifers the two water notes compare, read from the data so the
@@ -134,7 +136,7 @@ export default function MapPage() {
                 </span>
                 {level === "district" ? "Andhra Pradesh · District Heat-Map"
                   : mandalView === "status" ? "Andhra Pradesh · Mandal Fusion Status"
-                    : `Andhra Pradesh · ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isRechargeLayer(mandalView) ? RECHARGE_LAYER_META[mandalView].label : isRainLayer(mandalView) ? RAIN_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
+                    : `Andhra Pradesh · ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isRechargeLayer(mandalView) ? RECHARGE_LAYER_META[mandalView].label : isQualityLayer(mandalView) ? QUALITY_LAYER_META[mandalView].label : isRainLayer(mandalView) ? RAIN_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
                 {level === "mandal" && (isWaterLayer(mandalView) || isFieldLayer(mandalView)) ? (
                   <span className="dataAsOf">{isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].period : FIELD_LAYER_META[mandalView].period}</span>
                 ) : level === "mandal" && mandalView !== "status" ? (
@@ -222,6 +224,24 @@ export default function MapPage() {
                       <summary>How this is measured, and what it cannot say</summary>
                       <p>{RAIN_LAYER_META[mandalView].note}</p>
                       <ul>{rainGoverned.limits.map((limit, i) => <li key={i}>{limit}</li>)}</ul>
+                    </details>
+                  </div>
+                ) : isQualityLayer(mandalView) ? (
+                  <div className="choroLegend" data-testid="quality-layer-legend">
+                    <div className="choroHead">
+                      <span>{QUALITY_LAYER_META[mandalView].label}</span>
+                      <span className="choroPeriod">{QUALITY_LAYER_META[mandalView].period}</span>
+                    </div>
+                    <ul className="categoryLegend">
+                      {qualityLegend().map(item => <li key={item.key}><i style={{ background: item.color }} />{item.label}<b>{item.count}</b></li>)}
+                      <li><i style={{ background: "#e4e8eb" }} />None marked affected</li>
+                    </ul>
+                    <div className="mapHint">
+                      <IconInfo style={{ width: 13, height: 13 }} /> {waterQuality.totals.habitations} habitations are marked unsafe, {waterQuality.totals.fluoride} of them for fluoride and {waterQuality.totals.salinity} for salinity, home to {waterQuality.totals.households.toLocaleString("en-IN")} households. Fluoride is concentrated: {waterQuality.fluorideTopMandals.slice(0, 2).map(t => `${titleCase(t.mandal)} (${t.habitations})`).join(" and ")} hold {Math.round(100 * waterQuality.fluorideTopMandals.slice(0, 2).reduce((n, t) => n + t.habitations, 0) / Math.max(waterQuality.totals.fluoride, 1))}% of it.
+                    </div>
+                    <details className="rechargeMethod">
+                      <summary>Where this comes from, and what it cannot say</summary>
+                      <p>{QUALITY_LAYER_META[mandalView].note} Source: {waterQuality.source}.</p>
                     </details>
                   </div>
                 ) : isRechargeLayer(mandalView) ? (
