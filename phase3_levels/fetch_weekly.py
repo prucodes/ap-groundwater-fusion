@@ -111,6 +111,8 @@ STEPS = [
     # after similar rain fared in the backtest. Optional: a failure keeps last
     # week's notes, which name the month they describe.
     ("build forecast reliability", [PY, os.path.join(HERE, "build_forecast_reliability.py")], False),
+    # One reservoir snapshot a week, added to the canal release log, then summed for the season.
+    ("add up canal releases", [PY, os.path.join(HERE, "build_canal_releases.py")], False, 600),
     # Freeze this week's published forecasts and score any whose month has been measured.
     ("keep the forecast ledger", [PY, os.path.join(HERE, "build_forecast_ledger.py")], False),
     # Whether this season is recharging, measured per mandal against its own

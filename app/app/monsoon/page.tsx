@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CanalWater } from "../../components/CanalWater";
 import tankFill from "../../data/tank_fill.json";
 import { HeaderHero } from "../../components/HeaderHero";
 import { EvidenceComparison } from "../../components/EvidenceComparison";
@@ -367,6 +368,8 @@ export default function MonsoonPage() {
         </div>
         <WaterBanked />
       </section> : null}
+
+      <CanalWater />
 
       <section className="card" id="post-monsoon" aria-label="The official window">
         <div className="cardHead">

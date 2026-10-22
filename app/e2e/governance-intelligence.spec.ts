@@ -105,3 +105,11 @@ test("the map shows where drinking water is unsafe, and Summer Outlook points to
   await page.goto("/summer/");
   await expect(page.getByTestId("summer-unsafe")).toContainText("Where the water itself is unsafe");
 });
+
+test("Monsoon Watch shows canal water by delta and never adds canals into one State figure", async ({ page }) => {
+  await page.goto("/monsoon/");
+  const card = page.getByTestId("canal-water");
+  await expect(card).toContainText("Godavari delta canals");
+  await expect(card).toContainText("Krishna delta canals");
+  await expect(card).toContainText("not added into one State figure");
+});
