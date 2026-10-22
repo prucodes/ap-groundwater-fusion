@@ -268,7 +268,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
         <button type="button" className="creatorCredit" onClick={showWelcome} title="Revisit the introduction">
           <span className="creatorMonogram" aria-hidden="true">py.</span>
-          <span className="creatorCreditText"><strong>{CREATOR_NAME}</strong><small>Every drop has a deeper story</small></span>
+          <span className="creatorCreditText"><small>An exploration by</small><strong>{CREATOR_NAME}</strong></span>
         </button>
 
         <div className="sidebarStatus">
