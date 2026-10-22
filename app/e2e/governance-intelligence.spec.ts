@@ -68,3 +68,19 @@ test("mandal seasonal recovery names pumping as well as rain", async ({ page }) 
   await expect(page.locator(".monsoonCycle")).toContainText("or pumping that took the rise back out");
   await expect(page.getByRole("region", { name: /State network/ })).toContainText("one dated reading");
 });
+
+test("the methodology carries the forecast track record and does not judge it on a handful", async ({ page }) => {
+  await page.goto("/methodology/");
+  const ledger = page.getByTestId("forecast-ledger");
+  await expect(ledger).toContainText("Forecasts on record");
+  await expect(ledger).toContainText("Next to be scored");
+  await expect(ledger).toContainText("SHA-256");
+});
+
+test("the footer and methodology state ownership without claiming the source data", async ({ page }) => {
+  await page.goto("/methodology/");
+  await expect(page.locator(".appCreatorFooter")).toContainText("© 2026");
+  const note = page.getByTestId("method-ownership");
+  await expect(note).toContainText("© 2026 Pruthvi Yannam, all rights reserved");
+  await expect(note).toContainText("Source data belongs to its providers");
+});

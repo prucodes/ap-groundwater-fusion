@@ -3,6 +3,7 @@ import { HeaderHero } from "../../components/HeaderHero";
 import { MethodologyFlow } from "../../components/MethodologyFlow";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
+import { ForecastLedger } from "../../components/ForecastLedger";
 import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconLeaf, IconSatellite } from "../../components/icons";
 import { basePath, mapGeometry, modelCard } from "../../lib/data";
 import { stateSummary } from "../../lib/stateSummary";
@@ -256,6 +257,7 @@ export default function MethodologyPage() {
       </section>
 
       <CrossNetworkCheck />
+      <ForecastLedger />
 
       <section className="card">
         <div className="cardHead">
@@ -555,6 +557,17 @@ export default function MethodologyPage() {
             address.
           </p>
         </div>
+      </section>
+
+      <section className="card" id="ownership" aria-labelledby="method-ownership" data-testid="method-ownership">
+        <div className="cardHead">
+          <div className="cardTitle" id="method-ownership"><span className="titleIcon"><IconInfo /></span>Ownership and reuse</div>
+        </div>
+        <p className="cardNote">
+          Text, design, code and analysis &copy; 2026 Pruthvi Yannam, all rights reserved. Source data belongs to
+          its providers and is used under their terms; each source is named on this page and beside the figures it
+          supports. Citing this work is welcome; reusing it beyond citation needs written permission.
+        </p>
       </section>
     </div>
   );

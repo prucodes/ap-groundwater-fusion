@@ -545,3 +545,9 @@ Guards: `tests/test_visit_counter.py` and `app/e2e/analytics.spec.ts`.
 - Public prototype boundaries must remain `boundary_source=public_prototype` and `official_flag=false`.
 - Mock readings must remain `data_label=mock`.
 - Satellite/model percentiles must not be converted into groundwater depth.
+
+## Licence
+
+Copyright (c) 2026 Pruthvi Yannam. All rights reserved. The code, pipelines,
+models, methods and design are proprietary; see [LICENSE](LICENSE). Third-party
+data stays under its providers' terms.

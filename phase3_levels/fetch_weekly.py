@@ -111,6 +111,8 @@ STEPS = [
     # after similar rain fared in the backtest. Optional: a failure keeps last
     # week's notes, which name the month they describe.
     ("build forecast reliability", [PY, os.path.join(HERE, "build_forecast_reliability.py")], False),
+    # Freeze this week's published forecasts and score any whose month has been measured.
+    ("keep the forecast ledger", [PY, os.path.join(HERE, "build_forecast_ledger.py")], False),
     # Whether this season is recharging, measured per mandal against its own
     # past seasons. Built after the app data so it reads the history the site
     # has just published. Optional: it is a standalone page and a front-page

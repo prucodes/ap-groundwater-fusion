@@ -326,7 +326,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </button>
       </aside>
 
-      <main className="main" tabIndex={-1}><PageTransition>{children}</PageTransition><footer className="appCreatorFooter"><span>AP Water Intelligence · Created by <strong>{CREATOR_NAME}</strong></span><button type="button" onClick={showWelcome}>The story behind the project <span aria-hidden="true">↗</span></button></footer></main>
+      <main className="main" tabIndex={-1}><PageTransition>{children}</PageTransition><footer className="appCreatorFooter"><span>AP Water Intelligence · Created by <strong>{CREATOR_NAME}</strong> · &copy; 2026</span><button type="button" onClick={showWelcome}>The story behind the project <span aria-hidden="true">↗</span></button></footer></main>
       <CommandPalette />
     </div>
   );
