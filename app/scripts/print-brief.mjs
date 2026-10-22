@@ -84,9 +84,11 @@ try {
     "outlook3d.jpg": await render3d(browser, "?mode=outlook", true, "outlook3d.jpg", { x: 0, y: 170, width: 1700, height: 640 }, 1),
   };
   const desk = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  await desk.addInitScript(() => localStorage.setItem("ap-gw-welcome-v1", "entered"));
   for (const [key, route] of [["monsoon", "/monsoon/"], ["drought", "/drought/"], ["map", "/map/"], ["summer", "/summer/"]]) {
     try {
       await desk.goto(`${origin}${route}`, { waitUntil: "networkidle" });
+      await desk.locator(".shell").waitFor();
       await desk.waitForTimeout(800);
       await desk.screenshot({ path: join(folder, `site-${key}.jpg`), type: "jpeg", quality: 78 });
       shots[`site-${key}.jpg`] = true;
@@ -98,7 +100,9 @@ try {
   await desk.close();
 
   const page = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
+  await page.addInitScript(() => localStorage.setItem("ap-gw-welcome-v1", "entered"));
   await page.goto(`${origin}/brief/`, { waitUntil: "networkidle" });
+  await page.locator(".shell").waitFor();
   await page.emulateMedia({ media: "print" });
   await page.evaluate(() => document.fonts.ready);
   const missing = Object.entries(shots).filter(([file, ok]) => !ok || !existsSync(join(folder, file))).map(([file]) => file);

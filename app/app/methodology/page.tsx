@@ -539,8 +539,14 @@ export default function MethodologyPage() {
             GoatCounter</a>, which sets no cookies, stores no IP address and builds no profile across sites. What
             is recorded is the page opened, and — on the Monsoon Watch page — whether a visit used the film, the
             Pacific map, the mandal map or the download, and which of the page&rsquo;s sections came into view.
-            Each of those is counted at most once per visit, so a figure means the number of visits that did
-            something rather than the number of clicks one reader made.
+            The introduction also counts when it is viewed or completed, and the workspace counts download
+            requests and printing. Entered text, names and filenames are never sent. Each action is counted
+            at most once per page load, so repeated clicks do not inflate the figures.
+          </p>
+          <p>
+            The introduction remembers entry on this device using one local preference. It is a personal
+            welcome, not a sign-in: this research project remains public. The preference contains no visitor
+            identifier and is separate from analytics. The creator credit reopens the introduction.
           </p>
           <p>
             It exists to answer one question honestly: which of this evidence is actually reaching anyone. Nothing

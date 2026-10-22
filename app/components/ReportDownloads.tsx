@@ -5,6 +5,7 @@ import { csvBanner, downloadCsv, mandalsToCsv } from "../lib/csv";
 import { awarePayload, districtAdvisories } from "../lib/irrigation";
 import { waterSummary } from "../lib/waterSummary";
 import { IconDownload, IconDroplet, IconLeaf, IconSatellite, IconDatabase } from "./icons";
+import { CREATOR_CREDIT } from "../lib/creator";
 
 function downloadText(filename: string, text: string, type: string) {
   const blob = new Blob([text], { type });
@@ -62,7 +63,7 @@ const ITEMS = [
   { icon: <IconDatabase />, name: "AWARE draft payload", desc: "Unreleased schema preview. Nothing is dispatched.", fmt: "JSON", run: () => downloadText("ap_aware_advisory_payload.json", JSON.stringify(awarePayload(), null, 2), "application/json") },
   { icon: <IconLeaf />, name: "Season context by district", desc: "Gauge rain, soil moisture and reservoir storage, each with its date.", fmt: "CSV", run: () => downloadCsv("ap_season_context_by_district.csv", seasonCsv()) },
   { icon: <IconSatellite />, name: "NASA GRACE samples", desc: "Satellite-model percentiles at district centroids.", fmt: "CSV", run: () => downloadCsv("ap_nasa_grace_samples.csv", nasaSamplesCsv()) },
-  { icon: <IconDatabase />, name: "Evidence & model pack", desc: "Source periods, coverage, input hashes and model evaluation.", fmt: "JSON", run: () => downloadText("ap_evidence_model_pack.json", JSON.stringify({ releaseStatus: "research_only", operationalUse: false, caveats: ["Not live telemetry or official APWRIMS results.", "Seasonal baseline review pending; this pack does not independently certify source data."], manifest: datasetManifest, modelCard }, null, 2), "application/json") },
+  { icon: <IconDatabase />, name: "Evidence & model pack", desc: "Source periods, coverage, input hashes and model evaluation.", fmt: "JSON", run: () => downloadText("ap_evidence_model_pack.json", JSON.stringify({ application: "AP Water Intelligence", creator: CREATOR_CREDIT, releaseStatus: "research_only", operationalUse: false, caveats: ["Not live telemetry or official APWRIMS results.", "Seasonal baseline review pending; this pack does not independently certify source data."], manifest: datasetManifest, modelCard }, null, 2), "application/json") },
 ];
 
 export function ReportDownloads() {

@@ -91,7 +91,7 @@ def test_every_page_carries_the_counter(counter):
 
 def test_events_are_namespaced_and_labelled():
     calls = []
-    files = [os.path.join(COMPONENTS, n) for n in sorted(os.listdir(COMPONENTS)) if n.endswith(".tsx")]
+    files = [os.path.join(root, n) for root, _, names in os.walk(COMPONENTS) for n in sorted(names) if n.endswith(".tsx")]
     for path in files + [MONSOON]:
         source = read(path)
         calls += re.findall(r'countEvent\(\s*"([^"]+)"\s*,\s*"([^"]+)"', source)
@@ -99,7 +99,7 @@ def test_events_are_namespaced_and_labelled():
     assert calls, "no events found; the monsoon page should still be counting its controls"
     labels = {}
     for event, title in calls:
-        assert event.startswith("monsoon/"), f"{event} should say which page it belongs to"
+        assert event.startswith(("monsoon/", "welcome/", "app/", "report/")), f"{event} should say which experience it belongs to"
         # One event, one label: the dashboard shows the title, so a name that arrives with two
         # different labels reads as two different things.
         assert labels.setdefault(event, title) == title, f"{event} has two labels"

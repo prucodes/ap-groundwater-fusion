@@ -148,6 +148,7 @@ export default function DigestPage() {
         </div>
 
         <footer className={styles.foot}>
+          AP Water Intelligence · Conceived and built by Pruthvi Yannam. {" "}
           Sources: APWRIMS (reservoirs, gauge rain, NRSC soil moisture, State wells), the national drought manual&rsquo;s indicators (Drought Watch), ECMWF forecast via Open-Meteo, NOAA STAR vegetation health, CGWB/INGRES assessment, ESA WorldCereal, NOAA CPC. Each figure&rsquo;s own date is beside it. Full detail at prucodes.github.io/ap-groundwater-fusion.
         </footer>
       </article>

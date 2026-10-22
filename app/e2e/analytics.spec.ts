@@ -85,7 +85,8 @@ test("counts an interaction once, however many times a visit uses it", async ({ 
   const events = (await sent()).filter((row) => row.event);
   expect(events.filter((row) => row.path === "ap-gw/monsoon/pacific-play")).toHaveLength(1);
   expect(events.filter((row) => row.path === "ap-gw/monsoon/map-inspect")).toHaveLength(1);
-  expect(events.every((row) => row.path.startsWith("ap-gw/monsoon/"))).toBe(true);
+  // A returning visit also records that the workspace opened after hydration.
+  expect(events.every((row) => row.path.startsWith("ap-gw/monsoon/") || row.path === "ap-gw/app/opened")).toBe(true);
   expect(events.every((row) => (row.title ?? "").length > 12)).toBe(true);
 });
 

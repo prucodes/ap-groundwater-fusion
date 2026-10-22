@@ -92,6 +92,24 @@
 /* ============================================================
    Dark theme — overrides surface tokens; status hues stay legible.
    ============================================================ */
+/* Authorship stays with the workspace, including its narrow sidebar. */
+.creatorCredit { display: flex; align-items: center; gap: 11px; margin: 14px 16px 4px; padding: 13px 0; text-align: left; color: #d7e6df; border: 0; border-top: 1px solid #ffffff16; background: none; cursor: pointer; }
+.creatorMonogram { flex-shrink: 0; width: 30px; color: #c6e9bc; font: italic 27px Georgia, serif; text-align: center; }
+.creatorCreditText { display: grid; gap: 3px; }
+.creatorCreditText small { color: #98b0ad; font-size: 9px; font-weight: 400; }
+.creatorCreditText strong { font-size: 11px; font-weight: 500; }
+.creatorCredit:hover strong { color: #d4efbb; }
+.creatorCredit:focus-visible, .appCreatorFooter button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
+.shellCollapsed .creatorCredit { margin-left: 18px; margin-right: 18px; }
+.shellCollapsed .creatorCreditText { display: none; }
+.appCreatorFooter { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin: 26px 28px 0; padding: 20px 0 24px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 10px; }
+.appCreatorFooter strong { font-weight: 500; }
+.appCreatorFooter button { padding: 0; border: 0; background: none; color: var(--ink-soft); font: inherit; cursor: pointer; }
+.appCreatorFooter button span { margin-left: 7px; }
+.main:focus { outline: none; }
+@media (max-width: 760px) { .appCreatorFooter { margin: 18px 16px 0; padding-bottom: 24px; } }
+@media print { .appCreatorFooter, .creatorCredit { display: none !important; } }
+
 :root[data-theme="dark"] {
   --ink: #eaf1f9;
   --ink-soft: #aebfd2;
