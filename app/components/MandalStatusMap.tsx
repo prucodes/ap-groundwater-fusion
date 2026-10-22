@@ -21,6 +21,7 @@ import { isWaterLayer, WATER_LAYER_META, waterLayerColor, waterLayerText, type W
 import { FIELD_LAYER_META, fieldLayerColor, fieldLayerText, isFieldLayer, type FieldLayer } from "../lib/fieldSignals";
 import { RECHARGE_LAYER_META, isRechargeLayer, rechargeColor, rechargeText, type RechargeLayer } from "../lib/rechargeEfficiency";
 import { RAIN_LAYER_META, isRainLayer, rainColor, rainText, type RainLayer } from "../lib/rainGoverned";
+import { QUALITY_LAYER_META, isQualityLayer, qualityColor, qualityText, type QualityLayer } from "../lib/waterQuality";
 import { mapTooltipStyle } from "../lib/mapTooltip";
 import { HoverHydrograph } from "./HoverHydrograph";
 
@@ -36,7 +37,7 @@ export function MandalStatusMap({
 }: {
   selectedId?: string;
   onSelect: (id: string) => void;
-  layer?: MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer | null;
+  layer?: MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer | QualityLayer | null;
   /** Cap height (px); omit to fill the container width and scale by aspect. */
   maxHeight?: number;
 }) {
@@ -49,6 +50,7 @@ export function MandalStatusMap({
     if (layer) return isWaterLayer(layer) ? waterLayerColor(layer, d, m, dark)
       : isRechargeLayer(layer) ? rechargeColor(d, m)
       : isRainLayer(layer) ? rainColor(d, m)
+      : isQualityLayer(layer) ? qualityColor(d, m)
       : isFieldLayer(layer) ? fieldLayerColor(layer, d, m) : mandalHeatColor(layer, d, m, dark);
     const record = mandalByMapKey(d, m);
     return record?.status_bucket ? statusMeta(record.status_bucket).color : "var(--field)";
@@ -119,6 +121,11 @@ export function MandalStatusMap({
             <div className="estHoverRow">
               <span>{RAIN_LAYER_META[layer].label}</span>
               <strong>{rainText(hover.d, hover.m) ?? "Too few seasons"}</strong>
+            </div>
+          ) : layer && isQualityLayer(layer) ? (
+            <div className="estHoverRow">
+              <span>{QUALITY_LAYER_META[layer].label}</span>
+              <strong>{qualityText(hover.d, hover.m) ?? "None marked affected"}</strong>
             </div>
           ) : layer && isRechargeLayer(layer) ? (
             <div className="estHoverRow">

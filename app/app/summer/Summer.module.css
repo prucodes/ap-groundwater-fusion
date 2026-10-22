@@ -90,3 +90,8 @@
   .track { grid-column: 1 / -1; grid-row: 2; }
   .hit { grid-template-columns: 104px minmax(0, 1fr) 40px; }
 }
+
+/* The State's own list of habitations with unsafe water, beside the sources it counts. */
+.unsafe { margin: 14px 0 6px; max-width: 980px; font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
+.unsafe b { color: var(--ink); font-weight: 600; }
+.unsafe a { color: var(--teal); }
