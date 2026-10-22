@@ -68,3 +68,11 @@ test("mandal seasonal recovery names pumping as well as rain", async ({ page }) 
   await expect(page.locator(".monsoonCycle")).toContainText("or pumping that took the rise back out");
   await expect(page.getByRole("region", { name: /State network/ })).toContainText("one dated reading");
 });
+
+test("the methodology carries the forecast track record and does not judge it on a handful", async ({ page }) => {
+  await page.goto("/methodology/");
+  const ledger = page.getByTestId("forecast-ledger");
+  await expect(ledger).toContainText("Forecasts on record");
+  await expect(ledger).toContainText("Next to be scored");
+  await expect(ledger).toContainText("SHA-256");
+});

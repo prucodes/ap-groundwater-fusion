@@ -1,0 +1,88 @@
+{
+ "contractVersion": "1.0.0",
+ "generatedAt": "2026-10-22T18:05:38+00:00",
+ "kind": "prospective_track_record",
+ "rule": "Each mandal's earliest-issued 3-month forecast for a target month, frozen the week it was published and never changed, against the reading later measured for that month. The no-change rule repeats the reading at the forecast's origin. Bias is forecast minus measured, metres below ground: negative means more water was forecast than came.",
+ "weeksFrozen": 8,
+ "firstIssued": "2026-09-28",
+ "lastIssued": "2026-10-19",
+ "forecastsTracked": 1307,
+ "scored": {
+  "forecasts": 3,
+  "maeM": 2.657,
+  "biasM": -0.41,
+  "bandCoveragePct": 33.3,
+  "pairedForecasts": 3,
+  "pairedMaeM": 2.657,
+  "noChangeMaeM": 1.406,
+  "gainPct": -89.0
+ },
+ "byTarget": {
+  "2026-09": {
+   "forecasts": 3,
+   "maeM": 2.657,
+   "biasM": -0.41,
+   "bandCoveragePct": 33.3,
+   "pairedForecasts": 3,
+   "pairedMaeM": 2.657,
+   "noChangeMaeM": 1.406,
+   "gainPct": -89.0
+  }
+ },
+ "pendingByTarget": {
+  "2026-09": 11,
+  "2026-10": 1,
+  "2026-11": 642,
+  "2026-12": 650
+ },
+ "weeks": [
+  {
+   "issued": "2026-09-28",
+   "forecasts": 657,
+   "source": "git c617ded40f05, committed 2026-09-29T14:57:02-04:00",
+   "sha256": "ef029fd47df7da4fd611c4c337681dcc48f09f3ded458075b774963d04950e1b"
+  },
+  {
+   "issued": "2026-10-02",
+   "forecasts": 657,
+   "source": "git cc86184ad1fc, committed 2026-10-02T22:56:40-04:00",
+   "sha256": "c06004ac96b0de70229bf1dabb0af50f6708c65bd3a7f45c10e1390b79fd1447"
+  },
+  {
+   "issued": "2026-10-03",
+   "forecasts": 657,
+   "source": "git 0c5cede061f0, committed 2026-10-03T07:47:50-04:00",
+   "sha256": "6def16eaf0415ebff5890896a31582b133dac4e1fb7584c5dc6099646a8afc30"
+  },
+  {
+   "issued": "2026-10-05",
+   "forecasts": 657,
+   "source": "git c1a2cc24735c, committed 2026-10-05T14:00:06Z",
+   "sha256": "b6fa2004e4c86f3f40610212dee69db1c31e55c9797709255eb00d7da773be48"
+  },
+  {
+   "issued": "2026-10-08",
+   "forecasts": 657,
+   "source": "git 2f1280230d52, committed 2026-10-08T22:52:22Z",
+   "sha256": "aed85adffb80187f5d529ba76eb150cd4bc7eb21ebaf0c964797ce726b4252f3"
+  },
+  {
+   "issued": "2026-10-09",
+   "forecasts": 666,
+   "source": "git 0c4f33479d77, committed 2026-10-10T02:40:46-04:00",
+   "sha256": "72483af3575900e86e8a00c30f724c9c29e2b0de141a37af94203a99f6470b66"
+  },
+  {
+   "issued": "2026-10-12",
+   "forecasts": 666,
+   "source": "git 4ad0b98f429f, committed 2026-10-12T16:11:18Z",
+   "sha256": "6664dc298667ab55f09666eb7d97cf0ac46923abc0d0d8a131e3c998310f1a2b"
+  },
+  {
+   "issued": "2026-10-19",
+   "forecasts": 666,
+   "source": "git 8bca75fcbce1, committed 2026-10-19T15:25:16Z",
+   "sha256": "729ab55b8fad390c32975c2263b71672735984e4683462c39dcf24eb61696ca6"
+  }
+ ]
+}

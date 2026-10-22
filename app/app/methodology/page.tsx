@@ -3,6 +3,7 @@ import { HeaderHero } from "../../components/HeaderHero";
 import { MethodologyFlow } from "../../components/MethodologyFlow";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
+import { ForecastLedger } from "../../components/ForecastLedger";
 import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconLeaf, IconSatellite } from "../../components/icons";
 import { basePath, mapGeometry, modelCard } from "../../lib/data";
 import { stateSummary } from "../../lib/stateSummary";
@@ -256,6 +257,7 @@ export default function MethodologyPage() {
       </section>
 
       <CrossNetworkCheck />
+      <ForecastLedger />
 
       <section className="card">
         <div className="cardHead">
