@@ -97,9 +97,14 @@
 html:not([data-ap-welcome]) .shell, html[data-ap-welcome="welcome"] .shell { display: none; }
 /* Authorship stays with the workspace, including its narrow sidebar. */
 .creatorCredit { display: flex; align-items: center; gap: 11px; margin: 14px 16px 4px; padding: 13px 0; text-align: left; color: #d7e6df; border: 0; border-top: 1px solid #ffffff16; background: none; cursor: pointer; }
-.creatorMonogram { flex-shrink: 0; width: 30px; color: #c6e9bc; font: italic 28px Georgia, serif; text-align: center; }
+.creatorMonogram { position: relative; flex-shrink: 0; width: 30px; padding-bottom: 6px; color: #c6e9bc; font: italic 28px Georgia, serif; text-align: center; }
+/* A thin water line under the signature that drifts on hover, like a surface moving. */
+.creatorMonogram::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 5px; opacity: .45; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='5' viewBox='0 0 20 5'%3E%3Cpath d='M0 2.5 Q5 0 10 2.5 T20 2.5' fill='none' stroke='%2379dbbf' stroke-width='1'/%3E%3C/svg%3E") repeat-x 0 0 / 20px 5px; transition: opacity .3s; }
+.creatorCredit:hover .creatorMonogram::after, .creatorCredit:focus-visible .creatorMonogram::after { opacity: .9; animation: creatorDrift 2.4s linear infinite; }
+@keyframes creatorDrift { to { background-position: 20px 0; } }
+@media (prefers-reduced-motion: reduce) { .creatorCredit:hover .creatorMonogram::after { animation: none; } }
 .creatorCreditText { display: grid; gap: 3px; }
-.creatorCreditText small { color: #98b0ad; font-size: 10px; font-weight: 400; }
+.creatorCreditText small { color: #98b0ad; font-size: 10px; font-style: italic; font-weight: 400; }
 .creatorCreditText strong { font-size: 11px; font-weight: 500; }
 .creatorCredit:hover strong { color: #d4efbb; }
 .creatorCredit:focus-visible, .appCreatorFooter button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; }
