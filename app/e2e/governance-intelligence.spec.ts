@@ -84,3 +84,14 @@ test("the footer and methodology state ownership without claiming the source dat
   await expect(note).toContainText("© 2026 Pruthvi Yannam, all rights reserved");
   await expect(note).toContainText("Source data belongs to its providers");
 });
+
+test("buried findings now sit where a reader looks for them", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".monsoonStripCell").filter({ hasText: "Reservoir storage" })).toContainText("village tanks hold");
+  await expect(page.locator(".headlineCard").filter({ hasText: "Next summer" })).toContainText("rural drinking-water schemes draw on this groundwater");
+  await page.getByText("All figures and model accuracy").click();
+  await expect(page.getByTestId("overview-proof")).toContainText("Checked on wells it never saw");
+  await page.goto("/monsoon/");
+  await expect(page.getByTestId("banked-typical")).toContainText("over the last twelve years");
+  await expect(page.getByRole("region", { name: "Season evidence", exact: true })).toContainText("Village tanks hold");
+});

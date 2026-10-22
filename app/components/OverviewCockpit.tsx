@@ -47,10 +47,17 @@ const shortDay = (iso: string | null | undefined) => {
 /** The summer outlook's headline, worked out on the server (the outlook file stays out of the browser). */
 export type OverviewSummer = { beyond: number; beyondDeep: number; deepM: number; peopleDeep: string | null };
 
-export function OverviewCockpit({ agreement, summer, droughtWeek = null }: {
+export type OverviewProof = {
+  tanksBelowPct: number | null; tanksEmptier: number; tanksScored: number; drinkingGroundwaterPct: number;
+  crossForecastPct: number; crossMeasuredPct: number; ledgerTracked: number;
+};
+
+export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof = null }: {
   agreement: OverviewAgreement | null; summer?: OverviewSummer | null;
   /** Mandals whose drought manual reading moved since last week, as the This Week map counts them. */
   droughtWeek?: { worse: number; better: number } | null;
+  /** Findings from other pages (tanks, drinking water, the independent check, the ledger), as numbers. */
+  proof?: OverviewProof | null;
 }) {
   const dark = useIsDark();
   const s = dashboardSummary.summary;
@@ -150,7 +157,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null }: {
             <span className="headlineKicker"><IconWaves /> Next summer</span>
             <strong>{summer.beyond}<small>mandals heading past their deepest May</small></strong>
             <span className="headlineText">
-              {summer.beyondDeep} of them more than {summer.deepM} m down{summer.peopleDeep ? `, home to about ${summer.peopleDeep}` : ""}. A projection from past winters.
+              {summer.beyondDeep} of them more than {summer.deepM} m down{summer.peopleDeep ? `, home to about ${summer.peopleDeep}` : ""}. A projection from past winters.{proof ? ` ${proof.drinkingGroundwaterPct}% of rural drinking-water schemes draw on this groundwater.` : ""}
             </span>
             <span className="headlineGo">Summer Outlook <IconArrowRight /></span>
           </Link>
@@ -294,7 +301,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null }: {
             <div className="monsoonStripCell">
               <span>Reservoir storage</span>
               <strong>{formatNumber(season.reservoirs.storagePct)}%</strong>
-              <em>of capacity · {formatNumber(season.reservoirs.lastYearPct)}% a year ago</em>
+              <em>of capacity · {formatNumber(season.reservoirs.lastYearPct)}% a year ago{proof?.tanksBelowPct != null && proof.tanksBelowPct > 0 ? ` · village tanks hold ${proof.tanksBelowPct}% less water than usual` : ""}</em>
             </div>
           ) : null}
           {agreement ? (
@@ -438,6 +445,15 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null }: {
         <div className="depthBandIntro"><span className="validationEyebrow">Accuracy by depth</span><span>Error by depth band versus carrying the last reading forward.</span></div>
         {temporalEval.depthBands.map(band => <div className="depthBandCell" key={band.band}><span>{band.band}</span><strong>{formatNumber(band.maeM)} m</strong><em>vs {formatNumber(band.lastReadingMaeM)} m baseline</em></div>)}
       </div>
+      {proof ? (
+        <p className="overviewProof" data-testid="overview-proof">
+          <b>Checked on wells it never saw.</b>{" "}In usual seasons the forecast called the direction of CGWB&rsquo;s own
+          wells right {proof.crossForecastPct}% of the time, as often as the two measured networks agree with each
+          other ({proof.crossMeasuredPct}%). <b>And on the record:</b>{" "}{proof.ledgerTracked.toLocaleString("en-IN")} published
+          forecasts are frozen and will be scored as their months are measured.{" "}
+          <Link href="/methodology/#forecast-ledger">How both are kept</Link>.
+        </p>
+      ) : null}
       </details>
 
       <div className="overviewSupportGrid">

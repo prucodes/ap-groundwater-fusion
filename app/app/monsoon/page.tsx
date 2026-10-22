@@ -1,4 +1,5 @@
 import Link from "next/link";
+import tankFill from "../../data/tank_fill.json";
 import { HeaderHero } from "../../components/HeaderHero";
 import { EvidenceComparison } from "../../components/EvidenceComparison";
 import {
@@ -48,6 +49,9 @@ const ENSO_LABEL: Record<string, string> = {
   la_nina: "La Niña",
   neutral: "Neutral",
 };
+
+// Village tanks against their own usual for the same weeks (build_tank_fill.py), shown beside the reservoirs.
+const tanksBelowPct = tankFill.wetHaUsual ? Math.round(100 * (1 - tankFill.wetHaNow / tankFill.wetHaUsual)) : null;
 
 export default function MonsoonPage() {
   const w = monsoonWatch;
@@ -144,7 +148,7 @@ export default function MonsoonPage() {
             <div className="headlineCard headlineStatic">
               <span className="headlineKicker"><IconWaves /> Reservoirs</span>
               <strong>{formatNumber(storage.storagePct)}%<small>of capacity on {day(storage.asOf)}</small></strong>
-              <span className="headlineText">{formatNumber(storage.lastYearPct)}% a year ago, across {storage.count} reservoirs.</span>
+              <span className="headlineText">{formatNumber(storage.lastYearPct)}% a year ago, across {storage.count} reservoirs.{tanksBelowPct !== null && tanksBelowPct > 0 ? ` Village tanks hold ${tanksBelowPct}% less water than usual for the time of year.` : ""}</span>
               <EvidenceComparison label="Stored / capacity" value={storage.storagePct} reference={storage.lastYearPct}
                 referenceLabel="A year ago" unit="%" maximum={100} />
             </div>

@@ -1,4 +1,5 @@
 import { formatNumber, monsoonWatch } from "../lib/data";
+import { recharge } from "../lib/rechargeEfficiency";
 import styles from "./WaterBanked.module.css";
 
 /* What the season put into the ground, estimated.
@@ -34,6 +35,13 @@ export function WaterBanked() {
         <span className={styles.headline}>{banked.sharePct}%</span>
         <p>of the rain that fell on Andhra Pradesh this season is estimated to still be in the ground.</p>
       </div>
+      {recharge.stateMedianSharePct != null ? (
+        <p className={styles.typical} data-testid="banked-typical">
+          For comparison, over the last twelve years the median mandal had stored about <b>{formatNumber(recharge.stateMedianSharePct)}%</b>{" "}of
+          its monsoon rain by November. So far this season the median mandal has stored <b>{formatNumber(banked.medianSharePct)}%</b>, with
+          October and November still to come.
+        </p>
+      ) : null}
 
       <div className={styles.ribbon}>
         <div className={styles.kept} style={{ width: `${Math.min(100, Math.max(banked.sharePct, 0.6))}%` }} />
