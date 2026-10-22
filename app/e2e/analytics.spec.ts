@@ -57,11 +57,13 @@ test("counts a move to another page, dropping the theme it was opened with", asy
   await page.goto("/monsoon/");
   await routerReady(page);
   const sent = await recordSends(page);
+  // Page views only: on a slow runner the welcome's app/opened event can land after the router is ready.
+  const views = async () => (await sent()).filter((row) => !row.event);
   await page.evaluate(() => history.pushState({}, "", "/districts/?theme=dark"));
-  expect(await sent()).toEqual([{ path: "/districts/" }]);
+  expect(await views()).toEqual([{ path: "/districts/" }]);
   // The same screen again is the same screen, whatever else is in the address.
   await page.evaluate(() => history.replaceState({}, "", "/districts/?theme=light"));
-  expect(await sent()).toHaveLength(1);
+  expect(await views()).toHaveLength(1);
 });
 
 test("counts an interaction once, however many times a visit uses it", async ({ page }) => {
