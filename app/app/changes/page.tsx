@@ -167,6 +167,7 @@ export default function ChangesPage() {
           <p className={styles.basis}>Mandal comparison: one week of rain earlier. Separate from the headline refresh above.</p>
         </header>
         <div className={styles.movesGrid}>
+          <div className={styles.movesMain}>
           <WeekMoveMap {...weekMoves()} aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height}
             label={`Drought manual reading by mandal: ${changes.drought.worse.length} worse and ${changes.drought.better.length} better than last week.`} />
           <details className={styles.movesList}>
@@ -190,6 +191,34 @@ export default function ChangesPage() {
             ) : <p className={styles.empty}>No mandal changed its reading this week.</p>}
             <Link href="/drought" className={styles.more}>Open the Drought Watch →</Link>
           </details>
+          </div>
+          <section className={styles.list} aria-label="Groundwater status that moved">
+            <div className={styles.listHead}>
+              <h3>Groundwater status that moved</h3>
+              <span>Latest reading {asOf(changes.groundwater.latestMonth.before)} → {asOf(changes.groundwater.latestMonth.after)} · {changes.groundwater.worse} worse, {changes.groundwater.better} better</span>
+            </div>
+            {changes.groundwater.moved.length ? (
+              <RowFold id="moved-groundwater-rows" total={changes.groundwater.moved.length} visible={8} noun="mandals">
+              <ul>
+                {changes.groundwater.moved.map((m, i) => (
+                  <li key={m.id} data-worse={m.worse} {...foldAt(i, 8)}>
+                    <span className={styles.mark}>{m.worse ? "▲" : "▼"}</span>
+                    <span className={styles.where}><b>{place(m.mandal ?? "")}</b><small>{place(m.district ?? "")}</small></span>
+                    <span className={styles.move}>{STATUS_TEXT[m.from] ?? m.from} → <b>{STATUS_TEXT[m.to] ?? m.to}</b></span>
+                  </li>
+                ))}
+              </ul>
+              </RowFold>
+            ) : (
+              <p className={styles.empty}>
+                {changes.groundwater.latestMonth.before === changes.groundwater.latestMonth.after
+                  ? `No new month of groundwater readings since the last refresh; the latest is still ${asOf(changes.groundwater.latestMonth.after)}. Readings arrive monthly.`
+                  : "No mandal changed its groundwater status."}
+              </p>
+            )}
+            {changes.groundwater.truncated ? <p className={styles.empty}>Showing the first {changes.groundwater.moved.length}; the full list is on the watchlist.</p> : null}
+            <Link href="/watchlist" className={styles.more}>Open the watchlist →</Link>
+          </section>
         </div>
       </section>
       </div>
@@ -205,35 +234,6 @@ export default function ChangesPage() {
 
       <FieldTeams />
 
-      <div className={styles.lists}>
-        <section className={styles.list} aria-label="Groundwater status that moved">
-          <div className={styles.listHead}>
-            <h3>Groundwater status that moved</h3>
-            <span>Latest reading {asOf(changes.groundwater.latestMonth.before)} → {asOf(changes.groundwater.latestMonth.after)} · {changes.groundwater.worse} worse, {changes.groundwater.better} better</span>
-          </div>
-          {changes.groundwater.moved.length ? (
-            <RowFold id="moved-groundwater-rows" total={changes.groundwater.moved.length} visible={8} noun="mandals">
-            <ul>
-              {changes.groundwater.moved.map((m, i) => (
-                <li key={m.id} data-worse={m.worse} {...foldAt(i, 8)}>
-                  <span className={styles.mark}>{m.worse ? "▲" : "▼"}</span>
-                  <span className={styles.where}><b>{place(m.mandal ?? "")}</b><small>{place(m.district ?? "")}</small></span>
-                  <span className={styles.move}>{STATUS_TEXT[m.from] ?? m.from} → <b>{STATUS_TEXT[m.to] ?? m.to}</b></span>
-                </li>
-              ))}
-            </ul>
-            </RowFold>
-          ) : (
-            <p className={styles.empty}>
-              {changes.groundwater.latestMonth.before === changes.groundwater.latestMonth.after
-                ? `No new month of groundwater readings since the last refresh; the latest is still ${asOf(changes.groundwater.latestMonth.after)}. Readings arrive monthly.`
-                : "No mandal changed its groundwater status."}
-            </p>
-          )}
-          {changes.groundwater.truncated ? <p className={styles.empty}>Showing the first {changes.groundwater.moved.length}; the full list is on the watchlist.</p> : null}
-          <Link href="/watchlist" className={styles.more}>Open the watchlist →</Link>
-        </section>
-      </div>
 
       <p className={styles.foot}>
         Compared with {changes.comparedWith.label}{changes.comparedWith.commit ? ` (commit ${changes.comparedWith.commit}${changes.comparedWith.committedAt ? `, ${shortDate(changes.comparedWith.committedAt, true)}` : ""})` : ""}.{" "}

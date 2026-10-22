@@ -1,5 +1,5 @@
 export const CREATOR_NAME = "Pruthvi Yannam";
-export const CREATOR_CREDIT = `Built by ${CREATOR_NAME}`;
+export const CREATOR_CREDIT = `Created by ${CREATOR_NAME}`;
 
 /** A local welcome preference, never authentication or a visitor identifier. */
 export const WELCOME_STORAGE_KEY = "ap-gw-welcome-v1";

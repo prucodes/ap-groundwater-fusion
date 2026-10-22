@@ -43,6 +43,9 @@ export default function DistrictsPage() {
         variant="compact"
       />
 
+      <nav className="jumpNavPlain jumpNav" aria-label="District sections"><a href="#chapter-districts">Districts at a glance</a><a href="#district-decline">Eleven-year decline</a><a href="#district-detail">Selected district</a><a href="#chapter-look">Where to look closer</a><a href="#field-queue">Field visits</a><a href="#assessment-trajectory">Decade vs assessment</a><a href="#seawater-watch">Below sea level</a><a href="#chapter-village">Village level</a></nav>
+
+      <h2 className="pageChapter" id="chapter-districts">Districts at a glance<span>pick a district in either view; the panels below follow it</span></h2>
       <div className={styles.districtWorkspace}>
         <section className="card mapCard">
           <div className="cardHead">
@@ -87,7 +90,7 @@ export default function DistrictsPage() {
         </section>
       </div>
 
-      <section className="card">
+      <section className="card" id="district-decline">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconActivity /></span>
@@ -98,51 +101,80 @@ export default function DistrictsPage() {
         <DistrictTrendGrid series={trendSeries} selected={selected} onSelect={setSelected} />
       </section>
 
-      <section className="card" id="assessment-trajectory">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconDroplet /></span>
-            Where the decade disagrees with the assessment
+      {current && (
+        <section className="card" id="district-detail">
+          <div className="cardHead">
+            <div className="cardTitle">
+              <span className="titleIcon">
+                <IconLayers />
+              </span>
+              {titleCase(current.district_name)} District · {current.mandals.filter(m => m.estimate_mbgl != null).length} of {current.mandals.length} prototype units modelled
+            </div>
+            <ExportCsvButton
+              rows={current.mandals}
+              filename={`ap_${current.district_name.toLowerCase()}_mandals.csv`}
+            />
           </div>
-          <span className="cardSub">official category against twelve years of measured pre-monsoon depth</span>
-        </div>
-        <AssessmentTrajectory />
-      </section>
 
-      <section className="card" id="seawater-watch">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconDroplet /></span>
-            Where the water table sits below sea level
+          <div className="kpiRow kpiRow4" style={{ marginBottom: 16 }}>
+            <div className="kpiCard" style={{ ["--accent" as string]: "var(--teal)" }}>
+              <div className="kpiTop"><span className="kpiIcon"><IconLayers /></span><span className="kpiLabel">Mandals</span></div>
+              <div className="kpiValue">{current.mandal_count}</div>
+            </div>
+            <div className="kpiCard" style={{ ["--accent" as string]: "var(--rust)" }}>
+              <div className="kpiTop"><span className="kpiIcon"><IconActivity /></span><span className="kpiLabel">In Stress</span></div>
+              <div className="kpiValue">{current.stress_count}</div>
+            </div>
+            <div className="kpiCard" style={{ ["--accent" as string]: "var(--green)" }}>
+              <div className="kpiTop"><span className="kpiIcon"><IconCheck /></span><span className="kpiLabel">Stable</span></div>
+              <div className="kpiValue">{current.normal_count}</div>
+            </div>
+            <div className="kpiCard" style={{ ["--accent" as string]: "var(--cyan)" }}>
+              <div className="kpiTop"><span className="kpiIcon"><IconDroplet /></span><span className="kpiLabel">Avg Level (m)</span></div>
+              <div className="kpiValue">{formatNumber(current.avg_estimate_mbgl)}</div>
+            </div>
           </div>
-          <span className="cardSub">ground height minus measured depth, against the official salinity map · an estimate to verify</span>
-        </div>
-        <SeawaterWatch />
-      </section>
 
-      <section className="card" id="village-offsets">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconDroplet /></span>
-            Can a level be given per village?
+          <div className="tableWrap">
+            <table className="dataTable">
+              <thead>
+                <tr>
+                  <th>Mandal</th>
+                  <th>Historical median</th>
+                  <th>Est. Level β</th>
+                  <th>NASA GW percentile</th>
+                  <th>Root-Zone</th>
+                  <th>Water Balance</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {current.mandals.map((m) => (
+                  <tr key={m.id} onClick={() => router.push(`/mandals/${m.id}`)}>
+                    <td className="cellStrong">{titleCase(m.mandal_name)}</td>
+                    <td>{formatNumber(m.median_groundwater_mbgl)} <small style={{ color: "var(--muted-2)" }}>mbgl</small></td>
+                    <td><strong>{formatNumber(m.estimate_mbgl)}</strong> <small style={{ color: "var(--muted-2)" }}>m</small></td>
+                    <td><PercentileBar value={m.groundwater_percentile} /></td>
+                    <td><PercentileBar value={m.rootzone_percentile} /></td>
+                    <td>
+                      {m.water_balance_status ? (
+                        <span style={{ color: balanceMeta(m.water_balance_status).color, fontWeight: 600, fontSize: 11.5 }}>
+                          {m.water_balance_status}
+                        </span>
+                      ) : (
+                        "–"
+                      )}
+                    </td>
+                    <td><StatusBadge bucket={m.status_bucket} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <span className="cardSub">asked by the department; tested on CGWB&rsquo;s own Andhra well records</span>
-        </div>
-        <VillageOffsets />
-      </section>
+        </section>
+      )}
 
-      <section className="card" id="field-queue">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconActivity /></span>
-            Where a visit would be worth most
-          </div>
-          <span className="cardSub">interval width, population and irrigated area, each ranked against every mandal</span>
-        </div>
-        <FieldQueue />
-      </section>
-
-      <section className="card">
+      <section className="card" id="district-brief">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconActivity /></span>
@@ -217,78 +249,51 @@ export default function DistrictsPage() {
       </div>
       </details>
 
-      {current && (
-        <section className="card">
-          <div className="cardHead">
-            <div className="cardTitle">
-              <span className="titleIcon">
-                <IconLayers />
-              </span>
-              {titleCase(current.district_name)} District · {current.mandals.filter(m => m.estimate_mbgl != null).length} of {current.mandals.length} prototype units modelled
-            </div>
-            <ExportCsvButton
-              rows={current.mandals}
-              filename={`ap_${current.district_name.toLowerCase()}_mandals.csv`}
-            />
+      <h2 className="pageChapter" id="chapter-look">Where to look closer<span>where the record disagrees, sits low, or would gain most from a visit</span></h2>
+      <section className="card" id="field-queue">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconActivity /></span>
+            Where a visit would be worth most
           </div>
+          <span className="cardSub">interval width, population and irrigated area, each ranked against every mandal</span>
+        </div>
+        <FieldQueue />
+      </section>
 
-          <div className="kpiRow kpiRow4" style={{ marginBottom: 16 }}>
-            <div className="kpiCard" style={{ ["--accent" as string]: "var(--teal)" }}>
-              <div className="kpiTop"><span className="kpiIcon"><IconLayers /></span><span className="kpiLabel">Mandals</span></div>
-              <div className="kpiValue">{current.mandal_count}</div>
-            </div>
-            <div className="kpiCard" style={{ ["--accent" as string]: "var(--rust)" }}>
-              <div className="kpiTop"><span className="kpiIcon"><IconActivity /></span><span className="kpiLabel">In Stress</span></div>
-              <div className="kpiValue">{current.stress_count}</div>
-            </div>
-            <div className="kpiCard" style={{ ["--accent" as string]: "var(--green)" }}>
-              <div className="kpiTop"><span className="kpiIcon"><IconCheck /></span><span className="kpiLabel">Stable</span></div>
-              <div className="kpiValue">{current.normal_count}</div>
-            </div>
-            <div className="kpiCard" style={{ ["--accent" as string]: "var(--cyan)" }}>
-              <div className="kpiTop"><span className="kpiIcon"><IconDroplet /></span><span className="kpiLabel">Avg Level (m)</span></div>
-              <div className="kpiValue">{formatNumber(current.avg_estimate_mbgl)}</div>
-            </div>
+      <section className="card" id="assessment-trajectory">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconDroplet /></span>
+            Where the decade disagrees with the assessment
           </div>
+          <span className="cardSub">official category against twelve years of measured pre-monsoon depth</span>
+        </div>
+        <AssessmentTrajectory />
+      </section>
 
-          <div className="tableWrap">
-            <table className="dataTable">
-              <thead>
-                <tr>
-                  <th>Mandal</th>
-                  <th>Historical median</th>
-                  <th>Est. Level β</th>
-                  <th>NASA GW percentile</th>
-                  <th>Root-Zone</th>
-                  <th>Water Balance</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {current.mandals.map((m) => (
-                  <tr key={m.id} onClick={() => router.push(`/mandals/${m.id}`)}>
-                    <td className="cellStrong">{titleCase(m.mandal_name)}</td>
-                    <td>{formatNumber(m.median_groundwater_mbgl)} <small style={{ color: "var(--muted-2)" }}>mbgl</small></td>
-                    <td><strong>{formatNumber(m.estimate_mbgl)}</strong> <small style={{ color: "var(--muted-2)" }}>m</small></td>
-                    <td><PercentileBar value={m.groundwater_percentile} /></td>
-                    <td><PercentileBar value={m.rootzone_percentile} /></td>
-                    <td>
-                      {m.water_balance_status ? (
-                        <span style={{ color: balanceMeta(m.water_balance_status).color, fontWeight: 600, fontSize: 11.5 }}>
-                          {m.water_balance_status}
-                        </span>
-                      ) : (
-                        "–"
-                      )}
-                    </td>
-                    <td><StatusBadge bucket={m.status_bucket} /></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+      <section className="card" id="seawater-watch">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconDroplet /></span>
+            Where the water table sits below sea level
           </div>
-        </section>
-      )}
+          <span className="cardSub">ground height minus measured depth, against the official salinity map · an estimate to verify</span>
+        </div>
+        <SeawaterWatch />
+      </section>
+
+      <h2 className="pageChapter" id="chapter-village">Below the mandal<span>what it would take to give a level per village</span></h2>
+      <section className="card" id="village-offsets">
+        <div className="cardHead">
+          <div className="cardTitle">
+            <span className="titleIcon"><IconDroplet /></span>
+            Can a level be given per village?
+          </div>
+          <span className="cardSub">asked by the department; tested on CGWB&rsquo;s own Andhra well records</span>
+        </div>
+        <VillageOffsets />
+      </section>
 
       <div className="footNote">
         <strong>Prototype roll-up</strong>

@@ -42,7 +42,6 @@
 .description { max-width: 390px; margin: 27px 0 0; color: #afc1ba; font-size: 13px; line-height: 1.85; letter-spacing: .005em; }
 .description strong { display: block; margin-bottom: 7px; color: #b6e5e5; font-weight: 500; font-size: 14px; line-height: 1.6; }
 .creator { display: flex; align-items: center; gap: 15px; margin: 29px 0 31px; }
-.creatorRule { width: 30px; height: 1px; background: #9cbaa1; }
 .creatorLabel { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; color: #9fb2aa; }
 .creatorName { display: flex; align-items: center; gap: 16px; margin-top: 6px; font-size: 16px; font-weight: 500; color: #e0e7d7; letter-spacing: -.015em; }
 .creatorSignature { color: var(--welcome-mint); font: italic 28px Georgia, serif; line-height: 18px; transform: rotate(-12deg); opacity: .8; }

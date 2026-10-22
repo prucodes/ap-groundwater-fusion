@@ -34,6 +34,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
   const [phase, setPhase] = useState<"checking" | "welcome" | "entering" | "open">("checking");
   const [phrase, setPhrase] = useState("");
   const [error, setError] = useState(false);
+  const [hint, setHint] = useState(false);
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [replay, setReplay] = useState(false);
@@ -147,29 +148,28 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
             <section className={styles.story} aria-labelledby="welcome-title">
               <p className={styles.eyebrow}><span /> ANDHRA PRADESH · INDIA</p>
               <h1 id="welcome-title" tabIndex={-1}>Every drop<br />has a <em>deeper</em><br />story.</h1>
-              <p className={styles.description}><strong>Groundwater intelligence for Andhra Pradesh.</strong>Explore measured water levels, modelled outlooks, and the rainfall and agricultural conditions around them.</p>
+              <p className={styles.description}><strong>From the monsoon above to the water beneath.</strong>Groundwater intelligence for Andhra Pradesh: measured water levels, modelled outlooks, and the rainfall and crops around them.</p>
               <div className={styles.creator}>
-                <span className={styles.creatorRule} />
-                <div><span className={styles.creatorLabel}>BUILT BY</span><span className={styles.creatorName}>{CREATOR_NAME}<span className={styles.creatorSignature} aria-hidden="true">py.</span></span></div>
+                <div><span className={styles.creatorLabel}>AN EXPLORATION BY</span><span className={styles.creatorName}>{CREATOR_NAME}<span className={styles.creatorSignature} aria-hidden="true">py.</span></span></div>
               </div>
               {shared ? !replay && (
                 <div className={styles.form}>
-                  <div className={styles.formHeading}><p>Shown once on this device.</p></div>
+                  <div className={styles.formHeading}><p>A small introduction, shown once.</p></div>
                   <div className={styles.inputRow}>
                     <span className={styles.destination}>{destination}</span>
                     <button type="button" onClick={continueToPage} disabled={phase === "checking" || phase === "entering"}><span>{phase === "entering" ? "Welcome in" : "Continue"}</span><Arrow /></button>
                   </div>
-                  <div className={styles.formHelp}><span>The site and its data stay public.</span></div>
+                  <div className={styles.formHelp}><span>A personal welcome to a public research project.</span></div>
                 </div>
               ) : (
               <form className={styles.form} onSubmit={enter} aria-label="Enter the site">
-                <div className={styles.formHeading}><label htmlFor="welcome-key">Type PRUTHVI to enter</label></div>
+                <div className={styles.formHeading}><label htmlFor="welcome-key">A small introduction. Your invitation in.</label></div>
                 <div className={styles.inputRow} data-invalid={error}>
-                  <input ref={input} id="welcome-key" type="text" value={phrase} onChange={event => { setPhrase(event.target.value); setError(false); }} placeholder="Pruthvi" autoComplete="off" autoCapitalize="none" spellCheck={false} maxLength={80} aria-describedby="welcome-help" aria-invalid={error} disabled={phase === "entering"} />
+                  <input ref={input} id="welcome-key" type="text" value={phrase} onChange={event => { setPhrase(event.target.value); setError(false); }} placeholder="The creator’s first name" autoComplete="off" autoCapitalize="none" spellCheck={false} maxLength={80} aria-describedby="welcome-help" aria-invalid={error} disabled={phase === "entering"} />
                   <button type="submit" disabled={phase === "checking" || phase === "entering"}><span>{phase === "entering" ? "Welcome in" : "Explore"}</span><Arrow /></button>
                 </div>
                 <div id="welcome-help" className={styles.formHelp} aria-live="polite">
-                  {error ? <span className={styles.error}>Type PRUTHVI to enter.</span> : <span>Shown once on this device. The site and its data stay public.</span>}
+                  {error ? <span className={styles.error}>Try PRUTHVI, the creator&rsquo;s first name.</span> : hint ? <span>Type <strong>PRUTHVI</strong>. We&rsquo;ll remember this introduction on this device.</span> : <><span>A personal welcome to a public research project.</span><button type="button" onClick={() => setHint(true)}>Need a hint?</button></>}
                 </div>
               </form>
               )}

@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE } from "../lib/creator";
 
 async function enter(page: Page, value = "PRUTHVI") {
-  await page.getByLabel("Type PRUTHVI to enter").fill(value);
+  await page.getByLabel("A small introduction. Your invitation in.").fill(value);
   await page.getByRole("button", { name: "Explore", exact: true }).click();
   await expect(page.locator(".shell")).toBeVisible();
 }
@@ -17,10 +17,10 @@ test("the home page asks for the creator name and remembers entry", async ({ pag
   await page.goto("/");
   await expect(page.getByRole("heading", { name: "Every drop has a deeper story." })).toBeVisible();
   await expect(page.locator(".shell")).toHaveCount(0);
-  await page.getByLabel("Type PRUTHVI to enter").fill("wrong");
+  await page.getByLabel("A small introduction. Your invitation in.").fill("wrong");
   await page.getByRole("button", { name: "Explore", exact: true }).click();
-  await expect(page.getByText("Type PRUTHVI to enter.", { exact: true })).toBeVisible();
-  await expect(page.getByLabel("Type PRUTHVI to enter")).toBeFocused();
+  await expect(page.getByText("Try PRUTHVI, the creator’s first name.")).toBeVisible();
+  await expect(page.getByLabel("A small introduction. Your invitation in.")).toBeFocused();
   await enter(page, "  PrUtHvI  ");
   await expect(page.locator("main.main")).toBeFocused();
   expect(await page.evaluate(key => localStorage.getItem(key), WELCOME_STORAGE_KEY)).toBe(WELCOME_STORAGE_VALUE);
@@ -33,7 +33,7 @@ test("a shared link shows the introduction once and opens its page with one tap"
   await expect(page.getByRole("heading", { name: "Every drop has a deeper story." })).toBeVisible();
   await expect(page.locator(".shell")).toHaveCount(0);
   await expect(page.getByTestId("welcome")).toContainText("Pruthvi Yannam");
-  await expect(page.getByLabel("Type PRUTHVI to enter")).toHaveCount(0);
+  await expect(page.getByLabel("A small introduction. Your invitation in.")).toHaveCount(0);
   await expect(page.getByTestId("welcome")).toContainText("Reports");
   await continueIn(page);
   await expect(page).toHaveURL(/\/reports\/\?theme=dark#exports$/);
@@ -73,7 +73,7 @@ test("entrance and export analytics never include entered text or report content
   await page.goto("/");
   await expect(page.getByTestId("welcome")).toHaveAttribute("data-phase", "welcome");
   await expect.poll(() => page.evaluate(() => window.apgwCount?.pending?.map(row => row.name))).toContain("welcome/viewed");
-  await page.getByLabel("Type PRUTHVI to enter").fill("unrelated-private-text");
+  await page.getByLabel("A small introduction. Your invitation in.").fill("unrelated-private-text");
   await page.getByRole("button", { name: "Explore", exact: true }).click();
   await enter(page);
   const typed = await page.evaluate(() => window.apgwCount?.pending);
@@ -86,7 +86,7 @@ test("entrance and export analytics never include entered text or report content
   await page.getByRole("button", { name: /Mandal fusion table/ }).click();
   const file = await download;
   const text = await readFile((await file.path())!, "utf8");
-  expect(text).toContain("Built by Pruthvi Yannam");
+  expect(text).toContain("Created by Pruthvi Yannam");
   expect(text).toContain("APWRIMS");
   await expect.poll(() => page.evaluate(() => window.apgwCount?.pending?.map(row => row.name))).toContain("report/download");
   const pending = await page.evaluate(() => window.apgwCount?.pending);
@@ -124,7 +124,7 @@ for (const width of [320, 375, 768, 1440]) {
     expect(overflow).toBeLessThanOrEqual(1);
     const headingOverflow = await page.locator("#welcome-title").evaluate(el => el.scrollWidth - el.clientWidth);
     expect(headingOverflow).toBeLessThanOrEqual(1);
-    const input = await page.getByLabel("Type PRUTHVI to enter").boundingBox();
+    const input = await page.getByLabel("A small introduction. Your invitation in.").boundingBox();
     expect(input!.width).toBeGreaterThan(140);
     if (process.env.WELCOME_SCREENSHOTS) await page.screenshot({ path: `test-results/welcome-${width}.png`, fullPage: true, animations: "disabled" });
     await enter(page);
