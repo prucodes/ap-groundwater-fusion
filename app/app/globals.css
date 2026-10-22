@@ -92,6 +92,9 @@
 /* ============================================================
    Dark theme — overrides surface tokens; status hues stay legible.
    ============================================================ */
+/* Until the welcome check runs, a first visit sees only the entrance; the bootstrap
+   marks a returning reader so their exported page paints straight away. */
+html:not([data-ap-welcome]) .shell, html[data-ap-welcome="welcome"] .shell { display: none; }
 /* Authorship stays with the workspace, including its narrow sidebar. */
 .creatorCredit { display: flex; align-items: center; gap: 11px; margin: 14px 16px 4px; padding: 13px 0; text-align: left; color: #d7e6df; border: 0; border-top: 1px solid #ffffff16; background: none; cursor: pointer; }
 .creatorMonogram { flex-shrink: 0; width: 30px; color: #c6e9bc; font: italic 27px Georgia, serif; text-align: center; }
