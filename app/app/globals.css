@@ -5840,7 +5840,7 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
 
 /* Sidebar groups: a small label over each group; the evidence group folds. */
 .navGroup + .navGroup .navGroupLabel { margin-top: 2px; }
-.navGroupToggle { display: flex; align-items: center; justify-content: space-between; width: 100%; border: 0; background: transparent; cursor: pointer; text-align: left; font: inherit; }
+.navGroupToggle { display: flex; align-items: center; justify-content: space-between; width: 100%; border: 0; background: transparent; cursor: pointer; text-align: left; font-family: inherit; }
 .navGroupToggle svg { width: 13px; height: 13px; opacity: .7; transition: transform .2s var(--ease); }
 .navGroupToggle svg.navChevronOpen { transform: rotate(90deg); }
 
@@ -6067,3 +6067,26 @@ html { scroll-padding-top: 64px; }
 .pageChapter span { font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: var(--muted); }
 .jumpNav + .pageChapter { margin-top: 22px; padding-top: 0; border-top: 0; }
 @media (max-width: 760px) { .pageChapter { font-size: 18px; margin-top: 30px; } .pageChapter span { font-size: 12px; } }
+
+/* Data status folds to its one "Refreshed" line on shorter screens, so the menu
+   above keeps every page in view; the line opens to each source's date. */
+button.statusLive { width: 100%; padding: 0; border: 0; background: none; font-family: inherit; text-align: left; cursor: pointer; }
+button.statusLive:focus-visible { outline: 2px solid var(--cyan); outline-offset: 4px; border-radius: 4px; }
+.statusChevron { margin-left: auto; width: 7px; height: 7px; border-right: 1.5px solid #8fb2d6; border-bottom: 1.5px solid #8fb2d6; transform: rotate(225deg); transition: transform .2s; }
+.statusFolded .statusChevron { transform: rotate(45deg) translate(-2px, -2px); }
+.statusFolded { padding-top: 11px; padding-bottom: 11px; }
+.statusFolded h4, .statusFolded .statusFeed { display: none; }
+
+/* A laptop-height sidebar keeps its whole menu in view: search and the theme
+   switch share a row, rows are a little tighter, and the creator credit sits on
+   its own soft panel so the earth artwork behind it stays quiet. */
+.shell:not(.shellCollapsed) .sidebarUtils { flex-direction: row; }
+.shell:not(.shellCollapsed) .sidebarUtils .searchBtn { flex: 1; min-width: 0; }
+.shell:not(.shellCollapsed) .sidebarUtils .utilBtn:not(.searchBtn) { width: auto; flex: none; }
+.shell:not(.shellCollapsed) .sidebarUtils .utilBtn:not(.searchBtn) .utilLabel { display: none; }
+.sidebarBrand { padding: 14px 18px 10px; }
+.navItem { padding: 5px 12px; }
+.sidebarNav { gap: 1px; padding-top: 4px; padding-bottom: 12px; }
+.creatorCredit { margin: 8px 12px 2px; padding: 9px 12px; border: 1px solid rgba(123, 168, 214, 0.12); border-radius: 12px; background: linear-gradient(90deg, rgba(5, 18, 36, 0.92), rgba(5, 18, 36, 0.66)); }
+.shellCollapsed .creatorCredit { padding: 9px 0; justify-content: center; }
+.sidebarStatus { margin: 6px 12px; }

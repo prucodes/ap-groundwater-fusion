@@ -114,6 +114,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
+  // The source dates fold to one line so the whole menu fits on a laptop screen;
+  // a tall screen has room for both, so it opens there.
+  const [statusOpen, setStatusOpen] = useState(false);
+  useEffect(() => setStatusOpen(window.innerHeight >= 1050), []);
   const [overdue, setOverdue] = useState(false);
   const onEvidencePage = evidenceNav.some(item => pathname.startsWith(item.href));
   const [evidenceOpen, setEvidenceOpen] = useState(false);
@@ -271,12 +275,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <span className="creatorCreditText"><small>An exploration by</small><strong>{CREATOR_NAME}</strong></span>
         </button>
 
-        <div className="sidebarStatus">
+        <div className={`sidebarStatus ${statusOpen ? "" : "statusFolded"}`}>
           <h4>Data status</h4>
-          <div className={`statusLive ${overdue ? "statusOverdue" : ""}`}>
+          <button type="button" className={`statusLive ${overdue ? "statusOverdue" : ""}`} aria-expanded={statusOpen}
+            onClick={() => setStatusOpen(open => !open)} title={statusOpen ? "Hide the source dates" : "Show each source's date"}>
             <span className="liveDot" />
             {overdue ? "Refresh overdue" : "Refreshed"} · {formatDay(periods.uiGenerationTimestamp)}
-          </div>
+            <span className="statusChevron" aria-hidden="true" />
+          </button>
           <div className="statusFeed">
             <span className="feedDot" /> Sensor readings · {formatPeriod(periods.latestObservationPeriod)}
           </div>
@@ -306,7 +312,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <span className="feedDot" /> State wells · {formatDay(stateSummary.readingDates.last)}
             </div>
           ) : null}
-          <OrbitGlobe3D />
+          {statusOpen ? <OrbitGlobe3D /> : null}
         </div>
 
         <button
