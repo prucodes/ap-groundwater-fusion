@@ -491,7 +491,10 @@ Roadmap: GRACE depletion trend + real time-series, and Sentinel-1 InSAR land sub
 
 The first visit to any app route opens **Beneath the Monsoon**, an animated SVG
 introduction to AP Water Intelligence, conceived and built by **Pruthvi Yannam**.
-Enter `PRUTHVI` (case-insensitive; the full name also works). This is a welcome
+On the home page, enter `PRUTHVI` (case-insensitive; the full name also works).
+A shared link to any other page, such as the brief, shows the same introduction
+once with a single **Continue** button that names the page, so a reader sent a
+link sees who built the work without being asked for a name. This is a welcome
 ritual, **not authentication**: the static routes, downloaded data and repository
 remain public. The artwork uses a simplified prototype AP silhouette; its rain,
 layers and points are illustrative, not observations.
@@ -504,6 +507,7 @@ the device's reduced-motion preference. Print scripts and existing workspace tes
 set the returning-visit preference; `app/e2e/welcome.spec.ts` tests fresh visits.
 
 GoatCounter also records `ap-gw/welcome/viewed`, `ap-gw/welcome/entered`,
+`ap-gw/welcome/continued`,
 `ap-gw/welcome/replayed`, `ap-gw/app/opened`, `ap-gw/report/download`,
 `ap-gw/report/pdf-download`, and `ap-gw/report/print`. Each records at most once per
 page load, under the existing opt-out rules. No entered text, identity, filename,

@@ -48,6 +48,8 @@
 .form { max-width: 410px; }
 .formHeading { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 10px; }
 .formHeading label { color: #cad5c8; font-size: 10px; }
+.formHeading p { margin: 0; color: #cad5c8; font-size: 10px; }
+.destination { flex: 1; min-width: 0; padding: 12px; overflow: hidden; color: #ecf3df; font-size: 12px; white-space: nowrap; text-overflow: ellipsis; }
 .formHeading > span { color: #8ca69c; font: 8px var(--font-mono); letter-spacing: .05em; white-space: nowrap; }
 .inputRow { display: flex; padding: 5px; border: 1px solid #527369; border-radius: 5px; background: #ffffff03; transition: border-color .2s, box-shadow .2s; }
 .inputRow:focus-within { border-color: #bdd8af; box-shadow: 0 0 0 3px #c6e9bc10; }

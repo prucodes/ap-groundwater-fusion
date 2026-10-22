@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { CREATOR_CREDIT, CREATOR_NAME, WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE } from "../../lib/creator";
 import { countEvent } from "../../lib/visit-counter";
 import { WaterLandscape } from "./WaterLandscape";
@@ -13,8 +14,23 @@ function Arrow() {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
+// Pages people are likely to be sent, named as the sidebar names them.
+const PAGE_NAMES: Record<string, string> = {
+  brief: "Project brief", digest: "Weekly digest", reports: "Reports", "field-report": "Field report",
+  changes: "This Week", monsoon: "Monsoon Watch", drought: "Drought Watch", map: "Mandal Map",
+  crystal: "Water Depth 3D", summer: "Summer Outlook", rabi: "Rabi Outlook", agriculture: "Agriculture & Water",
+  districts: "Districts", constituencies: "Constituencies", mandals: "Mandal Insights", compare: "Compare",
+  methodology: "Methodology", readiness: "Data Readiness", estimates: "Modelled Levels", nasa: "NASA Signals",
+  climate: "Climate & Balance", scenario: "Scenario Lab", irrigation: "AWARE Preview", watchlist: "Watchlist",
+};
+
 /** A first-visit introduction. All routes and data remain public on static hosting. */
 export function WelcomeGate({ children }: { children: React.ReactNode }) {
+  // The home page asks for the creator's name. A shared link to any other page
+  // shows the same introduction once, then opens that page with one tap.
+  const route = (usePathname() ?? "/").split("/").filter(Boolean)[0] ?? "";
+  const shared = route !== "";
+  const destination = PAGE_NAMES[route] ?? "The page you opened";
   const [phase, setPhase] = useState<"checking" | "welcome" | "entering" | "open">("checking");
   const [phrase, setPhrase] = useState("");
   const [error, setError] = useState(false);
@@ -76,9 +92,19 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
       input.current?.focus();
       return;
     }
-    try { localStorage.setItem(WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE); } catch { /* Entry does not depend on storage. */ }
     countEvent("welcome/entered", "Welcome: entered the observatory");
     setError(false);
+    admit();
+  }
+
+  function continueToPage() {
+    if (phase === "entering") return;
+    countEvent("welcome/continued", "Welcome: continued to a shared page");
+    admit();
+  }
+
+  function admit() {
+    try { localStorage.setItem(WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE); } catch { /* Entry does not depend on storage. */ }
     if (reduced || paused) openWorkspace();
     else {
       setPhase("entering");
@@ -123,6 +149,16 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
             <span className={styles.creatorRule} />
             <div><span className={styles.creatorLabel}>CONCEIVED &amp; BUILT BY</span><span className={styles.creatorName}>{CREATOR_NAME}<span className={styles.creatorSignature} aria-hidden="true">py.</span></span></div>
           </div>
+          {shared ? !replay && (
+            <div className={styles.form}>
+              <div className={styles.formHeading}><p>A small introduction, shown once.</p><span>01 / CONTINUE</span></div>
+              <div className={styles.inputRow}>
+                <span className={styles.destination}>{destination}</span>
+                <button type="button" onClick={continueToPage} disabled={phase === "checking" || phase === "entering"}><span>{phase === "entering" ? "Welcome in" : "Continue"}</span><Arrow /></button>
+              </div>
+              <div className={styles.formHelp}><span>We&rsquo;ll remember this introduction on this device.</span></div>
+            </div>
+          ) : (
           <form className={styles.form} onSubmit={enter} aria-label="Enter the observatory">
             <div className={styles.formHeading}><label htmlFor="welcome-key">A small introduction. Your invitation in.</label><span>01 / ENTER</span></div>
             <div className={styles.inputRow} data-invalid={error}>
@@ -133,6 +169,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
               {error ? <span className={styles.error}>Try PRUTHVI, the creator&rsquo;s first name.</span> : hint ? <span>Type <strong>PRUTHVI</strong>. We&rsquo;ll remember this introduction on this device.</span> : <><span>A personal welcome to a public research project.</span><button type="button" onClick={() => setHint(true)}>Need a hint?</button></>}
             </div>
           </form>
+          )}
           {replay && <button className={styles.returnButton} type="button" onClick={openWorkspace}>Return to your workspace <Arrow /></button>}
           <noscript><p className={styles.noScript}>Enable JavaScript to enter the interactive observatory.</p></noscript>
         </section>
