@@ -150,7 +150,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
               <h1 id="welcome-title" tabIndex={-1}>Every drop<br />has a <em>deeper</em><br />story.</h1>
               <p className={styles.description}><strong>From the monsoon above to the water beneath.</strong>Groundwater intelligence for Andhra Pradesh: measured water levels, modelled outlooks, and the rainfall and crops around them.</p>
               <div className={styles.creator}>
-                <div><span className={styles.creatorName}>{CREATOR_NAME}<span className={styles.creatorSignature} aria-hidden="true">py.</span></span></div>
+                <div><span className={styles.creatorLabel}>AN EXPLORATION BY</span><span className={styles.creatorName}>{CREATOR_NAME}<span className={styles.creatorSignature} aria-hidden="true">py.</span></span></div>
               </div>
               {shared ? !replay && (
                 <div className={styles.form}>
