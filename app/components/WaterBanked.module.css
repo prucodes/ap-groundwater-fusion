@@ -32,3 +32,7 @@
 .note b { color: var(--ink); font-weight: 600; }
 .method { margin: 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { .kept { animation: none; } }
+
+/* The twelve-year usual, so this season's share reads against something. */
+.typical { margin: 10px 0 0; max-width: 640px; font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
+.typical b { color: var(--ink); font-weight: 600; }
