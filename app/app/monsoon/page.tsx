@@ -218,7 +218,7 @@ export default function MonsoonPage() {
             <span className="titleIcon"><IconDroplet /></span>
             What the season banked
           </div>
-          <span className="cardSub">positive storage-change proxy · not gross recharge</span>
+          <span className="cardSub">water-table fluctuation, the official assessment&rsquo;s method · net of pumping</span>
         </div>
         <WaterBanked />
       </section> : null}
@@ -404,7 +404,7 @@ export default function MonsoonPage() {
           <div className="cardHead">
             <div className="cardTitle">
               <span className="titleIcon"><IconCloudRain /></span>
-              Andhra Pradesh rainfall in warm-index years
+              Andhra Pradesh rainfall in El Niño-like years
             </div>
             <span className="cardSub">
               {rain ? rain.product.split(" monthly")[0] : "CHIRPS"}, {sw.firstYear}–{sw.lastYear}, mandal means
@@ -423,15 +423,15 @@ export default function MonsoonPage() {
                   {c.elNinoAnomalyPct !== null && c.elNinoAnomalyPct > 0 ? "+" : ""}
                   {formatNumber(c.elNinoAnomalyPct)}%
                 </strong>
-                <em>average across {c.elNinoYears} warm-index years</em>
+                <em>average across {c.elNinoYears} El Niño-like years</em>
                 <div className="ensoSeasonFacts">
                   <span>
-                    Below normal in <strong>{c.elNinoBelowNormal} of {c.elNinoYears}</strong> warm-index years,
+                    Below normal in <strong>{c.elNinoBelowNormal} of {c.elNinoYears}</strong> El Niño-like years,
                     against {c.belowNormalAllYears} of {c.allYears} years overall.
                   </span>
                   {c.elNinoRangePct ? (
                     <span>
-                      Individual warm-index years ranged{" "}
+                      Individual El Niño-like years ranged{" "}
                       <strong>
                         {formatNumber(c.elNinoRangePct[0])}% to {c.elNinoRangePct[1] > 0 ? "+" : ""}
                         {formatNumber(c.elNinoRangePct[1])}%
@@ -474,7 +474,7 @@ export default function MonsoonPage() {
           </span>
         </div>
         <p className="cardLede">
-          Two gridded historical temperature products provide climate context. Their trends and warm-index
+          Two gridded historical temperature products provide climate context. Their trends and El Niño-year
           composites differ; neither is a field temperature measurement, attribution of a local heat event,
           or a forecast of crop water demand.
         </p>

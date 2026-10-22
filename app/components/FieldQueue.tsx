@@ -36,7 +36,7 @@ export function FieldQueue() {
         </div>
         <div className={styles.head}>
           <b>{data.queue.filter(row => row.disagrees || row.belowSeaLevel).length}</b>
-          <span>of the top {data.published} already carry a reason of their own: {totals.disagreeInTop} where the decade and the assessment disagree, {totals.belowSeaLevelInTop} with a low elevation–depth proxy (flags can overlap)</span>
+          <span>of the top {data.published} already carry a reason of their own: {totals.disagreeInTop} where the decade and the assessment disagree, {totals.belowSeaLevelInTop} below sea level (some carry both)</span>
         </div>
       </div>
 
@@ -51,7 +51,7 @@ export function FieldQueue() {
                 <span>{titleCase(row.district)}{row.category ? ` · ${row.category.replace(/_/g, " ")}` : ""}</span>
                 {(row.belowSeaLevel || row.disagrees) && (
                   <div className={styles.tags}>
-                    {row.belowSeaLevel && <span className={styles.tag} data-kind="sea">low elevation–depth proxy</span>}
+                    {row.belowSeaLevel && <span className={styles.tag} data-kind="sea">below sea level</span>}
                     {row.disagrees && <span className={styles.tag} data-kind="gap">{row.disagrees}</span>}
                   </div>
                 )}
@@ -66,7 +66,7 @@ export function FieldQueue() {
                 ))}
               </div>
               <div className={styles.figures}>
-                <b>{row.intervalWidthM} m band width</b>
+                <b>&plusmn;{(row.intervalWidthM / 2).toFixed(1)} m</b>
                 <span>{(row.people / 1000).toFixed(0)}k people</span>
                 <span>{row.irrigatedKm2} km&sup2; irrigated</span>
               </div>
@@ -78,7 +78,7 @@ export function FieldQueue() {
       <p className={styles.note}>
         The three bars are each mandal&rsquo;s standing among all {data.scored}, so a row that is
         wide on all three is one the model is unsure about, in a populous place, with a lot of
-        irrigated land depending on the answer. <b>This is a screening priority, not a validated estimate of what a visit will resolve.</b>
+        irrigated land depending on the answer. <b>That is where a visit is likely to settle the most.</b>
       </p>
 
       <p className={styles.method}>{data.caveat} {data.populationSource}: {data.populationCaveat}</p>

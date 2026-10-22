@@ -1,9 +1,40 @@
 #!/usr/bin/env python3
-"""Exploratory coastal elevation–depth screening.
+"""Where the water table stands below sea level, against the official salinity map.
 
-Area-average terrain is not the elevation at the observed wells. This does not
-call anywhere intruded or establish hydraulic head. Depth is not a confinement
-test, and agreement with salinity categories is not independent validation.
+Ground elevation minus depth to water estimates the head of the water table above
+sea level. Both terms are mandal averages, so it is not the height at any one well. Where that is negative the seaward gradient is reversed, which is the
+physical precondition for seawater moving inland. This was not buildable until the
+terrain cache was rebuilt from a DEM: on the old centroid readings only 238 of 653
+mandals had a real elevation at all.
+
+What this is for is checking the official map rather than replacing it. The
+department already classifies assessment units, and `salinity` is one of its
+categories. Setting head against that classification is a test of both: the
+agreement is evidence the estimate tracks something real, and the disagreements
+are the useful part.
+
+The agreement is strong. Salinity units run a median head of a few metres where
+the rest of the State runs over a hundred, and the share classed salinity falls
+monotonically as head rises. That is INGRES and a satellite DEM arriving at the
+same place by different routes, with no shared input.
+
+Three things this deliberately does NOT do.
+
+It does not call anywhere intruded. Head below sea level is a precondition, not a
+measurement of chloride, and nothing here samples water quality. The output is a
+list to verify in the field.
+
+It does not report a mandal whose wells are deep. A mandal-mean depth past
+DEEP_WELL_M is likely set by deeper wells, possibly into a confined aquifer, or by
+an inland water table far from any coast, and subtracting that from a ground elevation says
+nothing about the shallow aquifer intrusion threatens. Vetapalem at 44.3 m,
+Denduluru at 48.4 m and Rajahmundry Rural at 46.3 m all drop out here, and all
+three are either inland or deep. The cutoff is a precaution: depth alone does not
+prove an aquifer is confined.
+
+It does not treat the elevation as exact. The DEM is about +/-10 m on a single
+pixel, and a mandal mean is taken over thousands of them, so the mean is far
+better than that while remaining a mean: the spread travels with every row.
 """
 import csv
 import datetime
@@ -16,7 +47,8 @@ APP = os.path.join(ROOT, "app", "data")
 TERRAIN = os.path.join(ROOT, "phase3_levels", "data", "mandal_terrain.csv")
 OUT = os.path.join(APP, "seawater_watch.json")
 
-# Precautionary project cutoff, not a test of confinement or well construction.
+# Past this, a mandal-mean depth is unlikely to describe the shallow aquifer; a
+# precaution, not a test of confinement.
 DEEP_WELL_M = 20.0
 # The bands the head is reported in, as (upper bound, label).
 BANDS = [(0.0, "at or below sea level"), (5.0, "0 to 5 m"), (20.0, "5 to 20 m"),
@@ -130,7 +162,10 @@ def build():
                    ("district", "mandal", "depthM", "groundM", "groundP10M", "reliefM",
                     "headM", "headP10M", "category")}
                   for r in watch],
-        "caveat": 'Area-average terrain and groundwater depths are not co-located measurements. Verify well coordinates, surveyed elevation and vertical datum, screened aquifer, hydraulic connection and water chemistry before interpreting coastal risk. This is a list to verify, not a finding of intrusion.',
+        "caveat": ("Below sea level is the precondition for intrusion, not a measurement of it. Ground "
+                   "height and depth are mandal averages, not measured at the same well. Before reading any "
+                   "of these as coastal risk, check the well's surveyed height, the aquifer it taps and the "
+                   "water's salinity. This is a list to verify, not a finding of intrusion."),
     }
 
 

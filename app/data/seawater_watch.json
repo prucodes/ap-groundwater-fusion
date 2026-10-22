@@ -330,5 +330,5 @@
       "category": "safe"
     }
   ],
-  "caveat": "Area-average terrain and groundwater depths are not co-located measurements. Verify well coordinates, surveyed elevation and vertical datum, screened aquifer, hydraulic connection and water chemistry before interpreting coastal risk. This is a list to verify, not a finding of intrusion."
+  "caveat": "Below sea level is the precondition for intrusion, not a measurement of it. Ground height and depth are mandal averages, not measured at the same well. Before reading any of these as coastal risk, check the well's surveyed height, the aquifer it taps and the water's salinity. This is a list to verify, not a finding of intrusion."
 }

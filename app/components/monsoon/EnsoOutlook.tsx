@@ -200,27 +200,27 @@ export function EnsoOutlook() {
         <div className={styles.recordGrid}>
           {ne ? (
             <div className={styles.fact}>
-              <span className={styles.tileLabel}>Northeast monsoon in warm-index years</span>
+              <span className={styles.tileLabel}>Northeast monsoon in El Niño-like years</span>
               <strong className={ne.elNinoAnomalyPct !== null && ne.elNinoAnomalyPct < 0 ? styles.bad : styles.good}>{signedPct(ne.elNinoAnomalyPct, 1)}</strong>
-              <p>Statewide October–December, average of {ne.elNinoYears} warm-index years. Below normal in <b>{ne.elNinoBelowNormal} of {ne.elNinoYears}</b>, against {ne.belowNormalAllYears} of {ne.allYears} years overall.</p>
+              <p>Statewide October–December, average of {ne.elNinoYears} El Niño-like years. Below normal in <b>{ne.elNinoBelowNormal} of {ne.elNinoYears}</b>, against {ne.belowNormalAllYears} of {ne.allYears} years overall.</p>
             </div>
           ) : null}
           {after ? (
             <div className={styles.fact}>
-              <span className={styles.tileLabel}>Southwest monsoons after warm-index winters</span>
+              <span className={styles.tileLabel}>The next southwest monsoon</span>
               <strong className={after.all.meanAnomalyPct < 0 ? styles.bad : styles.good}>{signedPct(after.all.meanAnomalyPct, 1)}</strong>
-              <p>June–September after the {after.all.years} warm-index winters. Below normal in <b>{after.all.belowNormal} of {after.all.years}</b>, against {after.allYearsBelowNormal} of {after.allYears} years overall.</p>
+              <p>June–September after the {after.all.years} El Niño-like winters. Below normal in <b>{after.all.belowNormal} of {after.all.years}</b>, against {after.allYearsBelowNormal} of {after.allYears} years overall.</p>
             </div>
           ) : null}
           {after && veryStrong.length ? (
             <div className={styles.fact}>
-              <span className={styles.tileLabel}>After very warm OND indices (≥ {after.veryStrong.thresholdC.toFixed(1)} °C)</span>
+              <span className={styles.tileLabel}>After the strongest El Niño-like winters (≥ {after.veryStrong.thresholdC.toFixed(1)} °C)</span>
               <ul className={styles.years}>
                 {veryStrong.map(d => (
                   <li key={d.year}><span>{d.year}</span><b className={d.anomalyPct < 0 ? styles.bad : styles.good}>{signedPct(d.anomalyPct, 1)}</b><small>after {d.afterWinter}–{String(d.afterWinter + 1).slice(2)}, +{d.oniOndC.toFixed(1)} °C</small></li>
                 ))}
               </ul>
-              <p>{`${veryStrong.filter(d => d.anomalyPct >= 0).length} of ${veryStrong.length} subsequent monsoons were at or above normal. This small sample is not a forecast.`}</p>
+              <p>{`In ${veryStrong.filter(d => d.anomalyPct >= 0).length} of ${veryStrong.length}, the next monsoon was at or above normal. Too few cases to promise anything.`}</p>
             </div>
           ) : null}
         </div>
@@ -256,7 +256,7 @@ export function EnsoOutlook() {
         Forecast: <a href={outlook.urls.outlook} target="_blank" rel="noreferrer">NOAA CPC official ENSO outlook</a>,{" "}
         <a href={outlook.urls.strengths} target="_blank" rel="noreferrer">strength probabilities</a> and{" "}
         <a href={outlook.urls.discussion} target="_blank" rel="noreferrer">diagnostic discussion</a>; {outlook.index}. Fetched {shortDate(outlook.fetchedAt, true)}, weekly.
-        Record: CHIRPS v3 monthly rain, equal-weight mandal means. Historical warm-index years use ONI ≥ 0.5 °C in JJA or OND; this is not the five-season episode criterion. The outlook uses RONI, a different index. These historical composites and the ENSO outlook are context, not inputs to the groundwater forecast.
+        Record: CHIRPS v3 monthly rain, equal-weight mandal means. El Niño-like years are those with NOAA&rsquo;s ONI at 0.5 °C or more in June–August or October–December, a looser test than NOAA&rsquo;s official episode count; the outlook uses RONI, a related index. Neither enters any model on this site.
       </p>
     </section>
   );

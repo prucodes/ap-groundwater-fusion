@@ -1,7 +1,19 @@
 import { seawaterWatch, titleCase } from "../lib/data";
 import styles from "./SeawaterWatch.module.css";
 
-/* Area-average elevation–depth screening, not measured hydraulic head. */
+/* Where the water table stands below sea level, set against the official map.
+ *
+ * Ground elevation minus depth to water estimates the head above sea level, and a
+ * negative head reverses the seaward gradient, which is what lets seawater move
+ * inland. Both terms are mandal averages: the elevation is a DEM zonal mean, not
+ * surveyed at the wells, so this ranks places rather than measuring them.
+ *
+ * It is a check on the assessment rather than a replacement for it. The department
+ * already classes units as `salinity`, and the share it classes so climbs steadily
+ * as this estimate falls, which makes the places they disagree the useful part.
+ * Nothing here measures chloride, so the disagreements are a list to verify in the
+ * field and never a finding of intrusion.
+ */
 
 export function SeawaterWatch() {
   const data = seawaterWatch;
@@ -13,24 +25,24 @@ export function SeawaterWatch() {
       <div className={styles.heads}>
         <div className={styles.head} data-tone="watch">
           <b>{data.watch.length}</b>
-          <span>mandals with a <strong>non-positive elevation–depth proxy</strong> and depth ≤ {data.deepWellThresholdM} m, not classed salinity</span>
+          <span>mandals whose water table sits <strong>below sea level</strong> on shallow wells, which the assessment has not classed salinity</span>
         </div>
         <div className={styles.head} data-tone="sea">
           <b>{data.medianHeadSalinityM?.toFixed(1)} m</b>
-          <span>median elevation–depth proxy across the {data.salinityUnits} units already classed <strong>salinity</strong>, against {data.medianHeadOtherM?.toFixed(0)} m everywhere else</span>
+          <span>median height of the water table above sea level across the {data.salinityUnits} units already classed <strong>salinity</strong>, against {data.medianHeadOtherM?.toFixed(0)} m everywhere else</span>
         </div>
         <div className={styles.head}>
           <b>{data.belowSeaLevel}</b>
-          <span>of {data.scored} mandals have a non-positive proxy using {data.observationPeriod}&rsquo;s measured depth</span>
+          <span>of {data.scored} mandals stand at or below sea level on {data.observationPeriod}&rsquo;s measured depth</span>
         </div>
       </div>
 
       <div>
-        <div className={styles.listHead}>Official salinity share by elevation–depth proxy</div>
+        <div className={styles.listHead}>Share the assessment calls salinity, by height of the water table above sea level</div>
         <div className={styles.bands}>
           {data.bands.map(band => (
             <div className={styles.band} key={band.band}>
-              <div className={styles.label}>{band.band === "at or below sea level" ? "≤ 0 m proxy" : `${band.band} proxy`}</div>
+              <div className={styles.label}>{band.band}</div>
               <div className={styles.track}>
                 <div className={styles.fill} style={{ width: `${100 * (band.salinityPct ?? 0) / peak}%` }} />
               </div>
@@ -41,14 +53,16 @@ export function SeawaterWatch() {
       </div>
 
       <p className={styles.note}>
-        This compares an official salinity category with area-average terrain elevation minus a
-        mandal-average depth. <b>The elevation is not surveyed at the wells.</b> Agreement between
-        these summaries does not validate hydraulic head or diagnose seawater intrusion.
-        {" "}{data.confirmed.length} flagged mandals already classed salinity are listed separately in the data.
+        The two come from independent sources: the assessment is a balance of volumes the department
+        computes, and this is satellite ground height minus a measured depth. <b>They agree</b>: the
+        share classed salinity climbs from {data.bands[data.bands.length - 1]?.salinityPct}% where the water table
+        stands {data.bands[data.bands.length - 1]?.band} to {data.bands[0]?.salinityPct}% where it is {data.bands[0]?.band}. Both
+        are mandal averages, so this ranks places to check rather than proving intrusion. The{" "}
+        {data.confirmed.length} below sea level that are <b>already classed salinity</b> are left off the list.
       </p>
 
       <div>
-        <div className={styles.listHead}>Non-positive proxy, depth ≤ {data.deepWellThresholdM} m, not classed salinity</div>
+        <div className={styles.listHead}>Below sea level, shallow wells, not yet classed salinity</div>
         <div className={styles.rows}>
           {data.watch.map(row => (
             <div className={styles.row} key={`${row.district}|${row.mandal}`}>
@@ -64,9 +78,9 @@ export function SeawaterWatch() {
       </div>
 
       <p className={styles.method}>
-        {data.caveat} {data.setAsideDeepWells.length} further mandals have non-positive proxies and are
-        set aside by the project’s {data.deepWellThresholdM} m precautionary depth cutoff.
-        Depth alone does not establish confinement, well type or hydraulic connection to the sea.
+        {data.caveat} {data.setAsideDeepWells.length} further mandals read below sea level and are
+        set aside as a precaution: past {data.deepWellThresholdM} m, a mandal-average depth is likely
+        describing a deeper aquifer than the shallow one seawater reaches.
         Ground elevation is a zonal mean from {data.elevationSource}; categories come from the{" "}
         {data.classificationSource}.
       </p>

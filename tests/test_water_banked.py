@@ -68,4 +68,4 @@ def test_the_state_total_is_a_ratio_of_volumes_not_a_mean_of_ratios(watch):
 def test_the_method_says_the_rise_is_net(watch):
     method = watch["banked"]["method"]
     assert "Water-table fluctuation" in method and "GEC-2015" in method
-    assert "Net of" in method and "not a GEC-2015 gross recharge assessment" in method
+    assert "Net of" in method and "gross recharge is larger" in method

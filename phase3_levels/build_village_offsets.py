@@ -1,14 +1,53 @@
 #!/usr/bin/env python3
-"""Historical well offsets and a prospective calibration check.
+"""Village-level depth, by measuring a fixed offset rather than modelling it.
 
-An offset is a well's deviation from contemporaneous, same-type peers in its
-mandal. It is not a representative village depth. Split-half validation uses
-calendar order. The original random calibration curve estimates a later mean;
-the separate forward curve scores individual future offsets on one fixed cohort.
-Both rely on observed peer levels and exclude mandal-nowcast error.
+The department asked whether the model can give a village estimate at the error
+it already achieves per mandal (about 10%). It cannot, as it stands, and the
+reason is not resolution: APWRIMS publishes levels already averaged to mandal,
+with no well id, village or coordinate, so the training target has never carried
+a sub-mandal signal. Hold a whole mandal out and estimate it from its neighbours
+-- a location with no sensor, which is what a village without a well is -- and
+error is 4.84 m against a 1.01 m mandal nowcast.
 
-Raw CGWB well records are supplied with --src and are not committed. Regenerate
-the full payload and browser summary together after any validation change.
+What makes it solvable is that a village's distance from its mandal mean is not
+scatter. On CGWB's quality-controlled Andhra records it is ~94% persistent, and a well's
+earlier deviation predicts its later one at r~0.84 in date order. A village three
+metres deeper than its mandal tends to stay about three metres deeper. So the offset is
+a fixed property to be measured once, after which the mandal network carries the
+month-to-month movement -- which is why a handful of readings, not a piezometer
+per village, is the actual requirement.
+
+This builds that offset for every Andhra village where CGWB has already read a
+well, validates it out of sample, and records the dose-response two ways: against
+a well's long-run mean, and forward, on each later reading in date order. The
+forward curve is the honest one for a pilot. Three readings at a dug well roughly
+halve the error, and the well's own season-to-season scatter sets a floor that
+more readings do not lower, so it lands near 2 m, not under the mandal nowcast.
+
+The split-half and forward tests sort months by date. Sorting the month strings
+alphabetically mixed years into both halves and inflated r to 0.986; a test now
+guards the order. It also records the null result that matters
+for planning -- predicting the offset from position, elevation proxy, well depth
+and well type, with whole mandals held out, is WORSE than using the mandal mean.
+One measured reading beats the best model, so the ask is a measurement programme
+rather than more modelling.
+
+Two things this deliberately does NOT do.
+
+It does not claim these are village estimates in the sense of representing the
+whole village. Each offset is that observation well's position relative to its
+mandal; it speaks for the village only as far as the well does. A village with
+one dug well on a valley floor is not characterised by it.
+
+It does not publish absolute village depths as a product. The applied examples
+exist to show the method end to end against the live nowcast. Publishing a
+depth for 1,073 named villages is a governance decision about official numbers,
+not a build step, and the underlying well records end in 2023.
+
+Source: CGWB "Quality controlled groundwater levels over India" (2000-2024,
+Jan/May/Aug/Nov), which is git-ignored for size, so this is run by hand like
+validate_cross_network.py. The offsets are persistent, so they do not need the
+weekly job.
 """
 import argparse
 import datetime
@@ -219,6 +258,16 @@ def forward_dose_response(long):
     } for k in DOSE_STEPS] if series else []
 
 
+def forward_baseline(long):
+    """The forward curve's starting point: the same wells and future readings with no
+    offset at all, which is what using the peer-well mandal figure alone gives."""
+    ordered = long.assign(_date=pd.to_datetime(long["month"], format="%b-%y", errors="raise")).sort_values("_date")
+    cutoff = max(DOSE_STEPS)
+    series = [sub["offset"].to_numpy() for _, sub in ordered.groupby("Station Code")
+              if len(sub) >= cutoff + 4]
+    return round(float(np.mean([np.abs(values[cutoff:]).mean() for values in series])), 3) if series else None
+
+
 def static_null(long, cohort_of):
     """Can the offset be predicted instead of measured? Whole mandals held out."""
     per_well = long.groupby("Station Code").agg(
@@ -338,6 +387,7 @@ def build(src):
         "splitHalf": split_half(long, cohort_of),
         "doseResponse": dose_response(long),
         "forwardDoseResponse": forward_dose_response(long),
+        "forwardBaselineM": forward_baseline(long),
         "forwardDoseMethod": "First k readings predict individual later offsets after the first eight readings, on a common well cohort. Future same-type peer means are observed; nowcast and peer-reference errors are not included.",
         "doseResponseMethod": "Randomly selected calibration readings versus the mean of remaining offsets; not a forward monthly-depth test. Peer-reference and nowcast errors are not included.",
         "staticCovariateNull": static_null(long, cohort_of),
@@ -357,6 +407,7 @@ def build(src):
             "splitHalf": {k: v for k, v in split_half(sub, cohort_of).items() if k != "byAquifer"},
             "doseResponse": dose_response(sub),
             "forwardDoseResponse": forward_dose_response(sub),
+            "forwardBaselineM": forward_baseline(sub),
         })
     validation["byWellType"].sort(key=lambda row: -row["wells"])
     curve = {row["readings"]: row["residualErrorM"] for row in validation["doseResponse"]}
@@ -514,10 +565,12 @@ def main():
         "crossNetworkOffset": payload["validation"]["crossNetworkOffset"],
         "dugWell": None if dug is None else
             {"wells": dug["wells"], "persistence": dug["persistence"]["persistentSharePct"],
-             "r": dug["splitHalf"]["pastPredictsFutureR"], "dose": dug["doseResponse"], "forwardDose": dug["forwardDoseResponse"]},
+             "r": dug["splitHalf"]["pastPredictsFutureR"], "dose": dug["doseResponse"], "forwardDose": dug["forwardDoseResponse"],
+             "forwardBaselineM": dug["forwardBaselineM"]},
         "boreWell": None if bore is None else
             {"wells": bore["wells"], "r": bore["splitHalf"]["pastPredictsFutureR"],
-             "dose": bore["doseResponse"], "forwardDose": bore["forwardDoseResponse"]},
+             "dose": bore["doseResponse"], "forwardDose": bore["forwardDoseResponse"],
+             "forwardBaselineM": bore["forwardBaselineM"]},
         "caveat": payload["source"]["caveat"],
         "doseResponseMethod": payload["validation"]["doseResponseMethod"],
         "forwardDoseMethod": payload["validation"]["forwardDoseMethod"],

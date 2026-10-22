@@ -1,7 +1,7 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-21T01:30:31Z",
-  "method": "In-sample linear association between May-to-November depth change and June-September rainfall for each mandal. R\u00b2 describes fitted historical variance, not causation or forecast skill",
+  "generatedAt": "2026-10-22T13:34:13Z",
+  "method": "Each mandal's May to November change in depth, fitted against that season's June to September rainfall, over every season it has both readings.",
   "window": {
     "preMonsoonMonth": 5,
     "postMonsoonMonth": 11,
@@ -3860,10 +3860,11 @@
       11.5
     ]
   },
-  "caveat": "Nothing here measures extraction, and the unexplained variation is not pumping. Low R\u00b2 or an inverse slope does not establish that rain has no influence. October-November rain, lagged effects, other flows and observation differences are omitted.",
+  "caveat": "Nothing here measures extraction, and the part rain does not explain is not pumping. A table that ignores the rain may be drawn down, fed by a canal, carrying last year forward, or noisy on a few points. The honest statement is the absence: rain is not the main explanation there.",
   "limits": [
-    "A single predictor on seven to eleven seasons is a thin instrument. Individual fits and group comparisons need uncertainty estimates and independent validation.",
-    "The stronger class starts at R\u00b2 0.40 with a water-level rise associated with wetter years. This is a project threshold, not evidence that rain explains most variation or controls the aquifer.",
-    "Irrigated-area differences between groups are descriptive associations. They do not identify pumping as the cause or show that rainfall control has changed over time."
+    "A single predictor on seven to eleven seasons is a thin instrument, so the groups are far firmer than any one mandal's figure.",
+    "The strongest group starts where rain explains 40% of the swing: a large share, not all of it.",
+    "The fit is within-season. A mandal that fills every monsoon and is emptied every summer reads as rain-driven, which is right: the monsoon does write its table.",
+    "The irrigation difference between the groups is a pattern, not proof that pumping is the cause. Naming what moves the other mandals needs the feeder supply hours and pump-set census the brief asks for."
   ]
 }

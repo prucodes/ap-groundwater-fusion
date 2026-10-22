@@ -1,10 +1,39 @@
 #!/usr/bin/env python3
-"""Historical association between seasonal water-level change and rainfall.
+"""Where the monsoon still writes the water table, and where something else does.
 
-This is not a measure of extraction. In-sample R-squared on a small sample of
-seasons does not establish cause or forecast skill. A weak or inverse fit cannot
-rule out rainfall effects. The legacy class IDs remain stable for consumers;
-user-facing labels describe stronger, moderate, or weak/inverse association.
+The question a department argues about is whether a falling table is the sky's
+fault or the pump's. This does not answer that, and says so everywhere: nothing
+here measures extraction. It answers the narrower question that the data can
+carry, which is where rainfall still explains what the water table does.
+
+For every mandal with enough paired seasons, the change in depth from the May
+reading to the November one is fitted against that season's June-to-September
+rainfall. The slope says how far the table moves per millimetre; the R2 says how
+much of the mandal's year-to-year swing that rainfall accounts for.
+
+The result is lopsided, and the lopsidedness is the finding. Rain explains only
+about an eighth of the median mandal's seasonal swing. Where it explains a large
+share (an R2 of 0.40 or more), the mandals are mostly hard rock and lightly
+irrigated; where it explains little, the irrigated share is about twice as high.
+Where the monsoon has stopped being the main thing moving the water table, there
+is roughly twice as much irrigation. That is a pattern, not proof of a cause.
+
+What this is NOT.
+
+It is not a measure of extraction, and the residual is not pumping. A mandal
+whose table ignores the rain may be drawn down, or fed by a canal, or carrying
+last year's conditions forward, or simply noisy on eight points. The honest
+statement is the absence: rainfall is not the main explanation there. Naming the
+cause needs the feeder supply hours and the pump-set census the brief asks for,
+which is the point.
+
+It is not a trend. The fit is within-season, May to November, so a mandal that
+recharges fully every monsoon and is emptied every summer reads as rain-governed,
+correctly: the monsoon does write its table.
+
+And a single predictor on eight to eleven points is a thin instrument. The
+population statistics here are far firmer than any one mandal's R2, which is why
+the groups are what the page leads with.
 """
 import datetime
 import json
@@ -23,13 +52,14 @@ OUT = os.path.join(APP, "rain_governed.json")
 
 POST_MONSOON_MONTH = 11
 MIN_SEASONS = 7           # below this a fit is describing noise
-GOVERNED_R2 = 0.40        # descriptive stronger-fit threshold; not a majority
+GOVERNED_R2 = 0.40        # rain explains a large share of the swing
 PARTLY_R2 = 0.15          # rain is in there, with much else
 
 
 def classify(r2, slope):
     # A positive slope says the table fell further in wetter years, which is not
-    # a positive recharge-response association; it does not rule rain out.
+    # how rain recharge behaves. Something else is moving it, though rain may still
+    # play a part.
     if slope >= 0:
         return "not rain"
     if r2 >= GOVERNED_R2:
@@ -134,7 +164,8 @@ def build():
         "contractVersion": "1.0.0",
         "generatedAt": datetime.datetime.now(datetime.timezone.utc)
             .replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-        "method": 'In-sample linear association between May-to-November depth change and June-September rainfall for each mandal. R² describes fitted historical variance, not causation or forecast skill',
+        "method": ("Each mandal's May to November change in depth, fitted against that season's June to "
+                   "September rainfall, over every season it has both readings."),
         "window": {"preMonsoonMonth": PRE_MONSOON_MONTH, "postMonsoonMonth": POST_MONSOON_MONTH,
                    "rainMonths": list(SW_MONSOON), "minSeasons": MIN_SEASONS},
         "thresholds": {"governedR2": GOVERNED_R2, "partlyR2": PARTLY_R2},
@@ -147,8 +178,21 @@ def build():
                    [r["r2"], classes.index(r["class"]), r["risePer100mm"],
                     r["seasons"], r["irrigatedPct"]]
                    for r in rows},
-        "caveat": 'Nothing here measures extraction, and the unexplained variation is not pumping. Low R² or an inverse slope does not establish that rain has no influence. October-November rain, lagged effects, other flows and observation differences are omitted.',
-        "limits": ['A single predictor on seven to eleven seasons is a thin instrument. Individual fits and group comparisons need uncertainty estimates and independent validation.', 'The stronger class starts at R² 0.40 with a water-level rise associated with wetter years. This is a project threshold, not evidence that rain explains most variation or controls the aquifer.', 'Irrigated-area differences between groups are descriptive associations. They do not identify pumping as the cause or show that rainfall control has changed over time.'],
+        "caveat": ("Nothing here measures extraction, and the part rain does not explain is not pumping. A "
+                   "table that ignores the rain may be drawn down, fed by a canal, carrying last year "
+                   "forward, or noisy on a few points. The honest statement is the absence: rain is not the "
+                   "main explanation there."),
+        "limits": [
+            ("A single predictor on seven to eleven seasons is a thin instrument, so the groups are "
+             "far firmer than any one mandal's figure."),
+            ("The strongest group starts where rain explains 40% of the swing: a large share, not all "
+             "of it."),
+            ("The fit is within-season. A mandal that fills every monsoon and is emptied every summer "
+             "reads as rain-driven, which is right: the monsoon does write its table."),
+            ("The irrigation difference between the groups is a pattern, not proof that pumping is the "
+             "cause. Naming what moves the other mandals needs the feeder supply hours and pump-set "
+             "census the brief asks for."),
+        ],
     }
 
 

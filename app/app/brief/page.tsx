@@ -53,10 +53,10 @@ type Village = {
   validation: {
     persistence: { wellsScored: number; persistentSharePct: number; betweenWellOffsetSdM: number; withinWellScatterSdM: number };
     splitHalf: { status?: string; protocol?: string; wellsScored: number; pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number; byAquifer: Array<{ aquifer: string; wells: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number }> };
-    doseResponse: Dose[]; forwardDoseResponse: Dose[];
+    doseResponse: Dose[]; forwardDoseResponse: Dose[]; forwardBaselineM: number | null;
     staticCovariateNull: { mandalMeanMaeM: number; predictedOffsetMaeM: number; predictedOffsetR2: number; wellsScored: number };
     crossNetworkOffset: { persistentSharePct: number; pastPredictsFutureR: number; withLearnedOffsetMaeM: number; villagesReached: number } | null;
-    byWellType: Array<{ wellType: string; wells: number; persistence: { persistentSharePct: number }; splitHalf: { pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number }; doseResponse: Dose[]; forwardDoseResponse: Dose[] }>;
+    byWellType: Array<{ wellType: string; wells: number; persistence: { persistentSharePct: number }; splitHalf: { pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number }; doseResponse: Dose[]; forwardDoseResponse: Dose[]; forwardBaselineM: number | null }>;
   };
 };
 
@@ -130,13 +130,13 @@ function Pipeline() {
         <g stroke="#7d93ab" strokeWidth="1.3" fill="none"><path d="M114 64V86" markerEnd="url(#brief-arrow)" /><path d="M360 64V86" markerEnd="url(#brief-arrow)" /><path d="M606 64V86" markerEnd="url(#brief-arrow)" /></g>
         <rect x="0" y="90" width="720" height="62" rx="9" fill="#0b2a4d" />
         <text x="16" y="112" fill="#fff" fontWeight="600" fontSize="11.5">Weekly pipeline · every Monday, automated</text>
-        <text x="16" y="128" fill="#bcd2e6">Refresh available feeds; retain source dates; compare each mandal with its own past</text>
-        <text x="16" y="143" fill="#ffd38a">Weekly refresh gates: data-contract and integrity checks before refreshed data is committed</text>
+        <text x="16" y="128" fill="#bcd2e6">Fetch every source, keep each one&rsquo;s own date, compare each mandal with its own past</text>
+        <text x="16" y="143" fill="#ffd38a">Gate: the test suite and a data-contract check run before anything publishes</text>
         <g stroke="#7d93ab" strokeWidth="1.3" fill="none"><path d="M180 152V174" markerEnd="url(#brief-arrow)" /><path d="M540 152V174" markerEnd="url(#brief-arrow)" /></g>
         <rect x="0" y="178" width="352" height="66" rx="9" {...box} /><rect x="368" y="178" width="352" height="66" rx="9" {...box} />
         <rect x="0" y="178" width="352" height="4" rx="2" fill="#1f8a8a" /><rect x="368" y="178" width="352" height="4" rx="2" fill="#d79b2e" />
         <g fill="#0d2138" fontWeight="600" fontSize="11.5"><text x="14" y="200">Groundwater model</text><text x="382" y="200">Rule-based analyses</text></g>
-        <g fill="#667085"><text x="14" y="217">Boosted trees on the monthly change · 19 inputs</text><text x="14" y="232">Point estimate + nominal 80% band · now and 3 months ahead</text><text x="382" y="217">Drought manual · recharge watch · summer outlook</text><text x="382" y="232">Crop water check · each mandal against its own past</text></g>
+        <g fill="#667085"><text x="14" y="217">Boosted trees on the monthly change · 19 inputs</text><text x="14" y="232">Best estimate + 80% band · now and 3 months ahead</text><text x="382" y="217">Drought manual · recharge watch · summer outlook</text><text x="382" y="232">Crop water check · each mandal against its own past</text></g>
         <g stroke="#7d93ab" strokeWidth="1.3" fill="none"><path d="M180 244V262" markerEnd="url(#brief-arrow)" /><path d="M540 244V262" markerEnd="url(#brief-arrow)" /></g>
         <rect x="0" y="266" width="720" height="34" rx="9" fill="#1f8a8a" />
         <text x="16" y="287" fill="#fff" fontWeight="600" fontSize="11">Published: the site, maps, 3D views, district and constituency briefs, a weekly PDF</text>
@@ -338,7 +338,7 @@ export default function BriefPage() {
               <div className={styles.kpi}><b>{mapGeometry.mandals.length}</b><span>mandals mapped, each compared with its own history</span></div>
               <div className={styles.kpi}><b>{WATER.length + CLIMATE.length + LAND.length}</b><span>public and official data sources, combined every week</span></div>
               <div className={styles.kpi}><b>{roll.maeM.toFixed(2)} m</b><span>average nowcast error; {roll.skillVsLastReadingPct.toFixed(0)}% better than the last reading</span></div>
-              <div className={styles.kpi}><b>Mon</b><span>scheduled refresh, subject to data-contract and integrity checks</span></div>
+              <div className={styles.kpi}><b>Mon</b><span>automated refresh; publishes only if the tests pass</span></div>
             </div>
             <div className={styles.inside}><div className={`${styles.ihead} ${styles.mono}`}>Inside</div>
               <div><b>01</b><span>What it is</span><small>the question, three rules, the pipeline</small></div>
@@ -392,7 +392,7 @@ export default function BriefPage() {
               <div className={styles.sec}>How it is built</div>
               <div className={styles.steps}>
                 <div className={styles.step}><i>01</i><b>19 inputs</b><span>Depth lags of 1 to 12 months, CHIRPS rain over 1, 3 and 12 months, season, location, aquifer type and specific yield (CGWB)</span></div>
-                <div className={styles.step}><i>02</i><b>Learner</b><span>scikit-learn HistGradientBoosting: a squared-error point estimate plus 10th and 90th percentile models under quantile loss</span></div>
+                <div className={styles.step}><i>02</i><b>Learner</b><span>scikit-learn HistGradientBoosting: a best estimate, plus 10th and 90th percentile models for the band</span></div>
                 <div className={styles.step}><i>03</i><b>Blend</b><span>Pulled toward the last reading by a weight set per depth band on a held-out year (2023)</span></div>
                 <div className={styles.step}><i>04</i><b>Band</b><span>10th to 90th percentile range widened per aquifer and season by split-conformal calibration</span></div>
                 <div className={styles.step}><i>05</i><b>No leakage</b><span>Each mandal&rsquo;s latest reading is held out before its own estimate; inputs use only what was known then</span></div>
@@ -402,13 +402,13 @@ export default function BriefPage() {
                 <tr><td>Nowcast, held out (trained to Dec 2023), Jan 2024 to Sep 2026</td><td className={styles.num}>{t.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{t.model.maeM.toFixed(2)} m</td><td className={styles.num}>{t.lastReadingBaseline.maeM.toFixed(2)} m last</td><td className={`${styles.num} ${styles.gain}`}>{t.lastReadingBaseline.skillPct.toFixed(0)}%</td></tr>
                 <tr><td>Nowcast, retrained every month</td><td className={styles.num}>{roll.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{roll.maeM.toFixed(2)} m</td><td className={styles.num}>{roll.lastReadingMaeM.toFixed(2)} m last</td><td className={`${styles.num} ${styles.gain}`}>{roll.skillVsLastReadingPct.toFixed(0)}%</td></tr>
                 {h3 ? <tr><td>Forecast 3 months ahead, rolling origins</td><td className={styles.num}>{h3.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{h3.maeM.toFixed(2)} m</td><td className={styles.num}>{h3.baselines.noChange.maeM.toFixed(2)} m no change</td><td className={`${styles.num} ${styles.gain}`}>{pct(h3.maeM, h3.baselines.noChange.maeM)}%</td></tr> : null}
-                <tr><td>80% band coverage</td><td className={styles.num}>{interval.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{interval.empiricalCoveragePct.toFixed(1)}%</td><td className={styles.num}>80% nominal</td><td className={styles.num}>{interval.meanWidthM.toFixed(1)} m mean width</td></tr>
+                <tr><td>80% band coverage</td><td className={styles.num}>{interval.sampleCount.toLocaleString("en-US")}</td><td className={styles.num}>{interval.empiricalCoveragePct.toFixed(1)}%</td><td className={styles.num}>80% nominal</td><td className={styles.num}>&plusmn;{(interval.meanWidthM / 2).toFixed(1)} m</td></tr>
                 <tr><td>Rise or fall on CGWB&rsquo;s wells, never trained on ({crossNetwork.years[0]}–{String(crossNetwork.years[crossNetwork.years.length - 1]).slice(2)})</td><td className={styles.num}>{crossNetwork.overall.clearMoves.toLocaleString("en-US")}</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.forecast! * 100)}% right</td><td className={styles.num}>{Math.round(crossNetwork.overall.direction.measured! * 100)}% State wells</td><td className={styles.num}>{Math.round(crossNetwork.overall.bySeason.usual.forecast! * 100)} / {Math.round(crossNetwork.overall.bySeason.broke.forecast! * 100)}%</td></tr>
                 {imd ? <tr><td>IMD rain in place of CHIRPS, retrained every month ({imd.window.first.slice(0, 4)}–{imd.window.last.slice(2, 4)})</td><td className={styles.num}>{imd.results.imd.rows.toLocaleString("en-US")}</td><td className={styles.num}>{imd.results.imd.maeM.toFixed(2)} m</td><td className={styles.num}>{imd.results.chirps.maeM.toFixed(2)} m CHIRPS</td><td className={styles.num}>{Math.round(imd.gainPct)}%, a year late</td></tr> : null}
                 <tr><td>Ungauged mandal (whole mandal held out)</td><td className={styles.num}>{spatial.rowCount.toLocaleString("en-US")}</td><td className={styles.num}>{spatial.reportedMetric.maeM.toFixed(1)} m</td><td className={styles.num}>state average</td><td className={`${styles.num} ${styles.no}`}>not released</td></tr>
               </tbody></table>
               <div className={styles.twocol} style={{ marginTop: "4mm" }}>
-                <div className={styles.chartcard}><h3>Error grows with depth; compare the model with persistence</h3><p>Average absolute error on held-out months</p><ErrorByDepth bands={t.depthBands} /></div>
+                <div className={styles.chartcard}><h3>{t.depthBands.every(b => b.maeM < b.lastReadingMaeM) ? "Error grows with depth; the model wins in every band" : "Error grows with depth; the model against the last reading"}</h3><p>Average absolute error on held-out months</p><ErrorByDepth bands={t.depthBands} /></div>
                 <div className={styles.stack}>
                   <div className={`${styles.note} ${styles.teal}`}><b>Release rule.</b> A horizon is published only if it beats both no-change and same-month-last-year by at least 5% under rolling-origin validation, with no leakage and consistent results by terrain. Three months passes; one, six and twelve do not yet, so they are not shown.</div>
                   <div className={styles.note}><b>Tried and rejected, on evidence.</b> The El Niño index made it worse. Rain over official outlines: no gain (1.797 vs 1.800 m). NASA near-real-time rain read twice as wet as CHIRPS and raised error 0.62 → 0.96 m. A month whose satellite rain is unpublished is estimated without it and says so (0.89 → 1.04 m). The State&rsquo;s seven carried-forward months of 2021 are treated as missing.</div>
@@ -511,7 +511,7 @@ export default function BriefPage() {
           </section>
 
           <section className={styles.page} data-testid="brief-sheet">
-            <Band num="07 · Closing the gap" title="Six inputs to test next" lede={<>Direction agreement is weaker in seasons that break the usual pattern. That identifies a validation priority, not an accuracy ceiling or a proven cause. <b>Pumping, canal supply, aquifer structure and observation differences remain hypotheses to test.</b></>} />
+            <Band num="07 · Closing the gap" title="Six inputs to test next" lede={<>In an ordinary season the forecast already calls direction about as often as the two measured networks agree with each other. The misses gather in seasons that break the pattern, when the water table may be set by what is pumped rather than by what fell. <b>Pumping is the one driver the model cannot see</b>, so these are the inputs to test next.</>} />
             <div className={styles.body}>
               <div className={styles.sec}>Candidate inputs; gains require matched validation</div>
               <div className={styles.qs}>
@@ -522,60 +522,62 @@ export default function BriefPage() {
                 <div className={styles.q}><b>An authorized APWRIMS export, full history.</b> Training begins June 2015. A longer, quality-controlled record may improve seasonal coverage; any gain must be tested. Source authorization remains a gate on official use.</div>
                 <div className={styles.q}><b>Prospective field verification.</b> Record predictions before new measurements arrive, then score depth error, interval coverage and missed stress cases by aquifer. Historical backtests do not replace prospective validation.</div>
               </div>
-              <div className={`${styles.note} ${styles.teal}`}><b>Where the cross-network check is weaker.</b> In usual seasons, forecast direction agrees with CGWB {Math.round(crossNetwork.overall.bySeason.usual.forecast! * 100)}% of the time; agreement between the two measured networks is {Math.round(crossNetwork.overall.bySeason.usual.measured! * 100)}%. In pattern-breaking seasons those figures are {Math.round(crossNetwork.overall.bySeason.broke.forecast! * 100)}% and {Math.round(crossNetwork.overall.bySeason.broke.measured! * 100)}%. These compare different measurements and are <b>not a ceiling on achievable accuracy or evidence that pumping caused the errors.</b></div>
+              <div className={`${styles.note} ${styles.teal}`}><b>Where the misses are.</b> In usual seasons, the forecast&rsquo;s direction agrees with CGWB {Math.round(crossNetwork.overall.bySeason.usual.forecast! * 100)}% of the time; agreement between the two measured networks is {Math.round(crossNetwork.overall.bySeason.usual.measured! * 100)}%. In pattern-breaking seasons those figures are {Math.round(crossNetwork.overall.bySeason.broke.forecast! * 100)}% and {Math.round(crossNetwork.overall.bySeason.broke.measured! * 100)}%. The networks read different wells, so this shows where to look rather than a hard ceiling.</div>
               <div className={styles.sec}>What this project can give back</div>
               <div className={styles.limits}>
                 <div className={styles.lim}><b>A systematic gap between the two well networks.</b> Over {cross.sampleCount.toLocaleString("en-US")} readings paired within {cross.maximumDistanceKm} km and the same month, CGWB&rsquo;s wells read {Math.abs(cross.biasCgwbMinusApwrimsM).toFixed(1)} m {cross.biasCgwbMinusApwrimsM < 0 ? "shallower" : "deeper"} than the State&rsquo;s, correlating {cross.correlation.toFixed(2)}.</div>
                 <div className={styles.lim}><b>259 series whose aquifer label its own specific yield contradicts</b>, already listed mandal by mandal and ready to hand over.</div>
                 <div className={styles.lim}><b>Quality control on the State&rsquo;s own record.</b> The same model that estimates a level also flags a reading inconsistent with that well&rsquo;s history and its neighbours — which is how a drifting recorder or a transcription error is found across a network of this size.</div>
               </div>
-              <div className={styles.note}><b>What to test next.</b> Combine located wells and aquifer properties, add independently measured pumping context where available, and compare with the current model on the same held-out locations and dates. Publish finer-scale estimates only after that validation.</div>
+              <div className={styles.note}><b>What that would build.</b> With located wells and aquifer properties in place, this same weekly pipeline ({WATER.length + CLIMATE.length + LAND.length} sources, {mapGeometry.mandals.length} mandals, every Monday) could estimate a level where no well stands. It would be published only once it beats the current model on held-out places and dates.</div>
 
             </div>
             <Foot n={8} />
           </section>
 
           <section className={styles.page} data-testid="brief-sheet">
-            <Band num="08 · Below the mandal" title="What a few local readings can establish" lede={<>APWRIMS publishes mandal averages, so the mandal nowcast does not establish village-level accuracy. This separate study examines <b>well offsets from contemporaneous, same-type peer wells</b>: {village.source.apWells.toLocaleString("en-US")} CGWB wells, {village.source.apReadings.toLocaleString("en-US")} readings, {village.source.period}.</>} />
+            <Band num="08 · Below the mandal" title="A village needs a few readings, not a piezometer" lede={<>The department asked whether a level can be given per village at the error the model reaches per mandal. Not as it stands. The reason is not resolution. What is missing is a target: <b>APWRIMS publishes levels already averaged to mandal</b>, so nothing below mandal scale has ever been trained or tested. Measured below on {village.source.apWells.toLocaleString("en-US")} CGWB wells, {village.source.apReadings.toLocaleString("en-US")} readings, {village.source.period}, each well against wells of the same type in its mandal.</>} />
             <div className={styles.body}>
               <div className={styles.figs}>
-                <div className={styles.fig}><b>{village.spread.medianVillageSpreadM.toFixed(2)} m</b><span>median within-mandal spread of village/well-type mean offsets</span></div>
-                <div className={styles.fig}><b>{village.validation.persistence.persistentSharePct.toFixed(0)}%</b><span>descriptive between-well persistence index; not a guarantee that offsets remain fixed</span></div>
-                <div className={styles.fig}><b>{village.validation.splitHalf.pastPredictsFutureR.toFixed(3)}</b><span>earlier- versus later-half mean offset correlation, in calendar order, {village.validation.splitHalf.wellsScored} wells, split-half</span></div>
-                <div className={styles.fig}><b>{dug ? dug.forwardDoseResponse.find(d => d.readings === 3)!.residualErrorM.toFixed(2) : "—"} m</b><span>future individual-offset MAE after three early dug-well readings; observed peers required</span></div>
+                <div className={styles.fig}><b>{village.spread.medianVillageSpreadM.toFixed(2)} m</b><span>the median village stands this far from its mandal&rsquo;s mean, more than the whole mandal-level error</span></div>
+                <div className={styles.fig}><b>{village.validation.persistence.persistentSharePct.toFixed(0)}%</b><span>of that gap stays with the place rather than moving season to season</span></div>
+                <div className={styles.fig}><b>{village.validation.splitHalf.pastPredictsFutureR.toFixed(3)}</b><span>a well&rsquo;s earlier gap against its later one, in date order, {village.validation.splitHalf.wellsScored} wells</span></div>
+                <div className={styles.fig}><b>{dug ? dug.forwardDoseResponse.find(d => d.readings === 3)!.residualErrorM.toFixed(2) : "—"} m</b><span>error on a later reading after three readings at a dug well{dug?.forwardBaselineM ? <>, against {dug.forwardBaselineM.toFixed(2)} m on the mandal figure alone</> : null}</span></div>
               </div>
 
-              <div className={styles.note}><b>Different questions, different errors.</b> Mandal nowcast MAE is {card.evaluations.temporalNowcast.model.maeM.toFixed(2)} m; holding out whole mandals gives {card.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(2)} m. Neither establishes village accuracy. The offset study below excludes errors in a future mandal estimate and in its peer reference.</div>
+              <div className={styles.note}><b>The accuracy is borrowed from the well.</b> The nowcast errs by {card.evaluations.temporalNowcast.model.maeM.toFixed(2)} m because every mandal has its own history to carry forward. That history alone, with no model, already gives {card.evaluations.temporalNowcast.lastReadingBaseline.maeM.toFixed(2)} m. Take the local sensor away and hold out whole mandals and the error is <b>{card.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(2)} m</b>. A village without a well is that case at a finer scale.</div>
 
               <div className={styles.twocol}>
                 <div className={styles.chartcard}>
-                  <h3>Early readings → future offset error</h3>
-                  <p>The first k readings estimate the offset; individual readings after the first eight test it. Every k uses the same wells and future tail, equally weighted by well. The peer-well mean is observed, not forecast. Missing quarterly readings can extend the calibration period.</p>
+                  <h3>What each reading at a well buys</h3>
+                  <p>The first readings measure the well&rsquo;s gap from its mandal; every later reading, in date order, tests it. Every point uses the same wells and the same later readings. CGWB reads in January, May, August and November, so four readings is about a year. These wells are read at rest from a fixed point, so private wells will be noisier.</p>
                   {dug && bore && <DoseCurve series={[{ label: "Dug well", colour: "#1f8a8a", dose: dug.forwardDoseResponse, below: true }, { label: "Bore well", colour: "#c2412d", dose: bore.forwardDoseResponse }]} />}
                 </div>
                 <div>
-                  <div className={styles.para}>Calendar-ordered split halves reduce error in the <b>later-half mean offset</b> from {village.validation.splitHalf.mandalMeanAppliedMaeM.toFixed(2)} m to {village.validation.splitHalf.withLearnedOffsetMaeM.toFixed(2)} m. That averaged target is easier than an individual future reading. The curve and table use the latter target.</div>
+                  <div className={styles.para}>A village deeper than its mandal tends to stay deeper. Across wells the gap varies by {village.validation.persistence.betweenWellOffsetSdM.toFixed(1)} m, while one well&rsquo;s own gap moves by {village.validation.persistence.withinWellScatterSdM.toFixed(1)} m from season to season. Measured from the first half of each record, it cuts the error on the second half&rsquo;s average from {village.validation.splitHalf.mandalMeanAppliedMaeM.toFixed(2)} m to {village.validation.splitHalf.withLearnedOffsetMaeM.toFixed(2)} m. <b>A single later reading is harder</b>: that season-to-season movement sets a floor near 2 m that more readings do not lower.</div>
                   <table className={styles.res}><thead><tr><th>Readings</th><th>Dug well</th><th>Bore well</th></tr></thead><tbody>
+                    {dug?.forwardBaselineM && bore?.forwardBaselineM ? <tr><td>none · mandal figure alone</td><td className={styles.num}>{dug.forwardBaselineM.toFixed(2)} m</td><td className={styles.num}>{bore.forwardBaselineM.toFixed(2)} m</td></tr> : null}
                     {dug && bore && [1, 3, 4, 8].map(n => {
                       const d = dug.forwardDoseResponse.find(x => x.readings === n), b = bore.forwardDoseResponse.find(x => x.readings === n);
                       if (!d || !b) return null;
 
-                      return <tr key={n}><td>{n} early readings</td><td className={styles.num}>{d.residualErrorM.toFixed(2)} m</td><td className={styles.num}>{b.residualErrorM.toFixed(2)} m</td></tr>;
+                      return <tr key={n}><td>{n === 4 ? "4 · a year quarterly" : n === 8 ? "8 · two years" : n}</td><td className={styles.num}>{d.residualErrorM.toFixed(2)} m</td><td className={styles.num}>{b.residualErrorM.toFixed(2)} m</td></tr>;
                     })}
                   </tbody></table>
                 </div>
               </div>
 
-              <div className={styles.note}><b>Mean-offset checks by aquifer.</b> Earlier-half offsets applied to later-half means: {village.validation.splitHalf.byAquifer.map((row, i, all) => <span key={row.aquifer}><b>{row.aquifer === "hard_rock" ? "hard rock" : row.aquifer}</b> {row.mandalMeanAppliedMaeM.toFixed(2)} &rarr; {row.withLearnedOffsetMaeM.toFixed(2)} m{i < all.length - 1 ? ", " : ". "}</span>)}These are historical subgroup results, not promised field accuracy.</div>
+              <div className={styles.note}><b>It helps most where the need is greatest.</b> Error on the second half&rsquo;s average, on the mandal figure alone and then with the measured gap: {village.validation.splitHalf.byAquifer.map((row, i, all) => <span key={row.aquifer}><b>{row.aquifer === "hard_rock" ? "hard rock" : row.aquifer}</b> {row.mandalMeanAppliedMaeM.toFixed(2)} &rarr; {row.withLearnedOffsetMaeM.toFixed(2)} m{i < all.length - 1 ? ", " : ". "}</span>)}Hard rock is the worst terrain in every other test on this platform, and the one a measured gap repairs by the most metres.</div>
 
-              <div className={`${styles.note} ${styles.teal}`}><b>The static model has not earned a release.</b> Predicting mean offsets from position, well depth and type, with whole mandals held out, gives {village.validation.staticCovariateNull.predictedOffsetMaeM.toFixed(2)} m MAE versus {village.validation.staticCovariateNull.mandalMeanMaeM.toFixed(2)} m for zero offset, at R&sup2; {village.validation.staticCovariateNull.predictedOffsetR2.toFixed(2)}. This target and cohort differ from the calibration curve.</div>
+              <div className={`${styles.note} ${styles.teal}`}><b>Measuring beats modelling, which is what sets the ask.</b> Predicting the gap instead, from position, well depth and type with whole mandals held out, gives {village.validation.staticCovariateNull.predictedOffsetMaeM.toFixed(2)} m at an R&sup2; of {village.validation.staticCovariateNull.predictedOffsetR2.toFixed(2)}, <b>no better than ignoring it</b> at {village.validation.staticCovariateNull.mandalMeanMaeM.toFixed(2)} m. A single measured reading cuts the error on later readings from {village.validation.forwardBaselineM?.toFixed(2)} m to {village.validation.forwardDoseResponse[0]?.residualErrorM.toFixed(2)} m.</div>
 
               <div className={styles.limits}>
-                <div className={styles.lim}><b>A compatible reference is still needed.</b> Against APWRIMS, the learned-offset error is {village.validation.crossNetworkOffset?.withLearnedOffsetMaeM.toFixed(1)} m on later-half means. Network, well-type and location differences can all contribute. The study does not identify a single cause.</div>
-                <div className={styles.lim}><b>A well does not represent an entire village.</b> Keep well types separate, record the measuring datum and pumping conditions, and revisit offsets as conditions change. A private well programme needs prospective validation.</div>
+                <div className={styles.lim}><b>Several wells per mandal, not one.</b> Measured against the State network&rsquo;s mandal mean instead of same-type peers, the gap keeps only {village.validation.crossNetworkOffset?.persistentSharePct.toFixed(0)}% of its persistence and leaves {village.validation.crossNetworkOffset?.withLearnedOffsetMaeM.toFixed(1)} m, because the two networks differ in wells, type and place. A pilot needs a handful of one kind per mandal, forming their own reference.</div>
+                <div className={styles.lim}><b>Dug wells and bores kept apart</b>, or the aquifer&rsquo;s depth enters what should be the village&rsquo;s position. Dug wells are the steadier kind ({dug?.splitHalf.pastPredictsFutureR.toFixed(2)} against {bore?.splitHalf.pastPredictsFutureR.toFixed(2)}) and the kind a village draws from.</div>
+                <div className={styles.lim}><b>A well speaks for its spot</b>, not the whole village. Private wells need a marked measuring point and a reading taken before pumping.</div>
               </div>
 
-              <div className={styles.note}><b>Next step: a measured pilot.</b> The dataset contains {village.coverage.villages} village/well-type records across {village.coverage.mandals} mandals. Select sites across depth, aquifer and pumping conditions; collect repeat readings with comparable peer wells; test future individual depths and uncertainty before publishing village estimates.</div>
+              <div className={styles.note}><b>What can be done now.</b> On {village.coverage.villages} villages across {village.coverage.mandals} mandals the gap is computable today, and the mandal figure is a poor village guide in {village.spread.proxyPoor} of the {village.coverage.mandalsWithSpread} mandals where it can be checked, which is itself a way to choose where to measure first. <b>The State&rsquo;s own well-level history would add the rest:</b> the mandal means here are averages of individual wells, so releasing those wells with coordinates gives sub-mandal structure statewide at no modelling cost. A measured pilot is what would then show the error a village figure can actually reach.</div>
             </div>
             <Foot n={9} />
           </section>

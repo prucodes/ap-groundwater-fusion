@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-22T12:28:41Z",
+  "generatedAt": "2026-10-22T13:23:19Z",
   "source": {
     "name": "CGWB Quality controlled groundwater levels over India",
     "period": "2000-2024, read in January, May, August and November",
@@ -133,6 +133,7 @@
         "futureReadings": 22141
       }
     ],
+    "forwardBaselineM": 4.384,
     "forwardDoseMethod": "First k readings predict individual later offsets after the first eight readings, on a common well cohort. Future same-type peer means are observed; nowcast and peer-reference errors are not included.",
     "doseResponseMethod": "Randomly selected calibration readings versus the mean of remaining offsets; not a forward monthly-depth test. Peer-reference and nowcast errors are not included.",
     "staticCovariateNull": {
@@ -250,7 +251,8 @@
             "wells": 441,
             "futureReadings": 15466
           }
-        ]
+        ],
+        "forwardBaselineM": 3.715
       },
       {
         "wellType": "Bore well",
@@ -340,7 +342,8 @@
             "wells": 168,
             "futureReadings": 6325
           }
-        ]
+        ],
+        "forwardBaselineM": 6.244
       }
     ]
   },

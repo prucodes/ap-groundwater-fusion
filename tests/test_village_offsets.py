@@ -150,3 +150,6 @@ def test_published_temporal_results_use_corrected_protocol():
         assert len({p["wells"] for p in curve}) == 1
         assert len({p["futureReadings"] for p in curve}) == 1
         assert all(p["residualErrorM"] >= 0 for p in curve)
+        # The page reads "X m on the mandal figure alone" against the curve, so the
+        # baseline must exist and a measured reading must actually beat it.
+        assert row["forwardBaselineM"] > curve[0]["residualErrorM"]

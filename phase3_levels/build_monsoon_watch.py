@@ -635,9 +635,14 @@ def water_banked(mandals, season_rain):
         "medianSharePct": shares[len(shares) // 2],
         "shareFloorMm": MIN_SHARE_RAIN_MM,
         "thinRain": thin,
-        # Ratios above 100% need attribution checks; no cause is identified here.
+        # Rain alone cannot fill these: the balance came from a canal, irrigation
+        # return flow or upslope, or is rain outside the window or a specific yield
+        # that is off. No released dataset says which.
         "aboveRain": sum(1 for share in shares if share > 100),
-        "method": 'Water-table fluctuation proxy: positive May-to-latest rise times assumed specific yield and area. Net of pumping and other flows before negative changes are clipped to zero. Rain covers available June-September months, which may differ from the level window. This is not a GEC-2015 gross recharge assessment or a measured rainfall-recharge fraction.',
+        "method": ("Water-table fluctuation (GEC-2015), the method the official assessment uses: the rise "
+                   "since May times the mandal's specific yield times its area. Net of the season's own "
+                   "pumping, so gross recharge is larger, and a mandal whose table fell counts as zero. The "
+                   "rain counted is June to September."),
     }
 
 

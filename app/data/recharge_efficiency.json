@@ -1,7 +1,7 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-21T01:16:21Z",
-  "method": "Exploratory storage-change/rainfall proxy: positive May-to-November water-level rise times specific yield and area, divided by June-September rainfall volume; median across paired years. Negative changes are clipped to zero",
+  "generatedAt": "2026-10-22T13:34:11Z",
+  "method": "Water-table fluctuation, the GEC-2015 method: the May to November rise times specific yield times area, as a share of June to September rainfall, for every year a mandal has both readings. The median year is published, and a year whose table fell counts as zero.",
   "window": {
     "preMonsoonMonth": 5,
     "postMonsoonMonth": 11,
@@ -3758,11 +3758,11 @@
       "class": "set aside"
     }
   ],
-  "caveat": "Net of the season's pumping and other flows, with an assumed specific yield. This is not gross recharge or a measured rainfall-recharge fraction. October-November rain is outside the denominator; a ratio above 100% does not prove imported water.",
+  "caveat": "Net of the season's pumping, so a mandal that keeps little may be recharging well and drawing it straight back out. The share rests on specific yield, often an aquifer-wide estimate, so the ranking within an aquifer is firmer than the number. October and November rain fall outside the rain counted.",
   "limits": [
-    "Depth alone does not identify a confined aquifer. The 20 m exclusion is a project precaution, not a hydrogeological diagnosis; well construction and aquifer data are needed.",
-    "In the current snapshot, proxy and depth correlate at 0.27 after the exclusion versus 0.40 before. Compare similar depth and aquifer settings; these descriptive correlations require rechecking when data change.",
-    "Rainfall-window mismatch, irrigation return flows, lateral flows, pumping and specific-yield error can all change the ratio. Their contributions are not identified here.",
-    "Project thresholds describe the proxy, not validated recharge suitability. Any proposed structure must be verified in the field; agreement with a published recharge coefficient is not independent validation."
+    "A deeper water table has more room to rise, and still scores higher after the deepest are set aside: share and depth correlate at 0.27 among the mandals ranked here, against 0.40 before. Compare mandals of similar depth and aquifer rather than across the whole table.",
+    "Past 20 m the method's unconfined assumption is doubtful, so those mandals are set aside as a precaution. Depth alone does not prove an aquifer is confined.",
+    "A share above 100% means more water was stored than the counted rain delivered: a canal, flow from upslope, irrigation return, October rain, or a specific yield that is off. This cannot tell which.",
+    "A ranking to decide where to look, verified in the field before anything is built on it."
   ]
 }

@@ -68,7 +68,7 @@ def test_rain_governed_mandals_are_mostly_hard_rock():
 def test_the_thinness_of_the_instrument_is_declared():
     limits = " ".join(load()["limits"])
     assert "thin instrument" in limits
-    assert "uncertainty estimates and independent validation" in limits
+    assert "groups are far firmer" in limits
 
 
 def test_the_median_fit_is_reported_not_hidden():

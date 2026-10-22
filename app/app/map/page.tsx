@@ -49,9 +49,16 @@ const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "soil_pct", label: "Soil moisture" },
   { key: "vci", label: "Crop vegetation" },
   { key: "gec_category", label: "Groundwater category" },
-  { key: "recharge_share", label: "Storage / rainfall proxy" },
-  { key: "rain_governed", label: "Rain–level association" },
+  { key: "recharge_share", label: "Rain reaching the aquifer" },
+  { key: "rain_governed", label: "Does rain still drive it?" },
 ];
+
+// The groups and aquifers the two water notes compare, read from the data so the
+// sentences follow it rather than a figure written into the page.
+const rainDriven = rainGoverned.groups.find(g => g.class === "rain governed");
+const rainLittle = rainGoverned.groups.find(g => g.class === "not rain");
+const aquiferShare = (name: string) => recharge.byAquifer.find(row => row.aquifer === name);
+const hardRock = aquiferShare("hard_rock"), alluvial = aquiferShare("alluvial"), coastal = aquiferShare("coastal");
 
 function legendGradient(layer: string, dark: boolean) {
   return layer === "water_balance_mm"
@@ -203,13 +210,13 @@ export default function MapPage() {
                       {rainGoverned.groups.map(group => (
                         <div key={group.class} className="rechargeAquifer">
                           <b>{group.medianIrrigatedPct}%</b>
-                          <span>median irrigated share · {group.class === "rain governed" ? "stronger fit" : group.class === "partly" ? "moderate fit" : "weak / inverse fit"}</span>
-                          <i>{group.medianRisePer100mm} m fitted rise per 100 mm</i>
+                          <span>irrigated, where {group.class === "rain governed" ? "rain drives it" : group.class === "partly" ? "rain is part of it" : "rain explains little"}</span>
+                          <i>{group.medianRisePer100mm} m per 100 mm</i>
                         </div>
                       ))}
                     </div>
                     <div className="mapHint">
-                      <IconInfo style={{ width: 13, height: 13 }} /> Median in-sample R²: {rainGoverned.medianR2}. Association does not establish causation; a weak or inverse fit does not show that rainfall is unimportant or that pumping caused the change.
+                      <IconInfo style={{ width: 13, height: 13 }} /> {rainDriven && rainLittle ? <>Where rain drives the water table, {rainDriven.medianIrrigatedPct}% of the land is irrigated against {rainLittle.medianIrrigatedPct}% where it explains little, and the table answers each 100 mm of rain {rainLittle.medianRisePer100mm > 0 ? `${Math.round(rainDriven.medianRisePer100mm / rainLittle.medianRisePer100mm)} times` : "far"} more strongly. </> : null}Rain explains about {Math.round(rainGoverned.medianR2 * 100)}% of the median mandal&rsquo;s swing. A pattern, not proof of what moves the rest.
                     </div>
                     <details className="rechargeMethod">
                       <summary>How this is measured, and what it cannot say</summary>
@@ -237,7 +244,7 @@ export default function MapPage() {
                       ))}
                     </div>
                     <div className="mapHint">
-                      <IconInfo style={{ width: 13, height: 13 }} /> May–November positive water-level change × assumed specific yield, divided by June–September rain. The windows differ: October–November rain is omitted. This is not a measured recharge fraction or a recharge-structure siting score.
+                      <IconInfo style={{ width: 13, height: 13 }} /> {hardRock && alluvial && Math.abs(hardRock.medianSharePct - alluvial.medianSharePct) < 2 ? <>Hard rock keeps about as much of its rain as alluvial land, on a far smaller specific yield. </> : null}{coastal && coastal.medianSharePct < Math.min(hardRock?.medianSharePct ?? Infinity, alluvial?.medianSharePct ?? Infinity) ? <>The coast keeps least. </> : null}An estimate from the May to November rise, net of pumping; a guide to where to look, not a siting rule.
                     </div>
                     {/* The method and its limits are the longest text on the page and
                         the least often wanted, so they fold. What stays open is the one

@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-22T12:28:41Z",
+  "generatedAt": "2026-10-22T13:23:19Z",
   "source": {
     "name": "CGWB Quality controlled groundwater levels over India",
     "period": "2000-2024, read in January, May, August and November",
@@ -162,7 +162,8 @@
         "wells": 441,
         "futureReadings": 15466
       }
-    ]
+    ],
+    "forwardBaselineM": 3.715
   },
   "boreWell": {
     "wells": 320,
@@ -236,7 +237,8 @@
         "wells": 168,
         "futureReadings": 6325
       }
-    ]
+    ],
+    "forwardBaselineM": 6.244
   },
   "caveat": "observation wells with a fixed measuring point, read at rest; private irrigation wells will be noisier",
   "doseResponseMethod": "Randomly selected calibration readings versus the mean of remaining offsets; not a forward monthly-depth test. Peer-reference and nowcast errors are not included.",
