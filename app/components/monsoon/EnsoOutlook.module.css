@@ -8,11 +8,11 @@
 .head, .grid { position: relative; color: #eaf3fb; }
 .head {
   display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; flex-wrap: wrap; padding: 26px 28px 8px;
-  background: radial-gradient(900px 300px at 0% -30%, rgba(178, 58, 46, .35), transparent 60%), linear-gradient(135deg, #1a0d14 0%, #2a1320 45%, #0b2a4d 100%);
+  background: linear-gradient(110deg, #071d35, #103448);
 }
 .grid {
   display: grid; grid-template-columns: 1.35fr 1fr; gap: 18px; padding: 16px 28px 26px;
-  background: radial-gradient(800px 260px at 100% 120%, rgba(18, 181, 203, .2), transparent 60%), linear-gradient(135deg, #2a1320 0%, #0b2a4d 55%, #123b66 100%);
+  background: radial-gradient(800px 260px at 100% 120%, rgba(18, 181, 203, .12), transparent 60%), linear-gradient(110deg, #071d35, #103448);
 }
 .head h2 { margin: 6px 0 10px; font: 600 28px/1.2 var(--font-display); color: #fff; }
 .kicker { font: 600 11px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #ffb4a6; }
@@ -22,10 +22,9 @@
 .alert {
   display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; white-space: nowrap;
   font: 600 12px var(--font-mono); text-transform: uppercase; letter-spacing: .08em; color: #fff;
-  background: rgba(178, 58, 46, .35); border: 1px solid rgba(255, 140, 120, .45);
+  background: rgba(233, 161, 90, .12); border: 1px solid rgba(233, 161, 90, .4);
 }
-.alert::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #ff7a5c; box-shadow: 0 0 0 0 rgba(255, 122, 92, .7); animation: pulse 2s infinite; }
-@keyframes pulse { 70% { box-shadow: 0 0 0 10px rgba(255, 122, 92, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 122, 92, 0); } }
+.alert::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #e9a15a; }
 
 .tile { min-width: 0; padding: 16px 16px 14px; border-radius: var(--radius); background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); }
 .tile p { margin: 8px 0 0; font-size: 13px; line-height: 1.55; color: #c4d6e8; }

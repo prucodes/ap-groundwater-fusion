@@ -32,7 +32,7 @@ export function MandalStateReading({ mandalId }: { mandalId: string }) {
   const vsOurs = move(reading?.vsOurLatestM);
   return (
     <section className="card" aria-labelledby="mandal-state-title">
-      <div className="cardHead">
+      <div className={`cardHead ${styles.head}`}>
         <div className="cardTitle" id="mandal-state-title">
           <span className="titleIcon"><IconDroplet /></span>The State network&rsquo;s latest reading
         </div>
