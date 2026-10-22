@@ -130,7 +130,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
               <button type="submit" disabled={phase === "checking" || phase === "entering"}><span>{phase === "entering" ? "Welcome in" : "Explore"}</span><Arrow /></button>
             </div>
             <div id="welcome-help" className={styles.formHelp} aria-live="polite">
-              {error ? <span className={styles.error}>Try PRUTHVI — the creator&rsquo;s first name.</span> : hint ? <span>Type <strong>PRUTHVI</strong>. We&rsquo;ll remember this introduction on this device.</span> : <><span>A personal welcome to a public research project.</span><button type="button" onClick={() => setHint(true)}>Need a hint?</button></>}
+              {error ? <span className={styles.error}>Try PRUTHVI, the creator&rsquo;s first name.</span> : hint ? <span>Type <strong>PRUTHVI</strong>. We&rsquo;ll remember this introduction on this device.</span> : <><span>A personal welcome to a public research project.</span><button type="button" onClick={() => setHint(true)}>Need a hint?</button></>}
             </div>
           </form>
           {replay && <button className={styles.returnButton} type="button" onClick={openWorkspace}>Return to your workspace <Arrow /></button>}

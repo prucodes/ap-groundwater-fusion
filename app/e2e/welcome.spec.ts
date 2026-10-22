@@ -14,7 +14,7 @@ test("first visit accepts the creator name, keeps a deep link, and remembers ent
   await expect(page.locator(".shell")).toHaveCount(0);
   await page.getByLabel("A small introduction. Your invitation in.").fill("wrong");
   await page.getByRole("button", { name: "Explore", exact: true }).click();
-  await expect(page.getByText("Try PRUTHVI — the creator’s first name.")).toBeVisible();
+  await expect(page.getByText("Try PRUTHVI, the creator’s first name.")).toBeVisible();
   await expect(page.getByLabel("A small introduction. Your invitation in.")).toBeFocused();
   await enter(page, "  PrUtHvI  ");
   await expect(page).toHaveURL(/\/reports\/\?theme=dark#exports$/);
