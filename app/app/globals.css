@@ -905,24 +905,19 @@ h4 {
   align-items: center;
   min-height: 196px;
   background:
-    linear-gradient(95deg, rgba(5, 18, 38, 0.93) 0%, rgba(5, 18, 38, 0.74) 30%, rgba(5, 18, 38, 0.32) 54%, rgba(6, 22, 44, 0.08) 80%, rgba(6, 22, 44, 0) 100%),
-    url("/assets/header-satellite-earth.png");
+    radial-gradient(ellipse at 95% 110%, rgba(31, 138, 138, .32), transparent 60%),
+    linear-gradient(115deg, #071d35, #0a2945 70%, #103e50);
   background-size: cover;
   background-position: center 44%;
   box-shadow: var(--shadow-card);
 }
 
 .hero::before {
-  /* very faint starfield over the navy */
+  /* A soft light along the surface, with the reading area kept quiet. */
   content: "";
   position: absolute;
   inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 18% 34%, rgba(207, 230, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 30% 72%, rgba(159, 198, 239, 0.4), transparent),
-    radial-gradient(1.2px 1.2px at 46% 24%, rgba(207, 230, 255, 0.35), transparent),
-    radial-gradient(1px 1px at 62% 60%, rgba(188, 217, 245, 0.3), transparent);
-  opacity: 0.5;
+  border-top: 1px solid rgba(159, 229, 232, .25);
   pointer-events: none;
 }
 
@@ -937,14 +932,21 @@ h4 {
   width: 100%;
 }
 
-.heroScan {
+.heroContours {
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, transparent 40%, rgba(18, 181, 203, 0.08) 50%, transparent 60%);
-  background-size: 280% 100%;
-  animation: scan 9s linear infinite;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: #83d6da;
+  stroke-width: .8;
+  opacity: .2;
+  mask-image: linear-gradient(90deg, transparent 20%, #000 100%);
   pointer-events: none;
+  animation: contoursEnter 1.2s var(--ease) both;
 }
+@keyframes contoursEnter { from { opacity: 0; transform: translateY(8px); } to { opacity: .2; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .heroContours { animation: none; } }
 
 .heroLeft {
   max-width: 760px;
@@ -4837,7 +4839,7 @@ pre.jsonBody {
 }
 .dtgTile:hover { border-color: var(--line-strong); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(13, 33, 56, .07); }
 .dtgTile:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-.dtgActive { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan) inset; }
+.dtgActive { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal) inset; background: color-mix(in srgb, var(--teal) 7%, var(--card)); }
 
 .dtgName {
   font-size: 12px; font-weight: 600; color: var(--ink);
@@ -5785,7 +5787,7 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
    Page brief: what the screen is, what it says now, what to do with it.
    Replaces the hero subtitle; the middle line is written from the data.
    ============================================================ */
-.hero.heroCompact { border-radius: 8px; box-shadow: none; }
+.hero.heroCompact { border-radius: 14px; box-shadow: none; }
 .hero.heroCompact .heroInner { padding: 18px 24px; gap: 20px; }
 .hero.heroCompact h1 { font-size: 28px; line-height: 1.15; letter-spacing: 0; }
 .hero.heroCompact .heroEyebrow { font-size: 10px; letter-spacing: 0; margin-bottom: 8px; }
@@ -5865,8 +5867,9 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
 .headlineText { font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
 .headlineGo { margin-top: auto; padding-top: 6px; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--teal); }
 .headlineGo svg { width: 12px; height: 12px; }
-.overviewHeadlines.evidenceStrip { gap: 0; margin: 16px 0 18px; border-block: 1px solid var(--line-strong); background: var(--card); }
+.overviewHeadlines.evidenceStrip { gap: 0; margin: 16px 0 18px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--card); }
 .evidenceStrip .headlineCard { min-width: 0; gap: 7px; padding: 16px 18px; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
+.evidenceStrip .headlineCard { border-radius: var(--radius-sm); }
 .evidenceStrip .headlineCard + .headlineCard { border-left: 1px solid var(--line); }
 .evidenceStrip .headlineCard:hover { transform: none; }
 .evidenceStrip a.headlineCard:hover { background: var(--row-hover); }
