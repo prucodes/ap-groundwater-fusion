@@ -4842,7 +4842,7 @@ pre.jsonBody {
 }
 .dtgTile:hover { border-color: var(--line-strong); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(13, 33, 56, .07); }
 .dtgTile:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
-.dtgActive { border-color: var(--cyan); box-shadow: 0 0 0 1px var(--cyan) inset; }
+.dtgActive { border-color: var(--teal); box-shadow: 0 0 0 1px var(--teal) inset; background: color-mix(in srgb, var(--teal) 7%, var(--card)); }
 
 .dtgName {
   font-size: 12px; font-weight: 600; color: var(--ink);
@@ -5790,7 +5790,7 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
    Page brief: what the screen is, what it says now, what to do with it.
    Replaces the hero subtitle; the middle line is written from the data.
    ============================================================ */
-.hero.heroCompact { border-radius: 8px; box-shadow: none; }
+.hero.heroCompact { border-radius: 14px; box-shadow: none; }
 .hero.heroCompact .heroInner { padding: 18px 24px; gap: 20px; }
 .hero.heroCompact h1 { font-size: 28px; line-height: 1.15; letter-spacing: 0; }
 .hero.heroCompact .heroEyebrow { font-size: 10px; letter-spacing: 0; margin-bottom: 8px; }
@@ -5870,7 +5870,8 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
 .headlineText { font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
 .headlineGo { margin-top: auto; padding-top: 6px; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: var(--teal); }
 .headlineGo svg { width: 12px; height: 12px; }
-.overviewHeadlines.evidenceStrip { gap: 0; margin: 16px 0 18px; border-block: 1px solid var(--line-strong); background: var(--card); }
+.overviewHeadlines.evidenceStrip { gap: 0; margin: 16px 0 18px; border: 1px solid var(--line-strong); border-radius: var(--radius); background: var(--card); }
+.evidenceStrip .headlineCard { border-radius: var(--radius-sm); }
 .evidenceStrip .headlineCard { min-width: 0; gap: 7px; padding: 16px 18px; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
 .evidenceStrip .headlineCard + .headlineCard { border-left: 1px solid var(--line); }
 .evidenceStrip .headlineCard:hover { transform: none; }
