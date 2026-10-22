@@ -39,6 +39,7 @@
 .story h1 { margin: 0; color: #eef1e6; font-family: Georgia, "Times New Roman", serif; font-size: clamp(66px, 6.1vw, 102px); font-weight: 400; line-height: 1.01; letter-spacing: -.045em; text-wrap: nowrap; }
 .story h1 em { color: var(--welcome-mint); font-weight: 400; }
 .description { max-width: 390px; margin: 27px 0 0; color: #afc1ba; font-size: 13px; line-height: 1.85; letter-spacing: .005em; }
+.description strong { display: block; margin-bottom: 7px; color: #b6e5e5; font-weight: 500; font-size: 14px; line-height: 1.6; }
 .creator { display: flex; align-items: center; gap: 15px; margin: 29px 0 31px; }
 .creatorRule { width: 30px; height: 1px; background: #9cbaa1; }
 .creatorLabel { display: block; font-family: var(--font-mono); font-size: 8px; letter-spacing: .16em; color: #9fb2aa; }
@@ -75,6 +76,14 @@
 .labelSub { font-family: var(--font-sans); font-size: 9px; letter-spacing: 0; fill: #8baaa2; }
 .stateLabel { font-size: 11px; letter-spacing: 3px; fill: #d2e7cc; }
 .seaLabel { font-size: 8px; letter-spacing: 2px; fill: #80aaa6; }
+.waterTableLabel, .groundwaterLabel { font: 10px var(--font-mono); letter-spacing: 1.1px; fill: #a4eff8; }
+.waterTableSub { font: 9px var(--font-sans); fill: #a8cdd1; }
+.assessmentTitle { font: 10px var(--font-mono); letter-spacing: 1.3px; fill: #c1edf0; }
+.assessmentNote { font: 8px var(--font-sans); fill: #99b6bd; }
+.aquiferResponse { opacity: .04; animation: aquiferResponse 10s ease-in-out infinite; }
+.rechargePulse { animation: rechargePulse 10s linear infinite; }
+.measurementResponse { transform-box: fill-box; transform-origin: center; animation: measurementResponse 10s ease-out infinite; }
+.assessmentTrace { stroke-dasharray: 100; animation: assessmentTrace 10s ease-in-out infinite; }
 .footer { margin: 0 4.2%; padding: 22px 0 24px; border-top: 1px solid #82ae9929; display: flex; justify-content: space-between; gap: 25px; align-items: center; }
 .disciplines { display: flex; gap: 36px; }
 .disciplines > span { display: flex; gap: 12px; align-items: baseline; color: #88a49a; font: 8px var(--font-mono); }
@@ -82,15 +91,20 @@
 .footer > p { display: flex; gap: 15px; margin: 0; color: #a4b8ad; font-size: 9px; }
 .footer > p > span { color: #829e91; }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.rainDrop { animation: rainfall 3.7s linear infinite; animation-delay: var(--delay); }
-.current { animation: current 13s linear infinite; animation-delay: var(--delay); }
+.rainDrop { animation: rainfall 10s linear infinite; }
+.current { animation: current 8s linear infinite; animation-delay: var(--delay); }
 .signal { transform-box: fill-box; transform-origin: center; animation: signal 5s ease-out infinite; animation-delay: var(--delay); }
 .clouds { animation: cloud 22s ease-in-out infinite alternate; }
 .ripple { transform-origin: 430px 555px; animation: ripple 9s ease-in-out infinite; animation-delay: var(--delay); }
 .entryRipple { position: fixed; z-index: 10; left: 50%; top: 50%; width: 30px; height: 30px; border-radius: 50%; background: #c6e9bc; opacity: 0; pointer-events: none; transform: translate(-50%, -50%) scale(0); }
 .welcome[data-phase="entering"] .entryRipple { animation: enter .65s ease-in forwards; }
 .welcome[data-motion="paused"] *, .welcome[data-motion="paused"] *::before, .welcome[data-motion="paused"] *::after { animation-play-state: paused !important; }
-@keyframes rainfall { 0% { transform: translateY(-34px); opacity: 0; } 20% { opacity: .75; } 80% { opacity: .6; } 100% { transform: translateY(65px); opacity: 0; } }
+/* One legible cycle: rain, infiltration, groundwater response, then assessment. */
+@keyframes rainfall { 0% { transform: translateY(-20px); opacity: 0; } 5% { opacity: 1; } 27% { opacity: .85; } 33%,100% { transform: translateY(65px); opacity: 0; } }
+@keyframes rechargePulse { 0%,28% { stroke-dashoffset: 14; opacity: 0; } 33% { stroke-dashoffset: 0; opacity: 1; } 59% { stroke-dashoffset: -100; opacity: 1; } 64%,100% { stroke-dashoffset: -100; opacity: 0; } }
+@keyframes aquiferResponse { 0%,48%,100% { opacity: .04; } 65%,77% { opacity: .26; } }
+@keyframes measurementResponse { 0%,54% { transform: scale(.5); opacity: 0; } 60% { transform: scale(.65); opacity: 1; } 84%,100% { transform: scale(2); opacity: 0; } }
+@keyframes assessmentTrace { 0%,60% { stroke-dashoffset: 100; opacity: .25; } 87%,97% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: .25; } }
 @keyframes current { to { stroke-dashoffset: -154; } }
 @keyframes signal { 0% { transform: scale(.35); opacity: .8; } 70%,100% { transform: scale(2.1); opacity: 0; } }
 @keyframes cloud { to { transform: translate(32px, -9px); } }
@@ -138,4 +152,4 @@
   .footer > p { text-align: left; gap: 5px; font-size: 9px; }
 }
 @media (max-width: 390px) { .story h1 { font-size: 54px; } .content { padding-left: 6%; padding-right: 6%; } .formHeading { gap: 6px; } .formHeading label { font-size: 9px; } .inputRow button { gap: 10px; padding: 10px 12px; } .figureNote { flex-basis: 100%; padding: 0; border: 0; } }
-@media (prefers-reduced-motion: reduce) { .welcome *, .welcome *::before, .welcome *::after { animation: none !important; transition: none !important; } .rainDrop { opacity: .35; } .signal { opacity: .4; } }
+@media (prefers-reduced-motion: reduce) { .welcome *, .welcome *::before, .welcome *::after { animation: none !important; transition: none !important; } .rainDrop { opacity: .65; } .signal, .measurementResponse { opacity: .4; } .aquiferResponse { opacity: .08; } .rechargePulse { stroke-dasharray: 3 7; opacity: .6; } .assessmentTrace { stroke-dashoffset: 0; } }

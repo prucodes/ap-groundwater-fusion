@@ -101,7 +101,7 @@ for (const width of [320, 375, 768, 1440]) {
     expect(headingOverflow).toBeLessThanOrEqual(1);
     const input = await page.getByLabel("A small introduction. Your invitation in.").boundingBox();
     expect(input!.width).toBeGreaterThan(140);
-    if (process.env.WELCOME_SCREENSHOTS) await page.screenshot({ path: `test-results/welcome-${width}.png`, fullPage: true });
+    if (process.env.WELCOME_SCREENSHOTS) await page.screenshot({ path: `test-results/welcome-${width}.png`, fullPage: true, animations: "disabled" });
     await enter(page);
   });
 }

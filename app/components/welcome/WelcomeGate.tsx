@@ -118,10 +118,10 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
         <section className={styles.story} aria-labelledby="welcome-title">
           <p className={styles.eyebrow}><span /> ANDHRA PRADESH · INDIA</p>
           <h1 id="welcome-title" tabIndex={-1}>Every drop<br />has a <em>deeper</em><br />story.</h1>
-          <p className={styles.description}>From the monsoon above to the water beneath.<br className={styles.desktopBreak} /> Explore the connections shaping Andhra Pradesh&rsquo;s water future.</p>
+          <p className={styles.description}><strong>Groundwater intelligence for Andhra Pradesh.</strong>Explore measured water levels, modelled outlooks, and the rainfall and agricultural conditions around them.</p>
           <div className={styles.creator}>
             <span className={styles.creatorRule} />
-            <div><span className={styles.creatorLabel}>CONCEIVED &amp; BUILT BY</span><span className={styles.creatorName}>{CREATOR_NAME}<span className={styles.creatorSignature} aria-hidden="true">p.</span></span></div>
+            <div><span className={styles.creatorLabel}>CONCEIVED &amp; BUILT BY</span><span className={styles.creatorName}>{CREATOR_NAME}<span className={styles.creatorSignature} aria-hidden="true">py.</span></span></div>
           </div>
           <form className={styles.form} onSubmit={enter} aria-label="Enter the observatory">
             <div className={styles.formHeading}><label htmlFor="welcome-key">A small introduction. Your invitation in.</label><span>01 / ENTER</span></div>
@@ -139,7 +139,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
 
         <figure className={styles.landscape}>
           <WaterLandscape />
-          <figcaption><span className={styles.figureIndex}>FIG. 01</span> BENEATH THE MONSOON <span className={styles.figureNote}>An illustrative water landscape</span></figcaption>
+          <figcaption><span className={styles.figureIndex}>FIG. 01</span> BENEATH THE MONSOON <span className={styles.figureNote}>Illustrative landscape · not measured data</span></figcaption>
         </figure>
       </main>
 
