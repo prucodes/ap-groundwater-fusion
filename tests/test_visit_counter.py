@@ -111,7 +111,8 @@ def test_the_monsoon_page_reports_how_far_down_it_is_read():
     reached = set(re.findall(r'event="(monsoon/reached-[^"]+)"', page))
     # Three markers in reading order make a funnel out of one page view.
     assert reached == {"monsoon/reached-map", "monsoon/reached-heat", "monsoon/reached-flagged"}
-    assert page.index("reached-map") < page.index("reached-heat") < page.index("reached-flagged")
+    # Since the page was grouped into chapters the review queue sits in the first one, ahead of heat.
+    assert page.index("reached-map") < page.index("reached-flagged") < page.index("reached-heat")
 
 
 def test_the_site_says_what_it_records():

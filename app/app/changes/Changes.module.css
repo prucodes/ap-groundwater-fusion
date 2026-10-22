@@ -68,7 +68,9 @@
 .movesHead h2 { font:600 22px/1.35 var(--font-display); margin:7px 0; color:var(--ink); }
 .movesHead p { font-size:12px; line-height:1.6; color:var(--ink-soft); margin:0; }
 .movesHead .basis { font-size:10px; color:var(--muted); margin-top:6px; }
-.movesGrid { margin-top:15px; }
+.movesGrid { margin-top:15px; display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:34px; align-items:start; }
+.movesMain { min-width:0; }
+.movesGrid .list { padding-top:0; border-top:0; }
 .moves :global(.weekMoveViews) { position:static; margin-bottom:12px; width:fit-content; }
 .moves :global(.weekMoveMap) figure { background:var(--field); border-radius:4px; padding:10px; }
 .moves :global(.weekMoveMap) figure > div { max-height:340px; }
@@ -93,7 +95,6 @@
 .cardsSteady .status, .cardsSteady .dates, .cardsSteady .note { grid-column:1 / -1; }
 .cardsSteady .badge { color:var(--muted); font-weight:400; font-size:10px; }
 .cardsSteady .cardLink { grid-column:1 / -1; border:0; padding:0; font-size:10px; }
-.lists { margin-top:24px; }
 .list { padding:20px 0; border-block:1px solid var(--line); min-width:0; }
 .listHead h3 { margin:0; font:600 16px var(--font-display); }
 .listHead span { display:block; font-size:11px; color:var(--muted); margin-top:4px; }
@@ -153,6 +154,7 @@
  .tally { gap:14px; }
  .registerLink { margin-left:0; }
  .briefingGrid { gap:26px; }
+ .movesGrid { grid-template-columns:minmax(0,1fr); gap:20px; }
  .leadColumn .cards { grid-template-columns:minmax(0,1fr); }
  .moves { padding:22px 0 0; border:0; border-top:1px solid var(--line-strong); }
  .movesHead h2 { font-size:18px; }
@@ -171,5 +173,6 @@
  .briefingGrid { grid-template-columns:1fr 1fr; }
  .leadColumn .cards { grid-template-columns:minmax(0,1fr); }
  .moves { border-top:0; padding-top:0; }
+ .movesGrid { grid-template-columns:minmax(0,1fr); }
  .steadyRegister::details-content, .movesList::details-content { content-visibility:visible; display:contents; }
 }
