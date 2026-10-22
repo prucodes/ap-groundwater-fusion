@@ -115,7 +115,7 @@ export default function DistrictsPage() {
             <span className="titleIcon"><IconDroplet /></span>
             Where the water table sits below sea level
           </div>
-          <span className="cardSub">ground elevation minus measured depth, against the official salinity map</span>
+          <span className="cardSub">ground height minus measured depth, against the official salinity map · an estimate to verify</span>
         </div>
         <SeawaterWatch />
       </section>
@@ -126,7 +126,7 @@ export default function DistrictsPage() {
             <span className="titleIcon"><IconDroplet /></span>
             Can a level be given per village?
           </div>
-          <span className="cardSub">asked by the department; answered on CGWB&rsquo;s own Andhra well records</span>
+          <span className="cardSub">asked by the department; tested on CGWB&rsquo;s own Andhra well records</span>
         </div>
         <VillageOffsets />
       </section>

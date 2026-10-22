@@ -1,13 +1,14 @@
 import { formatNumber, monsoonWatch } from "../lib/data";
 import styles from "./WaterBanked.module.css";
 
-/* What the season actually put into the ground.
+/* What the season put into the ground, estimated.
  *
  * The rest of the page measures the water table in metres. A department works in
  * volumes, by the method its own assessment uses: a rise times the specific yield
  * times the area. This says what arrived and what share of the rain it represents,
- * and shows the distribution beside it, because the statewide tenth hides the fact
- * that more than half the mandals kept nothing at all.
+ * and shows the distribution beside it, because the statewide share hides the fact
+ * that more than half the mandals kept nothing at all. It is net of pumping, and a
+ * mandal whose table fell counts as zero rather than negative.
  */
 
 const BINS = 10;          // 0-10%, 10-20% ... 90-100%
@@ -31,11 +32,11 @@ export function WaterBanked() {
     <div className={styles.wrap}>
       <div className={styles.lede}>
         <span className={styles.headline}>{banked.sharePct}%</span>
-        <p>of the rain that fell on Andhra Pradesh this season is still in the ground.</p>
+        <p>of the rain that fell on Andhra Pradesh this season is estimated to still be in the ground.</p>
       </div>
 
       <div className={styles.ribbon}>
-        <div className={styles.kept} style={{ width: `${Math.max(banked.sharePct, 0.6)}%` }} />
+        <div className={styles.kept} style={{ width: `${Math.min(100, Math.max(banked.sharePct, 0.6))}%` }} />
       </div>
       <div className={styles.ribbonLabels}>
         <span><b>{formatNumber(banked.bankedMm3)} Mm³</b> stayed</span>
@@ -63,16 +64,15 @@ export function WaterBanked() {
       </div>
 
       <div className={styles.stats}>
-        <div className={styles.stat}><b>{banked.rising}</b><span>mandals where the table rose at all, of {banked.mandals}</span></div>
+        <div className={styles.stat}><b>{monsoonWatch.mandals.filter(row => row.bankedSharePct !== null && (row.riseM ?? 0) > 0).length}</b><span>mandals where the table rose at all, of {banked.mandals}</span></div>
         <div className={styles.stat}><b>{banked.medianSharePct}%</b><span>kept by the median mandal</span></div>
-        <div className={styles.stat}><b>{banked.aboveRain}</b><span>kept more than their rain — every one in the Godavari delta</span></div>
+        <div className={styles.stat}><b>{banked.aboveRain}</b><span>kept more than their rain</span></div>
       </div>
 
       <p className={styles.note}>
-        A mandal cannot bank more rain than fell on it. Where it appears to, the water came from somewhere
-        else — <b>canal seepage and irrigation return flow</b>, which the official method counts as its own
-        recharge component and which no released dataset measures. That those {banked.aboveRain} mandals are all
-        in the delta is the method behaving as it should.
+        A mandal cannot keep more rain than fell on it. Where it appears to, water arrived from
+        somewhere else, <b>a canal, irrigation return flow or flow from upslope</b>, or the estimate is
+        off: rain after September, or a specific yield that does not fit. <b>This cannot tell which.</b>
       </p>
       <p className={styles.method}>
         {banked.method} Shares are left out below {banked.shareFloorMm} mm of season rain, where the ratio is

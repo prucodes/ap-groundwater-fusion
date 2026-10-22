@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Where the water table stands below sea level, against the official salinity map.
 
-Ground elevation minus depth to water gives the head of the water table above sea
-level. Where that is negative the seaward gradient is reversed, which is the
+Ground elevation minus depth to water estimates the head of the water table above
+sea level. Both terms are mandal averages, so it is not the height at any one well. Where that is negative the seaward gradient is reversed, which is the
 physical precondition for seawater moving inland. This was not buildable until the
 terrain cache was rebuilt from a DEM: on the old centroid readings only 238 of 653
 mandals had a real elevation at all.
@@ -10,7 +10,8 @@ mandals had a real elevation at all.
 What this is for is checking the official map rather than replacing it. The
 department already classifies assessment units, and `salinity` is one of its
 categories. Setting head against that classification is a test of both: the
-agreement says the method works, and the disagreements are the useful part.
+agreement is evidence the estimate tracks something real, and the disagreements
+are the useful part.
 
 The agreement is strong. Salinity units run a median head of a few metres where
 the rest of the State runs over a hundred, and the share classed salinity falls
@@ -24,16 +25,16 @@ measurement of chloride, and nothing here samples water quality. The output is a
 list to verify in the field.
 
 It does not report a mandal whose wells are deep. A mandal-mean depth past
-DEEP_WELL_M is being set by wells into a confined aquifer or by an inland
-water table far from any coast, and subtracting that from a ground elevation says
+DEEP_WELL_M is likely set by deeper wells, possibly into a confined aquifer, or by
+an inland water table far from any coast, and subtracting that from a ground elevation says
 nothing about the shallow aquifer intrusion threatens. Vetapalem at 44.3 m,
 Denduluru at 48.4 m and Rajahmundry Rural at 46.3 m all drop out here, and all
-three are either inland or deep.
+three are either inland or deep. The cutoff is a precaution: depth alone does not
+prove an aquifer is confined.
 
 It does not treat the elevation as exact. The DEM is about +/-10 m on a single
 pixel, and a mandal mean is taken over thousands of them, so the mean is far
-better than that while remaining a mean: the spread travels with every row, and a
-mandal is only called shallow-and-low when its tenth percentile agrees.
+better than that while remaining a mean: the spread travels with every row.
 """
 import csv
 import datetime
@@ -46,7 +47,8 @@ APP = os.path.join(ROOT, "app", "data")
 TERRAIN = os.path.join(ROOT, "phase3_levels", "data", "mandal_terrain.csv")
 OUT = os.path.join(APP, "seawater_watch.json")
 
-# Past this, a mandal-mean depth is not describing the shallow aquifer.
+# Past this, a mandal-mean depth is unlikely to describe the shallow aquifer; a
+# precaution, not a test of confinement.
 DEEP_WELL_M = 20.0
 # The bands the head is reported in, as (upper bound, label).
 BANDS = [(0.0, "at or below sea level"), (5.0, "0 to 5 m"), (20.0, "5 to 20 m"),
@@ -125,8 +127,8 @@ def build():
     below = [r for r in rows if r["headM"] <= 0]
     deep = [r for r in below if r["depthM"] > DEEP_WELL_M]
     shallow = [r for r in below if r["depthM"] <= DEEP_WELL_M]
-    # The watch list: the shallow ones the official map has not flagged, and whose
-    # lower ground agrees they sit low rather than the mean carrying them there.
+    # Preserve the screening rule. P10 is a descriptive lower-ground value,
+    # not independent corroboration: it is normally below the mean already.
     watch = sorted([r for r in shallow
                     if r["category"] != "salinity" and r["headP10M"] <= 0],
                    key=lambda r: r["headM"])
@@ -137,8 +139,7 @@ def build():
         "contractVersion": "1.0.0",
         "generatedAt": datetime.datetime.now(datetime.timezone.utc)
             .replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-        "method": "mandal mean ground elevation minus the latest measured depth to water; "
-                  "a negative head means the water table stands below sea level",
+        "method": 'Screening proxy: mandal mean terrain elevation minus mandal mean measured depth; not a surveyed well head or a verified level relative to sea level',
         "observationPeriod": period,
         "elevationSource": "Terrarium terrain tiles (AWS open data), zonal mean over each "
                            "mandal, about 150 m a pixel",
@@ -161,9 +162,10 @@ def build():
                    ("district", "mandal", "depthM", "groundM", "groundP10M", "reliefM",
                     "headM", "headP10M", "category")}
                   for r in watch],
-        "caveat": "Head below sea level is the precondition for intrusion, not a measurement "
-                  "of it. Nothing here samples water quality, and depth is a mandal mean over "
-                  "wells of unrecorded type and depth. This is a list to verify, not a finding.",
+        "caveat": ("Below sea level is the precondition for intrusion, not a measurement of it. Ground "
+                   "height and depth are mandal averages, not measured at the same well. Before reading any "
+                   "of these as coastal risk, check the well's surveyed height, the aquifer it taps and the "
+                   "water's salinity. This is a list to verify, not a finding of intrusion."),
     }
 
 

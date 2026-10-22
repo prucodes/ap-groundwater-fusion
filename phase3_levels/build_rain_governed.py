@@ -12,11 +12,11 @@ rainfall. The slope says how far the table moves per millimetre; the R2 says how
 much of the mandal's year-to-year swing that rainfall accounts for.
 
 The result is lopsided, and the lopsidedness is the finding. Rain explains only
-about an eighth of the median mandal's seasonal swing. In the 114 where it
-explains most of it, the mandals are overwhelmingly hard rock and lightly
-irrigated, a median 16.8% of their area. In the 427 where it does not, the
-irrigated share is twice that at 32.5%. Where the monsoon has stopped being the
-main thing moving the water table, there is roughly twice as much irrigation.
+about an eighth of the median mandal's seasonal swing. Where it explains a large
+share (an R2 of 0.40 or more), the mandals are mostly hard rock and lightly
+irrigated; where it explains little, the irrigated share is about twice as high.
+Where the monsoon has stopped being the main thing moving the water table, there
+is roughly twice as much irrigation. That is a pattern, not proof of a cause.
 
 What this is NOT.
 
@@ -52,13 +52,14 @@ OUT = os.path.join(APP, "rain_governed.json")
 
 POST_MONSOON_MONTH = 11
 MIN_SEASONS = 7           # below this a fit is describing noise
-GOVERNED_R2 = 0.40        # rain explains most of the swing
+GOVERNED_R2 = 0.40        # rain explains a large share of the swing
 PARTLY_R2 = 0.15          # rain is in there, with much else
 
 
 def classify(r2, slope):
     # A positive slope says the table fell further in wetter years, which is not
-    # rainfall behaving. Whatever is moving it, it is not the monsoon.
+    # how rain recharge behaves. Something else is moving it, though rain may still
+    # play a part.
     if slope >= 0:
         return "not rain"
     if r2 >= GOVERNED_R2:
@@ -163,8 +164,8 @@ def build():
         "contractVersion": "1.0.0",
         "generatedAt": datetime.datetime.now(datetime.timezone.utc)
             .replace(microsecond=0).isoformat().replace("+00:00", "Z"),
-        "method": "each mandal's May-to-November change in depth fitted against that season's "
-                  "June-September rainfall, over every season it has both readings",
+        "method": ("Each mandal's May to November change in depth, fitted against that season's June to "
+                   "September rainfall, over every season it has both readings."),
         "window": {"preMonsoonMonth": PRE_MONSOON_MONTH, "postMonsoonMonth": POST_MONSOON_MONTH,
                    "rainMonths": list(SW_MONSOON), "minSeasons": MIN_SEASONS},
         "thresholds": {"governedR2": GOVERNED_R2, "partlyR2": PARTLY_R2},
@@ -177,18 +178,20 @@ def build():
                    [r["r2"], classes.index(r["class"]), r["risePer100mm"],
                     r["seasons"], r["irrigatedPct"]]
                    for r in rows},
-        "caveat": "Nothing here measures extraction, and the part rainfall does not explain is "
-                  "not pumping. A table that ignores the rain may be drawn down, fed by a canal, "
-                  "carrying last year forward, or noisy on eight points. The honest statement is "
-                  "the absence: rainfall is not the main explanation there.",
+        "caveat": ("Nothing here measures extraction, and the part rain does not explain is not pumping. A "
+                   "table that ignores the rain may be drawn down, fed by a canal, carrying last year "
+                   "forward, or noisy on a few points. The honest statement is the absence: rain is not the "
+                   "main explanation there."),
         "limits": [
-            "A single predictor on seven to eleven seasons is a thin instrument, so the groups "
-            "are far firmer than any one mandal's R2.",
-            "The fit is within-season. A mandal that fills every monsoon and is emptied every "
-            "summer reads as rain governed, which is correct: the monsoon does write its table.",
-            "Naming what moves the other mandals needs the feeder supply hours and the pump-set "
-            "census the brief asks for. That this cannot be answered from open data is the "
-            "argument for asking.",
+            ("A single predictor on seven to eleven seasons is a thin instrument, so the groups are "
+             "far firmer than any one mandal's figure."),
+            ("The strongest group starts where rain explains 40% of the swing: a large share, not all "
+             "of it."),
+            ("The fit is within-season. A mandal that fills every monsoon and is emptied every summer "
+             "reads as rain-driven, which is right: the monsoon does write its table."),
+            ("The irrigation difference between the groups is a pattern, not proof that pumping is the "
+             "cause. Naming what moves the other mandals needs the feeder supply hours and pump-set "
+             "census the brief asks for."),
         ],
     }
 

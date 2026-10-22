@@ -13,7 +13,7 @@ test("the monsoon page carries NOAA's outlook beside the state's El Niño record
   await expect(panel).toContainText(outlook.synopsis);
   await expect(panel).toContainText(`+${outlook.peak.medianC.toFixed(2)} °C`);
   await expect(panel).toContainText("not a rainfall forecast for Andhra Pradesh");
-  await expect(panel).toContainText("Northeast monsoon in El Niño years");
+  await expect(panel).toContainText("Northeast monsoon in El Niño-like years");
   await expect(panel.getByRole("list", { name: "Northeast-monsoon districts in El Niño years" }).getByRole("listitem")).not.toHaveCount(0);
   await expect(page.getByRole("navigation", { name: "Monsoon sections" }).getByRole("link", { name: "El Niño outlook" })).toBeVisible();
 });

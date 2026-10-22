@@ -3,15 +3,16 @@ import styles from "./SeawaterWatch.module.css";
 
 /* Where the water table stands below sea level, set against the official map.
  *
- * Ground elevation minus depth to water is the head above sea level, and a negative
- * head reverses the seaward gradient, which is what lets seawater move inland. This
- * only became answerable once the terrain cache was rebuilt from a DEM.
+ * Ground elevation minus depth to water estimates the head above sea level, and a
+ * negative head reverses the seaward gradient, which is what lets seawater move
+ * inland. Both terms are mandal averages: the elevation is a DEM zonal mean, not
+ * surveyed at the wells, so this ranks places rather than measuring them.
  *
  * It is a check on the assessment rather than a replacement for it. The department
- * already classes units as `salinity`, and that classification and this head agree
- * closely enough to be worth trusting, which makes the places they disagree the
- * useful part. Nothing here measures chloride, so the disagreements are a list to
- * verify in the field and never a finding of intrusion.
+ * already classes units as `salinity`, and the share it classes so climbs steadily
+ * as this estimate falls, which makes the places they disagree the useful part.
+ * Nothing here measures chloride, so the disagreements are a list to verify in the
+ * field and never a finding of intrusion.
  */
 
 export function SeawaterWatch() {
@@ -28,7 +29,7 @@ export function SeawaterWatch() {
         </div>
         <div className={styles.head} data-tone="sea">
           <b>{data.medianHeadSalinityM?.toFixed(1)} m</b>
-          <span>median head above sea level across the {data.salinityUnits} units already classed <strong>salinity</strong>, against {data.medianHeadOtherM?.toFixed(0)} m everywhere else</span>
+          <span>median height of the water table above sea level across the {data.salinityUnits} units already classed <strong>salinity</strong>, against {data.medianHeadOtherM?.toFixed(0)} m everywhere else</span>
         </div>
         <div className={styles.head}>
           <b>{data.belowSeaLevel}</b>
@@ -37,7 +38,7 @@ export function SeawaterWatch() {
       </div>
 
       <div>
-        <div className={styles.listHead}>Share the assessment calls salinity, by head above sea level</div>
+        <div className={styles.listHead}>Share the assessment calls salinity, by height of the water table above sea level</div>
         <div className={styles.bands}>
           {data.bands.map(band => (
             <div className={styles.band} key={band.band}>
@@ -52,10 +53,12 @@ export function SeawaterWatch() {
       </div>
 
       <p className={styles.note}>
-        The two readings are independent: the assessment is a balance of volumes the department
-        computes, and the head is a satellite elevation minus a measured depth. <b>They agree.</b>{" "}
-        That is what makes the mandals below worth a look, and it is also why the {data.confirmed.length}{" "}
-        shallow mandals below sea level that are <b>already classed salinity</b> are left off the list.
+        The two come from independent sources: the assessment is a balance of volumes the department
+        computes, and this is satellite ground height minus a measured depth. <b>They agree</b>: the
+        share classed salinity climbs from {data.bands[data.bands.length - 1]?.salinityPct}% where the water table
+        stands {data.bands[data.bands.length - 1]?.band} to {data.bands[0]?.salinityPct}% where it is {data.bands[0]?.band}. Both
+        are mandal averages, so this ranks places to check rather than proving intrusion. The{" "}
+        {data.confirmed.length} below sea level that are <b>already classed salinity</b> are left off the list.
       </p>
 
       <div>
@@ -76,8 +79,8 @@ export function SeawaterWatch() {
 
       <p className={styles.method}>
         {data.caveat} {data.setAsideDeepWells.length} further mandals read below sea level and are
-        set aside here, because a mandal-mean depth past {data.deepWellThresholdM} m is describing a
-        confined aquifer or an inland water table rather than the shallow one intrusion reaches.
+        set aside as a precaution: past {data.deepWellThresholdM} m, a mandal-average depth is likely
+        describing a deeper aquifer than the shallow one seawater reaches.
         Ground elevation is a zonal mean from {data.elevationSource}; categories come from the{" "}
         {data.classificationSource}.
       </p>

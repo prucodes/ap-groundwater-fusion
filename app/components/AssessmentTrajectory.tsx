@@ -27,11 +27,11 @@ export function AssessmentTrajectory() {
       <div className={styles.heads}>
         <div className={styles.head} data-tone="watch">
           <b>{data.review.length}</b>
-          <span>mandals assessed <strong>safe</strong> whose pre-monsoon water table has fallen for a decade</span>
+          <span>mandals assessed <strong>safe</strong> whose May water table has been deepening over the decade</span>
         </div>
         <div className={styles.head} data-tone="good">
           <b>{data.recovering.length}</b>
-          <span>assessed <strong>semi-critical or worse</strong> whose table has risen over the same years</span>
+          <span>assessed <strong>semi-critical or worse</strong> whose May water table has been rising over the same years</span>
         </div>
         <div className={styles.head}>
           <b>{move.changedCategory}</b>
@@ -86,7 +86,8 @@ export function AssessmentTrajectory() {
         {data.rule}{" "}
         A slope through a mandal&rsquo;s own May readings makes a drought year one point in a line rather than the
         whole signal: the record&rsquo;s own year-on-year difference, which compares this September with last,
-        puts most of the safe category in decline and so only restates that this season was bad.
+        puts most of the safe category in decline and so only restates that this season was bad. A trend is
+        the overall direction, not every year moving the same way.
       </p>
     </div>
   );

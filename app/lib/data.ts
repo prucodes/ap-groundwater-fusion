@@ -355,11 +355,11 @@ export type VillageOffsets = {
   coverage: { villages: number; villagesPinned: number; mandals: number; mandalsWithSpread: number };
   spread: { medianVillageSpreadM: number; proxyPoor: number; proxyFair: number };
   persistence: { persistentSharePct: number; wellsScored: number };
-  splitHalf: { pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number };
+  splitHalf: { status?: string; protocol?: string; wellsScored: number; pastPredictsFutureR: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number; reductionPct: number };
   byAquifer: Array<{ aquifer: string; wells: number; mandalMeanAppliedMaeM: number; withLearnedOffsetMaeM: number }>;
   staticCovariateNull: { predictedOffsetMaeM: number; predictedOffsetR2: number; mandalMeanMaeM: number };
-  dugWell: { wells: number; persistence: number; r: number; dose: VillageDose[] } | null;
-  boreWell: { wells: number; r: number; dose: VillageDose[] } | null;
+  dugWell: { wells: number; persistence: number; r: number; dose: VillageDose[]; forwardDose: VillageDose[]; forwardBaselineM: number | null } | null;
+  boreWell: { wells: number; r: number; dose: VillageDose[]; forwardDose: VillageDose[]; forwardBaselineM: number | null } | null;
 };
 export const villageOffsets = villageOffsetsJson as unknown as VillageOffsets;
 

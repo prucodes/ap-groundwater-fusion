@@ -53,6 +53,13 @@ const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "rain_governed", label: "Does rain still drive it?" },
 ];
 
+// The groups and aquifers the two water notes compare, read from the data so the
+// sentences follow it rather than a figure written into the page.
+const rainDriven = rainGoverned.groups.find(g => g.class === "rain governed");
+const rainLittle = rainGoverned.groups.find(g => g.class === "not rain");
+const aquiferShare = (name: string) => recharge.byAquifer.find(row => row.aquifer === name);
+const hardRock = aquiferShare("hard_rock"), alluvial = aquiferShare("alluvial"), coastal = aquiferShare("coastal");
+
 function legendGradient(layer: string, dark: boolean) {
   return layer === "water_balance_mm"
     ? "linear-gradient(90deg, #c65a46, #e7cf86, #4f9268)"
@@ -203,13 +210,13 @@ export default function MapPage() {
                       {rainGoverned.groups.map(group => (
                         <div key={group.class} className="rechargeAquifer">
                           <b>{group.medianIrrigatedPct}%</b>
-                          <span>irrigated, where {group.class === "rain governed" ? "rain drives it" : group.class === "partly" ? "rain is part of it" : "rain does not"}</span>
+                          <span>irrigated, where {group.class === "rain governed" ? "rain drives it" : group.class === "partly" ? "rain is part of it" : "rain explains little"}</span>
                           <i>{group.medianRisePer100mm} m per 100 mm</i>
                         </div>
                       ))}
                     </div>
                     <div className="mapHint">
-                      <IconInfo style={{ width: 13, height: 13 }} /> Where the monsoon still writes the water table there is half the irrigation, and the table answers rain forty times more strongly. Rain explains about an eighth of the median mandal&rsquo;s swing.
+                      <IconInfo style={{ width: 13, height: 13 }} /> {rainDriven && rainLittle ? <>Where rain drives the water table, {rainDriven.medianIrrigatedPct}% of the land is irrigated against {rainLittle.medianIrrigatedPct}% where it explains little, and the table answers each 100 mm of rain {rainLittle.medianRisePer100mm > 0 ? `${Math.round(rainDriven.medianRisePer100mm / rainLittle.medianRisePer100mm)} times` : "far"} more strongly. </> : null}Rain explains about {Math.round(rainGoverned.medianR2 * 100)}% of the median mandal&rsquo;s swing. A pattern, not proof of what moves the rest.
                     </div>
                     <details className="rechargeMethod">
                       <summary>How this is measured, and what it cannot say</summary>
@@ -237,7 +244,7 @@ export default function MapPage() {
                       ))}
                     </div>
                     <div className="mapHint">
-                      <IconInfo style={{ width: 13, height: 13 }} /> Hard rock banks about as much of its rain as the delta does, on a specific yield five times smaller and a water table that swings far further. The coast banks least.
+                      <IconInfo style={{ width: 13, height: 13 }} /> {hardRock && alluvial && Math.abs(hardRock.medianSharePct - alluvial.medianSharePct) < 2 ? <>Hard rock keeps about as much of its rain as alluvial land, on a far smaller specific yield. </> : null}{coastal && coastal.medianSharePct < Math.min(hardRock?.medianSharePct ?? Infinity, alluvial?.medianSharePct ?? Infinity) ? <>The coast keeps least. </> : null}An estimate from the May to November rise, net of pumping; a guide to where to look, not a siting rule.
                     </div>
                     {/* The method and its limits are the longest text on the page and
                         the least often wanted, so they fold. What stays open is the one

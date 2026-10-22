@@ -1,7 +1,7 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-21T01:16:21Z",
-  "method": "GEC-2015 water-table fluctuation: the May to November rise times specific yield times area, as a share of June-September rainfall, for every year a mandal has both readings; the median of those years is published",
+  "generatedAt": "2026-10-22T13:34:11Z",
+  "method": "Water-table fluctuation, the GEC-2015 method: the May to November rise times specific yield times area, as a share of June to September rainfall, for every year a mandal has both readings. The median year is published, and a year whose table fell counts as zero.",
   "window": {
     "preMonsoonMonth": 5,
     "postMonsoonMonth": 11,
@@ -3758,10 +3758,11 @@
       "class": "set aside"
     }
   ],
-  "caveat": "Net of the season's own pumping, so a mandal that converts little may be recharging well and drawing it back out. The absolute share rests on specific yield, which is an aquifer-wide proxy where CGWB has not measured it, so the ranking within an aquifer is firmer than the number.",
+  "caveat": "Net of the season's pumping, so a mandal that keeps little may be recharging well and drawing it straight back out. The share rests on specific yield, often an aquifer-wide estimate, so the ranking within an aquifer is firmer than the number. October and November rain fall outside the rain counted.",
   "limits": [
     "A deeper water table has more room to rise, and still scores higher after the deepest are set aside: share and depth correlate at 0.27 among the mandals ranked here, against 0.40 before. Compare mandals of similar depth and aquifer rather than across the whole table.",
-    "In a canal command a share can be lifted by irrigation return flow without ever passing 100%, and this cannot separate that from rain. Of the 32 mandals at or above 40%, seventeen are alluvial and ten are hard rock, so it is not simply the delta, but a high share in a commanded mandal is worth reading as water arriving rather than water converting.",
-    "A ranking to inform where to look, verified in the field before anything is built on it. The state median sits inside the 8 to 20% that GEC's own recharge coefficients give for most formations, which is the check that the method is behaving, not a licence to site a structure from a table."
+    "Past 20 m the method's unconfined assumption is doubtful, so those mandals are set aside as a precaution. Depth alone does not prove an aquifer is confined.",
+    "A share above 100% means more water was stored than the counted rain delivered: a canal, flow from upslope, irrigation return, October rain, or a specific yield that is off. This cannot tell which.",
+    "A ranking to decide where to look, verified in the field before anything is built on it."
   ]
 }

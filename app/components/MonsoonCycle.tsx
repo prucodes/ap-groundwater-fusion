@@ -3,10 +3,10 @@ import { medianRecharge, type SeasonalYear } from "../lib/data";
 /**
  * Pre-monsoon low against post-monsoon recovery, year by year.
  *
- * In Indian groundwater practice this pairing IS the assessment — it is how CGWB
- * reports, and it is what separates ordinary seasonal drawdown from genuine
- * depletion. A dumbbell per year reads the comparison directly: the span is the
- * recharge, and a year whose span collapses is visible without reading a number.
+ * In Indian groundwater practice this pairing is how CGWB reports, and it is what
+ * separates ordinary seasonal drawdown from depletion. A dumbbell per year reads the
+ * comparison directly: the span is the net recovery, after whatever was pumped
+ * while it rained, and a year whose span collapses is visible without reading a number.
  */
 
 const MIN_YEARS = 2;
@@ -81,10 +81,10 @@ export function MonsoonCycle({ cycle }: { cycle: SeasonalYear[] }) {
       </ol>
 
       <div className="mcKey">
-        <span className="mcKeyItem"><i className="mcSwatch mcSwatchPre" /> Pre-monsoon (May) — the annual low</span>
-        <span className="mcKeyItem"><i className="mcSwatch mcSwatchPost" /> Post-monsoon (Nov) — after recharge</span>
+        <span className="mcKeyItem"><i className="mcSwatch mcSwatchPre" /> Pre-monsoon (May), the annual low</span>
+        <span className="mcKeyItem"><i className="mcSwatch mcSwatchPost" /> Post-monsoon (Nov), after the rains</span>
         <span className="mcKeyItem mcKeyNote">
-          Recovery is the metres the water table rose over the monsoon. A short bar is a monsoon that did not refill the aquifer.
+          Recovery is how far the water table rose from May to November. A short bar is a monsoon that did not refill it, or pumping that took the rise back out.
         </span>
       </div>
     </div>

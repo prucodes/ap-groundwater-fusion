@@ -1,7 +1,7 @@
 {
   "contractVersion": "1.0.0",
   "generatedAt": "2026-10-20T01:55:24Z",
-  "method": "mandal mean ground elevation minus the latest measured depth to water; a negative head means the water table stands below sea level",
+  "method": "Screening proxy: mandal mean terrain elevation minus mandal mean measured depth; not a surveyed well head or a verified level relative to sea level",
   "observationPeriod": "2026-09",
   "elevationSource": "Terrarium terrain tiles (AWS open data), zonal mean over each mandal, about 150 m a pixel",
   "classificationSource": "CGWB and the State's Dynamic Ground Water Resources assessment, via the INGRES public dashboard",
@@ -330,5 +330,5 @@
       "category": "safe"
     }
   ],
-  "caveat": "Head below sea level is the precondition for intrusion, not a measurement of it. Nothing here samples water quality, and depth is a mandal mean over wells of unrecorded type and depth. This is a list to verify, not a finding."
+  "caveat": "Below sea level is the precondition for intrusion, not a measurement of it. Ground height and depth are mandal averages, not measured at the same well. Before reading any of these as coastal risk, check the well's surveyed height, the aquifer it taps and the water's salinity. This is a list to verify, not a finding of intrusion."
 }

@@ -35,9 +35,9 @@ export function isRainLayer(layer: string | null | undefined): layer is RainLaye
 
 export const RAIN_LAYER_META: Record<RainLayer, { label: string; period: string; note: string }> = {
   rain_governed: {
-    label: "Does the monsoon still write the water table?",
+    label: "Does the monsoon still drive the water table?",
     period: `${rainGoverned.scored} mandals on ${rainGoverned.window.minSeasons}+ seasons`,
-    note: `${rainGoverned.method}. ${rainGoverned.caveat}`,
+    note: `${rainGoverned.method} ${rainGoverned.caveat}`,
   },
 };
 
@@ -66,8 +66,8 @@ export function rainColor(district: string, mandal: string): string {
 export function rainText(district: string, mandal: string): string | null {
   const row = rainForMandal(district, mandal);
   if (!row || !row.klass) return null;
-  const rise = `${row.risePer100mm.toFixed(2)} m per 100 mm`;
-  if (row.klass === "rain governed") return `monsoon explains most of it · ${rise}`;
+  const rise = `${row.risePer100mm >= 0 ? "rises" : "falls"} ${Math.abs(row.risePer100mm).toFixed(2)} m per 100 mm of rain`;
+  if (row.klass === "rain governed") return `rain explains much of the swing · ${rise}`;
   if (row.klass === "partly") return `rain is part of it · ${rise}`;
   return `rain explains little · ${rise}`;
 }
@@ -75,7 +75,7 @@ export function rainText(district: string, mandal: string): string | null {
 export function rainLegend() {
   return rainGoverned.groups.map(group => ({
     key: group.class,
-    label: group.class === "rain governed" ? "The monsoon explains most of the swing"
+    label: group.class === "rain governed" ? `Rain explains much of the swing (${Math.round(rainGoverned.thresholds.governedR2 * 100)}%+)`
       : group.class === "partly" ? "Rain is part of it, with much else"
       : "Rain explains little of it",
     color: SHADE[group.class],

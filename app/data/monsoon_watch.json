@@ -195,7 +195,7 @@
     "shareFloorMm": 100.0,
     "thinRain": 5,
     "aboveRain": 1,
-    "method": "Water-table fluctuation (GEC-2015): the May-to-latest rise times the mandal's specific yield times its area. Net of the season's own pumping, which no public source observes, so gross recharge is larger."
+    "method": "Water-table fluctuation (GEC-2015), the method the official assessment uses: the rise since May times the mandal's specific yield times its area. Net of the season's own pumping, so gross recharge is larger, and a mandal whose table fell counts as zero. The rain counted is June to September."
   },
   "seasons": [
     {

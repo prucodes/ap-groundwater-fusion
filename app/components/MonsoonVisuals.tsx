@@ -498,7 +498,7 @@ export function ElNinoChain() {
       eyebrow: "2 · The monsoon",
       value: `${sw.elNinoAnomalyPct}%`,
       lead: "average June–September rain in El Niño years",
-      body: `CHIRPS analysis across ${sw.years} years: below normal in ${sw.elNinoBelowNormal} of ${sw.elNinoYears} warm-index years, against ${sw.belowNormalAllYears} of ${sw.allYears} overall. These are historical associations, not independent causal events.`,
+      body: `CHIRPS analysis across ${sw.years} years: below normal in ${sw.elNinoBelowNormal} of ${sw.elNinoYears} El Niño-like years, against ${sw.belowNormalAllYears} of ${sw.allYears} overall. These are historical associations, not independent causal events.`,
       source: `CHIRPS ${sw.firstYear}–${sw.lastYear}`,
     },
     {
