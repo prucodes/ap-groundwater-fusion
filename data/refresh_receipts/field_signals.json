@@ -1,27 +1,27 @@
 {
-  "checkedAt": "2026-10-19T15:18:51+00:00",
-  "status": "refreshed",
+  "checkedAt": "2026-10-26T08:09:33+00:00",
+  "status": "partial",
   "sections": {
     "weather": {
       "status": "refreshed",
-      "seconds": 144.8
+      "seconds": 94.2
     },
     "vegetation": {
       "status": "refreshed",
-      "seconds": 8.6
+      "seconds": 73.0
     },
     "assessment": {
-      "status": "refreshed",
-      "seconds": 164.6
+      "status": "retained",
+      "error": "HTTP Error 502: Bad Gateway"
     }
   },
-  "weatherIssued": "2026-10-19",
+  "weatherIssued": "2026-10-26",
   "vegetationWeeks": [
-    "2026-09-17",
     "2026-09-24",
     "2026-10-01",
-    "2026-10-08"
+    "2026-10-08",
+    "2026-10-15"
   ],
   "assessmentYear": "2025-2026",
-  "outputSha256": "6ad34c534ca2a2f119727e49c32ca98906b63cd420611bb0329465aee7448c95"
+  "outputSha256": "dba552a5719e26169802f0328fa29ac89b93d1164e1ea546013bb9ecfeb34b25"
 }
