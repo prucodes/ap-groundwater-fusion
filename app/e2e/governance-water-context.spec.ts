@@ -52,7 +52,8 @@ test("a mandal page shows its season beside its groundwater record", async ({ pa
   await expect(card).toContainText("against normal");
   await expect(card.getByRole("list", { name: "Soil moisture by depth" }).getByRole("listitem")).toHaveCount(4);
   await expect(card).toContainText(/of 1\d years for this date/);
-  await expect(card).toContainText("3 of 3 usable");
+  // How many signals point to stress changes with each week's data; all three being usable does not.
+  await expect(card).toContainText(/\d of 3 usable/);
   await expect(card).toContainText("Reservoirs in Kurnool");
   await expect(card).toContainText("not a score");
 });
