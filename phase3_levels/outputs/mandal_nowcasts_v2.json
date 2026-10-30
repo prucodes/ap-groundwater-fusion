@@ -1,6 +1,6 @@
 {
   "schemaVersion": "2.1.0",
-  "generatedAt": "2026-10-26T07:47:55+00:00",
+  "generatedAt": "2026-10-30T04:21:30+00:00",
   "label": "Modelled temporal nowcast; not an official APWRIMS result",
   "modelVersion": "phase0-nowcast-3.0.0",
   "trainingPeriod": {

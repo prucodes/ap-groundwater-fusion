@@ -1,11 +1,11 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-10-26T07:56:06+00:00",
+ "generatedAt": "2026-10-30T04:27:14+00:00",
  "kind": "prospective_track_record",
  "rule": "Each mandal's earliest-issued 3-month forecast for a target month, frozen the week it was published and never changed, against the reading later measured for that month. The no-change rule repeats the reading at the forecast's origin. Bias is forecast minus measured, metres below ground: negative means more water was forecast than came.",
- "weeksFrozen": 9,
+ "weeksFrozen": 10,
  "firstIssued": "2026-09-28",
- "lastIssued": "2026-10-26",
+ "lastIssued": "2026-10-30",
  "forecastsTracked": 1307,
  "scored": {
   "forecasts": 3,
@@ -89,6 +89,12 @@
    "forecasts": 666,
    "source": "weekly refresh",
    "sha256": "0971e3ff76fbc3d8716dcfc7e992a425294d5c6855a8f83c8fad17fe44ebfcf5"
+  },
+  {
+   "issued": "2026-10-30",
+   "forecasts": 666,
+   "source": "weekly refresh",
+   "sha256": "61f53b93ad25418bd064d7007a252aa0220b577ea17b2f598e9e6000b51f22ab"
   }
  ]
 }

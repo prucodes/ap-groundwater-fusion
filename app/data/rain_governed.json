@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-26T07:56:24Z",
+  "generatedAt": "2026-10-30T04:27:29Z",
   "method": "Each mandal's May to November change in depth, fitted against that season's June to September rainfall, over every season it has both readings.",
   "window": {
     "preMonsoonMonth": 5,

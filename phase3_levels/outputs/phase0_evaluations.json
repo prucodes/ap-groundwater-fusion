@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-10-26T07:48:27+00:00",
+  "generatedAt": "2026-10-30T04:21:57+00:00",
   "modelVersion": "phase0-nowcast-3.0.0",
   "temporalNowcast": {
     "task": "rolling_temporal_holdout_nowcast",
@@ -137,15 +137,15 @@
   },
   "spatialEstimation": {
     "task": "whole_mandal_spatial_estimation",
-    "generatedAt": "2026-10-26T07:54:46+00:00",
+    "generatedAt": "2026-10-30T04:26:12+00:00",
     "validation": "5-fold GroupKFold with whole mandals held out",
     "rowCount": 82332,
     "mandalCount": 651,
     "reportedMethod": "inverse_distance_weighted_same_month_neighbours",
     "reportedMetric": {
-      "rmseM": 7.6267,
-      "maeM": 4.9419,
-      "r2": 0.3823
+      "rmseM": 7.6244,
+      "maeM": 4.9388,
+      "r2": 0.3827
     },
     "methods": {
       "A naive (predict average)": {
@@ -159,34 +159,34 @@
         "r2": 0.3004
       },
       "C IDW neighbours": {
-        "rmseM": 7.6267,
-        "maeM": 4.9419,
-        "r2": 0.3823
+        "rmseM": 7.6244,
+        "maeM": 4.9388,
+        "r2": 0.3827
       },
       "D fusion (static + IDW)": {
-        "rmseM": 8.366,
-        "maeM": 5.4239,
-        "r2": 0.2568
+        "rmseM": 8.3488,
+        "maeM": 5.4284,
+        "r2": 0.2598
       }
     },
     "terrainCohortsForReportedMethod": {
       "alluvial": {
         "sampleCount": 24207,
-        "rmseM": 8.485,
-        "maeM": 5.3309,
-        "r2": 0.2785
+        "rmseM": 8.4842,
+        "maeM": 5.331,
+        "r2": 0.2787
       },
       "coastal": {
         "sampleCount": 28800,
-        "rmseM": 5.6842,
-        "maeM": 3.8018,
-        "r2": 0.4608
+        "rmseM": 5.6795,
+        "maeM": 3.7971,
+        "r2": 0.4617
       },
       "hard_rock": {
         "sampleCount": 29325,
-        "rmseM": 8.4938,
-        "maeM": 5.7405,
-        "r2": 0.3547
+        "rmseM": 8.4917,
+        "maeM": 5.7363,
+        "r2": 0.355
       }
     },
     "selfNeighbourExcluded": true,
@@ -199,7 +199,7 @@
   },
   "directForecast": {
     "task": "direct_multi_horizon_forecast",
-    "generatedAt": "2026-10-26T07:55:36+00:00",
+    "generatedAt": "2026-10-30T04:26:54+00:00",
     "featureTiming": "features available at forecast origin; no future rainfall",
     "baselineDefinitions": {
       "noChange": "the level at the forecast origin",
@@ -539,7 +539,7 @@
   },
   "crossNetworkComparison": {
     "task": "cross_network_comparison",
-    "generatedAt": "2026-10-26T07:55:37+00:00",
+    "generatedAt": "2026-10-30T04:26:55+00:00",
     "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
     "overlapPeriod": {
       "start": "2014-06",

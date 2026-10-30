@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-26T07:56:18Z",
+  "generatedAt": "2026-10-30T04:27:24Z",
   "method": "Water-table fluctuation, the GEC-2015 method: the May to November rise times specific yield times area, as a share of June to September rainfall, for every year a mandal has both readings. The median year is published, and a year whose table fell counts as zero.",
   "window": {
     "preMonsoonMonth": 5,

@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "modelName": "AP Mandal Groundwater Temporal Nowcast",
   "modelVersion": "phase0-nowcast-3.0.0",
-  "buildTimestamp": "2026-10-26T07:47:55+00:00",
+  "buildTimestamp": "2026-10-30T04:21:30+00:00",
   "trainingPeriod": {
     "start": "2015-06",
     "end": "2026-08"
@@ -159,15 +159,15 @@
     },
     "spatialEstimation": {
       "task": "whole_mandal_spatial_estimation",
-      "generatedAt": "2026-10-26T07:54:46+00:00",
+      "generatedAt": "2026-10-30T04:26:12+00:00",
       "validation": "5-fold GroupKFold with whole mandals held out",
       "rowCount": 82332,
       "mandalCount": 651,
       "reportedMethod": "inverse_distance_weighted_same_month_neighbours",
       "reportedMetric": {
-        "rmseM": 7.6267,
-        "maeM": 4.9419,
-        "r2": 0.3823
+        "rmseM": 7.6244,
+        "maeM": 4.9388,
+        "r2": 0.3827
       },
       "methods": {
         "A naive (predict average)": {
@@ -181,34 +181,34 @@
           "r2": 0.3004
         },
         "C IDW neighbours": {
-          "rmseM": 7.6267,
-          "maeM": 4.9419,
-          "r2": 0.3823
+          "rmseM": 7.6244,
+          "maeM": 4.9388,
+          "r2": 0.3827
         },
         "D fusion (static + IDW)": {
-          "rmseM": 8.366,
-          "maeM": 5.4239,
-          "r2": 0.2568
+          "rmseM": 8.3488,
+          "maeM": 5.4284,
+          "r2": 0.2598
         }
       },
       "terrainCohortsForReportedMethod": {
         "alluvial": {
           "sampleCount": 24207,
-          "rmseM": 8.485,
-          "maeM": 5.3309,
-          "r2": 0.2785
+          "rmseM": 8.4842,
+          "maeM": 5.331,
+          "r2": 0.2787
         },
         "coastal": {
           "sampleCount": 28800,
-          "rmseM": 5.6842,
-          "maeM": 3.8018,
-          "r2": 0.4608
+          "rmseM": 5.6795,
+          "maeM": 3.7971,
+          "r2": 0.4617
         },
         "hard_rock": {
           "sampleCount": 29325,
-          "rmseM": 8.4938,
-          "maeM": 5.7405,
-          "r2": 0.3547
+          "rmseM": 8.4917,
+          "maeM": 5.7363,
+          "r2": 0.355
         }
       },
       "selfNeighbourExcluded": true,
@@ -221,7 +221,7 @@
     },
     "directForecast": {
       "task": "direct_multi_horizon_forecast",
-      "generatedAt": "2026-10-26T07:55:36+00:00",
+      "generatedAt": "2026-10-30T04:26:54+00:00",
       "featureTiming": "features available at forecast origin; no future rainfall",
       "baselineDefinitions": {
         "noChange": "the level at the forecast origin",
@@ -561,7 +561,7 @@
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",
-      "generatedAt": "2026-10-26T07:55:37+00:00",
+      "generatedAt": "2026-10-30T04:26:55+00:00",
       "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
       "overlapPeriod": {
         "start": "2014-06",
@@ -646,13 +646,13 @@
   },
   "inputHashes": {
     "apwrimsHistory": "83790c630a9df3a150118761ba351f2f2b89b6eae1db0e66eed2706ba8930f83",
-    "nowcasts": "28994b67b5d9010cedb82ff1259eb8d44b94e58c498bc92550012014914e8e3e",
+    "nowcasts": "b19554774325fb1de201f7aa06d122f1a5b09d8799cd8241c6cc665685f0fa14",
     "geometry": "e729b948fc08a60cb90af9a3588977a52561a868d75cbe0cf7d61b27617997d6",
-    "districtSignals": "4e1885a7877530c8ad1fb1dc86be0978071acff6f4a11012c797277d6feb56e5",
+    "districtSignals": "4b648895e2d185c16e4bee637521810db003ed0f4fd126fdc17db211a9bbaf50",
     "climateContext": "f3f621464cf2f72f76b194fba4b2a76e3a0715d14bb762a986700c828a81aa5d",
-    "graceProvenance": "2f1534ef5dc0d3c6f4320e3bdcdc958ccafdf9c3130f6c8410a410804e9da6b2",
+    "graceProvenance": "a62bc381dc33482b60f40781822792719888929e3a94441a3d2236e1fdc4aecf",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "e914f60a2d8ab2f55c0f5d64112f726271cd113aa06dba97f994459eef3d1869"
+    "evaluations": "f4a51f1ea4067db87d4cfebd768c5861c1563fdd43d48ff08fd8d60460e2dbbf"
   },
-  "generatedAt": "2026-10-26T07:55:57+00:00"
+  "generatedAt": "2026-10-30T04:27:11+00:00"
 }
