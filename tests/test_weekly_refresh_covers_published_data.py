@@ -36,6 +36,10 @@ STATIC_BY_DESIGN = {
     ),
     "dashboard_summary.json": "a July 2026 snapshot; the UI derives its live figures in data.ts instead",
     "source_readiness.json": "hand-maintained description of which sources are live",
+    "cyclone_arnab.json": (
+        "one event, Cyclone Arnab, measured once: the water context read before and after the storm is kept in "
+        "phase3_levels/data/cyclone_arnab_capture.json and rebuilt by phase3_levels/build_cyclone_arnab.py by hand"
+    ),
     "water_quality.json": (
         "habitations the Jal Jeevan Mission marks as quality affected; the public report encrypts its query, "
         "so it is read through the page into phase3_levels/data/jjm_quality_affected_habitations.csv and "
