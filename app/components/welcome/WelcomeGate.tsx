@@ -17,7 +17,7 @@ function Arrow() {
 // Pages people are likely to be sent, named as the sidebar names them.
 const PAGE_NAMES: Record<string, string> = {
   brief: "Project brief", digest: "Weekly digest", reports: "Reports", "field-report": "Field report",
-  changes: "This Week", monsoon: "Monsoon Watch", drought: "Drought Watch", map: "Mandal Map",
+  changes: "This Week", arnab: "Cyclone Arnab", monsoon: "Monsoon Watch", drought: "Drought Watch", map: "Mandal Map",
   crystal: "Water Depth 3D", summer: "Summer Outlook", rabi: "Rabi Outlook", agriculture: "Agriculture & Water",
   districts: "Districts", constituencies: "Constituencies", mandals: "Mandal Insights", compare: "Compare",
   methodology: "Methodology", readiness: "Data Readiness", estimates: "Modelled Levels", nasa: "NASA Signals",

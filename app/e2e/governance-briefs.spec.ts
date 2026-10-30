@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 /* Every screen in the menu says what it is, what it says now and what to do with it,
    and the menu lists the screens by group, without the four it retired. */
 
-const PAGES = ["/", "/changes/", "/monsoon/", "/drought/", "/map/", "/summer/", "/rabi/", "/agriculture/", "/districts/", "/constituencies/", "/mandals/", "/compare/", "/methodology/"];
+const PAGES = ["/", "/changes/", "/monsoon/", "/arnab/", "/drought/", "/map/", "/summer/", "/rabi/", "/agriculture/", "/districts/", "/constituencies/", "/mandals/", "/compare/", "/methodology/"];
 
 for (const route of PAGES) {
   test(`${route} opens with its brief`, async ({ page }) => {

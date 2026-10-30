@@ -146,3 +146,14 @@ test("records nothing for a browser that sends Global Privacy Control", async ({
   await expect(page.getByRole("button", { name: "Pause months" })).toBeVisible();
   expect(await page.evaluate(() => window.apgwCount?.pending)).toBeUndefined();
 });
+
+test("records how far down the Cyclone Arnab page a visit read, and how it opened the map", async ({ page }) => {
+  await page.goto("/arnab/");
+  const sent = await recordSends(page);
+  const paths = async () => (await sent()).map((row) => row.path);
+  expect(await paths()).not.toContain("ap-gw/arnab/reached-follow");
+  await page.getByRole("heading", { name: "Did Arnab follow?" }).scrollIntoViewIfNeeded();
+  await expect.poll(paths).toContain("ap-gw/arnab/reached-follow");
+  await page.getByTestId("arnab-view-rain").click();
+  await expect.poll(paths).toContain("ap-gw/arnab/map-rain");
+});

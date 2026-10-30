@@ -114,11 +114,20 @@ test("Monsoon Watch shows canal water by delta and never adds canals into one St
   await expect(card).toContainText("not added into one State figure");
 });
 
-test("Monsoon Watch sets Cyclone Arnab's rain against where the water table had room", async ({ page }) => {
+test("Monsoon Watch points to the Cyclone Arnab page", async ({ page }) => {
   await page.goto("/monsoon/");
   const card = page.getByTestId("cyclone-arnab");
-  await expect(card).toContainText("Deep tables that got heavy rain");
-  await expect(card.getByTestId("arnab-view-meet")).toHaveAttribute("aria-pressed", "true");
-  await expect(card).toContainText("After Montha, extra rise");
-  await expect(card).toContainText("not a forecast");
+  await expect(card).toContainText("Deep tables, heavy rain");
+  await card.getByTestId("arnab-open").click();
+  await expect(page).toHaveURL(/\/arnab\/$/);
+});
+
+test("the Cyclone Arnab page sets the rain against room to rise and waits for the readings", async ({ page }) => {
+  await page.goto("/arnab/");
+  await expect(page.getByTestId("arnab-hero")).toContainText("The rain fell where the water table was already high");
+  await expect(page.getByTestId("arnab-view-meet")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("heading", { name: "Where the water went" })).toBeVisible();
+  const follow = page.getByTestId("arnab-follow");
+  await expect(follow).toContainText("November awaited");
+  await expect(page.locator("#arnab-room")).toContainText("not a forecast");
 });
