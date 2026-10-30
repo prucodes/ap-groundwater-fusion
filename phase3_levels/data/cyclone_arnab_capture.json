@@ -1,0 +1,6223 @@
+{
+ "source": "APWRIMS water context (gauge rain, NRSC soil moisture, reservoirs), read before and after the storm",
+ "rainWindow": {
+  "before": "2026-10-24",
+  "after": "2026-10-28"
+ },
+ "soilAsOf": {
+  "before": "2026-10-23",
+  "after": "2026-10-28"
+ },
+ "state": {
+  "rainTmcBefore": 2377.8,
+  "rainTmcAfter": 2588.3,
+  "normalTmcBefore": 3764.8,
+  "normalTmcAfter": 3820.7,
+  "seasonDeviationBefore": -36.8,
+  "seasonDeviationAfter": -32.3,
+  "soilMedianBefore": 49.9,
+  "soilMedianAfter": 90.5,
+  "soilDriestBefore": 52,
+  "soilDriestAfter": 14,
+  "reservoirTmcBefore": 499.642,
+  "reservoirTmcAfter": 507.659,
+  "reservoirAsOf": {
+   "before": "2026-10-26T12:38+05:30",
+   "after": "2026-10-30T08:25+05:30"
+  }
+ },
+ "mandals": [
+  {
+   "uuid": "17284a50-d99a-4f44-8042-975c58895d66",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Ananthagiri",
+   "rainBeforeMm": 529.0,
+   "rainAfterMm": 638.2,
+   "soil30Before": 50.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "6a54c010-9d08-440b-866f-2fcebcaf5d00",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Araku Valley",
+   "rainBeforeMm": 586.4,
+   "rainAfterMm": 710.8,
+   "soil30Before": 42.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "56cff6ac-95b5-4826-86d4-fda40c875a79",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Chintapalle",
+   "rainBeforeMm": 634.9,
+   "rainAfterMm": 725.0,
+   "soil30Before": 71.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "3170512b-4202-4f09-aac2-1dad09004f64",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Dumbriguda",
+   "rainBeforeMm": 618.9,
+   "rainAfterMm": 716.0,
+   "soil30Before": 46.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "1fa47fc1-5da1-4e10-8100-611bd9df6226",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "G.Madugula",
+   "rainBeforeMm": 743.6,
+   "rainAfterMm": 838.0,
+   "soil30Before": 76.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "cefefb83-092d-4d3f-b261-d06c8e70bad0",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "GUDEM KOTHAVEEDHI",
+   "rainBeforeMm": 1162.3,
+   "rainAfterMm": 1236.5,
+   "soil30Before": 87.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5d774342-5a6b-4f48-9da3-f28f57f79797",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Hukumpeta",
+   "rainBeforeMm": 643.3,
+   "rainAfterMm": 753.4,
+   "soil30Before": 41.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "4ed4ad0b-5740-44a0-9b10-9e4ce3200cf6",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Koyyuru",
+   "rainBeforeMm": 768.0,
+   "rainAfterMm": 873.3,
+   "soil30Before": 78.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "8098b2ab-fcac-421e-af8a-5f60750ea4df",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Munchingi Puttu",
+   "rainBeforeMm": 1375.7,
+   "rainAfterMm": 1429.2,
+   "soil30Before": 99.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "88eb5f29-2f08-4862-bd75-14cf2c6b6479",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "PEDABAYALU",
+   "rainBeforeMm": 923.7,
+   "rainAfterMm": 991.3,
+   "soil30Before": 89.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2b27c193-a0cf-4120-8a3c-e7b661311424",
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Paderu",
+   "rainBeforeMm": 689.7,
+   "rainAfterMm": 800.6,
+   "soil30Before": 66.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "fc019dc6-d365-4d27-88fe-7343266e9bc1",
+   "district": "Anakapalli",
+   "mandal": "Anakapalle",
+   "rainBeforeMm": 541.8,
+   "rainAfterMm": 671.4,
+   "soil30Before": 59.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "cc93bfc0-4371-4c82-b094-9a4c56210298",
+   "district": "Anakapalli",
+   "mandal": "Atchutapuram",
+   "rainBeforeMm": 560.1,
+   "rainAfterMm": 794.1,
+   "soil30Before": 90.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "84c42391-071a-4058-b804-d1e8c020de1e",
+   "district": "Anakapalli",
+   "mandal": "Butchayyapeta",
+   "rainBeforeMm": 595.5,
+   "rainAfterMm": 718.2,
+   "soil30Before": 81.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e93cb238-543e-4dd6-bf3a-b927a5ac3f1d",
+   "district": "Anakapalli",
+   "mandal": "Cheedikada",
+   "rainBeforeMm": 577.3,
+   "rainAfterMm": 704.5,
+   "soil30Before": 81.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "df7e22f1-3739-4520-ac5a-1f690648bdbf",
+   "district": "Anakapalli",
+   "mandal": "Chodavaram",
+   "rainBeforeMm": 687.3,
+   "rainAfterMm": 884.6,
+   "soil30Before": 86.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "c899c337-62c4-467a-89bc-920c809924d5",
+   "district": "Anakapalli",
+   "mandal": "DEVARAPALLE (VISAKHAPATNAM)",
+   "rainBeforeMm": 686.7,
+   "rainAfterMm": 809.6,
+   "soil30Before": 74.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e19a3768-0fae-439a-9615-f3ae5c4d77bf",
+   "district": "Anakapalli",
+   "mandal": "Golugonda",
+   "rainBeforeMm": 537.0,
+   "rainAfterMm": 608.9,
+   "soil30Before": 90.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "adde9990-e9c0-4d77-b824-79cfd5ebb394",
+   "district": "Anakapalli",
+   "mandal": "K.Kotapadu",
+   "rainBeforeMm": 765.8,
+   "rainAfterMm": 911.7,
+   "soil30Before": 70.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "477bc99c-e5df-4562-bfbf-ef8845138e69",
+   "district": "Anakapalli",
+   "mandal": "Kasimkota",
+   "rainBeforeMm": 724.1,
+   "rainAfterMm": 984.8,
+   "soil30Before": 77.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "37e3ff10-31bc-45d7-8721-34cc15362092",
+   "district": "Anakapalli",
+   "mandal": "Kotauratla",
+   "rainBeforeMm": 594.2,
+   "rainAfterMm": 710.2,
+   "soil30Before": 71.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "d362d1e2-3c5d-4b5b-9236-8eaf85ff1772",
+   "district": "Anakapalli",
+   "mandal": "Madugula",
+   "rainBeforeMm": 746.2,
+   "rainAfterMm": 845.5,
+   "soil30Before": 78.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "9d1cbdd5-9b8f-4613-8acf-995667a44d56",
+   "district": "Anakapalli",
+   "mandal": "Makavarapalem",
+   "rainBeforeMm": 542.9,
+   "rainAfterMm": 716.3,
+   "soil30Before": 76.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "953c18d6-3841-4821-aba4-173463c07b77",
+   "district": "Anakapalli",
+   "mandal": "Munagapaka",
+   "rainBeforeMm": 443.6,
+   "rainAfterMm": 606.4,
+   "soil30Before": 84.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e79a9098-3c5c-4db3-9ab6-f6b153192e0c",
+   "district": "Anakapalli",
+   "mandal": "Nakkapalle",
+   "rainBeforeMm": 532.8,
+   "rainAfterMm": 638.2,
+   "soil30Before": 46.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "fd6c2c2b-80bc-4609-b2a1-d0b7859f701c",
+   "district": "Anakapalli",
+   "mandal": "Narsipatnam",
+   "rainBeforeMm": 783.9,
+   "rainAfterMm": 927.1,
+   "soil30Before": 93.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "8fe9c51e-149e-41a3-adcb-fea446164bec",
+   "district": "Anakapalli",
+   "mandal": "Nathavaram",
+   "rainBeforeMm": 653.4,
+   "rainAfterMm": 805.5,
+   "soil30Before": 94.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "4831c167-3dde-4684-8eea-1b0c2c8f934f",
+   "district": "Anakapalli",
+   "mandal": "Paravada",
+   "rainBeforeMm": 651.5,
+   "rainAfterMm": 787.3,
+   "soil30Before": 92.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "ac73afb7-8895-4ac1-97a8-d5125e147cdb",
+   "district": "Anakapalli",
+   "mandal": "Payakaraopeta",
+   "rainBeforeMm": 671.8,
+   "rainAfterMm": 777.1,
+   "soil30Before": 80.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "f695f7fa-53c8-4d53-91bb-3ac0a527b4ca",
+   "district": "Anakapalli",
+   "mandal": "Rambilli",
+   "rainBeforeMm": 477.0,
+   "rainAfterMm": 612.4,
+   "soil30Before": 29.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "621b50b3-3e2b-442b-812e-856a004aa89e",
+   "district": "Anakapalli",
+   "mandal": "Ravikamatham",
+   "rainBeforeMm": 700.4,
+   "rainAfterMm": 842.0,
+   "soil30Before": 88.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "146838bc-a0f7-4d70-bf93-54ae1e7225f7",
+   "district": "Anakapalli",
+   "mandal": "Rolugunta",
+   "rainBeforeMm": 637.7,
+   "rainAfterMm": 739.0,
+   "soil30Before": 96.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "3e4c1b5e-4778-4f7b-b814-7398072e7d0e",
+   "district": "Anakapalli",
+   "mandal": "S.Rayavaram",
+   "rainBeforeMm": 498.1,
+   "rainAfterMm": 630.3,
+   "soil30Before": 41.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "f7baf7ba-35ea-4fe1-94a6-9dcd7739d7d4",
+   "district": "Anakapalli",
+   "mandal": "Sabbavaram",
+   "rainBeforeMm": 702.4,
+   "rainAfterMm": 902.2,
+   "soil30Before": 88.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "713c0673-375d-4af9-8be2-50e71d7e481e",
+   "district": "Anakapalli",
+   "mandal": "YELAMANCHILI (VISAKHAPATNAM)",
+   "rainBeforeMm": 531.6,
+   "rainAfterMm": 653.1,
+   "soil30Before": 66.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "71a987f6-27a6-4c47-9582-e5d772861423",
+   "district": "Ananthapuramu",
+   "mandal": "Anantapur_Rural",
+   "rainBeforeMm": 230.6,
+   "rainAfterMm": 233.0,
+   "soil30Before": 10.2,
+   "soil30After": 8.3
+  },
+  {
+   "uuid": "586cc703-176f-49a4-9b69-4588dd527a3a",
+   "district": "Ananthapuramu",
+   "mandal": "Anantapur_Urban",
+   "rainBeforeMm": 203.5,
+   "rainAfterMm": 207.8,
+   "soil30Before": 15.1,
+   "soil30After": 14.5
+  },
+  {
+   "uuid": "f62abe72-4ee7-4c9f-847a-a5de163c8bb9",
+   "district": "Ananthapuramu",
+   "mandal": "Atmakur",
+   "rainBeforeMm": 232.5,
+   "rainAfterMm": 237.7,
+   "soil30Before": 6.3,
+   "soil30After": 11.0
+  },
+  {
+   "uuid": "da84fb8f-e24c-4fde-8db0-aec6062f76fe",
+   "district": "Ananthapuramu",
+   "mandal": "Beluguppa",
+   "rainBeforeMm": 272.1,
+   "rainAfterMm": 280.7,
+   "soil30Before": 17.7,
+   "soil30After": 21.1
+  },
+  {
+   "uuid": "bf28866e-f299-4521-84a9-2807ab441d17",
+   "district": "Ananthapuramu",
+   "mandal": "Bommanahal",
+   "rainBeforeMm": 166.1,
+   "rainAfterMm": 208.1,
+   "soil30Before": 13.6,
+   "soil30After": 39.9
+  },
+  {
+   "uuid": "97aece32-48ae-463a-8789-9a02fbc6a334",
+   "district": "Ananthapuramu",
+   "mandal": "Brahmasamudram",
+   "rainBeforeMm": 149.5,
+   "rainAfterMm": 151.3,
+   "soil30Before": 7.8,
+   "soil30After": 4.8
+  },
+  {
+   "uuid": "4660294b-fa03-4d43-9597-162823c9fdb4",
+   "district": "Ananthapuramu",
+   "mandal": "Bukkaraya Samudram",
+   "rainBeforeMm": 202.9,
+   "rainAfterMm": 208.5,
+   "soil30Before": 14.7,
+   "soil30After": 11.7
+  },
+  {
+   "uuid": "ed6b5ad9-9b9f-4822-96c9-32b361f6b60d",
+   "district": "Ananthapuramu",
+   "mandal": "D HIRCHAL",
+   "rainBeforeMm": 117.5,
+   "rainAfterMm": 140.6,
+   "soil30Before": 9.4,
+   "soil30After": 36.8
+  },
+  {
+   "uuid": "4cb38050-bb72-4c1a-89c9-a15b23518a71",
+   "district": "Ananthapuramu",
+   "mandal": "Garladinne",
+   "rainBeforeMm": 246.2,
+   "rainAfterMm": 256.6,
+   "soil30Before": 14.7,
+   "soil30After": 14.9
+  },
+  {
+   "uuid": "88e79920-24ab-4dce-89f4-904c4e2c0074",
+   "district": "Ananthapuramu",
+   "mandal": "Gooty",
+   "rainBeforeMm": 219.0,
+   "rainAfterMm": 229.9,
+   "soil30Before": 20.0,
+   "soil30After": 26.2
+  },
+  {
+   "uuid": "61040d42-8667-4660-8432-8b34c35b9cfe",
+   "district": "Ananthapuramu",
+   "mandal": "Gummagatta",
+   "rainBeforeMm": 83.5,
+   "rainAfterMm": 85.4,
+   "soil30Before": 1.9,
+   "soil30After": 1.2
+  },
+  {
+   "uuid": "8ca99f12-93fc-47e8-b5ce-1cf7aaf9b0b8",
+   "district": "Ananthapuramu",
+   "mandal": "Guntakal",
+   "rainBeforeMm": 241.4,
+   "rainAfterMm": 271.2,
+   "soil30Before": 20.2,
+   "soil30After": 34.9
+  },
+  {
+   "uuid": "e4482285-b2e4-45fa-a476-0f0400c65c71",
+   "district": "Ananthapuramu",
+   "mandal": "Kalyandurg",
+   "rainBeforeMm": 192.6,
+   "rainAfterMm": 194.5,
+   "soil30Before": 13.3,
+   "soil30After": 7.5
+  },
+  {
+   "uuid": "281c1560-f836-4a40-9fc4-b80c62990a0d",
+   "district": "Ananthapuramu",
+   "mandal": "Kambadur",
+   "rainBeforeMm": 150.4,
+   "rainAfterMm": 150.4,
+   "soil30Before": 8.8,
+   "soil30After": 4.4
+  },
+  {
+   "uuid": "80f63e45-117b-40ca-b130-d5eb56c3cf54",
+   "district": "Ananthapuramu",
+   "mandal": "Kanekal",
+   "rainBeforeMm": 217.0,
+   "rainAfterMm": 226.1,
+   "soil30Before": 15.0,
+   "soil30After": 23.3
+  },
+  {
+   "uuid": "67a4b95e-b74d-4450-beb3-451e875c7e1a",
+   "district": "Ananthapuramu",
+   "mandal": "Kudair",
+   "rainBeforeMm": 231.9,
+   "rainAfterMm": 234.4,
+   "soil30Before": 8.0,
+   "soil30After": 10.0
+  },
+  {
+   "uuid": "db73a229-d192-491f-b664-06c3ae4023a9",
+   "district": "Ananthapuramu",
+   "mandal": "Kundurpi",
+   "rainBeforeMm": 199.1,
+   "rainAfterMm": 199.1,
+   "soil30Before": 6.2,
+   "soil30After": 7.7
+  },
+  {
+   "uuid": "2b34761f-7580-4d57-b38f-4ae142fe0562",
+   "district": "Ananthapuramu",
+   "mandal": "Narpala",
+   "rainBeforeMm": 335.2,
+   "rainAfterMm": 349.8,
+   "soil30Before": 70.9,
+   "soil30After": 55.2
+  },
+  {
+   "uuid": "b3d4966e-08e5-43d4-ae0f-b275ccf5ad2d",
+   "district": "Ananthapuramu",
+   "mandal": "Pamidi",
+   "rainBeforeMm": 313.7,
+   "rainAfterMm": 330.3,
+   "soil30Before": 27.1,
+   "soil30After": 30.6
+  },
+  {
+   "uuid": "32334fda-35a5-45b1-afe0-02d438b4ca9a",
+   "district": "Ananthapuramu",
+   "mandal": "Peddapappur",
+   "rainBeforeMm": 288.2,
+   "rainAfterMm": 301.0,
+   "soil30Before": 25.4,
+   "soil30After": 37.6
+  },
+  {
+   "uuid": "2a146091-2f7e-4f8d-a7c8-b45a4c6a7bfe",
+   "district": "Ananthapuramu",
+   "mandal": "Peddavadugur",
+   "rainBeforeMm": 404.3,
+   "rainAfterMm": 412.5,
+   "soil30Before": 20.4,
+   "soil30After": 41.8
+  },
+  {
+   "uuid": "215beb46-bb18-4076-804b-e2aa85283482",
+   "district": "Ananthapuramu",
+   "mandal": "Putlur",
+   "rainBeforeMm": 215.6,
+   "rainAfterMm": 226.0,
+   "soil30Before": 37.2,
+   "soil30After": 45.7
+  },
+  {
+   "uuid": "a423ea65-35f2-489d-a21c-fb203fec09e8",
+   "district": "Ananthapuramu",
+   "mandal": "Raptadu",
+   "rainBeforeMm": 178.3,
+   "rainAfterMm": 181.4,
+   "soil30Before": 5.9,
+   "soil30After": 4.4
+  },
+  {
+   "uuid": "7ffdc9dc-8bad-47ae-88a2-6726621e23f1",
+   "district": "Ananthapuramu",
+   "mandal": "Rayadurg",
+   "rainBeforeMm": 145.3,
+   "rainAfterMm": 151.7,
+   "soil30Before": 2.7,
+   "soil30After": 5.6
+  },
+  {
+   "uuid": "88aaa887-8788-42b2-ae12-1b806442ba2e",
+   "district": "Ananthapuramu",
+   "mandal": "Settur",
+   "rainBeforeMm": 179.9,
+   "rainAfterMm": 179.9,
+   "soil30Before": 6.1,
+   "soil30After": 3.1
+  },
+  {
+   "uuid": "4e9f5439-f050-4285-b80c-eeae36041479",
+   "district": "Ananthapuramu",
+   "mandal": "Singanamala",
+   "rainBeforeMm": 203.9,
+   "rainAfterMm": 213.3,
+   "soil30Before": 19.6,
+   "soil30After": 21.9
+  },
+  {
+   "uuid": "df22169c-eecc-44b1-9128-99a8e060b4c0",
+   "district": "Ananthapuramu",
+   "mandal": "Tadpatri",
+   "rainBeforeMm": 241.4,
+   "rainAfterMm": 242.8,
+   "soil30Before": 32.2,
+   "soil30After": 31.0
+  },
+  {
+   "uuid": "6fa02c32-6aa8-41a0-9b56-ae6b1cd9ee59",
+   "district": "Ananthapuramu",
+   "mandal": "Uravakonda",
+   "rainBeforeMm": 286.2,
+   "rainAfterMm": 298.3,
+   "soil30Before": 24.5,
+   "soil30After": 27.7
+  },
+  {
+   "uuid": "426bac69-02c9-4b4a-9680-bfc20b4c4e68",
+   "district": "Ananthapuramu",
+   "mandal": "Vajrakarur",
+   "rainBeforeMm": 227.2,
+   "rainAfterMm": 236.1,
+   "soil30Before": 30.0,
+   "soil30After": 34.3
+  },
+  {
+   "uuid": "cffd3448-15d8-4304-af80-bee6722bf3f3",
+   "district": "Ananthapuramu",
+   "mandal": "Vidapanakal",
+   "rainBeforeMm": 284.3,
+   "rainAfterMm": 334.5,
+   "soil30Before": 40.6,
+   "soil30After": 73.0
+  },
+  {
+   "uuid": "161b2e5b-f04c-489d-a304-ee9e0b403a1c",
+   "district": "Ananthapuramu",
+   "mandal": "Yadiki",
+   "rainBeforeMm": 505.7,
+   "rainAfterMm": 577.9,
+   "soil30Before": 39.3,
+   "soil30After": 75.9
+  },
+  {
+   "uuid": "ca182d4f-0ef6-4582-ba1b-e0a25010b2a2",
+   "district": "Ananthapuramu",
+   "mandal": "Yellanur",
+   "rainBeforeMm": 238.8,
+   "rainAfterMm": 277.5,
+   "soil30Before": 26.9,
+   "soil30After": 63.8
+  },
+  {
+   "uuid": "512cc106-da5f-4ea3-8ac3-2f70c367a284",
+   "district": "Annamayya",
+   "mandal": "B KOTHAKOTA",
+   "rainBeforeMm": 245.3,
+   "rainAfterMm": 278.2,
+   "soil30Before": 77.7,
+   "soil30After": 80.6
+  },
+  {
+   "uuid": "fa645350-ee3e-43bf-aac5-f7db9a0b5b81",
+   "district": "Annamayya",
+   "mandal": "Chinnamandem",
+   "rainBeforeMm": 125.0,
+   "rainAfterMm": 176.6,
+   "soil30Before": 58.4,
+   "soil30After": 78.2
+  },
+  {
+   "uuid": "b24846cf-0714-4ef0-8bcf-59b530a508b4",
+   "district": "Annamayya",
+   "mandal": "Chowdepalle",
+   "rainBeforeMm": 182.0,
+   "rainAfterMm": 192.6,
+   "soil30Before": 76.7,
+   "soil30After": 71.4
+  },
+  {
+   "uuid": "a5533d96-6cc8-4d96-90a6-2eeb4972d090",
+   "district": "Annamayya",
+   "mandal": "Galiveedu",
+   "rainBeforeMm": 225.4,
+   "rainAfterMm": 281.5,
+   "soil30Before": 46.3,
+   "soil30After": 81.6
+  },
+  {
+   "uuid": "05ea1ac0-bcfe-4df8-8059-8082ca317ba0",
+   "district": "Annamayya",
+   "mandal": "Gurramkonda",
+   "rainBeforeMm": 216.8,
+   "rainAfterMm": 237.1,
+   "soil30Before": 21.0,
+   "soil30After": 70.2
+  },
+  {
+   "uuid": "23e52780-edc1-4b1d-bd53-ba53effd1db6",
+   "district": "Annamayya",
+   "mandal": "Kalakada",
+   "rainBeforeMm": 133.4,
+   "rainAfterMm": 158.5,
+   "soil30Before": 8.0,
+   "soil30After": 66.3
+  },
+  {
+   "uuid": "7e2d260d-0ba2-433e-9d51-34e5912fc827",
+   "district": "Annamayya",
+   "mandal": "Kalikiri",
+   "rainBeforeMm": 244.2,
+   "rainAfterMm": 317.5,
+   "soil30Before": 49.3,
+   "soil30After": 86.6
+  },
+  {
+   "uuid": "032cc5fd-437a-4c05-b312-2ae8535ca77f",
+   "district": "Annamayya",
+   "mandal": "Kambhamvaripalle",
+   "rainBeforeMm": 170.0,
+   "rainAfterMm": 183.6,
+   "soil30Before": 30.1,
+   "soil30After": 55.3
+  },
+  {
+   "uuid": "6dd17b63-89c5-46dc-88a9-4c9e4cff2556",
+   "district": "Annamayya",
+   "mandal": "Kurabalakota",
+   "rainBeforeMm": 163.2,
+   "rainAfterMm": 176.3,
+   "soil30Before": 53.9,
+   "soil30After": 84.6
+  },
+  {
+   "uuid": "4012ce0c-7230-4468-b070-ac14c76514d0",
+   "district": "Annamayya",
+   "mandal": "Lakkireddipalle",
+   "rainBeforeMm": 293.6,
+   "rainAfterMm": 330.5,
+   "soil30Before": 9.7,
+   "soil30After": 64.3
+  },
+  {
+   "uuid": "7ec14913-ffee-49c8-9e65-e9731d297dd0",
+   "district": "Annamayya",
+   "mandal": "MANDAPALLE",
+   "rainBeforeMm": 323.7,
+   "rainAfterMm": 372.3,
+   "soil30Before": 70.4,
+   "soil30After": 93.5
+  },
+  {
+   "uuid": "42e698a9-2d5a-492a-bcc8-ef6166e30785",
+   "district": "Annamayya",
+   "mandal": "Mulakalacheruvu",
+   "rainBeforeMm": 236.2,
+   "rainAfterMm": 261.9,
+   "soil30Before": 26.4,
+   "soil30After": 80.2
+  },
+  {
+   "uuid": "29a92ba3-c2b9-42da-be4b-487465eb99fc",
+   "district": "Annamayya",
+   "mandal": "Nimmanapalle",
+   "rainBeforeMm": 293.6,
+   "rainAfterMm": 383.1,
+   "soil30Before": 73.7,
+   "soil30After": 91.8
+  },
+  {
+   "uuid": "9a0e85b3-8ff7-4c78-8a6e-18f28852d293",
+   "district": "Annamayya",
+   "mandal": "Pedda Thippasamudram",
+   "rainBeforeMm": 153.0,
+   "rainAfterMm": 170.4,
+   "soil30Before": 64.9,
+   "soil30After": 56.6
+  },
+  {
+   "uuid": "2e43f973-2804-4f6a-9122-8e20ae75404e",
+   "district": "Annamayya",
+   "mandal": "Peddamandyam",
+   "rainBeforeMm": 187.2,
+   "rainAfterMm": 221.7,
+   "soil30Before": 47.0,
+   "soil30After": 75.0
+  },
+  {
+   "uuid": "71101a31-cda1-497f-b207-4c08b6540a6a",
+   "district": "Annamayya",
+   "mandal": "Pileru",
+   "rainBeforeMm": 399.4,
+   "rainAfterMm": 459.2,
+   "soil30Before": 64.9,
+   "soil30After": 78.6
+  },
+  {
+   "uuid": "6a6010f2-f5ef-4916-acb0-469568e39bf6",
+   "district": "Annamayya",
+   "mandal": "Punganur",
+   "rainBeforeMm": 358.1,
+   "rainAfterMm": 368.0,
+   "soil30Before": 92.7,
+   "soil30After": 88.1
+  },
+  {
+   "uuid": "a48b826b-1ce1-45a1-95fc-4c024865a03e",
+   "district": "Annamayya",
+   "mandal": "Ramapuram",
+   "rainBeforeMm": 220.0,
+   "rainAfterMm": 245.6,
+   "soil30Before": 16.8,
+   "soil30After": 61.8
+  },
+  {
+   "uuid": "d32f2464-a231-4013-b80d-e88d1972959d",
+   "district": "Annamayya",
+   "mandal": "Ramasamudram",
+   "rainBeforeMm": 395.1,
+   "rainAfterMm": 406.8,
+   "soil30Before": 94.4,
+   "soil30After": 87.9
+  },
+  {
+   "uuid": "a215a02a-4d6e-4c0c-bd65-9f0d7d05bd84",
+   "district": "Annamayya",
+   "mandal": "Rayachoti",
+   "rainBeforeMm": 208.9,
+   "rainAfterMm": 288.3,
+   "soil30Before": 71.7,
+   "soil30After": 90.3
+  },
+  {
+   "uuid": "c417530b-d998-4199-8cf1-dff70222a88d",
+   "district": "Annamayya",
+   "mandal": "Sambepalle",
+   "rainBeforeMm": 155.6,
+   "rainAfterMm": 193.2,
+   "soil30Before": 52.6,
+   "soil30After": 74.3
+  },
+  {
+   "uuid": "df827c4d-d496-4e0e-9c11-c9c01f7a9939",
+   "district": "Annamayya",
+   "mandal": "Sodam",
+   "rainBeforeMm": 285.3,
+   "rainAfterMm": 313.4,
+   "soil30Before": 92.1,
+   "soil30After": 94.9
+  },
+  {
+   "uuid": "852a169d-8596-4c94-aa71-df9ffdcc015b",
+   "district": "Annamayya",
+   "mandal": "Somala",
+   "rainBeforeMm": 375.0,
+   "rainAfterMm": 379.5,
+   "soil30Before": 94.5,
+   "soil30After": 87.9
+  },
+  {
+   "uuid": "b1b1c2ca-8699-4144-85cc-332aa0fd6676",
+   "district": "Annamayya",
+   "mandal": "Thamballapalle",
+   "rainBeforeMm": 175.1,
+   "rainAfterMm": 202.3,
+   "soil30Before": 56.7,
+   "soil30After": 76.1
+  },
+  {
+   "uuid": "6f8561ad-4503-4fca-938b-cb731759c552",
+   "district": "Annamayya",
+   "mandal": "Valmikipuram",
+   "rainBeforeMm": 272.0,
+   "rainAfterMm": 332.4,
+   "soil30Before": 50.0,
+   "soil30After": 92.3
+  },
+  {
+   "uuid": "b1c5506e-7334-4abc-acbb-7de1a8261b0a",
+   "district": "Bapatla",
+   "mandal": "Amruthalur",
+   "rainBeforeMm": 414.2,
+   "rainAfterMm": 463.9,
+   "soil30Before": 44.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "fe5f6216-77de-4e35-96c7-0eab75c0528f",
+   "district": "Bapatla",
+   "mandal": "BAPATLA(M)",
+   "rainBeforeMm": 296.3,
+   "rainAfterMm": 326.3,
+   "soil30Before": 85.8,
+   "soil30After": 99.1
+  },
+  {
+   "uuid": "cf432f6e-484c-409e-9e03-6d97ffe0a1c9",
+   "district": "Bapatla",
+   "mandal": "Bhattiprolu",
+   "rainBeforeMm": 475.8,
+   "rainAfterMm": 537.4,
+   "soil30Before": 43.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "c575a7e5-202c-488d-9d65-8bc1477d5470",
+   "district": "Bapatla",
+   "mandal": "Cherukupalle",
+   "rainBeforeMm": 443.7,
+   "rainAfterMm": 491.1,
+   "soil30Before": 58.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "48d551e4-b19a-4312-b8a1-68b2db54456b",
+   "district": "Bapatla",
+   "mandal": "Chinaganjam",
+   "rainBeforeMm": 339.0,
+   "rainAfterMm": 342.9,
+   "soil30Before": 39.7,
+   "soil30After": 56.0
+  },
+  {
+   "uuid": "2fae3539-babc-4251-8d88-69ec4afb799e",
+   "district": "Bapatla",
+   "mandal": "Chirala",
+   "rainBeforeMm": 260.8,
+   "rainAfterMm": 281.9,
+   "soil30Before": 91.1,
+   "soil30After": 97.5
+  },
+  {
+   "uuid": "10925c91-c56c-4a53-ab0f-68e1719de195",
+   "district": "Bapatla",
+   "mandal": "Inkollu",
+   "rainBeforeMm": 277.0,
+   "rainAfterMm": 282.1,
+   "soil30Before": 9.8,
+   "soil30After": 66.9
+  },
+  {
+   "uuid": "42207d88-3b04-4ea5-a093-60a2444c71b0",
+   "district": "Bapatla",
+   "mandal": "Karamchedu",
+   "rainBeforeMm": 218.7,
+   "rainAfterMm": 232.6,
+   "soil30Before": 60.8,
+   "soil30After": 78.9
+  },
+  {
+   "uuid": "c538a1ca-6153-42c5-ba93-699b7d819727",
+   "district": "Bapatla",
+   "mandal": "Karlapalem",
+   "rainBeforeMm": 322.1,
+   "rainAfterMm": 397.0,
+   "soil30Before": 80.2,
+   "soil30After": 99.4
+  },
+  {
+   "uuid": "40a4bfdc-33a5-4b64-946f-3347513f5f77",
+   "district": "Bapatla",
+   "mandal": "Kollur",
+   "rainBeforeMm": 603.7,
+   "rainAfterMm": 647.1,
+   "soil30Before": 60.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0acf39b5-23d2-4c8b-b512-829b5f81a7f1",
+   "district": "Bapatla",
+   "mandal": "Martur",
+   "rainBeforeMm": 253.5,
+   "rainAfterMm": 255.4,
+   "soil30Before": 41.4,
+   "soil30After": 48.6
+  },
+  {
+   "uuid": "02fa33ef-6a6a-40ba-8d36-556d85da92e3",
+   "district": "Bapatla",
+   "mandal": "Nagaram",
+   "rainBeforeMm": 358.4,
+   "rainAfterMm": 394.7,
+   "soil30Before": 47.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b67e9518-3a79-4dc3-bd85-27ddbb7a79c0",
+   "district": "Bapatla",
+   "mandal": "Nizampatnam",
+   "rainBeforeMm": 475.7,
+   "rainAfterMm": 528.9,
+   "soil30Before": 83.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "60e4f857-24f0-4a26-8dd9-07b6a1aa92bc",
+   "district": "Bapatla",
+   "mandal": "Parchur",
+   "rainBeforeMm": 328.9,
+   "rainAfterMm": 332.5,
+   "soil30Before": 76.1,
+   "soil30After": 90.8
+  },
+  {
+   "uuid": "ce03aaa6-63e4-432f-877e-b688be2e8759",
+   "district": "Bapatla",
+   "mandal": "Pittalavanipalem",
+   "rainBeforeMm": 441.4,
+   "rainAfterMm": 488.3,
+   "soil30Before": 61.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "842655a7-2a0e-4bad-b7e1-a986d309ee8f",
+   "district": "Bapatla",
+   "mandal": "Repalle",
+   "rainBeforeMm": 436.4,
+   "rainAfterMm": 501.1,
+   "soil30Before": 61.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "599c1100-ea1e-4060-a7fc-70c6b81148a0",
+   "district": "Bapatla",
+   "mandal": "Tsundur",
+   "rainBeforeMm": 486.7,
+   "rainAfterMm": 563.1,
+   "soil30Before": 48.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "73f81c93-3183-4936-ae81-1fb1554fa7b9",
+   "district": "Bapatla",
+   "mandal": "Vemuru",
+   "rainBeforeMm": 457.8,
+   "rainAfterMm": 564.2,
+   "soil30Before": 32.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5f2f8713-3cb6-4673-9262-1f6438893213",
+   "district": "Bapatla",
+   "mandal": "Vetapalem",
+   "rainBeforeMm": 246.6,
+   "rainAfterMm": 255.2,
+   "soil30Before": 73.9,
+   "soil30After": 85.0
+  },
+  {
+   "uuid": "d8aa7456-845e-4a15-96dc-d602a0f5a488",
+   "district": "Bapatla",
+   "mandal": "Yeddanapudi",
+   "rainBeforeMm": 255.2,
+   "rainAfterMm": 259.7,
+   "soil30Before": 62.5,
+   "soil30After": 68.2
+  },
+  {
+   "uuid": "8031d1b3-30c1-43a9-8230-5d8698333883",
+   "district": "Chittoor",
+   "mandal": "BAIREDDI PALLE",
+   "rainBeforeMm": 385.8,
+   "rainAfterMm": 428.3,
+   "soil30Before": 83.7,
+   "soil30After": 91.2
+  },
+  {
+   "uuid": "a3bd2f7d-d810-402a-aeb7-6a7c936596b5",
+   "district": "Chittoor",
+   "mandal": "Bangarupalem",
+   "rainBeforeMm": 326.1,
+   "rainAfterMm": 342.1,
+   "soil30Before": 78.1,
+   "soil30After": 75.8
+  },
+  {
+   "uuid": "1f5c77f8-92ee-457a-8069-774c4a02b16e",
+   "district": "Chittoor",
+   "mandal": "Chittoor_ Rural",
+   "rainBeforeMm": 455.3,
+   "rainAfterMm": 485.3,
+   "soil30Before": 90.7,
+   "soil30After": 92.1
+  },
+  {
+   "uuid": "f9074956-b52a-4fab-be0c-856c5a85a90e",
+   "district": "Chittoor",
+   "mandal": "Chittoor_Urban",
+   "rainBeforeMm": 498.2,
+   "rainAfterMm": 523.3,
+   "soil30Before": 42.2,
+   "soil30After": 93.7
+  },
+  {
+   "uuid": "d1a104bb-2cd2-4649-b658-dc3569253dc4",
+   "district": "Chittoor",
+   "mandal": "GANGADHARA NELLORE",
+   "rainBeforeMm": 437.0,
+   "rainAfterMm": 491.1,
+   "soil30Before": 73.4,
+   "soil30After": 97.2
+  },
+  {
+   "uuid": "d997d91a-f387-4baa-8e17-d5ecea1f1740",
+   "district": "Chittoor",
+   "mandal": "GUDI PALLE",
+   "rainBeforeMm": 318.2,
+   "rainAfterMm": 354.2,
+   "soil30Before": 93.6,
+   "soil30After": 97.3
+  },
+  {
+   "uuid": "a3467a09-8a06-43cb-8864-cf33dbe1a388",
+   "district": "Chittoor",
+   "mandal": "Gangavaram",
+   "rainBeforeMm": 345.5,
+   "rainAfterMm": 377.0,
+   "soil30Before": 69.1,
+   "soil30After": 82.2
+  },
+  {
+   "uuid": "4b7241f9-d25a-4c18-b71a-a37a723706b3",
+   "district": "Chittoor",
+   "mandal": "Gudipala",
+   "rainBeforeMm": 363.9,
+   "rainAfterMm": 386.4,
+   "soil30Before": 94.6,
+   "soil30After": 92.4
+  },
+  {
+   "uuid": "85abb1db-29af-41d7-9455-772c6589eb5f",
+   "district": "Chittoor",
+   "mandal": "Irala",
+   "rainBeforeMm": 433.3,
+   "rainAfterMm": 490.1,
+   "soil30Before": 90.5,
+   "soil30After": 91.4
+  },
+  {
+   "uuid": "4bff0591-0cbd-4efa-8c77-399e93b8f97e",
+   "district": "Chittoor",
+   "mandal": "Karvetinagar",
+   "rainBeforeMm": 345.3,
+   "rainAfterMm": 392.6,
+   "soil30Before": 79.3,
+   "soil30After": 98.7
+  },
+  {
+   "uuid": "cdec201d-74ce-4c38-8dd6-80ef2e1c050c",
+   "district": "Chittoor",
+   "mandal": "Kuppam",
+   "rainBeforeMm": 362.4,
+   "rainAfterMm": 414.2,
+   "soil30Before": 81.2,
+   "soil30After": 91.9
+  },
+  {
+   "uuid": "377ef2b1-5fe0-4f95-92ea-4573b2ae9a21",
+   "district": "Chittoor",
+   "mandal": "Nagari",
+   "rainBeforeMm": 391.8,
+   "rainAfterMm": 455.4,
+   "soil30Before": 97.4,
+   "soil30After": 99.1
+  },
+  {
+   "uuid": "2e8a1fb0-99be-4cb7-92d6-49bb5ccf6fb6",
+   "district": "Chittoor",
+   "mandal": "Nindra",
+   "rainBeforeMm": 488.3,
+   "rainAfterMm": 512.6,
+   "soil30Before": 95.4,
+   "soil30After": 98.0
+  },
+  {
+   "uuid": "936dc381-04c0-41b3-ac3d-5d5931c56e78",
+   "district": "Chittoor",
+   "mandal": "PEDDA PANJANI",
+   "rainBeforeMm": 269.3,
+   "rainAfterMm": 295.5,
+   "soil30Before": 60.0,
+   "soil30After": 80.5
+  },
+  {
+   "uuid": "b3b458e7-c0f2-40cc-8c13-68c5b87fa3ed",
+   "district": "Chittoor",
+   "mandal": "Palamaner",
+   "rainBeforeMm": 308.5,
+   "rainAfterMm": 332.8,
+   "soil30Before": 79.1,
+   "soil30After": 77.7
+  },
+  {
+   "uuid": "75807165-110b-4301-9fd2-fda3a4ad27a9",
+   "district": "Chittoor",
+   "mandal": "Palasamudram",
+   "rainBeforeMm": 546.0,
+   "rainAfterMm": 573.8,
+   "soil30Before": 98.7,
+   "soil30After": 97.3
+  },
+  {
+   "uuid": "e3874632-05de-494e-b757-5c67864d09dc",
+   "district": "Chittoor",
+   "mandal": "Penumuru",
+   "rainBeforeMm": 438.2,
+   "rainAfterMm": 461.6,
+   "soil30Before": 89.2,
+   "soil30After": 96.6
+  },
+  {
+   "uuid": "35bba598-ca60-43ec-8f4e-8ba36631d588",
+   "district": "Chittoor",
+   "mandal": "Pulicherla",
+   "rainBeforeMm": 282.7,
+   "rainAfterMm": 331.9,
+   "soil30Before": 57.5,
+   "soil30After": 77.1
+  },
+  {
+   "uuid": "5719d3ba-ca19-4ef3-ad5b-9cba6aed4711",
+   "district": "Chittoor",
+   "mandal": "Puthalapattu",
+   "rainBeforeMm": 399.0,
+   "rainAfterMm": 411.5,
+   "soil30Before": 61.9,
+   "soil30After": 93.6
+  },
+  {
+   "uuid": "86d2de3e-0861-421f-99e2-00fb7437f4ff",
+   "district": "Chittoor",
+   "mandal": "RAMA KUPPAM",
+   "rainBeforeMm": 404.2,
+   "rainAfterMm": 428.5,
+   "soil30Before": 93.2,
+   "soil30After": 93.5
+  },
+  {
+   "uuid": "4d0d8890-c13e-420a-be8d-410916e21c3a",
+   "district": "Chittoor",
+   "mandal": "Rompicherla",
+   "rainBeforeMm": 248.3,
+   "rainAfterMm": 262.1,
+   "soil30Before": 63.9,
+   "soil30After": 73.2
+  },
+  {
+   "uuid": "cc01acda-b327-4eba-891a-c6449e005d33",
+   "district": "Chittoor",
+   "mandal": "Santhipuram",
+   "rainBeforeMm": 502.3,
+   "rainAfterMm": 531.8,
+   "soil30Before": 94.8,
+   "soil30After": 95.5
+  },
+  {
+   "uuid": "aaff5505-79e9-499f-9002-f12e5e361af9",
+   "district": "Chittoor",
+   "mandal": "Srirangarajapuram",
+   "rainBeforeMm": 271.5,
+   "rainAfterMm": 335.2,
+   "soil30Before": 55.4,
+   "soil30After": 99.6
+  },
+  {
+   "uuid": "3b150092-f711-4d51-bba5-ed0dd6d49cf4",
+   "district": "Chittoor",
+   "mandal": "Thavanampalle",
+   "rainBeforeMm": 340.8,
+   "rainAfterMm": 355.2,
+   "soil30Before": 90.6,
+   "soil30After": 89.0
+  },
+  {
+   "uuid": "0547e41e-e81b-4d4a-af6b-f07754d4fcd3",
+   "district": "Chittoor",
+   "mandal": "VEDURU KUPPAM",
+   "rainBeforeMm": 299.2,
+   "rainAfterMm": 324.4,
+   "soil30Before": 46.4,
+   "soil30After": 96.1
+  },
+  {
+   "uuid": "ee63a0eb-a6b9-44f5-a2e9-4122cf6b1cf6",
+   "district": "Chittoor",
+   "mandal": "VENKATAGIRI KOTA",
+   "rainBeforeMm": 353.4,
+   "rainAfterMm": 442.2,
+   "soil30Before": 92.1,
+   "soil30After": 93.8
+  },
+  {
+   "uuid": "188d6658-8510-45fe-8477-1bbac7226197",
+   "district": "Chittoor",
+   "mandal": "Vijayapuram",
+   "rainBeforeMm": 531.3,
+   "rainAfterMm": 631.6,
+   "soil30Before": 98.5,
+   "soil30After": 99.0
+  },
+  {
+   "uuid": "9b06799c-0744-4c83-b747-885a361d47fc",
+   "district": "Chittoor",
+   "mandal": "YADAMARI",
+   "rainBeforeMm": 398.1,
+   "rainAfterMm": 405.4,
+   "soil30Before": 91.7,
+   "soil30After": 86.6
+  },
+  {
+   "uuid": "f5adc5ab-9a09-4165-8a89-cef6c3dae7e5",
+   "district": "East Godavari",
+   "mandal": "ANAPARTHI",
+   "rainBeforeMm": 628.1,
+   "rainAfterMm": 678.9,
+   "soil30Before": 63.8,
+   "soil30After": 98.8
+  },
+  {
+   "uuid": "6f35d4b0-b70d-4c05-8e84-ca1acb1f5f5a",
+   "district": "East Godavari",
+   "mandal": "Biccavolu",
+   "rainBeforeMm": 498.9,
+   "rainAfterMm": 556.9,
+   "soil30Before": 48.2,
+   "soil30After": 95.2
+  },
+  {
+   "uuid": "eb97207f-a93f-4036-87f7-a2ea58db90d4",
+   "district": "East Godavari",
+   "mandal": "Chagallu",
+   "rainBeforeMm": 538.5,
+   "rainAfterMm": 568.9,
+   "soil30Before": 26.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "a8920649-0067-48c0-b39a-96613bf5e402",
+   "district": "East Godavari",
+   "mandal": "Devarapalle",
+   "rainBeforeMm": 512.2,
+   "rainAfterMm": 540.4,
+   "soil30Before": 47.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2344c2eb-ee58-4a75-a12b-6c3849c409bf",
+   "district": "East Godavari",
+   "mandal": "Gokavaram",
+   "rainBeforeMm": 585.4,
+   "rainAfterMm": 645.7,
+   "soil30Before": 66.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "1114eff9-37c6-4b6b-88d2-85c3efb7db8a",
+   "district": "East Godavari",
+   "mandal": "Gopalapuram",
+   "rainBeforeMm": 683.1,
+   "rainAfterMm": 719.1,
+   "soil30Before": 45.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "8138cea9-935c-40b2-b3a3-3e4f67bfa14e",
+   "district": "East Godavari",
+   "mandal": "Kadiam",
+   "rainBeforeMm": 618.2,
+   "rainAfterMm": 659.4,
+   "soil30Before": 47.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b608592d-1fa3-47be-a12a-98a70af20824",
+   "district": "East Godavari",
+   "mandal": "Kapileswarapuram",
+   "rainBeforeMm": 635.2,
+   "rainAfterMm": 681.4,
+   "soil30Before": 53.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "da9c1b4a-8348-4dbe-9229-8ebe2bf8ff91",
+   "district": "East Godavari",
+   "mandal": "Korukonda",
+   "rainBeforeMm": 616.3,
+   "rainAfterMm": 644.0,
+   "soil30Before": 62.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "56b9b1c2-cdfd-4eb9-8745-669a16c9c702",
+   "district": "East Godavari",
+   "mandal": "Kovvur",
+   "rainBeforeMm": 348.5,
+   "rainAfterMm": 380.0,
+   "soil30Before": 65.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "d88c7e9d-fe40-4297-b292-06231bbaf5f4",
+   "district": "East Godavari",
+   "mandal": "Mandapeta",
+   "rainBeforeMm": 375.3,
+   "rainAfterMm": 453.4,
+   "soil30Before": 53.5,
+   "soil30After": 99.9
+  },
+  {
+   "uuid": "8738fea1-1b6c-4d5f-99cf-4758610edde2",
+   "district": "East Godavari",
+   "mandal": "Nallajerla",
+   "rainBeforeMm": 495.1,
+   "rainAfterMm": 523.8,
+   "soil30Before": 41.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "3cfb2afb-000c-44d1-b8cd-18e71aa53c1a",
+   "district": "East Godavari",
+   "mandal": "Nidadavole",
+   "rainBeforeMm": 656.8,
+   "rainAfterMm": 705.3,
+   "soil30Before": 37.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "c5957599-303e-4179-8995-dabf25ac1983",
+   "district": "East Godavari",
+   "mandal": "Peravali",
+   "rainBeforeMm": 576.9,
+   "rainAfterMm": 619.6,
+   "soil30Before": 52.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "1b58b6fd-d051-41a6-8816-f23dc8b32f6e",
+   "district": "East Godavari",
+   "mandal": "Rajahmundry (Rural)",
+   "rainBeforeMm": 733.8,
+   "rainAfterMm": 781.0,
+   "soil30Before": 72.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5a8a3937-a9a9-441e-b4af-827e486c3e87",
+   "district": "East Godavari",
+   "mandal": "Rajahmundry (Urban)",
+   "rainBeforeMm": 703.2,
+   "rainAfterMm": 739.2,
+   "soil30Before": 89.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "f441cc30-1c9a-4bdf-914f-6e31c29ea200",
+   "district": "East Godavari",
+   "mandal": "Rajanagaram",
+   "rainBeforeMm": 631.9,
+   "rainAfterMm": 663.6,
+   "soil30Before": 55.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "afec623b-4534-4570-9b19-248c3ad1ca92",
+   "district": "East Godavari",
+   "mandal": "Rangampeta",
+   "rainBeforeMm": 677.2,
+   "rainAfterMm": 755.1,
+   "soil30Before": 51.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0549201e-ba84-44ce-b524-1faaa9a0425b",
+   "district": "East Godavari",
+   "mandal": "Rayavaram",
+   "rainBeforeMm": 535.3,
+   "rainAfterMm": 566.8,
+   "soil30Before": 48.8,
+   "soil30After": 98.7
+  },
+  {
+   "uuid": "e9467991-fbb0-465b-955e-9469a29c6170",
+   "district": "East Godavari",
+   "mandal": "Seethanagaram",
+   "rainBeforeMm": 677.1,
+   "rainAfterMm": 718.8,
+   "soil30Before": 96.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "1866f8ef-7ba7-4c46-8d44-e93236a24b74",
+   "district": "East Godavari",
+   "mandal": "Tallapudi",
+   "rainBeforeMm": 630.0,
+   "rainAfterMm": 684.9,
+   "soil30Before": 82.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "1b4400c3-aca4-474e-acb7-1a0aca80e9a1",
+   "district": "East Godavari",
+   "mandal": "Undrajavaram",
+   "rainBeforeMm": 526.3,
+   "rainAfterMm": 573.4,
+   "soil30Before": 39.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "ba460230-3f43-4b37-88e0-b467a0424eef",
+   "district": "Eluru",
+   "mandal": "Agiripalle",
+   "rainBeforeMm": 612.1,
+   "rainAfterMm": 621.8,
+   "soil30Before": 60.5,
+   "soil30After": 92.7
+  },
+  {
+   "uuid": "d27fa137-ddcf-4112-b693-15838034c325",
+   "district": "Eluru",
+   "mandal": "Bhimadole",
+   "rainBeforeMm": 406.9,
+   "rainAfterMm": 419.8,
+   "soil30Before": 9.8,
+   "soil30After": 98.8
+  },
+  {
+   "uuid": "9b84f7f0-759e-4fb2-836b-13025abdcb7e",
+   "district": "Eluru",
+   "mandal": "Buttayagudem",
+   "rainBeforeMm": 687.1,
+   "rainAfterMm": 705.3,
+   "soil30Before": 56.6,
+   "soil30After": 97.9
+  },
+  {
+   "uuid": "5b557fb5-da4c-434f-978a-127c39e177c2",
+   "district": "Eluru",
+   "mandal": "Chatrai",
+   "rainBeforeMm": 353.1,
+   "rainAfterMm": 362.9,
+   "soil30Before": 37.4,
+   "soil30After": 75.7
+  },
+  {
+   "uuid": "7a669cae-7557-4aaf-9faa-69d9d50a95a5",
+   "district": "Eluru",
+   "mandal": "Chintalapudi",
+   "rainBeforeMm": 583.8,
+   "rainAfterMm": 590.9,
+   "soil30Before": 46.9,
+   "soil30After": 85.0
+  },
+  {
+   "uuid": "a3db1bb2-3e04-4e65-ac0f-ec842d5ca7af",
+   "district": "Eluru",
+   "mandal": "Denduluru",
+   "rainBeforeMm": 539.7,
+   "rainAfterMm": 556.5,
+   "soil30Before": 34.9,
+   "soil30After": 92.8
+  },
+  {
+   "uuid": "0e796a24-a94d-49d1-b2a5-2facc53dc4f4",
+   "district": "Eluru",
+   "mandal": "Dwaraka Tirumala",
+   "rainBeforeMm": 363.5,
+   "rainAfterMm": 381.8,
+   "soil30Before": 57.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "df66e44b-0da4-4204-a664-aa00f788e226",
+   "district": "Eluru",
+   "mandal": "Eluru_Rural",
+   "rainBeforeMm": 472.2,
+   "rainAfterMm": 485.7,
+   "soil30Before": 61.7,
+   "soil30After": 98.6
+  },
+  {
+   "uuid": "cf888ee9-da38-4c4d-9118-99c6930eeb90",
+   "district": "Eluru",
+   "mandal": "Eluru_Urban",
+   "rainBeforeMm": 408.6,
+   "rainAfterMm": 419.5,
+   "soil30Before": 40.2,
+   "soil30After": 95.8
+  },
+  {
+   "uuid": "858f5a64-eb3d-4826-8f54-dbd81cf27594",
+   "district": "Eluru",
+   "mandal": "JEELUGUMILLI",
+   "rainBeforeMm": 561.5,
+   "rainAfterMm": 575.2,
+   "soil30Before": 63.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "65234f68-d99b-476c-bbb5-3d4d94b99b18",
+   "district": "Eluru",
+   "mandal": "Jangareddigudem",
+   "rainBeforeMm": 575.3,
+   "rainAfterMm": 595.4,
+   "soil30Before": 79.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "6d5ae874-eefe-46b0-93ea-ebd01fa91b56",
+   "district": "Eluru",
+   "mandal": "Kaikalur",
+   "rainBeforeMm": 659.7,
+   "rainAfterMm": 683.4,
+   "soil30Before": 73.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "cd01eb56-729c-41fe-bf00-5abb7e16c2b3",
+   "district": "Eluru",
+   "mandal": "Kalidindi",
+   "rainBeforeMm": 690.1,
+   "rainAfterMm": 726.8,
+   "soil30Before": 80.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0c1b8cec-30a2-4c89-9f65-f45bfc4a6e96",
+   "district": "Eluru",
+   "mandal": "Kamavarapukota",
+   "rainBeforeMm": 528.4,
+   "rainAfterMm": 542.5,
+   "soil30Before": 49.2,
+   "soil30After": 99.1
+  },
+  {
+   "uuid": "9287e75c-5e32-4dea-b6d2-5af7f8debdd9",
+   "district": "Eluru",
+   "mandal": "Koyyalagudem",
+   "rainBeforeMm": 757.4,
+   "rainAfterMm": 790.9,
+   "soil30Before": 58.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "30738ab3-f549-4ad0-a592-53f4f5bcdee7",
+   "district": "Eluru",
+   "mandal": "Kukunoor",
+   "rainBeforeMm": 800.5,
+   "rainAfterMm": 814.8,
+   "soil30Before": 71.9,
+   "soil30After": 98.1
+  },
+  {
+   "uuid": "c24552d6-c8a4-4de8-b230-1aba55161667",
+   "district": "Eluru",
+   "mandal": "Lingapalem",
+   "rainBeforeMm": 457.3,
+   "rainAfterMm": 467.6,
+   "soil30Before": 42.7,
+   "soil30After": 94.8
+  },
+  {
+   "uuid": "5e6b2ed8-4cef-49a3-84f4-156120714541",
+   "district": "Eluru",
+   "mandal": "MUDINAPALLE",
+   "rainBeforeMm": 815.6,
+   "rainAfterMm": 842.6,
+   "soil30Before": 62.0,
+   "soil30After": 99.6
+  },
+  {
+   "uuid": "7b7a4926-b3d6-43bb-ab0f-96dc5aa766f7",
+   "district": "Eluru",
+   "mandal": "Mandavalli",
+   "rainBeforeMm": 717.2,
+   "rainAfterMm": 768.5,
+   "soil30Before": 68.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "aacd2235-5387-4d39-919e-cbb4d9295b97",
+   "district": "Eluru",
+   "mandal": "Musunuru",
+   "rainBeforeMm": 600.3,
+   "rainAfterMm": 614.2,
+   "soil30Before": 56.1,
+   "soil30After": 95.2
+  },
+  {
+   "uuid": "cc8e4683-9124-487b-8d3e-97aad08bf378",
+   "district": "Eluru",
+   "mandal": "Nidamarru",
+   "rainBeforeMm": 495.3,
+   "rainAfterMm": 520.4,
+   "soil30Before": 33.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2f4d0a39-ab7a-4675-8aa7-e0d00d38ce6b",
+   "district": "Eluru",
+   "mandal": "Nuzvid",
+   "rainBeforeMm": 483.1,
+   "rainAfterMm": 491.6,
+   "soil30Before": 59.5,
+   "soil30After": 97.9
+  },
+  {
+   "uuid": "96709996-c534-4c81-aa8c-0a790a632bd7",
+   "district": "Eluru",
+   "mandal": "PADAVEGI",
+   "rainBeforeMm": 485.1,
+   "rainAfterMm": 503.3,
+   "soil30Before": 55.4,
+   "soil30After": 96.5
+  },
+  {
+   "uuid": "61007ebb-a187-4bbe-9b31-4728497a5eeb",
+   "district": "Eluru",
+   "mandal": "POLAVARAM (M)",
+   "rainBeforeMm": 667.7,
+   "rainAfterMm": 699.5,
+   "soil30Before": 62.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5eb0e871-8dce-4f46-a014-78402f196baa",
+   "district": "Eluru",
+   "mandal": "Pedapadu",
+   "rainBeforeMm": 748.3,
+   "rainAfterMm": 761.9,
+   "soil30Before": 62.2,
+   "soil30After": 91.2
+  },
+  {
+   "uuid": "fc1f82fe-d48c-4c6b-8dd7-bda457b9f71c",
+   "district": "Eluru",
+   "mandal": "T NARASAPURAM",
+   "rainBeforeMm": 446.9,
+   "rainAfterMm": 464.1,
+   "soil30Before": 66.2,
+   "soil30After": 99.7
+  },
+  {
+   "uuid": "c62baeba-f69b-437b-9bf4-62942f4fa396",
+   "district": "Eluru",
+   "mandal": "Ungutur",
+   "rainBeforeMm": 600.9,
+   "rainAfterMm": 621.1,
+   "soil30Before": 34.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "fbaf04d4-d185-43df-9ced-1c66c1463a24",
+   "district": "Eluru",
+   "mandal": "Velairpadu",
+   "rainBeforeMm": 1013.4,
+   "rainAfterMm": 1025.0,
+   "soil30Before": 38.5,
+   "soil30After": 83.4
+  },
+  {
+   "uuid": "a98c1a51-1dde-42d7-a3a6-f07464ea5d10",
+   "district": "Guntur",
+   "mandal": "CHEBROLE",
+   "rainBeforeMm": 681.2,
+   "rainAfterMm": 743.5,
+   "soil30Before": 71.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "75f07057-70cc-4b8f-8ae9-ea688cfe7868",
+   "district": "Guntur",
+   "mandal": "Duggirala",
+   "rainBeforeMm": 698.1,
+   "rainAfterMm": 770.7,
+   "soil30Before": 61.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "c2b446e6-1d1f-4134-bc68-4e06c44724e4",
+   "district": "Guntur",
+   "mandal": "Guntur East",
+   "rainBeforeMm": 585.8,
+   "rainAfterMm": 630.9,
+   "soil30Before": 74.3,
+   "soil30After": 98.7
+  },
+  {
+   "uuid": "e54d1178-e721-46bd-b05a-3b13dd6a50be",
+   "district": "Guntur",
+   "mandal": "Guntur West",
+   "rainBeforeMm": 542.8,
+   "rainAfterMm": 569.9,
+   "soil30Before": 86.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0958def2-b4b8-426a-bb89-6f38cba6f487",
+   "district": "Guntur",
+   "mandal": "Kakumanu",
+   "rainBeforeMm": 384.3,
+   "rainAfterMm": 392.1,
+   "soil30Before": 76.6,
+   "soil30After": 95.9
+  },
+  {
+   "uuid": "ccdb7b8b-c3e3-42c0-a1e5-c6d5ac79c843",
+   "district": "Guntur",
+   "mandal": "Kollipara",
+   "rainBeforeMm": 706.5,
+   "rainAfterMm": 766.6,
+   "soil30Before": 58.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b7c410fe-31da-456e-b047-3916775b7c99",
+   "district": "Guntur",
+   "mandal": "Mangalagiri",
+   "rainBeforeMm": 599.5,
+   "rainAfterMm": 671.9,
+   "soil30Before": 38.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "1078933b-c353-4521-8d36-974a5cd6985b",
+   "district": "Guntur",
+   "mandal": "Medikonduru",
+   "rainBeforeMm": 395.2,
+   "rainAfterMm": 407.4,
+   "soil30Before": 55.8,
+   "soil30After": 96.3
+  },
+  {
+   "uuid": "7c4ebbcf-a2b0-42c4-aa36-02b73fbac27e",
+   "district": "Guntur",
+   "mandal": "Pedakakani",
+   "rainBeforeMm": 771.7,
+   "rainAfterMm": 849.0,
+   "soil30Before": 60.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "379f8a00-e4fc-4815-ae36-f219105fb204",
+   "district": "Guntur",
+   "mandal": "Pedanandipadu",
+   "rainBeforeMm": 295.8,
+   "rainAfterMm": 311.5,
+   "soil30Before": 53.6,
+   "soil30After": 86.1
+  },
+  {
+   "uuid": "d34fac4f-a819-4f4d-92ff-04d3ca76a37a",
+   "district": "Guntur",
+   "mandal": "Phirangipuram",
+   "rainBeforeMm": 418.7,
+   "rainAfterMm": 424.4,
+   "soil30Before": 39.0,
+   "soil30After": 69.6
+  },
+  {
+   "uuid": "7cc7ca31-a240-408e-95fb-ff83e9c2f162",
+   "district": "Guntur",
+   "mandal": "Ponnur",
+   "rainBeforeMm": 365.2,
+   "rainAfterMm": 383.1,
+   "soil30Before": 44.1,
+   "soil30After": 93.9
+  },
+  {
+   "uuid": "fb0e1913-061e-4480-a327-03778b1116ba",
+   "district": "Guntur",
+   "mandal": "Prathipadu",
+   "rainBeforeMm": 332.3,
+   "rainAfterMm": 342.4,
+   "soil30Before": 55.0,
+   "soil30After": 80.3
+  },
+  {
+   "uuid": "993aecb4-377a-47e9-8127-87439caa35ee",
+   "district": "Guntur",
+   "mandal": "THADEPALLE",
+   "rainBeforeMm": 639.5,
+   "rainAfterMm": 706.6,
+   "soil30Before": 36.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "6d891b69-37a2-4cdb-8cf7-ed2536a3732b",
+   "district": "Guntur",
+   "mandal": "Tadikonda",
+   "rainBeforeMm": 458.9,
+   "rainAfterMm": 496.8,
+   "soil30Before": 68.4,
+   "soil30After": 99.2
+  },
+  {
+   "uuid": "90dc0e7b-be88-4dd5-b68f-4976329fc816",
+   "district": "Guntur",
+   "mandal": "Tenali",
+   "rainBeforeMm": 637.5,
+   "rainAfterMm": 698.9,
+   "soil30Before": 56.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b786a27d-d1fb-44ca-b019-a01185ebf21b",
+   "district": "Guntur",
+   "mandal": "Thullur",
+   "rainBeforeMm": 394.8,
+   "rainAfterMm": 410.1,
+   "soil30Before": 50.2,
+   "soil30After": 95.3
+  },
+  {
+   "uuid": "9e81ee53-02f8-4678-86c4-ec7697a60867",
+   "district": "Guntur",
+   "mandal": "Vatticherukuru",
+   "rainBeforeMm": 342.0,
+   "rainAfterMm": 351.8,
+   "soil30Before": 58.6,
+   "soil30After": 94.3
+  },
+  {
+   "uuid": "ad8fc126-0335-48a8-b548-8e368c9a6212",
+   "district": "Kakinada",
+   "mandal": "Gandepalle",
+   "rainBeforeMm": 594.3,
+   "rainAfterMm": 687.6,
+   "soil30Before": 56.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "464570aa-bd91-4bfa-8cc4-26dde11a0ef1",
+   "district": "Kakinada",
+   "mandal": "Gollaprolu",
+   "rainBeforeMm": 605.6,
+   "rainAfterMm": 745.1,
+   "soil30Before": 70.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "4934a77d-134d-4cf8-8eae-87fa5191351e",
+   "district": "Kakinada",
+   "mandal": "Jaggampeta",
+   "rainBeforeMm": 747.4,
+   "rainAfterMm": 860.2,
+   "soil30Before": 53.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "bbe36f32-dc3e-4be5-bab3-d7a9a846a3b1",
+   "district": "Kakinada",
+   "mandal": "Kajuluru",
+   "rainBeforeMm": 659.7,
+   "rainAfterMm": 757.4,
+   "soil30Before": 46.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "f5728f48-e20a-434e-8b5b-e8115dd7d7bf",
+   "district": "Kakinada",
+   "mandal": "Kakinada (Rural)",
+   "rainBeforeMm": 631.2,
+   "rainAfterMm": 723.9,
+   "soil30Before": 9.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "ad74b0c7-4ab3-4779-8ac3-e69bb9c8dfd5",
+   "district": "Kakinada",
+   "mandal": "Kakinada (Urban)",
+   "rainBeforeMm": 522.2,
+   "rainAfterMm": 603.8,
+   "soil30Before": 95.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "d2d9ebf3-71e3-4c5d-b492-4a73e6eca5fc",
+   "district": "Kakinada",
+   "mandal": "Karapa",
+   "rainBeforeMm": 634.5,
+   "rainAfterMm": 705.0,
+   "soil30Before": 13.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "d07a3752-d0fd-4b9e-ba75-9a1c6cc3ab4a",
+   "district": "Kakinada",
+   "mandal": "Kirlampudi",
+   "rainBeforeMm": 574.6,
+   "rainAfterMm": 681.9,
+   "soil30Before": 63.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "91763692-1a4f-45dd-9eb7-c193ce31d498",
+   "district": "Kakinada",
+   "mandal": "Kotananduru",
+   "rainBeforeMm": 554.8,
+   "rainAfterMm": 650.8,
+   "soil30Before": 89.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e5808365-a379-4c85-892f-96562344744b",
+   "district": "Kakinada",
+   "mandal": "PRATHIPADU (EAST GODAVARI)",
+   "rainBeforeMm": 512.6,
+   "rainAfterMm": 600.8,
+   "soil30Before": 76.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "bb150848-2c56-4bd0-82ef-769725e30370",
+   "district": "Kakinada",
+   "mandal": "Pedapudi",
+   "rainBeforeMm": 495.3,
+   "rainAfterMm": 571.8,
+   "soil30Before": 35.2,
+   "soil30After": 98.7
+  },
+  {
+   "uuid": "1479a122-0010-4100-bd61-90243ef4bcdf",
+   "district": "Kakinada",
+   "mandal": "Peddapuram",
+   "rainBeforeMm": 740.2,
+   "rainAfterMm": 836.8,
+   "soil30Before": 69.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "619799d0-07f0-41c8-9e54-5e03e9b8b42d",
+   "district": "Kakinada",
+   "mandal": "Pithapuram",
+   "rainBeforeMm": 633.8,
+   "rainAfterMm": 720.6,
+   "soil30Before": 60.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b3b99aa6-b6ff-43fd-aa20-06a81b062bd0",
+   "district": "Kakinada",
+   "mandal": "ROUTHULAPUDI",
+   "rainBeforeMm": 671.9,
+   "rainAfterMm": 774.0,
+   "soil30Before": 92.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0401e626-cc6b-4c84-a8dd-5b183b83a55d",
+   "district": "Kakinada",
+   "mandal": "Samalkota",
+   "rainBeforeMm": 668.8,
+   "rainAfterMm": 747.5,
+   "soil30Before": 49.8,
+   "soil30After": 99.8
+  },
+  {
+   "uuid": "7d886945-797a-466b-afbd-bcc0f76a7543",
+   "district": "Kakinada",
+   "mandal": "Sankhavaram",
+   "rainBeforeMm": 663.3,
+   "rainAfterMm": 766.1,
+   "soil30Before": 88.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "f7f47c6d-e791-4945-b795-a2e879acceca",
+   "district": "Kakinada",
+   "mandal": "Thallarevu",
+   "rainBeforeMm": 776.9,
+   "rainAfterMm": 875.1,
+   "soil30Before": 89.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b0c01664-efeb-424f-ab63-d85b8f058a40",
+   "district": "Kakinada",
+   "mandal": "Thondangi",
+   "rainBeforeMm": 587.2,
+   "rainAfterMm": 687.2,
+   "soil30Before": 57.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e8fd87eb-8d53-49b5-b479-f1bc0b69cf55",
+   "district": "Kakinada",
+   "mandal": "Tuni",
+   "rainBeforeMm": 652.4,
+   "rainAfterMm": 787.8,
+   "soil30Before": 80.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "3910ae3c-7958-45a4-98b4-e272d1d8abdb",
+   "district": "Kakinada",
+   "mandal": "U.Kothapalle",
+   "rainBeforeMm": 575.7,
+   "rainAfterMm": 729.9,
+   "soil30Before": 74.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "7d3aee43-6187-407a-ba33-c97c2559c411",
+   "district": "Kakinada",
+   "mandal": "Yeleswaram",
+   "rainBeforeMm": 422.2,
+   "rainAfterMm": 499.1,
+   "soil30Before": 59.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "8d82ff77-17fb-4cfa-8b79-910ed64daa3d",
+   "district": "Konaseema",
+   "mandal": "Ainavilli",
+   "rainBeforeMm": 889.6,
+   "rainAfterMm": 969.2,
+   "soil30Before": 89.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "56422198-07e8-43af-ae1d-6421dc37357b",
+   "district": "Konaseema",
+   "mandal": "Alamuru",
+   "rainBeforeMm": 484.3,
+   "rainAfterMm": 544.5,
+   "soil30Before": 36.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0ecff39f-84e8-4ec4-9bbf-cd6da36d7052",
+   "district": "Konaseema",
+   "mandal": "Allavaram",
+   "rainBeforeMm": 719.6,
+   "rainAfterMm": 810.0,
+   "soil30Before": 100.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "a2839ef5-c1b5-48e0-9937-2671dfa0c9f3",
+   "district": "Konaseema",
+   "mandal": "Amalapuram",
+   "rainBeforeMm": 913.9,
+   "rainAfterMm": 1007.2,
+   "soil30Before": 97.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "9bfe7c91-5bb2-4b9a-8232-6ca06179e9bf",
+   "district": "Konaseema",
+   "mandal": "Ambajipeta",
+   "rainBeforeMm": 615.1,
+   "rainAfterMm": 672.5,
+   "soil30Before": 80.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "65bc5ffa-74fb-4434-88f7-fe83e92014e6",
+   "district": "Konaseema",
+   "mandal": "Atreyapuram",
+   "rainBeforeMm": 603.7,
+   "rainAfterMm": 680.9,
+   "soil30Before": 85.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "45943240-4dd7-4917-b7ec-d027d2604ade",
+   "district": "Konaseema",
+   "mandal": "I POLAVARAM",
+   "rainBeforeMm": 691.9,
+   "rainAfterMm": 816.9,
+   "soil30Before": 100.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b6b3ba9f-065b-48ab-a607-4b9bcc16af16",
+   "district": "Konaseema",
+   "mandal": "Katrenikona",
+   "rainBeforeMm": 1055.6,
+   "rainAfterMm": 1180.6,
+   "soil30Before": 100.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "a5fbec9e-3d31-4c51-ac0f-40e7b79a052a",
+   "district": "Konaseema",
+   "mandal": "Kothapeta",
+   "rainBeforeMm": 629.5,
+   "rainAfterMm": 716.1,
+   "soil30Before": 62.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "64a84a16-fd85-4ab5-a9ea-3a95f6935564",
+   "district": "Konaseema",
+   "mandal": "Kotipalli Gangavaram",
+   "rainBeforeMm": 641.4,
+   "rainAfterMm": 706.9,
+   "soil30Before": 88.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5177f406-86bf-472e-8d0e-5d8e2a1cfd18",
+   "district": "Konaseema",
+   "mandal": "Malikipuram",
+   "rainBeforeMm": 740.7,
+   "rainAfterMm": 839.7,
+   "soil30Before": 96.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "65cf656b-748c-4997-9b1d-0d9788fd8a94",
+   "district": "Konaseema",
+   "mandal": "Mamidikuduru",
+   "rainBeforeMm": 742.9,
+   "rainAfterMm": 821.2,
+   "soil30Before": 98.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "1601db3c-9bfc-4737-8bb6-83e91f833e20",
+   "district": "Konaseema",
+   "mandal": "Mummidivaram",
+   "rainBeforeMm": 857.2,
+   "rainAfterMm": 955.1,
+   "soil30Before": 99.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "3fdb9c15-444e-4d3d-82b5-19c99b30a956",
+   "district": "Konaseema",
+   "mandal": "P.Gannavaram",
+   "rainBeforeMm": 617.8,
+   "rainAfterMm": 684.1,
+   "soil30Before": 82.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "11c6ca26-db81-499c-a8fc-dc17372ef4c8",
+   "district": "Konaseema",
+   "mandal": "Ramachandrapuram",
+   "rainBeforeMm": 640.7,
+   "rainAfterMm": 706.9,
+   "soil30Before": 31.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "6cd405ca-47e3-4401-a7ea-83bf8965c82d",
+   "district": "Konaseema",
+   "mandal": "Ravulapalem",
+   "rainBeforeMm": 570.4,
+   "rainAfterMm": 625.0,
+   "soil30Before": 51.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "151e23d3-25a5-43be-b0af-b21fff7cc8e0",
+   "district": "Konaseema",
+   "mandal": "Razole",
+   "rainBeforeMm": 594.0,
+   "rainAfterMm": 711.8,
+   "soil30Before": 92.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "8535efa8-ff48-4296-9e46-08fdfe8dd4e3",
+   "district": "Konaseema",
+   "mandal": "Sakhinetipalle",
+   "rainBeforeMm": 758.4,
+   "rainAfterMm": 874.1,
+   "soil30Before": 98.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "549d8da4-00ca-49df-b28b-cead6e241d70",
+   "district": "Konaseema",
+   "mandal": "Uppalaguptam",
+   "rainBeforeMm": 981.7,
+   "rainAfterMm": 1141.0,
+   "soil30Before": 100.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b253af52-0651-419b-9e3d-53bc3666f137",
+   "district": "Krishna",
+   "mandal": "AVANIGADA",
+   "rainBeforeMm": 468.3,
+   "rainAfterMm": 544.5,
+   "soil30Before": 28.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2a30f939-edec-4481-a9c4-8ee8bfc634da",
+   "district": "Krishna",
+   "mandal": "BAPULAPAD",
+   "rainBeforeMm": 599.0,
+   "rainAfterMm": 624.7,
+   "soil30Before": 68.5,
+   "soil30After": 98.5
+  },
+  {
+   "uuid": "b2975ffe-95be-4a02-be02-d512922fe146",
+   "district": "Krishna",
+   "mandal": "Bantumilli",
+   "rainBeforeMm": 446.5,
+   "rainAfterMm": 509.5,
+   "soil30Before": 46.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "a60eea10-9e60-46e1-96d8-27c05f05be7b",
+   "district": "Krishna",
+   "mandal": "Challapalle",
+   "rainBeforeMm": 550.4,
+   "rainAfterMm": 621.8,
+   "soil30Before": 57.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "d8da8a39-4b53-4f06-bc14-716250ee9f05",
+   "district": "Krishna",
+   "mandal": "GUDUR (KRISHNA)",
+   "rainBeforeMm": 631.3,
+   "rainAfterMm": 696.0,
+   "soil30Before": 27.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0a40634a-e3b4-4065-a125-4932ac790a63",
+   "district": "Krishna",
+   "mandal": "Gannavaram",
+   "rainBeforeMm": 536.9,
+   "rainAfterMm": 561.2,
+   "soil30Before": 72.5,
+   "soil30After": 98.9
+  },
+  {
+   "uuid": "f092e1c3-c3f3-4456-859f-1f74d7293c12",
+   "district": "Krishna",
+   "mandal": "Ghantasala",
+   "rainBeforeMm": 580.8,
+   "rainAfterMm": 639.0,
+   "soil30Before": 52.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "fc753dc3-1d6a-465c-afef-e5fb7b7de6f0",
+   "district": "Krishna",
+   "mandal": "Gudivada",
+   "rainBeforeMm": 734.4,
+   "rainAfterMm": 767.5,
+   "soil30Before": 26.5,
+   "soil30After": 99.4
+  },
+  {
+   "uuid": "d929e5ec-db0a-406f-80a2-376f2af7d3c9",
+   "district": "Krishna",
+   "mandal": "Gudlavalleru",
+   "rainBeforeMm": 625.6,
+   "rainAfterMm": 671.0,
+   "soil30Before": 39.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "98577883-b59a-495d-b0f5-26404fb27fb4",
+   "district": "Krishna",
+   "mandal": "Kankipadu",
+   "rainBeforeMm": 706.5,
+   "rainAfterMm": 743.8,
+   "soil30Before": 60.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "9b1eb7b3-bf2f-4fef-ae02-5071ff9b454c",
+   "district": "Krishna",
+   "mandal": "Koduru",
+   "rainBeforeMm": 616.5,
+   "rainAfterMm": 755.6,
+   "soil30Before": 13.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "a5cb09b1-2861-4693-a48e-e919faa62af5",
+   "district": "Krishna",
+   "mandal": "Kruthivennu",
+   "rainBeforeMm": 368.7,
+   "rainAfterMm": 442.8,
+   "soil30Before": 54.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "303419d8-5110-4307-a57d-cea0725f306f",
+   "district": "Krishna",
+   "mandal": "Machilipatnam_North",
+   "rainBeforeMm": 618.2,
+   "rainAfterMm": 725.0,
+   "soil30Before": 45.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "756983d9-4123-4056-9e1d-f97aec3ca3ba",
+   "district": "Krishna",
+   "mandal": "Machilipatnam_South",
+   "rainBeforeMm": 557.6,
+   "rainAfterMm": 685.7,
+   "soil30Before": 12.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "175e5ecd-ad1d-4502-a7d7-e6448dbac8f2",
+   "district": "Krishna",
+   "mandal": "Mopidevi",
+   "rainBeforeMm": 441.2,
+   "rainAfterMm": 515.2,
+   "soil30Before": 46.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2c34c81b-8fe6-4810-b0c9-05699f01b2c5",
+   "district": "Krishna",
+   "mandal": "Movva",
+   "rainBeforeMm": 384.3,
+   "rainAfterMm": 424.2,
+   "soil30Before": 24.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "143250eb-2d92-4304-b178-db4bb5a0ea00",
+   "district": "Krishna",
+   "mandal": "Nagayalanka",
+   "rainBeforeMm": 527.7,
+   "rainAfterMm": 600.9,
+   "soil30Before": 57.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "4c9ebc66-54f6-42ac-91bc-a732f892e3a9",
+   "district": "Krishna",
+   "mandal": "Nandivada",
+   "rainBeforeMm": 685.3,
+   "rainAfterMm": 714.7,
+   "soil30Before": 36.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5d8ceb6f-4d12-4ec5-bbb2-61cd17e68c01",
+   "district": "Krishna",
+   "mandal": "Pamarru",
+   "rainBeforeMm": 383.0,
+   "rainAfterMm": 426.4,
+   "soil30Before": 22.5,
+   "soil30After": 99.4
+  },
+  {
+   "uuid": "251bb8ec-ac41-422f-bca9-a9b848c98b16",
+   "district": "Krishna",
+   "mandal": "Pamidimukkala",
+   "rainBeforeMm": 511.4,
+   "rainAfterMm": 541.1,
+   "soil30Before": 39.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "3115594c-3680-4e77-a4cd-84534c361f09",
+   "district": "Krishna",
+   "mandal": "Pedana",
+   "rainBeforeMm": 539.7,
+   "rainAfterMm": 585.3,
+   "soil30Before": 45.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "34a915b1-b309-44c3-ac8c-b16f3ad3baca",
+   "district": "Krishna",
+   "mandal": "Pedaparupudi",
+   "rainBeforeMm": 427.2,
+   "rainAfterMm": 458.5,
+   "soil30Before": 32.1,
+   "soil30After": 99.7
+  },
+  {
+   "uuid": "5a20863d-27ee-4d43-9ad8-b1c144f2eda3",
+   "district": "Krishna",
+   "mandal": "Penamaluru",
+   "rainBeforeMm": 615.7,
+   "rainAfterMm": 655.4,
+   "soil30Before": 63.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "294bb600-0bed-4d15-a843-cf05666e4aed",
+   "district": "Krishna",
+   "mandal": "Thotlavalluru",
+   "rainBeforeMm": 544.0,
+   "rainAfterMm": 601.0,
+   "soil30Before": 72.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "dfac8f90-d3b8-4dca-a920-aee17e7ed0c8",
+   "district": "Krishna",
+   "mandal": "Unguturu",
+   "rainBeforeMm": 642.0,
+   "rainAfterMm": 684.2,
+   "soil30Before": 59.6,
+   "soil30After": 99.2
+  },
+  {
+   "uuid": "25d27c15-7a29-4919-946b-42a99cdc3e7c",
+   "district": "Krishna",
+   "mandal": "Vuyyuru",
+   "rainBeforeMm": 519.6,
+   "rainAfterMm": 564.3,
+   "soil30Before": 54.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "8767a82d-f9f6-4a71-9857-b087a9a1fd9b",
+   "district": "Kurnool",
+   "mandal": "Adoni 1",
+   "rainBeforeMm": 321.0,
+   "rainAfterMm": 321.9,
+   "soil30Before": 13.2,
+   "soil30After": 12.1
+  },
+  {
+   "uuid": "4b1e336f-fdd6-48f7-8092-fd10b70878f9",
+   "district": "Kurnool",
+   "mandal": "Adoni 2",
+   "rainBeforeMm": 226.5,
+   "rainAfterMm": 227.8,
+   "soil30Before": 5.4,
+   "soil30After": 7.3
+  },
+  {
+   "uuid": "9f9af309-331c-4a8f-9eaf-f6e23928b916",
+   "district": "Kurnool",
+   "mandal": "Alur",
+   "rainBeforeMm": 248.8,
+   "rainAfterMm": 258.1,
+   "soil30Before": 25.2,
+   "soil30After": 35.8
+  },
+  {
+   "uuid": "c419fd09-c596-499b-af9f-97408ba49b88",
+   "district": "Kurnool",
+   "mandal": "Aspari",
+   "rainBeforeMm": 184.3,
+   "rainAfterMm": 186.2,
+   "soil30Before": 25.2,
+   "soil30After": 32.9
+  },
+  {
+   "uuid": "841b79d1-e0ac-491f-abb5-93ff661d8fc5",
+   "district": "Kurnool",
+   "mandal": "C BELAGAL",
+   "rainBeforeMm": 199.7,
+   "rainAfterMm": 200.1,
+   "soil30Before": 11.3,
+   "soil30After": 11.3
+  },
+  {
+   "uuid": "529c2ac2-3113-496d-ae38-491b9369cc1b",
+   "district": "Kurnool",
+   "mandal": "Chippagiri",
+   "rainBeforeMm": 220.4,
+   "rainAfterMm": 240.2,
+   "soil30Before": 25.6,
+   "soil30After": 36.1
+  },
+  {
+   "uuid": "b2342c1c-26e0-45ea-b3eb-25e47dcbfdc8",
+   "district": "Kurnool",
+   "mandal": "Devanakonda",
+   "rainBeforeMm": 323.1,
+   "rainAfterMm": 325.2,
+   "soil30Before": 25.9,
+   "soil30After": 40.8
+  },
+  {
+   "uuid": "22edffac-11c7-4867-b7ec-3fa25335c608",
+   "district": "Kurnool",
+   "mandal": "GUDUR (KURNOOL)",
+   "rainBeforeMm": 229.5,
+   "rainAfterMm": 230.3,
+   "soil30Before": 8.7,
+   "soil30After": 9.0
+  },
+  {
+   "uuid": "b8e2a828-15b5-413b-9b45-4091080673f1",
+   "district": "Kurnool",
+   "mandal": "Gonegandla",
+   "rainBeforeMm": 257.2,
+   "rainAfterMm": 258.2,
+   "soil30Before": 22.9,
+   "soil30After": 23.7
+  },
+  {
+   "uuid": "f6f01a67-2199-4715-b4f5-267653dd425f",
+   "district": "Kurnool",
+   "mandal": "Halaharvi",
+   "rainBeforeMm": 200.3,
+   "rainAfterMm": 204.2,
+   "soil30Before": 20.7,
+   "soil30After": 28.7
+  },
+  {
+   "uuid": "f237a128-9ed1-4db5-832a-66a628480780",
+   "district": "Kurnool",
+   "mandal": "Holagunda",
+   "rainBeforeMm": 213.9,
+   "rainAfterMm": 214.2,
+   "soil30Before": 10.6,
+   "soil30After": 9.7
+  },
+  {
+   "uuid": "734ef13f-691b-4546-8ef5-c124e14614ce",
+   "district": "Kurnool",
+   "mandal": "Kallur",
+   "rainBeforeMm": 237.9,
+   "rainAfterMm": 239.7,
+   "soil30Before": 10.0,
+   "soil30After": 13.7
+  },
+  {
+   "uuid": "247c3525-25b3-45f9-a569-099c7c2ff7af",
+   "district": "Kurnool",
+   "mandal": "Kodumur",
+   "rainBeforeMm": 258.2,
+   "rainAfterMm": 261.6,
+   "soil30Before": 24.3,
+   "soil30After": 28.7
+  },
+  {
+   "uuid": "1a47209d-7d9a-41ce-b789-5de29d5f6cc0",
+   "district": "Kurnool",
+   "mandal": "Kosigi",
+   "rainBeforeMm": 265.5,
+   "rainAfterMm": 265.5,
+   "soil30Before": 6.1,
+   "soil30After": 5.4
+  },
+  {
+   "uuid": "1280a6c4-5125-47d5-8ab0-55fa12ec44a4",
+   "district": "Kurnool",
+   "mandal": "Kowthalam",
+   "rainBeforeMm": 240.8,
+   "rainAfterMm": 240.8,
+   "soil30Before": 4.4,
+   "soil30After": 10.0
+  },
+  {
+   "uuid": "ea3b0407-dec2-4120-8519-571b5c32c7d6",
+   "district": "Kurnool",
+   "mandal": "Krishnagiri",
+   "rainBeforeMm": 196.5,
+   "rainAfterMm": 219.4,
+   "soil30Before": 21.2,
+   "soil30After": 40.8
+  },
+  {
+   "uuid": "5a7667ba-a37b-4025-9550-1fac8a990423",
+   "district": "Kurnool",
+   "mandal": "Kurnool Rural",
+   "rainBeforeMm": 189.0,
+   "rainAfterMm": 192.0,
+   "soil30Before": 11.6,
+   "soil30After": 10.7
+  },
+  {
+   "uuid": "532eb57d-2ebf-4bc8-ba88-72440949bc39",
+   "district": "Kurnool",
+   "mandal": "Kurnool Urban",
+   "rainBeforeMm": 239.7,
+   "rainAfterMm": 241.9,
+   "soil30Before": 14.0,
+   "soil30After": 13.5
+  },
+  {
+   "uuid": "198bcd86-a67c-4d17-9781-30578fa0e429",
+   "district": "Kurnool",
+   "mandal": "MADDIKERA EAST",
+   "rainBeforeMm": 193.7,
+   "rainAfterMm": 205.0,
+   "soil30Before": 28.0,
+   "soil30After": 34.2
+  },
+  {
+   "uuid": "c04290bf-4a4b-45f6-bab0-736a39f38de4",
+   "district": "Kurnool",
+   "mandal": "Mantralayam",
+   "rainBeforeMm": 314.7,
+   "rainAfterMm": 314.7,
+   "soil30Before": 9.1,
+   "soil30After": 8.2
+  },
+  {
+   "uuid": "177a26d9-4851-4acd-a44a-4d622a1c6c46",
+   "district": "Kurnool",
+   "mandal": "Nandavaram",
+   "rainBeforeMm": 250.2,
+   "rainAfterMm": 250.2,
+   "soil30Before": 12.8,
+   "soil30After": 14.1
+  },
+  {
+   "uuid": "68df28d1-3804-46ae-a2c5-e65dff531969",
+   "district": "Kurnool",
+   "mandal": "Orvakal",
+   "rainBeforeMm": 222.9,
+   "rainAfterMm": 231.1,
+   "soil30Before": 31.6,
+   "soil30After": 38.5
+  },
+  {
+   "uuid": "0b26b5ca-74ca-4f7c-9cbb-80637943da0b",
+   "district": "Kurnool",
+   "mandal": "PATTIKANDA",
+   "rainBeforeMm": 328.8,
+   "rainAfterMm": 331.2,
+   "soil30Before": 33.4,
+   "soil30After": 45.7
+  },
+  {
+   "uuid": "4a9e81df-0c08-433c-adea-47444d1ec73e",
+   "district": "Kurnool",
+   "mandal": "Pedda Kadubur",
+   "rainBeforeMm": 372.4,
+   "rainAfterMm": 372.5,
+   "soil30Before": 9.2,
+   "soil30After": 9.4
+  },
+  {
+   "uuid": "ec1ebf5b-a909-4f80-8494-ef628625e665",
+   "district": "Kurnool",
+   "mandal": "Tuggali",
+   "rainBeforeMm": 225.5,
+   "rainAfterMm": 228.7,
+   "soil30Before": 22.8,
+   "soil30After": 33.9
+  },
+  {
+   "uuid": "0984fc95-8ed8-46dc-a486-e8b5f7cef465",
+   "district": "Kurnool",
+   "mandal": "VELDURTHI (KURNOOL)",
+   "rainBeforeMm": 183.4,
+   "rainAfterMm": 186.7,
+   "soil30Before": 18.8,
+   "soil30After": 24.0
+  },
+  {
+   "uuid": "5a427d48-cfb6-4510-b89b-6ef2422e4fda",
+   "district": "Kurnool",
+   "mandal": "Yemmiganur",
+   "rainBeforeMm": 350.8,
+   "rainAfterMm": 352.0,
+   "soil30Before": 17.6,
+   "soil30After": 18.7
+  },
+  {
+   "uuid": "a9c7ec9c-51d8-45ba-b445-3db93083d95a",
+   "district": "Markapuram",
+   "mandal": "Ardhaveedu",
+   "rainBeforeMm": 182.4,
+   "rainAfterMm": 182.4,
+   "soil30Before": 12.9,
+   "soil30After": 10.8
+  },
+  {
+   "uuid": "ecb7b40b-27a1-4538-bffd-d5934d0ce025",
+   "district": "Markapuram",
+   "mandal": "BESTAVARIPETA",
+   "rainBeforeMm": 149.3,
+   "rainAfterMm": 153.9,
+   "soil30Before": 24.2,
+   "soil30After": 22.2
+  },
+  {
+   "uuid": "2378f5dc-0411-4589-9600-24a632357744",
+   "district": "Markapuram",
+   "mandal": "Chandrasekhara Puram",
+   "rainBeforeMm": 250.7,
+   "rainAfterMm": 251.3,
+   "soil30Before": 36.8,
+   "soil30After": 37.4
+  },
+  {
+   "uuid": "a755eab4-c6db-4589-a20a-3f4758cc6676",
+   "district": "Markapuram",
+   "mandal": "Cumbum",
+   "rainBeforeMm": 252.2,
+   "rainAfterMm": 254.5,
+   "soil30Before": 16.1,
+   "soil30After": 23.0
+  },
+  {
+   "uuid": "1c1bb1cd-6cb4-48e3-b7c5-509bea7bfd49",
+   "district": "Markapuram",
+   "mandal": "Dornala",
+   "rainBeforeMm": 225.1,
+   "rainAfterMm": 225.1,
+   "soil30Before": 26.5,
+   "soil30After": 18.0
+  },
+  {
+   "uuid": "66ea4ed5-4ddc-49ac-a743-10377c192397",
+   "district": "Markapuram",
+   "mandal": "GIDDALURU",
+   "rainBeforeMm": 263.6,
+   "rainAfterMm": 264.8,
+   "soil30Before": 33.5,
+   "soil30After": 30.1
+  },
+  {
+   "uuid": "7e21faf2-e725-461c-a954-2475881edb3e",
+   "district": "Markapuram",
+   "mandal": "Hanumanthunipadu",
+   "rainBeforeMm": 250.8,
+   "rainAfterMm": 254.8,
+   "soil30Before": 38.8,
+   "soil30After": 49.1
+  },
+  {
+   "uuid": "59ca2a42-da0b-4599-a700-46122fe4dc31",
+   "district": "Markapuram",
+   "mandal": "Kanigiri",
+   "rainBeforeMm": 149.9,
+   "rainAfterMm": 154.8,
+   "soil30Before": 22.4,
+   "soil30After": 40.6
+  },
+  {
+   "uuid": "70006dfa-762b-4280-b57d-5a08ac45fded",
+   "district": "Markapuram",
+   "mandal": "Komarolu",
+   "rainBeforeMm": 241.0,
+   "rainAfterMm": 241.0,
+   "soil30Before": 12.1,
+   "soil30After": 14.6
+  },
+  {
+   "uuid": "b8e17707-1cf9-49aa-9da5-823da9d4756e",
+   "district": "Markapuram",
+   "mandal": "Konakanamitla",
+   "rainBeforeMm": 78.4,
+   "rainAfterMm": 80.1,
+   "soil30Before": 21.6,
+   "soil30After": 30.1
+  },
+  {
+   "uuid": "1d9e0b1c-aab6-4850-9452-9aec5da2a1c4",
+   "district": "Markapuram",
+   "mandal": "Markapur",
+   "rainBeforeMm": 231.8,
+   "rainAfterMm": 231.9,
+   "soil30Before": 0.2,
+   "soil30After": 23.4
+  },
+  {
+   "uuid": "1c0f9a77-3583-403b-a7f3-c83a4a04b97e",
+   "district": "Markapuram",
+   "mandal": "PEDAARAVEEDU",
+   "rainBeforeMm": 111.7,
+   "rainAfterMm": 114.4,
+   "soil30Before": 15.2,
+   "soil30After": 17.5
+  },
+  {
+   "uuid": "48b65c4a-e1f2-4862-b313-c5acc7afe3ab",
+   "district": "Markapuram",
+   "mandal": "PEDACHERLOPALLE",
+   "rainBeforeMm": 240.0,
+   "rainAfterMm": 249.3,
+   "soil30Before": 32.5,
+   "soil30After": 50.4
+  },
+  {
+   "uuid": "07649149-740a-4308-b50a-a3fa80ba3f9c",
+   "district": "Markapuram",
+   "mandal": "Pamur",
+   "rainBeforeMm": 235.0,
+   "rainAfterMm": 240.9,
+   "soil30Before": 57.1,
+   "soil30After": 65.5
+  },
+  {
+   "uuid": "d28800f2-7c46-432d-86a9-4cad9fec768c",
+   "district": "Markapuram",
+   "mandal": "Podili",
+   "rainBeforeMm": 197.5,
+   "rainAfterMm": 197.6,
+   "soil30Before": 2.7,
+   "soil30After": 24.9
+  },
+  {
+   "uuid": "9e103bdd-9f38-47e7-a7bf-a058c23e7b31",
+   "district": "Markapuram",
+   "mandal": "Pullalacheruvu",
+   "rainBeforeMm": 247.5,
+   "rainAfterMm": 247.6,
+   "soil30Before": 25.4,
+   "soil30After": 22.7
+  },
+  {
+   "uuid": "be33b37c-c776-4e25-90d2-1dc2942e674f",
+   "district": "Markapuram",
+   "mandal": "Racherla",
+   "rainBeforeMm": 308.9,
+   "rainAfterMm": 308.9,
+   "soil30Before": 43.2,
+   "soil30After": 38.3
+  },
+  {
+   "uuid": "fa504fc3-1fd3-4397-9ce9-f7afd0b2d1a1",
+   "district": "Markapuram",
+   "mandal": "TARLAPADU",
+   "rainBeforeMm": 250.8,
+   "rainAfterMm": 250.8,
+   "soil30Before": 21.7,
+   "soil30After": 42.7
+  },
+  {
+   "uuid": "711bda5d-c725-46d3-9675-21eafa2b155a",
+   "district": "Markapuram",
+   "mandal": "Tripuranthakam",
+   "rainBeforeMm": 312.3,
+   "rainAfterMm": 312.4,
+   "soil30Before": 23.0,
+   "soil30After": 27.0
+  },
+  {
+   "uuid": "13c9a830-f912-414b-b2ec-2544c1214983",
+   "district": "Markapuram",
+   "mandal": "Veligandla",
+   "rainBeforeMm": 184.7,
+   "rainAfterMm": 195.7,
+   "soil30Before": 21.6,
+   "soil30After": 31.0
+  },
+  {
+   "uuid": "6d645b71-26bd-4cc7-8654-d7d5748c61e7",
+   "district": "Markapuram",
+   "mandal": "Yerragondapalem",
+   "rainBeforeMm": 285.3,
+   "rainAfterMm": 285.3,
+   "soil30Before": 48.9,
+   "soil30After": 36.5
+  },
+  {
+   "uuid": "2356ad35-54fa-45cc-813f-1e147cb09fe3",
+   "district": "NTR",
+   "mandal": "A KONDURU",
+   "rainBeforeMm": 526.8,
+   "rainAfterMm": 535.7,
+   "soil30Before": 28.6,
+   "soil30After": 41.8
+  },
+  {
+   "uuid": "74c08d1c-14eb-4f16-ab32-27431f51f0b0",
+   "district": "NTR",
+   "mandal": "Chandarlapadu",
+   "rainBeforeMm": 475.6,
+   "rainAfterMm": 485.1,
+   "soil30Before": 23.5,
+   "soil30After": 49.5
+  },
+  {
+   "uuid": "b9bba65f-596f-4284-970d-21977fc94f4e",
+   "district": "NTR",
+   "mandal": "G.Konduru",
+   "rainBeforeMm": 567.2,
+   "rainAfterMm": 587.4,
+   "soil30Before": 43.6,
+   "soil30After": 70.4
+  },
+  {
+   "uuid": "d25d84bd-5db3-4571-8f7c-a74066f25251",
+   "district": "NTR",
+   "mandal": "Gampalagudem",
+   "rainBeforeMm": 599.9,
+   "rainAfterMm": 607.1,
+   "soil30Before": 8.3,
+   "soil30After": 43.1
+  },
+  {
+   "uuid": "ee014bb3-9af0-4356-860d-2c9464421453",
+   "district": "NTR",
+   "mandal": "Ibrahimpatnam",
+   "rainBeforeMm": 497.8,
+   "rainAfterMm": 516.5,
+   "soil30Before": 44.6,
+   "soil30After": 91.9
+  },
+  {
+   "uuid": "44b1f8ee-0fc6-4138-88ac-11e5bd13504a",
+   "district": "NTR",
+   "mandal": "Jaggayyapeta",
+   "rainBeforeMm": 405.0,
+   "rainAfterMm": 409.8,
+   "soil30Before": 25.7,
+   "soil30After": 32.6
+  },
+  {
+   "uuid": "a5a70746-9595-45ee-aa38-a7cff6dac892",
+   "district": "NTR",
+   "mandal": "KANCHIKA CHERLA",
+   "rainBeforeMm": 658.2,
+   "rainAfterMm": 669.0,
+   "soil30Before": 29.9,
+   "soil30After": 77.9
+  },
+  {
+   "uuid": "32bf9848-0387-4a9c-96dc-5da32c5de5c2",
+   "district": "NTR",
+   "mandal": "MYLAVARAM (KRISHNA)",
+   "rainBeforeMm": 710.4,
+   "rainAfterMm": 719.7,
+   "soil30Before": 44.8,
+   "soil30After": 57.4
+  },
+  {
+   "uuid": "243335dc-f433-4101-b9c7-f87e87da5ec6",
+   "district": "NTR",
+   "mandal": "Nandigama",
+   "rainBeforeMm": 396.4,
+   "rainAfterMm": 403.5,
+   "soil30Before": 19.2,
+   "soil30After": 44.3
+  },
+  {
+   "uuid": "67db1559-8eb6-422c-a975-1c26b274db5d",
+   "district": "NTR",
+   "mandal": "Penuganchiprolu",
+   "rainBeforeMm": 424.7,
+   "rainAfterMm": 428.0,
+   "soil30Before": 19.2,
+   "soil30After": 28.7
+  },
+  {
+   "uuid": "9b8c41a6-23da-4ef4-a033-bca38cc7f154",
+   "district": "NTR",
+   "mandal": "Reddigudem",
+   "rainBeforeMm": 557.7,
+   "rainAfterMm": 566.0,
+   "soil30Before": 35.6,
+   "soil30After": 52.0
+  },
+  {
+   "uuid": "5e49412a-854f-49b5-a3cf-a2773c01f611",
+   "district": "NTR",
+   "mandal": "Tiruvuru",
+   "rainBeforeMm": 710.6,
+   "rainAfterMm": 716.1,
+   "soil30Before": 14.8,
+   "soil30After": 41.1
+  },
+  {
+   "uuid": "f291d014-dc85-4789-8620-0fe554be78fa",
+   "district": "NTR",
+   "mandal": "Vatsavai",
+   "rainBeforeMm": 449.9,
+   "rainAfterMm": 454.1,
+   "soil30Before": 9.6,
+   "soil30After": 20.1
+  },
+  {
+   "uuid": "3431a2d5-97d5-4d86-851b-291969a66913",
+   "district": "NTR",
+   "mandal": "Veerullapadu",
+   "rainBeforeMm": 575.5,
+   "rainAfterMm": 587.5,
+   "soil30Before": 34.9,
+   "soil30After": 70.4
+  },
+  {
+   "uuid": "43bea361-78f2-419b-beda-deeac728af5e",
+   "district": "NTR",
+   "mandal": "Vijayawada (Rural)",
+   "rainBeforeMm": 653.9,
+   "rainAfterMm": 688.8,
+   "soil30Before": 53.0,
+   "soil30After": 98.9
+  },
+  {
+   "uuid": "16f05aae-8b8e-49ba-b6cd-b2e84572cba8",
+   "district": "NTR",
+   "mandal": "Vijayawada Central",
+   "rainBeforeMm": 573.5,
+   "rainAfterMm": 620.4,
+   "soil30Before": 62.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "523939a5-f371-424a-afc2-2626c7bfbbe5",
+   "district": "NTR",
+   "mandal": "Vijayawada East",
+   "rainBeforeMm": 593.7,
+   "rainAfterMm": 626.4,
+   "soil30Before": null,
+   "soil30After": null
+  },
+  {
+   "uuid": "64ce40b7-ec8f-4f85-b5e3-c282cfd343d7",
+   "district": "NTR",
+   "mandal": "Vijayawada North",
+   "rainBeforeMm": 626.4,
+   "rainAfterMm": 664.0,
+   "soil30Before": null,
+   "soil30After": null
+  },
+  {
+   "uuid": "9bd38b06-949f-4399-90b3-21af34f0f99e",
+   "district": "NTR",
+   "mandal": "Vijayawada West",
+   "rainBeforeMm": 633.0,
+   "rainAfterMm": 686.3,
+   "soil30Before": null,
+   "soil30After": null
+  },
+  {
+   "uuid": "ad87fb1f-8daa-4801-8bad-6d398612c6ce",
+   "district": "NTR",
+   "mandal": "Vissannapet",
+   "rainBeforeMm": 608.5,
+   "rainAfterMm": 616.5,
+   "soil30Before": 42.5,
+   "soil30After": 57.2
+  },
+  {
+   "uuid": "87def732-030e-40b5-a67e-c795ffa607e7",
+   "district": "Nandyal",
+   "mandal": "ATMAKUR (KURNOOL)",
+   "rainBeforeMm": 319.1,
+   "rainAfterMm": 323.5,
+   "soil30Before": 45.7,
+   "soil30After": 34.5
+  },
+  {
+   "uuid": "9097ec91-987d-44fa-a3cc-f14cd55b2381",
+   "district": "Nandyal",
+   "mandal": "Allagadda",
+   "rainBeforeMm": 429.0,
+   "rainAfterMm": 432.2,
+   "soil30Before": 27.9,
+   "soil30After": 26.9
+  },
+  {
+   "uuid": "4c8f88ba-0b92-4836-8b2c-beaa66b8d22b",
+   "district": "Nandyal",
+   "mandal": "Banaganapalle",
+   "rainBeforeMm": 334.2,
+   "rainAfterMm": 344.3,
+   "soil30Before": 46.3,
+   "soil30After": 64.1
+  },
+  {
+   "uuid": "df73b623-0017-4d45-9a14-02f3b920fd11",
+   "district": "Nandyal",
+   "mandal": "Bandi Atmakur",
+   "rainBeforeMm": 351.3,
+   "rainAfterMm": 353.2,
+   "soil30Before": 24.9,
+   "soil30After": 26.7
+  },
+  {
+   "uuid": "751174c4-e8b7-4d77-b1e0-8d2555b378f0",
+   "district": "Nandyal",
+   "mandal": "Bethamcherla",
+   "rainBeforeMm": 265.5,
+   "rainAfterMm": 295.9,
+   "soil30Before": 30.1,
+   "soil30After": 50.0
+  },
+  {
+   "uuid": "97e3785d-0e55-4f6f-b83c-56946c983280",
+   "district": "Nandyal",
+   "mandal": "Chagalamarri",
+   "rainBeforeMm": 398.1,
+   "rainAfterMm": 400.2,
+   "soil30Before": 39.3,
+   "soil30After": 29.1
+  },
+  {
+   "uuid": "d5b99fbe-619e-4625-a7dc-ea611eea0a16",
+   "district": "Nandyal",
+   "mandal": "Dhone",
+   "rainBeforeMm": 179.9,
+   "rainAfterMm": 208.5,
+   "soil30Before": 13.9,
+   "soil30After": 31.0
+  },
+  {
+   "uuid": "92ae1357-0424-4321-be5c-c319118b605d",
+   "district": "Nandyal",
+   "mandal": "Dornipadu",
+   "rainBeforeMm": 272.8,
+   "rainAfterMm": 282.6,
+   "soil30Before": 46.6,
+   "soil30After": 42.2
+  },
+  {
+   "uuid": "8890dc0f-9651-4393-adc9-50222bc4ef3a",
+   "district": "Nandyal",
+   "mandal": "Gadivemula",
+   "rainBeforeMm": 322.6,
+   "rainAfterMm": 340.4,
+   "soil30Before": 43.9,
+   "soil30After": 48.9
+  },
+  {
+   "uuid": "3182cec4-7df9-41a3-8a49-c99a3d688b4d",
+   "district": "Nandyal",
+   "mandal": "Gospadu",
+   "rainBeforeMm": 311.8,
+   "rainAfterMm": 318.8,
+   "soil30Before": 26.8,
+   "soil30After": 28.5
+  },
+  {
+   "uuid": "04b8e31a-f98b-4b32-99a0-9ef407223b68",
+   "district": "Nandyal",
+   "mandal": "Jupadu Bungalow",
+   "rainBeforeMm": 424.1,
+   "rainAfterMm": 425.3,
+   "soil30Before": 19.0,
+   "soil30After": 24.8
+  },
+  {
+   "uuid": "0eef3762-f0e7-46a3-b197-449b36cde0c3",
+   "district": "Nandyal",
+   "mandal": "Koilkuntla",
+   "rainBeforeMm": 314.1,
+   "rainAfterMm": 320.1,
+   "soil30Before": 53.3,
+   "soil30After": 55.0
+  },
+  {
+   "uuid": "51a89e06-904f-4e7b-ba08-d40884c35d17",
+   "district": "Nandyal",
+   "mandal": "Kolimigundla",
+   "rainBeforeMm": 273.1,
+   "rainAfterMm": 276.6,
+   "soil30Before": 34.0,
+   "soil30After": 36.6
+  },
+  {
+   "uuid": "458e29b0-1bbf-4076-a322-456c45cef0c5",
+   "district": "Nandyal",
+   "mandal": "Kothapalle",
+   "rainBeforeMm": 202.4,
+   "rainAfterMm": 204.3,
+   "soil30Before": 35.0,
+   "soil30After": 35.3
+  },
+  {
+   "uuid": "1d51c864-6db7-495b-b872-710ea4550c51",
+   "district": "Nandyal",
+   "mandal": "Mahanandi",
+   "rainBeforeMm": 406.3,
+   "rainAfterMm": 426.2,
+   "soil30Before": 33.1,
+   "soil30After": 35.5
+  },
+  {
+   "uuid": "6447b6a2-07e0-4ec5-b275-9b750bdc3250",
+   "district": "Nandyal",
+   "mandal": "Midthur",
+   "rainBeforeMm": 281.5,
+   "rainAfterMm": 283.1,
+   "soil30Before": 36.9,
+   "soil30After": 38.5
+  },
+  {
+   "uuid": "f00b62d1-93d5-4d6f-9047-39ebed05e5d0",
+   "district": "Nandyal",
+   "mandal": "Nandikotkur",
+   "rainBeforeMm": 359.3,
+   "rainAfterMm": 361.3,
+   "soil30Before": 38.2,
+   "soil30After": 32.4
+  },
+  {
+   "uuid": "8dcf428a-07f1-4131-9cdb-97f142916de3",
+   "district": "Nandyal",
+   "mandal": "Nandyal_Rural",
+   "rainBeforeMm": 256.2,
+   "rainAfterMm": 263.8,
+   "soil30Before": 29.1,
+   "soil30After": 34.0
+  },
+  {
+   "uuid": "5d26897f-60ea-42fc-9ca7-1a8a6d3ebe8f",
+   "district": "Nandyal",
+   "mandal": "Nandyal_Urban",
+   "rainBeforeMm": 240.5,
+   "rainAfterMm": 247.5,
+   "soil30Before": 20.9,
+   "soil30After": 29.8
+  },
+  {
+   "uuid": "07bacd1f-9737-4684-a39d-3714d810f95f",
+   "district": "Nandyal",
+   "mandal": "Owk",
+   "rainBeforeMm": 228.3,
+   "rainAfterMm": 232.0,
+   "soil30Before": 32.2,
+   "soil30After": 37.7
+  },
+  {
+   "uuid": "f8039ce0-2dcd-4fe0-b1c7-cb8261017610",
+   "district": "Nandyal",
+   "mandal": "Pagidyala",
+   "rainBeforeMm": 416.7,
+   "rainAfterMm": 417.4,
+   "soil30Before": 50.3,
+   "soil30After": 39.1
+  },
+  {
+   "uuid": "127230f9-73e0-453a-b462-80329f0ea063",
+   "district": "Nandyal",
+   "mandal": "Pamulapadu",
+   "rainBeforeMm": 340.5,
+   "rainAfterMm": 351.3,
+   "soil30Before": 22.2,
+   "soil30After": 26.7
+  },
+  {
+   "uuid": "c69e5698-fbf1-4847-9cb1-354f5f62ed0e",
+   "district": "Nandyal",
+   "mandal": "Panyam",
+   "rainBeforeMm": 205.2,
+   "rainAfterMm": 220.7,
+   "soil30Before": 32.3,
+   "soil30After": 43.8
+  },
+  {
+   "uuid": "9b4f5e6e-9978-4acf-bc2b-df28ce28ff2a",
+   "district": "Nandyal",
+   "mandal": "Peapally",
+   "rainBeforeMm": 273.1,
+   "rainAfterMm": 282.4,
+   "soil30Before": 19.6,
+   "soil30After": 32.0
+  },
+  {
+   "uuid": "0e8dbb74-cc0c-4c86-82d7-e2c2f6214922",
+   "district": "Nandyal",
+   "mandal": "Rudravaram",
+   "rainBeforeMm": 317.4,
+   "rainAfterMm": 320.4,
+   "soil30Before": 23.0,
+   "soil30After": 19.5
+  },
+  {
+   "uuid": "3cee18dc-6dd3-469b-925a-9d2a32b110c4",
+   "district": "Nandyal",
+   "mandal": "Sanjamala",
+   "rainBeforeMm": 268.3,
+   "rainAfterMm": 271.6,
+   "soil30Before": 40.9,
+   "soil30After": 43.4
+  },
+  {
+   "uuid": "c4b43404-f1b5-4a8a-95d4-215cfa9442fc",
+   "district": "Nandyal",
+   "mandal": "Sirvel",
+   "rainBeforeMm": 301.3,
+   "rainAfterMm": 320.3,
+   "soil30Before": 15.6,
+   "soil30After": 20.8
+  },
+  {
+   "uuid": "24dc4996-b2eb-4c51-ae27-252c0fe1d2f8",
+   "district": "Nandyal",
+   "mandal": "Srisailam",
+   "rainBeforeMm": 367.3,
+   "rainAfterMm": 368.2,
+   "soil30Before": 81.9,
+   "soil30After": 73.2
+  },
+  {
+   "uuid": "68027f00-d5a6-44f8-8fb5-c22b9d70a897",
+   "district": "Nandyal",
+   "mandal": "Uyyalawada",
+   "rainBeforeMm": 319.4,
+   "rainAfterMm": 324.2,
+   "soil30Before": 48.6,
+   "soil30After": 47.5
+  },
+  {
+   "uuid": "2526381e-40fa-42b8-9d17-2bf53b2584c4",
+   "district": "Nandyal",
+   "mandal": "Velgode",
+   "rainBeforeMm": 424.4,
+   "rainAfterMm": 426.9,
+   "soil30Before": 35.8,
+   "soil30After": 28.3
+  },
+  {
+   "uuid": "cffd59ba-0b37-47d2-b96e-61603e2e8ef4",
+   "district": "Palnadu",
+   "mandal": "Amaravathi",
+   "rainBeforeMm": 583.2,
+   "rainAfterMm": 595.3,
+   "soil30Before": 39.3,
+   "soil30After": 93.6
+  },
+  {
+   "uuid": "1238478a-2962-449b-badf-89847f71c766",
+   "district": "Palnadu",
+   "mandal": "Atchampet",
+   "rainBeforeMm": 485.7,
+   "rainAfterMm": 489.1,
+   "soil30Before": 12.6,
+   "soil30After": 52.9
+  },
+  {
+   "uuid": "25a49e88-9047-4334-a003-1072cc6b29c9",
+   "district": "Palnadu",
+   "mandal": "Bellamkonda",
+   "rainBeforeMm": 551.3,
+   "rainAfterMm": 559.4,
+   "soil30Before": 18.9,
+   "soil30After": 35.2
+  },
+  {
+   "uuid": "cb2f8b94-b3a5-4c26-b821-803d0c6bec9c",
+   "district": "Palnadu",
+   "mandal": "Bollapalle",
+   "rainBeforeMm": 178.6,
+   "rainAfterMm": 182.7,
+   "soil30Before": 11.2,
+   "soil30After": 18.6
+  },
+  {
+   "uuid": "c91349a1-9a74-4fa8-97f9-5abd3ea58940",
+   "district": "Palnadu",
+   "mandal": "Chilakaluripet",
+   "rainBeforeMm": 442.7,
+   "rainAfterMm": 451.0,
+   "soil30Before": 53.3,
+   "soil30After": 73.3
+  },
+  {
+   "uuid": "766c4ecd-46d9-45c1-aaf3-012ed9f28063",
+   "district": "Palnadu",
+   "mandal": "Dachepalle",
+   "rainBeforeMm": 364.2,
+   "rainAfterMm": 366.0,
+   "soil30Before": 5.7,
+   "soil30After": 23.7
+  },
+  {
+   "uuid": "1c195e9c-bb02-41d5-9844-b45db63c919f",
+   "district": "Palnadu",
+   "mandal": "Durgi",
+   "rainBeforeMm": 326.5,
+   "rainAfterMm": 326.8,
+   "soil30Before": 18.9,
+   "soil30After": 10.6
+  },
+  {
+   "uuid": "0891e8fc-1c29-4c4f-85bc-0ee853465304",
+   "district": "Palnadu",
+   "mandal": "Edlapadu",
+   "rainBeforeMm": 284.0,
+   "rainAfterMm": 289.9,
+   "soil30Before": 38.6,
+   "soil30After": 60.6
+  },
+  {
+   "uuid": "8002ca6e-7b95-4a0d-bd69-16de5938c50a",
+   "district": "Palnadu",
+   "mandal": "Gurazala",
+   "rainBeforeMm": 310.5,
+   "rainAfterMm": 311.2,
+   "soil30Before": 7.6,
+   "soil30After": 18.3
+  },
+  {
+   "uuid": "e09ff2f3-2a13-4d89-b3f7-9414f41dcaf6",
+   "district": "Palnadu",
+   "mandal": "IPURU",
+   "rainBeforeMm": 185.0,
+   "rainAfterMm": 185.8,
+   "soil30Before": 30.6,
+   "soil30After": 42.5
+  },
+  {
+   "uuid": "2c5ebdcc-248b-4e85-97c2-b8e5d5d8c62d",
+   "district": "Palnadu",
+   "mandal": "Karempudi",
+   "rainBeforeMm": 308.8,
+   "rainAfterMm": 309.9,
+   "soil30Before": 14.0,
+   "soil30After": 16.9
+  },
+  {
+   "uuid": "17a848bd-3c1c-4317-b30c-d15d2f73d37a",
+   "district": "Palnadu",
+   "mandal": "Krosuru",
+   "rainBeforeMm": 480.2,
+   "rainAfterMm": 485.1,
+   "soil30Before": 9.5,
+   "soil30After": 53.7
+  },
+  {
+   "uuid": "0d17618e-dc9d-436a-91de-0aac694947fa",
+   "district": "Palnadu",
+   "mandal": "Machavaram",
+   "rainBeforeMm": 388.9,
+   "rainAfterMm": 394.1,
+   "soil30Before": 11.2,
+   "soil30After": 31.8
+  },
+  {
+   "uuid": "5005b5cb-3157-4417-9ffc-9894b0d874fa",
+   "district": "Palnadu",
+   "mandal": "Macherla",
+   "rainBeforeMm": 308.0,
+   "rainAfterMm": 308.0,
+   "soil30Before": 24.8,
+   "soil30After": 17.5
+  },
+  {
+   "uuid": "c84e81fa-1b67-4c41-ae35-8aa27f132a9f",
+   "district": "Palnadu",
+   "mandal": "Muppalla",
+   "rainBeforeMm": 295.9,
+   "rainAfterMm": 298.0,
+   "soil30Before": 35.1,
+   "soil30After": 35.0
+  },
+  {
+   "uuid": "1edcabf6-3da7-4ea4-8128-9cb2a5b3a7a0",
+   "district": "Palnadu",
+   "mandal": "NAKARIKALLU",
+   "rainBeforeMm": 206.4,
+   "rainAfterMm": 208.2,
+   "soil30Before": 25.3,
+   "soil30After": 35.3
+  },
+  {
+   "uuid": "c2fd48fd-f51f-48ac-888a-0d2fb7f60309",
+   "district": "Palnadu",
+   "mandal": "Nadendla",
+   "rainBeforeMm": 346.3,
+   "rainAfterMm": 353.1,
+   "soil30Before": 46.8,
+   "soil30After": 61.8
+  },
+  {
+   "uuid": "59b1cba7-18ca-43f5-a0d7-a2890d9cd649",
+   "district": "Palnadu",
+   "mandal": "Narasaraopet",
+   "rainBeforeMm": 254.3,
+   "rainAfterMm": 256.3,
+   "soil30Before": 44.3,
+   "soil30After": 54.3
+  },
+  {
+   "uuid": "3229d352-6ce0-41d6-99fe-b1e866fadc58",
+   "district": "Palnadu",
+   "mandal": "Nuzendla",
+   "rainBeforeMm": 146.3,
+   "rainAfterMm": 146.4,
+   "soil30Before": 10.2,
+   "soil30After": 22.1
+  },
+  {
+   "uuid": "b9606fb8-a76d-4b04-99e7-d96ac1338488",
+   "district": "Palnadu",
+   "mandal": "Pedakurapadu",
+   "rainBeforeMm": 622.7,
+   "rainAfterMm": 628.9,
+   "soil30Before": 38.7,
+   "soil30After": 88.3
+  },
+  {
+   "uuid": "be08af1b-93eb-4d33-bc0b-57d40b17778b",
+   "district": "Palnadu",
+   "mandal": "Piduguralla",
+   "rainBeforeMm": 222.7,
+   "rainAfterMm": 226.7,
+   "soil30Before": 17.9,
+   "soil30After": 26.3
+  },
+  {
+   "uuid": "a787b206-5ac2-4266-8f50-9c922c74c313",
+   "district": "Palnadu",
+   "mandal": "ROMPICHERLA (GUNTUR)",
+   "rainBeforeMm": 245.2,
+   "rainAfterMm": 248.4,
+   "soil30Before": 43.3,
+   "soil30After": 53.9
+  },
+  {
+   "uuid": "e9fb8430-50ea-4570-8383-a87f982d4919",
+   "district": "Palnadu",
+   "mandal": "Rajupalem",
+   "rainBeforeMm": 536.7,
+   "rainAfterMm": 544.0,
+   "soil30Before": 26.2,
+   "soil30After": 36.1
+  },
+  {
+   "uuid": "0766db38-2384-4607-954c-1dfbc6c8637b",
+   "district": "Palnadu",
+   "mandal": "Rentachintala",
+   "rainBeforeMm": 433.4,
+   "rainAfterMm": 433.4,
+   "soil30Before": 17.9,
+   "soil30After": 18.2
+  },
+  {
+   "uuid": "b43b8b3c-1b81-43e9-8ed1-265f09888adb",
+   "district": "Palnadu",
+   "mandal": "Sattenapalle",
+   "rainBeforeMm": 429.5,
+   "rainAfterMm": 435.8,
+   "soil30Before": 50.8,
+   "soil30After": 81.6
+  },
+  {
+   "uuid": "e1a0e8ec-fffd-4969-b92e-2089f8d37c88",
+   "district": "Palnadu",
+   "mandal": "Savalyapuram",
+   "rainBeforeMm": 267.5,
+   "rainAfterMm": 269.8,
+   "soil30Before": 41.3,
+   "soil30After": 56.3
+  },
+  {
+   "uuid": "485a7081-4134-4344-91fd-1f808bd16fd6",
+   "district": "Palnadu",
+   "mandal": "Veldurthi",
+   "rainBeforeMm": 203.1,
+   "rainAfterMm": 203.1,
+   "soil30Before": 27.4,
+   "soil30After": 18.4
+  },
+  {
+   "uuid": "a58cb588-b7fd-4969-ac28-3fde04a76feb",
+   "district": "Palnadu",
+   "mandal": "Vinukonda",
+   "rainBeforeMm": 139.6,
+   "rainAfterMm": 141.2,
+   "soil30Before": 19.1,
+   "soil30After": 31.8
+  },
+  {
+   "uuid": "9313cf61-d194-4573-b17c-18b487e228e0",
+   "district": "Parvathipuram Manyam",
+   "mandal": "BALAJIPETA",
+   "rainBeforeMm": 814.6,
+   "rainAfterMm": 965.9,
+   "soil30Before": 41.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "9f763556-bccd-40f2-bd49-e8544525b868",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Bhamini",
+   "rainBeforeMm": 377.8,
+   "rainAfterMm": 429.7,
+   "soil30Before": 50.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "52043404-2763-4805-9e04-9ecd94a6cbfc",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Garugubilli",
+   "rainBeforeMm": 605.6,
+   "rainAfterMm": 655.6,
+   "soil30Before": 38.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "6284286a-8c85-429e-b34c-fa56d590adbb",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Gummalakshmipuram",
+   "rainBeforeMm": 522.2,
+   "rainAfterMm": 587.1,
+   "soil30Before": 28.9,
+   "soil30After": 97.3
+  },
+  {
+   "uuid": "9df82203-cb0f-4c00-8bf6-5f96ca0789cf",
+   "district": "Parvathipuram Manyam",
+   "mandal": "JIYYAMMA VALASA",
+   "rainBeforeMm": 509.2,
+   "rainAfterMm": 551.8,
+   "soil30Before": 43.9,
+   "soil30After": 99.9
+  },
+  {
+   "uuid": "38577c74-ac0d-44e3-a188-b250189b91e2",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Komarada",
+   "rainBeforeMm": 469.1,
+   "rainAfterMm": 508.9,
+   "soil30Before": 36.8,
+   "soil30After": 94.7
+  },
+  {
+   "uuid": "c7b721b6-0dd4-4b17-9d02-bf28cdca4acb",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Kurupam",
+   "rainBeforeMm": 458.0,
+   "rainAfterMm": 497.7,
+   "soil30Before": 36.3,
+   "soil30After": 97.3
+  },
+  {
+   "uuid": "34781e01-74da-4453-9dee-51615c1e6c31",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Makkuva",
+   "rainBeforeMm": 579.7,
+   "rainAfterMm": 685.1,
+   "soil30Before": 33.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "76fa9279-79b6-4f52-8a4a-fc787daefb18",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Pachipenta",
+   "rainBeforeMm": 624.9,
+   "rainAfterMm": 783.6,
+   "soil30Before": 45.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "f9d97f05-c04c-4f47-aa31-8230a43d47f2",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Palakonda",
+   "rainBeforeMm": 686.1,
+   "rainAfterMm": 790.9,
+   "soil30Before": 71.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5abb6c72-e024-4a98-a82c-de9c4de89839",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Parvathipuram",
+   "rainBeforeMm": 830.9,
+   "rainAfterMm": 910.7,
+   "soil30Before": 35.9,
+   "soil30After": 99.8
+  },
+  {
+   "uuid": "34459a27-adbb-4885-b088-5aa76744cbbc",
+   "district": "Parvathipuram Manyam",
+   "mandal": "SEETHANAGARAM (VIZIANAGARAM)",
+   "rainBeforeMm": 431.1,
+   "rainAfterMm": 483.5,
+   "soil30Before": 38.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "ad802a2d-35cf-40d0-9cf4-5d2342446dad",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Salur",
+   "rainBeforeMm": 512.7,
+   "rainAfterMm": 600.6,
+   "soil30Before": 56.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e25eba69-f28b-4810-b985-5b96682f52ff",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Seethampeta",
+   "rainBeforeMm": 1043.9,
+   "rainAfterMm": 1192.9,
+   "soil30Before": 75.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "a4ae658e-72d3-4969-b4db-f5c5b7c5713f",
+   "district": "Parvathipuram Manyam",
+   "mandal": "Veeraghattam",
+   "rainBeforeMm": 702.9,
+   "rainAfterMm": 766.5,
+   "soil30Before": 69.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "36f19db2-368d-4e32-b7df-ea23c1a8f9a3",
+   "district": "Polavaram",
+   "mandal": "Addateegala",
+   "rainBeforeMm": 812.5,
+   "rainAfterMm": 885.3,
+   "soil30Before": 50.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "dcff1f1a-7861-48ba-a6ba-425b032ba470",
+   "district": "Polavaram",
+   "mandal": "Chintur",
+   "rainBeforeMm": 771.8,
+   "rainAfterMm": 793.3,
+   "soil30Before": 60.2,
+   "soil30After": 99.3
+  },
+  {
+   "uuid": "078c616a-601d-475a-a006-664ed9bc6e66",
+   "district": "Polavaram",
+   "mandal": "Devipatnam",
+   "rainBeforeMm": 740.4,
+   "rainAfterMm": 807.2,
+   "soil30Before": 67.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "7fe5373d-8e9e-48e9-9c24-7caa36ae354f",
+   "district": "Polavaram",
+   "mandal": "GANGAVARAM (EAST GODAVARI)",
+   "rainBeforeMm": 682.9,
+   "rainAfterMm": 730.4,
+   "soil30Before": 68.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2da5e9a5-4d86-411a-b86d-d39c0a93589b",
+   "district": "Polavaram",
+   "mandal": "Gurthedu",
+   "rainBeforeMm": 782.3,
+   "rainAfterMm": 822.8,
+   "soil30Before": 96.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "06c77d9d-6366-463d-8a6c-b1d515c94134",
+   "district": "Polavaram",
+   "mandal": "Kunavaram",
+   "rainBeforeMm": 756.4,
+   "rainAfterMm": 768.8,
+   "soil30Before": 47.9,
+   "soil30After": 95.2
+  },
+  {
+   "uuid": "183552f1-8870-4b03-ad98-af0ce5843b16",
+   "district": "Polavaram",
+   "mandal": "Maredumilli",
+   "rainBeforeMm": 1108.4,
+   "rainAfterMm": 1139.8,
+   "soil30Before": 80.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5a699f0d-a972-4291-b0d7-025998b36a37",
+   "district": "Polavaram",
+   "mandal": "Rajavommangi",
+   "rainBeforeMm": 779.7,
+   "rainAfterMm": 896.7,
+   "soil30Before": 71.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "98aa48f3-6abd-430a-aba0-3031d65241e1",
+   "district": "Polavaram",
+   "mandal": "Rampachodavaram",
+   "rainBeforeMm": 785.6,
+   "rainAfterMm": 812.4,
+   "soil30Before": 66.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5217e2e1-cedb-4ff9-abba-a74dae5d0222",
+   "district": "Polavaram",
+   "mandal": "Vararamachandrapuram",
+   "rainBeforeMm": 756.0,
+   "rainAfterMm": 763.0,
+   "soil30Before": 30.8,
+   "soil30After": 90.9
+  },
+  {
+   "uuid": "2f99b4fa-f5de-46d1-b0cb-0f5f97ec22c5",
+   "district": "Polavaram",
+   "mandal": "Y.Ramavaram",
+   "rainBeforeMm": 768.2,
+   "rainAfterMm": 821.9,
+   "soil30Before": 77.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "04479a49-6e02-44a2-b5ba-d7dcf1c96957",
+   "district": "Polavaram",
+   "mandal": "Yetpaka",
+   "rainBeforeMm": 793.8,
+   "rainAfterMm": 804.0,
+   "soil30Before": 76.2,
+   "soil30After": 98.6
+  },
+  {
+   "uuid": "818c1557-5892-4bbe-b7af-f1d16be5d654",
+   "district": "Prakasam",
+   "mandal": "Addanki",
+   "rainBeforeMm": 388.9,
+   "rainAfterMm": 391.9,
+   "soil30Before": 55.5,
+   "soil30After": 41.5
+  },
+  {
+   "uuid": "3cb56660-d601-4e30-aab8-a5fadd77f496",
+   "district": "Prakasam",
+   "mandal": "BALLIKURUVA",
+   "rainBeforeMm": 191.6,
+   "rainAfterMm": 206.3,
+   "soil30Before": 21.4,
+   "soil30After": 34.9
+  },
+  {
+   "uuid": "fdb747f2-797b-4783-ad12-8d38981cfff1",
+   "district": "Prakasam",
+   "mandal": "Chimakurthi",
+   "rainBeforeMm": 114.3,
+   "rainAfterMm": 115.1,
+   "soil30Before": 35.9,
+   "soil30After": 34.4
+  },
+  {
+   "uuid": "a253fc6c-2456-4017-a350-c72ff9252993",
+   "district": "Prakasam",
+   "mandal": "Darsi",
+   "rainBeforeMm": 196.9,
+   "rainAfterMm": 198.7,
+   "soil30Before": 46.5,
+   "soil30After": 32.6
+  },
+  {
+   "uuid": "c5ab6be6-26aa-402e-b3af-4e5805cbb082",
+   "district": "Prakasam",
+   "mandal": "Donakonda",
+   "rainBeforeMm": 72.7,
+   "rainAfterMm": 73.5,
+   "soil30Before": 0.3,
+   "soil30After": 12.2
+  },
+  {
+   "uuid": "4ea6cf25-5128-4004-94e6-b106a949ef75",
+   "district": "Prakasam",
+   "mandal": "Gudluru",
+   "rainBeforeMm": 204.6,
+   "rainAfterMm": 212.2,
+   "soil30Before": 70.0,
+   "soil30After": 77.7
+  },
+  {
+   "uuid": "b1db113c-2272-498d-8776-a05c914a1207",
+   "district": "Prakasam",
+   "mandal": "Janakavarampanguluru",
+   "rainBeforeMm": 291.6,
+   "rainAfterMm": 292.5,
+   "soil30Before": 73.3,
+   "soil30After": 51.2
+  },
+  {
+   "uuid": "80e52e6e-95b0-4c32-b9bf-7c04e8d94179",
+   "district": "Prakasam",
+   "mandal": "Kandukur",
+   "rainBeforeMm": 254.4,
+   "rainAfterMm": 255.9,
+   "soil30Before": 42.2,
+   "soil30After": 49.4
+  },
+  {
+   "uuid": "858cbe39-0ae9-45f4-b06c-2ee9476f7620",
+   "district": "Prakasam",
+   "mandal": "Kondapi",
+   "rainBeforeMm": 253.3,
+   "rainAfterMm": 255.6,
+   "soil30Before": 23.4,
+   "soil30After": 47.1
+  },
+  {
+   "uuid": "7e30c8ef-afd6-4c0d-83d3-700bdf9674d9",
+   "district": "Prakasam",
+   "mandal": "Korisapadu",
+   "rainBeforeMm": 305.7,
+   "rainAfterMm": 305.7,
+   "soil30Before": 47.6,
+   "soil30After": 43.9
+  },
+  {
+   "uuid": "ffdfdce7-a7c1-4325-b6df-20c80867269f",
+   "district": "Prakasam",
+   "mandal": "Kotha Patnam",
+   "rainBeforeMm": 182.6,
+   "rainAfterMm": 195.3,
+   "soil30Before": 9.8,
+   "soil30After": 54.6
+  },
+  {
+   "uuid": "bb0a06a3-3faf-4ca8-8d61-842f17996c71",
+   "district": "Prakasam",
+   "mandal": "Kurichedu",
+   "rainBeforeMm": 111.2,
+   "rainAfterMm": 111.2,
+   "soil30Before": 3.5,
+   "soil30After": 19.5
+  },
+  {
+   "uuid": "b8f987f0-0ebb-4525-8c0d-71d9dfcf8114",
+   "district": "Prakasam",
+   "mandal": "Lingasamudram",
+   "rainBeforeMm": 302.9,
+   "rainAfterMm": 311.1,
+   "soil30Before": 68.7,
+   "soil30After": 77.7
+  },
+  {
+   "uuid": "1f1a0308-cc35-4ce1-9a64-ad936138b187",
+   "district": "Prakasam",
+   "mandal": "Maddipadu",
+   "rainBeforeMm": 152.6,
+   "rainAfterMm": 152.7,
+   "soil30Before": 56.5,
+   "soil30After": 50.4
+  },
+  {
+   "uuid": "1cdc0963-8371-459b-bfff-2f4c61e130a9",
+   "district": "Prakasam",
+   "mandal": "Marripudi",
+   "rainBeforeMm": 188.3,
+   "rainAfterMm": 192.2,
+   "soil30Before": 18.8,
+   "soil30After": 25.4
+  },
+  {
+   "uuid": "4156ba78-4e8f-430e-95fc-da8bb2be1b7a",
+   "district": "Prakasam",
+   "mandal": "Mundlamuru",
+   "rainBeforeMm": 142.4,
+   "rainAfterMm": 151.2,
+   "soil30Before": 22.9,
+   "soil30After": 31.4
+  },
+  {
+   "uuid": "9beff766-1eea-4e4e-9c16-7d80a6398abe",
+   "district": "Prakasam",
+   "mandal": "Naguluppalapadu",
+   "rainBeforeMm": 73.0,
+   "rainAfterMm": 73.6,
+   "soil30Before": 29.4,
+   "soil30After": 35.6
+  },
+  {
+   "uuid": "18faaca7-5d83-4b4f-bfc9-661cb2633b37",
+   "district": "Prakasam",
+   "mandal": "Ongole_Rural",
+   "rainBeforeMm": 225.4,
+   "rainAfterMm": 225.4,
+   "soil30Before": 28.6,
+   "soil30After": 39.9
+  },
+  {
+   "uuid": "c6dc222e-409f-42f1-94e0-32c57b57c43f",
+   "district": "Prakasam",
+   "mandal": "Ongole_Urban",
+   "rainBeforeMm": 200.5,
+   "rainAfterMm": 201.7,
+   "soil30Before": 9.6,
+   "soil30After": 30.5
+  },
+  {
+   "uuid": "53ec1a05-ff39-4a2a-8986-5d80823493b1",
+   "district": "Prakasam",
+   "mandal": "Ponnaluru",
+   "rainBeforeMm": 270.1,
+   "rainAfterMm": 271.6,
+   "soil30Before": 32.6,
+   "soil30After": 62.0
+  },
+  {
+   "uuid": "40241aa0-24cc-49ed-9f4c-69152554baac",
+   "district": "Prakasam",
+   "mandal": "Santhamaguluru",
+   "rainBeforeMm": 114.0,
+   "rainAfterMm": 115.5,
+   "soil30Before": 31.1,
+   "soil30After": 35.0
+  },
+  {
+   "uuid": "2c884d7b-bf67-420e-8942-4b937061667f",
+   "district": "Prakasam",
+   "mandal": "Santhanuthala Padu",
+   "rainBeforeMm": 320.7,
+   "rainAfterMm": 320.7,
+   "soil30Before": 90.9,
+   "soil30After": 70.0
+  },
+  {
+   "uuid": "95ea5ada-271e-4806-b129-b581dd402716",
+   "district": "Prakasam",
+   "mandal": "Singarayakonda",
+   "rainBeforeMm": 288.3,
+   "rainAfterMm": 304.5,
+   "soil30Before": 71.5,
+   "soil30After": 81.0
+  },
+  {
+   "uuid": "81dcea8a-923b-436c-9ba2-f71ebce16e01",
+   "district": "Prakasam",
+   "mandal": "Tangutur",
+   "rainBeforeMm": 306.5,
+   "rainAfterMm": 329.9,
+   "soil30Before": 55.7,
+   "soil30After": 75.0
+  },
+  {
+   "uuid": "e2d7220d-728c-4a00-a0bd-0e848a966980",
+   "district": "Prakasam",
+   "mandal": "Thallur",
+   "rainBeforeMm": 278.9,
+   "rainAfterMm": 282.7,
+   "soil30Before": 27.2,
+   "soil30After": 30.9
+  },
+  {
+   "uuid": "5c6f746c-8116-4b5e-b2b2-e78fe1a6eb43",
+   "district": "Prakasam",
+   "mandal": "Ulavapadu",
+   "rainBeforeMm": 304.5,
+   "rainAfterMm": 331.1,
+   "soil30Before": 68.9,
+   "soil30After": 79.0
+  },
+  {
+   "uuid": "0f86ede4-8a8b-44e7-b625-c27821d9765d",
+   "district": "Prakasam",
+   "mandal": "Voletivaripalem",
+   "rainBeforeMm": 258.3,
+   "rainAfterMm": 258.3,
+   "soil30Before": 63.5,
+   "soil30After": 67.8
+  },
+  {
+   "uuid": "75c1f82b-cd5b-4559-b6de-e0397d3b62b3",
+   "district": "Prakasam",
+   "mandal": "Zarugumilli",
+   "rainBeforeMm": 306.8,
+   "rainAfterMm": 309.9,
+   "soil30Before": 29.5,
+   "soil30After": 74.4
+  },
+  {
+   "uuid": "898d2321-da3d-4730-8ac9-77e47ec076e6",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "ATMAKUR (NELLORE)",
+   "rainBeforeMm": 265.5,
+   "rainAfterMm": 265.6,
+   "soil30Before": 83.3,
+   "soil30After": 87.9
+  },
+  {
+   "uuid": "ccc8313b-8677-4041-afba-0ffd855287da",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Allur",
+   "rainBeforeMm": 329.9,
+   "rainAfterMm": 353.4,
+   "soil30Before": 77.2,
+   "soil30After": 85.6
+  },
+  {
+   "uuid": "2d461eb2-abac-4d56-96aa-4dddc5836841",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Ananthasagaram",
+   "rainBeforeMm": 191.0,
+   "rainAfterMm": 198.8,
+   "soil30Before": 57.1,
+   "soil30After": 71.4
+  },
+  {
+   "uuid": "ef9733a7-6374-48b7-ba01-0cb68ad6b20d",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Anumasamudrampeta",
+   "rainBeforeMm": 311.6,
+   "rainAfterMm": 314.2,
+   "soil30Before": 80.8,
+   "soil30After": 89.9
+  },
+  {
+   "uuid": "ca478743-03fe-49ea-abf9-73bd3bac2b28",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Bogole",
+   "rainBeforeMm": 324.4,
+   "rainAfterMm": 336.5,
+   "soil30Before": 73.4,
+   "soil30After": 82.7
+  },
+  {
+   "uuid": "1e38b3b1-2c8a-4dff-a43f-006c3d3e3539",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Buchireddipalem",
+   "rainBeforeMm": 339.9,
+   "rainAfterMm": 341.0,
+   "soil30Before": 76.5,
+   "soil30After": 81.9
+  },
+  {
+   "uuid": "ec9974b7-b49b-46d6-ad26-687d9d90f1ed",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Chejerla",
+   "rainBeforeMm": 377.5,
+   "rainAfterMm": 379.3,
+   "soil30Before": 94.2,
+   "soil30After": 89.8
+  },
+  {
+   "uuid": "15b3a31f-1350-47aa-997d-1aedb5027e0c",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Chillakur",
+   "rainBeforeMm": 606.7,
+   "rainAfterMm": 607.0,
+   "soil30Before": 100.0,
+   "soil30After": 95.4
+  },
+  {
+   "uuid": "43c8b867-37d4-47cb-b2d8-dbaacc9a0c68",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Dagadarthi",
+   "rainBeforeMm": 270.8,
+   "rainAfterMm": 277.7,
+   "soil30Before": 63.1,
+   "soil30After": 78.0
+  },
+  {
+   "uuid": "4611c1e3-2506-42de-b995-12c20cf93a92",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Duttalur",
+   "rainBeforeMm": 281.6,
+   "rainAfterMm": 289.2,
+   "soil30Before": 56.4,
+   "soil30After": 75.6
+  },
+  {
+   "uuid": "bff9cb90-8c08-4510-bfde-fa69bdd3774e",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Gudur",
+   "rainBeforeMm": 530.8,
+   "rainAfterMm": 530.8,
+   "soil30Before": 100.0,
+   "soil30After": 96.2
+  },
+  {
+   "uuid": "a1ed1458-340e-46c4-88ca-a50acaff36e0",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Indukurpet",
+   "rainBeforeMm": 363.0,
+   "rainAfterMm": 364.5,
+   "soil30Before": 88.9,
+   "soil30After": 88.5
+  },
+  {
+   "uuid": "6d6e4494-4e40-4895-83e0-cb63be62e7a1",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Jaladanki",
+   "rainBeforeMm": 247.6,
+   "rainAfterMm": 249.1,
+   "soil30Before": 71.3,
+   "soil30After": 83.3
+  },
+  {
+   "uuid": "b4a94b07-65d2-4bad-a6fa-c1af03e2bd7c",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "KONDAPURAM (NELLORE)",
+   "rainBeforeMm": 221.3,
+   "rainAfterMm": 249.4,
+   "soil30Before": 65.2,
+   "soil30After": 84.3
+  },
+  {
+   "uuid": "79fd8a8f-a4b2-461e-bb2a-2f1b367969a3",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Kaligiri",
+   "rainBeforeMm": 366.2,
+   "rainAfterMm": 372.5,
+   "soil30Before": 80.5,
+   "soil30After": 90.6
+  },
+  {
+   "uuid": "1e6b30a1-c575-4993-9fc9-e6fd565268db",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Kaluvoya",
+   "rainBeforeMm": 398.9,
+   "rainAfterMm": 407.4,
+   "soil30Before": 88.8,
+   "soil30After": 85.6
+  },
+  {
+   "uuid": "33ccc955-442e-43f0-839e-f3791e9246f4",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Kavali",
+   "rainBeforeMm": 296.5,
+   "rainAfterMm": 308.6,
+   "soil30Before": 92.0,
+   "soil30After": 93.7
+  },
+  {
+   "uuid": "f0f559c5-55ef-448d-aabd-7b2a305fc18c",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Kodavalur",
+   "rainBeforeMm": 317.4,
+   "rainAfterMm": 318.5,
+   "soil30Before": 72.1,
+   "soil30After": 81.8
+  },
+  {
+   "uuid": "a8f57895-5ee4-4aca-8dd1-0264d73248b2",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Kota",
+   "rainBeforeMm": 500.8,
+   "rainAfterMm": 504.7,
+   "soil30Before": 100.0,
+   "soil30After": 92.2
+  },
+  {
+   "uuid": "51fe0838-94a8-435e-8ae5-e52d7f8035ee",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Kovur",
+   "rainBeforeMm": 348.5,
+   "rainAfterMm": 348.5,
+   "soil30Before": 75.7,
+   "soil30After": 84.4
+  },
+  {
+   "uuid": "91b7a8f0-ce7e-4883-a0de-d5088755000f",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Manubolu",
+   "rainBeforeMm": 467.2,
+   "rainAfterMm": 467.2,
+   "soil30Before": 100.0,
+   "soil30After": 91.4
+  },
+  {
+   "uuid": "e65b22f5-a890-4ef0-9a8c-fe65586f217b",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Marripadu",
+   "rainBeforeMm": 239.4,
+   "rainAfterMm": 251.3,
+   "soil30Before": 39.2,
+   "soil30After": 64.6
+  },
+  {
+   "uuid": "78f60b9a-7a23-4769-a8e8-06950aa85839",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Muthukur",
+   "rainBeforeMm": 366.4,
+   "rainAfterMm": 366.4,
+   "soil30Before": 100.0,
+   "soil30After": 89.6
+  },
+  {
+   "uuid": "43329743-b736-4e13-a895-ca6d55e59286",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Nellore Rural",
+   "rainBeforeMm": 344.3,
+   "rainAfterMm": 345.8,
+   "soil30Before": 81.9,
+   "soil30After": 86.5
+  },
+  {
+   "uuid": "8a8582de-7e2e-488a-b8e7-4e9bf12d2c07",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Nellore Urban",
+   "rainBeforeMm": 365.7,
+   "rainAfterMm": 365.7,
+   "soil30Before": 78.9,
+   "soil30After": 88.8
+  },
+  {
+   "uuid": "a8f01e46-52af-4685-8435-607a840a6df3",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "PODLAKUR",
+   "rainBeforeMm": 421.7,
+   "rainAfterMm": 425.3,
+   "soil30Before": 96.1,
+   "soil30After": 93.6
+  },
+  {
+   "uuid": "355b24dc-466f-4d14-9a4c-578a0514ea68",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Rapur",
+   "rainBeforeMm": 423.7,
+   "rainAfterMm": 463.9,
+   "soil30Before": 86.1,
+   "soil30After": 82.6
+  },
+  {
+   "uuid": "c64308f3-95a9-4aff-ad68-fb66b70983d9",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Sangam",
+   "rainBeforeMm": 354.5,
+   "rainAfterMm": 355.9,
+   "soil30Before": 75.1,
+   "soil30After": 82.6
+  },
+  {
+   "uuid": "4056173c-5c19-40f4-8396-d3e28f287c48",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Seetharamapuram",
+   "rainBeforeMm": 372.2,
+   "rainAfterMm": 372.9,
+   "soil30Before": 66.9,
+   "soil30After": 58.7
+  },
+  {
+   "uuid": "5b93e4bd-7f87-4136-b8ff-244e73bcf5f1",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Sydapuram",
+   "rainBeforeMm": 453.7,
+   "rainAfterMm": 496.0,
+   "soil30Before": 99.9,
+   "soil30After": 97.6
+  },
+  {
+   "uuid": "cb4ab750-5f8a-4c3b-8cf1-2fbda359e275",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Thotapalligudur",
+   "rainBeforeMm": 448.8,
+   "rainAfterMm": 449.9,
+   "soil30Before": 98.0,
+   "soil30After": 89.8
+  },
+  {
+   "uuid": "6e0cc489-ffda-4170-9fe6-45f865d10fcf",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Udayagiri",
+   "rainBeforeMm": 346.6,
+   "rainAfterMm": 351.6,
+   "soil30Before": 61.8,
+   "soil30After": 71.2
+  },
+  {
+   "uuid": "6eac5327-f620-44b5-a668-5cc82387095f",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Varikuntapadu",
+   "rainBeforeMm": 226.8,
+   "rainAfterMm": 227.7,
+   "soil30Before": 57.4,
+   "soil30After": 71.9
+  },
+  {
+   "uuid": "b3ff3c1d-ae0a-41c3-9514-a59730fa78c7",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Venkatachalam",
+   "rainBeforeMm": 391.1,
+   "rainAfterMm": 391.1,
+   "soil30Before": 96.2,
+   "soil30After": 90.0
+  },
+  {
+   "uuid": "a7beae2a-da54-49b9-88b4-d43593ee65aa",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Vidavalur",
+   "rainBeforeMm": 318.7,
+   "rainAfterMm": 318.9,
+   "soil30Before": 86.5,
+   "soil30After": 86.2
+  },
+  {
+   "uuid": "4534f557-5e7f-4d86-812c-6bb90b112263",
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandal": "Vinjamur",
+   "rainBeforeMm": 369.2,
+   "rainAfterMm": 369.2,
+   "soil30Before": 68.8,
+   "soil30After": 84.1
+  },
+  {
+   "uuid": "f99060f1-3324-40eb-afe8-b93881c34e64",
+   "district": "Sri Sathya Sai",
+   "mandal": "Agali",
+   "rainBeforeMm": 213.8,
+   "rainAfterMm": 223.8,
+   "soil30Before": 39.4,
+   "soil30After": 29.4
+  },
+  {
+   "uuid": "6f4e05db-fec9-44ef-b911-86b92eed9710",
+   "district": "Sri Sathya Sai",
+   "mandal": "Amadagur",
+   "rainBeforeMm": 120.4,
+   "rainAfterMm": 158.1,
+   "soil30Before": 47.2,
+   "soil30After": 61.0
+  },
+  {
+   "uuid": "0f265ea9-3ee2-4122-8bea-bacf4f8da6ee",
+   "district": "Sri Sathya Sai",
+   "mandal": "Amarapuram",
+   "rainBeforeMm": 206.8,
+   "rainAfterMm": 206.8,
+   "soil30Before": 13.9,
+   "soil30After": 6.1
+  },
+  {
+   "uuid": "1615959b-b996-4415-95e0-c1fb2a5f2b3a",
+   "district": "Sri Sathya Sai",
+   "mandal": "Bathalapalle",
+   "rainBeforeMm": 225.4,
+   "rainAfterMm": 236.8,
+   "soil30Before": 28.4,
+   "soil30After": 17.4
+  },
+  {
+   "uuid": "23b34c2e-9f77-4102-9ff2-ba50259f0512",
+   "district": "Sri Sathya Sai",
+   "mandal": "Bukkapatnam",
+   "rainBeforeMm": 200.8,
+   "rainAfterMm": 213.9,
+   "soil30Before": 28.1,
+   "soil30After": 27.7
+  },
+  {
+   "uuid": "bcc3d6c3-8853-4ecd-8e8e-7c3285091830",
+   "district": "Sri Sathya Sai",
+   "mandal": "CHENNE KOTHAPALLE",
+   "rainBeforeMm": 153.4,
+   "rainAfterMm": 158.1,
+   "soil30Before": 20.4,
+   "soil30After": 11.8
+  },
+  {
+   "uuid": "930c3efb-a22e-49b6-9fb4-938997003505",
+   "district": "Sri Sathya Sai",
+   "mandal": "Chilamathur",
+   "rainBeforeMm": 209.6,
+   "rainAfterMm": 254.2,
+   "soil30Before": 39.7,
+   "soil30After": 66.8
+  },
+  {
+   "uuid": "d8d4e78e-3240-457f-a6fc-84d07203312b",
+   "district": "Sri Sathya Sai",
+   "mandal": "Dharmavaram",
+   "rainBeforeMm": 168.6,
+   "rainAfterMm": 182.4,
+   "soil30Before": 19.7,
+   "soil30After": 17.2
+  },
+  {
+   "uuid": "7ea7687e-bd89-4334-8228-11325120c16b",
+   "district": "Sri Sathya Sai",
+   "mandal": "Gandlapenta",
+   "rainBeforeMm": 194.7,
+   "rainAfterMm": 214.3,
+   "soil30Before": 59.7,
+   "soil30After": 78.0
+  },
+  {
+   "uuid": "9337c56a-5418-4a85-9803-d96a82cbed83",
+   "district": "Sri Sathya Sai",
+   "mandal": "Gorantla",
+   "rainBeforeMm": 231.2,
+   "rainAfterMm": 281.1,
+   "soil30Before": 32.8,
+   "soil30After": 58.1
+  },
+  {
+   "uuid": "822c2af5-c57b-491b-b30f-588d315973a9",
+   "district": "Sri Sathya Sai",
+   "mandal": "Gudibanda",
+   "rainBeforeMm": 189.6,
+   "rainAfterMm": 189.6,
+   "soil30Before": 20.3,
+   "soil30After": 10.2
+  },
+  {
+   "uuid": "6d3f1283-447f-46a5-826e-df92820ba6a6",
+   "district": "Sri Sathya Sai",
+   "mandal": "Hindupur",
+   "rainBeforeMm": 276.8,
+   "rainAfterMm": 290.6,
+   "soil30Before": 23.0,
+   "soil30After": 22.5
+  },
+  {
+   "uuid": "404501cf-ec66-4da7-b255-65f6db248238",
+   "district": "Sri Sathya Sai",
+   "mandal": "Kadiri",
+   "rainBeforeMm": 217.6,
+   "rainAfterMm": 256.7,
+   "soil30Before": 54.8,
+   "soil30After": 76.0
+  },
+  {
+   "uuid": "50b89b3d-3ee4-4356-9aaf-7a91bc960f10",
+   "district": "Sri Sathya Sai",
+   "mandal": "Kanaganapalle",
+   "rainBeforeMm": 86.0,
+   "rainAfterMm": 88.9,
+   "soil30Before": 5.6,
+   "soil30After": 7.5
+  },
+  {
+   "uuid": "7df1fbdf-ea26-4dba-8f27-88a951d3e332",
+   "district": "Sri Sathya Sai",
+   "mandal": "Kothacheruvu",
+   "rainBeforeMm": 338.2,
+   "rainAfterMm": 344.4,
+   "soil30Before": 38.4,
+   "soil30After": 29.0
+  },
+  {
+   "uuid": "821e61e1-2f28-489e-943c-b154a830eaa5",
+   "district": "Sri Sathya Sai",
+   "mandal": "Lepakshi",
+   "rainBeforeMm": 184.1,
+   "rainAfterMm": 191.3,
+   "soil30Before": 22.5,
+   "soil30After": 21.4
+  },
+  {
+   "uuid": "4df6187e-7e58-4d58-b41e-fbd2134e3f28",
+   "district": "Sri Sathya Sai",
+   "mandal": "Madakasira",
+   "rainBeforeMm": 205.1,
+   "rainAfterMm": 214.6,
+   "soil30Before": 17.8,
+   "soil30After": 19.4
+  },
+  {
+   "uuid": "e3618e0b-5931-48c1-ab19-b262bc7eb425",
+   "district": "Sri Sathya Sai",
+   "mandal": "Mudigubba",
+   "rainBeforeMm": 132.4,
+   "rainAfterMm": 140.1,
+   "soil30Before": 19.5,
+   "soil30After": 25.9
+  },
+  {
+   "uuid": "6b219d0a-95ef-49d1-a33e-46b7048262e3",
+   "district": "Sri Sathya Sai",
+   "mandal": "Nallacheruvu",
+   "rainBeforeMm": 293.8,
+   "rainAfterMm": 321.0,
+   "soil30Before": 70.7,
+   "soil30After": 86.4
+  },
+  {
+   "uuid": "b6b6dd73-7fcd-4ead-8ba4-f0d5e1cece32",
+   "district": "Sri Sathya Sai",
+   "mandal": "Nallamada",
+   "rainBeforeMm": 271.0,
+   "rainAfterMm": 292.5,
+   "soil30Before": 24.0,
+   "soil30After": 44.3
+  },
+  {
+   "uuid": "0d801728-51a8-4c4b-8e79-320d6687d3e7",
+   "district": "Sri Sathya Sai",
+   "mandal": "Nambulipulikunta",
+   "rainBeforeMm": 153.8,
+   "rainAfterMm": 183.9,
+   "soil30Before": 66.9,
+   "soil30After": 80.9
+  },
+  {
+   "uuid": "62d1693d-ec7c-49b1-980b-21c066545163",
+   "district": "Sri Sathya Sai",
+   "mandal": "Obuladevaracheruvu",
+   "rainBeforeMm": 188.0,
+   "rainAfterMm": 209.3,
+   "soil30Before": 33.4,
+   "soil30After": 46.7
+  },
+  {
+   "uuid": "7a0889d3-537a-40aa-b72c-0446e003eb9e",
+   "district": "Sri Sathya Sai",
+   "mandal": "PENU KONDA",
+   "rainBeforeMm": 175.3,
+   "rainAfterMm": 176.0,
+   "soil30Before": 15.2,
+   "soil30After": 6.6
+  },
+  {
+   "uuid": "8a00be4d-b4eb-4444-9097-b4680244fc2c",
+   "district": "Sri Sathya Sai",
+   "mandal": "Parigi",
+   "rainBeforeMm": 128.8,
+   "rainAfterMm": 144.6,
+   "soil30Before": 19.4,
+   "soil30After": 18.9
+  },
+  {
+   "uuid": "2764bcee-ae18-46a3-ad8a-b20deb8e7406",
+   "district": "Sri Sathya Sai",
+   "mandal": "Puttaparthi",
+   "rainBeforeMm": 210.4,
+   "rainAfterMm": 239.2,
+   "soil30Before": 37.0,
+   "soil30After": 46.1
+  },
+  {
+   "uuid": "ccf028b5-254d-4dfe-a9bc-d62504d5ea57",
+   "district": "Sri Sathya Sai",
+   "mandal": "Ramagiri",
+   "rainBeforeMm": 92.0,
+   "rainAfterMm": 116.1,
+   "soil30Before": 9.1,
+   "soil30After": 15.7
+  },
+  {
+   "uuid": "afa36916-7df9-477e-9bb4-370e2bac5cee",
+   "district": "Sri Sathya Sai",
+   "mandal": "Roddam",
+   "rainBeforeMm": 160.7,
+   "rainAfterMm": 166.7,
+   "soil30Before": 7.1,
+   "soil30After": 10.0
+  },
+  {
+   "uuid": "a37b2e1b-1987-4e3d-91a6-b6873d856d7f",
+   "district": "Sri Sathya Sai",
+   "mandal": "Rolla",
+   "rainBeforeMm": 211.5,
+   "rainAfterMm": 217.1,
+   "soil30Before": 23.1,
+   "soil30After": 18.9
+  },
+  {
+   "uuid": "e9a71342-f142-4daf-9eff-f17779f38e03",
+   "district": "Sri Sathya Sai",
+   "mandal": "Somandepalle",
+   "rainBeforeMm": 200.5,
+   "rainAfterMm": 204.3,
+   "soil30Before": 12.3,
+   "soil30After": 10.2
+  },
+  {
+   "uuid": "f9fa4689-336c-4866-bd39-1322f1b93b87",
+   "district": "Sri Sathya Sai",
+   "mandal": "Tadimarri",
+   "rainBeforeMm": 225.1,
+   "rainAfterMm": 228.3,
+   "soil30Before": 27.2,
+   "soil30After": 21.5
+  },
+  {
+   "uuid": "6c9973d2-138a-4920-a40f-ec305ebc256f",
+   "district": "Sri Sathya Sai",
+   "mandal": "Talupula",
+   "rainBeforeMm": 169.8,
+   "rainAfterMm": 188.5,
+   "soil30Before": 57.2,
+   "soil30After": 70.5
+  },
+  {
+   "uuid": "7cb872fc-41b6-4510-a85a-86225f2f6e03",
+   "district": "Sri Sathya Sai",
+   "mandal": "Tanakal",
+   "rainBeforeMm": 180.5,
+   "rainAfterMm": 204.4,
+   "soil30Before": 48.1,
+   "soil30After": 63.9
+  },
+  {
+   "uuid": "4e85eba6-935f-4e34-a1dc-9bce551189ca",
+   "district": "Srikakulam",
+   "mandal": "Amadalavalasa",
+   "rainBeforeMm": 512.4,
+   "rainAfterMm": 631.0,
+   "soil30Before": 55.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "1437f9bf-207a-4d7e-bd9d-0af79b6ef8db",
+   "district": "Srikakulam",
+   "mandal": "Burja",
+   "rainBeforeMm": 540.9,
+   "rainAfterMm": 639.8,
+   "soil30Before": 51.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "a6d6621e-0830-4757-aae3-0791053ccfcd",
+   "district": "Srikakulam",
+   "mandal": "Etcherla",
+   "rainBeforeMm": 553.0,
+   "rainAfterMm": 748.9,
+   "soil30Before": 54.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "cbf2afa2-fba0-4a1c-8b57-76775d774bdf",
+   "district": "Srikakulam",
+   "mandal": "GANGUVARI SINGADAM",
+   "rainBeforeMm": 509.1,
+   "rainAfterMm": 641.6,
+   "soil30Before": 51.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "15d24770-389a-4d4a-bea7-07393c154227",
+   "district": "Srikakulam",
+   "mandal": "Gara",
+   "rainBeforeMm": 346.9,
+   "rainAfterMm": 512.9,
+   "soil30Before": 65.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0484c56e-9564-4dd1-ad0a-92ca67dffb13",
+   "district": "Srikakulam",
+   "mandal": "Hiramandalam",
+   "rainBeforeMm": 973.6,
+   "rainAfterMm": 1101.4,
+   "soil30Before": 62.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "f17d2dbc-5f01-4602-aef4-8a273f9498b5",
+   "district": "Srikakulam",
+   "mandal": "Ichchapuram",
+   "rainBeforeMm": 588.1,
+   "rainAfterMm": 651.7,
+   "soil30Before": 63.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e335dbd6-029c-4be4-bf87-8953ba09e6e8",
+   "district": "Srikakulam",
+   "mandal": "Jalumuru",
+   "rainBeforeMm": 671.0,
+   "rainAfterMm": 824.4,
+   "soil30Before": 43.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0f6215d8-c44f-4542-9dae-bf9782428738",
+   "district": "Srikakulam",
+   "mandal": "KOTABOMMAL",
+   "rainBeforeMm": 715.1,
+   "rainAfterMm": 888.6,
+   "soil30Before": 59.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "878ee25b-7f5a-4ad0-9b30-3cfa081af3ec",
+   "district": "Srikakulam",
+   "mandal": "Kanchili",
+   "rainBeforeMm": 728.5,
+   "rainAfterMm": 855.0,
+   "soil30Before": 84.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "fd3005e3-f487-4b85-8e3b-b22b6372b990",
+   "district": "Srikakulam",
+   "mandal": "Kaviti",
+   "rainBeforeMm": 602.7,
+   "rainAfterMm": 710.6,
+   "soil30Before": 76.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "90078389-41b3-49d6-a9fa-667ecfabf197",
+   "district": "Srikakulam",
+   "mandal": "Kothuru",
+   "rainBeforeMm": 775.5,
+   "rainAfterMm": 930.7,
+   "soil30Before": 77.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "32b650ce-fb85-4575-86e8-5eea5fd7f6f8",
+   "district": "Srikakulam",
+   "mandal": "Lakshminarsupeta",
+   "rainBeforeMm": 931.8,
+   "rainAfterMm": 1034.9,
+   "soil30Before": 91.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0b3d5e90-3d74-4f7f-bf61-6fd844335f09",
+   "district": "Srikakulam",
+   "mandal": "Laveru",
+   "rainBeforeMm": 672.2,
+   "rainAfterMm": 828.7,
+   "soil30Before": 40.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "8adef9ed-a21d-446c-a9f2-d73d07445b85",
+   "district": "Srikakulam",
+   "mandal": "Mandasa",
+   "rainBeforeMm": 881.0,
+   "rainAfterMm": 1066.4,
+   "soil30Before": 95.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "411b2bb1-7001-4cc6-929b-62daece2bcf6",
+   "district": "Srikakulam",
+   "mandal": "Meliaputti",
+   "rainBeforeMm": 562.8,
+   "rainAfterMm": 697.7,
+   "soil30Before": 56.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "87820ced-e383-42af-bdb6-1811fabe6b3b",
+   "district": "Srikakulam",
+   "mandal": "Nandigam",
+   "rainBeforeMm": 534.5,
+   "rainAfterMm": 659.0,
+   "soil30Before": 63.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "7bd990ed-0131-497a-bfb4-434cfdca5552",
+   "district": "Srikakulam",
+   "mandal": "Narasannapeta",
+   "rainBeforeMm": 708.7,
+   "rainAfterMm": 851.1,
+   "soil30Before": 47.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "d7d2377c-6743-4dff-8da6-d01bb506b3f7",
+   "district": "Srikakulam",
+   "mandal": "Palasa",
+   "rainBeforeMm": 744.3,
+   "rainAfterMm": 915.3,
+   "soil30Before": 75.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2ddfc1ed-bbba-43ea-a34d-6003c9cf6e8c",
+   "district": "Srikakulam",
+   "mandal": "Pathapatnam",
+   "rainBeforeMm": 779.9,
+   "rainAfterMm": 926.7,
+   "soil30Before": 46.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e541e9fc-9308-42d4-8823-a9f05e6663a9",
+   "district": "Srikakulam",
+   "mandal": "Polaki",
+   "rainBeforeMm": 482.0,
+   "rainAfterMm": 605.5,
+   "soil30Before": 74.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "d5603b41-129c-4abd-9ddd-be351a920898",
+   "district": "Srikakulam",
+   "mandal": "Ponduru",
+   "rainBeforeMm": 443.3,
+   "rainAfterMm": 617.8,
+   "soil30Before": 41.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "012df7d6-23f4-4ce0-9f6c-783d00622084",
+   "district": "Srikakulam",
+   "mandal": "Ranastalam",
+   "rainBeforeMm": 614.0,
+   "rainAfterMm": 820.7,
+   "soil30Before": 36.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "3c5ef83e-5a7a-4d9f-a0ac-fcf443eb9264",
+   "district": "Srikakulam",
+   "mandal": "SRIKAKULAM MANDAL",
+   "rainBeforeMm": 536.6,
+   "rainAfterMm": 699.2,
+   "soil30Before": 53.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "9e407b1a-9d23-4f79-aca6-5e491c52b161",
+   "district": "Srikakulam",
+   "mandal": "Santhabommali",
+   "rainBeforeMm": 695.9,
+   "rainAfterMm": 869.2,
+   "soil30Before": 91.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0399a83d-8c2c-421e-9c98-5680c12de597",
+   "district": "Srikakulam",
+   "mandal": "Saravakota",
+   "rainBeforeMm": 424.3,
+   "rainAfterMm": 534.9,
+   "soil30Before": 41.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e36d0add-48de-4c0e-a841-d226fbfa671f",
+   "district": "Srikakulam",
+   "mandal": "Sarubujjili",
+   "rainBeforeMm": 875.9,
+   "rainAfterMm": 988.5,
+   "soil30Before": 66.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "97131478-1230-47b5-900f-cad49f41ed40",
+   "district": "Srikakulam",
+   "mandal": "Sompeta",
+   "rainBeforeMm": 743.5,
+   "rainAfterMm": 898.8,
+   "soil30Before": 98.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "a99cae35-482b-4cfc-aaa4-3c09777c130e",
+   "district": "Srikakulam",
+   "mandal": "Tekkali",
+   "rainBeforeMm": 770.9,
+   "rainAfterMm": 911.8,
+   "soil30Before": 62.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "375bff52-1d4e-4199-8290-93a38cb01de5",
+   "district": "Srikakulam",
+   "mandal": "Vajrapukothuru",
+   "rainBeforeMm": 619.0,
+   "rainAfterMm": 760.9,
+   "soil30Before": 86.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "89c6c9ae-0138-4831-9c21-ec86b5d11937",
+   "district": "Tirupati",
+   "mandal": "Balayapalle",
+   "rainBeforeMm": 459.3,
+   "rainAfterMm": 465.5,
+   "soil30Before": 100.0,
+   "soil30After": 98.9
+  },
+  {
+   "uuid": "ca649eb8-c061-41d9-8a64-c91a85fbd401",
+   "district": "Tirupati",
+   "mandal": "Buchinaidu Kandriga",
+   "rainBeforeMm": 862.8,
+   "rainAfterMm": 876.9,
+   "soil30Before": 100.0,
+   "soil30After": 91.7
+  },
+  {
+   "uuid": "101590b9-7f3a-45a2-8ba2-a36637a6bfc0",
+   "district": "Tirupati",
+   "mandal": "Chandragiri",
+   "rainBeforeMm": 318.4,
+   "rainAfterMm": 347.4,
+   "soil30Before": 71.0,
+   "soil30After": 74.7
+  },
+  {
+   "uuid": "673a9392-da34-44bf-8d8c-109537510359",
+   "district": "Tirupati",
+   "mandal": "Chinnagottigallu",
+   "rainBeforeMm": 366.4,
+   "rainAfterMm": 396.3,
+   "soil30Before": 74.5,
+   "soil30After": 78.2
+  },
+  {
+   "uuid": "4f9ae112-dadc-4f6f-915b-a341b67deb0a",
+   "district": "Tirupati",
+   "mandal": "Chittamur",
+   "rainBeforeMm": 600.4,
+   "rainAfterMm": 602.0,
+   "soil30Before": 100.0,
+   "soil30After": 93.6
+  },
+  {
+   "uuid": "14e380c6-02ba-4d2b-9cc5-12320e930347",
+   "district": "Tirupati",
+   "mandal": "Chitvel",
+   "rainBeforeMm": 269.5,
+   "rainAfterMm": 274.6,
+   "soil30Before": 58.3,
+   "soil30After": 50.2
+  },
+  {
+   "uuid": "23ae76b0-7108-4706-9b93-b3126c67021c",
+   "district": "Tirupati",
+   "mandal": "Dakkili",
+   "rainBeforeMm": 295.4,
+   "rainAfterMm": 309.7,
+   "soil30Before": 70.3,
+   "soil30After": 73.8
+  },
+  {
+   "uuid": "34d48b7d-5c3f-4fcd-a879-5291a6f817ce",
+   "district": "Tirupati",
+   "mandal": "Doravarisatram",
+   "rainBeforeMm": 745.5,
+   "rainAfterMm": 747.5,
+   "soil30Before": 100.0,
+   "soil30After": 96.0
+  },
+  {
+   "uuid": "0722a12d-24bd-40e0-953c-f824f5a3896c",
+   "district": "Tirupati",
+   "mandal": "K.V.B.Puram",
+   "rainBeforeMm": 443.9,
+   "rainAfterMm": 449.4,
+   "soil30Before": 97.1,
+   "soil30After": 85.1
+  },
+  {
+   "uuid": "6287f6a9-b5a0-4f46-9ad8-94b104134e3b",
+   "district": "Tirupati",
+   "mandal": "Kodur",
+   "rainBeforeMm": 337.2,
+   "rainAfterMm": 348.9,
+   "soil30Before": 83.0,
+   "soil30After": 73.8
+  },
+  {
+   "uuid": "a1454dca-89e4-49c3-8a67-fcb279daf768",
+   "district": "Tirupati",
+   "mandal": "Nagalapuram",
+   "rainBeforeMm": 421.7,
+   "rainAfterMm": 451.3,
+   "soil30Before": 87.7,
+   "soil30After": 82.4
+  },
+  {
+   "uuid": "b85af7e3-d6ba-4b78-a998-5962eb8da4a7",
+   "district": "Tirupati",
+   "mandal": "Naidupet",
+   "rainBeforeMm": 567.6,
+   "rainAfterMm": 567.6,
+   "soil30Before": 100.0,
+   "soil30After": 93.5
+  },
+  {
+   "uuid": "7aa00c45-86fb-41d6-a4fb-3136ef92e7f5",
+   "district": "Tirupati",
+   "mandal": "Narayanavanam",
+   "rainBeforeMm": 419.4,
+   "rainAfterMm": 436.5,
+   "soil30Before": 98.6,
+   "soil30After": 93.9
+  },
+  {
+   "uuid": "724b8f41-79a8-4a4b-ad36-33a310c51d0b",
+   "district": "Tirupati",
+   "mandal": "Obulavaripalle",
+   "rainBeforeMm": 250.9,
+   "rainAfterMm": 256.2,
+   "soil30Before": 38.5,
+   "soil30After": 35.4
+  },
+  {
+   "uuid": "f8f55128-4ac7-4cfb-9ad1-3b1c55dacaa8",
+   "district": "Tirupati",
+   "mandal": "Ojili",
+   "rainBeforeMm": 515.7,
+   "rainAfterMm": 515.7,
+   "soil30Before": 100.0,
+   "soil30After": 96.5
+  },
+  {
+   "uuid": "6e0f8620-9aee-479e-a7a1-b20ed22b6717",
+   "district": "Tirupati",
+   "mandal": "PENAGALURU",
+   "rainBeforeMm": 541.9,
+   "rainAfterMm": 566.3,
+   "soil30Before": 75.2,
+   "soil30After": 75.6
+  },
+  {
+   "uuid": "a10f6e18-1cde-4180-bcd4-5b6410a17115",
+   "district": "Tirupati",
+   "mandal": "Pakala",
+   "rainBeforeMm": 393.0,
+   "rainAfterMm": 456.5,
+   "soil30Before": 79.9,
+   "soil30After": 90.5
+  },
+  {
+   "uuid": "690f6064-e9ab-4a51-9bab-a5bf8488ad62",
+   "district": "Tirupati",
+   "mandal": "Pellakur",
+   "rainBeforeMm": 616.9,
+   "rainAfterMm": 616.9,
+   "soil30Before": 100.0,
+   "soil30After": 89.7
+  },
+  {
+   "uuid": "0c329af1-c303-4fdf-bf10-8e16660b9cee",
+   "district": "Tirupati",
+   "mandal": "Pichatur",
+   "rainBeforeMm": 328.6,
+   "rainAfterMm": 361.8,
+   "soil30Before": 92.3,
+   "soil30After": 94.9
+  },
+  {
+   "uuid": "a0f24f73-f5c3-4581-85ba-63209e94b0f8",
+   "district": "Tirupati",
+   "mandal": "Pullampeta",
+   "rainBeforeMm": 247.7,
+   "rainAfterMm": 281.0,
+   "soil30Before": 37.9,
+   "soil30After": 62.5
+  },
+  {
+   "uuid": "bd1be47a-ee93-4d17-96a6-5b170c08a019",
+   "district": "Tirupati",
+   "mandal": "Puttur",
+   "rainBeforeMm": 402.0,
+   "rainAfterMm": 421.9,
+   "soil30Before": 99.5,
+   "soil30After": 96.9
+  },
+  {
+   "uuid": "9b51ace6-4426-47bf-ad6b-94a4da4afc8a",
+   "district": "Tirupati",
+   "mandal": "RAMACHANDRAPURAM-17",
+   "rainBeforeMm": 385.3,
+   "rainAfterMm": 413.3,
+   "soil30Before": 84.5,
+   "soil30After": 84.9
+  },
+  {
+   "uuid": "a78240fe-37ba-4430-8bbf-c78290577a30",
+   "district": "Tirupati",
+   "mandal": "Renigunta",
+   "rainBeforeMm": 518.0,
+   "rainAfterMm": 555.5,
+   "soil30Before": 93.4,
+   "soil30After": 83.5
+  },
+  {
+   "uuid": "e18692e1-1cca-4eab-bc6a-69f53a8d687d",
+   "district": "Tirupati",
+   "mandal": "Satyavedu",
+   "rainBeforeMm": 526.2,
+   "rainAfterMm": 562.1,
+   "soil30Before": 92.6,
+   "soil30After": 88.2
+  },
+  {
+   "uuid": "7f30f25d-01fe-4947-9def-e923e3afa40f",
+   "district": "Tirupati",
+   "mandal": "Srikalahasti",
+   "rainBeforeMm": 560.3,
+   "rainAfterMm": 572.8,
+   "soil30Before": 99.3,
+   "soil30After": 88.1
+  },
+  {
+   "uuid": "5a0fc526-ff59-4e57-8252-912fd70b38e3",
+   "district": "Tirupati",
+   "mandal": "Sullurpeta",
+   "rainBeforeMm": 649.4,
+   "rainAfterMm": 676.5,
+   "soil30Before": 100.0,
+   "soil30After": 93.8
+  },
+  {
+   "uuid": "d8f14f52-fb2e-4635-9755-1b72ebeb467b",
+   "district": "Tirupati",
+   "mandal": "Tada",
+   "rainBeforeMm": 675.6,
+   "rainAfterMm": 709.6,
+   "soil30Before": 100.0,
+   "soil30After": 91.1
+  },
+  {
+   "uuid": "289f9216-502e-4f04-8b6e-3a10e4754d39",
+   "district": "Tirupati",
+   "mandal": "Thottambedu",
+   "rainBeforeMm": 437.8,
+   "rainAfterMm": 442.7,
+   "soil30Before": 100.0,
+   "soil30After": 89.7
+  },
+  {
+   "uuid": "b19c12e2-eb8c-4d92-a8d7-22b46e87b86a",
+   "district": "Tirupati",
+   "mandal": "Tirupati (Rural)",
+   "rainBeforeMm": 354.4,
+   "rainAfterMm": 393.5,
+   "soil30Before": 90.5,
+   "soil30After": 84.2
+  },
+  {
+   "uuid": "d97f2a0c-d2a7-4fb5-a265-79ec3a53b8b9",
+   "district": "Tirupati",
+   "mandal": "Tirupati (Urban)",
+   "rainBeforeMm": 413.6,
+   "rainAfterMm": 428.5,
+   "soil30Before": 67.9,
+   "soil30After": 48.9
+  },
+  {
+   "uuid": "0aeb208d-b024-409e-9758-b2ed0f8d9fef",
+   "district": "Tirupati",
+   "mandal": "Vadamalapeta",
+   "rainBeforeMm": 541.7,
+   "rainAfterMm": 592.9,
+   "soil30Before": 100.0,
+   "soil30After": 98.9
+  },
+  {
+   "uuid": "e474aa14-6f58-4f60-813b-6f9e65e068eb",
+   "district": "Tirupati",
+   "mandal": "Vakadu",
+   "rainBeforeMm": 457.2,
+   "rainAfterMm": 458.4,
+   "soil30Before": 100.0,
+   "soil30After": 89.2
+  },
+  {
+   "uuid": "18834ee4-d598-4412-99a7-be15d90b144e",
+   "district": "Tirupati",
+   "mandal": "Varadaiahpalem",
+   "rainBeforeMm": 664.5,
+   "rainAfterMm": 683.3,
+   "soil30Before": 98.7,
+   "soil30After": 90.8
+  },
+  {
+   "uuid": "f7ac1823-8863-4a5a-9a4a-27b6a14d1582",
+   "district": "Tirupati",
+   "mandal": "Venkatagiri",
+   "rainBeforeMm": 461.0,
+   "rainAfterMm": 477.9,
+   "soil30Before": 93.6,
+   "soil30After": 84.7
+  },
+  {
+   "uuid": "453af372-387e-464e-910c-d050c506595c",
+   "district": "Tirupati",
+   "mandal": "YARRAVARIPALEM",
+   "rainBeforeMm": 407.8,
+   "rainAfterMm": 412.6,
+   "soil30Before": 62.6,
+   "soil30After": 56.0
+  },
+  {
+   "uuid": "bbde84c5-d4bc-4ec0-bd61-874fc3642112",
+   "district": "Tirupati",
+   "mandal": "Yerpedu",
+   "rainBeforeMm": 441.4,
+   "rainAfterMm": 452.5,
+   "soil30Before": 100.0,
+   "soil30After": 91.4
+  },
+  {
+   "uuid": "0699b7a6-d4a3-4072-a974-ad799a7894cb",
+   "district": "Visakhapatnam",
+   "mandal": "Anandapuram",
+   "rainBeforeMm": 609.4,
+   "rainAfterMm": 799.9,
+   "soil30Before": 79.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b55ded5e-21e9-426d-a6aa-bb021bcde3d6",
+   "district": "Visakhapatnam",
+   "mandal": "Bheemunipatnam",
+   "rainBeforeMm": 491.6,
+   "rainAfterMm": 699.5,
+   "soil30Before": 61.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "50449311-079d-4baa-9ac6-c388285eceb8",
+   "district": "Visakhapatnam",
+   "mandal": "Gajuwaka",
+   "rainBeforeMm": 535.6,
+   "rainAfterMm": 738.7,
+   "soil30Before": 95.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "68f18a00-3104-4b6c-9054-868bc4ef057b",
+   "district": "Visakhapatnam",
+   "mandal": "Gopalapatnam (m)",
+   "rainBeforeMm": 700.2,
+   "rainAfterMm": 989.8,
+   "soil30Before": 99.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "0c6a9b03-b77b-4601-9e8c-e996ef7ea47e",
+   "district": "Visakhapatnam",
+   "mandal": "Maharanipeta",
+   "rainBeforeMm": 721.0,
+   "rainAfterMm": 928.3,
+   "soil30Before": 89.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "cc8d1c38-c5f1-4fc4-8a2d-9eb67ad478a4",
+   "district": "Visakhapatnam",
+   "mandal": "Mulagada",
+   "rainBeforeMm": 646.4,
+   "rainAfterMm": 846.8,
+   "soil30Before": 98.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "7e298ad9-4507-4b8e-b79d-a4463a581e24",
+   "district": "Visakhapatnam",
+   "mandal": "Padmanabham",
+   "rainBeforeMm": 554.9,
+   "rainAfterMm": 775.5,
+   "soil30Before": 70.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "aedb595b-b7af-42cb-8b64-22cb193cd9cd",
+   "district": "Visakhapatnam",
+   "mandal": "Pedagantyada",
+   "rainBeforeMm": 704.8,
+   "rainAfterMm": 915.5,
+   "soil30Before": 98.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b95ee233-1e54-49fd-b468-d29425036d49",
+   "district": "Visakhapatnam",
+   "mandal": "Pendurthi",
+   "rainBeforeMm": 575.3,
+   "rainAfterMm": 822.3,
+   "soil30Before": 72.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "dd017499-816b-4ffa-b100-112b6b17a4ea",
+   "district": "Visakhapatnam",
+   "mandal": "Seethammadhara",
+   "rainBeforeMm": 622.7,
+   "rainAfterMm": 812.7,
+   "soil30Before": 58.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "8a3e7f5f-86a5-4c04-a18d-6ffa7ae66a01",
+   "district": "Visakhapatnam",
+   "mandal": "Visakhapatnam (Rural)",
+   "rainBeforeMm": 601.6,
+   "rainAfterMm": 834.1,
+   "soil30Before": 75.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "e7d72d0e-efe3-42e5-b263-119b4651d77b",
+   "district": "Vizianagaram",
+   "mandal": "BHOGHAPURAM",
+   "rainBeforeMm": 499.6,
+   "rainAfterMm": 767.7,
+   "soil30Before": 63.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "112c236a-6f63-4757-9ef7-6ad1ab22d324",
+   "district": "Vizianagaram",
+   "mandal": "Badangi",
+   "rainBeforeMm": 604.5,
+   "rainAfterMm": 765.7,
+   "soil30Before": 62.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "19cf5dff-2e61-4bb3-adbf-ca3f258a5e3d",
+   "district": "Vizianagaram",
+   "mandal": "Bobbili",
+   "rainBeforeMm": 785.7,
+   "rainAfterMm": 944.2,
+   "soil30Before": 65.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "c746e90d-682c-44d1-a0e8-7fcd25600589",
+   "district": "Vizianagaram",
+   "mandal": "Bondapalle",
+   "rainBeforeMm": 584.7,
+   "rainAfterMm": 749.6,
+   "soil30Before": 38.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2ed576e5-8d55-401c-83e4-47c9194d0025",
+   "district": "Vizianagaram",
+   "mandal": "Cheepurupalle",
+   "rainBeforeMm": 611.4,
+   "rainAfterMm": 765.4,
+   "soil30Before": 65.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "520ad93f-d6fd-4e6f-823e-3d17ca979e67",
+   "district": "Vizianagaram",
+   "mandal": "Dattirajeru",
+   "rainBeforeMm": 599.9,
+   "rainAfterMm": 773.3,
+   "soil30Before": 45.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "5fffd8a5-efcb-4267-b669-6082e9fd1f52",
+   "district": "Vizianagaram",
+   "mandal": "Denkada",
+   "rainBeforeMm": 576.8,
+   "rainAfterMm": 772.0,
+   "soil30Before": 42.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "d1154a62-bcf6-4ab1-8c86-b9c80358b3d2",
+   "district": "Vizianagaram",
+   "mandal": "Gajapathinagaram",
+   "rainBeforeMm": 584.9,
+   "rainAfterMm": 787.1,
+   "soil30Before": 37.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "280bcc72-63e5-4e0f-b394-5c052c764673",
+   "district": "Vizianagaram",
+   "mandal": "Gantyada",
+   "rainBeforeMm": 604.0,
+   "rainAfterMm": 783.0,
+   "soil30Before": 36.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "32bec69c-fc45-4f77-a44c-e65556bbae0f",
+   "district": "Vizianagaram",
+   "mandal": "Garividi",
+   "rainBeforeMm": 677.7,
+   "rainAfterMm": 897.8,
+   "soil30Before": 58.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "23641e0b-7aa7-4fec-be89-2b08baebe2cf",
+   "district": "Vizianagaram",
+   "mandal": "Gurla",
+   "rainBeforeMm": 652.3,
+   "rainAfterMm": 859.2,
+   "soil30Before": 50.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "295fc294-754e-4aa4-8533-1bdc829106da",
+   "district": "Vizianagaram",
+   "mandal": "Jami",
+   "rainBeforeMm": 844.6,
+   "rainAfterMm": 1088.9,
+   "soil30Before": 45.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "095c405f-ccaf-4d01-8bd4-884279173303",
+   "district": "Vizianagaram",
+   "mandal": "Kothavalasa",
+   "rainBeforeMm": 639.9,
+   "rainAfterMm": 943.0,
+   "soil30Before": 89.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "339d9833-eef2-4d3e-8509-641eb3bec96b",
+   "district": "Vizianagaram",
+   "mandal": "Lakkavarapukota",
+   "rainBeforeMm": 720.6,
+   "rainAfterMm": 971.9,
+   "soil30Before": 60.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "dba7058f-cf58-448a-8563-9c72f12cdde1",
+   "district": "Vizianagaram",
+   "mandal": "Mentada",
+   "rainBeforeMm": 541.0,
+   "rainAfterMm": 741.5,
+   "soil30Before": 44.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "c712bc08-2c7e-4fad-8616-45f2eb46d8fb",
+   "district": "Vizianagaram",
+   "mandal": "Merakamudidam",
+   "rainBeforeMm": 614.3,
+   "rainAfterMm": 780.8,
+   "soil30Before": 67.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "cd665f90-d82a-4332-acac-7171af3a6ce7",
+   "district": "Vizianagaram",
+   "mandal": "Nellimarla",
+   "rainBeforeMm": 568.8,
+   "rainAfterMm": 777.8,
+   "soil30Before": 50.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2ceca0e3-3d2f-4bb6-b5e5-5eeb2a7b8252",
+   "district": "Vizianagaram",
+   "mandal": "Pusapatirega",
+   "rainBeforeMm": 498.1,
+   "rainAfterMm": 676.4,
+   "soil30Before": 56.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "3e7f8704-30b8-42e3-bfb2-f894a77c4cf1",
+   "district": "Vizianagaram",
+   "mandal": "Rajam",
+   "rainBeforeMm": 696.1,
+   "rainAfterMm": 841.3,
+   "soil30Before": 50.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "b4770314-bc8f-44d1-8a86-57dcc5a2c293",
+   "district": "Vizianagaram",
+   "mandal": "Ramabhadrapuram",
+   "rainBeforeMm": 620.5,
+   "rainAfterMm": 784.6,
+   "soil30Before": 66.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "c918d31f-532a-4099-8662-334e2a61efb8",
+   "district": "Vizianagaram",
+   "mandal": "Regidiamadalavalasa",
+   "rainBeforeMm": 528.9,
+   "rainAfterMm": 648.8,
+   "soil30Before": 64.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "462ce093-fc32-4e8c-bb58-4976059bd1e5",
+   "district": "Vizianagaram",
+   "mandal": "Santhakaviti",
+   "rainBeforeMm": 416.0,
+   "rainAfterMm": 534.5,
+   "soil30Before": 64.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "9c69ed4d-1b08-4cf1-816e-e6b2d884d34d",
+   "district": "Vizianagaram",
+   "mandal": "Srungavarapukota",
+   "rainBeforeMm": 643.0,
+   "rainAfterMm": 872.7,
+   "soil30Before": 34.6,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "3a746041-a5e4-4c03-b324-c4eba262c311",
+   "district": "Vizianagaram",
+   "mandal": "Therlam",
+   "rainBeforeMm": 551.6,
+   "rainAfterMm": 674.4,
+   "soil30Before": 49.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "fb171688-0f26-43cf-a285-a177fd1f57ae",
+   "district": "Vizianagaram",
+   "mandal": "Vangara",
+   "rainBeforeMm": 581.9,
+   "rainAfterMm": 711.7,
+   "soil30Before": 43.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "d4d6ee30-8f22-4fa3-b24c-3d1a8969fc7f",
+   "district": "Vizianagaram",
+   "mandal": "Vepada",
+   "rainBeforeMm": 789.5,
+   "rainAfterMm": 1033.4,
+   "soil30Before": 67.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "95d348f4-2a6b-4250-82cf-511cd090ddf4",
+   "district": "Vizianagaram",
+   "mandal": "Vizianagaram Rural",
+   "rainBeforeMm": 664.8,
+   "rainAfterMm": 867.6,
+   "soil30Before": 38.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "7dd7eaf5-aeda-464f-95e1-9193230825e8",
+   "district": "Vizianagaram",
+   "mandal": "Vizianagaram Urban",
+   "rainBeforeMm": 594.7,
+   "rainAfterMm": 784.6,
+   "soil30Before": 44.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "1c291902-8518-4eac-9b21-b268e5b91fac",
+   "district": "West Godavari",
+   "mandal": "AKIVEEDU",
+   "rainBeforeMm": 452.8,
+   "rainAfterMm": 494.5,
+   "soil30Before": 61.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "be738fec-0f30-422a-b4e2-d9a441d7f7e6",
+   "district": "West Godavari",
+   "mandal": "Achanta",
+   "rainBeforeMm": 630.7,
+   "rainAfterMm": 670.0,
+   "soil30Before": 37.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "074cd2a2-561b-4801-9baf-0d9a6637936e",
+   "district": "West Godavari",
+   "mandal": "Attili",
+   "rainBeforeMm": 410.2,
+   "rainAfterMm": 445.3,
+   "soil30Before": 26.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "02720798-48c8-4eb9-8c5d-73747924a886",
+   "district": "West Godavari",
+   "mandal": "Bhimavaram",
+   "rainBeforeMm": 634.2,
+   "rainAfterMm": 671.5,
+   "soil30Before": 85.2,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "f54481de-39de-4bfb-ab10-9692a09cd814",
+   "district": "West Godavari",
+   "mandal": "Ganapavaram",
+   "rainBeforeMm": 683.5,
+   "rainAfterMm": 717.8,
+   "soil30Before": 33.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "21791f6b-f20e-4152-8ef3-19c6a6b6d731",
+   "district": "West Godavari",
+   "mandal": "Iragavaram",
+   "rainBeforeMm": 735.5,
+   "rainAfterMm": 817.7,
+   "soil30Before": 48.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "33af22cc-d7fa-4d7a-9079-1a06987e34f8",
+   "district": "West Godavari",
+   "mandal": "Kalla",
+   "rainBeforeMm": 452.4,
+   "rainAfterMm": 476.1,
+   "soil30Before": 66.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "7b36a6cd-4481-4e20-83dd-e13a335231d7",
+   "district": "West Godavari",
+   "mandal": "Mogalthur",
+   "rainBeforeMm": 561.6,
+   "rainAfterMm": 611.4,
+   "soil30Before": 72.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "2a3816a9-2f9b-43bf-a2b3-253ec67e87d7",
+   "district": "West Godavari",
+   "mandal": "Narasapuram",
+   "rainBeforeMm": 639.5,
+   "rainAfterMm": 702.7,
+   "soil30Before": 84.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "52d21240-7287-4e9c-82cb-dfaa06c7cfe6",
+   "district": "West Godavari",
+   "mandal": "Palacoderu",
+   "rainBeforeMm": 600.9,
+   "rainAfterMm": 631.1,
+   "soil30Before": 53.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "ccdf8be0-4a7b-49fb-bb1c-1283ef65518a",
+   "district": "West Godavari",
+   "mandal": "Palacole",
+   "rainBeforeMm": 732.8,
+   "rainAfterMm": 803.5,
+   "soil30Before": 6.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "a6eb2982-13e1-4ff4-8c37-3419c2587535",
+   "district": "West Godavari",
+   "mandal": "Pentapadu",
+   "rainBeforeMm": 606.7,
+   "rainAfterMm": 638.2,
+   "soil30Before": 16.5,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "bc24b3fc-6483-4aee-b9c3-586257a0e1b8",
+   "district": "West Godavari",
+   "mandal": "Penugonda",
+   "rainBeforeMm": 598.7,
+   "rainAfterMm": 665.7,
+   "soil30Before": 13.9,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "11fbc53d-92a1-4f05-98fb-876023ec60ab",
+   "district": "West Godavari",
+   "mandal": "Penumantra",
+   "rainBeforeMm": 596.1,
+   "rainAfterMm": 648.0,
+   "soil30Before": 19.1,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "53cfedb7-1be1-4726-925b-24263c725809",
+   "district": "West Godavari",
+   "mandal": "Poduru",
+   "rainBeforeMm": 664.6,
+   "rainAfterMm": 739.8,
+   "soil30Before": 15.7,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "dd9e80fb-7347-4742-b6dc-f794a45acd2a",
+   "district": "West Godavari",
+   "mandal": "Tadepalligudem",
+   "rainBeforeMm": 577.9,
+   "rainAfterMm": 610.0,
+   "soil30Before": 27.0,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "faa08eab-6c6e-4e29-b5d1-d482bce9424c",
+   "district": "West Godavari",
+   "mandal": "Tanuku",
+   "rainBeforeMm": 582.1,
+   "rainAfterMm": 612.5,
+   "soil30Before": 26.8,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "7e3099dc-47ba-4154-bd57-e4b642431037",
+   "district": "West Godavari",
+   "mandal": "Undi",
+   "rainBeforeMm": 668.1,
+   "rainAfterMm": 724.0,
+   "soil30Before": 48.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "fdf16d39-e262-4168-9884-4202db7a8483",
+   "district": "West Godavari",
+   "mandal": "Veeravasaram",
+   "rainBeforeMm": 635.6,
+   "rainAfterMm": 676.8,
+   "soil30Before": 44.3,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "84196691-4762-480a-98f0-3a03a843d7ba",
+   "district": "West Godavari",
+   "mandal": "Yelamanchili",
+   "rainBeforeMm": 568.4,
+   "rainAfterMm": 632.8,
+   "soil30Before": 83.4,
+   "soil30After": 100.0
+  },
+  {
+   "uuid": "f233623b-9ed5-409f-8fed-45484e8f3d5b",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Atlur",
+   "rainBeforeMm": 193.2,
+   "rainAfterMm": 194.6,
+   "soil30Before": 44.5,
+   "soil30After": 51.6
+  },
+  {
+   "uuid": "0c5a574d-1328-4e74-bce0-eee96333cc3a",
+   "district": "Y.S.R Kadapa",
+   "mandal": "B.Kodur",
+   "rainBeforeMm": 307.0,
+   "rainAfterMm": 311.9,
+   "soil30Before": 50.2,
+   "soil30After": 54.5
+  },
+  {
+   "uuid": "937635c9-a4a8-4cab-b426-b241b243f782",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Badvel",
+   "rainBeforeMm": 189.1,
+   "rainAfterMm": 189.9,
+   "soil30Before": 27.2,
+   "soil30After": 34.3
+  },
+  {
+   "uuid": "2ece002f-ccca-4abf-b9bd-f19c1fa0a07b",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Brahmamgarimattam",
+   "rainBeforeMm": 201.3,
+   "rainAfterMm": 217.2,
+   "soil30Before": 17.2,
+   "soil30After": 21.7
+  },
+  {
+   "uuid": "8ec07b4d-ae96-4094-9f6e-8020ef9e7898",
+   "district": "Y.S.R Kadapa",
+   "mandal": "CHAKNAYAPET",
+   "rainBeforeMm": 215.7,
+   "rainAfterMm": 234.3,
+   "soil30Before": 55.8,
+   "soil30After": 69.8
+  },
+  {
+   "uuid": "ca027cd5-145b-410c-bde1-ade69b701e19",
+   "district": "Y.S.R Kadapa",
+   "mandal": "CHINTHA KOMMADINNE",
+   "rainBeforeMm": 299.5,
+   "rainAfterMm": 304.3,
+   "soil30Before": 28.1,
+   "soil30After": 37.6
+  },
+  {
+   "uuid": "d861f269-5a7a-4063-8de0-b99ff024c71b",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Chapad",
+   "rainBeforeMm": 283.7,
+   "rainAfterMm": 284.5,
+   "soil30Before": 22.2,
+   "soil30After": 18.2
+  },
+  {
+   "uuid": "29e74ceb-159c-4601-8664-695f980af455",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Chennur",
+   "rainBeforeMm": 273.0,
+   "rainAfterMm": 276.5,
+   "soil30Before": 12.3,
+   "soil30After": 17.2
+  },
+  {
+   "uuid": "f6906fed-a15c-4ad5-bfbc-85c2e4108be9",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Duvvur",
+   "rainBeforeMm": 284.2,
+   "rainAfterMm": 284.2,
+   "soil30Before": 38.0,
+   "soil30After": 22.3
+  },
+  {
+   "uuid": "ca4876d4-b068-4eda-baed-16cfc71f6174",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Gopavaram",
+   "rainBeforeMm": 156.2,
+   "rainAfterMm": 156.2,
+   "soil30Before": 38.9,
+   "soil30After": 40.3
+  },
+  {
+   "uuid": "1303abc7-47ac-4c83-aae7-8084d54eff44",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Jammalamadugu",
+   "rainBeforeMm": 326.9,
+   "rainAfterMm": 371.1,
+   "soil30Before": 48.7,
+   "soil30After": 69.4
+  },
+  {
+   "uuid": "7305e42b-98d6-42df-9f40-abb8b193d0e4",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Kalasapadu",
+   "rainBeforeMm": 79.2,
+   "rainAfterMm": 79.2,
+   "soil30Before": 10.8,
+   "soil30After": 5.0
+  },
+  {
+   "uuid": "9a70af37-116e-4220-b581-f4c97c26d63f",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Kamalapuram",
+   "rainBeforeMm": 269.3,
+   "rainAfterMm": 280.8,
+   "soil30Before": 28.6,
+   "soil30After": 36.4
+  },
+  {
+   "uuid": "4d4821b8-7600-4f29-983f-50face4c70e3",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Khajipet",
+   "rainBeforeMm": 278.4,
+   "rainAfterMm": 284.0,
+   "soil30Before": 19.6,
+   "soil30After": 18.4
+  },
+  {
+   "uuid": "bb2620c3-5437-4c64-b412-54d1611d1a17",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Kondapuram",
+   "rainBeforeMm": 322.1,
+   "rainAfterMm": 360.0,
+   "soil30Before": 27.1,
+   "soil30After": 67.7
+  },
+  {
+   "uuid": "3557a899-ccef-4e87-b583-75731a47c33a",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Lingala",
+   "rainBeforeMm": 234.5,
+   "rainAfterMm": 250.9,
+   "soil30Before": 1.6,
+   "soil30After": 49.9
+  },
+  {
+   "uuid": "9a0e9efc-c612-4117-be4c-1fc6f3a25f16",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Muddanur",
+   "rainBeforeMm": 205.9,
+   "rainAfterMm": 210.0,
+   "soil30Before": 23.5,
+   "soil30After": 35.0
+  },
+  {
+   "uuid": "27d41f9d-2526-4152-ab6e-39818b05a2bd",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Mylavaram",
+   "rainBeforeMm": 286.5,
+   "rainAfterMm": 327.0,
+   "soil30Before": 53.4,
+   "soil30After": 68.2
+  },
+  {
+   "uuid": "0707c7f1-5f97-44ce-977d-6ba1752a1796",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Nandalur",
+   "rainBeforeMm": 344.1,
+   "rainAfterMm": 361.1,
+   "soil30Before": 42.1,
+   "soil30After": 55.9
+  },
+  {
+   "uuid": "cd27c38d-dbee-4b8e-aaef-b44488af438c",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Peddamudium",
+   "rainBeforeMm": 319.4,
+   "rainAfterMm": 321.7,
+   "soil30Before": 53.3,
+   "soil30After": 53.3
+  },
+  {
+   "uuid": "26744963-5b70-4e5e-9100-245a27dec85d",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Pendlimarry",
+   "rainBeforeMm": 208.2,
+   "rainAfterMm": 211.3,
+   "soil30Before": 21.5,
+   "soil30After": 29.8
+  },
+  {
+   "uuid": "7aaa1526-724e-42a6-967b-065849308e39",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Porumamilla",
+   "rainBeforeMm": 231.4,
+   "rainAfterMm": 231.4,
+   "soil30Before": 37.6,
+   "soil30After": 29.8
+  },
+  {
+   "uuid": "313aea66-4b8c-483f-ae36-17da7591937d",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Proddatur",
+   "rainBeforeMm": 272.0,
+   "rainAfterMm": 274.2,
+   "soil30Before": 37.8,
+   "soil30After": 30.1
+  },
+  {
+   "uuid": "083c78c9-5e01-4422-bdda-c5680aee7685",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Pulivendla",
+   "rainBeforeMm": 350.2,
+   "rainAfterMm": 381.5,
+   "soil30Before": 26.1,
+   "soil30After": 88.0
+  },
+  {
+   "uuid": "93ff3954-7cf9-42c3-a43d-32503a9bc1d2",
+   "district": "Y.S.R Kadapa",
+   "mandal": "RAJU PALEM",
+   "rainBeforeMm": 344.5,
+   "rainAfterMm": 344.5,
+   "soil30Before": 41.2,
+   "soil30After": 33.5
+  },
+  {
+   "uuid": "6e87cfa1-8a20-4ed7-925b-e293180f8aca",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Rajampet",
+   "rainBeforeMm": 215.4,
+   "rainAfterMm": 219.1,
+   "soil30Before": 35.0,
+   "soil30After": 50.7
+  },
+  {
+   "uuid": "8bf6d7c7-c5e3-4c07-b5c6-4b59ab33e6ae",
+   "district": "Y.S.R Kadapa",
+   "mandal": "S MYDUKUR",
+   "rainBeforeMm": 257.4,
+   "rainAfterMm": 259.0,
+   "soil30Before": 19.5,
+   "soil30After": 16.6
+  },
+  {
+   "uuid": "d777652c-59f8-4958-b937-18b31123cf18",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Sidhout",
+   "rainBeforeMm": 285.2,
+   "rainAfterMm": 286.5,
+   "soil30Before": 21.8,
+   "soil30After": 22.7
+  },
+  {
+   "uuid": "8c14a8e2-c06d-4dd6-9bb1-2be1e7393e54",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Simhadripuram",
+   "rainBeforeMm": 275.3,
+   "rainAfterMm": 345.0,
+   "soil30Before": 18.9,
+   "soil30After": 85.9
+  },
+  {
+   "uuid": "50d2ed3e-0e3f-47f9-b266-21f4d3c50796",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Sri Avadhutha Kasinayana",
+   "rainBeforeMm": 201.5,
+   "rainAfterMm": 201.5,
+   "soil30Before": 18.8,
+   "soil30After": 12.1
+  },
+  {
+   "uuid": "b43523ee-a290-4822-9436-7630304e1823",
+   "district": "Y.S.R Kadapa",
+   "mandal": "T Sundupalle",
+   "rainBeforeMm": 213.7,
+   "rainAfterMm": 225.5,
+   "soil30Before": 9.8,
+   "soil30After": 47.6
+  },
+  {
+   "uuid": "c4e64dc6-79b6-48c7-b273-7d0b2cb7d17f",
+   "district": "Y.S.R Kadapa",
+   "mandal": "THANDUR",
+   "rainBeforeMm": 295.0,
+   "rainAfterMm": 336.7,
+   "soil30Before": 35.5,
+   "soil30After": 62.2
+  },
+  {
+   "uuid": "15808150-8997-4517-a021-ca9f37905609",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Vallur",
+   "rainBeforeMm": 294.6,
+   "rainAfterMm": 310.2,
+   "soil30Before": 14.0,
+   "soil30After": 33.1
+  },
+  {
+   "uuid": "c652c1f3-f499-4ae4-84f8-f862029680f8",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Veeraballe",
+   "rainBeforeMm": 262.3,
+   "rainAfterMm": 304.3,
+   "soil30Before": 15.8,
+   "soil30After": 43.5
+  },
+  {
+   "uuid": "5ced6a9f-065d-4938-8b9c-6da7ce0b409c",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Veerapunayunipalle",
+   "rainBeforeMm": 245.4,
+   "rainAfterMm": 248.2,
+   "soil30Before": 27.0,
+   "soil30After": 46.8
+  },
+  {
+   "uuid": "75588d18-dc16-4aac-a11a-e959ef707d96",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Vempalle",
+   "rainBeforeMm": 266.0,
+   "rainAfterMm": 280.3,
+   "soil30Before": 73.4,
+   "soil30After": 64.0
+  },
+  {
+   "uuid": "00dbb599-15c6-4edc-a35c-7d9c704eae1e",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Vemula",
+   "rainBeforeMm": 250.8,
+   "rainAfterMm": 255.7,
+   "soil30Before": 76.7,
+   "soil30After": 68.1
+  },
+  {
+   "uuid": "a124176f-5df0-4279-8c1f-4cbb7257c70b",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Vontimitta",
+   "rainBeforeMm": 279.7,
+   "rainAfterMm": 299.3,
+   "soil30Before": 32.2,
+   "soil30After": 44.6
+  },
+  {
+   "uuid": "cce9074b-d78b-470e-b26b-aff8f480efeb",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Y.S.R.Kadapa",
+   "rainBeforeMm": 327.2,
+   "rainAfterMm": 329.2,
+   "soil30Before": 31.8,
+   "soil30After": 36.0
+  },
+  {
+   "uuid": "7a5dbb8a-ea27-411f-848e-ba06964c6210",
+   "district": "Y.S.R Kadapa",
+   "mandal": "Yerraguntla",
+   "rainBeforeMm": 318.2,
+   "rainAfterMm": 323.1,
+   "soil30Before": 32.4,
+   "soil30After": 23.5
+  }
+ ]
+}

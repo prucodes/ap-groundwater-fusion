@@ -1,0 +1,399 @@
+{
+ "contractVersion": "1.0.0",
+ "generatedAt": "2026-10-30T03:00:35+00:00",
+ "event": "Cyclone Arnab",
+ "landfall": "2026-10-28",
+ "rainWindow": {
+  "from": "2026-10-25",
+  "to": "2026-10-28",
+  "days": 4
+ },
+ "source": "APWRIMS water context (gauge rain, NRSC soil moisture, reservoirs), read before and after the storm",
+ "authorizationStatus": "research_pending",
+ "groundwaterLatest": "2026-09",
+ "state": {
+  "rainTmc": 210.5,
+  "normalTmc": 55.9,
+  "seasonDeviationBefore": -36.8,
+  "seasonDeviationAfter": -32.3,
+  "soilMedianBefore": 49.9,
+  "soilMedianAfter": 90.5,
+  "soilDriestBefore": 52,
+  "soilDriestAfter": 14,
+  "soilAsOf": {
+   "before": "2026-10-23",
+   "after": "2026-10-28"
+  },
+  "reservoirTmcBefore": 499.642,
+  "reservoirTmcAfter": 507.659,
+  "mandals": 688,
+  "heavyMandals": 118,
+  "deepMandals": 315,
+  "deepHeavyMandals": 22
+ },
+ "heavyMm": 100,
+ "deepM": 8,
+ "districts": [
+  {
+   "district": "Visakhapatnam",
+   "mandals": 11,
+   "medianMm": 208.0,
+   "heavy": 11
+  },
+  {
+   "district": "Vizianagaram",
+   "mandals": 28,
+   "medianMm": 184.0,
+   "heavy": 28
+  },
+  {
+   "district": "Srikakulam",
+   "mandals": 30,
+   "medianMm": 142.0,
+   "heavy": 28
+  },
+  {
+   "district": "Anakapalli",
+   "mandals": 24,
+   "medianMm": 134.0,
+   "heavy": 22
+  },
+  {
+   "district": "Alluri Sitharama Raju",
+   "mandals": 11,
+   "medianMm": 97.0,
+   "heavy": 5
+  },
+  {
+   "district": "Kakinada",
+   "mandals": 21,
+   "medianMm": 97.0,
+   "heavy": 8
+  },
+  {
+   "district": "Konaseema",
+   "mandals": 19,
+   "medianMm": 87.0,
+   "heavy": 5
+  },
+  {
+   "district": "Parvathipuram Manyam",
+   "mandals": 15,
+   "medianMm": 65.0,
+   "heavy": 5
+  },
+  {
+   "district": "Krishna",
+   "mandals": 26,
+   "medianMm": 46.0,
+   "heavy": 3
+  },
+  {
+   "district": "East Godavari",
+   "mandals": 22,
+   "medianMm": 42.0,
+   "heavy": 0
+  },
+  {
+   "district": "West Godavari",
+   "mandals": 20,
+   "medianMm": 41.0,
+   "heavy": 0
+  },
+  {
+   "district": "Bapatla",
+   "mandals": 20,
+   "medianMm": 40.0,
+   "heavy": 1
+  },
+  {
+   "district": "Polavaram",
+   "mandals": 12,
+   "medianMm": 36.0,
+   "heavy": 1
+  },
+  {
+   "district": "Guntur",
+   "mandals": 18,
+   "medianMm": 32.0,
+   "heavy": 0
+  },
+  {
+   "district": "Chittoor",
+   "mandals": 28,
+   "medianMm": 29.0,
+   "heavy": 1
+  },
+  {
+   "district": "Annamayya",
+   "mandals": 25,
+   "medianMm": 28.0,
+   "heavy": 0
+  },
+  {
+   "district": "Eluru",
+   "mandals": 28,
+   "medianMm": 16.0,
+   "heavy": 0
+  },
+  {
+   "district": "Tirupati",
+   "mandals": 36,
+   "medianMm": 16.0,
+   "heavy": 0
+  },
+  {
+   "district": "Sri Sathya Sai",
+   "mandals": 32,
+   "medianMm": 13.0,
+   "heavy": 0
+  },
+  {
+   "district": "Ananthapuramu",
+   "mandals": 32,
+   "medianMm": 9.0,
+   "heavy": 0
+  },
+  {
+   "district": "NTR",
+   "mandals": 20,
+   "medianMm": 9.0,
+   "heavy": 0
+  },
+  {
+   "district": "Nandyal",
+   "mandals": 30,
+   "medianMm": 5.0,
+   "heavy": 0
+  },
+  {
+   "district": "Y.S.R Kadapa",
+   "mandals": 40,
+   "medianMm": 5.0,
+   "heavy": 0
+  },
+  {
+   "district": "Palnadu",
+   "mandals": 28,
+   "medianMm": 3.0,
+   "heavy": 0
+  },
+  {
+   "district": "Kurnool",
+   "mandals": 27,
+   "medianMm": 2.0,
+   "heavy": 0
+  },
+  {
+   "district": "Prakasam",
+   "mandals": 28,
+   "medianMm": 2.0,
+   "heavy": 0
+  },
+  {
+   "district": "Sri Potti Sriramulu Nellore",
+   "mandals": 36,
+   "medianMm": 2.0,
+   "heavy": 0
+  },
+  {
+   "district": "Markapuram",
+   "mandals": 21,
+   "medianMm": 1.0,
+   "heavy": 0
+  }
+ ],
+ "byDepth": [
+  {
+   "band": "under 3 m",
+   "mandals": 113,
+   "medianMm": 72.0,
+   "heavy": 45
+  },
+  {
+   "band": "3 to 8 m",
+   "mandals": 244,
+   "medianMm": 27.0,
+   "heavy": 48
+  },
+  {
+   "band": "8 to 20 m",
+   "mandals": 240,
+   "medianMm": 14.0,
+   "heavy": 21
+  },
+  {
+   "band": "over 20 m",
+   "mandals": 75,
+   "medianMm": 14.0,
+   "heavy": 1
+  }
+ ],
+ "precedent": {
+  "event": "Cyclone Montha",
+  "landfall": "2025-10-28",
+  "mandalsCompared": 539,
+  "mandalsWithHeavyRain": 438,
+  "bands": [
+   {
+    "band": "under 3 m",
+    "mandals": 183,
+    "extraRiseM": 0.1,
+    "roseMorePct": 55.0
+   },
+   {
+    "band": "3 to 8 m",
+    "mandals": 154,
+    "extraRiseM": 0.6,
+    "roseMorePct": 75.0
+   },
+   {
+    "band": "8 to 20 m",
+    "mandals": 75,
+    "extraRiseM": 1.48,
+    "roseMorePct": 80.0
+   },
+   {
+    "band": "over 20 m",
+    "mandals": 26,
+    "extraRiseM": 2.6,
+    "roseMorePct": 85.0
+   }
+  ]
+ },
+ "watch": [
+  {
+   "district": "Anakapalli",
+   "mandal": "Atchutapuram",
+   "stormMm": 234.0,
+   "depthM": 26.84
+  },
+  {
+   "district": "Visakhapatnam",
+   "mandal": "Visakhapatnam (Rural)",
+   "stormMm": 232.5,
+   "depthM": 19.17
+  },
+  {
+   "district": "Vizianagaram",
+   "mandal": "Garividi",
+   "stormMm": 220.1,
+   "depthM": 9.41
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "Ranastalam",
+   "stormMm": 206.7,
+   "depthM": 14.95
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "Etcherla",
+   "stormMm": 195.9,
+   "depthM": 8.98
+  },
+  {
+   "district": "Visakhapatnam",
+   "mandal": "Anandapuram",
+   "stormMm": 190.5,
+   "depthM": 10.26
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "KOTABOMMAL",
+   "stormMm": 173.5,
+   "depthM": 8.09
+  },
+  {
+   "district": "Parvathipuram Manyam",
+   "mandal": "Pachipenta",
+   "stormMm": 158.7,
+   "depthM": 8.54
+  },
+  {
+   "district": "Vizianagaram",
+   "mandal": "Cheepurupalle",
+   "stormMm": 154.0,
+   "depthM": 11.39
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "Vajrapukothuru",
+   "stormMm": 141.9,
+   "depthM": 12.3
+  },
+  {
+   "district": "Anakapalli",
+   "mandal": "Ravikamatham",
+   "stormMm": 141.6,
+   "depthM": 8.73
+  },
+  {
+   "district": "Kakinada",
+   "mandal": "Gollaprolu",
+   "stormMm": 139.5,
+   "depthM": 11.89
+  },
+  {
+   "district": "Krishna",
+   "mandal": "Koduru",
+   "stormMm": 139.1,
+   "depthM": 8.24
+  },
+  {
+   "district": "Anakapalli",
+   "mandal": "Paravada",
+   "stormMm": 135.8,
+   "depthM": 8.05
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "Kanchili",
+   "stormMm": 126.5,
+   "depthM": 13.69
+  },
+  {
+   "district": "Anakapalli",
+   "mandal": "DEVARAPALLE (VISAKHAPATNAM)",
+   "stormMm": 122.9,
+   "depthM": 12.25
+  },
+  {
+   "district": "Anakapalli",
+   "mandal": "Butchayyapeta",
+   "stormMm": 122.7,
+   "depthM": 11.99
+  },
+  {
+   "district": "Kakinada",
+   "mandal": "Jaggampeta",
+   "stormMm": 112.8,
+   "depthM": 9.81
+  },
+  {
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Ananthagiri",
+   "stormMm": 109.2,
+   "depthM": 10.41
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "Kaviti",
+   "stormMm": 107.9,
+   "depthM": 19.91
+  },
+  {
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Koyyuru",
+   "stormMm": 105.3,
+   "depthM": 12.86
+  },
+  {
+   "district": "Kakinada",
+   "mandal": "Thondangi",
+   "stormMm": 100.0,
+   "depthM": 8.37
+  }
+ ],
+ "caveat": "Rain is the State's gauge network, the difference between its season totals before and after the storm. Groundwater after the storm is not published yet; the November reading is the first that will show it. Last year's figures are a precedent, not a forecast: October 2025 was wet before Montha too, and the deepest band holds few mandals. The three-month forecasts frozen before the storm did not know about it."
+}
