@@ -45,12 +45,12 @@ export function CycloneArnab() {
             <em>normal {formatNumber(Math.round(s.normalTmc))} · season {s.seasonDeviationBefore}% → {s.seasonDeviationAfter}%</em>
           </div>
           <div>
-            <span>Soil moisture, 30 cm</span>
+            <span>Soil, 30 cm</span>
             <strong>{Math.round(s.soilMedianBefore)}% → {Math.round(s.soilMedianAfter)}%</strong>
             <em>median, {arnabDay(s.soilAsOf.before)} to {arnabDay(s.soilAsOf.after)}</em>
           </div>
           <div className={styles.key}>
-            <span>Deep tables that got heavy rain</span>
+            <span>Deep tables, heavy rain</span>
             <strong>{s.deepHeavyMandals} <small>of {s.deepMandals}</small></strong>
             <em>deeper than {d.deepM} m, {d.heavyMm} mm or more</em>
           </div>

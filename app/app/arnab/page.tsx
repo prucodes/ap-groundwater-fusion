@@ -24,7 +24,7 @@ const signed = (v: number, unit: string) => `${v > 0 ? "+" : v < 0 ? "−" : ""}
 /* Storage across the State's reservoirs, day by day since the storm. A quiet line:
    the days are few, so every reading is a labelled point. */
 function StorageLine({ days }: { days: ArnabDay[] }) {
-  const W = 560, H = 170, L = 44, R = 18, T = 18, B = 30;
+  const W = 560, H = 180, L = 48, R = 34, T = 30, B = 30;
   const v = days.map(d => d.reservoirTmc);
   const lo = Math.floor((Math.min(...v) - 2) / 5) * 5, hi = Math.ceil((Math.max(...v) + 2) / 5) * 5;
   const x = (i: number) => (days.length === 1 ? (L + W - R) / 2 : L + (i * (W - L - R)) / (days.length - 1));
@@ -51,7 +51,7 @@ function StorageLine({ days }: { days: ArnabDay[] }) {
         <circle cx={x(i)} cy={y(d.reservoirTmc)} r={i === days.length - 1 ? 5 : 3.5} className={i === days.length - 1 ? styles.dotNow : styles.dot} />
         <text x={x(i)} y={H - 10} textAnchor="middle" className={styles.tick}>{arnabDay(d.date)}</text>
       </g>)}
-      <text x={L} y={10} className={styles.tick}>TMC</text>
+      <text x={L - 8} y={14} textAnchor="end" className={styles.tick}>TMC</text>
     </svg>
   );
 }
@@ -90,10 +90,10 @@ export default function ArnabPage() {
         </div>
         <ArnabSpiral className={styles.spiral} />
         <ul className={styles.tiles}>
-          <li><span>Rain in {d.rainWindow.days} days</span><b>{formatNumber(Math.round(s.rainTmc))}<small> TMC</small></b><em>about {Math.round(s.rainTmc / s.normalTmc)}× the normal {Math.round(s.normalTmc)} TMC for those days</em></li>
-          <li><span>Soil moisture, 30 cm</span><b>{Math.round(s.soilMedianBefore)}<small>%</small> → {Math.round(s.soilMedianAfter)}<small>%</small></b><em>statewide median · driest on record {s.soilDriestBefore} → {s.soilDriestAfter} mandals</em></li>
-          {since ? <li><span>Reservoirs since {arnabDay(since.from)}</span><b>{signed(since.gainTmc, "")}<small>TMC</small></b><em>{since.days[since.days.length - 1].reservoirPct}% full on {arnabDay(since.to)}</em></li> : null}
-          <li className={styles.key}><span>Deep tables, heavy rain</span><b>{s.deepHeavyMandals}<small> of {s.deepMandals}</small></b><em>mandals deeper than {d.deepM} m in {seen} that got {d.heavyMm} mm or more</em></li>
+          <li><span>Rain, {d.rainWindow.days} days</span><b>{formatNumber(Math.round(s.rainTmc))}<small> TMC</small></b><em>{Math.round(s.rainTmc / s.normalTmc)}× the normal</em></li>
+          <li><span>Soil moisture</span><b>{Math.round(s.soilMedianBefore)}<small>%</small> → {Math.round(s.soilMedianAfter)}<small>%</small></b><em>at 30 cm, statewide median</em></li>
+          {since ? <li><span>Reservoirs</span><b>{signed(since.gainTmc, "")}<small>TMC</small></b><em>since {arnabDay(since.from)}, now {since.days[since.days.length - 1].reservoirPct}% full</em></li> : null}
+          <li className={styles.key}><span>Deep tables</span><b>{s.deepHeavyMandals}<small> of {s.deepMandals}</small></b><em>got {d.heavyMm} mm or more, of those deeper than {d.deepM} m</em></li>
         </ul>
       </section>
 
@@ -187,11 +187,11 @@ export default function ArnabPage() {
                 return <div className={styles.mirrorRow} role="row" key={b.band}>
                   <span role="cell" className={styles.left}><b>{b.heavy}</b><i style={{ width: `${(100 * b.heavy) / mostHeavy}%` }} /></span>
                   <span role="cell" className={styles.mid}>{b.band}</span>
-                  <span role="cell" className={styles.right}><i style={{ width: `${p ? (100 * p.extraRiseM) / mostRise : 0}%` }} /><b>{p ? `${p.extraRiseM.toFixed(1)} m` : "–"}</b></span>
+                  <span role="cell" className={styles.right}><i style={{ width: `${p ? (100 * p.extraRiseM) / mostRise : 0}%` }} /><b>{p ? `${p.extraRiseM.toFixed(1)} m` : "no data"}</b></span>
                 </div>;
               })}
             </div>
-            <p className={styles.small}>The bars point in opposite directions: most of Arnab&apos;s heavy rain landed where last year&apos;s rise was smallest. Rise is beyond each mandal&apos;s usual change from the October to the November reading.</p>
+            <p className={styles.small}>Most of Arnab&apos;s heavy rain fell where last year&apos;s rise was smallest. Rise is beyond each mandal&apos;s usual change from the October to the November reading. Last year is a precedent, not a forecast.</p>
           </div>
         </div>
       </section>
@@ -201,38 +201,54 @@ export default function ArnabPage() {
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconTarget /> Checked when the readings arrive</span>
           <h2 id="arnab-follow-title">Did Arnab follow?</h2>
-          <p>The State publishes each month&apos;s groundwater reading after the month ends. When October and November arrive, this fills in by itself: what the table did in the {d.watch.length} deep-table mandals that got heavy rain, against what last year suggests.</p>
+          <p>The {d.watch.length} mandals where heavy rain met a deep table. The State publishes each month&apos;s reading after the month ends; when October and November arrive, this fills in by itself.</p>
         </header>
         <div className={styles.status}>
-          <span data-done={octOut || undefined}><i />October reading {octOut ? "in" : "awaited"}</span>
-          <span data-done={novOut || undefined}><i />November reading {novOut ? "in" : "awaited"}</span>
+          <span data-done={octOut || undefined}><i />October {octOut ? "in" : "awaited"}</span>
+          <span data-done={novOut || undefined}><i />November {novOut ? "in" : "awaited"}</span>
         </div>
         {d.follow.bands.length ? (
           <ul className={styles.verdict}>
-            {d.follow.bands.map(b => <li key={b.band}><span>{b.band}</span><b>{signed(b.extraRiseM, "m")}</b><em>{b.mandals} mandals · Montha {b.precedentM === null ? "–" : signed(b.precedentM, "m")}</em></li>)}
+            {d.follow.bands.map(b => <li key={b.band}><span>{b.band}</span><b>{signed(b.extraRiseM, "m")}</b><em>{b.mandals} mandals · Montha {b.precedentM === null ? "no data" : signed(b.precedentM, "m")}</em></li>)}
           </ul>
         ) : null}
         <RowFold id="arnab-follow-rows" total={d.watch.length} visible={8} noun="mandals">
-          <div className="tableWrap capped">
+          <div className={`tableWrap capped ${styles.wideOnly}`}>
             <table className="dataTable compact" aria-label="Deep water tables that got heavy rain">
               <thead><tr><th>Mandal</th><th>District</th><th>Arnab rain</th><th>Depth in {seen}</th><th>Last year suggests</th><th>October reading</th><th>November, beyond usual</th></tr></thead>
               <tbody>
                 {d.watch.map((m, i) => <tr key={`${m.district}-${m.mandal}`} {...foldAt(i, 8)}>
                   <td>{/[a-z]/.test(m.mandal) ? m.mandal : titleCase(m.mandal)}</td><td>{m.district}</td><td>{Math.round(m.stormMm)} mm</td><td>{m.depthM.toFixed(1)} m</td>
-                  <td>{m.precedentM === null ? "–" : `rise ${m.precedentM.toFixed(1)} m`}</td>
+                  <td>{m.precedentM === null ? "no data" : `rise ${m.precedentM.toFixed(1)} m`}</td>
                   <td className={m.octRiseM === undefined ? styles.pending : m.octRiseM > 0 ? styles.rose : styles.fell}>{m.octRiseM === undefined ? "awaited" : `${m.octRiseM > 0 ? "rose" : "fell"} ${Math.abs(m.octRiseM).toFixed(1)} m`}</td>
                   <td className={m.novExtraRiseM === undefined ? styles.pending : m.novExtraRiseM > 0 ? styles.rose : styles.fell}>{m.novExtraRiseM === undefined ? "awaited" : signed(m.novExtraRiseM, "m")}</td>
                 </tr>)}
               </tbody>
             </table>
           </div>
+          <ul className={styles.cards} aria-label="Deep water tables that got heavy rain">
+            {d.watch.map((m, i) => <li key={`${m.district}-${m.mandal}`} {...foldAt(i, 8)}>
+              <div className={styles.cardTop}>
+                <b>{/[a-z]/.test(m.mandal) ? m.mandal : titleCase(m.mandal)}</b>
+                <span>{Math.round(m.stormMm)} mm</span>
+              </div>
+              <small>{m.district} · {m.depthM.toFixed(1)} m down in {seen}</small>
+              <p>
+                <span>Last year suggests {m.precedentM === null ? "no data" : `a rise of ${m.precedentM.toFixed(1)} m`}</span>
+                <span className={m.novExtraRiseM === undefined ? styles.pending : m.novExtraRiseM > 0 ? styles.rose : styles.fell}>
+                  November {m.novExtraRiseM === undefined ? "awaited" : signed(m.novExtraRiseM, "m")}
+                </span>
+              </p>
+            </li>)}
+          </ul>
         </RowFold>
       </section>
 
-      <section className={`${shared.block} ${styles.notes}`} aria-label="Sources and limits">
-        <p><IconCyclone /> {d.caveat}</p>
+      <details className={`${shared.block} ${styles.notes}`}>
+        <summary><IconCyclone /> Sources and limits</summary>
+        <p>{d.caveat}</p>
         <p>Rain: AP Directorate of Economics and Statistics gauges. Soil moisture: NRSC model. Reservoirs: State telemetry. All via APWRIMS, as a research sample pending authorisation. Updated every morning until 15 November, then weekly. <Link href="/monsoon/">Monsoon Watch →</Link></p>
-      </section>
+      </details>
     </div>
   );
 }

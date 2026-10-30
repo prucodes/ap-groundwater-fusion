@@ -117,7 +117,7 @@ test("Monsoon Watch shows canal water by delta and never adds canals into one St
 test("Monsoon Watch points to the Cyclone Arnab page", async ({ page }) => {
   await page.goto("/monsoon/");
   const card = page.getByTestId("cyclone-arnab");
-  await expect(card).toContainText("Deep tables that got heavy rain");
+  await expect(card).toContainText("Deep tables, heavy rain");
   await card.getByTestId("arnab-open").click();
   await expect(page).toHaveURL(/\/arnab\/$/);
 });
@@ -128,6 +128,6 @@ test("the Cyclone Arnab page sets the rain against room to rise and waits for th
   await expect(page.getByTestId("arnab-view-meet")).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByRole("heading", { name: "Where the water went" })).toBeVisible();
   const follow = page.getByTestId("arnab-follow");
-  await expect(follow).toContainText("November reading");
-  await expect(page.getByText("not a forecast")).toBeVisible();
+  await expect(follow).toContainText("November awaited");
+  await expect(page.locator("#arnab-room")).toContainText("not a forecast");
 });
