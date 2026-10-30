@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-10-30T03:40:16+00:00",
+ "generatedAt": "2026-10-30T05:27:52+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -278,34 +278,34 @@
     "rainTo": "2026-10-28",
     "rainSinceTmc": 210.5,
     "soilMedian30": 90.5,
-    "reservoirTmc": 507.7,
+    "reservoirTmc": 507.1,
     "reservoirPct": 43.7
    }
   ],
-  "gainTmc": 8.0,
+  "gainTmc": 7.4,
   "basins": [
    {
     "basin": "OTHERS",
     "beforePct": 52.0,
-    "nowPct": 60.9,
-    "gainTmc": 7.9
+    "nowPct": 61.4,
+    "gainTmc": 8.4
    },
    {
     "basin": "KRISHNA",
     "beforePct": 43.1,
-    "nowPct": 43.3,
-    "gainTmc": 1.3
+    "nowPct": 43.2,
+    "gainTmc": 0.4
    },
    {
     "basin": "PENNAR",
     "beforePct": 37.0,
     "nowPct": 36.8,
-    "gainTmc": -0.5
+    "gainTmc": -0.6
    },
    {
     "basin": "GODAVARI",
     "beforePct": 77.1,
-    "nowPct": 74.6,
+    "nowPct": 74.3,
     "gainTmc": -0.7
    }
   ],
@@ -316,10 +316,10 @@
     "district": "Anakapalli",
     "capacityTmc": 3.6,
     "beforeTmc": 0.96,
-    "nowTmc": 3.03,
-    "gainTmc": 2.07,
+    "nowTmc": 3.04,
+    "gainTmc": 2.09,
     "beforePct": 26.6,
-    "nowPct": 84.1
+    "nowPct": 84.6
    },
    {
     "name": "YELERU RESERVOIR",
@@ -338,10 +338,10 @@
     "district": "Vizianagaram",
     "capacityTmc": 3.325,
     "beforeTmc": 1.52,
-    "nowTmc": 3.01,
-    "gainTmc": 1.49,
+    "nowTmc": 3.02,
+    "gainTmc": 1.5,
     "beforePct": 45.7,
-    "nowPct": 90.6
+    "nowPct": 91.0
    },
    {
     "name": "TANDAVA RESERVOIR",
@@ -349,10 +349,21 @@
     "district": "Alluri Sitharama Raju",
     "capacityTmc": 4.96,
     "beforeTmc": 2.63,
-    "nowTmc": 3.39,
-    "gainTmc": 0.76,
+    "nowTmc": 3.4,
+    "gainTmc": 0.77,
     "beforePct": 53.0,
-    "nowPct": 68.3
+    "nowPct": 68.5
+   },
+   {
+    "name": "HIRAMANDALAM RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Srikakulam",
+    "capacityTmc": 10.0,
+    "beforeTmc": 5.54,
+    "nowTmc": 6.1,
+    "gainTmc": 0.56,
+    "beforePct": 55.4,
+    "nowPct": 61.0
    },
    {
     "name": "MEHADRIGADD RESERVOIR",
@@ -366,6 +377,17 @@
     "nowPct": 94.0
    },
    {
+    "name": "ANDRA RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Vizianagaram",
+    "capacityTmc": 0.98,
+    "beforeTmc": 0.41,
+    "nowTmc": 0.81,
+    "gainTmc": 0.4,
+    "beforePct": 41.9,
+    "nowPct": 82.8
+   },
+   {
     "name": "KONAM RESERVOIR",
     "basin": "OTHERS",
     "district": "Anakapalli",
@@ -375,28 +397,6 @@
     "gainTmc": 0.4,
     "beforePct": 44.2,
     "nowPct": 91.1
-   },
-   {
-    "name": "SUNKESULA BARRAGE",
-    "basin": "KRISHNA",
-    "district": "Kurnool",
-    "capacityTmc": 1.235,
-    "beforeTmc": 0.78,
-    "nowTmc": 1.07,
-    "gainTmc": 0.29,
-    "beforePct": 63.3,
-    "nowPct": 86.5
-   },
-   {
-    "name": "ANDRA RESERVOIR",
-    "basin": "OTHERS",
-    "district": "Vizianagaram",
-    "capacityTmc": 0.98,
-    "beforeTmc": 0.41,
-    "nowTmc": 0.7,
-    "gainTmc": 0.29,
-    "beforePct": 41.9,
-    "nowPct": 71.6
    }
   ]
  },
