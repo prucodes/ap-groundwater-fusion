@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { formatNumber } from "../lib/data";
 import { arnab, arnabDay, listOf, soakedDistricts } from "../lib/arnab";
+import { ArnabOpenLink } from "./ArnabOpenLink";
 import { IconArrowRight } from "./icons";
 import styles from "./CycloneArnab.module.css";
 
@@ -55,9 +55,9 @@ export function CycloneArnab() {
             <em>deeper than {d.deepM} m, {d.heavyMm} mm or more</em>
           </div>
         </div>
-        <Link className={styles.open} href="/arnab/" data-testid="arnab-open">
+        <ArnabOpenLink className={styles.open}>
           Maps, reservoirs day by day, and the groundwater check <IconArrowRight />
-        </Link>
+        </ArnabOpenLink>
       </div>
     </section>
   );

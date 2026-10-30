@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { StateOutlineMap } from "./StateOutlineMap";
+import { countEvent } from "../lib/visit-counter";
 import { RAIN_SCALE as RAIN } from "../lib/arnabScale";
 
 /* Cyclone Arnab on the State map. The opening view puts the storm's rain and the
@@ -57,7 +58,7 @@ export function CycloneArnabMap({ rows, heavyMm, deepM, month, aspect }: {
   return <div className="arnabMap">
     <div className="segmented" role="group" aria-label="Map view">
       {VIEWS.map(v => <button key={v.key} type="button" className={`segBtn ${view === v.key ? "active" : ""}`} aria-pressed={view === v.key}
-        onClick={() => setView(v.key)} data-testid={`arnab-view-${v.key}`}>{v.label}</button>)}
+        onClick={() => { if (v.key !== view) countEvent(`arnab/map-${v.key}`, `Arnab: viewed the map as ${v.label.toLowerCase()}`); setView(v.key); }} data-testid={`arnab-view-${v.key}`}>{v.label}</button>)}
     </div>
     <StateOutlineMap testId="arnab-map" aspect={aspect} keys={keys} colors={colors} notes={notes} marks={marks}
       label={`Cyclone Arnab: ${VIEWS.find(v => v.key === view)?.label}.`}

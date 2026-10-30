@@ -5,6 +5,7 @@ import { StateOutlineMap } from "../../components/StateOutlineMap";
 import { CycloneArnabMap } from "../../components/CycloneArnabMap";
 import { ArnabSpiral } from "../../components/CycloneArnab";
 import { RowFold, foldAt } from "../../components/RowFold";
+import { CountedReach } from "../../components/CountedReach";
 import { IconCloudRain, IconCyclone, IconDroplet, IconTarget, IconWaves } from "../../components/icons";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
 import { formatNumber, titleCase } from "../../lib/data";
@@ -127,6 +128,7 @@ export default function ArnabPage() {
 
       {since ? (
         <section className={shared.block} id="arnab-water" aria-labelledby="arnab-water-title">
+          <CountedReach event="arnab/reached-water" title="Arnab: reached where the water went" />
           <header className={shared.blockHead}>
             <span className={shared.eyebrow}><IconWaves /> Reservoirs, read daily</span>
             <h2 id="arnab-water-title">Where the water went</h2>
@@ -166,6 +168,7 @@ export default function ArnabPage() {
       ) : null}
 
       <section className={shared.block} id="arnab-room" aria-labelledby="arnab-room-title">
+        <CountedReach event="arnab/reached-room" title="Arnab: reached room to rise" />
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconDroplet /> Groundwater</span>
           <h2 id="arnab-room-title">Room to rise</h2>
@@ -194,6 +197,7 @@ export default function ArnabPage() {
       </section>
 
       <section className={shared.block} id="arnab-follow" aria-labelledby="arnab-follow-title" data-testid="arnab-follow">
+        <CountedReach event="arnab/reached-follow" title="Arnab: reached did Arnab follow" />
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconTarget /> Checked when the readings arrive</span>
           <h2 id="arnab-follow-title">Did Arnab follow?</h2>
