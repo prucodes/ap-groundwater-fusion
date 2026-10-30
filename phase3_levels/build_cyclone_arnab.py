@@ -68,7 +68,7 @@ def capture(before_path, after_path):
         if not b or m.get("actualMm") is None or b.get("actualMm") is None:
             continue
         sb, sa = soil_b.get(m["uuid"], {}), soil_a.get(m["uuid"], {})
-        rows.append({"uuid": m["uuid"], "district": m["district"], "mandal": m["mandal"],
+        rows.append({"uuid": m["uuid"], "district": m["district"], "mandal": m["mandal"], "boundaryIndex": m.get("boundaryIndex"),
                      "rainBeforeMm": b["actualMm"], "rainAfterMm": m["actualMm"],
                      "soil30Before": (sb.get("pct") or [None, None])[1], "soil30After": (sa.get("pct") or [None, None])[1]})
     payload = {
@@ -162,6 +162,16 @@ def main():
     deep = [m for m in mandals if m["depthM"] is not None and m["depthM"] >= DEEP_M]
     watch = sorted((m for m in deep if m["stormMm"] >= HEAVY_MM), key=lambda m: -m["stormMm"])
 
+    # One row per map outline; where two mandals share an outline, the wetter one speaks for it.
+    outline = {}
+    for m in mandals:
+        i = m.get("boundaryIndex")
+        if i is None:
+            continue
+        if i not in outline or m["stormMm"] > outline[i]["stormMm"]:
+            outline[i] = m
+    map_rows = [[i, m["mandal"], m["district"], round(m["stormMm"]), m["depthM"]] for i, m in sorted(outline.items())]
+
     s = cap["state"]
     window_days = (datetime.date.fromisoformat(cap["rainWindow"]["after"]) - datetime.date.fromisoformat(cap["rainWindow"]["before"])).days
     payload = {
@@ -187,6 +197,7 @@ def main():
         "districts": district_rows,
         "byDepth": by_depth,
         "precedent": {"event": "Cyclone Montha", "landfall": "2025-10-28", **montha_precedent(gw_by_name)},
+        "map": map_rows,
         "watch": [{"district": m["district"], "mandal": m["mandal"], "stormMm": m["stormMm"], "depthM": m["depthM"]} for m in watch],
         "caveat": ("Rain is the State's gauge network, the difference between its season totals before and after the storm. "
                    "Groundwater after the storm is not published yet; the November reading is the first that will show it. "

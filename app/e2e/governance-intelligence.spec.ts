@@ -117,7 +117,8 @@ test("Monsoon Watch shows canal water by delta and never adds canals into one St
 test("Monsoon Watch sets Cyclone Arnab's rain against where the water table had room", async ({ page }) => {
   await page.goto("/monsoon/");
   const card = page.getByTestId("cyclone-arnab");
-  await expect(card).toContainText("Where the table had room");
-  await expect(card).toContainText("After Montha in 2025");
+  await expect(card).toContainText("Deep tables that got heavy rain");
+  await expect(card.getByTestId("arnab-view-meet")).toHaveAttribute("aria-pressed", "true");
+  await expect(card).toContainText("After Montha, extra rise");
   await expect(card).toContainText("not a forecast");
 });
