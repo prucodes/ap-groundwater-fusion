@@ -99,7 +99,7 @@ def test_events_are_namespaced_and_labelled():
     assert calls, "no events found; the monsoon page should still be counting its controls"
     labels = {}
     for event, title in calls:
-        assert event.startswith(("monsoon/", "welcome/", "app/", "report/")), f"{event} should say which experience it belongs to"
+        assert event.startswith(("monsoon/", "arnab/", "welcome/", "app/", "report/")), f"{event} should say which experience it belongs to"
         # One event, one label: the dashboard shows the title, so a name that arrives with two
         # different labels reads as two different things.
         assert labels.setdefault(event, title) == title, f"{event} has two labels"
