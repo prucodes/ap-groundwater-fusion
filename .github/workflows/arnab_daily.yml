@@ -44,7 +44,9 @@ jobs:
           python-version: "3.11"
       - name: Install dependencies
         if: steps.window.outputs.run == 'true'
-        run: pip install -r requirements.txt pandas numpy pytest
+        # The same libraries as the weekly job: the context fetcher borrows its boundary matching
+        # from build_levels_engine.py, which imports joblib and scikit-learn.
+        run: pip install -r requirements.txt scikit-learn joblib pandas numpy pytest
       - name: Read the water context
         if: steps.window.outputs.run == 'true'
         run: python phase3_levels/fetch_apwrims_context.py
