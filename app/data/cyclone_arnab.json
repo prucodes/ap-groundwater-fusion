@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-10-30T03:18:58+00:00",
+ "generatedAt": "2026-10-30T03:40:16+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -261,6 +261,150 @@
    }
   ]
  },
+ "since": {
+  "from": "2026-10-26",
+  "to": "2026-10-30",
+  "days": [
+   {
+    "date": "2026-10-26",
+    "rainTo": "2026-10-24",
+    "rainSinceTmc": 0.0,
+    "soilMedian30": 49.9,
+    "reservoirTmc": 499.6,
+    "reservoirPct": 43.0
+   },
+   {
+    "date": "2026-10-30",
+    "rainTo": "2026-10-28",
+    "rainSinceTmc": 210.5,
+    "soilMedian30": 90.5,
+    "reservoirTmc": 507.7,
+    "reservoirPct": 43.7
+   }
+  ],
+  "gainTmc": 8.0,
+  "basins": [
+   {
+    "basin": "OTHERS",
+    "beforePct": 52.0,
+    "nowPct": 60.9,
+    "gainTmc": 7.9
+   },
+   {
+    "basin": "KRISHNA",
+    "beforePct": 43.1,
+    "nowPct": 43.3,
+    "gainTmc": 1.3
+   },
+   {
+    "basin": "PENNAR",
+    "beforePct": 37.0,
+    "nowPct": 36.8,
+    "gainTmc": -0.5
+   },
+   {
+    "basin": "GODAVARI",
+    "beforePct": 77.1,
+    "nowPct": 74.6,
+    "gainTmc": -0.7
+   }
+  ],
+  "reservoirs": [
+   {
+    "name": "RAIWADA RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Anakapalli",
+    "capacityTmc": 3.6,
+    "beforeTmc": 0.96,
+    "nowTmc": 3.03,
+    "gainTmc": 2.07,
+    "beforePct": 26.6,
+    "nowPct": 84.1
+   },
+   {
+    "name": "YELERU RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Kakinada",
+    "capacityTmc": 24.11,
+    "beforeTmc": 17.96,
+    "nowTmc": 19.49,
+    "gainTmc": 1.53,
+    "beforePct": 74.5,
+    "nowPct": 80.8
+   },
+   {
+    "name": "THATIPUDI RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Vizianagaram",
+    "capacityTmc": 3.325,
+    "beforeTmc": 1.52,
+    "nowTmc": 3.01,
+    "gainTmc": 1.49,
+    "beforePct": 45.7,
+    "nowPct": 90.6
+   },
+   {
+    "name": "TANDAVA RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Alluri Sitharama Raju",
+    "capacityTmc": 4.96,
+    "beforeTmc": 2.63,
+    "nowTmc": 3.39,
+    "gainTmc": 0.76,
+    "beforePct": 53.0,
+    "nowPct": 68.3
+   },
+   {
+    "name": "MEHADRIGADD RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Visakhapatnam",
+    "capacityTmc": 1.169,
+    "beforeTmc": 0.54,
+    "nowTmc": 1.1,
+    "gainTmc": 0.56,
+    "beforePct": 46.2,
+    "nowPct": 94.0
+   },
+   {
+    "name": "KONAM RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Anakapalli",
+    "capacityTmc": 0.85,
+    "beforeTmc": 0.38,
+    "nowTmc": 0.77,
+    "gainTmc": 0.4,
+    "beforePct": 44.2,
+    "nowPct": 91.1
+   },
+   {
+    "name": "SUNKESULA BARRAGE",
+    "basin": "KRISHNA",
+    "district": "Kurnool",
+    "capacityTmc": 1.235,
+    "beforeTmc": 0.78,
+    "nowTmc": 1.07,
+    "gainTmc": 0.29,
+    "beforePct": 63.3,
+    "nowPct": 86.5
+   },
+   {
+    "name": "ANDRA RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Vizianagaram",
+    "capacityTmc": 0.98,
+    "beforeTmc": 0.41,
+    "nowTmc": 0.7,
+    "gainTmc": 0.29,
+    "beforePct": 41.9,
+    "nowPct": 71.6
+   }
+  ]
+ },
+ "follow": {
+  "published": [],
+  "bands": []
+ },
+ "updatedAt": "2026-10-30",
  "map": [
   [
    0,
@@ -4657,133 +4801,155 @@
    "district": "Anakapalli",
    "mandal": "Atchutapuram",
    "stormMm": 234.0,
-   "depthM": 26.84
+   "depthM": 26.84,
+   "precedentM": 2.6
   },
   {
    "district": "Visakhapatnam",
    "mandal": "Visakhapatnam (Rural)",
    "stormMm": 232.5,
-   "depthM": 19.17
+   "depthM": 19.17,
+   "precedentM": 1.48
   },
   {
    "district": "Vizianagaram",
    "mandal": "Garividi",
    "stormMm": 220.1,
-   "depthM": 9.41
+   "depthM": 9.41,
+   "precedentM": 1.48
   },
   {
    "district": "Srikakulam",
    "mandal": "Ranastalam",
    "stormMm": 206.7,
-   "depthM": 14.95
+   "depthM": 14.95,
+   "precedentM": 1.48
   },
   {
    "district": "Srikakulam",
    "mandal": "Etcherla",
    "stormMm": 195.9,
-   "depthM": 8.98
+   "depthM": 8.98,
+   "precedentM": 1.48
   },
   {
    "district": "Visakhapatnam",
    "mandal": "Anandapuram",
    "stormMm": 190.5,
-   "depthM": 10.26
+   "depthM": 10.26,
+   "precedentM": 1.48
   },
   {
    "district": "Srikakulam",
    "mandal": "KOTABOMMAL",
    "stormMm": 173.5,
-   "depthM": 8.09
+   "depthM": 8.09,
+   "precedentM": 1.48
   },
   {
    "district": "Parvathipuram Manyam",
    "mandal": "Pachipenta",
    "stormMm": 158.7,
-   "depthM": 8.54
+   "depthM": 8.54,
+   "precedentM": 1.48
   },
   {
    "district": "Vizianagaram",
    "mandal": "Cheepurupalle",
    "stormMm": 154.0,
-   "depthM": 11.39
+   "depthM": 11.39,
+   "precedentM": 1.48
   },
   {
    "district": "Srikakulam",
    "mandal": "Vajrapukothuru",
    "stormMm": 141.9,
-   "depthM": 12.3
+   "depthM": 12.3,
+   "precedentM": 1.48
   },
   {
    "district": "Anakapalli",
    "mandal": "Ravikamatham",
    "stormMm": 141.6,
-   "depthM": 8.73
+   "depthM": 8.73,
+   "precedentM": 1.48
   },
   {
    "district": "Kakinada",
    "mandal": "Gollaprolu",
    "stormMm": 139.5,
-   "depthM": 11.89
+   "depthM": 11.89,
+   "precedentM": 1.48
   },
   {
    "district": "Krishna",
    "mandal": "Koduru",
    "stormMm": 139.1,
-   "depthM": 8.24
+   "depthM": 8.24,
+   "precedentM": 1.48
   },
   {
    "district": "Anakapalli",
    "mandal": "Paravada",
    "stormMm": 135.8,
-   "depthM": 8.05
+   "depthM": 8.05,
+   "precedentM": 1.48
   },
   {
    "district": "Srikakulam",
    "mandal": "Kanchili",
    "stormMm": 126.5,
-   "depthM": 13.69
+   "depthM": 13.69,
+   "precedentM": 1.48
   },
   {
    "district": "Anakapalli",
    "mandal": "DEVARAPALLE (VISAKHAPATNAM)",
    "stormMm": 122.9,
-   "depthM": 12.25
+   "depthM": 12.25,
+   "precedentM": 1.48
   },
   {
    "district": "Anakapalli",
    "mandal": "Butchayyapeta",
    "stormMm": 122.7,
-   "depthM": 11.99
+   "depthM": 11.99,
+   "precedentM": 1.48
   },
   {
    "district": "Kakinada",
    "mandal": "Jaggampeta",
    "stormMm": 112.8,
-   "depthM": 9.81
+   "depthM": 9.81,
+   "precedentM": 1.48
   },
   {
    "district": "Alluri Sitharama Raju",
    "mandal": "Ananthagiri",
    "stormMm": 109.2,
-   "depthM": 10.41
+   "depthM": 10.41,
+   "precedentM": 1.48
   },
   {
    "district": "Srikakulam",
    "mandal": "Kaviti",
    "stormMm": 107.9,
-   "depthM": 19.91
+   "depthM": 19.91,
+   "precedentM": 1.48
   },
   {
    "district": "Alluri Sitharama Raju",
    "mandal": "Koyyuru",
    "stormMm": 105.3,
-   "depthM": 12.86
+   "depthM": 12.86,
+   "precedentM": 1.48
   },
   {
    "district": "Kakinada",
    "mandal": "Thondangi",
    "stormMm": 100.0,
-   "depthM": 8.37
+   "depthM": 8.37,
+   "precedentM": 1.48
   }
  ],
  "caveat": "Rain is the State's gauge network, the difference between its season totals before and after the storm. Groundwater after the storm is not published yet; the November reading is the first that will show it. Last year's figures are a precedent, not a forecast: October 2025 was wet before Montha too, and the deepest band holds few mandals. The three-month forecasts frozen before the storm did not know about it."

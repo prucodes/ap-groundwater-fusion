@@ -10,6 +10,7 @@ import {
   IconChevronRight,
   IconChevrons,
   IconCloudRain,
+  IconCyclone,
   IconSun,
   IconTarget,
   IconCalendar,
@@ -53,6 +54,7 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
       { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "What moved since the last weekly refresh: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its date." },
   ] },
   { label: "Water now", items: [
+      { href: "/arnab", label: "Cyclone Arnab", Icon: IconCyclone, desc: "Where the cyclone's rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },
       { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
       { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
       { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },

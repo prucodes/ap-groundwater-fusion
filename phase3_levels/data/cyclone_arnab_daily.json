@@ -1,0 +1,841 @@
+{
+ "meta": {
+  "NAGARJUNA SAGAR": [
+   312.05,
+   "KRISHNA",
+   "Palnadu"
+  ],
+  "SRISAILAM R": [
+   215.81,
+   "KRISHNA",
+   "Nandyal"
+  ],
+  "TUNGABADRA DAM": [
+   105.79,
+   "KRISHNA",
+   "Vijayanagara(KS)"
+  ],
+  "Somasila Reservoir": [
+   78.0,
+   "PENNAR",
+   "Sri Potti Sriramulu Nellore"
+  ],
+  "KANDALERU RESERVOIR": [
+   68.03,
+   "PENNAR",
+   "Sri Potti Sriramulu Nellore"
+  ],
+  "PULA SUBBAIAH VELIGONDA PROJECT": [
+   53.85,
+   "KRISHNA",
+   "Markapuram"
+  ],
+  "PULICHINTHALA PROJECT": [
+   45.77,
+   "KRISHNA",
+   "Palnadu"
+  ],
+  "GANDIKOTA RESERVOIR": [
+   26.85,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "YELERU RESERVOIR": [
+   24.11,
+   "OTHERS",
+   "Kakinada"
+  ],
+  "BRAHMAMSAGAR RESERVOIR": [
+   17.74,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "VELOGODU BALANCING RESERVOIR": [
+   16.95,
+   "PENNAR",
+   "Nandyal"
+  ],
+  "Donkarayi Reservoir": [
+   16.51,
+   "GODAVARI",
+   "Alluri Sitharama Raju"
+  ],
+  "GORAKKALU BALANCING RESERVIOR": [
+   11.0,
+   "PENNAR",
+   "Nandyal"
+  ],
+  "CHITRAVATI BALANCING RESERVOIR": [
+   10.229,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "HIRAMANDALAM RESERVOIR": [
+   10.0,
+   "OTHERS",
+   "Srikakulam"
+  ],
+  "MYLAVARAM(PENNAR) RESERVOIR": [
+   6.5,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "PAIDIPALEM BALANCING RESERVOIR": [
+   6.0,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "PENNA AHOBILAM BALANCING RESERVOIR": [
+   5.5,
+   "PENNAR",
+   "Ananthapuramu"
+  ],
+  "MID PENNAR RESERVOIR": [
+   5.17,
+   "PENNAR",
+   "Ananthapuramu"
+  ],
+  "TANDAVA RESERVOIR": [
+   4.96,
+   "OTHERS",
+   "Alluri Sitharama Raju"
+  ],
+  "VELIGALLU RESERVOIR": [
+   4.64,
+   "PENNAR",
+   "Annamayya"
+  ],
+  "GAJULADINNE PROJECT": [
+   4.5,
+   "KRISHNA",
+   "Kurnool"
+  ],
+  "YERRAKALVA RESERVOIR": [
+   4.43,
+   "OTHERS",
+   "Eluru"
+  ],
+  "Sileru (Guntawada) Reservoir": [
+   4.334,
+   "GODAVARI",
+   "Alluri Sitharama Raju"
+  ],
+  "OWK RESERVOIR": [
+   4.148,
+   "PENNAR",
+   "Nandyal"
+  ],
+  "GUNDLAKAMMA RESERVOIR": [
+   3.86,
+   "OTHERS",
+   "Prakasam"
+  ],
+  "RAIWADA RESERVOIR": [
+   3.6,
+   "OTHERS",
+   "Anakapalli"
+  ],
+  "BUGGAVAGU": [
+   3.46,
+   "KRISHNA",
+   "Palnadu"
+  ],
+  "KANIGIRI RESERVOIR": [
+   3.45,
+   "PENNAR",
+   "Sri Potti Sriramulu Nellore"
+  ],
+  "MADDUVALASA PROJECT": [
+   3.373,
+   "OTHERS",
+   "Vizianagaram"
+  ],
+  "THATIPUDI RESERVOIR": [
+   3.325,
+   "OTHERS",
+   "Vizianagaram"
+  ],
+  "PRAKASAM BARRAGE": [
+   3.071,
+   "KRISHNA",
+   "NTR"
+  ],
+  "ALAGANURU BALANCING RESERVOIR": [
+   2.97,
+   "PENNAR",
+   "Nandyal"
+  ],
+  "CUM BUM TANK": [
+   2.952,
+   "OTHERS",
+   "Markapuram"
+  ],
+  "SIR AURTHUR COTTON BARRAGE": [
+   2.93,
+   "GODAVARI",
+   "Konaseema"
+  ],
+  "THOTAPALLI REGULATOR / BARRAGE": [
+   2.534,
+   "OTHERS",
+   "Parvathipuram Manyam"
+  ],
+  "SUBSIDIARY RESERVOIR -II": [
+   2.405,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "ANNAMAYYA (CHEYYERU) RESERVOIR": [
+   2.24,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "SUBSIDIARY RESERVOIR -I": [
+   2.135,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "MOPADU RESERVOIR PROJECT": [
+   2.091,
+   "OTHERS",
+   "Markapuram"
+  ],
+  "BHAIRAVANITHIPPA PROJECT": [
+   2.0,
+   "KRISHNA",
+   "Ananthapuramu"
+  ],
+  "GOLLAPALLI RESERVOIR": [
+   1.913,
+   "PENNAR",
+   "Sri Sathya Sai"
+  ],
+  "GANDIPALEM RESERVOIR PROJECT": [
+   1.88,
+   "OTHERS",
+   "Sri Potti Sriramulu Nellore"
+  ],
+  "ARANIAR RESERVOIR": [
+   1.853,
+   "OTHERS",
+   "Tirupati"
+  ],
+  "ADAVIPALLI RESERVOIR": [
+   1.814,
+   "PENNAR",
+   "Annamayya"
+  ],
+  "UPPER PENNAR": [
+   1.81,
+   "PENNAR",
+   "Sri Sathya Sai"
+  ],
+  "GONELAVAGU RESERVOIR": [
+   1.77,
+   "OTHERS",
+   "Eluru"
+  ],
+  "SARVEPALLI RESERVOIR": [
+   1.74,
+   "OTHERS",
+   "Sri Potti Sriramulu Nellore"
+  ],
+  "JEEDIPALLI RESERVOIR": [
+   1.681,
+   "PENNAR",
+   "Ananthapuramu"
+  ],
+  "VENGALRAYA SAGARAM": [
+   1.679,
+   "OTHERS",
+   "Parvathipuram Manyam"
+  ],
+  "VAMIKONDA SAGAR RESERVOIR": [
+   1.66,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "Cherlopalli Reservoir": [
+   1.608,
+   "PENNAR",
+   "Sri Sathya Sai"
+  ],
+  "MUSURIMALLI": [
+   1.6,
+   "GODAVARI",
+   "Polavaram"
+  ],
+  "RAMA THIRTHAM": [
+   1.569,
+   "OTHERS",
+   "Prakasam"
+  ],
+  "BADVEL TANK": [
+   1.36,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "SUNKESULA BARRAGE": [
+   1.235,
+   "KRISHNA",
+   "Kurnool"
+  ],
+  "TAMMILERU RESERVOIR": [
+   1.23,
+   "OTHERS",
+   "Eluru"
+  ],
+  "MEHADRIGADD RESERVOIR": [
+   1.169,
+   "OTHERS",
+   "Visakhapatnam"
+  ],
+  "PATHIKONDA RESERVOIR": [
+   1.126,
+   "KRISHNA",
+   "Kurnool"
+  ],
+  "RALLAPADU RESERVOIR": [
+   1.106,
+   "OTHERS",
+   "Prakasam"
+  ],
+  "PEDDAGEDDA RESERVOIR": [
+   1.07,
+   "OTHERS",
+   "Parvathipuram Manyam"
+  ],
+  "SARVARAJA SAGAR": [
+   1.06,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "SRINIVASAPURAM RESERVOIR (HNSS)": [
+   1.02,
+   "PENNAR",
+   "Annamayya"
+  ],
+  "ANDRA RESERVOIR": [
+   0.98,
+   "OTHERS",
+   "Vizianagaram"
+  ],
+  "VATTIGEDDA RESERVOIR": [
+   0.958,
+   "OTHERS",
+   "Parvathipuram Manyam"
+  ],
+  "CHAGALLU BALANCING RESERVOIR": [
+   0.95,
+   "PENNAR",
+   "Ananthapuramu"
+  ],
+  "KALYANI DAM": [
+   0.91,
+   "OTHERS",
+   "Tirupati"
+  ],
+  "YOGI VEMANA (MADDILERU) RESERVOIR": [
+   0.9,
+   "PENNAR",
+   "Sri Sathya Sai"
+  ],
+  "KONAM RESERVOIR": [
+   0.85,
+   "OTHERS",
+   "Anakapalli"
+  ],
+  "NELLORE TANK": [
+   0.837,
+   "PENNAR",
+   "Sri Potti Sriramulu Nellore"
+  ],
+  "GOTTA BARRAGE": [
+   0.66,
+   "OTHERS",
+   "Srikakulam"
+  ],
+  "PENDEKALLU RESERVOIR": [
+   0.65,
+   "PENNAR",
+   "Ananthapuramu"
+  ],
+  "BHUPATIPALEM RESERVOIR": [
+   0.645,
+   "GODAVARI",
+   "Polavaram"
+  ],
+  "VEERA RAGHAVANI KOTA ANICUT": [
+   0.6,
+   "OTHERS",
+   "Prakasam"
+  ],
+  "PEDDERU RESERVOIR PROJECT": [
+   0.56,
+   "PENNAR",
+   "Annamayya"
+  ],
+  "JALLERU RESERVOIR": [
+   0.54,
+   "OTHERS",
+   "Eluru"
+  ],
+  "BUGGAVANKA RESERVOIR": [
+   0.51,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "MADDIGEDDA PROJECT": [
+   0.484,
+   "OTHERS",
+   "Polavaram"
+  ],
+  "Marala Reservoir": [
+   0.483,
+   "PENNAR",
+   "Sri Sathya Sai"
+  ],
+  "VARAHA RESERVOIR": [
+   0.465,
+   "OTHERS",
+   "Anakapalli"
+  ],
+  "SANGAM ANICUT / BARRGE": [
+   0.45,
+   "OTHERS",
+   "Sri Potti Sriramulu Nellore"
+  ],
+  "KOVVADAKALVA RESERVOIR": [
+   0.44,
+   "GODAVARI",
+   "East Godavari"
+  ],
+  "PAMPA RESERVOIR": [
+   0.423,
+   "OTHERS",
+   "Kakinada"
+  ],
+  "BAHUDA RESERVOIR": [
+   0.398,
+   "PENNAR",
+   "Annamayya"
+  ],
+  "VARADARAJASWAMY GUDI PROJECT": [
+   0.389,
+   "KRISHNA",
+   "Nandyal"
+  ],
+  "NELLORE ANICUT": [
+   0.38,
+   "PENNAR",
+   "Sri Potti Sriramulu Nellore"
+  ],
+  "PALERU BITRAGUNTA ANICUT": [
+   0.37,
+   "OTHERS",
+   "Srikakulam"
+  ],
+  "PEDDERU RESERVOIR": [
+   0.358,
+   "OTHERS",
+   "Anakapalli"
+  ],
+  "PINCHA PROJECT": [
+   0.327,
+   "PENNAR",
+   "Annamayya"
+  ],
+  "YELLANUR SR2": [
+   0.31,
+   "PENNAR",
+   "Ananthapuramu"
+  ],
+  "GODDAMVARIPALLI SR3": [
+   0.3,
+   "PENNAR",
+   "Ananthapuramu"
+  ],
+  "THIMMAPURAM SR1": [
+   0.3,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "SUREMPALEM RESERVOIR": [
+   0.28,
+   "GODAVARI",
+   "Polavaram"
+  ],
+  "ZURRERU RESERVOIR": [
+   0.266,
+   "PENNAR",
+   "Nandyal"
+  ],
+  "KALANGI RESERVOIR": [
+   0.24,
+   "OTHERS",
+   "Tirupati"
+  ],
+  "SUBBAREDDY SAGAR": [
+   0.235,
+   "OTHERS",
+   "Kakinada"
+  ],
+  "NTR RESERVOIR": [
+   0.203,
+   "OTHERS",
+   "Anakapalli"
+  ],
+  "KRISHNAPURAM PROJECT": [
+   0.2,
+   "OTHERS",
+   "Chittoor"
+  ],
+  "MALLIMADUGU": [
+   0.181,
+   "OTHERS",
+   "Tirupati"
+  ],
+  "CHENNARAYA SWAMI GUDI PROJECT": [
+   0.17,
+   "PENNAR",
+   "Sri Sathya Sai"
+  ],
+  "LOWER SAGILERU ANI CUT": [
+   0.169,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "KRISHNAGIRI RESERVOIR": [
+   0.164,
+   "KRISHNA",
+   "Kurnool"
+  ],
+  "KALINGADAL PROJECT": [
+   0.15,
+   "OTHERS",
+   "Srikakulam"
+  ],
+  "MUNIYERU PROJECT": [
+   0.13,
+   "KRISHNA",
+   "NTR"
+  ],
+  "NTR Jalasayam": [
+   0.11,
+   "OTHERS",
+   "Chittoor"
+  ],
+  "GODDUMARRI ANICUT": [
+   0.07,
+   "PENNAR",
+   "Ananthapuramu"
+  ],
+  "DAMODARAM SAGARAM": [
+   0.057,
+   "OTHERS",
+   "Srikakulam"
+  ],
+  "GAJJILIGEDDA RESERVOIR": [
+   0.05,
+   "OTHERS",
+   "Srikakulam"
+  ],
+  "SWARNAMUKHI BARRAGE CUM BRIDGE": [
+   0.035,
+   "OTHERS",
+   "Tirupati"
+  ],
+  "ADINIMMAYAPALLI ANICUT": [
+   0.0,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "NARAYANAPURAM ANICUT": [
+   0.0,
+   "OTHERS",
+   "Srikakulam"
+  ],
+  "PENNAR KUMUDWATHI PROJECT (ANICUT)": [
+   0.0,
+   "PENNAR",
+   "Sri Sathya Sai"
+  ],
+  "UPPER SAGILERU": [
+   null,
+   "PENNAR",
+   "Y.S.R Kadapa"
+  ],
+  "VIJAYARAI ANICUT": [
+   0.0,
+   "OTHERS",
+   "Eluru"
+  ]
+ },
+ "days": [
+  {
+   "date": "2026-10-26",
+   "rainTo": "2026-10-24",
+   "rainTmc": 2377.8,
+   "normalTmc": 3764.8,
+   "soilAsOf": "2026-10-23",
+   "soilMedian30": 49.9,
+   "soilDriest": 52,
+   "reservoirsAsOf": "2026-10-26T12:38+05:30",
+   "reservoirTmc": 499.642,
+   "capacityTmc": 1161.357,
+   "basins": {
+    "KRISHNA": 322.992,
+    "PENNAR": 109.287,
+    "OTHERS": 46.746,
+    "GODAVARI": 20.617
+   },
+   "reservoirs": {
+    "NAGARJUNA SAGAR": 183.159,
+    "SRISAILAM R": 56.689,
+    "TUNGABADRA DAM": 46.306,
+    "Somasila Reservoir": 19.835,
+    "KANDALERU RESERVOIR": 16.809,
+    "PULICHINTHALA PROJECT": 27.488,
+    "GANDIKOTA RESERVOIR": 18.747,
+    "YELERU RESERVOIR": 17.96,
+    "BRAHMAMSAGAR RESERVOIR": 5.271,
+    "VELOGODU BALANCING RESERVOIR": 7.546,
+    "Donkarayi Reservoir": 15.083,
+    "GORAKKALU BALANCING RESERVIOR": 9.089,
+    "CHITRAVATI BALANCING RESERVOIR": 3.194,
+    "HIRAMANDALAM RESERVOIR": 5.541,
+    "MYLAVARAM(PENNAR) RESERVOIR": 1.15,
+    "PAIDIPALEM BALANCING RESERVOIR": 3.296,
+    "PENNA AHOBILAM BALANCING RESERVOIR": 4.404,
+    "MID PENNAR RESERVOIR": 1.997,
+    "TANDAVA RESERVOIR": 2.63,
+    "VELIGALLU RESERVOIR": 2.57,
+    "GAJULADINNE PROJECT": 2.679,
+    "YERRAKALVA RESERVOIR": 1.495,
+    "Sileru (Guntawada) Reservoir": 1.181,
+    "OWK RESERVOIR": 3.145,
+    "GUNDLAKAMMA RESERVOIR": 1.664,
+    "RAIWADA RESERVOIR": 0.956,
+    "BUGGAVAGU": 1.698,
+    "KANIGIRI RESERVOIR": 1.385,
+    "MADDUVALASA PROJECT": 2.732,
+    "THATIPUDI RESERVOIR": 1.52,
+    "PRAKASAM BARRAGE": 2.955,
+    "ALAGANURU BALANCING RESERVOIR": 0.0,
+    "CUM BUM TANK": 0.695,
+    "SIR AURTHUR COTTON BARRAGE": 2.93,
+    "THOTAPALLI REGULATOR / BARRAGE": 2.026,
+    "SUBSIDIARY RESERVOIR -II": 0.688,
+    "ANNAMAYYA (CHEYYERU) RESERVOIR": 0.0,
+    "SUBSIDIARY RESERVOIR -I": 0.366,
+    "MOPADU RESERVOIR PROJECT": 0.0,
+    "BHAIRAVANITHIPPA PROJECT": 0.19,
+    "GOLLAPALLI RESERVOIR": 1.814,
+    "GANDIPALEM RESERVOIR PROJECT": 0.226,
+    "ARANIAR RESERVOIR": 0.512,
+    "ADAVIPALLI RESERVOIR": 0.396,
+    "UPPER PENNAR": 0.001,
+    "GONELAVAGU RESERVOIR": 0.251,
+    "SARVEPALLI RESERVOIR": 1.527,
+    "JEEDIPALLI RESERVOIR": 1.681,
+    "VENGALRAYA SAGARAM": 0.978,
+    "VAMIKONDA SAGAR RESERVOIR": 0.494,
+    "Cherlopalli Reservoir": 0.96,
+    "MUSURIMALLI": 0.56,
+    "RAMA THIRTHAM": 0.425,
+    "BADVEL TANK": 0.35,
+    "SUNKESULA BARRAGE": 0.782,
+    "TAMMILERU RESERVOIR": 0.126,
+    "MEHADRIGADD RESERVOIR": 0.54,
+    "PATHIKONDA RESERVOIR": 0.865,
+    "RALLAPADU RESERVOIR": 0.157,
+    "PEDDAGEDDA RESERVOIR": 0.471,
+    "SARVARAJA SAGAR": 0.281,
+    "SRINIVASAPURAM RESERVOIR (HNSS)": 0.032,
+    "ANDRA RESERVOIR": 0.411,
+    "VATTIGEDDA RESERVOIR": 0.643,
+    "CHAGALLU BALANCING RESERVOIR": 0.436,
+    "KALYANI DAM": 0.179,
+    "YOGI VEMANA (MADDILERU) RESERVOIR": 0.181,
+    "KONAM RESERVOIR": 0.376,
+    "NELLORE TANK": 0.62,
+    "GOTTA BARRAGE": 0.55,
+    "PENDEKALLU RESERVOIR": 0.272,
+    "BHUPATIPALEM RESERVOIR": 0.638,
+    "VEERA RAGHAVANI KOTA ANICUT": 0.0,
+    "PEDDERU RESERVOIR PROJECT": 0.399,
+    "JALLERU RESERVOIR": 0.422,
+    "BUGGAVANKA RESERVOIR": 0.08,
+    "MADDIGEDDA PROJECT": 0.377,
+    "Marala Reservoir": 0.306,
+    "VARAHA RESERVOIR": 0.117,
+    "SANGAM ANICUT / BARRGE": 0.308,
+    "KOVVADAKALVA RESERVOIR": 0.052,
+    "PAMPA RESERVOIR": 0.243,
+    "BAHUDA RESERVOIR": 0.127,
+    "VARADARAJASWAMY GUDI PROJECT": 0.021,
+    "NELLORE ANICUT": 0.38,
+    "PALERU BITRAGUNTA ANICUT": 0.0,
+    "PEDDERU RESERVOIR": 0.181,
+    "PINCHA PROJECT": 0.069,
+    "YELLANUR SR2": 0.2,
+    "GODDAMVARIPALLI SR3": 0.2,
+    "THIMMAPURAM SR1": 0.28,
+    "SUREMPALEM RESERVOIR": 0.173,
+    "ZURRERU RESERVOIR": 0.05,
+    "KALANGI RESERVOIR": 0.051,
+    "SUBBAREDDY SAGAR": 0.174,
+    "NTR RESERVOIR": 0.04,
+    "KRISHNAPURAM PROJECT": 0.004,
+    "MALLIMADUGU": 0.012,
+    "CHENNARAYA SWAMI GUDI PROJECT": 0.086,
+    "LOWER SAGILERU ANI CUT": 0.1,
+    "KRISHNAGIRI RESERVOIR": 0.16,
+    "KALINGADAL PROJECT": 0.065,
+    "MUNIYERU PROJECT": 0.0,
+    "NTR Jalasayam": 0.029,
+    "GODDUMARRI ANICUT": 0.0,
+    "DAMODARAM SAGARAM": 0.057,
+    "GAJJILIGEDDA RESERVOIR": 0.04,
+    "SWARNAMUKHI BARRAGE CUM BRIDGE": 0.035,
+    "ADINIMMAYAPALLI ANICUT": 0.0,
+    "NARAYANAPURAM ANICUT": 0.0,
+    "PENNAR KUMUDWATHI PROJECT (ANICUT)": 0.0,
+    "VIJAYARAI ANICUT": 0.0
+   }
+  },
+  {
+   "date": "2026-10-30",
+   "rainTo": "2026-10-28",
+   "rainTmc": 2588.3,
+   "normalTmc": 3820.7,
+   "soilAsOf": "2026-10-28",
+   "soilMedian30": 90.5,
+   "soilDriest": 14,
+   "reservoirsAsOf": "2026-10-30T08:25+05:30",
+   "reservoirTmc": 507.659,
+   "capacityTmc": 1161.357,
+   "basins": {
+    "KRISHNA": 324.284,
+    "PENNAR": 108.747,
+    "OTHERS": 54.674,
+    "GODAVARI": 19.954
+   },
+   "reservoirs": {
+    "NAGARJUNA SAGAR": 181.721,
+    "SRISAILAM R": 55.047,
+    "TUNGABADRA DAM": 43.539,
+    "Somasila Reservoir": 19.782,
+    "KANDALERU RESERVOIR": 16.77,
+    "PULA SUBBAIAH VELIGONDA PROJECT": 6.88,
+    "PULICHINTHALA PROJECT": 27.564,
+    "GANDIKOTA RESERVOIR": 18.711,
+    "YELERU RESERVOIR": 19.49,
+    "BRAHMAMSAGAR RESERVOIR": 5.221,
+    "VELOGODU BALANCING RESERVOIR": 7.372,
+    "Donkarayi Reservoir": 14.883,
+    "GORAKKALU BALANCING RESERVIOR": 8.98,
+    "CHITRAVATI BALANCING RESERVOIR": 3.163,
+    "HIRAMANDALAM RESERVOIR": 5.783,
+    "MYLAVARAM(PENNAR) RESERVOIR": 1.11,
+    "PAIDIPALEM BALANCING RESERVOIR": 3.292,
+    "PENNA AHOBILAM BALANCING RESERVOIR": 4.404,
+    "MID PENNAR RESERVOIR": 2.053,
+    "TANDAVA RESERVOIR": 3.39,
+    "VELIGALLU RESERVOIR": 2.56,
+    "GAJULADINNE PROJECT": 2.646,
+    "YERRAKALVA RESERVOIR": 1.676,
+    "Sileru (Guntawada) Reservoir": 1.094,
+    "OWK RESERVOIR": 3.059,
+    "GUNDLAKAMMA RESERVOIR": 1.664,
+    "RAIWADA RESERVOIR": 3.029,
+    "BUGGAVAGU": 1.698,
+    "KANIGIRI RESERVOIR": 1.615,
+    "MADDUVALASA PROJECT": 2.685,
+    "THATIPUDI RESERVOIR": 3.013,
+    "PRAKASAM BARRAGE": 2.885,
+    "ALAGANURU BALANCING RESERVOIR": 0.0,
+    "CUM BUM TANK": 0.673,
+    "SIR AURTHUR COTTON BARRAGE": 2.541,
+    "THOTAPALLI REGULATOR / BARRAGE": 1.919,
+    "SUBSIDIARY RESERVOIR -II": 0.674,
+    "ANNAMAYYA (CHEYYERU) RESERVOIR": 0.0,
+    "SUBSIDIARY RESERVOIR -I": 0.345,
+    "MOPADU RESERVOIR PROJECT": 0.0,
+    "BHAIRAVANITHIPPA PROJECT": 0.19,
+    "GOLLAPALLI RESERVOIR": 1.796,
+    "GANDIPALEM RESERVOIR PROJECT": 0.225,
+    "ARANIAR RESERVOIR": 0.512,
+    "ADAVIPALLI RESERVOIR": 0.4,
+    "UPPER PENNAR": 0.001,
+    "GONELAVAGU RESERVOIR": 0.251,
+    "SARVEPALLI RESERVOIR": 1.527,
+    "JEEDIPALLI RESERVOIR": 1.681,
+    "VENGALRAYA SAGARAM": 1.181,
+    "VAMIKONDA SAGAR RESERVOIR": 0.486,
+    "Cherlopalli Reservoir": 0.959,
+    "MUSURIMALLI": 0.56,
+    "RAMA THIRTHAM": 0.419,
+    "BADVEL TANK": 0.2,
+    "SUNKESULA BARRAGE": 1.068,
+    "TAMMILERU RESERVOIR": 0.126,
+    "MEHADRIGADD RESERVOIR": 1.099,
+    "PATHIKONDA RESERVOIR": 0.865,
+    "RALLAPADU RESERVOIR": 0.155,
+    "PEDDAGEDDA RESERVOIR": 0.688,
+    "SARVARAJA SAGAR": 0.281,
+    "SRINIVASAPURAM RESERVOIR (HNSS)": 0.032,
+    "ANDRA RESERVOIR": 0.702,
+    "VATTIGEDDA RESERVOIR": 0.759,
+    "CHAGALLU BALANCING RESERVOIR": 0.431,
+    "KALYANI DAM": 0.174,
+    "YOGI VEMANA (MADDILERU) RESERVOIR": 0.201,
+    "KONAM RESERVOIR": 0.774,
+    "NELLORE TANK": 0.65,
+    "GOTTA BARRAGE": 0.09,
+    "PENDEKALLU RESERVOIR": 0.267,
+    "BHUPATIPALEM RESERVOIR": 0.587,
+    "VEERA RAGHAVANI KOTA ANICUT": 0.0,
+    "PEDDERU RESERVOIR PROJECT": 0.398,
+    "JALLERU RESERVOIR": 0.43,
+    "BUGGAVANKA RESERVOIR": 0.08,
+    "MADDIGEDDA PROJECT": 0.319,
+    "Marala Reservoir": 0.298,
+    "VARAHA RESERVOIR": 0.352,
+    "SANGAM ANICUT / BARRGE": 0.308,
+    "KOVVADAKALVA RESERVOIR": 0.052,
+    "PAMPA RESERVOIR": 0.332,
+    "BAHUDA RESERVOIR": 0.134,
+    "VARADARAJASWAMY GUDI PROJECT": 0.021,
+    "NELLORE ANICUT": 0.38,
+    "PALERU BITRAGUNTA ANICUT": 0.0,
+    "PEDDERU RESERVOIR": 0.331,
+    "PINCHA PROJECT": 0.075,
+    "YELLANUR SR2": 0.2,
+    "GODDAMVARIPALLI SR3": 0.2,
+    "THIMMAPURAM SR1": 0.25,
+    "SUREMPALEM RESERVOIR": 0.237,
+    "ZURRERU RESERVOIR": 0.05,
+    "KALANGI RESERVOIR": 0.051,
+    "SUBBAREDDY SAGAR": 0.235,
+    "NTR RESERVOIR": 0.069,
+    "KRISHNAPURAM PROJECT": 0.004,
+    "MALLIMADUGU": 0.013,
+    "CHENNARAYA SWAMI GUDI PROJECT": 0.086,
+    "LOWER SAGILERU ANI CUT": 0.1,
+    "KRISHNAGIRI RESERVOIR": 0.16,
+    "KALINGADAL PROJECT": 0.065,
+    "MUNIYERU PROJECT": 0.0,
+    "NTR Jalasayam": 0.029,
+    "GODDUMARRI ANICUT": 0.0,
+    "DAMODARAM SAGARAM": 0.057,
+    "GAJJILIGEDDA RESERVOIR": 0.04,
+    "SWARNAMUKHI BARRAGE CUM BRIDGE": 0.035,
+    "ADINIMMAYAPALLI ANICUT": 0.0,
+    "NARAYANAPURAM ANICUT": 0.0,
+    "PENNAR KUMUDWATHI PROJECT (ANICUT)": 0.0,
+    "VIJAYARAI ANICUT": 0.0
+   }
+  }
+ ]
+}

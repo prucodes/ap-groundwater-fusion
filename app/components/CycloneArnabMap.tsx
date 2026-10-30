@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { StateOutlineMap } from "./StateOutlineMap";
+import { RAIN_SCALE as RAIN } from "../lib/arnabScale";
 
 /* Cyclone Arnab on the State map. The opening view puts the storm's rain and the
    water table's depth on one map, so the mismatch shows at a glance: heavy rain on
@@ -18,13 +19,6 @@ const VIEWS: { key: View; label: string }[] = [
   { key: "depth", label: "Depth before" },
 ];
 
-const RAIN = [
-  { key: "0", max: 25, label: "Under 25 mm", color: "#e3edf7" },
-  { key: "1", max: 50, label: "25 to 50", color: "#b5d0ec" },
-  { key: "2", max: 100, label: "50 to 100", color: "#6fa3d9" },
-  { key: "3", max: 200, label: "100 to 200", color: "#2f63b4" },
-  { key: "4", max: Infinity, label: "200 mm or more", color: "#1b2a78" },
-];
 const DEPTH = [
   { key: "a", max: 3, label: "Under 3 m", color: "#cfe7e4" },
   { key: "b", max: 8, label: "3 to 8 m", color: "#e9d7a8" },

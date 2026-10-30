@@ -19,6 +19,15 @@ by how much October rain exceeded that mandal's October average (satellite rain,
 2014-2024). That is a precedent, not a forecast: October 2025 was wet across the
 State before Montha too, and the deepest band holds few mandals.
 
+After the storm, each run also adds the day's water context to a log
+(phase3_levels/data/cyclone_arnab_daily.json): rain since the storm began,
+soil moisture, and storage in every reservoir, so the page can show where the
+water went as the rivers bring it down. And once the State publishes October
+and November readings, it sets what the water table did against the precedent.
+
+Run daily by .github/workflows/arnab_daily.yml until 15 November 2026, and by
+the weekly refresh after that.
+
 Output: app/data/cyclone_arnab.json
 """
 import csv
@@ -36,7 +45,12 @@ CAPTURE = os.path.join(HERE, "data", "cyclone_arnab_capture.json")
 GW = os.path.join(HERE, "apwrims", "apwrims_gw_history.csv")
 RAIN = os.path.join(HERE, "data", "mandal_rain_history.csv")
 OUT = os.path.join(ROOT, "app", "data", "cyclone_arnab.json")
+LOG = os.path.join(HERE, "data", "cyclone_arnab_daily.json")
+CONTEXT = os.path.join(ROOT, "app", "data", "water_context.json")
+BEFORE_MONTH = "2026-09"             # the last reading before the storm
+AFTER_MONTHS = ["2026-10", "2026-11"]
 
+RAIN_BASE_TMC = None
 HEAVY_MM = 100                       # the storm's rain counted as heavy for a mandal
 BANDS = [(0, 3, "under 3 m"), (3, 8, "3 to 8 m"), (8, 20, "8 to 20 m"), (20, 1e9, "over 20 m")]
 DEEP_M = 8                           # a water table with real room to rise
@@ -132,13 +146,112 @@ def montha_precedent(gw_by_name):
     return {"mandalsCompared": len(rows), "mandalsWithHeavyRain": len(wet), "bands": bands}
 
 
+def log_entry(context):
+    """One day of the water context, as the log keeps it."""
+    rain, soil, res = context["rainfall"], context["soilMoisture"], context["reservoirs"]
+    return {
+        "date": context["generatedAt"][:10],
+        "rainTo": rain["window"]["end"], "rainTmc": rain["state"]["actualTmc"], "normalTmc": rain["state"]["normalTmc"],
+        "soilAsOf": soil["asOf"], "soilMedian30": soil["summary"]["medianPct"], "soilDriest": soil["summary"]["driestOnRecord"],
+        "reservoirsAsOf": res["asOf"], "reservoirTmc": res["state"]["storageTmc"], "capacityTmc": res["state"]["capacityTmc"],
+        "basins": {b["basin"]: b["storageTmc"] for b in res["byBasin"]},
+        "reservoirs": {r["name"]: r["storageTmc"] for r in res["reservoirs"] if r.get("storageTmc") is not None},
+        "meta": {r["name"]: [r.get("capacityTmc"), r.get("basin"), r.get("district")] for r in res["reservoirs"]},
+    }
+
+
+def update_log(paths):
+    """Add each water context read to the log, one entry per day; a later read of the same day replaces it."""
+    log = json.load(open(LOG)) if os.path.exists(LOG) else {"meta": {}, "days": []}
+    days = {d["date"]: d for d in log["days"]}
+    for path in paths:
+        if not os.path.exists(path):
+            continue
+        entry = log_entry(json.load(open(path)))
+        log["meta"].update(entry.pop("meta"))
+        days[entry["date"]] = entry
+    log["days"] = [days[k] for k in sorted(days)]
+    with open(LOG, "w") as handle:
+        json.dump(log, handle, indent=1)
+    return log
+
+
+def where_it_went(log):
+    """Rain since the storm began, soil and storage by day; reservoirs and basins that gained most."""
+    days = log["days"]
+    if not days:
+        return None
+    first, last = days[0], days[-1]
+    gains = []
+    for name, now in last["reservoirs"].items():
+        then = first["reservoirs"].get(name)
+        cap, basin, district = (log["meta"].get(name) or [None, None, None])
+        if then is None or not cap:
+            continue
+        gains.append({"name": name, "basin": basin, "district": district, "capacityTmc": cap,
+                      "beforeTmc": round(then, 2), "nowTmc": round(now, 2), "gainTmc": round(now - then, 2),
+                      "beforePct": round(100 * then / cap, 1), "nowPct": round(100 * now / cap, 1)})
+    gains.sort(key=lambda g: -g["gainTmc"])
+    basins = []
+    for basin, now in last["basins"].items():
+        then = first["basins"].get(basin)
+        cap = sum((m[0] or 0) for m in log["meta"].values() if m[1] == basin)
+        if then is None or not cap:
+            continue
+        basins.append({"basin": basin, "beforePct": round(100 * then / cap, 1), "nowPct": round(100 * now / cap, 1),
+                       "gainTmc": round(now - then, 1)})
+    basins.sort(key=lambda b: -b["gainTmc"])
+    return {
+        "from": first["reservoirsAsOf"][:10], "to": last["reservoirsAsOf"][:10],
+        "days": [{"date": d["date"], "rainTo": d["rainTo"], "rainSinceTmc": round(d["rainTmc"] - RAIN_BASE_TMC, 1),
+                  "soilMedian30": d["soilMedian30"], "reservoirTmc": round(d["reservoirTmc"], 1),
+                  "reservoirPct": round(100 * d["reservoirTmc"] / d["capacityTmc"], 1)} for d in days],
+        "gainTmc": round(last["reservoirTmc"] - first["reservoirTmc"], 1),
+        "basins": basins, "reservoirs": [g for g in gains if g["gainTmc"] > 0][:8],
+    }
+
+
+def did_it_follow(gw_by_uuid, mandals, precedent):
+    """Once the State publishes October and November, what the water table did against the precedent."""
+    def usual(series_by_month, a, b):
+        moves = [series_by_month[f"{y}-{b}"] - series_by_month[f"{y}-{a}"] for y in USUAL_YEARS
+                 if f"{y}-{a}" in series_by_month and f"{y}-{b}" in series_by_month]
+        return statistics.median(moves) if len(moves) >= 5 else None
+    published = [m for m in AFTER_MONTHS if any(m in s for s in gw_by_uuid.values())]
+    rows = {}
+    for m in mandals:
+        series = gw_by_uuid.get(m["uuid"], {})
+        row = {}
+        if "2026-10" in series and BEFORE_MONTH in series:
+            row["octRiseM"] = round(series[BEFORE_MONTH] - series["2026-10"], 2)    # positive: the table rose
+        if "2026-11" in series and "2026-10" in series:
+            u = usual(series, "10", "11")
+            if u is not None:
+                row["novExtraRiseM"] = round(u - (series["2026-11"] - series["2026-10"]), 2)
+        rows[m["uuid"]] = row
+    bands = []
+    if "2026-11" in published:
+        prec = {b["band"]: b for b in precedent["bands"]}
+        for lo, hi, label in BANDS:
+            got = [rows[m["uuid"]]["novExtraRiseM"] for m in mandals if m["stormMm"] >= HEAVY_MM and m["depthM"] is not None
+                   and lo <= m["depthM"] < hi and "novExtraRiseM" in rows[m["uuid"]]]
+            if got:
+                bands.append({"band": label, "mandals": len(got), "extraRiseM": round(statistics.median(got), 2),
+                              "precedentM": prec.get(label, {}).get("extraRiseM")})
+    return {"published": published, "bands": bands}, rows
+
+
 def main():
     if "--capture" in sys.argv:
         i = sys.argv.index("--capture")
         capture(sys.argv[i + 1], sys.argv[i + 2])
     cap = json.load(open(CAPTURE))
+    global RAIN_BASE_TMC
+    RAIN_BASE_TMC = cap["state"]["rainTmcBefore"]
+    seeds = sys.argv[sys.argv.index("--seed") + 1:sys.argv.index("--seed") + 3] if "--seed" in sys.argv else []
+    log = update_log(seeds + [CONTEXT])
     gw_by_name, gw_by_uuid = groundwater()
-    latest = max(m for s in gw_by_uuid.values() for m in s)
+    latest = BEFORE_MONTH
 
     mandals = []
     for m in cap["mandals"]:
@@ -172,6 +285,10 @@ def main():
             outline[i] = m
     map_rows = [[i, m["mandal"], m["district"], round(m["stormMm"]), m["depthM"]] for i, m in sorted(outline.items())]
 
+    precedent = {"event": "Cyclone Montha", "landfall": "2025-10-28", **montha_precedent(gw_by_name)}
+    follow, follow_rows = did_it_follow(gw_by_uuid, mandals, precedent)
+    expected = {b["band"]: b["extraRiseM"] for b in precedent["bands"]}
+
     s = cap["state"]
     window_days = (datetime.date.fromisoformat(cap["rainWindow"]["after"]) - datetime.date.fromisoformat(cap["rainWindow"]["before"])).days
     payload = {
@@ -196,9 +313,13 @@ def main():
         "heavyMm": HEAVY_MM, "deepM": DEEP_M,
         "districts": district_rows,
         "byDepth": by_depth,
-        "precedent": {"event": "Cyclone Montha", "landfall": "2025-10-28", **montha_precedent(gw_by_name)},
+        "precedent": precedent,
+        "since": where_it_went(log),
+        "follow": follow,
+        "updatedAt": log["days"][-1]["date"] if log["days"] else None,
         "map": map_rows,
-        "watch": [{"district": m["district"], "mandal": m["mandal"], "stormMm": m["stormMm"], "depthM": m["depthM"]} for m in watch],
+        "watch": [{"district": m["district"], "mandal": m["mandal"], "stormMm": m["stormMm"], "depthM": m["depthM"],
+                   "precedentM": expected.get(band_of(m["depthM"])), **follow_rows.get(m["uuid"], {})} for m in watch],
         "caveat": ("Rain is the State's gauge network, the difference between its season totals before and after the storm. "
                    "Groundwater after the storm is not published yet; the November reading is the first that will show it. "
                    "Last year's figures are a precedent, not a forecast: October 2025 was wet before Montha too, and the deepest "

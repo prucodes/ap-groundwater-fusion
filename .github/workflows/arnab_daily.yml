@@ -1,0 +1,78 @@
+name: Cyclone Arnab — daily
+
+# Every morning until 15 November 2026: reads the State's water context (about twenty
+# requests to the public APWRIMS dashboards), adds the day to Cyclone Arnab's log,
+# rebuilds the /arnab/ page's data and redeploys. After that the weekly refresh keeps
+# the page, which runs the same builder.
+#
+# Only the Arnab files are committed. The water context it reads is left for the
+# weekly refresh, which rebuilds everything derived from it together.
+#
+# 03:30 UTC is 09:00 IST, after the portal's morning reservoir readings. On a Monday
+# the weekly refresh may push while this runs, so the push rebases first.
+on:
+  schedule:
+    - cron: "30 3 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: arnab-daily
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stop after 15 November
+        id: window
+        run: |
+          if [ "$(date -u +%Y%m%d)" -gt 20261115 ] && [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "Past 15 November; the weekly refresh keeps the page from here."
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.window.outputs.run == 'true'
+      - uses: actions/setup-python@v5
+        if: steps.window.outputs.run == 'true'
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        if: steps.window.outputs.run == 'true'
+        run: pip install -r requirements.txt pandas numpy pytest
+      - name: Read the water context
+        if: steps.window.outputs.run == 'true'
+        run: python phase3_levels/fetch_apwrims_context.py
+      - name: Add the day to Arnab's log
+        if: steps.window.outputs.run == 'true'
+        run: python phase3_levels/build_cyclone_arnab.py
+      - name: Check the page still says what it is allowed to say
+        if: steps.window.outputs.run == 'true'
+        run: python -m pytest -q tests/test_cyclone_arnab.py
+      - name: Commit the day
+        if: steps.window.outputs.run == 'true'
+        id: publish
+        run: |
+          git config user.name "phase3-bot"
+          git config user.email "bot@local"
+          git add app/data/cyclone_arnab.json phase3_levels/data/cyclone_arnab_daily.json
+          if git diff --cached --quiet; then
+            echo "nothing new today"
+            exit 0
+          fi
+          git commit -m "chore(arnab): daily water context $(date -u +%Y-%m-%d)"
+          git stash --include-untracked || true
+          git pull --rebase origin main
+          git push
+          echo "published=true" >> "$GITHUB_OUTPUT"
+      - name: Deploy
+        # A push made with this workflow's own token starts no other workflow; a dispatch does.
+        if: steps.publish.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

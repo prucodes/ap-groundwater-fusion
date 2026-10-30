@@ -315,3 +315,12 @@ export const IconArrowDown = (p: IconProps) => (
     <path d="M12 5v14M6 13l6 6 6-6" />
   </svg>
 );
+
+/* The weather-map cyclone mark: an eye with two arms wound round it. */
+export const IconCyclone = (p: IconProps) => (
+  <svg {...base(p)}>
+    <circle cx="12" cy="12" r="2.2" />
+    <path d="M12 9.8c0-3.4 2.6-5.8 6.2-5.3M12 14.2c0 3.4-2.6 5.8-6.2 5.3" />
+    <path d="M9.8 12c-3.4 0-5.8-2.6-5.3-6.2M14.2 12c3.4 0 5.8 2.6 5.3 6.2" />
+  </svg>
+);

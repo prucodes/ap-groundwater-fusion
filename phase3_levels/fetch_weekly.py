@@ -115,6 +115,9 @@ STEPS = [
     ("add up canal releases", [PY, os.path.join(HERE, "build_canal_releases.py")], False, 600),
     # Freeze this week's published forecasts and score any whose month has been measured.
     ("keep the forecast ledger", [PY, os.path.join(HERE, "build_forecast_ledger.py")], False),
+    # Cyclone Arnab: this week's water context into its log, and the groundwater check
+    # once October and November are published. Daily until 15 Nov 2026 (arnab_daily.yml).
+    ("follow Cyclone Arnab", [PY, os.path.join(HERE, "build_cyclone_arnab.py")], False, 300),
     # Whether this season is recharging, measured per mandal against its own
     # past seasons. Built after the app data so it reads the history the site
     # has just published. Optional: it is a standalone page and a front-page
