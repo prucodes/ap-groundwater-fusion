@@ -154,6 +154,6 @@ test("records how far down the Cyclone Arnab page a visit read, and how it opene
   expect(await paths()).not.toContain("ap-gw/arnab/reached-follow");
   await page.getByRole("heading", { name: "Did Arnab follow?" }).scrollIntoViewIfNeeded();
   await expect.poll(paths).toContain("ap-gw/arnab/reached-follow");
-  await page.getByTestId("arnab-view-rain").click();
-  await expect.poll(paths).toContain("ap-gw/arnab/map-rain");
+  await page.getByTestId("arnab-view-drought").click();
+  await expect.poll(paths).toContain("ap-gw/arnab/map-drought");
 });

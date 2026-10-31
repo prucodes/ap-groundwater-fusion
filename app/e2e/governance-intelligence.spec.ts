@@ -126,6 +126,9 @@ test("the Cyclone Arnab page sets the rain against room to rise and waits for th
   await page.goto("/arnab/");
   await expect(page.getByTestId("arnab-hero")).toContainText("The rain fell where the water table was already high");
   await expect(page.getByTestId("arnab-view-meet")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("arnab-drought")).toContainText("flagged mandals got 100 mm or more");
+  await page.getByTestId("arnab-view-drought").click();
+  await expect(page.getByTestId("arnab-rain-map")).toContainText("Flagged, little rain");
   await expect(page.getByRole("heading", { name: "Where the water went" })).toBeVisible();
   const follow = page.getByTestId("arnab-follow");
   await expect(follow).toContainText("November awaited");
