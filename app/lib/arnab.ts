@@ -22,7 +22,8 @@ export type Arnab = {
   precedent: { mandalsWithHeavyRain: number; bands: ArnabPrecedent[] };
   since: { from: string; to: string; days: ArnabDay[]; gainTmc: number; basins: Array<{ basin: string; beforePct: number; nowPct: number; gainTmc: number }>; reservoirs: ArnabGain[] } | null;
   follow: { published: string[]; bands: Array<{ band: string; mandals: number; extraRiseM: number; precedentM: number | null }> };
-  map: Array<[number, string, string, number, number | null]>;
+  map: Array<[number, string, string, number, number | null, string]>;
+  drought: { asOf: string; declareBy: string; flagged: number; flaggedHeavy: number; medianMm: number; severe: number; severeHeavy: number; byDrySpell: number } | null;
   watch: ArnabWatch[];
   caveat: string;
 };

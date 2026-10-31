@@ -42,3 +42,15 @@ def test_groundwater_check_waits_for_the_readings():
         assert ("octRiseM" in m) <= ("2026-10" in published)
         assert ("novExtraRiseM" in m) <= ("2026-11" in published)
     assert DATA["groundwaterLatest"] == "2026-09", "depth before the storm stays September's"
+
+
+def test_drought_overlay_counts_only_settled_flags_and_says_it_is_not_a_declaration():
+    watch = json.load(open(os.path.join(ROOT, "app", "data", "drought_watch.json")))
+    settled = [m for m in watch["mandals"] if m["category"] in {"severe", "moderate|severe", "moderate"}]
+    drought = DATA["drought"]
+    assert drought["flagged"] == len(settled), "a normal-or-moderate range is undecided, so it is not a flag"
+    rain = {row[0]: row[3] for row in DATA["map"]}
+    assert drought["flaggedHeavy"] == sum(rain[m["i"]] >= DATA["heavyMm"] for m in settled if m["i"] in rain)
+    assert drought["severeHeavy"] <= drought["severe"] <= drought["flagged"]
+    page = open(os.path.join(ROOT, "app", "app", "arnab", "page.tsx")).read()
+    assert "not a declaration" in page

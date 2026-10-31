@@ -45,6 +45,13 @@
 .bars li i { display: block; height: 10px; border-radius: 5px; background: linear-gradient(90deg, #6fa3d9, #1b2a78); min-width: 3px; }
 .bars li b { text-align: right; font: 600 13px var(--font-mono); color: var(--ink); font-variant-numeric: tabular-nums; }
 
+/* Against the drought flags */
+.drought { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.drought div { display: grid; gap: 4px; align-content: start; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--field); }
+.drought b { font: 600 24px/1.1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.drought b small { font-size: 14px; font-weight: 500; color: var(--muted-2); }
+.drought span { font-size: 12px; line-height: 1.4; color: var(--ink-soft); }
+
 /* Storage line */
 .line { width: 100%; height: auto; display: block; }
 .grid { stroke: var(--line); stroke-width: 1; }
@@ -141,7 +148,7 @@
 @media (max-width: 640px) {
   .wideOnly { display: none; }
   .cards { display: grid; }
-  .split :global(.arnabMap .segmented) { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .split :global(.arnabMap .segmented) { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
   .split :global(.arnabMap .segBtn) { justify-content: center; padding: 8px 2px; font-size: 11.5px; white-space: nowrap; }
   .jump { gap: 8px !important; padding: 10px 0; mask-image: linear-gradient(90deg, #000 85%, transparent); }
   .jump a { padding: 7px 12px; border-radius: 999px; background: var(--field); border: 1px solid var(--line); font-weight: 600; }

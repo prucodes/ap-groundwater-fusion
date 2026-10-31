@@ -47,10 +47,15 @@ RAIN = os.path.join(HERE, "data", "mandal_rain_history.csv")
 OUT = os.path.join(ROOT, "app", "data", "cyclone_arnab.json")
 LOG = os.path.join(HERE, "data", "cyclone_arnab_daily.json")
 CONTEXT = os.path.join(ROOT, "app", "data", "water_context.json")
+DROUGHT = os.path.join(ROOT, "app", "data", "drought_watch.json")
 BEFORE_MONTH = "2026-09"             # the last reading before the storm
 AFTER_MONTHS = ["2026-10", "2026-11"]
 
 RAIN_BASE_TMC = None
+# The drought manual's outcome: moderate or worse counts as flagged. "normal|moderate"
+# is undecided (a missing indicator settles it), so it is not counted.
+SEVERE = {"severe", "moderate|severe"}
+FLAGGED = SEVERE | {"moderate"}
 HEAVY_MM = 100                       # the storm's rain counted as heavy for a mandal
 BANDS = [(0, 3, "under 3 m"), (3, 8, "3 to 8 m"), (8, 20, "8 to 20 m"), (20, 1e9, "over 20 m")]
 DEEP_M = 8                           # a water table with real room to rise
@@ -241,6 +246,31 @@ def did_it_follow(gw_by_uuid, mandals, precedent):
     return {"published": published, "bands": bands}, rows
 
 
+def drought_overlay(outline):
+    """The storm's rain against the drought manual's flags, outline by outline."""
+    if not os.path.exists(DROUGHT):
+        return {}, None
+    watch = json.load(open(DROUGHT))
+    flags, flagged = {}, []
+    for row in watch["mandals"]:
+        category = row.get("category")
+        if category in FLAGGED:
+            flags[row["i"]] = "s" if category in SEVERE else "m"
+            if row["i"] in outline:
+                flagged.append({"storm": outline[row["i"]]["stormMm"], "severe": category in SEVERE,
+                                "drySpell": row.get("t1Why") == "drySpell"})
+    if not flagged:
+        return flags, None
+    severe = [f for f in flagged if f["severe"]]
+    return flags, {
+        "asOf": watch["season"]["asOf"], "declareBy": watch["season"]["declareBy"],
+        "flagged": len(flagged), "flaggedHeavy": sum(f["storm"] >= HEAVY_MM for f in flagged),
+        "medianMm": round(statistics.median(f["storm"] for f in flagged)),
+        "severe": len(severe), "severeHeavy": sum(f["storm"] >= HEAVY_MM for f in severe),
+        "byDrySpell": sum(f["drySpell"] for f in flagged),
+    }
+
+
 def main():
     if "--capture" in sys.argv:
         i = sys.argv.index("--capture")
@@ -283,7 +313,8 @@ def main():
             continue
         if i not in outline or m["stormMm"] > outline[i]["stormMm"]:
             outline[i] = m
-    map_rows = [[i, m["mandal"], m["district"], round(m["stormMm"]), m["depthM"]] for i, m in sorted(outline.items())]
+    flags, drought = drought_overlay(outline)
+    map_rows = [[i, m["mandal"], m["district"], round(m["stormMm"]), m["depthM"], flags.get(i, "")] for i, m in sorted(outline.items())]
 
     precedent = {"event": "Cyclone Montha", "landfall": "2025-10-28", **montha_precedent(gw_by_name)}
     follow, follow_rows = did_it_follow(gw_by_uuid, mandals, precedent)
@@ -313,6 +344,7 @@ def main():
         "heavyMm": HEAVY_MM, "deepM": DEEP_M,
         "districts": district_rows,
         "byDepth": by_depth,
+        "drought": drought,
         "precedent": precedent,
         "since": where_it_went(log),
         "follow": follow,

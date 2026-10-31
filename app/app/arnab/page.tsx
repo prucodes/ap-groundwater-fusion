@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
-import { StateOutlineMap } from "../../components/StateOutlineMap";
+import { ArnabRainMap } from "../../components/ArnabRainMap";
 import { CycloneArnabMap } from "../../components/CycloneArnabMap";
 import { ArnabSpiral } from "../../components/CycloneArnab";
 import { RowFold, foldAt } from "../../components/RowFold";
@@ -10,7 +10,7 @@ import { IconCloudRain, IconCyclone, IconDroplet, IconTarget, IconWaves } from "
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
 import { formatNumber, titleCase } from "../../lib/data";
 import { brief } from "../../lib/pageBriefs";
-import { arnab, arnabDay, arnabMonth, BASIN_NAMES, listOf, RAIN_SCALE, soakedDistricts, titleName, type ArnabDay } from "../../lib/arnab";
+import { arnab, arnabDay, arnabMonth, BASIN_NAMES, listOf, soakedDistricts, titleName, type ArnabDay } from "../../lib/arnab";
 import shared from "../rabi/Rabi.module.css";
 import styles from "./Arnab.module.css";
 
@@ -57,7 +57,7 @@ function StorageLine({ days }: { days: ArnabDay[] }) {
 }
 
 export default function ArnabPage() {
-  const d = arnab, s = d.state, since = d.since;
+  const d = arnab, s = d.state, since = d.since, dr = d.drought;
   const seen = arnabMonth(d.groundwaterLatest);
   const soaked = soakedDistricts();
   const precedent = new Map(d.precedent.bands.map(b => [b.band, b]));
@@ -65,12 +65,6 @@ export default function ArnabPage() {
   const mostRise = Math.max(...d.precedent.bands.map(b => b.extraRiseM), 0.1);
   const wettest = d.districts.slice(0, 8);
   const topMm = Math.max(...wettest.map(x => x.medianMm), 1);
-  const rainKeys = Array<string>(d.map.reduce((n, r) => Math.max(n, r[0] + 1), 0)).fill("i");
-  const rainNotes = Array<string>(rainKeys.length).fill("No reading.");
-  for (const [i, mandal, , mm] of d.map) {
-    rainKeys[i] = RAIN_SCALE.find(b => mm < b.max)!.key;
-    rainNotes[i] = `${mm} mm from ${arnabDay(d.rainWindow.from)} to ${arnabDay(d.rainWindow.to)} (${mandal}).`;
-  }
   const octOut = d.follow.published.includes("2026-10"), novOut = d.follow.published.includes("2026-11");
 
   return (
@@ -108,10 +102,8 @@ export default function ArnabPage() {
           <p>Gauge rain from {arnabDay(d.rainWindow.from)} to {arnabDay(d.rainWindow.to)}, mandal by mandal: <b>{s.heavyMandals} mandals</b> got {d.heavyMm} mm or more. The season&apos;s shortfall since 1 June narrowed from {s.seasonDeviationBefore}% to {s.seasonDeviationAfter}%.</p>
         </header>
         <div className={styles.split}>
-          <StateOutlineMap testId="arnab-rain-map" aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height}
-            keys={rainKeys} colors={{ ...Object.fromEntries(RAIN_SCALE.map(b => [b.key, b.color])), i: "#e6ebf1" }} notes={rainNotes}
-            label={`Cyclone Arnab's rain by mandal, ${arnabDay(d.rainWindow.from)} to ${arnabDay(d.rainWindow.to)}.`}
-            legend={<>{RAIN_SCALE.map(b => <span key={b.key}><i style={{ background: b.color }} />{b.label}</span>)}</>} />
+          <ArnabRainMap rows={d.map} heavyMm={d.heavyMm} window={`${arnabDay(d.rainWindow.from)} to ${arnabDay(d.rainWindow.to)}`}
+            aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height} />
           <div className={styles.side}>
             <h3>Wettest districts</h3>
             <ol className={styles.bars} aria-label="Median mandal rain by district">
@@ -122,6 +114,14 @@ export default function ArnabPage() {
               </li>)}
             </ol>
             <p className={styles.small}>Median mandal in each district. Rayalaseema, Prakasam and Nellore had under 15 mm.</p>
+            {dr ? <>
+              <h3>Against the drought flags</h3>
+              <div className={styles.drought} data-testid="arnab-drought">
+                <div><b>{dr.flaggedHeavy}<small> of {dr.flagged}</small></b><span>flagged mandals got {d.heavyMm} mm or more; the median got {dr.medianMm} mm</span></div>
+                <div><b>{dr.severeHeavy}<small> of {dr.severe}</small></b><span>of those severe or possibly severe</span></div>
+              </div>
+              <p className={styles.small}>The drought manual&apos;s flags, moderate or worse, as of {arnabDay(dr.asOf)}. In {dr.byDrySpell} of {dr.flagged} the rainfall trigger came from a four-week dry spell earlier in the season, which later rain does not undo. An evidence screen, not a declaration; that decision, due by {arnabDay(dr.declareBy)}, is the State&apos;s.</p>
+            </> : null}
           </div>
         </div>
       </section>

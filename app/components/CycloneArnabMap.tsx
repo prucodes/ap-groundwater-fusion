@@ -3,20 +3,18 @@
 import { useState } from "react";
 import { StateOutlineMap } from "./StateOutlineMap";
 import { countEvent } from "../lib/visit-counter";
-import { RAIN_SCALE as RAIN } from "../lib/arnabScale";
 
 /* Cyclone Arnab on the State map. The opening view puts the storm's rain and the
    water table's depth on one map, so the mismatch shows at a glance: heavy rain on
-   shallow tables along the north coast, deep tables left dry inland. The other two
-   views give each measure alone. The mandals where heavy rain met a deep table keep
-   an ink ring in every view. */
+   shallow tables along the north coast, deep tables left dry inland. The other view
+   gives depth alone. The mandals where heavy rain met a deep table keep an ink ring
+   in both. */
 
-type View = "meet" | "rain" | "depth";
-type Row = [number, string, string, number, number | null];
+type View = "meet" | "depth";
+type Row = [number, string, string, number, number | null, string];
 
 const VIEWS: { key: View; label: string }[] = [
   { key: "meet", label: "Where they meet" },
-  { key: "rain", label: "Storm rain" },
   { key: "depth", label: "Depth before" },
 ];
 
@@ -44,12 +42,10 @@ export function CycloneArnabMap({ rows, heavyMm, deepM, month, aspect }: {
     const heavy = rain >= heavyMm, deep = depth !== null && depth >= deepM;
     const meet = heavy && deep ? "w" : heavy ? "h" : deep ? "d" : "o";
     if (meet === "w") marks.push(i);
-    keys[i] = view === "rain" ? RAIN.find(b => rain < b.max)!.key
-      : view === "depth" ? (depth === null ? "i" : DEPTH.find(b => depth < b.max)!.key)
-      : meet;
+    keys[i] = view === "depth" ? (depth === null ? "i" : DEPTH.find(b => depth < b.max)!.key) : meet;
     notes[i] = `${rain} mm from the storm; water table ${depth === null ? "not read" : `${depth.toFixed(1)} m down`} in ${month}.`;
   }
-  const scale = view === "rain" ? RAIN : view === "depth" ? DEPTH : null;
+  const scale = view === "depth" ? DEPTH : null;
   const colors: Record<string, string> = scale
     ? Object.fromEntries(scale.map(b => [b.key, b.color]))
     : Object.fromEntries(Object.entries(MEET).map(([k, v]) => [k, v.color]));
