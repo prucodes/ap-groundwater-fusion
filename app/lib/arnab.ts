@@ -36,7 +36,7 @@ export const listOf = (names: string[]) => names.length < 2 ? names.join("") : `
 export const BASIN_NAMES: Record<string, string> = { KRISHNA: "Krishna", GODAVARI: "Godavari", PENNAR: "Pennar", OTHERS: "Smaller rivers" };
 export const titleName = (s: string) => s.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase()).replace(/\bReservoir\b/, "").trim();
 
-/** The districts whose median mandal got heavy rain, wettest first. */
-export const soakedDistricts = (d: Arnab = arnab) => d.districts.filter(x => x.medianMm >= d.heavyMm).map(x => x.district);
+/** The four wettest districts by median mandal. */
+export const soakedDistricts = (d: Arnab = arnab) => d.districts.slice(0, 4).map(x => x.district);
 
 export { RAIN_SCALE } from "./arnabScale";

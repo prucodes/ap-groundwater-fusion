@@ -1,21 +1,21 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-01T10:46:15+00:00",
+ "generatedAt": "2026-11-01T17:11:58+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
   "from": "2026-10-25",
-  "to": "2026-10-28",
-  "days": 4
+  "to": "2026-10-30",
+  "days": 6
  },
  "source": "APWRIMS water context (gauge rain, NRSC soil moisture, reservoirs), read before and after the storm",
  "authorizationStatus": "research_pending",
  "groundwaterLatest": "2026-09",
  "state": {
-  "rainTmc": 210.5,
-  "normalTmc": 55.9,
+  "rainTmc": 338.8,
+  "normalTmc": 121.3,
   "seasonDeviationBefore": -36.8,
-  "seasonDeviationAfter": -32.3,
+  "seasonDeviationAfter": -30.1,
   "soilMedianBefore": 49.9,
   "soilMedianAfter": 90.5,
   "soilDriestBefore": 52,
@@ -27,96 +27,108 @@
   "reservoirTmcBefore": 499.642,
   "reservoirTmcAfter": 507.659,
   "mandals": 688,
-  "heavyMandals": 118,
+  "heavyMandals": 223,
   "deepMandals": 315,
-  "deepHeavyMandals": 22
+  "deepHeavyMandals": 59
  },
  "heavyMm": 100,
  "deepM": 8,
  "districts": [
   {
+   "district": "Srikakulam",
+   "mandals": 30,
+   "medianMm": 245.0,
+   "heavy": 30
+  },
+  {
    "district": "Visakhapatnam",
    "mandals": 11,
-   "medianMm": 208.0,
+   "medianMm": 244.0,
    "heavy": 11
   },
   {
    "district": "Vizianagaram",
    "mandals": 28,
-   "medianMm": 184.0,
-   "heavy": 28
-  },
-  {
-   "district": "Srikakulam",
-   "mandals": 30,
-   "medianMm": 142.0,
+   "medianMm": 240.0,
    "heavy": 28
   },
   {
    "district": "Anakapalli",
    "mandals": 24,
-   "medianMm": 134.0,
-   "heavy": 22
+   "medianMm": 172.0,
+   "heavy": 24
   },
   {
    "district": "Alluri Sitharama Raju",
    "mandals": 11,
-   "medianMm": 97.0,
-   "heavy": 5
+   "medianMm": 154.0,
+   "heavy": 10
   },
   {
    "district": "Kakinada",
    "mandals": 21,
-   "medianMm": 97.0,
-   "heavy": 8
-  },
-  {
-   "district": "Konaseema",
-   "mandals": 19,
-   "medianMm": 87.0,
-   "heavy": 5
-  },
-  {
-   "district": "Parvathipuram Manyam",
-   "mandals": 15,
-   "medianMm": 65.0,
-   "heavy": 5
-  },
-  {
-   "district": "Krishna",
-   "mandals": 26,
-   "medianMm": 46.0,
-   "heavy": 3
-  },
-  {
-   "district": "East Godavari",
-   "mandals": 22,
-   "medianMm": 42.0,
-   "heavy": 0
+   "medianMm": 150.0,
+   "heavy": 19
   },
   {
    "district": "West Godavari",
    "mandals": 20,
-   "medianMm": 41.0,
-   "heavy": 0
+   "medianMm": 127.0,
+   "heavy": 18
   },
   {
-   "district": "Bapatla",
-   "mandals": 20,
-   "medianMm": 40.0,
-   "heavy": 1
+   "district": "East Godavari",
+   "mandals": 22,
+   "medianMm": 124.0,
+   "heavy": 16
+  },
+  {
+   "district": "Krishna",
+   "mandals": 26,
+   "medianMm": 124.0,
+   "heavy": 16
+  },
+  {
+   "district": "Konaseema",
+   "mandals": 19,
+   "medianMm": 112.0,
+   "heavy": 15
+  },
+  {
+   "district": "Parvathipuram Manyam",
+   "mandals": 15,
+   "medianMm": 108.0,
+   "heavy": 8
   },
   {
    "district": "Polavaram",
    "mandals": 12,
-   "medianMm": 36.0,
-   "heavy": 1
+   "medianMm": 95.0,
+   "heavy": 5
+  },
+  {
+   "district": "Bapatla",
+   "mandals": 20,
+   "medianMm": 92.0,
+   "heavy": 10
   },
   {
    "district": "Guntur",
    "mandals": 18,
-   "medianMm": 32.0,
-   "heavy": 0
+   "medianMm": 83.0,
+   "heavy": 7
+  },
+  {
+   "district": "Eluru",
+   "mandals": 28,
+   "medianMm": 74.0,
+   "heavy": 4
+  },
+  {
+   "district": "NTR",
+   "mandals": 20,
+   "medianMm": 36.0,
+   "heavy": 1
   },
   {
    "district": "Chittoor",
@@ -131,15 +143,15 @@
    "heavy": 0
   },
   {
-   "district": "Eluru",
-   "mandals": 28,
+   "district": "Tirupati",
+   "mandals": 36,
    "medianMm": 16.0,
    "heavy": 0
   },
   {
-   "district": "Tirupati",
-   "mandals": 36,
-   "medianMm": 16.0,
+   "district": "Palnadu",
+   "mandals": 28,
+   "medianMm": 13.0,
    "heavy": 0
   },
   {
@@ -155,12 +167,6 @@
    "heavy": 0
   },
   {
-   "district": "NTR",
-   "mandals": 20,
-   "medianMm": 9.0,
-   "heavy": 0
-  },
-  {
    "district": "Nandyal",
    "mandals": 30,
    "medianMm": 5.0,
@@ -170,12 +176,6 @@
    "district": "Y.S.R Kadapa",
    "mandals": 40,
    "medianMm": 5.0,
-   "heavy": 0
-  },
-  {
-   "district": "Palnadu",
-   "mandals": 28,
-   "medianMm": 3.0,
    "heavy": 0
   },
   {
@@ -207,36 +207,36 @@
   {
    "band": "under 3 m",
    "mandals": 113,
-   "medianMm": 72.0,
-   "heavy": 45
+   "medianMm": 116.0,
+   "heavy": 71
   },
   {
    "band": "3 to 8 m",
    "mandals": 244,
-   "medianMm": 27.0,
-   "heavy": 48
+   "medianMm": 41.0,
+   "heavy": 87
   },
   {
    "band": "8 to 20 m",
    "mandals": 240,
-   "medianMm": 14.0,
-   "heavy": 21
+   "medianMm": 17.0,
+   "heavy": 50
   },
   {
    "band": "over 20 m",
    "mandals": 75,
-   "medianMm": 14.0,
-   "heavy": 1
+   "medianMm": 24.0,
+   "heavy": 9
   }
  ],
  "drought": {
   "asOf": "2026-10-28",
   "declareBy": "2026-10-31",
   "flagged": 378,
-  "flaggedHeavy": 48,
-  "medianMm": 12,
+  "flaggedHeavy": 84,
+  "medianMm": 18,
   "severe": 54,
-  "severeHeavy": 5,
+  "severeHeavy": 10,
   "byDrySpell": 375
  },
  "precedent": {
@@ -436,7 +436,7 @@
    0,
    "Veeraghattam",
    "Parvathipuram Manyam",
-   64,
+   108,
    2.53,
    ""
   ],
@@ -444,7 +444,7 @@
    1,
    "Seethampeta",
    "Parvathipuram Manyam",
-   149,
+   223,
    0.93,
    ""
   ],
@@ -452,7 +452,7 @@
    2,
    "Bhamini",
    "Parvathipuram Manyam",
-   52,
+   88,
    1.5,
    "m"
   ],
@@ -460,7 +460,7 @@
    3,
    "Kothuru",
    "Srikakulam",
-   155,
+   236,
    2.41,
    ""
   ],
@@ -468,7 +468,7 @@
    4,
    "Pathapatnam",
    "Srikakulam",
-   147,
+   257,
    0.76,
    ""
   ],
@@ -476,7 +476,7 @@
    5,
    "Meliaputti",
    "Srikakulam",
-   135,
+   333,
    0.51,
    "m"
   ],
@@ -484,7 +484,7 @@
    6,
    "Palasa",
    "Srikakulam",
-   171,
+   412,
    4.89,
    ""
   ],
@@ -492,7 +492,7 @@
    7,
    "Mandasa",
    "Srikakulam",
-   185,
+   426,
    1.72,
    ""
   ],
@@ -500,7 +500,7 @@
    8,
    "Kanchili",
    "Srikakulam",
-   126,
+   424,
    13.69,
    ""
   ],
@@ -508,7 +508,7 @@
    9,
    "Ichchapuram",
    "Srikakulam",
-   64,
+   344,
    2.56,
    ""
   ],
@@ -516,7 +516,7 @@
    10,
    "Kaviti",
    "Srikakulam",
-   108,
+   384,
    19.91,
    ""
   ],
@@ -524,7 +524,7 @@
    11,
    "Sompeta",
    "Srikakulam",
-   155,
+   415,
    6.85,
    ""
   ],
@@ -532,7 +532,7 @@
    12,
    "Vajrapukothuru",
    "Srikakulam",
-   142,
+   294,
    12.3,
    ""
   ],
@@ -540,7 +540,7 @@
    13,
    "Nandigam",
    "Srikakulam",
-   124,
+   227,
    1.73,
    ""
   ],
@@ -548,7 +548,7 @@
    14,
    "Hiramandalam",
    "Srikakulam",
-   128,
+   202,
    1.13,
    "m"
   ],
@@ -556,7 +556,7 @@
    15,
    "Palakonda",
    "Parvathipuram Manyam",
-   105,
+   174,
    1.76,
    ""
   ],
@@ -564,7 +564,7 @@
    16,
    "Vangara",
    "Vizianagaram",
-   130,
+   174,
    5.91,
    ""
   ],
@@ -572,7 +572,7 @@
    17,
    "Regidiamadalavalasa",
    "Vizianagaram",
-   120,
+   208,
    0.61,
    ""
   ],
@@ -580,7 +580,7 @@
    18,
    "Lakshminarsupeta",
    "Srikakulam",
-   103,
+   148,
    0.69,
    ""
   ],
@@ -588,7 +588,7 @@
    19,
    "Saravakota",
    "Srikakulam",
-   111,
+   155,
    2.28,
    ""
   ],
@@ -596,7 +596,7 @@
    20,
    "Tekkali",
    "Srikakulam",
-   141,
+   245,
    0.25,
    ""
   ],
@@ -604,7 +604,7 @@
    21,
    "Santhabommali",
    "Srikakulam",
-   173,
+   282,
    3.9,
    ""
   ],
@@ -612,7 +612,7 @@
    22,
    "KOTABOMMAL",
    "Srikakulam",
-   174,
+   285,
    8.09,
    "m"
   ],
@@ -620,7 +620,7 @@
    23,
    "Jalumuru",
    "Srikakulam",
-   153,
+   213,
    1.07,
    ""
   ],
@@ -628,7 +628,7 @@
    24,
    "Sarubujjili",
    "Srikakulam",
-   113,
+   164,
    1.17,
    ""
   ],
@@ -636,7 +636,7 @@
    25,
    "Burja",
    "Srikakulam",
-   99,
+   177,
    4.73,
    "m"
   ],
@@ -644,7 +644,7 @@
    26,
    "Santhakaviti",
    "Vizianagaram",
-   118,
+   218,
    0.24,
    ""
   ],
@@ -652,7 +652,7 @@
    27,
    "Rajam",
    "Vizianagaram",
-   145,
+   221,
    2.23,
    ""
   ],
@@ -660,7 +660,7 @@
    29,
    "Amadalavalasa",
    "Srikakulam",
-   119,
+   162,
    3.06,
    ""
   ],
@@ -668,7 +668,7 @@
    30,
    "Narasannapeta",
    "Srikakulam",
-   142,
+   203,
    6.09,
    "m"
   ],
@@ -676,7 +676,7 @@
    31,
    "Polaki",
    "Srikakulam",
-   124,
+   202,
    3.44,
    ""
   ],
@@ -684,7 +684,7 @@
    32,
    "Gara",
    "Srikakulam",
-   166,
+   238,
    3.49,
    "m"
   ],
@@ -692,7 +692,7 @@
    33,
    "SRIKAKULAM MANDAL",
    "Srikakulam",
-   163,
+   246,
    2.26,
    ""
   ],
@@ -700,7 +700,7 @@
    34,
    "Ponduru",
    "Srikakulam",
-   174,
+   272,
    3.48,
    "m"
   ],
@@ -708,7 +708,7 @@
    35,
    "Laveru",
    "Srikakulam",
-   156,
+   216,
    6.86,
    "m"
   ],
@@ -716,7 +716,7 @@
    36,
    "Ranastalam",
    "Srikakulam",
-   207,
+   284,
    14.95,
    "m"
   ],
@@ -724,7 +724,7 @@
    37,
    "Etcherla",
    "Srikakulam",
-   196,
+   307,
    8.98,
    ""
   ],
@@ -732,7 +732,7 @@
    38,
    "Komarada",
    "Parvathipuram Manyam",
-   40,
+   75,
    6.2,
    ""
   ],
@@ -740,7 +740,7 @@
    39,
    "Gummalakshmipuram",
    "Parvathipuram Manyam",
-   65,
+   82,
    5.2,
    "m"
   ],
@@ -748,7 +748,7 @@
    40,
    "Kurupam",
    "Parvathipuram Manyam",
-   40,
+   82,
    5.72,
    "m"
   ],
@@ -756,7 +756,7 @@
    41,
    "JIYYAMMA VALASA",
    "Parvathipuram Manyam",
-   43,
+   62,
    3.03,
    ""
   ],
@@ -764,7 +764,7 @@
    42,
    "Garugubilli",
    "Parvathipuram Manyam",
-   50,
+   84,
    5.48,
    "m"
   ],
@@ -772,7 +772,7 @@
    43,
    "Parvathipuram",
    "Parvathipuram Manyam",
-   80,
+   113,
    3.1,
    "m"
   ],
@@ -780,7 +780,7 @@
    44,
    "Makkuva",
    "Parvathipuram Manyam",
-   105,
+   134,
    0.38,
    ""
   ],
@@ -788,7 +788,7 @@
    47,
    "Bobbili",
    "Vizianagaram",
-   158,
+   214,
    1.5,
    ""
   ],
@@ -796,7 +796,7 @@
    48,
    "Salur",
    "Parvathipuram Manyam",
-   88,
+   138,
    15.76,
    ""
   ],
@@ -804,7 +804,7 @@
    49,
    "Pachipenta",
    "Parvathipuram Manyam",
-   159,
+   263,
    8.54,
    ""
   ],
@@ -812,7 +812,7 @@
    50,
    "Ramabhadrapuram",
    "Vizianagaram",
-   164,
+   224,
    3.29,
    ""
   ],
@@ -820,7 +820,7 @@
    51,
    "Badangi",
    "Vizianagaram",
-   161,
+   219,
    0.32,
    ""
   ],
@@ -828,7 +828,7 @@
    52,
    "Therlam",
    "Vizianagaram",
-   123,
+   180,
    1.78,
    ""
   ],
@@ -836,7 +836,7 @@
    53,
    "Merakamudidam",
    "Vizianagaram",
-   166,
+   227,
    7.88,
    ""
   ],
@@ -844,7 +844,7 @@
    54,
    "Dattirajeru",
    "Vizianagaram",
-   173,
+   240,
    3.69,
    ""
   ],
@@ -852,7 +852,7 @@
    55,
    "Mentada",
    "Vizianagaram",
-   200,
+   255,
    3.77,
    "m"
   ],
@@ -860,7 +860,7 @@
    56,
    "Gajapathinagaram",
    "Vizianagaram",
-   202,
+   258,
    1.76,
    ""
   ],
@@ -868,7 +868,7 @@
    57,
    "Garividi",
    "Vizianagaram",
-   220,
+   259,
    9.41,
    "m"
   ],
@@ -876,7 +876,7 @@
    58,
    "Cheepurupalle",
    "Vizianagaram",
-   154,
+   185,
    11.39,
    "m"
   ],
@@ -884,7 +884,7 @@
    59,
    "Gurla",
    "Vizianagaram",
-   207,
+   250,
    1.04,
    "m"
   ],
@@ -892,7 +892,7 @@
    60,
    "Bondapalle",
    "Vizianagaram",
-   165,
+   212,
    1.72,
    "m"
   ],
@@ -900,7 +900,7 @@
    61,
    "Gantyada",
    "Vizianagaram",
-   179,
+   230,
    0.92,
    "m"
   ],
@@ -908,7 +908,7 @@
    62,
    "Srungavarapukota",
    "Vizianagaram",
-   230,
+   312,
    2.97,
    "m"
   ],
@@ -916,7 +916,7 @@
    63,
    "Vepada",
    "Vizianagaram",
-   244,
+   309,
    1.47,
    "m"
   ],
@@ -924,7 +924,7 @@
    64,
    "Lakkavarapukota",
    "Vizianagaram",
-   251,
+   304,
    4.99,
    "s"
   ],
@@ -932,7 +932,7 @@
    65,
    "Kothavalasa",
    "Vizianagaram",
-   303,
+   361,
    4.8,
    ""
   ],
@@ -940,7 +940,7 @@
    66,
    "Jami",
    "Vizianagaram",
-   244,
+   295,
    2.81,
    "m"
   ],
@@ -948,7 +948,7 @@
    67,
    "Vizianagaram Rural",
    "Vizianagaram",
-   203,
+   255,
    0.85,
    ""
   ],
@@ -956,7 +956,7 @@
    68,
    "Nellimarla",
    "Vizianagaram",
-   209,
+   255,
    1.57,
    "m"
   ],
@@ -964,7 +964,7 @@
    69,
    "Pusapatirega",
    "Vizianagaram",
-   178,
+   281,
    2.32,
    "m"
   ],
@@ -972,7 +972,7 @@
    70,
    "Denkada",
    "Vizianagaram",
-   195,
+   228,
    6.42,
    "m"
   ],
@@ -980,7 +980,7 @@
    71,
    "BHOGHAPURAM",
    "Vizianagaram",
-   268,
+   356,
    6.37,
    "m"
   ],
@@ -988,7 +988,7 @@
    72,
    "Munchingi Puttu",
    "Alluri Sitharama Raju",
-   54,
+   99,
    9.36,
    ""
   ],
@@ -996,7 +996,7 @@
    73,
    "PEDABAYALU",
    "Alluri Sitharama Raju",
-   68,
+   116,
    2.4,
    ""
   ],
@@ -1004,7 +1004,7 @@
    74,
    "Dumbriguda",
    "Alluri Sitharama Raju",
-   97,
+   143,
    8.43,
    "m"
   ],
@@ -1012,7 +1012,7 @@
    75,
    "Araku Valley",
    "Alluri Sitharama Raju",
-   124,
+   206,
    6.67,
    "m"
   ],
@@ -1020,7 +1020,7 @@
    76,
    "Ananthagiri",
    "Alluri Sitharama Raju",
-   109,
+   192,
    10.41,
    "m"
   ],
@@ -1028,7 +1028,7 @@
    77,
    "Hukumpeta",
    "Alluri Sitharama Raju",
-   110,
+   209,
    2.59,
    "m"
   ],
@@ -1036,7 +1036,7 @@
    78,
    "Paderu",
    "Alluri Sitharama Raju",
-   111,
+   259,
    5.92,
    "m"
   ],
@@ -1044,7 +1044,7 @@
    79,
    "G.Madugula",
    "Alluri Sitharama Raju",
-   94,
+   154,
    4.56,
    ""
   ],
@@ -1052,7 +1052,7 @@
    80,
    "Chintapalle",
    "Alluri Sitharama Raju",
-   90,
+   135,
    8.09,
    ""
   ],
@@ -1060,7 +1060,7 @@
    81,
    "GUDEM KOTHAVEEDHI",
    "Alluri Sitharama Raju",
-   74,
+   186,
    9.91,
    ""
   ],
@@ -1068,7 +1068,7 @@
    82,
    "Koyyuru",
    "Alluri Sitharama Raju",
-   105,
+   148,
    12.86,
    ""
   ],
@@ -1076,7 +1076,7 @@
    83,
    "Nathavaram",
    "Anakapalli",
-   152,
+   197,
    4.81,
    "m"
   ],
@@ -1084,7 +1084,7 @@
    84,
    "Golugonda",
    "Anakapalli",
-   72,
+   123,
    10.47,
    ""
   ],
@@ -1092,7 +1092,7 @@
    85,
    "Narsipatnam",
    "Anakapalli",
-   143,
+   188,
    2.2,
    "m"
   ],
@@ -1100,7 +1100,7 @@
    86,
    "Rolugunta",
    "Anakapalli",
-   101,
+   141,
    6.24,
    "m"
   ],
@@ -1108,7 +1108,7 @@
    87,
    "Ravikamatham",
    "Anakapalli",
-   142,
+   194,
    8.73,
    "m"
   ],
@@ -1116,7 +1116,7 @@
    88,
    "Madugula",
    "Anakapalli",
-   99,
+   132,
    7.93,
    ""
   ],
@@ -1124,7 +1124,7 @@
    89,
    "Cheedikada",
    "Anakapalli",
-   127,
+   150,
    3.4,
    "m"
   ],
@@ -1132,7 +1132,7 @@
    91,
    "K.Kotapadu",
    "Anakapalli",
-   146,
+   180,
    6.1,
    "m"
   ],
@@ -1140,7 +1140,7 @@
    92,
    "Sabbavaram",
    "Anakapalli",
-   200,
+   262,
    3.38,
    ""
   ],
@@ -1148,7 +1148,7 @@
    93,
    "Pendurthi",
    "Visakhapatnam",
-   247,
+   295,
    7.04,
    "m"
   ],
@@ -1156,7 +1156,7 @@
    94,
    "Anandapuram",
    "Visakhapatnam",
-   190,
+   227,
    10.26,
    ""
   ],
@@ -1164,7 +1164,7 @@
    95,
    "Padmanabham",
    "Visakhapatnam",
-   221,
+   262,
    7.24,
    "m"
   ],
@@ -1172,7 +1172,7 @@
    96,
    "Bheemunipatnam",
    "Visakhapatnam",
-   208,
+   261,
    3.59,
    "m"
   ],
@@ -1180,7 +1180,7 @@
    97,
    "Visakhapatnam (Rural)",
    "Visakhapatnam",
-   232,
+   280,
    19.17,
    "s"
   ],
@@ -1188,7 +1188,7 @@
    99,
    "Pedagantyada",
    "Visakhapatnam",
-   211,
+   227,
    2.19,
    ""
   ],
@@ -1196,7 +1196,7 @@
    100,
    "Gajuwaka",
    "Visakhapatnam",
-   203,
+   235,
    7.38,
    ""
   ],
@@ -1204,7 +1204,7 @@
    101,
    "Paravada",
    "Anakapalli",
-   136,
+   145,
    8.05,
    ""
   ],
@@ -1212,7 +1212,7 @@
    102,
    "Anakapalle",
    "Anakapalli",
-   130,
+   147,
    7.0,
    "s"
   ],
@@ -1220,7 +1220,7 @@
    103,
    "Chodavaram",
    "Anakapalli",
-   197,
+   229,
    6.73,
    ""
   ],
@@ -1228,7 +1228,7 @@
    104,
    "Butchayyapeta",
    "Anakapalli",
-   123,
+   176,
    11.99,
    "m"
   ],
@@ -1236,7 +1236,7 @@
    105,
    "Kotauratla",
    "Anakapalli",
-   116,
+   156,
    5.94,
    "m"
   ],
@@ -1244,7 +1244,7 @@
    106,
    "Makavarapalem",
    "Anakapalli",
-   173,
+   216,
    4.94,
    "m"
   ],
@@ -1252,7 +1252,7 @@
    107,
    "Kasimkota",
    "Anakapalli",
-   261,
+   292,
    4.38,
    "m"
   ],
@@ -1260,7 +1260,7 @@
    108,
    "Munagapaka",
    "Anakapalli",
-   163,
+   180,
    7.39,
    "m"
   ],
@@ -1268,7 +1268,7 @@
    109,
    "Atchutapuram",
    "Anakapalli",
-   234,
+   256,
    26.84,
    "m"
   ],
@@ -1276,7 +1276,7 @@
    111,
    "Nakkapalle",
    "Anakapalli",
-   105,
+   147,
    6.11,
    "m"
   ],
@@ -1284,7 +1284,7 @@
    112,
    "Payakaraopeta",
    "Anakapalli",
-   105,
+   172,
    7.55,
    ""
   ],
@@ -1292,7 +1292,7 @@
    113,
    "S.Rayavaram",
    "Anakapalli",
-   132,
+   171,
    3.78,
    "m"
   ],
@@ -1300,7 +1300,7 @@
    114,
    "Rambilli",
    "Anakapalli",
-   135,
+   162,
    6.01,
    ""
   ],
@@ -1308,7 +1308,7 @@
    115,
    "Yetpaka",
    "Polavaram",
-   10,
+   40,
    6.36,
    ""
   ],
@@ -1316,7 +1316,7 @@
    116,
    "Kunavaram",
    "Polavaram",
-   12,
+   69,
    2.45,
    ""
   ],
@@ -1324,7 +1324,7 @@
    117,
    "Chintur",
    "Polavaram",
-   22,
+   92,
    5.85,
    "s"
   ],
@@ -1332,7 +1332,7 @@
    118,
    "Vararamachandrapuram",
    "Polavaram",
-   7,
+   42,
    4.58,
    "s"
   ],
@@ -1340,7 +1340,7 @@
    119,
    "Maredumilli",
    "Polavaram",
-   31,
+   89,
    8.85,
    ""
   ],
@@ -1348,7 +1348,7 @@
    120,
    "Devipatnam",
    "Polavaram",
-   67,
+   161,
    6.42,
    ""
   ],
@@ -1356,7 +1356,7 @@
    121,
    "Y.Ramavaram",
    "Polavaram",
-   54,
+   114,
    11.27,
    ""
   ],
@@ -1364,7 +1364,7 @@
    122,
    "Addateegala",
    "Polavaram",
-   73,
+   143,
    11.97,
    ""
   ],
@@ -1372,7 +1372,7 @@
    123,
    "Rajavommangi",
    "Polavaram",
-   117,
+   179,
    4.58,
    ""
   ],
@@ -1380,7 +1380,7 @@
    124,
    "Kotananduru",
    "Kakinada",
-   96,
+   178,
    3.52,
    ""
   ],
@@ -1388,7 +1388,7 @@
    125,
    "Tuni",
    "Kakinada",
-   135,
+   209,
    3.8,
    ""
   ],
@@ -1396,7 +1396,7 @@
    126,
    "ROUTHULAPUDI",
    "Kakinada",
-   102,
+   155,
    null,
    ""
   ],
@@ -1404,7 +1404,7 @@
    127,
    "Sankhavaram",
    "Kakinada",
-   103,
+   150,
    2.05,
    ""
   ],
@@ -1412,7 +1412,7 @@
    128,
    "Yeleswaram",
    "Kakinada",
-   77,
+   149,
    5.74,
    "m"
   ],
@@ -1420,7 +1420,7 @@
    130,
    "Rampachodavaram",
    "Polavaram",
-   27,
+   80,
    7.9,
    ""
   ],
@@ -1428,7 +1428,7 @@
    132,
    "Gokavaram",
    "East Godavari",
-   60,
+   168,
    4.19,
    ""
   ],
@@ -1436,7 +1436,7 @@
    133,
    "Jaggampeta",
    "Kakinada",
-   113,
+   177,
    9.81,
    "m"
   ],
@@ -1444,7 +1444,7 @@
    134,
    "Kirlampudi",
    "Kakinada",
-   107,
+   168,
    4.05,
    ""
   ],
@@ -1452,7 +1452,7 @@
    136,
    "Thondangi",
    "Kakinada",
-   100,
+   156,
    8.37,
    ""
   ],
@@ -1460,7 +1460,7 @@
    137,
    "Gollaprolu",
    "Kakinada",
-   140,
+   228,
    11.89,
    ""
   ],
@@ -1468,7 +1468,7 @@
    138,
    "Peddapuram",
    "Kakinada",
-   97,
+   131,
    30.15,
    ""
   ],
@@ -1476,7 +1476,7 @@
    139,
    "Gandepalle",
    "Kakinada",
-   93,
+   157,
    46.41,
    "m"
   ],
@@ -1484,7 +1484,7 @@
    140,
    "Korukonda",
    "East Godavari",
-   28,
+   151,
    19.94,
    "m"
   ],
@@ -1492,7 +1492,7 @@
    141,
    "Rajahmundry (Urban)",
    "East Godavari",
-   36,
+   126,
    18.18,
    ""
   ],
@@ -1500,7 +1500,7 @@
    142,
    "Rajahmundry (Rural)",
    "East Godavari",
-   47,
+   135,
    46.3,
    ""
   ],
@@ -1508,7 +1508,7 @@
    143,
    "Rajanagaram",
    "East Godavari",
-   32,
+   99,
    35.75,
    "m"
   ],
@@ -1516,7 +1516,7 @@
    144,
    "Rangampeta",
    "East Godavari",
-   78,
+   136,
    18.98,
    ""
   ],
@@ -1524,7 +1524,7 @@
    145,
    "Samalkota",
    "Kakinada",
-   79,
+   110,
    24.39,
    ""
   ],
@@ -1532,7 +1532,7 @@
    146,
    "Pithapuram",
    "Kakinada",
-   87,
+   180,
    2.9,
    "m"
   ],
@@ -1540,7 +1540,7 @@
    148,
    "Kakinada (Rural)",
    "Kakinada",
-   93,
+   128,
    5.89,
    ""
   ],
@@ -1548,7 +1548,7 @@
    149,
    "Kakinada (Urban)",
    "Kakinada",
-   82,
+   111,
    null,
    ""
   ],
@@ -1556,7 +1556,7 @@
    150,
    "Pedapudi",
    "Kakinada",
-   76,
+   83,
    2.94,
    ""
   ],
@@ -1564,7 +1564,7 @@
    151,
    "Biccavolu",
    "East Godavari",
-   58,
+   66,
    11.67,
    ""
   ],
@@ -1572,7 +1572,7 @@
    152,
    "ANAPARTHI",
    "East Godavari",
-   51,
+   73,
    10.34,
    "m"
   ],
@@ -1580,7 +1580,7 @@
    153,
    "Kadiam",
    "East Godavari",
-   41,
+   144,
    5.32,
    ""
   ],
@@ -1588,7 +1588,7 @@
    154,
    "Atreyapuram",
    "Konaseema",
-   77,
+   138,
    6.34,
    ""
   ],
@@ -1596,7 +1596,7 @@
    155,
    "Mandapeta",
    "East Godavari",
-   78,
+   100,
    3.42,
    ""
   ],
@@ -1604,7 +1604,7 @@
    156,
    "Rayavaram",
    "East Godavari",
-   32,
+   41,
    1.82,
    ""
   ],
@@ -1612,7 +1612,7 @@
    157,
    "Karapa",
    "Kakinada",
-   70,
+   77,
    1.64,
    "m"
   ],
@@ -1620,7 +1620,7 @@
    158,
    "Kajuluru",
    "Kakinada",
-   98,
+   112,
    1.79,
    ""
   ],
@@ -1628,7 +1628,7 @@
    160,
    "Alamuru",
    "Konaseema",
-   60,
+   112,
    5.51,
    ""
   ],
@@ -1636,7 +1636,7 @@
    161,
    "Ravulapalem",
    "Konaseema",
-   55,
+   110,
    5.04,
    "m"
   ],
@@ -1644,7 +1644,7 @@
    162,
    "Kothapeta",
    "Konaseema",
-   87,
+   122,
    null,
    "m"
   ],
@@ -1652,7 +1652,7 @@
    163,
    "Kapileswarapuram",
    "East Godavari",
-   46,
+   79,
    5.05,
    "m"
   ],
@@ -1660,7 +1660,7 @@
    164,
    "Kotipalli Gangavaram",
    "Konaseema",
-   66,
+   82,
    1.65,
    "m"
   ],
@@ -1668,7 +1668,7 @@
    165,
    "Thallarevu",
    "Kakinada",
-   98,
+   111,
    1.9,
    ""
   ],
@@ -1676,7 +1676,7 @@
    166,
    "I POLAVARAM",
    "Konaseema",
-   125,
+   146,
    1.18,
    ""
   ],
@@ -1684,7 +1684,7 @@
    167,
    "Mummidivaram",
    "Konaseema",
-   98,
+   110,
    1.47,
    ""
   ],
@@ -1692,7 +1692,7 @@
    168,
    "Ainavilli",
    "Konaseema",
-   80,
+   102,
    1.53,
    ""
   ],
@@ -1700,7 +1700,7 @@
    169,
    "P.Gannavaram",
    "Konaseema",
-   66,
+   78,
    4.9,
    ""
   ],
@@ -1708,7 +1708,7 @@
    170,
    "Ambajipeta",
    "Konaseema",
-   57,
+   81,
    2.49,
    ""
   ],
@@ -1716,7 +1716,7 @@
    171,
    "Mamidikuduru",
    "Konaseema",
-   78,
+   90,
    0.73,
    ""
   ],
@@ -1724,7 +1724,7 @@
    172,
    "Razole",
    "Konaseema",
-   118,
+   133,
    1.17,
    ""
   ],
@@ -1732,7 +1732,7 @@
    173,
    "Malikipuram",
    "Konaseema",
-   99,
+   117,
    0.51,
    ""
   ],
@@ -1740,7 +1740,7 @@
    174,
    "Sakhinetipalle",
    "Konaseema",
-   116,
+   124,
    0.55,
    ""
   ],
@@ -1748,7 +1748,7 @@
    175,
    "Allavaram",
    "Konaseema",
-   90,
+   103,
    1.4,
    ""
   ],
@@ -1756,7 +1756,7 @@
    176,
    "Amalapuram",
    "Konaseema",
-   93,
+   108,
    2.3,
    ""
   ],
@@ -1764,7 +1764,7 @@
    177,
    "Uppalaguptam",
    "Konaseema",
-   159,
+   192,
    1.07,
    ""
   ],
@@ -1772,7 +1772,7 @@
    178,
    "Katrenikona",
    "Konaseema",
-   125,
+   136,
    0.98,
    ""
   ],
@@ -1780,7 +1780,7 @@
    179,
    "Velairpadu",
    "Eluru",
-   12,
+   80,
    4.79,
    "s"
   ],
@@ -1788,7 +1788,7 @@
    180,
    "Kukunoor",
    "Eluru",
-   14,
+   63,
    4.18,
    ""
   ],
@@ -1796,7 +1796,7 @@
    181,
    "Chintalapudi",
    "Eluru",
-   7,
+   35,
    20.72,
    ""
   ],
@@ -1804,7 +1804,7 @@
    182,
    "Lingapalem",
    "Eluru",
-   10,
+   50,
    33.7,
    "m"
   ],
@@ -1812,7 +1812,7 @@
    183,
    "T NARASAPURAM",
    "Eluru",
-   17,
+   74,
    18.61,
    ""
   ],
@@ -1820,7 +1820,7 @@
    184,
    "JEELUGUMILLI",
    "Eluru",
-   14,
+   75,
    13.26,
    ""
   ],
@@ -1828,7 +1828,7 @@
    185,
    "Buttayagudem",
    "Eluru",
-   18,
+   61,
    8.15,
    ""
   ],
@@ -1836,7 +1836,7 @@
    186,
    "POLAVARAM (M)",
    "Eluru",
-   32,
+   73,
    4.93,
    ""
   ],
@@ -1844,7 +1844,7 @@
    187,
    "Tallapudi",
    "East Godavari",
-   55,
+   123,
    13.95,
    ""
   ],
@@ -1852,7 +1852,7 @@
    188,
    "Gopalapuram",
    "East Godavari",
-   36,
+   143,
    13.98,
    ""
   ],
@@ -1860,7 +1860,7 @@
    189,
    "Koyyalagudem",
    "Eluru",
-   34,
+   94,
    44.32,
    "m"
   ],
@@ -1868,7 +1868,7 @@
    190,
    "Jangareddigudem",
    "Eluru",
-   20,
+   98,
    14.48,
    ""
   ],
@@ -1876,7 +1876,7 @@
    191,
    "Kamavarapukota",
    "Eluru",
-   14,
+   84,
    43.11,
    ""
   ],
@@ -1884,7 +1884,7 @@
    192,
    "Dwaraka Tirumala",
    "Eluru",
-   18,
+   98,
    56.38,
    ""
   ],
@@ -1892,7 +1892,7 @@
    193,
    "Nallajerla",
    "East Godavari",
-   29,
+   144,
    47.85,
    ""
   ],
@@ -1900,7 +1900,7 @@
    195,
    "Kovvur",
    "East Godavari",
-   32,
+   123,
    6.21,
    "m"
   ],
@@ -1908,7 +1908,7 @@
    196,
    "Chagallu",
    "East Godavari",
-   30,
+   111,
    33.34,
    ""
   ],
@@ -1916,7 +1916,7 @@
    197,
    "Nidadavole",
    "East Godavari",
-   48,
+   123,
    18.44,
    "m"
   ],
@@ -1924,7 +1924,7 @@
    198,
    "Tadepalligudem",
    "West Godavari",
-   32,
+   135,
    26.3,
    ""
   ],
@@ -1932,7 +1932,7 @@
    200,
    "Bhimadole",
    "Eluru",
-   13,
+   63,
    13.94,
    "m"
   ],
@@ -1940,7 +1940,7 @@
    202,
    "Pedapadu",
    "Eluru",
-   14,
+   53,
    25.11,
    "m"
   ],
@@ -1948,7 +1948,7 @@
    203,
    "Eluru_Rural",
    "Eluru",
-   14,
+   80,
    10.19,
    ""
   ],
@@ -1956,7 +1956,7 @@
    204,
    "Denduluru",
    "Eluru",
-   17,
+   86,
    48.38,
    "m"
   ],
@@ -1964,7 +1964,7 @@
    205,
    "Nidamarru",
    "Eluru",
-   25,
+   102,
    9.17,
    "m"
   ],
@@ -1972,7 +1972,7 @@
    206,
    "Pentapadu",
    "West Godavari",
-   32,
+   145,
    4.74,
    ""
   ],
@@ -1980,7 +1980,7 @@
    207,
    "Undrajavaram",
    "East Godavari",
-   47,
+   139,
    4.52,
    "m"
   ],
@@ -1988,7 +1988,7 @@
    208,
    "Peravali",
    "East Godavari",
-   43,
+   124,
    8.4,
    "m"
   ],
@@ -1996,7 +1996,7 @@
    209,
    "Tanuku",
    "West Godavari",
-   30,
+   133,
    3.78,
    "m"
   ],
@@ -2004,7 +2004,7 @@
    210,
    "Attili",
    "West Godavari",
-   35,
+   146,
    1.25,
    ""
   ],
@@ -2012,7 +2012,7 @@
    211,
    "Ganapavaram",
    "West Godavari",
-   34,
+   141,
    8.1,
    ""
   ],
@@ -2020,7 +2020,7 @@
    212,
    "AKIVEEDU",
    "West Godavari",
-   42,
+   109,
    0.52,
    ""
   ],
@@ -2028,7 +2028,7 @@
    213,
    "Undi",
    "West Godavari",
-   56,
+   109,
    0.61,
    "m"
   ],
@@ -2036,7 +2036,7 @@
    214,
    "Palacoderu",
    "West Godavari",
-   30,
+   86,
    3.21,
    ""
   ],
@@ -2044,7 +2044,7 @@
    215,
    "Penumantra",
    "West Godavari",
-   52,
+   158,
    1.59,
    ""
   ],
@@ -2052,7 +2052,7 @@
    216,
    "Iragavaram",
    "West Godavari",
-   82,
+   218,
    3.92,
    ""
   ],
@@ -2060,7 +2060,7 @@
    217,
    "Penugonda",
    "West Godavari",
-   67,
+   139,
    9.32,
    "m"
   ],
@@ -2068,7 +2068,7 @@
    218,
    "Achanta",
    "West Godavari",
-   39,
+   136,
    1.04,
    "m"
   ],
@@ -2076,7 +2076,7 @@
    219,
    "Poduru",
    "West Godavari",
-   75,
+   168,
    18.35,
    ""
   ],
@@ -2084,7 +2084,7 @@
    220,
    "Veeravasaram",
    "West Godavari",
-   41,
+   107,
    4.46,
    ""
   ],
@@ -2092,7 +2092,7 @@
    221,
    "Bhimavaram",
    "West Godavari",
-   37,
+   100,
    9.5,
    "m"
   ],
@@ -2100,7 +2100,7 @@
    222,
    "Kalla",
    "West Godavari",
-   24,
+   60,
    1.72,
    ""
   ],
@@ -2108,7 +2108,7 @@
    223,
    "Mogalthur",
    "West Godavari",
-   50,
+   106,
    4.62,
    ""
   ],
@@ -2116,7 +2116,7 @@
    224,
    "Narasapuram",
    "West Godavari",
-   63,
+   101,
    6.31,
    ""
   ],
@@ -2124,7 +2124,7 @@
    225,
    "Palacole",
    "West Godavari",
-   71,
+   110,
    14.13,
    "m"
   ],
@@ -2132,7 +2132,7 @@
    227,
    "Vatsavai",
    "NTR",
-   4,
+   14,
    2.86,
    "m"
   ],
@@ -2140,7 +2140,7 @@
    228,
    "Jaggayyapeta",
    "NTR",
-   5,
+   19,
    5.47,
    "m"
   ],
@@ -2148,7 +2148,7 @@
    229,
    "Penuganchiprolu",
    "NTR",
-   3,
+   14,
    3.21,
    ""
   ],
@@ -2156,7 +2156,7 @@
    230,
    "Nandigama",
    "NTR",
-   7,
+   28,
    4.95,
    "m"
   ],
@@ -2164,7 +2164,7 @@
    231,
    "Veerullapadu",
    "NTR",
-   12,
+   47,
    3.65,
    ""
   ],
@@ -2172,7 +2172,7 @@
    233,
    "Gampalagudem",
    "NTR",
-   7,
+   24,
    3.23,
    ""
   ],
@@ -2180,7 +2180,7 @@
    234,
    "Tiruvuru",
    "NTR",
-   6,
+   20,
    3.51,
    "m"
   ],
@@ -2188,7 +2188,7 @@
    235,
    "A KONDURU",
    "NTR",
-   9,
+   34,
    6.93,
    "s"
   ],
@@ -2196,7 +2196,7 @@
    236,
    "Reddigudem",
    "NTR",
-   8,
+   30,
    14.77,
    "m"
   ],
@@ -2204,7 +2204,7 @@
    237,
    "Vissannapet",
    "NTR",
-   8,
+   26,
    5.73,
    "m"
   ],
@@ -2212,7 +2212,7 @@
    238,
    "Chatrai",
    "Eluru",
-   10,
+   43,
    17.74,
    "m"
   ],
@@ -2220,7 +2220,7 @@
    239,
    "Musunuru",
    "Eluru",
-   14,
+   56,
    56.28,
    "m"
   ],
@@ -2228,7 +2228,7 @@
    240,
    "Nuzvid",
    "Eluru",
-   8,
+   69,
    17.61,
    "m"
   ],
@@ -2236,7 +2236,7 @@
    242,
    "Agiripalle",
    "Eluru",
-   10,
+   43,
    10.54,
    "m"
   ],
@@ -2244,7 +2244,7 @@
    243,
    "G.Konduru",
    "NTR",
-   20,
+   44,
    3.56,
    "m"
   ],
@@ -2252,7 +2252,7 @@
    244,
    "KANCHIKA CHERLA",
    "NTR",
-   11,
+   39,
    3.59,
    ""
   ],
@@ -2260,7 +2260,7 @@
    245,
    "Chandarlapadu",
    "NTR",
-   10,
+   24,
    3.05,
    "m"
   ],
@@ -2268,7 +2268,7 @@
    246,
    "Ibrahimpatnam",
    "NTR",
-   19,
+   69,
    3.98,
    "m"
   ],
@@ -2276,7 +2276,7 @@
    247,
    "Vijayawada West",
    "NTR",
-   53,
+   103,
    null,
    ""
   ],
@@ -2284,7 +2284,7 @@
    248,
    "Vijayawada (Rural)",
    "NTR",
-   35,
+   84,
    16.34,
    "m"
   ],
@@ -2292,7 +2292,7 @@
    249,
    "Gannavaram",
    "Krishna",
-   24,
+   56,
    7.64,
    ""
   ],
@@ -2300,7 +2300,7 @@
    251,
    "Nandivada",
    "Krishna",
-   29,
+   74,
    12.86,
    "m"
   ],
@@ -2308,7 +2308,7 @@
    252,
    "Mandavalli",
    "Eluru",
-   51,
+   127,
    19.67,
    ""
   ],
@@ -2316,7 +2316,7 @@
    253,
    "Kaikalur",
    "Eluru",
-   24,
+   104,
    0.96,
    ""
   ],
@@ -2324,7 +2324,7 @@
    254,
    "Kalidindi",
    "Eluru",
-   37,
+   98,
    1.05,
    ""
   ],
@@ -2332,7 +2332,7 @@
    255,
    "Kruthivennu",
    "Krishna",
-   74,
+   155,
    0.26,
    ""
   ],
@@ -2340,7 +2340,7 @@
    256,
    "Bantumilli",
    "Krishna",
-   63,
+   116,
    0.71,
    "s"
   ],
@@ -2348,7 +2348,7 @@
    258,
    "Gudivada",
    "Krishna",
-   33,
+   82,
    5.14,
    "m"
   ],
@@ -2356,7 +2356,7 @@
    259,
    "Pedaparupudi",
    "Krishna",
-   31,
+   80,
    11.15,
    "m"
   ],
@@ -2364,7 +2364,7 @@
    260,
    "Kankipadu",
    "Krishna",
-   37,
+   82,
    13.85,
    ""
   ],
@@ -2372,7 +2372,7 @@
    261,
    "Penamaluru",
    "Krishna",
-   40,
+   81,
    19.73,
    ""
   ],
@@ -2380,7 +2380,7 @@
    262,
    "Thotlavalluru",
    "Krishna",
-   57,
+   110,
    6.3,
    ""
   ],
@@ -2388,7 +2388,7 @@
    263,
    "Pamidimukkala",
    "Krishna",
-   30,
+   95,
    4.74,
    ""
   ],
@@ -2396,7 +2396,7 @@
    264,
    "Vuyyuru",
    "Krishna",
-   45,
+   114,
    16.36,
    ""
   ],
@@ -2404,7 +2404,7 @@
    265,
    "Pamarru",
    "Krishna",
-   43,
+   134,
    17.33,
    "m"
   ],
@@ -2412,7 +2412,7 @@
    266,
    "Gudlavalleru",
    "Krishna",
-   45,
+   93,
    17.82,
    "m"
   ],
@@ -2420,7 +2420,7 @@
    267,
    "Pedana",
    "Krishna",
-   46,
+   142,
    13.91,
    "m"
   ],
@@ -2428,7 +2428,7 @@
    269,
    "Movva",
    "Krishna",
-   40,
+   132,
    0.6,
    "m"
   ],
@@ -2436,7 +2436,7 @@
    270,
    "Ghantasala",
    "Krishna",
-   58,
+   141,
    12.2,
    ""
   ],
@@ -2444,7 +2444,7 @@
    271,
    "Machilipatnam_South",
    "Krishna",
-   128,
+   216,
    0.41,
    ""
   ],
@@ -2452,7 +2452,7 @@
    272,
    "Challapalle",
    "Krishna",
-   71,
+   168,
    4.21,
    "s"
   ],
@@ -2460,7 +2460,7 @@
    273,
    "Mopidevi",
    "Krishna",
-   74,
+   140,
    3.85,
    "s"
   ],
@@ -2468,7 +2468,7 @@
    274,
    "AVANIGADA",
    "Krishna",
-   76,
+   147,
    5.3,
    "m"
   ],
@@ -2476,7 +2476,7 @@
    275,
    "Nagayalanka",
    "Krishna",
-   73,
+   158,
    5.02,
    ""
   ],
@@ -2484,7 +2484,7 @@
    276,
    "Koduru",
    "Krishna",
-   139,
+   236,
    8.24,
    "s"
   ],
@@ -2500,7 +2500,7 @@
    279,
    "Durgi",
    "Palnadu",
-   0,
+   1,
    15.85,
    "s"
   ],
@@ -2508,7 +2508,7 @@
    280,
    "Rentachintala",
    "Palnadu",
-   0,
+   4,
    8.55,
    ""
   ],
@@ -2516,7 +2516,7 @@
    281,
    "Gurazala",
    "Palnadu",
-   1,
+   7,
    15.92,
    "s"
   ],
@@ -2524,7 +2524,7 @@
    282,
    "Dachepalle",
    "Palnadu",
-   2,
+   16,
    10.45,
    "m"
   ],
@@ -2532,7 +2532,7 @@
    283,
    "Karempudi",
    "Palnadu",
-   1,
+   6,
    10.97,
    "m"
   ],
@@ -2540,7 +2540,7 @@
    284,
    "Piduguralla",
    "Palnadu",
-   4,
+   13,
    5.96,
    "m"
   ],
@@ -2548,7 +2548,7 @@
    285,
    "Machavaram",
    "Palnadu",
-   5,
+   16,
    11.23,
    "s"
   ],
@@ -2556,7 +2556,7 @@
    286,
    "Bellamkonda",
    "Palnadu",
-   8,
+   31,
    1.71,
    "m"
   ],
@@ -2564,7 +2564,7 @@
    287,
    "Atchampet",
    "Palnadu",
-   3,
+   15,
    3.05,
    "m"
   ],
@@ -2572,7 +2572,7 @@
    288,
    "Krosuru",
    "Palnadu",
-   5,
+   18,
    4.3,
    "m"
   ],
@@ -2580,7 +2580,7 @@
    289,
    "Amaravathi",
    "Palnadu",
-   12,
+   63,
    4.16,
    "m"
   ],
@@ -2588,7 +2588,7 @@
    290,
    "Thullur",
    "Guntur",
-   15,
+   65,
    2.41,
    "m"
   ],
@@ -2596,7 +2596,7 @@
    291,
    "THADEPALLE",
    "Guntur",
-   67,
+   131,
    5.99,
    ""
   ],
@@ -2604,7 +2604,7 @@
    292,
    "Mangalagiri",
    "Guntur",
-   72,
+   130,
    2.19,
    "m"
   ],
@@ -2612,7 +2612,7 @@
    293,
    "Tadikonda",
    "Guntur",
-   38,
+   98,
    2.32,
    "m"
   ],
@@ -2620,7 +2620,7 @@
    294,
    "Pedakurapadu",
    "Palnadu",
-   6,
+   36,
    1.8,
    "m"
   ],
@@ -2628,7 +2628,7 @@
    295,
    "Sattenapalle",
    "Palnadu",
-   6,
+   24,
    5.61,
    ""
   ],
@@ -2636,7 +2636,7 @@
    297,
    "NAKARIKALLU",
    "Palnadu",
-   2,
+   9,
    4.47,
    "m"
   ],
@@ -2644,7 +2644,7 @@
    298,
    "Bollapalle",
    "Palnadu",
-   4,
+   10,
    30.42,
    "m"
   ],
@@ -2652,7 +2652,7 @@
    299,
    "Vinukonda",
    "Palnadu",
-   2,
+   8,
    4.79,
    "m"
   ],
@@ -2660,7 +2660,7 @@
    300,
    "Nuzendla",
    "Palnadu",
-   0,
+   2,
    4.17,
    "m"
   ],
@@ -2668,7 +2668,7 @@
    301,
    "Savalyapuram",
    "Palnadu",
-   2,
+   12,
    2.22,
    "s"
   ],
@@ -2676,7 +2676,7 @@
    302,
    "IPURU",
    "Palnadu",
-   1,
+   5,
    6.61,
    "m"
   ],
@@ -2684,7 +2684,7 @@
    304,
    "Narasaraopet",
    "Palnadu",
-   2,
+   15,
    3.28,
    "m"
   ],
@@ -2692,7 +2692,7 @@
    305,
    "Muppalla",
    "Palnadu",
-   2,
+   7,
    2.78,
    "s"
   ],
@@ -2700,7 +2700,7 @@
    306,
    "Nadendla",
    "Palnadu",
-   7,
+   30,
    2.2,
    "m"
   ],
@@ -2708,7 +2708,7 @@
    307,
    "Chilakaluripet",
    "Palnadu",
-   8,
+   32,
    2.35,
    "m"
   ],
@@ -2716,7 +2716,7 @@
    308,
    "Edlapadu",
    "Palnadu",
-   6,
+   34,
    10.45,
    "m"
   ],
@@ -2724,7 +2724,7 @@
    309,
    "Phirangipuram",
    "Guntur",
-   6,
+   32,
    1.88,
    "m"
   ],
@@ -2732,7 +2732,7 @@
    310,
    "Medikonduru",
    "Guntur",
-   12,
+   40,
    4.11,
    "m"
   ],
@@ -2740,7 +2740,7 @@
    311,
    "Guntur East",
    "Guntur",
-   45,
+   89,
    8.28,
    ""
   ],
@@ -2748,7 +2748,7 @@
    312,
    "Pedakakani",
    "Guntur",
-   77,
+   137,
    4.3,
    ""
   ],
@@ -2756,7 +2756,7 @@
    313,
    "Duggirala",
    "Guntur",
-   73,
+   126,
    7.03,
    ""
   ],
@@ -2764,7 +2764,7 @@
    314,
    "Kollipara",
    "Guntur",
-   60,
+   121,
    8.26,
    ""
   ],
@@ -2772,7 +2772,7 @@
    315,
    "Tenali",
    "Guntur",
-   61,
+   130,
    3.23,
    ""
   ],
@@ -2780,7 +2780,7 @@
    317,
    "Vatticherukuru",
    "Guntur",
-   10,
+   55,
    1.19,
    "m"
   ],
@@ -2788,7 +2788,7 @@
    319,
    "Pedanandipadu",
    "Guntur",
-   16,
+   45,
    0.86,
    "m"
   ],
@@ -2796,7 +2796,7 @@
    320,
    "Kakumanu",
    "Guntur",
-   8,
+   43,
    1.31,
    ""
   ],
@@ -2804,7 +2804,7 @@
    321,
    "Ponnur",
    "Guntur",
-   18,
+   53,
    3.05,
    "m"
   ],
@@ -2812,7 +2812,7 @@
    322,
    "Tsundur",
    "Bapatla",
-   76,
+   136,
    4.49,
    "m"
   ],
@@ -2820,7 +2820,7 @@
    323,
    "Amruthalur",
    "Bapatla",
-   50,
+   113,
    4.73,
    "m"
   ],
@@ -2828,7 +2828,7 @@
    324,
    "Vemuru",
    "Bapatla",
-   106,
+   175,
    4.88,
    "s"
   ],
@@ -2836,7 +2836,7 @@
    325,
    "Kollur",
    "Bapatla",
-   43,
+   107,
    8.89,
    ""
   ],
@@ -2844,7 +2844,7 @@
    326,
    "Bhattiprolu",
    "Bapatla",
-   62,
+   120,
    3.62,
    "m"
   ],
@@ -2852,7 +2852,7 @@
    327,
    "Cherukupalle",
    "Bapatla",
-   47,
+   110,
    1.78,
    "m"
   ],
@@ -2860,7 +2860,7 @@
    328,
    "Pittalavanipalem",
    "Bapatla",
-   47,
+   80,
    1.54,
    ""
   ],
@@ -2868,7 +2868,7 @@
    329,
    "Karlapalem",
    "Bapatla",
-   75,
+   114,
    3.06,
    "m"
   ],
@@ -2876,7 +2876,7 @@
    330,
    "BAPATLA(M)",
    "Bapatla",
-   30,
+   73,
    2.29,
    ""
   ],
@@ -2884,7 +2884,7 @@
    331,
    "Nizampatnam",
    "Bapatla",
-   53,
+   104,
    1.25,
    "m"
   ],
@@ -2892,7 +2892,7 @@
    332,
    "Nagaram",
    "Bapatla",
-   36,
+   103,
    2.13,
    "s"
   ],
@@ -2900,7 +2900,7 @@
    333,
    "Repalle",
    "Bapatla",
-   65,
+   138,
    3.54,
    "s"
   ],
@@ -2964,7 +2964,7 @@
    341,
    "Santhamaguluru",
    "Prakasam",
-   2,
+   4,
    3.02,
    "m"
   ],
@@ -2972,7 +2972,7 @@
    342,
    "BALLIKURUVA",
    "Prakasam",
-   15,
+   16,
    6.53,
    "m"
   ],
@@ -2980,7 +2980,7 @@
    343,
    "Martur",
    "Bapatla",
-   2,
+   8,
    3.71,
    "m"
   ],
@@ -2988,7 +2988,7 @@
    344,
    "Yeddanapudi",
    "Bapatla",
-   4,
+   17,
    4.54,
    "m"
   ],
@@ -2996,7 +2996,7 @@
    345,
    "Parchur",
    "Bapatla",
-   4,
+   24,
    2.77,
    ""
   ],
@@ -3004,7 +3004,7 @@
    346,
    "Karamchedu",
    "Bapatla",
-   14,
+   30,
    2.03,
    "s"
   ],
@@ -3012,7 +3012,7 @@
    347,
    "Inkollu",
    "Bapatla",
-   5,
+   11,
    null,
    "s"
   ],
@@ -3076,7 +3076,7 @@
    355,
    "TARLAPADU",
    "Markapuram",
-   0,
+   1,
    16.0,
    "m"
   ],
@@ -3116,7 +3116,7 @@
    360,
    "Chirala",
    "Bapatla",
-   21,
+   36,
    3.61,
    ""
   ],
@@ -3124,7 +3124,7 @@
    361,
    "Vetapalem",
    "Bapatla",
-   9,
+   24,
    44.29,
    "s"
   ],
@@ -3132,7 +3132,7 @@
    362,
    "Chinaganjam",
    "Bapatla",
-   4,
+   8,
    2.88,
    "m"
   ],
@@ -3588,7 +3588,7 @@
    422,
    "Sydapuram",
    "Sri Potti Sriramulu Nellore",
-   42,
+   43,
    3.48,
    "m"
   ],
@@ -4044,7 +4044,7 @@
    484,
    "Pullampeta",
    "Tirupati",
-   33,
+   34,
    20.75,
    ""
   ],
@@ -4132,7 +4132,7 @@
    496,
    "Kurnool Rural",
    "Kurnool",
-   3,
+   4,
    10.1,
    ""
   ],
@@ -4204,7 +4204,7 @@
    507,
    "Gonegandla",
    "Kurnool",
-   1,
+   2,
    9.37,
    "m"
   ],
@@ -4356,7 +4356,7 @@
    527,
    "PATTIKANDA",
    "Kurnool",
-   2,
+   3,
    8.66,
    "m"
   ],
@@ -4604,7 +4604,7 @@
    560,
    "Kudair",
    "Ananthapuramu",
-   2,
+   3,
    13.11,
    "m"
   ],
@@ -4716,7 +4716,7 @@
    574,
    "Bathalapalle",
    "Sri Sathya Sai",
-   11,
+   12,
    6.58,
    "m"
   ],
@@ -4756,7 +4756,7 @@
    579,
    "Gandlapenta",
    "Sri Sathya Sai",
-   20,
+   23,
    24.69,
    "m"
   ],
@@ -4972,7 +4972,7 @@
    606,
    "Peddamandyam",
    "Annamayya",
-   34,
+   35,
    8.28,
    "m"
   ],
@@ -5188,7 +5188,7 @@
    636,
    "Vadamalapeta",
    "Tirupati",
-   51,
+   52,
    5.8,
    ""
   ],
@@ -5451,157 +5451,416 @@
  ],
  "watch": [
   {
-   "district": "Anakapalli",
-   "mandal": "Atchutapuram",
-   "stormMm": 234.0,
-   "depthM": 26.84,
-   "precedentM": 2.6
-  },
-  {
-   "district": "Visakhapatnam",
-   "mandal": "Visakhapatnam (Rural)",
-   "stormMm": 232.5,
-   "depthM": 19.17,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Vizianagaram",
-   "mandal": "Garividi",
-   "stormMm": 220.1,
-   "depthM": 9.41,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Srikakulam",
-   "mandal": "Ranastalam",
-   "stormMm": 206.7,
-   "depthM": 14.95,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Srikakulam",
-   "mandal": "Etcherla",
-   "stormMm": 195.9,
-   "depthM": 8.98,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Visakhapatnam",
-   "mandal": "Anandapuram",
-   "stormMm": 190.5,
-   "depthM": 10.26,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Srikakulam",
-   "mandal": "KOTABOMMAL",
-   "stormMm": 173.5,
-   "depthM": 8.09,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Parvathipuram Manyam",
-   "mandal": "Pachipenta",
-   "stormMm": 158.7,
-   "depthM": 8.54,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Vizianagaram",
-   "mandal": "Cheepurupalle",
-   "stormMm": 154.0,
-   "depthM": 11.39,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Srikakulam",
-   "mandal": "Vajrapukothuru",
-   "stormMm": 141.9,
-   "depthM": 12.3,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Anakapalli",
-   "mandal": "Ravikamatham",
-   "stormMm": 141.6,
-   "depthM": 8.73,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Kakinada",
-   "mandal": "Gollaprolu",
-   "stormMm": 139.5,
-   "depthM": 11.89,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Krishna",
-   "mandal": "Koduru",
-   "stormMm": 139.1,
-   "depthM": 8.24,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Anakapalli",
-   "mandal": "Paravada",
-   "stormMm": 135.8,
-   "depthM": 8.05,
-   "precedentM": 1.48
-  },
-  {
    "district": "Srikakulam",
    "mandal": "Kanchili",
-   "stormMm": 126.5,
+   "stormMm": 424.3,
    "depthM": 13.69,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Anakapalli",
-   "mandal": "DEVARAPALLE (VISAKHAPATNAM)",
-   "stormMm": 122.9,
-   "depthM": 12.25,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Anakapalli",
-   "mandal": "Butchayyapeta",
-   "stormMm": 122.7,
-   "depthM": 11.99,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Kakinada",
-   "mandal": "Jaggampeta",
-   "stormMm": 112.8,
-   "depthM": 9.81,
-   "precedentM": 1.48
-  },
-  {
-   "district": "Alluri Sitharama Raju",
-   "mandal": "Ananthagiri",
-   "stormMm": 109.2,
-   "depthM": 10.41,
    "precedentM": 1.48
   },
   {
    "district": "Srikakulam",
    "mandal": "Kaviti",
-   "stormMm": 107.9,
+   "stormMm": 383.9,
    "depthM": 19.91,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "Etcherla",
+   "stormMm": 307.2,
+   "depthM": 8.98,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "Vajrapukothuru",
+   "stormMm": 294.4,
+   "depthM": 12.3,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "KOTABOMMAL",
+   "stormMm": 284.6,
+   "depthM": 8.09,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Srikakulam",
+   "mandal": "Ranastalam",
+   "stormMm": 283.5,
+   "depthM": 14.95,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Visakhapatnam",
+   "mandal": "Visakhapatnam (Rural)",
+   "stormMm": 280.0,
+   "depthM": 19.17,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Parvathipuram Manyam",
+   "mandal": "Pachipenta",
+   "stormMm": 262.8,
+   "depthM": 8.54,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Vizianagaram",
+   "mandal": "Garividi",
+   "stormMm": 259.3,
+   "depthM": 9.41,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Anakapalli",
+   "mandal": "Atchutapuram",
+   "stormMm": 256.2,
+   "depthM": 26.84,
+   "precedentM": 2.6
+  },
+  {
+   "district": "Krishna",
+   "mandal": "Koduru",
+   "stormMm": 236.0,
+   "depthM": 8.24,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Kakinada",
+   "mandal": "Gollaprolu",
+   "stormMm": 228.4,
+   "depthM": 11.89,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Visakhapatnam",
+   "mandal": "Anandapuram",
+   "stormMm": 226.9,
+   "depthM": 10.26,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Anakapalli",
+   "mandal": "Ravikamatham",
+   "stormMm": 194.0,
+   "depthM": 8.73,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Ananthagiri",
+   "stormMm": 192.1,
+   "depthM": 10.41,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Alluri Sitharama Raju",
+   "mandal": "GUDEM KOTHAVEEDHI",
+   "stormMm": 186.3,
+   "depthM": 9.91,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Vizianagaram",
+   "mandal": "Cheepurupalle",
+   "stormMm": 184.9,
+   "depthM": 11.39,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Kakinada",
+   "mandal": "Jaggampeta",
+   "stormMm": 177.1,
+   "depthM": 9.81,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Anakapalli",
+   "mandal": "Butchayyapeta",
+   "stormMm": 175.8,
+   "depthM": 11.99,
+   "precedentM": 1.48
+  },
+  {
+   "district": "West Godavari",
+   "mandal": "Poduru",
+   "stormMm": 168.0,
+   "depthM": 18.35,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Kakinada",
+   "mandal": "Gandepalle",
+   "stormMm": 157.4,
+   "depthM": 46.41,
+   "precedentM": 2.6
+  },
+  {
+   "district": "Kakinada",
+   "mandal": "Thondangi",
+   "stormMm": 155.8,
+   "depthM": 8.37,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Anakapalli",
+   "mandal": "DEVARAPALLE (VISAKHAPATNAM)",
+   "stormMm": 154.9,
+   "depthM": 12.25,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Korukonda",
+   "stormMm": 150.8,
+   "depthM": 19.94,
    "precedentM": 1.48
   },
   {
    "district": "Alluri Sitharama Raju",
    "mandal": "Koyyuru",
-   "stormMm": 105.3,
+   "stormMm": 148.2,
    "depthM": 12.86,
    "precedentM": 1.48
   },
   {
+   "district": "Anakapalli",
+   "mandal": "Paravada",
+   "stormMm": 145.2,
+   "depthM": 8.05,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Nallajerla",
+   "stormMm": 144.0,
+   "depthM": 47.85,
+   "precedentM": 2.6
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Gopalapuram",
+   "stormMm": 142.8,
+   "depthM": 13.98,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Polavaram",
+   "mandal": "Addateegala",
+   "stormMm": 142.8,
+   "depthM": 11.97,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Dumbriguda",
+   "stormMm": 142.6,
+   "depthM": 8.43,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Krishna",
+   "mandal": "Pedana",
+   "stormMm": 141.5,
+   "depthM": 13.91,
+   "precedentM": 1.48
+  },
+  {
+   "district": "West Godavari",
+   "mandal": "Ganapavaram",
+   "stormMm": 141.3,
+   "depthM": 8.1,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Krishna",
+   "mandal": "Ghantasala",
+   "stormMm": 141.2,
+   "depthM": 12.2,
+   "precedentM": 1.48
+  },
+  {
+   "district": "West Godavari",
+   "mandal": "Penugonda",
+   "stormMm": 138.9,
+   "depthM": 9.32,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Parvathipuram Manyam",
+   "mandal": "Salur",
+   "stormMm": 138.5,
+   "depthM": 15.76,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Guntur",
+   "mandal": "CHEBROLE",
+   "stormMm": 136.4,
+   "depthM": 9.44,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Rangampeta",
+   "stormMm": 136.0,
+   "depthM": 18.98,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Rajahmundry (Rural)",
+   "stormMm": 135.3,
+   "depthM": 46.3,
+   "precedentM": 2.6
+  },
+  {
+   "district": "Alluri Sitharama Raju",
+   "mandal": "Chintapalle",
+   "stormMm": 135.1,
+   "depthM": 8.09,
+   "precedentM": 1.48
+  },
+  {
+   "district": "West Godavari",
+   "mandal": "Tadepalligudem",
+   "stormMm": 134.9,
+   "depthM": 26.3,
+   "precedentM": 2.6
+  },
+  {
+   "district": "Krishna",
+   "mandal": "Pamarru",
+   "stormMm": 133.5,
+   "depthM": 17.33,
+   "precedentM": 1.48
+  },
+  {
    "district": "Kakinada",
-   "mandal": "Thondangi",
-   "stormMm": 100.0,
-   "depthM": 8.37,
+   "mandal": "Peddapuram",
+   "stormMm": 130.7,
+   "depthM": 30.15,
+   "precedentM": 2.6
+  },
+  {
+   "district": "Eluru",
+   "mandal": "Ungutur",
+   "stormMm": 129.9,
+   "depthM": 17.59,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Eluru",
+   "mandal": "Mandavalli",
+   "stormMm": 126.8,
+   "depthM": 19.67,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Rajahmundry (Urban)",
+   "stormMm": 125.5,
+   "depthM": 18.18,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Peravali",
+   "stormMm": 124.1,
+   "depthM": 8.4,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Nidadavole",
+   "stormMm": 122.9,
+   "depthM": 18.44,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Tallapudi",
+   "stormMm": 122.7,
+   "depthM": 13.95,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Anakapalli",
+   "mandal": "Golugonda",
+   "stormMm": 122.6,
+   "depthM": 10.47,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Guntur",
+   "mandal": "Kollipara",
+   "stormMm": 121.0,
+   "depthM": 8.26,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Krishna",
+   "mandal": "Vuyyuru",
+   "stormMm": 114.5,
+   "depthM": 16.36,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Polavaram",
+   "mandal": "Y.Ramavaram",
+   "stormMm": 114.0,
+   "depthM": 11.27,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Chagallu",
+   "stormMm": 111.2,
+   "depthM": 33.34,
+   "precedentM": 2.6
+  },
+  {
+   "district": "Kakinada",
+   "mandal": "Samalkota",
+   "stormMm": 110.2,
+   "depthM": 24.39,
+   "precedentM": 2.6
+  },
+  {
+   "district": "West Godavari",
+   "mandal": "Palacole",
+   "stormMm": 110.2,
+   "depthM": 14.13,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Bapatla",
+   "mandal": "Kollur",
+   "stormMm": 106.7,
+   "depthM": 8.89,
+   "precedentM": 1.48
+  },
+  {
+   "district": "Eluru",
+   "mandal": "Nidamarru",
+   "stormMm": 102.4,
+   "depthM": 9.17,
+   "precedentM": 1.48
+  },
+  {
+   "district": "East Godavari",
+   "mandal": "Devarapalle",
+   "stormMm": 101.5,
+   "depthM": 27.42,
+   "precedentM": 2.6
+  },
+  {
+   "district": "West Godavari",
+   "mandal": "Bhimavaram",
+   "stormMm": 100.2,
+   "depthM": 9.5,
    "precedentM": 1.48
   }
  ],

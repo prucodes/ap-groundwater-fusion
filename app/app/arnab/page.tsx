@@ -71,7 +71,7 @@ export default function ArnabPage() {
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
         title="Cyclone Arnab"
-        brief={brief("/arnab", <><b>{s.rainTmc.toFixed(0)} TMC</b> of rain in four days, most of it on the north coast; only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.</>)}
+        brief={brief("/arnab", <><b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, most of it along the coast; only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.</>)}
         showChips={false}
         variant="compact"
       />
@@ -80,12 +80,12 @@ export default function ArnabPage() {
         <div className={styles.heroText}>
           <span className={styles.kicker}>Came ashore {arnabDay(d.landfall)} 2026 · updated {d.updatedAt ? arnabDay(d.updatedAt) : "daily"}</span>
           <h2>The rain fell where the water table was already high</h2>
-          <p>The heaviest fell on {listOf(soaked)}, where most tables sat within {d.deepM} m of the surface. The deep, dry interior, which had the most room to take it, got little.</p>
+          <p>The heaviest fell along the coast, on {listOf(soaked)}, and most of it landed where tables sat within {d.deepM} m of the surface. The deep, dry interior, which had the most room to take it, got little.</p>
         </div>
         <ArnabSpiral className={styles.spiral} />
         <ul className={styles.tiles}>
           <li><span>Rain, {d.rainWindow.days} days</span><b>{formatNumber(Math.round(s.rainTmc))}<small> TMC</small></b><em>{Math.round(s.rainTmc / s.normalTmc)}× the normal</em></li>
-          <li><span>Soil moisture</span><b>{Math.round(s.soilMedianBefore)}<small>%</small> → {Math.round(s.soilMedianAfter)}<small>%</small></b><em>at 30 cm, statewide median</em></li>
+          <li><span>Soil moisture</span><b>{Math.round(s.soilMedianBefore)}<small>%</small> → {Math.round(s.soilMedianAfter)}<small>%</small></b><em>at 30 cm, {arnabDay(s.soilAsOf.before)} to {arnabDay(s.soilAsOf.after)}</em></li>
           {since ? <li><span>Reservoirs</span><b>{signed(since.gainTmc, "")}<small>TMC</small></b><em>since {arnabDay(since.from)}, now {since.days[since.days.length - 1].reservoirPct}% full</em></li> : null}
           <li className={styles.key}><span>Deep tables</span><b>{s.deepHeavyMandals}<small> of {s.deepMandals}</small></b><em>got {d.heavyMm} mm or more, of those deeper than {d.deepM} m</em></li>
         </ul>
@@ -113,14 +113,14 @@ export default function ArnabPage() {
                 <b>{x.medianMm} mm</b>
               </li>)}
             </ol>
-            <p className={styles.small}>Median mandal in each district. Rayalaseema, Prakasam and Nellore had under 15 mm.</p>
+            <p className={styles.small}>Median mandal in each district. The driest: {listOf(d.districts.slice(-5).reverse().map(x => `${x.district} ${x.medianMm} mm`))}.</p>
             {dr ? <>
               <h3>Against the drought flags</h3>
               <div className={styles.drought} data-testid="arnab-drought">
                 <div><b>{dr.flaggedHeavy}<small> of {dr.flagged}</small></b><span>flagged mandals got {d.heavyMm} mm or more; the median got {dr.medianMm} mm</span></div>
                 <div><b>{dr.severeHeavy}<small> of {dr.severe}</small></b><span>of those severe or possibly severe</span></div>
               </div>
-              <p className={styles.small}>The drought manual&apos;s flags, moderate or worse, as of {arnabDay(dr.asOf)}. In {dr.byDrySpell} of {dr.flagged} the rainfall trigger came from a four-week dry spell earlier in the season, which later rain does not undo. An evidence screen, not a declaration; that decision, due by {arnabDay(dr.declareBy)}, is the State&apos;s.</p>
+              <p className={styles.small}>The drought manual&apos;s flags, moderate or worse, as of {arnabDay(dr.asOf)}. In {dr.byDrySpell} of {dr.flagged} the rainfall trigger came from a four-week dry spell earlier in the season, which later rain does not undo. An evidence screen, not a declaration; that decision is the State&apos;s.</p>
             </> : null}
           </div>
         </div>
