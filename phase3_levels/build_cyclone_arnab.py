@@ -4,7 +4,7 @@
 Arnab came ashore on the Godavari delta coast on 28 October 2026. The water
 context (fetch_apwrims_context.py) records gauge rain for the water year to date,
 so the storm's rain in each mandal is the difference between two readings of it:
-to 24 October, before the storm, and to 28 October. The same two readings give
+to 24 October, before the storm, and to 30 October, when the rain had passed. The same two readings give
 soil moisture before and after, and reservoir storage. Those are captured once,
 with --capture, into phase3_levels/data/cyclone_arnab_capture.json; the weekly
 refresh moves on, so the event is kept as it was measured.
@@ -108,6 +108,25 @@ def capture(before_path, after_path):
     with open(CAPTURE, "w") as handle:
         json.dump(payload, handle, indent=1)
     print(f"  captured {len(rows)} mandals, rain to {payload['rainWindow']['before']} and to {payload['rainWindow']['after']}")
+
+
+def extend_rain(path):
+    """Move the storm's end to a later reading. Soil and reservoirs stay as first captured;
+    the log follows them day by day."""
+    cap = json.load(open(CAPTURE))
+    context = json.load(open(path))
+    rain = {m["uuid"]: m for m in context["rainfall"]["mandals"]}
+    for m in cap["mandals"]:
+        later = rain.get(m["uuid"])
+        if later and later.get("actualMm") is not None:
+            m["rainAfterMm"] = later["actualMm"]
+    state = context["rainfall"]["state"]
+    cap["rainWindow"]["after"] = context["rainfall"]["window"]["end"]
+    cap["state"].update({"rainTmcAfter": state["actualTmc"], "normalTmcAfter": state["normalTmc"],
+                         "seasonDeviationAfter": state["deviationPct"]})
+    with open(CAPTURE, "w") as handle:
+        json.dump(cap, handle, indent=1)
+    print(f"  storm rain now runs to {cap['rainWindow']['after']}")
 
 
 def groundwater():
@@ -275,6 +294,8 @@ def main():
     if "--capture" in sys.argv:
         i = sys.argv.index("--capture")
         capture(sys.argv[i + 1], sys.argv[i + 2])
+    if "--extend-rain" in sys.argv:
+        extend_rain(sys.argv[sys.argv.index("--extend-rain") + 1])
     cap = json.load(open(CAPTURE))
     global RAIN_BASE_TMC
     RAIN_BASE_TMC = cap["state"]["rainTmcBefore"]

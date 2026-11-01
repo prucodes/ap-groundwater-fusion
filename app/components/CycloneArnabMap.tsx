@@ -6,7 +6,7 @@ import { countEvent } from "../lib/visit-counter";
 
 /* Cyclone Arnab on the State map. The opening view puts the storm's rain and the
    water table's depth on one map, so the mismatch shows at a glance: heavy rain on
-   shallow tables along the north coast, deep tables left dry inland. The other view
+   shallow tables along the coast, deep tables left dry inland. The other view
    gives depth alone. The mandals where heavy rain met a deep table keep an ink ring
    in both. */
 
@@ -66,6 +66,6 @@ export function CycloneArnabMap({ rows, heavyMm, deepM, month, aspect }: {
         : <>
           {(Object.keys(MEET) as Array<keyof typeof MEET>).map(k => <span key={k}><i style={{ background: MEET[k].color }} />{MEET[k].label}</span>)}
         </>} />
-    <p className="arnabMapKey">Heavy rain is {heavyMm} mm or more in the four days; a deep table is {deepM} m or more below ground in {month}.</p>
+    <p className="arnabMapKey">Heavy rain is {heavyMm} mm or more from the storm; a deep table is {deepM} m or more below ground in {month}.</p>
   </div>;
 }

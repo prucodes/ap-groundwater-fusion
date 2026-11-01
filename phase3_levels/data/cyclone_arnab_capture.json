@@ -2,7 +2,7 @@
  "source": "APWRIMS water context (gauge rain, NRSC soil moisture, reservoirs), read before and after the storm",
  "rainWindow": {
   "before": "2026-10-24",
-  "after": "2026-10-28"
+  "after": "2026-10-30"
  },
  "soilAsOf": {
   "before": "2026-10-23",
@@ -10,11 +10,11 @@
  },
  "state": {
   "rainTmcBefore": 2377.8,
-  "rainTmcAfter": 2588.3,
+  "rainTmcAfter": 2716.6,
   "normalTmcBefore": 3764.8,
-  "normalTmcAfter": 3820.7,
+  "normalTmcAfter": 3886.1,
   "seasonDeviationBefore": -36.8,
-  "seasonDeviationAfter": -32.3,
+  "seasonDeviationAfter": -30.1,
   "soilMedianBefore": 49.9,
   "soilMedianAfter": 90.5,
   "soilDriestBefore": 52,
@@ -33,7 +33,7 @@
    "mandal": "Ananthagiri",
    "boundaryIndex": 76,
    "rainBeforeMm": 529.0,
-   "rainAfterMm": 638.2,
+   "rainAfterMm": 721.1,
    "soil30Before": 50.6,
    "soil30After": 100.0
   },
@@ -43,7 +43,7 @@
    "mandal": "Araku Valley",
    "boundaryIndex": 75,
    "rainBeforeMm": 586.4,
-   "rainAfterMm": 710.8,
+   "rainAfterMm": 792.4,
    "soil30Before": 42.3,
    "soil30After": 100.0
   },
@@ -53,7 +53,7 @@
    "mandal": "Chintapalle",
    "boundaryIndex": 80,
    "rainBeforeMm": 634.9,
-   "rainAfterMm": 725.0,
+   "rainAfterMm": 770.0,
    "soil30Before": 71.7,
    "soil30After": 100.0
   },
@@ -63,7 +63,7 @@
    "mandal": "Dumbriguda",
    "boundaryIndex": 74,
    "rainBeforeMm": 618.9,
-   "rainAfterMm": 716.0,
+   "rainAfterMm": 761.5,
    "soil30Before": 46.8,
    "soil30After": 100.0
   },
@@ -73,7 +73,7 @@
    "mandal": "G.Madugula",
    "boundaryIndex": 79,
    "rainBeforeMm": 743.6,
-   "rainAfterMm": 838.0,
+   "rainAfterMm": 897.2,
    "soil30Before": 76.6,
    "soil30After": 100.0
   },
@@ -83,7 +83,7 @@
    "mandal": "GUDEM KOTHAVEEDHI",
    "boundaryIndex": 81,
    "rainBeforeMm": 1162.3,
-   "rainAfterMm": 1236.5,
+   "rainAfterMm": 1348.6,
    "soil30Before": 87.0,
    "soil30After": 100.0
   },
@@ -93,7 +93,7 @@
    "mandal": "Hukumpeta",
    "boundaryIndex": 77,
    "rainBeforeMm": 643.3,
-   "rainAfterMm": 753.4,
+   "rainAfterMm": 852.6,
    "soil30Before": 41.3,
    "soil30After": 100.0
   },
@@ -103,7 +103,7 @@
    "mandal": "Koyyuru",
    "boundaryIndex": 82,
    "rainBeforeMm": 768.0,
-   "rainAfterMm": 873.3,
+   "rainAfterMm": 916.2,
    "soil30Before": 78.8,
    "soil30After": 100.0
   },
@@ -113,7 +113,7 @@
    "mandal": "Munchingi Puttu",
    "boundaryIndex": 72,
    "rainBeforeMm": 1375.7,
-   "rainAfterMm": 1429.2,
+   "rainAfterMm": 1474.9,
    "soil30Before": 99.2,
    "soil30After": 100.0
   },
@@ -123,7 +123,7 @@
    "mandal": "PEDABAYALU",
    "boundaryIndex": 73,
    "rainBeforeMm": 923.7,
-   "rainAfterMm": 991.3,
+   "rainAfterMm": 1039.4,
    "soil30Before": 89.7,
    "soil30After": 100.0
   },
@@ -133,7 +133,7 @@
    "mandal": "Paderu",
    "boundaryIndex": 78,
    "rainBeforeMm": 689.7,
-   "rainAfterMm": 800.6,
+   "rainAfterMm": 948.6,
    "soil30Before": 66.6,
    "soil30After": 100.0
   },
@@ -143,7 +143,7 @@
    "mandal": "Anakapalle",
    "boundaryIndex": 102,
    "rainBeforeMm": 541.8,
-   "rainAfterMm": 671.4,
+   "rainAfterMm": 689.1,
    "soil30Before": 59.4,
    "soil30After": 100.0
   },
@@ -153,7 +153,7 @@
    "mandal": "Atchutapuram",
    "boundaryIndex": 109,
    "rainBeforeMm": 560.1,
-   "rainAfterMm": 794.1,
+   "rainAfterMm": 816.3,
    "soil30Before": 90.1,
    "soil30After": 100.0
   },
@@ -163,7 +163,7 @@
    "mandal": "Butchayyapeta",
    "boundaryIndex": 104,
    "rainBeforeMm": 595.5,
-   "rainAfterMm": 718.2,
+   "rainAfterMm": 771.3,
    "soil30Before": 81.7,
    "soil30After": 100.0
   },
@@ -173,7 +173,7 @@
    "mandal": "Cheedikada",
    "boundaryIndex": 89,
    "rainBeforeMm": 577.3,
-   "rainAfterMm": 704.5,
+   "rainAfterMm": 727.2,
    "soil30Before": 81.6,
    "soil30After": 100.0
   },
@@ -183,7 +183,7 @@
    "mandal": "Chodavaram",
    "boundaryIndex": 103,
    "rainBeforeMm": 687.3,
-   "rainAfterMm": 884.6,
+   "rainAfterMm": 915.9,
    "soil30Before": 86.4,
    "soil30After": 100.0
   },
@@ -193,7 +193,7 @@
    "mandal": "DEVARAPALLE (VISAKHAPATNAM)",
    "boundaryIndex": null,
    "rainBeforeMm": 686.7,
-   "rainAfterMm": 809.6,
+   "rainAfterMm": 841.6,
    "soil30Before": 74.0,
    "soil30After": 100.0
   },
@@ -203,7 +203,7 @@
    "mandal": "Golugonda",
    "boundaryIndex": 84,
    "rainBeforeMm": 537.0,
-   "rainAfterMm": 608.9,
+   "rainAfterMm": 659.6,
    "soil30Before": 90.5,
    "soil30After": 100.0
   },
@@ -213,7 +213,7 @@
    "mandal": "K.Kotapadu",
    "boundaryIndex": 91,
    "rainBeforeMm": 765.8,
-   "rainAfterMm": 911.7,
+   "rainAfterMm": 945.4,
    "soil30Before": 70.1,
    "soil30After": 100.0
   },
@@ -223,7 +223,7 @@
    "mandal": "Kasimkota",
    "boundaryIndex": 107,
    "rainBeforeMm": 724.1,
-   "rainAfterMm": 984.8,
+   "rainAfterMm": 1016.1,
    "soil30Before": 77.2,
    "soil30After": 100.0
   },
@@ -233,7 +233,7 @@
    "mandal": "Kotauratla",
    "boundaryIndex": 105,
    "rainBeforeMm": 594.2,
-   "rainAfterMm": 710.2,
+   "rainAfterMm": 750.0,
    "soil30Before": 71.9,
    "soil30After": 100.0
   },
@@ -243,7 +243,7 @@
    "mandal": "Madugula",
    "boundaryIndex": 88,
    "rainBeforeMm": 746.2,
-   "rainAfterMm": 845.5,
+   "rainAfterMm": 878.6,
    "soil30Before": 78.3,
    "soil30After": 100.0
   },
@@ -253,7 +253,7 @@
    "mandal": "Makavarapalem",
    "boundaryIndex": 106,
    "rainBeforeMm": 542.9,
-   "rainAfterMm": 716.3,
+   "rainAfterMm": 759.0,
    "soil30Before": 76.3,
    "soil30After": 100.0
   },
@@ -263,7 +263,7 @@
    "mandal": "Munagapaka",
    "boundaryIndex": 108,
    "rainBeforeMm": 443.6,
-   "rainAfterMm": 606.4,
+   "rainAfterMm": 623.7,
    "soil30Before": 84.9,
    "soil30After": 100.0
   },
@@ -273,7 +273,7 @@
    "mandal": "Nakkapalle",
    "boundaryIndex": 111,
    "rainBeforeMm": 532.8,
-   "rainAfterMm": 638.2,
+   "rainAfterMm": 679.8,
    "soil30Before": 46.7,
    "soil30After": 100.0
   },
@@ -283,7 +283,7 @@
    "mandal": "Narsipatnam",
    "boundaryIndex": 85,
    "rainBeforeMm": 783.9,
-   "rainAfterMm": 927.1,
+   "rainAfterMm": 972.4,
    "soil30Before": 93.4,
    "soil30After": 100.0
   },
@@ -293,7 +293,7 @@
    "mandal": "Nathavaram",
    "boundaryIndex": 83,
    "rainBeforeMm": 653.4,
-   "rainAfterMm": 805.5,
+   "rainAfterMm": 850.1,
    "soil30Before": 94.2,
    "soil30After": 100.0
   },
@@ -303,7 +303,7 @@
    "mandal": "Paravada",
    "boundaryIndex": 101,
    "rainBeforeMm": 651.5,
-   "rainAfterMm": 787.3,
+   "rainAfterMm": 796.7,
    "soil30Before": 92.4,
    "soil30After": 100.0
   },
@@ -313,7 +313,7 @@
    "mandal": "Payakaraopeta",
    "boundaryIndex": 112,
    "rainBeforeMm": 671.8,
-   "rainAfterMm": 777.1,
+   "rainAfterMm": 843.6,
    "soil30Before": 80.2,
    "soil30After": 100.0
   },
@@ -323,7 +323,7 @@
    "mandal": "Rambilli",
    "boundaryIndex": 114,
    "rainBeforeMm": 477.0,
-   "rainAfterMm": 612.4,
+   "rainAfterMm": 638.6,
    "soil30Before": 29.6,
    "soil30After": 100.0
   },
@@ -333,7 +333,7 @@
    "mandal": "Ravikamatham",
    "boundaryIndex": 87,
    "rainBeforeMm": 700.4,
-   "rainAfterMm": 842.0,
+   "rainAfterMm": 894.4,
    "soil30Before": 88.8,
    "soil30After": 100.0
   },
@@ -343,7 +343,7 @@
    "mandal": "Rolugunta",
    "boundaryIndex": 86,
    "rainBeforeMm": 637.7,
-   "rainAfterMm": 739.0,
+   "rainAfterMm": 778.4,
    "soil30Before": 96.4,
    "soil30After": 100.0
   },
@@ -353,7 +353,7 @@
    "mandal": "S.Rayavaram",
    "boundaryIndex": 113,
    "rainBeforeMm": 498.1,
-   "rainAfterMm": 630.3,
+   "rainAfterMm": 669.4,
    "soil30Before": 41.0,
    "soil30After": 100.0
   },
@@ -363,7 +363,7 @@
    "mandal": "Sabbavaram",
    "boundaryIndex": 92,
    "rainBeforeMm": 702.4,
-   "rainAfterMm": 902.2,
+   "rainAfterMm": 964.9,
    "soil30Before": 88.0,
    "soil30After": 100.0
   },
@@ -373,7 +373,7 @@
    "mandal": "YELAMANCHILI (VISAKHAPATNAM)",
    "boundaryIndex": null,
    "rainBeforeMm": 531.6,
-   "rainAfterMm": 653.1,
+   "rainAfterMm": 682.8,
    "soil30Before": 66.7,
    "soil30After": 100.0
   },
@@ -413,7 +413,7 @@
    "mandal": "Beluguppa",
    "boundaryIndex": 555,
    "rainBeforeMm": 272.1,
-   "rainAfterMm": 280.7,
+   "rainAfterMm": 280.8,
    "soil30Before": 17.7,
    "soil30After": 21.1
   },
@@ -453,7 +453,7 @@
    "mandal": "D HIRCHAL",
    "boundaryIndex": null,
    "rainBeforeMm": 117.5,
-   "rainAfterMm": 140.6,
+   "rainAfterMm": 140.7,
    "soil30Before": 9.4,
    "soil30After": 36.8
   },
@@ -493,7 +493,7 @@
    "mandal": "Guntakal",
    "boundaryIndex": 546,
    "rainBeforeMm": 241.4,
-   "rainAfterMm": 271.2,
+   "rainAfterMm": 271.4,
    "soil30Before": 20.2,
    "soil30After": 34.9
   },
@@ -533,7 +533,7 @@
    "mandal": "Kudair",
    "boundaryIndex": 560,
    "rainBeforeMm": 231.9,
-   "rainAfterMm": 234.4,
+   "rainAfterMm": 234.5,
    "soil30Before": 8.0,
    "soil30After": 10.0
   },
@@ -603,7 +603,7 @@
    "mandal": "Raptadu",
    "boundaryIndex": 568,
    "rainBeforeMm": 178.3,
-   "rainAfterMm": 181.4,
+   "rainAfterMm": 181.5,
    "soil30Before": 5.9,
    "soil30After": 4.4
   },
@@ -693,7 +693,7 @@
    "mandal": "Yellanur",
    "boundaryIndex": 564,
    "rainBeforeMm": 238.8,
-   "rainAfterMm": 277.5,
+   "rainAfterMm": 277.8,
    "soil30Before": 26.9,
    "soil30After": 63.8
   },
@@ -733,7 +733,7 @@
    "mandal": "Galiveedu",
    "boundaryIndex": 472,
    "rainBeforeMm": 225.4,
-   "rainAfterMm": 281.5,
+   "rainAfterMm": 281.8,
    "soil30Before": 46.3,
    "soil30After": 81.6
   },
@@ -843,7 +843,7 @@
    "mandal": "Peddamandyam",
    "boundaryIndex": 606,
    "rainBeforeMm": 187.2,
-   "rainAfterMm": 221.7,
+   "rainAfterMm": 222.4,
    "soil30Before": 47.0,
    "soil30After": 75.0
   },
@@ -913,7 +913,7 @@
    "mandal": "Sodam",
    "boundaryIndex": 631,
    "rainBeforeMm": 285.3,
-   "rainAfterMm": 313.4,
+   "rainAfterMm": 313.7,
    "soil30Before": 92.1,
    "soil30After": 94.9
   },
@@ -953,7 +953,7 @@
    "mandal": "Amruthalur",
    "boundaryIndex": 323,
    "rainBeforeMm": 414.2,
-   "rainAfterMm": 463.9,
+   "rainAfterMm": 527.2,
    "soil30Before": 44.1,
    "soil30After": 100.0
   },
@@ -963,7 +963,7 @@
    "mandal": "BAPATLA(M)",
    "boundaryIndex": 330,
    "rainBeforeMm": 296.3,
-   "rainAfterMm": 326.3,
+   "rainAfterMm": 368.9,
    "soil30Before": 85.8,
    "soil30After": 99.1
   },
@@ -973,7 +973,7 @@
    "mandal": "Bhattiprolu",
    "boundaryIndex": 326,
    "rainBeforeMm": 475.8,
-   "rainAfterMm": 537.4,
+   "rainAfterMm": 596.3,
    "soil30Before": 43.1,
    "soil30After": 100.0
   },
@@ -983,7 +983,7 @@
    "mandal": "Cherukupalle",
    "boundaryIndex": 327,
    "rainBeforeMm": 443.7,
-   "rainAfterMm": 491.1,
+   "rainAfterMm": 553.3,
    "soil30Before": 58.2,
    "soil30After": 100.0
   },
@@ -993,7 +993,7 @@
    "mandal": "Chinaganjam",
    "boundaryIndex": 362,
    "rainBeforeMm": 339.0,
-   "rainAfterMm": 342.9,
+   "rainAfterMm": 347.2,
    "soil30Before": 39.7,
    "soil30After": 56.0
   },
@@ -1003,7 +1003,7 @@
    "mandal": "Chirala",
    "boundaryIndex": 360,
    "rainBeforeMm": 260.8,
-   "rainAfterMm": 281.9,
+   "rainAfterMm": 296.8,
    "soil30Before": 91.1,
    "soil30After": 97.5
   },
@@ -1013,7 +1013,7 @@
    "mandal": "Inkollu",
    "boundaryIndex": 347,
    "rainBeforeMm": 277.0,
-   "rainAfterMm": 282.1,
+   "rainAfterMm": 287.9,
    "soil30Before": 9.8,
    "soil30After": 66.9
   },
@@ -1023,7 +1023,7 @@
    "mandal": "Karamchedu",
    "boundaryIndex": 346,
    "rainBeforeMm": 218.7,
-   "rainAfterMm": 232.6,
+   "rainAfterMm": 248.8,
    "soil30Before": 60.8,
    "soil30After": 78.9
   },
@@ -1033,7 +1033,7 @@
    "mandal": "Karlapalem",
    "boundaryIndex": 329,
    "rainBeforeMm": 322.1,
-   "rainAfterMm": 397.0,
+   "rainAfterMm": 436.5,
    "soil30Before": 80.2,
    "soil30After": 99.4
   },
@@ -1043,7 +1043,7 @@
    "mandal": "Kollur",
    "boundaryIndex": 325,
    "rainBeforeMm": 603.7,
-   "rainAfterMm": 647.1,
+   "rainAfterMm": 710.4,
    "soil30Before": 60.6,
    "soil30After": 100.0
   },
@@ -1053,7 +1053,7 @@
    "mandal": "Martur",
    "boundaryIndex": 343,
    "rainBeforeMm": 253.5,
-   "rainAfterMm": 255.4,
+   "rainAfterMm": 261.6,
    "soil30Before": 41.4,
    "soil30After": 48.6
   },
@@ -1063,7 +1063,7 @@
    "mandal": "Nagaram",
    "boundaryIndex": 332,
    "rainBeforeMm": 358.4,
-   "rainAfterMm": 394.7,
+   "rainAfterMm": 461.8,
    "soil30Before": 47.1,
    "soil30After": 100.0
   },
@@ -1073,7 +1073,7 @@
    "mandal": "Nizampatnam",
    "boundaryIndex": 331,
    "rainBeforeMm": 475.7,
-   "rainAfterMm": 528.9,
+   "rainAfterMm": 579.4,
    "soil30Before": 83.5,
    "soil30After": 100.0
   },
@@ -1083,7 +1083,7 @@
    "mandal": "Parchur",
    "boundaryIndex": 345,
    "rainBeforeMm": 328.9,
-   "rainAfterMm": 332.5,
+   "rainAfterMm": 353.1,
    "soil30Before": 76.1,
    "soil30After": 90.8
   },
@@ -1093,7 +1093,7 @@
    "mandal": "Pittalavanipalem",
    "boundaryIndex": 328,
    "rainBeforeMm": 441.4,
-   "rainAfterMm": 488.3,
+   "rainAfterMm": 521.9,
    "soil30Before": 61.2,
    "soil30After": 100.0
   },
@@ -1103,7 +1103,7 @@
    "mandal": "Repalle",
    "boundaryIndex": 333,
    "rainBeforeMm": 436.4,
-   "rainAfterMm": 501.1,
+   "rainAfterMm": 574.9,
    "soil30Before": 61.3,
    "soil30After": 100.0
   },
@@ -1113,7 +1113,7 @@
    "mandal": "Tsundur",
    "boundaryIndex": 322,
    "rainBeforeMm": 486.7,
-   "rainAfterMm": 563.1,
+   "rainAfterMm": 623.1,
    "soil30Before": 48.4,
    "soil30After": 100.0
   },
@@ -1123,7 +1123,7 @@
    "mandal": "Vemuru",
    "boundaryIndex": 324,
    "rainBeforeMm": 457.8,
-   "rainAfterMm": 564.2,
+   "rainAfterMm": 633.2,
    "soil30Before": 32.6,
    "soil30After": 100.0
   },
@@ -1133,7 +1133,7 @@
    "mandal": "Vetapalem",
    "boundaryIndex": 361,
    "rainBeforeMm": 246.6,
-   "rainAfterMm": 255.2,
+   "rainAfterMm": 270.2,
    "soil30Before": 73.9,
    "soil30After": 85.0
   },
@@ -1143,7 +1143,7 @@
    "mandal": "Yeddanapudi",
    "boundaryIndex": 344,
    "rainBeforeMm": 255.2,
-   "rainAfterMm": 259.7,
+   "rainAfterMm": 272.6,
    "soil30Before": 62.5,
    "soil30After": 68.2
   },
@@ -1183,7 +1183,7 @@
    "mandal": "Chittoor_Urban",
    "boundaryIndex": 658,
    "rainBeforeMm": 498.2,
-   "rainAfterMm": 523.3,
+   "rainAfterMm": 523.4,
    "soil30Before": 42.2,
    "soil30After": 93.7
   },
@@ -1293,7 +1293,7 @@
    "mandal": "Palamaner",
    "boundaryIndex": 659,
    "rainBeforeMm": 308.5,
-   "rainAfterMm": 332.8,
+   "rainAfterMm": 332.9,
    "soil30Before": 79.1,
    "soil30After": 77.7
   },
@@ -1433,7 +1433,7 @@
    "mandal": "ANAPARTHI",
    "boundaryIndex": 152,
    "rainBeforeMm": 628.1,
-   "rainAfterMm": 678.9,
+   "rainAfterMm": 701.3,
    "soil30Before": 63.8,
    "soil30After": 98.8
   },
@@ -1443,7 +1443,7 @@
    "mandal": "Biccavolu",
    "boundaryIndex": 151,
    "rainBeforeMm": 498.9,
-   "rainAfterMm": 556.9,
+   "rainAfterMm": 565.2,
    "soil30Before": 48.2,
    "soil30After": 95.2
   },
@@ -1453,7 +1453,7 @@
    "mandal": "Chagallu",
    "boundaryIndex": 196,
    "rainBeforeMm": 538.5,
-   "rainAfterMm": 568.9,
+   "rainAfterMm": 649.7,
    "soil30Before": 26.2,
    "soil30After": 100.0
   },
@@ -1463,7 +1463,7 @@
    "mandal": "Devarapalle",
    "boundaryIndex": null,
    "rainBeforeMm": 512.2,
-   "rainAfterMm": 540.4,
+   "rainAfterMm": 613.7,
    "soil30Before": 47.0,
    "soil30After": 100.0
   },
@@ -1473,7 +1473,7 @@
    "mandal": "Gokavaram",
    "boundaryIndex": 132,
    "rainBeforeMm": 585.4,
-   "rainAfterMm": 645.7,
+   "rainAfterMm": 753.5,
    "soil30Before": 66.6,
    "soil30After": 100.0
   },
@@ -1483,7 +1483,7 @@
    "mandal": "Gopalapuram",
    "boundaryIndex": 188,
    "rainBeforeMm": 683.1,
-   "rainAfterMm": 719.1,
+   "rainAfterMm": 825.9,
    "soil30Before": 45.9,
    "soil30After": 100.0
   },
@@ -1493,7 +1493,7 @@
    "mandal": "Kadiam",
    "boundaryIndex": 153,
    "rainBeforeMm": 618.2,
-   "rainAfterMm": 659.4,
+   "rainAfterMm": 762.3,
    "soil30Before": 47.0,
    "soil30After": 100.0
   },
@@ -1503,7 +1503,7 @@
    "mandal": "Kapileswarapuram",
    "boundaryIndex": 163,
    "rainBeforeMm": 635.2,
-   "rainAfterMm": 681.4,
+   "rainAfterMm": 713.8,
    "soil30Before": 53.7,
    "soil30After": 100.0
   },
@@ -1513,7 +1513,7 @@
    "mandal": "Korukonda",
    "boundaryIndex": 140,
    "rainBeforeMm": 616.3,
-   "rainAfterMm": 644.0,
+   "rainAfterMm": 767.1,
    "soil30Before": 62.7,
    "soil30After": 100.0
   },
@@ -1523,7 +1523,7 @@
    "mandal": "Kovvur",
    "boundaryIndex": 195,
    "rainBeforeMm": 348.5,
-   "rainAfterMm": 380.0,
+   "rainAfterMm": 471.9,
    "soil30Before": 65.4,
    "soil30After": 100.0
   },
@@ -1533,7 +1533,7 @@
    "mandal": "Mandapeta",
    "boundaryIndex": 155,
    "rainBeforeMm": 375.3,
-   "rainAfterMm": 453.4,
+   "rainAfterMm": 475.2,
    "soil30Before": 53.5,
    "soil30After": 99.9
   },
@@ -1543,7 +1543,7 @@
    "mandal": "Nallajerla",
    "boundaryIndex": 193,
    "rainBeforeMm": 495.1,
-   "rainAfterMm": 523.8,
+   "rainAfterMm": 639.1,
    "soil30Before": 41.4,
    "soil30After": 100.0
   },
@@ -1553,7 +1553,7 @@
    "mandal": "Nidadavole",
    "boundaryIndex": 197,
    "rainBeforeMm": 656.8,
-   "rainAfterMm": 705.3,
+   "rainAfterMm": 779.7,
    "soil30Before": 37.1,
    "soil30After": 100.0
   },
@@ -1563,7 +1563,7 @@
    "mandal": "Peravali",
    "boundaryIndex": 208,
    "rainBeforeMm": 576.9,
-   "rainAfterMm": 619.6,
+   "rainAfterMm": 701.0,
    "soil30Before": 52.6,
    "soil30After": 100.0
   },
@@ -1573,7 +1573,7 @@
    "mandal": "Rajahmundry (Rural)",
    "boundaryIndex": 142,
    "rainBeforeMm": 733.8,
-   "rainAfterMm": 781.0,
+   "rainAfterMm": 869.1,
    "soil30Before": 72.0,
    "soil30After": 100.0
   },
@@ -1583,7 +1583,7 @@
    "mandal": "Rajahmundry (Urban)",
    "boundaryIndex": 141,
    "rainBeforeMm": 703.2,
-   "rainAfterMm": 739.2,
+   "rainAfterMm": 828.7,
    "soil30Before": 89.0,
    "soil30After": 100.0
   },
@@ -1593,7 +1593,7 @@
    "mandal": "Rajanagaram",
    "boundaryIndex": 143,
    "rainBeforeMm": 631.9,
-   "rainAfterMm": 663.6,
+   "rainAfterMm": 730.8,
    "soil30Before": 55.1,
    "soil30After": 100.0
   },
@@ -1603,7 +1603,7 @@
    "mandal": "Rangampeta",
    "boundaryIndex": 144,
    "rainBeforeMm": 677.2,
-   "rainAfterMm": 755.1,
+   "rainAfterMm": 813.2,
    "soil30Before": 51.9,
    "soil30After": 100.0
   },
@@ -1613,7 +1613,7 @@
    "mandal": "Rayavaram",
    "boundaryIndex": 156,
    "rainBeforeMm": 535.3,
-   "rainAfterMm": 566.8,
+   "rainAfterMm": 576.3,
    "soil30Before": 48.8,
    "soil30After": 98.7
   },
@@ -1623,7 +1623,7 @@
    "mandal": "Seethanagaram",
    "boundaryIndex": null,
    "rainBeforeMm": 677.1,
-   "rainAfterMm": 718.8,
+   "rainAfterMm": 805.0,
    "soil30Before": 96.4,
    "soil30After": 100.0
   },
@@ -1633,7 +1633,7 @@
    "mandal": "Tallapudi",
    "boundaryIndex": 187,
    "rainBeforeMm": 630.0,
-   "rainAfterMm": 684.9,
+   "rainAfterMm": 752.7,
    "soil30Before": 82.0,
    "soil30After": 100.0
   },
@@ -1643,7 +1643,7 @@
    "mandal": "Undrajavaram",
    "boundaryIndex": 207,
    "rainBeforeMm": 526.3,
-   "rainAfterMm": 573.4,
+   "rainAfterMm": 665.6,
    "soil30Before": 39.4,
    "soil30After": 100.0
   },
@@ -1653,7 +1653,7 @@
    "mandal": "Agiripalle",
    "boundaryIndex": 242,
    "rainBeforeMm": 612.1,
-   "rainAfterMm": 621.8,
+   "rainAfterMm": 655.5,
    "soil30Before": 60.5,
    "soil30After": 92.7
   },
@@ -1663,7 +1663,7 @@
    "mandal": "Bhimadole",
    "boundaryIndex": 200,
    "rainBeforeMm": 406.9,
-   "rainAfterMm": 419.8,
+   "rainAfterMm": 470.1,
    "soil30Before": 9.8,
    "soil30After": 98.8
   },
@@ -1673,7 +1673,7 @@
    "mandal": "Buttayagudem",
    "boundaryIndex": 185,
    "rainBeforeMm": 687.1,
-   "rainAfterMm": 705.3,
+   "rainAfterMm": 747.7,
    "soil30Before": 56.6,
    "soil30After": 97.9
   },
@@ -1683,7 +1683,7 @@
    "mandal": "Chatrai",
    "boundaryIndex": 238,
    "rainBeforeMm": 353.1,
-   "rainAfterMm": 362.9,
+   "rainAfterMm": 395.9,
    "soil30Before": 37.4,
    "soil30After": 75.7
   },
@@ -1693,7 +1693,7 @@
    "mandal": "Chintalapudi",
    "boundaryIndex": 181,
    "rainBeforeMm": 583.8,
-   "rainAfterMm": 590.9,
+   "rainAfterMm": 619.1,
    "soil30Before": 46.9,
    "soil30After": 85.0
   },
@@ -1703,7 +1703,7 @@
    "mandal": "Denduluru",
    "boundaryIndex": 204,
    "rainBeforeMm": 539.7,
-   "rainAfterMm": 556.5,
+   "rainAfterMm": 625.5,
    "soil30Before": 34.9,
    "soil30After": 92.8
   },
@@ -1713,7 +1713,7 @@
    "mandal": "Dwaraka Tirumala",
    "boundaryIndex": 192,
    "rainBeforeMm": 363.5,
-   "rainAfterMm": 381.8,
+   "rainAfterMm": 461.8,
    "soil30Before": 57.9,
    "soil30After": 100.0
   },
@@ -1723,7 +1723,7 @@
    "mandal": "Eluru_Rural",
    "boundaryIndex": 203,
    "rainBeforeMm": 472.2,
-   "rainAfterMm": 485.7,
+   "rainAfterMm": 552.4,
    "soil30Before": 61.7,
    "soil30After": 98.6
   },
@@ -1733,7 +1733,7 @@
    "mandal": "Eluru_Urban",
    "boundaryIndex": 203,
    "rainBeforeMm": 408.6,
-   "rainAfterMm": 419.5,
+   "rainAfterMm": 482.3,
    "soil30Before": 40.2,
    "soil30After": 95.8
   },
@@ -1743,7 +1743,7 @@
    "mandal": "JEELUGUMILLI",
    "boundaryIndex": 184,
    "rainBeforeMm": 561.5,
-   "rainAfterMm": 575.2,
+   "rainAfterMm": 636.6,
    "soil30Before": 63.1,
    "soil30After": 100.0
   },
@@ -1753,7 +1753,7 @@
    "mandal": "Jangareddigudem",
    "boundaryIndex": 190,
    "rainBeforeMm": 575.3,
-   "rainAfterMm": 595.4,
+   "rainAfterMm": 673.1,
    "soil30Before": 79.9,
    "soil30After": 100.0
   },
@@ -1763,7 +1763,7 @@
    "mandal": "Kaikalur",
    "boundaryIndex": 253,
    "rainBeforeMm": 659.7,
-   "rainAfterMm": 683.4,
+   "rainAfterMm": 763.4,
    "soil30Before": 73.9,
    "soil30After": 100.0
   },
@@ -1773,7 +1773,7 @@
    "mandal": "Kalidindi",
    "boundaryIndex": 254,
    "rainBeforeMm": 690.1,
-   "rainAfterMm": 726.8,
+   "rainAfterMm": 787.8,
    "soil30Before": 80.4,
    "soil30After": 100.0
   },
@@ -1783,7 +1783,7 @@
    "mandal": "Kamavarapukota",
    "boundaryIndex": 191,
    "rainBeforeMm": 528.4,
-   "rainAfterMm": 542.5,
+   "rainAfterMm": 612.9,
    "soil30Before": 49.2,
    "soil30After": 99.1
   },
@@ -1793,7 +1793,7 @@
    "mandal": "Koyyalagudem",
    "boundaryIndex": 189,
    "rainBeforeMm": 757.4,
-   "rainAfterMm": 790.9,
+   "rainAfterMm": 851.6,
    "soil30Before": 58.6,
    "soil30After": 100.0
   },
@@ -1803,7 +1803,7 @@
    "mandal": "Kukunoor",
    "boundaryIndex": 180,
    "rainBeforeMm": 800.5,
-   "rainAfterMm": 814.8,
+   "rainAfterMm": 863.9,
    "soil30Before": 71.9,
    "soil30After": 98.1
   },
@@ -1813,7 +1813,7 @@
    "mandal": "Lingapalem",
    "boundaryIndex": 182,
    "rainBeforeMm": 457.3,
-   "rainAfterMm": 467.6,
+   "rainAfterMm": 506.8,
    "soil30Before": 42.7,
    "soil30After": 94.8
   },
@@ -1823,7 +1823,7 @@
    "mandal": "MUDINAPALLE",
    "boundaryIndex": null,
    "rainBeforeMm": 815.6,
-   "rainAfterMm": 842.6,
+   "rainAfterMm": 901.1,
    "soil30Before": 62.0,
    "soil30After": 99.6
   },
@@ -1833,7 +1833,7 @@
    "mandal": "Mandavalli",
    "boundaryIndex": 252,
    "rainBeforeMm": 717.2,
-   "rainAfterMm": 768.5,
+   "rainAfterMm": 844.0,
    "soil30Before": 68.7,
    "soil30After": 100.0
   },
@@ -1843,7 +1843,7 @@
    "mandal": "Musunuru",
    "boundaryIndex": 239,
    "rainBeforeMm": 600.3,
-   "rainAfterMm": 614.2,
+   "rainAfterMm": 655.9,
    "soil30Before": 56.1,
    "soil30After": 95.2
   },
@@ -1853,7 +1853,7 @@
    "mandal": "Nidamarru",
    "boundaryIndex": 205,
    "rainBeforeMm": 495.3,
-   "rainAfterMm": 520.4,
+   "rainAfterMm": 597.7,
    "soil30Before": 33.2,
    "soil30After": 100.0
   },
@@ -1863,7 +1863,7 @@
    "mandal": "Nuzvid",
    "boundaryIndex": 240,
    "rainBeforeMm": 483.1,
-   "rainAfterMm": 491.6,
+   "rainAfterMm": 552.4,
    "soil30Before": 59.5,
    "soil30After": 97.9
   },
@@ -1873,7 +1873,7 @@
    "mandal": "PADAVEGI",
    "boundaryIndex": null,
    "rainBeforeMm": 485.1,
-   "rainAfterMm": 503.3,
+   "rainAfterMm": 543.3,
    "soil30Before": 55.4,
    "soil30After": 96.5
   },
@@ -1883,7 +1883,7 @@
    "mandal": "POLAVARAM (M)",
    "boundaryIndex": 186,
    "rainBeforeMm": 667.7,
-   "rainAfterMm": 699.5,
+   "rainAfterMm": 741.1,
    "soil30Before": 62.6,
    "soil30After": 100.0
   },
@@ -1893,7 +1893,7 @@
    "mandal": "Pedapadu",
    "boundaryIndex": 202,
    "rainBeforeMm": 748.3,
-   "rainAfterMm": 761.9,
+   "rainAfterMm": 800.9,
    "soil30Before": 62.2,
    "soil30After": 91.2
   },
@@ -1903,7 +1903,7 @@
    "mandal": "T NARASAPURAM",
    "boundaryIndex": 183,
    "rainBeforeMm": 446.9,
-   "rainAfterMm": 464.1,
+   "rainAfterMm": 520.8,
    "soil30Before": 66.2,
    "soil30After": 99.7
   },
@@ -1913,7 +1913,7 @@
    "mandal": "Ungutur",
    "boundaryIndex": null,
    "rainBeforeMm": 600.9,
-   "rainAfterMm": 621.1,
+   "rainAfterMm": 730.8,
    "soil30Before": 34.0,
    "soil30After": 100.0
   },
@@ -1923,7 +1923,7 @@
    "mandal": "Velairpadu",
    "boundaryIndex": 179,
    "rainBeforeMm": 1013.4,
-   "rainAfterMm": 1025.0,
+   "rainAfterMm": 1093.4,
    "soil30Before": 38.5,
    "soil30After": 83.4
   },
@@ -1933,7 +1933,7 @@
    "mandal": "CHEBROLE",
    "boundaryIndex": null,
    "rainBeforeMm": 681.2,
-   "rainAfterMm": 743.5,
+   "rainAfterMm": 817.6,
    "soil30Before": 71.1,
    "soil30After": 100.0
   },
@@ -1943,7 +1943,7 @@
    "mandal": "Duggirala",
    "boundaryIndex": 313,
    "rainBeforeMm": 698.1,
-   "rainAfterMm": 770.7,
+   "rainAfterMm": 824.5,
    "soil30Before": 61.0,
    "soil30After": 100.0
   },
@@ -1953,7 +1953,7 @@
    "mandal": "Guntur East",
    "boundaryIndex": 311,
    "rainBeforeMm": 585.8,
-   "rainAfterMm": 630.9,
+   "rainAfterMm": 675.2,
    "soil30Before": 74.3,
    "soil30After": 98.7
   },
@@ -1963,7 +1963,7 @@
    "mandal": "Guntur West",
    "boundaryIndex": 311,
    "rainBeforeMm": 542.8,
-   "rainAfterMm": 569.9,
+   "rainAfterMm": 619.1,
    "soil30Before": 86.8,
    "soil30After": 100.0
   },
@@ -1973,7 +1973,7 @@
    "mandal": "Kakumanu",
    "boundaryIndex": 320,
    "rainBeforeMm": 384.3,
-   "rainAfterMm": 392.1,
+   "rainAfterMm": 426.9,
    "soil30Before": 76.6,
    "soil30After": 95.9
   },
@@ -1983,7 +1983,7 @@
    "mandal": "Kollipara",
    "boundaryIndex": 314,
    "rainBeforeMm": 706.5,
-   "rainAfterMm": 766.6,
+   "rainAfterMm": 827.5,
    "soil30Before": 58.1,
    "soil30After": 100.0
   },
@@ -1993,7 +1993,7 @@
    "mandal": "Mangalagiri",
    "boundaryIndex": 292,
    "rainBeforeMm": 599.5,
-   "rainAfterMm": 671.9,
+   "rainAfterMm": 729.2,
    "soil30Before": 38.0,
    "soil30After": 100.0
   },
@@ -2003,7 +2003,7 @@
    "mandal": "Medikonduru",
    "boundaryIndex": 310,
    "rainBeforeMm": 395.2,
-   "rainAfterMm": 407.4,
+   "rainAfterMm": 435.3,
    "soil30Before": 55.8,
    "soil30After": 96.3
   },
@@ -2013,7 +2013,7 @@
    "mandal": "Pedakakani",
    "boundaryIndex": 312,
    "rainBeforeMm": 771.7,
-   "rainAfterMm": 849.0,
+   "rainAfterMm": 908.8,
    "soil30Before": 60.7,
    "soil30After": 100.0
   },
@@ -2023,7 +2023,7 @@
    "mandal": "Pedanandipadu",
    "boundaryIndex": 319,
    "rainBeforeMm": 295.8,
-   "rainAfterMm": 311.5,
+   "rainAfterMm": 340.7,
    "soil30Before": 53.6,
    "soil30After": 86.1
   },
@@ -2033,7 +2033,7 @@
    "mandal": "Phirangipuram",
    "boundaryIndex": 309,
    "rainBeforeMm": 418.7,
-   "rainAfterMm": 424.4,
+   "rainAfterMm": 450.6,
    "soil30Before": 39.0,
    "soil30After": 69.6
   },
@@ -2043,7 +2043,7 @@
    "mandal": "Ponnur",
    "boundaryIndex": 321,
    "rainBeforeMm": 365.2,
-   "rainAfterMm": 383.1,
+   "rainAfterMm": 418.2,
    "soil30Before": 44.1,
    "soil30After": 93.9
   },
@@ -2053,7 +2053,7 @@
    "mandal": "Prathipadu",
    "boundaryIndex": null,
    "rainBeforeMm": 332.3,
-   "rainAfterMm": 342.4,
+   "rainAfterMm": 369.8,
    "soil30Before": 55.0,
    "soil30After": 80.3
   },
@@ -2063,7 +2063,7 @@
    "mandal": "THADEPALLE",
    "boundaryIndex": 291,
    "rainBeforeMm": 639.5,
-   "rainAfterMm": 706.6,
+   "rainAfterMm": 770.2,
    "soil30Before": 36.5,
    "soil30After": 100.0
   },
@@ -2073,7 +2073,7 @@
    "mandal": "Tadikonda",
    "boundaryIndex": 293,
    "rainBeforeMm": 458.9,
-   "rainAfterMm": 496.8,
+   "rainAfterMm": 556.4,
    "soil30Before": 68.4,
    "soil30After": 99.2
   },
@@ -2083,7 +2083,7 @@
    "mandal": "Tenali",
    "boundaryIndex": 315,
    "rainBeforeMm": 637.5,
-   "rainAfterMm": 698.9,
+   "rainAfterMm": 767.5,
    "soil30Before": 56.5,
    "soil30After": 100.0
   },
@@ -2093,7 +2093,7 @@
    "mandal": "Thullur",
    "boundaryIndex": 290,
    "rainBeforeMm": 394.8,
-   "rainAfterMm": 410.1,
+   "rainAfterMm": 459.5,
    "soil30Before": 50.2,
    "soil30After": 95.3
   },
@@ -2103,7 +2103,7 @@
    "mandal": "Vatticherukuru",
    "boundaryIndex": 317,
    "rainBeforeMm": 342.0,
-   "rainAfterMm": 351.8,
+   "rainAfterMm": 397.3,
    "soil30Before": 58.6,
    "soil30After": 94.3
   },
@@ -2113,7 +2113,7 @@
    "mandal": "Gandepalle",
    "boundaryIndex": 139,
    "rainBeforeMm": 594.3,
-   "rainAfterMm": 687.6,
+   "rainAfterMm": 751.7,
    "soil30Before": 56.2,
    "soil30After": 100.0
   },
@@ -2123,7 +2123,7 @@
    "mandal": "Gollaprolu",
    "boundaryIndex": 137,
    "rainBeforeMm": 605.6,
-   "rainAfterMm": 745.1,
+   "rainAfterMm": 834.0,
    "soil30Before": 70.5,
    "soil30After": 100.0
   },
@@ -2133,7 +2133,7 @@
    "mandal": "Jaggampeta",
    "boundaryIndex": 133,
    "rainBeforeMm": 747.4,
-   "rainAfterMm": 860.2,
+   "rainAfterMm": 924.5,
    "soil30Before": 53.3,
    "soil30After": 100.0
   },
@@ -2143,7 +2143,7 @@
    "mandal": "Kajuluru",
    "boundaryIndex": 158,
    "rainBeforeMm": 659.7,
-   "rainAfterMm": 757.4,
+   "rainAfterMm": 771.2,
    "soil30Before": 46.5,
    "soil30After": 100.0
   },
@@ -2153,7 +2153,7 @@
    "mandal": "Kakinada (Rural)",
    "boundaryIndex": 148,
    "rainBeforeMm": 631.2,
-   "rainAfterMm": 723.9,
+   "rainAfterMm": 759.6,
    "soil30Before": 9.4,
    "soil30After": 100.0
   },
@@ -2163,7 +2163,7 @@
    "mandal": "Kakinada (Urban)",
    "boundaryIndex": 149,
    "rainBeforeMm": 522.2,
-   "rainAfterMm": 603.8,
+   "rainAfterMm": 632.9,
    "soil30Before": 95.3,
    "soil30After": 100.0
   },
@@ -2173,7 +2173,7 @@
    "mandal": "Karapa",
    "boundaryIndex": 157,
    "rainBeforeMm": 634.5,
-   "rainAfterMm": 705.0,
+   "rainAfterMm": 711.9,
    "soil30Before": 13.8,
    "soil30After": 100.0
   },
@@ -2183,7 +2183,7 @@
    "mandal": "Kirlampudi",
    "boundaryIndex": 134,
    "rainBeforeMm": 574.6,
-   "rainAfterMm": 681.9,
+   "rainAfterMm": 742.1,
    "soil30Before": 63.8,
    "soil30After": 100.0
   },
@@ -2193,7 +2193,7 @@
    "mandal": "Kotananduru",
    "boundaryIndex": 124,
    "rainBeforeMm": 554.8,
-   "rainAfterMm": 650.8,
+   "rainAfterMm": 732.6,
    "soil30Before": 89.9,
    "soil30After": 100.0
   },
@@ -2203,7 +2203,7 @@
    "mandal": "PRATHIPADU (EAST GODAVARI)",
    "boundaryIndex": null,
    "rainBeforeMm": 512.6,
-   "rainAfterMm": 600.8,
+   "rainAfterMm": 662.3,
    "soil30Before": 76.3,
    "soil30After": 100.0
   },
@@ -2213,7 +2213,7 @@
    "mandal": "Pedapudi",
    "boundaryIndex": 150,
    "rainBeforeMm": 495.3,
-   "rainAfterMm": 571.8,
+   "rainAfterMm": 578.0,
    "soil30Before": 35.2,
    "soil30After": 98.7
   },
@@ -2223,7 +2223,7 @@
    "mandal": "Peddapuram",
    "boundaryIndex": 138,
    "rainBeforeMm": 740.2,
-   "rainAfterMm": 836.8,
+   "rainAfterMm": 870.9,
    "soil30Before": 69.1,
    "soil30After": 100.0
   },
@@ -2233,7 +2233,7 @@
    "mandal": "Pithapuram",
    "boundaryIndex": 146,
    "rainBeforeMm": 633.8,
-   "rainAfterMm": 720.6,
+   "rainAfterMm": 813.4,
    "soil30Before": 60.8,
    "soil30After": 100.0
   },
@@ -2243,7 +2243,7 @@
    "mandal": "ROUTHULAPUDI",
    "boundaryIndex": 126,
    "rainBeforeMm": 671.9,
-   "rainAfterMm": 774.0,
+   "rainAfterMm": 827.3,
    "soil30Before": 92.0,
    "soil30After": 100.0
   },
@@ -2253,7 +2253,7 @@
    "mandal": "Samalkota",
    "boundaryIndex": 145,
    "rainBeforeMm": 668.8,
-   "rainAfterMm": 747.5,
+   "rainAfterMm": 779.0,
    "soil30Before": 49.8,
    "soil30After": 99.8
   },
@@ -2263,7 +2263,7 @@
    "mandal": "Sankhavaram",
    "boundaryIndex": 127,
    "rainBeforeMm": 663.3,
-   "rainAfterMm": 766.1,
+   "rainAfterMm": 813.6,
    "soil30Before": 88.6,
    "soil30After": 100.0
   },
@@ -2273,7 +2273,7 @@
    "mandal": "Thallarevu",
    "boundaryIndex": 165,
    "rainBeforeMm": 776.9,
-   "rainAfterMm": 875.1,
+   "rainAfterMm": 888.2,
    "soil30Before": 89.5,
    "soil30After": 100.0
   },
@@ -2283,7 +2283,7 @@
    "mandal": "Thondangi",
    "boundaryIndex": 136,
    "rainBeforeMm": 587.2,
-   "rainAfterMm": 687.2,
+   "rainAfterMm": 743.0,
    "soil30Before": 57.8,
    "soil30After": 100.0
   },
@@ -2293,7 +2293,7 @@
    "mandal": "Tuni",
    "boundaryIndex": 125,
    "rainBeforeMm": 652.4,
-   "rainAfterMm": 787.8,
+   "rainAfterMm": 861.1,
    "soil30Before": 80.6,
    "soil30After": 100.0
   },
@@ -2303,7 +2303,7 @@
    "mandal": "U.Kothapalle",
    "boundaryIndex": null,
    "rainBeforeMm": 575.7,
-   "rainAfterMm": 729.9,
+   "rainAfterMm": 804.9,
    "soil30Before": 74.7,
    "soil30After": 100.0
   },
@@ -2313,7 +2313,7 @@
    "mandal": "Yeleswaram",
    "boundaryIndex": 128,
    "rainBeforeMm": 422.2,
-   "rainAfterMm": 499.1,
+   "rainAfterMm": 570.9,
    "soil30Before": 59.8,
    "soil30After": 100.0
   },
@@ -2323,7 +2323,7 @@
    "mandal": "Ainavilli",
    "boundaryIndex": 168,
    "rainBeforeMm": 889.6,
-   "rainAfterMm": 969.2,
+   "rainAfterMm": 991.6,
    "soil30Before": 89.2,
    "soil30After": 100.0
   },
@@ -2333,7 +2333,7 @@
    "mandal": "Alamuru",
    "boundaryIndex": 160,
    "rainBeforeMm": 484.3,
-   "rainAfterMm": 544.5,
+   "rainAfterMm": 596.7,
    "soil30Before": 36.8,
    "soil30After": 100.0
   },
@@ -2343,7 +2343,7 @@
    "mandal": "Allavaram",
    "boundaryIndex": 175,
    "rainBeforeMm": 719.6,
-   "rainAfterMm": 810.0,
+   "rainAfterMm": 822.4,
    "soil30Before": 100.0,
    "soil30After": 100.0
   },
@@ -2353,7 +2353,7 @@
    "mandal": "Amalapuram",
    "boundaryIndex": 176,
    "rainBeforeMm": 913.9,
-   "rainAfterMm": 1007.2,
+   "rainAfterMm": 1022.0,
    "soil30Before": 97.6,
    "soil30After": 100.0
   },
@@ -2363,7 +2363,7 @@
    "mandal": "Ambajipeta",
    "boundaryIndex": 170,
    "rainBeforeMm": 615.1,
-   "rainAfterMm": 672.5,
+   "rainAfterMm": 695.9,
    "soil30Before": 80.7,
    "soil30After": 100.0
   },
@@ -2373,7 +2373,7 @@
    "mandal": "Atreyapuram",
    "boundaryIndex": 154,
    "rainBeforeMm": 603.7,
-   "rainAfterMm": 680.9,
+   "rainAfterMm": 741.4,
    "soil30Before": 85.3,
    "soil30After": 100.0
   },
@@ -2383,7 +2383,7 @@
    "mandal": "I POLAVARAM",
    "boundaryIndex": 166,
    "rainBeforeMm": 691.9,
-   "rainAfterMm": 816.9,
+   "rainAfterMm": 838.1,
    "soil30Before": 100.0,
    "soil30After": 100.0
   },
@@ -2393,7 +2393,7 @@
    "mandal": "Katrenikona",
    "boundaryIndex": 178,
    "rainBeforeMm": 1055.6,
-   "rainAfterMm": 1180.6,
+   "rainAfterMm": 1191.5,
    "soil30Before": 100.0,
    "soil30After": 100.0
   },
@@ -2403,7 +2403,7 @@
    "mandal": "Kothapeta",
    "boundaryIndex": 162,
    "rainBeforeMm": 629.5,
-   "rainAfterMm": 716.1,
+   "rainAfterMm": 751.5,
    "soil30Before": 62.9,
    "soil30After": 100.0
   },
@@ -2413,7 +2413,7 @@
    "mandal": "Kotipalli Gangavaram",
    "boundaryIndex": 164,
    "rainBeforeMm": 641.4,
-   "rainAfterMm": 706.9,
+   "rainAfterMm": 722.9,
    "soil30Before": 88.1,
    "soil30After": 100.0
   },
@@ -2423,7 +2423,7 @@
    "mandal": "Malikipuram",
    "boundaryIndex": 173,
    "rainBeforeMm": 740.7,
-   "rainAfterMm": 839.7,
+   "rainAfterMm": 857.7,
    "soil30Before": 96.1,
    "soil30After": 100.0
   },
@@ -2433,7 +2433,7 @@
    "mandal": "Mamidikuduru",
    "boundaryIndex": 171,
    "rainBeforeMm": 742.9,
-   "rainAfterMm": 821.2,
+   "rainAfterMm": 832.5,
    "soil30Before": 98.6,
    "soil30After": 100.0
   },
@@ -2443,7 +2443,7 @@
    "mandal": "Mummidivaram",
    "boundaryIndex": 167,
    "rainBeforeMm": 857.2,
-   "rainAfterMm": 955.1,
+   "rainAfterMm": 966.9,
    "soil30Before": 99.8,
    "soil30After": 100.0
   },
@@ -2453,7 +2453,7 @@
    "mandal": "P.Gannavaram",
    "boundaryIndex": 169,
    "rainBeforeMm": 617.8,
-   "rainAfterMm": 684.1,
+   "rainAfterMm": 696.3,
    "soil30Before": 82.8,
    "soil30After": 100.0
   },
@@ -2463,7 +2463,7 @@
    "mandal": "Ramachandrapuram",
    "boundaryIndex": null,
    "rainBeforeMm": 640.7,
-   "rainAfterMm": 706.9,
+   "rainAfterMm": 768.7,
    "soil30Before": 31.9,
    "soil30After": 100.0
   },
@@ -2473,7 +2473,7 @@
    "mandal": "Ravulapalem",
    "boundaryIndex": 161,
    "rainBeforeMm": 570.4,
-   "rainAfterMm": 625.0,
+   "rainAfterMm": 680.6,
    "soil30Before": 51.3,
    "soil30After": 100.0
   },
@@ -2483,7 +2483,7 @@
    "mandal": "Razole",
    "boundaryIndex": 172,
    "rainBeforeMm": 594.0,
-   "rainAfterMm": 711.8,
+   "rainAfterMm": 727.4,
    "soil30Before": 92.1,
    "soil30After": 100.0
   },
@@ -2493,7 +2493,7 @@
    "mandal": "Sakhinetipalle",
    "boundaryIndex": 174,
    "rainBeforeMm": 758.4,
-   "rainAfterMm": 874.1,
+   "rainAfterMm": 882.1,
    "soil30Before": 98.5,
    "soil30After": 100.0
   },
@@ -2503,7 +2503,7 @@
    "mandal": "Uppalaguptam",
    "boundaryIndex": 177,
    "rainBeforeMm": 981.7,
-   "rainAfterMm": 1141.0,
+   "rainAfterMm": 1174.0,
    "soil30Before": 100.0,
    "soil30After": 100.0
   },
@@ -2513,7 +2513,7 @@
    "mandal": "AVANIGADA",
    "boundaryIndex": 274,
    "rainBeforeMm": 468.3,
-   "rainAfterMm": 544.5,
+   "rainAfterMm": 615.7,
    "soil30Before": 28.9,
    "soil30After": 100.0
   },
@@ -2523,7 +2523,7 @@
    "mandal": "BAPULAPAD",
    "boundaryIndex": null,
    "rainBeforeMm": 599.0,
-   "rainAfterMm": 624.7,
+   "rainAfterMm": 657.0,
    "soil30Before": 68.5,
    "soil30After": 98.5
   },
@@ -2533,7 +2533,7 @@
    "mandal": "Bantumilli",
    "boundaryIndex": 256,
    "rainBeforeMm": 446.5,
-   "rainAfterMm": 509.5,
+   "rainAfterMm": 562.5,
    "soil30Before": 46.6,
    "soil30After": 100.0
   },
@@ -2543,7 +2543,7 @@
    "mandal": "Challapalle",
    "boundaryIndex": 272,
    "rainBeforeMm": 550.4,
-   "rainAfterMm": 621.8,
+   "rainAfterMm": 718.7,
    "soil30Before": 57.2,
    "soil30After": 100.0
   },
@@ -2553,7 +2553,7 @@
    "mandal": "GUDUR (KRISHNA)",
    "boundaryIndex": null,
    "rainBeforeMm": 631.3,
-   "rainAfterMm": 696.0,
+   "rainAfterMm": 824.5,
    "soil30Before": 27.7,
    "soil30After": 100.0
   },
@@ -2563,7 +2563,7 @@
    "mandal": "Gannavaram",
    "boundaryIndex": 249,
    "rainBeforeMm": 536.9,
-   "rainAfterMm": 561.2,
+   "rainAfterMm": 593.3,
    "soil30Before": 72.5,
    "soil30After": 98.9
   },
@@ -2573,7 +2573,7 @@
    "mandal": "Ghantasala",
    "boundaryIndex": 270,
    "rainBeforeMm": 580.8,
-   "rainAfterMm": 639.0,
+   "rainAfterMm": 722.0,
    "soil30Before": 52.6,
    "soil30After": 100.0
   },
@@ -2583,7 +2583,7 @@
    "mandal": "Gudivada",
    "boundaryIndex": 258,
    "rainBeforeMm": 734.4,
-   "rainAfterMm": 767.5,
+   "rainAfterMm": 815.9,
    "soil30Before": 26.5,
    "soil30After": 99.4
   },
@@ -2593,7 +2593,7 @@
    "mandal": "Gudlavalleru",
    "boundaryIndex": 266,
    "rainBeforeMm": 625.6,
-   "rainAfterMm": 671.0,
+   "rainAfterMm": 718.2,
    "soil30Before": 39.3,
    "soil30After": 100.0
   },
@@ -2603,7 +2603,7 @@
    "mandal": "Kankipadu",
    "boundaryIndex": 260,
    "rainBeforeMm": 706.5,
-   "rainAfterMm": 743.8,
+   "rainAfterMm": 788.7,
    "soil30Before": 60.1,
    "soil30After": 100.0
   },
@@ -2613,7 +2613,7 @@
    "mandal": "Koduru",
    "boundaryIndex": 276,
    "rainBeforeMm": 616.5,
-   "rainAfterMm": 755.6,
+   "rainAfterMm": 852.5,
    "soil30Before": 13.5,
    "soil30After": 100.0
   },
@@ -2623,7 +2623,7 @@
    "mandal": "Kruthivennu",
    "boundaryIndex": 255,
    "rainBeforeMm": 368.7,
-   "rainAfterMm": 442.8,
+   "rainAfterMm": 523.9,
    "soil30Before": 54.7,
    "soil30After": 100.0
   },
@@ -2633,7 +2633,7 @@
    "mandal": "Machilipatnam_North",
    "boundaryIndex": 271,
    "rainBeforeMm": 618.2,
-   "rainAfterMm": 725.0,
+   "rainAfterMm": 815.3,
    "soil30Before": 45.0,
    "soil30After": 100.0
   },
@@ -2643,7 +2643,7 @@
    "mandal": "Machilipatnam_South",
    "boundaryIndex": 271,
    "rainBeforeMm": 557.6,
-   "rainAfterMm": 685.7,
+   "rainAfterMm": 773.5,
    "soil30Before": 12.1,
    "soil30After": 100.0
   },
@@ -2653,7 +2653,7 @@
    "mandal": "Mopidevi",
    "boundaryIndex": 273,
    "rainBeforeMm": 441.2,
-   "rainAfterMm": 515.2,
+   "rainAfterMm": 581.0,
    "soil30Before": 46.2,
    "soil30After": 100.0
   },
@@ -2663,7 +2663,7 @@
    "mandal": "Movva",
    "boundaryIndex": 269,
    "rainBeforeMm": 384.3,
-   "rainAfterMm": 424.2,
+   "rainAfterMm": 516.0,
    "soil30Before": 24.2,
    "soil30After": 100.0
   },
@@ -2673,7 +2673,7 @@
    "mandal": "Nagayalanka",
    "boundaryIndex": 275,
    "rainBeforeMm": 527.7,
-   "rainAfterMm": 600.9,
+   "rainAfterMm": 685.5,
    "soil30Before": 57.1,
    "soil30After": 100.0
   },
@@ -2683,7 +2683,7 @@
    "mandal": "Nandivada",
    "boundaryIndex": 251,
    "rainBeforeMm": 685.3,
-   "rainAfterMm": 714.7,
+   "rainAfterMm": 758.9,
    "soil30Before": 36.3,
    "soil30After": 100.0
   },
@@ -2693,7 +2693,7 @@
    "mandal": "Pamarru",
    "boundaryIndex": 265,
    "rainBeforeMm": 383.0,
-   "rainAfterMm": 426.4,
+   "rainAfterMm": 516.5,
    "soil30Before": 22.5,
    "soil30After": 99.4
   },
@@ -2703,7 +2703,7 @@
    "mandal": "Pamidimukkala",
    "boundaryIndex": 263,
    "rainBeforeMm": 511.4,
-   "rainAfterMm": 541.1,
+   "rainAfterMm": 606.2,
    "soil30Before": 39.8,
    "soil30After": 100.0
   },
@@ -2713,7 +2713,7 @@
    "mandal": "Pedana",
    "boundaryIndex": 267,
    "rainBeforeMm": 539.7,
-   "rainAfterMm": 585.3,
+   "rainAfterMm": 681.2,
    "soil30Before": 45.3,
    "soil30After": 100.0
   },
@@ -2723,7 +2723,7 @@
    "mandal": "Pedaparupudi",
    "boundaryIndex": 259,
    "rainBeforeMm": 427.2,
-   "rainAfterMm": 458.5,
+   "rainAfterMm": 507.4,
    "soil30Before": 32.1,
    "soil30After": 99.7
   },
@@ -2733,7 +2733,7 @@
    "mandal": "Penamaluru",
    "boundaryIndex": 261,
    "rainBeforeMm": 615.7,
-   "rainAfterMm": 655.4,
+   "rainAfterMm": 697.0,
    "soil30Before": 63.1,
    "soil30After": 100.0
   },
@@ -2743,7 +2743,7 @@
    "mandal": "Thotlavalluru",
    "boundaryIndex": 262,
    "rainBeforeMm": 544.0,
-   "rainAfterMm": 601.0,
+   "rainAfterMm": 654.2,
    "soil30Before": 72.9,
    "soil30After": 100.0
   },
@@ -2753,7 +2753,7 @@
    "mandal": "Unguturu",
    "boundaryIndex": null,
    "rainBeforeMm": 642.0,
-   "rainAfterMm": 684.2,
+   "rainAfterMm": 728.5,
    "soil30Before": 59.6,
    "soil30After": 99.2
   },
@@ -2763,7 +2763,7 @@
    "mandal": "Vuyyuru",
    "boundaryIndex": 264,
    "rainBeforeMm": 519.6,
-   "rainAfterMm": 564.3,
+   "rainAfterMm": 634.1,
    "soil30Before": 54.3,
    "soil30After": 100.0
   },
@@ -2773,7 +2773,7 @@
    "mandal": "Adoni 1",
    "boundaryIndex": 508,
    "rainBeforeMm": 321.0,
-   "rainAfterMm": 321.9,
+   "rainAfterMm": 322.2,
    "soil30Before": 13.2,
    "soil30After": 12.1
   },
@@ -2793,7 +2793,7 @@
    "mandal": "Alur",
    "boundaryIndex": 511,
    "rainBeforeMm": 248.8,
-   "rainAfterMm": 258.1,
+   "rainAfterMm": 258.2,
    "soil30Before": 25.2,
    "soil30After": 35.8
   },
@@ -2833,7 +2833,7 @@
    "mandal": "Devanakonda",
    "boundaryIndex": 513,
    "rainBeforeMm": 323.1,
-   "rainAfterMm": 325.2,
+   "rainAfterMm": 325.3,
    "soil30Before": 25.9,
    "soil30After": 40.8
   },
@@ -2843,7 +2843,7 @@
    "mandal": "GUDUR (KURNOOL)",
    "boundaryIndex": null,
    "rainBeforeMm": 229.5,
-   "rainAfterMm": 230.3,
+   "rainAfterMm": 231.3,
    "soil30Before": 8.7,
    "soil30After": 9.0
   },
@@ -2853,7 +2853,7 @@
    "mandal": "Gonegandla",
    "boundaryIndex": 507,
    "rainBeforeMm": 257.2,
-   "rainAfterMm": 258.2,
+   "rainAfterMm": 259.5,
    "soil30Before": 22.9,
    "soil30After": 23.7
   },
@@ -2873,7 +2873,7 @@
    "mandal": "Holagunda",
    "boundaryIndex": 509,
    "rainBeforeMm": 213.9,
-   "rainAfterMm": 214.2,
+   "rainAfterMm": 214.3,
    "soil30Before": 10.6,
    "soil30After": 9.7
   },
@@ -2883,7 +2883,7 @@
    "mandal": "Kallur",
    "boundaryIndex": 495,
    "rainBeforeMm": 237.9,
-   "rainAfterMm": 239.7,
+   "rainAfterMm": 239.8,
    "soil30Before": 10.0,
    "soil30After": 13.7
   },
@@ -2933,7 +2933,7 @@
    "mandal": "Kurnool Rural",
    "boundaryIndex": 496,
    "rainBeforeMm": 189.0,
-   "rainAfterMm": 192.0,
+   "rainAfterMm": 193.1,
    "soil30Before": 11.6,
    "soil30After": 10.7
   },
@@ -2993,7 +2993,7 @@
    "mandal": "PATTIKANDA",
    "boundaryIndex": 527,
    "rainBeforeMm": 328.8,
-   "rainAfterMm": 331.2,
+   "rainAfterMm": 331.4,
    "soil30Before": 33.4,
    "soil30After": 45.7
   },
@@ -3033,7 +3033,7 @@
    "mandal": "Yemmiganur",
    "boundaryIndex": 491,
    "rainBeforeMm": 350.8,
-   "rainAfterMm": 352.0,
+   "rainAfterMm": 352.2,
    "soil30Before": 17.6,
    "soil30After": 18.7
   },
@@ -3043,7 +3043,7 @@
    "mandal": "Ardhaveedu",
    "boundaryIndex": 353,
    "rainBeforeMm": 182.4,
-   "rainAfterMm": 182.4,
+   "rainAfterMm": 182.5,
    "soil30Before": 12.9,
    "soil30After": 10.8
   },
@@ -3213,7 +3213,7 @@
    "mandal": "TARLAPADU",
    "boundaryIndex": 355,
    "rainBeforeMm": 250.8,
-   "rainAfterMm": 250.8,
+   "rainAfterMm": 251.4,
    "soil30Before": 21.7,
    "soil30After": 42.7
   },
@@ -3253,7 +3253,7 @@
    "mandal": "A KONDURU",
    "boundaryIndex": 235,
    "rainBeforeMm": 526.8,
-   "rainAfterMm": 535.7,
+   "rainAfterMm": 560.3,
    "soil30Before": 28.6,
    "soil30After": 41.8
   },
@@ -3263,7 +3263,7 @@
    "mandal": "Chandarlapadu",
    "boundaryIndex": 245,
    "rainBeforeMm": 475.6,
-   "rainAfterMm": 485.1,
+   "rainAfterMm": 499.5,
    "soil30Before": 23.5,
    "soil30After": 49.5
   },
@@ -3273,7 +3273,7 @@
    "mandal": "G.Konduru",
    "boundaryIndex": 243,
    "rainBeforeMm": 567.2,
-   "rainAfterMm": 587.4,
+   "rainAfterMm": 611.2,
    "soil30Before": 43.6,
    "soil30After": 70.4
   },
@@ -3283,7 +3283,7 @@
    "mandal": "Gampalagudem",
    "boundaryIndex": 233,
    "rainBeforeMm": 599.9,
-   "rainAfterMm": 607.1,
+   "rainAfterMm": 623.7,
    "soil30Before": 8.3,
    "soil30After": 43.1
   },
@@ -3293,7 +3293,7 @@
    "mandal": "Ibrahimpatnam",
    "boundaryIndex": 246,
    "rainBeforeMm": 497.8,
-   "rainAfterMm": 516.5,
+   "rainAfterMm": 567.1,
    "soil30Before": 44.6,
    "soil30After": 91.9
   },
@@ -3303,7 +3303,7 @@
    "mandal": "Jaggayyapeta",
    "boundaryIndex": 228,
    "rainBeforeMm": 405.0,
-   "rainAfterMm": 409.8,
+   "rainAfterMm": 423.6,
    "soil30Before": 25.7,
    "soil30After": 32.6
   },
@@ -3313,7 +3313,7 @@
    "mandal": "KANCHIKA CHERLA",
    "boundaryIndex": 244,
    "rainBeforeMm": 658.2,
-   "rainAfterMm": 669.0,
+   "rainAfterMm": 697.3,
    "soil30Before": 29.9,
    "soil30After": 77.9
   },
@@ -3323,7 +3323,7 @@
    "mandal": "MYLAVARAM (KRISHNA)",
    "boundaryIndex": null,
    "rainBeforeMm": 710.4,
-   "rainAfterMm": 719.7,
+   "rainAfterMm": 758.7,
    "soil30Before": 44.8,
    "soil30After": 57.4
   },
@@ -3333,7 +3333,7 @@
    "mandal": "Nandigama",
    "boundaryIndex": 230,
    "rainBeforeMm": 396.4,
-   "rainAfterMm": 403.5,
+   "rainAfterMm": 424.2,
    "soil30Before": 19.2,
    "soil30After": 44.3
   },
@@ -3343,7 +3343,7 @@
    "mandal": "Penuganchiprolu",
    "boundaryIndex": 229,
    "rainBeforeMm": 424.7,
-   "rainAfterMm": 428.0,
+   "rainAfterMm": 438.4,
    "soil30Before": 19.2,
    "soil30After": 28.7
   },
@@ -3353,7 +3353,7 @@
    "mandal": "Reddigudem",
    "boundaryIndex": 236,
    "rainBeforeMm": 557.7,
-   "rainAfterMm": 566.0,
+   "rainAfterMm": 587.9,
    "soil30Before": 35.6,
    "soil30After": 52.0
   },
@@ -3363,7 +3363,7 @@
    "mandal": "Tiruvuru",
    "boundaryIndex": 234,
    "rainBeforeMm": 710.6,
-   "rainAfterMm": 716.1,
+   "rainAfterMm": 730.3,
    "soil30Before": 14.8,
    "soil30After": 41.1
   },
@@ -3373,7 +3373,7 @@
    "mandal": "Vatsavai",
    "boundaryIndex": 227,
    "rainBeforeMm": 449.9,
-   "rainAfterMm": 454.1,
+   "rainAfterMm": 464.4,
    "soil30Before": 9.6,
    "soil30After": 20.1
   },
@@ -3383,7 +3383,7 @@
    "mandal": "Veerullapadu",
    "boundaryIndex": 231,
    "rainBeforeMm": 575.5,
-   "rainAfterMm": 587.5,
+   "rainAfterMm": 622.3,
    "soil30Before": 34.9,
    "soil30After": 70.4
   },
@@ -3393,7 +3393,7 @@
    "mandal": "Vijayawada (Rural)",
    "boundaryIndex": 248,
    "rainBeforeMm": 653.9,
-   "rainAfterMm": 688.8,
+   "rainAfterMm": 737.9,
    "soil30Before": 53.0,
    "soil30After": 98.9
   },
@@ -3403,7 +3403,7 @@
    "mandal": "Vijayawada Central",
    "boundaryIndex": 247,
    "rainBeforeMm": 573.5,
-   "rainAfterMm": 620.4,
+   "rainAfterMm": 670.8,
    "soil30Before": 62.6,
    "soil30After": 100.0
   },
@@ -3413,7 +3413,7 @@
    "mandal": "Vijayawada East",
    "boundaryIndex": 247,
    "rainBeforeMm": 593.7,
-   "rainAfterMm": 626.4,
+   "rainAfterMm": 674.9,
    "soil30Before": null,
    "soil30After": null
   },
@@ -3423,7 +3423,7 @@
    "mandal": "Vijayawada North",
    "boundaryIndex": 247,
    "rainBeforeMm": 626.4,
-   "rainAfterMm": 664.0,
+   "rainAfterMm": 715.8,
    "soil30Before": null,
    "soil30After": null
   },
@@ -3433,7 +3433,7 @@
    "mandal": "Vijayawada West",
    "boundaryIndex": 247,
    "rainBeforeMm": 633.0,
-   "rainAfterMm": 686.3,
+   "rainAfterMm": 735.7,
    "soil30Before": null,
    "soil30After": null
   },
@@ -3443,7 +3443,7 @@
    "mandal": "Vissannapet",
    "boundaryIndex": 237,
    "rainBeforeMm": 608.5,
-   "rainAfterMm": 616.5,
+   "rainAfterMm": 634.9,
    "soil30Before": 42.5,
    "soil30After": 57.2
   },
@@ -3473,7 +3473,7 @@
    "mandal": "Banaganapalle",
    "boundaryIndex": 525,
    "rainBeforeMm": 334.2,
-   "rainAfterMm": 344.3,
+   "rainAfterMm": 344.4,
    "soil30Before": 46.3,
    "soil30After": 64.1
   },
@@ -3523,7 +3523,7 @@
    "mandal": "Dornipadu",
    "boundaryIndex": 536,
    "rainBeforeMm": 272.8,
-   "rainAfterMm": 282.6,
+   "rainAfterMm": 282.9,
    "soil30Before": 46.6,
    "soil30After": 42.2
   },
@@ -3543,7 +3543,7 @@
    "mandal": "Gospadu",
    "boundaryIndex": 524,
    "rainBeforeMm": 311.8,
-   "rainAfterMm": 318.8,
+   "rainAfterMm": 319.1,
    "soil30Before": 26.8,
    "soil30After": 28.5
   },
@@ -3643,7 +3643,7 @@
    "mandal": "Owk",
    "boundaryIndex": 532,
    "rainBeforeMm": 228.3,
-   "rainAfterMm": 232.0,
+   "rainAfterMm": 232.2,
    "soil30Before": 32.2,
    "soil30After": 37.7
   },
@@ -3653,7 +3653,7 @@
    "mandal": "Pagidyala",
    "boundaryIndex": 498,
    "rainBeforeMm": 416.7,
-   "rainAfterMm": 417.4,
+   "rainAfterMm": 417.5,
    "soil30Before": 50.3,
    "soil30After": 39.1
   },
@@ -3753,7 +3753,7 @@
    "mandal": "Amaravathi",
    "boundaryIndex": 289,
    "rainBeforeMm": 583.2,
-   "rainAfterMm": 595.3,
+   "rainAfterMm": 645.9,
    "soil30Before": 39.3,
    "soil30After": 93.6
   },
@@ -3763,7 +3763,7 @@
    "mandal": "Atchampet",
    "boundaryIndex": 287,
    "rainBeforeMm": 485.7,
-   "rainAfterMm": 489.1,
+   "rainAfterMm": 501.0,
    "soil30Before": 12.6,
    "soil30After": 52.9
   },
@@ -3773,7 +3773,7 @@
    "mandal": "Bellamkonda",
    "boundaryIndex": 286,
    "rainBeforeMm": 551.3,
-   "rainAfterMm": 559.4,
+   "rainAfterMm": 582.6,
    "soil30Before": 18.9,
    "soil30After": 35.2
   },
@@ -3783,7 +3783,7 @@
    "mandal": "Bollapalle",
    "boundaryIndex": 298,
    "rainBeforeMm": 178.6,
-   "rainAfterMm": 182.7,
+   "rainAfterMm": 188.3,
    "soil30Before": 11.2,
    "soil30After": 18.6
   },
@@ -3793,7 +3793,7 @@
    "mandal": "Chilakaluripet",
    "boundaryIndex": 307,
    "rainBeforeMm": 442.7,
-   "rainAfterMm": 451.0,
+   "rainAfterMm": 475.0,
    "soil30Before": 53.3,
    "soil30After": 73.3
   },
@@ -3803,7 +3803,7 @@
    "mandal": "Dachepalle",
    "boundaryIndex": 282,
    "rainBeforeMm": 364.2,
-   "rainAfterMm": 366.0,
+   "rainAfterMm": 379.8,
    "soil30Before": 5.7,
    "soil30After": 23.7
   },
@@ -3813,7 +3813,7 @@
    "mandal": "Durgi",
    "boundaryIndex": 279,
    "rainBeforeMm": 326.5,
-   "rainAfterMm": 326.8,
+   "rainAfterMm": 327.5,
    "soil30Before": 18.9,
    "soil30After": 10.6
   },
@@ -3823,7 +3823,7 @@
    "mandal": "Edlapadu",
    "boundaryIndex": 308,
    "rainBeforeMm": 284.0,
-   "rainAfterMm": 289.9,
+   "rainAfterMm": 318.1,
    "soil30Before": 38.6,
    "soil30After": 60.6
   },
@@ -3833,7 +3833,7 @@
    "mandal": "Gurazala",
    "boundaryIndex": 281,
    "rainBeforeMm": 310.5,
-   "rainAfterMm": 311.2,
+   "rainAfterMm": 317.6,
    "soil30Before": 7.6,
    "soil30After": 18.3
   },
@@ -3843,7 +3843,7 @@
    "mandal": "IPURU",
    "boundaryIndex": 302,
    "rainBeforeMm": 185.0,
-   "rainAfterMm": 185.8,
+   "rainAfterMm": 190.4,
    "soil30Before": 30.6,
    "soil30After": 42.5
   },
@@ -3853,7 +3853,7 @@
    "mandal": "Karempudi",
    "boundaryIndex": 283,
    "rainBeforeMm": 308.8,
-   "rainAfterMm": 309.9,
+   "rainAfterMm": 314.5,
    "soil30Before": 14.0,
    "soil30After": 16.9
   },
@@ -3863,7 +3863,7 @@
    "mandal": "Krosuru",
    "boundaryIndex": 288,
    "rainBeforeMm": 480.2,
-   "rainAfterMm": 485.1,
+   "rainAfterMm": 498.2,
    "soil30Before": 9.5,
    "soil30After": 53.7
   },
@@ -3873,7 +3873,7 @@
    "mandal": "Machavaram",
    "boundaryIndex": 285,
    "rainBeforeMm": 388.9,
-   "rainAfterMm": 394.1,
+   "rainAfterMm": 405.4,
    "soil30Before": 11.2,
    "soil30After": 31.8
   },
@@ -3893,7 +3893,7 @@
    "mandal": "Muppalla",
    "boundaryIndex": 305,
    "rainBeforeMm": 295.9,
-   "rainAfterMm": 298.0,
+   "rainAfterMm": 302.5,
    "soil30Before": 35.1,
    "soil30After": 35.0
   },
@@ -3903,7 +3903,7 @@
    "mandal": "NAKARIKALLU",
    "boundaryIndex": 297,
    "rainBeforeMm": 206.4,
-   "rainAfterMm": 208.2,
+   "rainAfterMm": 215.3,
    "soil30Before": 25.3,
    "soil30After": 35.3
   },
@@ -3913,7 +3913,7 @@
    "mandal": "Nadendla",
    "boundaryIndex": 306,
    "rainBeforeMm": 346.3,
-   "rainAfterMm": 353.1,
+   "rainAfterMm": 376.7,
    "soil30Before": 46.8,
    "soil30After": 61.8
   },
@@ -3923,7 +3923,7 @@
    "mandal": "Narasaraopet",
    "boundaryIndex": 304,
    "rainBeforeMm": 254.3,
-   "rainAfterMm": 256.3,
+   "rainAfterMm": 269.5,
    "soil30Before": 44.3,
    "soil30After": 54.3
   },
@@ -3933,7 +3933,7 @@
    "mandal": "Nuzendla",
    "boundaryIndex": 300,
    "rainBeforeMm": 146.3,
-   "rainAfterMm": 146.4,
+   "rainAfterMm": 148.8,
    "soil30Before": 10.2,
    "soil30After": 22.1
   },
@@ -3943,7 +3943,7 @@
    "mandal": "Pedakurapadu",
    "boundaryIndex": 294,
    "rainBeforeMm": 622.7,
-   "rainAfterMm": 628.9,
+   "rainAfterMm": 658.8,
    "soil30Before": 38.7,
    "soil30After": 88.3
   },
@@ -3953,7 +3953,7 @@
    "mandal": "Piduguralla",
    "boundaryIndex": 284,
    "rainBeforeMm": 222.7,
-   "rainAfterMm": 226.7,
+   "rainAfterMm": 235.9,
    "soil30Before": 17.9,
    "soil30After": 26.3
   },
@@ -3963,7 +3963,7 @@
    "mandal": "ROMPICHERLA (GUNTUR)",
    "boundaryIndex": null,
    "rainBeforeMm": 245.2,
-   "rainAfterMm": 248.4,
+   "rainAfterMm": 257.7,
    "soil30Before": 43.3,
    "soil30After": 53.9
   },
@@ -3973,7 +3973,7 @@
    "mandal": "Rajupalem",
    "boundaryIndex": null,
    "rainBeforeMm": 536.7,
-   "rainAfterMm": 544.0,
+   "rainAfterMm": 561.6,
    "soil30Before": 26.2,
    "soil30After": 36.1
   },
@@ -3983,7 +3983,7 @@
    "mandal": "Rentachintala",
    "boundaryIndex": 280,
    "rainBeforeMm": 433.4,
-   "rainAfterMm": 433.4,
+   "rainAfterMm": 437.5,
    "soil30Before": 17.9,
    "soil30After": 18.2
   },
@@ -3993,7 +3993,7 @@
    "mandal": "Sattenapalle",
    "boundaryIndex": 295,
    "rainBeforeMm": 429.5,
-   "rainAfterMm": 435.8,
+   "rainAfterMm": 453.0,
    "soil30Before": 50.8,
    "soil30After": 81.6
   },
@@ -4003,7 +4003,7 @@
    "mandal": "Savalyapuram",
    "boundaryIndex": 301,
    "rainBeforeMm": 267.5,
-   "rainAfterMm": 269.8,
+   "rainAfterMm": 279.4,
    "soil30Before": 41.3,
    "soil30After": 56.3
   },
@@ -4013,7 +4013,7 @@
    "mandal": "Veldurthi",
    "boundaryIndex": null,
    "rainBeforeMm": 203.1,
-   "rainAfterMm": 203.1,
+   "rainAfterMm": 204.8,
    "soil30Before": 27.4,
    "soil30After": 18.4
   },
@@ -4023,7 +4023,7 @@
    "mandal": "Vinukonda",
    "boundaryIndex": 299,
    "rainBeforeMm": 139.6,
-   "rainAfterMm": 141.2,
+   "rainAfterMm": 148.1,
    "soil30Before": 19.1,
    "soil30After": 31.8
   },
@@ -4033,7 +4033,7 @@
    "mandal": "BALAJIPETA",
    "boundaryIndex": null,
    "rainBeforeMm": 814.6,
-   "rainAfterMm": 965.9,
+   "rainAfterMm": 1007.8,
    "soil30Before": 41.2,
    "soil30After": 100.0
   },
@@ -4043,7 +4043,7 @@
    "mandal": "Bhamini",
    "boundaryIndex": 2,
    "rainBeforeMm": 377.8,
-   "rainAfterMm": 429.7,
+   "rainAfterMm": 466.3,
    "soil30Before": 50.3,
    "soil30After": 100.0
   },
@@ -4053,7 +4053,7 @@
    "mandal": "Garugubilli",
    "boundaryIndex": 42,
    "rainBeforeMm": 605.6,
-   "rainAfterMm": 655.6,
+   "rainAfterMm": 690.1,
    "soil30Before": 38.9,
    "soil30After": 100.0
   },
@@ -4063,7 +4063,7 @@
    "mandal": "Gummalakshmipuram",
    "boundaryIndex": 39,
    "rainBeforeMm": 522.2,
-   "rainAfterMm": 587.1,
+   "rainAfterMm": 603.9,
    "soil30Before": 28.9,
    "soil30After": 97.3
   },
@@ -4073,7 +4073,7 @@
    "mandal": "JIYYAMMA VALASA",
    "boundaryIndex": 41,
    "rainBeforeMm": 509.2,
-   "rainAfterMm": 551.8,
+   "rainAfterMm": 571.2,
    "soil30Before": 43.9,
    "soil30After": 99.9
   },
@@ -4083,7 +4083,7 @@
    "mandal": "Komarada",
    "boundaryIndex": 38,
    "rainBeforeMm": 469.1,
-   "rainAfterMm": 508.9,
+   "rainAfterMm": 543.8,
    "soil30Before": 36.8,
    "soil30After": 94.7
   },
@@ -4093,7 +4093,7 @@
    "mandal": "Kurupam",
    "boundaryIndex": 40,
    "rainBeforeMm": 458.0,
-   "rainAfterMm": 497.7,
+   "rainAfterMm": 539.9,
    "soil30Before": 36.3,
    "soil30After": 97.3
   },
@@ -4103,7 +4103,7 @@
    "mandal": "Makkuva",
    "boundaryIndex": 44,
    "rainBeforeMm": 579.7,
-   "rainAfterMm": 685.1,
+   "rainAfterMm": 713.9,
    "soil30Before": 33.5,
    "soil30After": 100.0
   },
@@ -4113,7 +4113,7 @@
    "mandal": "Pachipenta",
    "boundaryIndex": 49,
    "rainBeforeMm": 624.9,
-   "rainAfterMm": 783.6,
+   "rainAfterMm": 887.7,
    "soil30Before": 45.1,
    "soil30After": 100.0
   },
@@ -4123,7 +4123,7 @@
    "mandal": "Palakonda",
    "boundaryIndex": 15,
    "rainBeforeMm": 686.1,
-   "rainAfterMm": 790.9,
+   "rainAfterMm": 859.7,
    "soil30Before": 71.4,
    "soil30After": 100.0
   },
@@ -4133,7 +4133,7 @@
    "mandal": "Parvathipuram",
    "boundaryIndex": 43,
    "rainBeforeMm": 830.9,
-   "rainAfterMm": 910.7,
+   "rainAfterMm": 944.3,
    "soil30Before": 35.9,
    "soil30After": 99.8
   },
@@ -4143,7 +4143,7 @@
    "mandal": "SEETHANAGARAM (VIZIANAGARAM)",
    "boundaryIndex": null,
    "rainBeforeMm": 431.1,
-   "rainAfterMm": 483.5,
+   "rainAfterMm": 530.6,
    "soil30Before": 38.0,
    "soil30After": 100.0
   },
@@ -4153,7 +4153,7 @@
    "mandal": "Salur",
    "boundaryIndex": 48,
    "rainBeforeMm": 512.7,
-   "rainAfterMm": 600.6,
+   "rainAfterMm": 651.2,
    "soil30Before": 56.4,
    "soil30After": 100.0
   },
@@ -4163,7 +4163,7 @@
    "mandal": "Seethampeta",
    "boundaryIndex": 1,
    "rainBeforeMm": 1043.9,
-   "rainAfterMm": 1192.9,
+   "rainAfterMm": 1266.9,
    "soil30Before": 75.4,
    "soil30After": 100.0
   },
@@ -4173,7 +4173,7 @@
    "mandal": "Veeraghattam",
    "boundaryIndex": 0,
    "rainBeforeMm": 702.9,
-   "rainAfterMm": 766.5,
+   "rainAfterMm": 811.2,
    "soil30Before": 69.3,
    "soil30After": 100.0
   },
@@ -4183,7 +4183,7 @@
    "mandal": "Addateegala",
    "boundaryIndex": 122,
    "rainBeforeMm": 812.5,
-   "rainAfterMm": 885.3,
+   "rainAfterMm": 955.3,
    "soil30Before": 50.6,
    "soil30After": 100.0
   },
@@ -4193,7 +4193,7 @@
    "mandal": "Chintur",
    "boundaryIndex": 117,
    "rainBeforeMm": 771.8,
-   "rainAfterMm": 793.3,
+   "rainAfterMm": 864.1,
    "soil30Before": 60.2,
    "soil30After": 99.3
   },
@@ -4203,7 +4203,7 @@
    "mandal": "Devipatnam",
    "boundaryIndex": 120,
    "rainBeforeMm": 740.4,
-   "rainAfterMm": 807.2,
+   "rainAfterMm": 901.2,
    "soil30Before": 67.1,
    "soil30After": 100.0
   },
@@ -4213,7 +4213,7 @@
    "mandal": "GANGAVARAM (EAST GODAVARI)",
    "boundaryIndex": null,
    "rainBeforeMm": 682.9,
-   "rainAfterMm": 730.4,
+   "rainAfterMm": 791.1,
    "soil30Before": 68.4,
    "soil30After": 100.0
   },
@@ -4223,7 +4223,7 @@
    "mandal": "Gurthedu",
    "boundaryIndex": null,
    "rainBeforeMm": 782.3,
-   "rainAfterMm": 822.8,
+   "rainAfterMm": 880.8,
    "soil30Before": 96.3,
    "soil30After": 100.0
   },
@@ -4233,7 +4233,7 @@
    "mandal": "Kunavaram",
    "boundaryIndex": 116,
    "rainBeforeMm": 756.4,
-   "rainAfterMm": 768.8,
+   "rainAfterMm": 825.1,
    "soil30Before": 47.9,
    "soil30After": 95.2
   },
@@ -4243,7 +4243,7 @@
    "mandal": "Maredumilli",
    "boundaryIndex": 119,
    "rainBeforeMm": 1108.4,
-   "rainAfterMm": 1139.8,
+   "rainAfterMm": 1197.5,
    "soil30Before": 80.0,
    "soil30After": 100.0
   },
@@ -4253,7 +4253,7 @@
    "mandal": "Rajavommangi",
    "boundaryIndex": 123,
    "rainBeforeMm": 779.7,
-   "rainAfterMm": 896.7,
+   "rainAfterMm": 958.5,
    "soil30Before": 71.8,
    "soil30After": 100.0
   },
@@ -4263,7 +4263,7 @@
    "mandal": "Rampachodavaram",
    "boundaryIndex": 130,
    "rainBeforeMm": 785.6,
-   "rainAfterMm": 812.4,
+   "rainAfterMm": 866.0,
    "soil30Before": 66.1,
    "soil30After": 100.0
   },
@@ -4273,7 +4273,7 @@
    "mandal": "Vararamachandrapuram",
    "boundaryIndex": 118,
    "rainBeforeMm": 756.0,
-   "rainAfterMm": 763.0,
+   "rainAfterMm": 798.1,
    "soil30Before": 30.8,
    "soil30After": 90.9
   },
@@ -4283,7 +4283,7 @@
    "mandal": "Y.Ramavaram",
    "boundaryIndex": 121,
    "rainBeforeMm": 768.2,
-   "rainAfterMm": 821.9,
+   "rainAfterMm": 882.2,
    "soil30Before": 77.1,
    "soil30After": 100.0
   },
@@ -4293,7 +4293,7 @@
    "mandal": "Yetpaka",
    "boundaryIndex": 115,
    "rainBeforeMm": 793.8,
-   "rainAfterMm": 804.0,
+   "rainAfterMm": 834.2,
    "soil30Before": 76.2,
    "soil30After": 98.6
   },
@@ -4303,7 +4303,7 @@
    "mandal": "Addanki",
    "boundaryIndex": 349,
    "rainBeforeMm": 388.9,
-   "rainAfterMm": 391.9,
+   "rainAfterMm": 392.1,
    "soil30Before": 55.5,
    "soil30After": 41.5
   },
@@ -4313,7 +4313,7 @@
    "mandal": "BALLIKURUVA",
    "boundaryIndex": 342,
    "rainBeforeMm": 191.6,
-   "rainAfterMm": 206.3,
+   "rainAfterMm": 207.1,
    "soil30Before": 21.4,
    "soil30After": 34.9
   },
@@ -4403,7 +4403,7 @@
    "mandal": "Kotha Patnam",
    "boundaryIndex": 377,
    "rainBeforeMm": 182.6,
-   "rainAfterMm": 195.3,
+   "rainAfterMm": 195.4,
    "soil30Before": 9.8,
    "soil30After": 54.6
   },
@@ -4433,7 +4433,7 @@
    "mandal": "Maddipadu",
    "boundaryIndex": 364,
    "rainBeforeMm": 152.6,
-   "rainAfterMm": 152.7,
+   "rainAfterMm": 152.8,
    "soil30Before": 56.5,
    "soil30After": 50.4
   },
@@ -4453,7 +4453,7 @@
    "mandal": "Mundlamuru",
    "boundaryIndex": 350,
    "rainBeforeMm": 142.4,
-   "rainAfterMm": 151.2,
+   "rainAfterMm": 151.4,
    "soil30Before": 22.9,
    "soil30After": 31.4
   },
@@ -4463,7 +4463,7 @@
    "mandal": "Naguluppalapadu",
    "boundaryIndex": 363,
    "rainBeforeMm": 73.0,
-   "rainAfterMm": 73.6,
+   "rainAfterMm": 74.1,
    "soil30Before": 29.4,
    "soil30After": 35.6
   },
@@ -4483,7 +4483,7 @@
    "mandal": "Ongole_Urban",
    "boundaryIndex": 376,
    "rainBeforeMm": 200.5,
-   "rainAfterMm": 201.7,
+   "rainAfterMm": 201.9,
    "soil30Before": 9.6,
    "soil30After": 30.5
   },
@@ -4503,7 +4503,7 @@
    "mandal": "Santhamaguluru",
    "boundaryIndex": 341,
    "rainBeforeMm": 114.0,
-   "rainAfterMm": 115.5,
+   "rainAfterMm": 118.4,
    "soil30Before": 31.1,
    "soil30After": 35.0
   },
@@ -4513,7 +4513,7 @@
    "mandal": "Santhanuthala Padu",
    "boundaryIndex": 375,
    "rainBeforeMm": 320.7,
-   "rainAfterMm": 320.7,
+   "rainAfterMm": 320.8,
    "soil30Before": 90.9,
    "soil30After": 70.0
   },
@@ -4543,7 +4543,7 @@
    "mandal": "Thallur",
    "boundaryIndex": 358,
    "rainBeforeMm": 278.9,
-   "rainAfterMm": 282.7,
+   "rainAfterMm": 282.8,
    "soil30Before": 27.2,
    "soil30After": 30.9
   },
@@ -4593,7 +4593,7 @@
    "mandal": "Allur",
    "boundaryIndex": 404,
    "rainBeforeMm": 329.9,
-   "rainAfterMm": 353.4,
+   "rainAfterMm": 353.6,
    "soil30Before": 77.2,
    "soil30After": 85.6
   },
@@ -4673,7 +4673,7 @@
    "mandal": "Duttalur",
    "boundaryIndex": 399,
    "rainBeforeMm": 281.6,
-   "rainAfterMm": 289.2,
+   "rainAfterMm": 289.3,
    "soil30Before": 56.4,
    "soil30After": 75.6
   },
@@ -4743,7 +4743,7 @@
    "mandal": "Kavali",
    "boundaryIndex": 395,
    "rainBeforeMm": 296.5,
-   "rainAfterMm": 308.6,
+   "rainAfterMm": 308.7,
    "soil30Before": 92.0,
    "soil30After": 93.7
   },
@@ -4833,7 +4833,7 @@
    "mandal": "PODLAKUR",
    "boundaryIndex": 413,
    "rainBeforeMm": 421.7,
-   "rainAfterMm": 425.3,
+   "rainAfterMm": 425.5,
    "soil30Before": 96.1,
    "soil30After": 93.6
   },
@@ -4873,7 +4873,7 @@
    "mandal": "Sydapuram",
    "boundaryIndex": 422,
    "rainBeforeMm": 453.7,
-   "rainAfterMm": 496.0,
+   "rainAfterMm": 496.6,
    "soil30Before": 99.9,
    "soil30After": 97.6
   },
@@ -4893,7 +4893,7 @@
    "mandal": "Udayagiri",
    "boundaryIndex": 391,
    "rainBeforeMm": 346.6,
-   "rainAfterMm": 351.6,
+   "rainAfterMm": 351.9,
    "soil30Before": 61.8,
    "soil30After": 71.2
   },
@@ -4973,7 +4973,7 @@
    "mandal": "Bathalapalle",
    "boundaryIndex": 574,
    "rainBeforeMm": 225.4,
-   "rainAfterMm": 236.8,
+   "rainAfterMm": 237.9,
    "soil30Before": 28.4,
    "soil30After": 17.4
   },
@@ -5023,7 +5023,7 @@
    "mandal": "Gandlapenta",
    "boundaryIndex": 579,
    "rainBeforeMm": 194.7,
-   "rainAfterMm": 214.3,
+   "rainAfterMm": 217.4,
    "soil30Before": 59.7,
    "soil30After": 78.0
   },
@@ -5063,7 +5063,7 @@
    "mandal": "Kadiri",
    "boundaryIndex": 580,
    "rainBeforeMm": 217.6,
-   "rainAfterMm": 256.7,
+   "rainAfterMm": 256.8,
    "soil30Before": 54.8,
    "soil30After": 76.0
   },
@@ -5143,7 +5143,7 @@
    "mandal": "Nambulipulikunta",
    "boundaryIndex": 578,
    "rainBeforeMm": 153.8,
-   "rainAfterMm": 183.9,
+   "rainAfterMm": 184.0,
    "soil30Before": 66.9,
    "soil30After": 80.9
   },
@@ -5263,7 +5263,7 @@
    "mandal": "Amadalavalasa",
    "boundaryIndex": 29,
    "rainBeforeMm": 512.4,
-   "rainAfterMm": 631.0,
+   "rainAfterMm": 674.9,
    "soil30Before": 55.3,
    "soil30After": 100.0
   },
@@ -5273,7 +5273,7 @@
    "mandal": "Burja",
    "boundaryIndex": 25,
    "rainBeforeMm": 540.9,
-   "rainAfterMm": 639.8,
+   "rainAfterMm": 718.3,
    "soil30Before": 51.4,
    "soil30After": 100.0
   },
@@ -5283,7 +5283,7 @@
    "mandal": "Etcherla",
    "boundaryIndex": 37,
    "rainBeforeMm": 553.0,
-   "rainAfterMm": 748.9,
+   "rainAfterMm": 860.2,
    "soil30Before": 54.2,
    "soil30After": 100.0
   },
@@ -5293,7 +5293,7 @@
    "mandal": "GANGUVARI SINGADAM",
    "boundaryIndex": null,
    "rainBeforeMm": 509.1,
-   "rainAfterMm": 641.6,
+   "rainAfterMm": 704.1,
    "soil30Before": 51.5,
    "soil30After": 100.0
   },
@@ -5303,7 +5303,7 @@
    "mandal": "Gara",
    "boundaryIndex": 32,
    "rainBeforeMm": 346.9,
-   "rainAfterMm": 512.9,
+   "rainAfterMm": 584.8,
    "soil30Before": 65.0,
    "soil30After": 100.0
   },
@@ -5313,7 +5313,7 @@
    "mandal": "Hiramandalam",
    "boundaryIndex": 14,
    "rainBeforeMm": 973.6,
-   "rainAfterMm": 1101.4,
+   "rainAfterMm": 1175.7,
    "soil30Before": 62.9,
    "soil30After": 100.0
   },
@@ -5323,7 +5323,7 @@
    "mandal": "Ichchapuram",
    "boundaryIndex": 9,
    "rainBeforeMm": 588.1,
-   "rainAfterMm": 651.7,
+   "rainAfterMm": 931.8,
    "soil30Before": 63.9,
    "soil30After": 100.0
   },
@@ -5333,7 +5333,7 @@
    "mandal": "Jalumuru",
    "boundaryIndex": 23,
    "rainBeforeMm": 671.0,
-   "rainAfterMm": 824.4,
+   "rainAfterMm": 884.3,
    "soil30Before": 43.9,
    "soil30After": 100.0
   },
@@ -5343,7 +5343,7 @@
    "mandal": "KOTABOMMAL",
    "boundaryIndex": 22,
    "rainBeforeMm": 715.1,
-   "rainAfterMm": 888.6,
+   "rainAfterMm": 999.7,
    "soil30Before": 59.8,
    "soil30After": 100.0
   },
@@ -5353,7 +5353,7 @@
    "mandal": "Kanchili",
    "boundaryIndex": 8,
    "rainBeforeMm": 728.5,
-   "rainAfterMm": 855.0,
+   "rainAfterMm": 1152.8,
    "soil30Before": 84.1,
    "soil30After": 100.0
   },
@@ -5363,7 +5363,7 @@
    "mandal": "Kaviti",
    "boundaryIndex": 10,
    "rainBeforeMm": 602.7,
-   "rainAfterMm": 710.6,
+   "rainAfterMm": 986.6,
    "soil30Before": 76.9,
    "soil30After": 100.0
   },
@@ -5373,7 +5373,7 @@
    "mandal": "Kothuru",
    "boundaryIndex": 3,
    "rainBeforeMm": 775.5,
-   "rainAfterMm": 930.7,
+   "rainAfterMm": 1011.3,
    "soil30Before": 77.5,
    "soil30After": 100.0
   },
@@ -5383,7 +5383,7 @@
    "mandal": "Lakshminarsupeta",
    "boundaryIndex": 18,
    "rainBeforeMm": 931.8,
-   "rainAfterMm": 1034.9,
+   "rainAfterMm": 1079.6,
    "soil30Before": 91.6,
    "soil30After": 100.0
   },
@@ -5393,7 +5393,7 @@
    "mandal": "Laveru",
    "boundaryIndex": 35,
    "rainBeforeMm": 672.2,
-   "rainAfterMm": 828.7,
+   "rainAfterMm": 888.2,
    "soil30Before": 40.5,
    "soil30After": 100.0
   },
@@ -5403,7 +5403,7 @@
    "mandal": "Mandasa",
    "boundaryIndex": 7,
    "rainBeforeMm": 881.0,
-   "rainAfterMm": 1066.4,
+   "rainAfterMm": 1306.7,
    "soil30Before": 95.1,
    "soil30After": 100.0
   },
@@ -5413,7 +5413,7 @@
    "mandal": "Meliaputti",
    "boundaryIndex": 5,
    "rainBeforeMm": 562.8,
-   "rainAfterMm": 697.7,
+   "rainAfterMm": 895.8,
    "soil30Before": 56.6,
    "soil30After": 100.0
   },
@@ -5423,7 +5423,7 @@
    "mandal": "Nandigam",
    "boundaryIndex": 13,
    "rainBeforeMm": 534.5,
-   "rainAfterMm": 659.0,
+   "rainAfterMm": 761.5,
    "soil30Before": 63.8,
    "soil30After": 100.0
   },
@@ -5433,7 +5433,7 @@
    "mandal": "Narasannapeta",
    "boundaryIndex": 30,
    "rainBeforeMm": 708.7,
-   "rainAfterMm": 851.1,
+   "rainAfterMm": 911.5,
    "soil30Before": 47.0,
    "soil30After": 100.0
   },
@@ -5443,7 +5443,7 @@
    "mandal": "Palasa",
    "boundaryIndex": 6,
    "rainBeforeMm": 744.3,
-   "rainAfterMm": 915.3,
+   "rainAfterMm": 1156.8,
    "soil30Before": 75.7,
    "soil30After": 100.0
   },
@@ -5453,7 +5453,7 @@
    "mandal": "Pathapatnam",
    "boundaryIndex": 4,
    "rainBeforeMm": 779.9,
-   "rainAfterMm": 926.7,
+   "rainAfterMm": 1036.8,
    "soil30Before": 46.2,
    "soil30After": 100.0
   },
@@ -5463,7 +5463,7 @@
    "mandal": "Polaki",
    "boundaryIndex": 31,
    "rainBeforeMm": 482.0,
-   "rainAfterMm": 605.5,
+   "rainAfterMm": 684.3,
    "soil30Before": 74.9,
    "soil30After": 100.0
   },
@@ -5473,7 +5473,7 @@
    "mandal": "Ponduru",
    "boundaryIndex": 34,
    "rainBeforeMm": 443.3,
-   "rainAfterMm": 617.8,
+   "rainAfterMm": 714.9,
    "soil30Before": 41.2,
    "soil30After": 100.0
   },
@@ -5483,7 +5483,7 @@
    "mandal": "Ranastalam",
    "boundaryIndex": 36,
    "rainBeforeMm": 614.0,
-   "rainAfterMm": 820.7,
+   "rainAfterMm": 897.5,
    "soil30Before": 36.4,
    "soil30After": 100.0
   },
@@ -5493,7 +5493,7 @@
    "mandal": "SRIKAKULAM MANDAL",
    "boundaryIndex": 33,
    "rainBeforeMm": 536.6,
-   "rainAfterMm": 699.2,
+   "rainAfterMm": 782.8,
    "soil30Before": 53.1,
    "soil30After": 100.0
   },
@@ -5503,7 +5503,7 @@
    "mandal": "Santhabommali",
    "boundaryIndex": 21,
    "rainBeforeMm": 695.9,
-   "rainAfterMm": 869.2,
+   "rainAfterMm": 977.7,
    "soil30Before": 91.8,
    "soil30After": 100.0
   },
@@ -5513,7 +5513,7 @@
    "mandal": "Saravakota",
    "boundaryIndex": 19,
    "rainBeforeMm": 424.3,
-   "rainAfterMm": 534.9,
+   "rainAfterMm": 579.4,
    "soil30Before": 41.3,
    "soil30After": 100.0
   },
@@ -5523,7 +5523,7 @@
    "mandal": "Sarubujjili",
    "boundaryIndex": 24,
    "rainBeforeMm": 875.9,
-   "rainAfterMm": 988.5,
+   "rainAfterMm": 1040.0,
    "soil30Before": 66.7,
    "soil30After": 100.0
   },
@@ -5533,7 +5533,7 @@
    "mandal": "Sompeta",
    "boundaryIndex": 11,
    "rainBeforeMm": 743.5,
-   "rainAfterMm": 898.8,
+   "rainAfterMm": 1158.7,
    "soil30Before": 98.4,
    "soil30After": 100.0
   },
@@ -5543,7 +5543,7 @@
    "mandal": "Tekkali",
    "boundaryIndex": 20,
    "rainBeforeMm": 770.9,
-   "rainAfterMm": 911.8,
+   "rainAfterMm": 1015.6,
    "soil30Before": 62.4,
    "soil30After": 100.0
   },
@@ -5553,7 +5553,7 @@
    "mandal": "Vajrapukothuru",
    "boundaryIndex": 12,
    "rainBeforeMm": 619.0,
-   "rainAfterMm": 760.9,
+   "rainAfterMm": 913.4,
    "soil30Before": 86.2,
    "soil30After": 100.0
   },
@@ -5633,7 +5633,7 @@
    "mandal": "Doravarisatram",
    "boundaryIndex": 433,
    "rainBeforeMm": 745.5,
-   "rainAfterMm": 747.5,
+   "rainAfterMm": 747.6,
    "soil30Before": 100.0,
    "soil30After": 96.0
   },
@@ -5653,7 +5653,7 @@
    "mandal": "Kodur",
    "boundaryIndex": 486,
    "rainBeforeMm": 337.2,
-   "rainAfterMm": 348.9,
+   "rainAfterMm": 349.0,
    "soil30Before": 83.0,
    "soil30After": 73.8
   },
@@ -5753,7 +5753,7 @@
    "mandal": "Pullampeta",
    "boundaryIndex": 484,
    "rainBeforeMm": 247.7,
-   "rainAfterMm": 281.0,
+   "rainAfterMm": 281.2,
    "soil30Before": 37.9,
    "soil30After": 62.5
   },
@@ -5783,7 +5783,7 @@
    "mandal": "Renigunta",
    "boundaryIndex": 613,
    "rainBeforeMm": 518.0,
-   "rainAfterMm": 555.5,
+   "rainAfterMm": 555.6,
    "soil30Before": 93.4,
    "soil30After": 83.5
   },
@@ -5823,7 +5823,7 @@
    "mandal": "Tada",
    "boundaryIndex": 435,
    "rainBeforeMm": 675.6,
-   "rainAfterMm": 709.6,
+   "rainAfterMm": 709.7,
    "soil30Before": 100.0,
    "soil30After": 91.1
   },
@@ -5863,7 +5863,7 @@
    "mandal": "Vadamalapeta",
    "boundaryIndex": 636,
    "rainBeforeMm": 541.7,
-   "rainAfterMm": 592.9,
+   "rainAfterMm": 593.7,
    "soil30Before": 100.0,
    "soil30After": 98.9
   },
@@ -5923,7 +5923,7 @@
    "mandal": "Anandapuram",
    "boundaryIndex": 94,
    "rainBeforeMm": 609.4,
-   "rainAfterMm": 799.9,
+   "rainAfterMm": 836.3,
    "soil30Before": 79.4,
    "soil30After": 100.0
   },
@@ -5933,7 +5933,7 @@
    "mandal": "Bheemunipatnam",
    "boundaryIndex": 96,
    "rainBeforeMm": 491.6,
-   "rainAfterMm": 699.5,
+   "rainAfterMm": 752.5,
    "soil30Before": 61.2,
    "soil30After": 100.0
   },
@@ -5943,7 +5943,7 @@
    "mandal": "Gajuwaka",
    "boundaryIndex": 100,
    "rainBeforeMm": 535.6,
-   "rainAfterMm": 738.7,
+   "rainAfterMm": 771.0,
    "soil30Before": 95.9,
    "soil30After": 100.0
   },
@@ -5953,7 +5953,7 @@
    "mandal": "Gopalapatnam (m)",
    "boundaryIndex": null,
    "rainBeforeMm": 700.2,
-   "rainAfterMm": 989.8,
+   "rainAfterMm": 1019.2,
    "soil30Before": 99.0,
    "soil30After": 100.0
   },
@@ -5963,7 +5963,7 @@
    "mandal": "Maharanipeta",
    "boundaryIndex": null,
    "rainBeforeMm": 721.0,
-   "rainAfterMm": 928.3,
+   "rainAfterMm": 965.0,
    "soil30Before": 89.5,
    "soil30After": 100.0
   },
@@ -5973,7 +5973,7 @@
    "mandal": "Mulagada",
    "boundaryIndex": null,
    "rainBeforeMm": 646.4,
-   "rainAfterMm": 846.8,
+   "rainAfterMm": 877.1,
    "soil30Before": 98.0,
    "soil30After": 100.0
   },
@@ -5983,7 +5983,7 @@
    "mandal": "Padmanabham",
    "boundaryIndex": 95,
    "rainBeforeMm": 554.9,
-   "rainAfterMm": 775.5,
+   "rainAfterMm": 816.5,
    "soil30Before": 70.8,
    "soil30After": 100.0
   },
@@ -5993,7 +5993,7 @@
    "mandal": "Pedagantyada",
    "boundaryIndex": 99,
    "rainBeforeMm": 704.8,
-   "rainAfterMm": 915.5,
+   "rainAfterMm": 932.2,
    "soil30Before": 98.2,
    "soil30After": 100.0
   },
@@ -6003,7 +6003,7 @@
    "mandal": "Pendurthi",
    "boundaryIndex": 93,
    "rainBeforeMm": 575.3,
-   "rainAfterMm": 822.3,
+   "rainAfterMm": 870.7,
    "soil30Before": 72.4,
    "soil30After": 100.0
   },
@@ -6013,7 +6013,7 @@
    "mandal": "Seethammadhara",
    "boundaryIndex": null,
    "rainBeforeMm": 622.7,
-   "rainAfterMm": 812.7,
+   "rainAfterMm": 848.9,
    "soil30Before": 58.1,
    "soil30After": 100.0
   },
@@ -6023,7 +6023,7 @@
    "mandal": "Visakhapatnam (Rural)",
    "boundaryIndex": 97,
    "rainBeforeMm": 601.6,
-   "rainAfterMm": 834.1,
+   "rainAfterMm": 881.6,
    "soil30Before": 75.7,
    "soil30After": 100.0
   },
@@ -6033,7 +6033,7 @@
    "mandal": "BHOGHAPURAM",
    "boundaryIndex": 71,
    "rainBeforeMm": 499.6,
-   "rainAfterMm": 767.7,
+   "rainAfterMm": 855.1,
    "soil30Before": 63.3,
    "soil30After": 100.0
   },
@@ -6043,7 +6043,7 @@
    "mandal": "Badangi",
    "boundaryIndex": 51,
    "rainBeforeMm": 604.5,
-   "rainAfterMm": 765.7,
+   "rainAfterMm": 823.4,
    "soil30Before": 62.7,
    "soil30After": 100.0
   },
@@ -6053,7 +6053,7 @@
    "mandal": "Bobbili",
    "boundaryIndex": 47,
    "rainBeforeMm": 785.7,
-   "rainAfterMm": 944.2,
+   "rainAfterMm": 999.4,
    "soil30Before": 65.0,
    "soil30After": 100.0
   },
@@ -6063,7 +6063,7 @@
    "mandal": "Bondapalle",
    "boundaryIndex": 60,
    "rainBeforeMm": 584.7,
-   "rainAfterMm": 749.6,
+   "rainAfterMm": 797.1,
    "soil30Before": 38.6,
    "soil30After": 100.0
   },
@@ -6073,7 +6073,7 @@
    "mandal": "Cheepurupalle",
    "boundaryIndex": 58,
    "rainBeforeMm": 611.4,
-   "rainAfterMm": 765.4,
+   "rainAfterMm": 796.3,
    "soil30Before": 65.1,
    "soil30After": 100.0
   },
@@ -6083,7 +6083,7 @@
    "mandal": "Dattirajeru",
    "boundaryIndex": 54,
    "rainBeforeMm": 599.9,
-   "rainAfterMm": 773.3,
+   "rainAfterMm": 840.3,
    "soil30Before": 45.6,
    "soil30After": 100.0
   },
@@ -6093,7 +6093,7 @@
    "mandal": "Denkada",
    "boundaryIndex": 70,
    "rainBeforeMm": 576.8,
-   "rainAfterMm": 772.0,
+   "rainAfterMm": 804.5,
    "soil30Before": 42.3,
    "soil30After": 100.0
   },
@@ -6103,7 +6103,7 @@
    "mandal": "Gajapathinagaram",
    "boundaryIndex": 56,
    "rainBeforeMm": 584.9,
-   "rainAfterMm": 787.1,
+   "rainAfterMm": 843.3,
    "soil30Before": 37.2,
    "soil30After": 100.0
   },
@@ -6113,7 +6113,7 @@
    "mandal": "Gantyada",
    "boundaryIndex": 61,
    "rainBeforeMm": 604.0,
-   "rainAfterMm": 783.0,
+   "rainAfterMm": 833.5,
    "soil30Before": 36.4,
    "soil30After": 100.0
   },
@@ -6123,7 +6123,7 @@
    "mandal": "Garividi",
    "boundaryIndex": 57,
    "rainBeforeMm": 677.7,
-   "rainAfterMm": 897.8,
+   "rainAfterMm": 937.0,
    "soil30Before": 58.8,
    "soil30After": 100.0
   },
@@ -6133,7 +6133,7 @@
    "mandal": "Gurla",
    "boundaryIndex": 59,
    "rainBeforeMm": 652.3,
-   "rainAfterMm": 859.2,
+   "rainAfterMm": 901.8,
    "soil30Before": 50.1,
    "soil30After": 100.0
   },
@@ -6143,7 +6143,7 @@
    "mandal": "Jami",
    "boundaryIndex": 66,
    "rainBeforeMm": 844.6,
-   "rainAfterMm": 1088.9,
+   "rainAfterMm": 1139.7,
    "soil30Before": 45.6,
    "soil30After": 100.0
   },
@@ -6153,7 +6153,7 @@
    "mandal": "Kothavalasa",
    "boundaryIndex": 65,
    "rainBeforeMm": 639.9,
-   "rainAfterMm": 943.0,
+   "rainAfterMm": 1000.5,
    "soil30Before": 89.1,
    "soil30After": 100.0
   },
@@ -6163,7 +6163,7 @@
    "mandal": "Lakkavarapukota",
    "boundaryIndex": 64,
    "rainBeforeMm": 720.6,
-   "rainAfterMm": 971.9,
+   "rainAfterMm": 1024.5,
    "soil30Before": 60.1,
    "soil30After": 100.0
   },
@@ -6173,7 +6173,7 @@
    "mandal": "Mentada",
    "boundaryIndex": 55,
    "rainBeforeMm": 541.0,
-   "rainAfterMm": 741.5,
+   "rainAfterMm": 796.1,
    "soil30Before": 44.6,
    "soil30After": 100.0
   },
@@ -6183,7 +6183,7 @@
    "mandal": "Merakamudidam",
    "boundaryIndex": 53,
    "rainBeforeMm": 614.3,
-   "rainAfterMm": 780.8,
+   "rainAfterMm": 841.5,
    "soil30Before": 67.8,
    "soil30After": 100.0
   },
@@ -6193,7 +6193,7 @@
    "mandal": "Nellimarla",
    "boundaryIndex": 68,
    "rainBeforeMm": 568.8,
-   "rainAfterMm": 777.8,
+   "rainAfterMm": 824.0,
    "soil30Before": 50.9,
    "soil30After": 100.0
   },
@@ -6203,7 +6203,7 @@
    "mandal": "Pusapatirega",
    "boundaryIndex": 69,
    "rainBeforeMm": 498.1,
-   "rainAfterMm": 676.4,
+   "rainAfterMm": 778.8,
    "soil30Before": 56.9,
    "soil30After": 100.0
   },
@@ -6213,7 +6213,7 @@
    "mandal": "Rajam",
    "boundaryIndex": 27,
    "rainBeforeMm": 696.1,
-   "rainAfterMm": 841.3,
+   "rainAfterMm": 917.4,
    "soil30Before": 50.6,
    "soil30After": 100.0
   },
@@ -6223,7 +6223,7 @@
    "mandal": "Ramabhadrapuram",
    "boundaryIndex": 50,
    "rainBeforeMm": 620.5,
-   "rainAfterMm": 784.6,
+   "rainAfterMm": 844.9,
    "soil30Before": 66.1,
    "soil30After": 100.0
   },
@@ -6233,7 +6233,7 @@
    "mandal": "Regidiamadalavalasa",
    "boundaryIndex": 17,
    "rainBeforeMm": 528.9,
-   "rainAfterMm": 648.8,
+   "rainAfterMm": 737.3,
    "soil30Before": 64.2,
    "soil30After": 100.0
   },
@@ -6243,7 +6243,7 @@
    "mandal": "Santhakaviti",
    "boundaryIndex": 26,
    "rainBeforeMm": 416.0,
-   "rainAfterMm": 534.5,
+   "rainAfterMm": 633.8,
    "soil30Before": 64.3,
    "soil30After": 100.0
   },
@@ -6253,7 +6253,7 @@
    "mandal": "Srungavarapukota",
    "boundaryIndex": 62,
    "rainBeforeMm": 643.0,
-   "rainAfterMm": 872.7,
+   "rainAfterMm": 955.4,
    "soil30Before": 34.6,
    "soil30After": 100.0
   },
@@ -6263,7 +6263,7 @@
    "mandal": "Therlam",
    "boundaryIndex": 52,
    "rainBeforeMm": 551.6,
-   "rainAfterMm": 674.4,
+   "rainAfterMm": 732.1,
    "soil30Before": 49.5,
    "soil30After": 100.0
   },
@@ -6273,7 +6273,7 @@
    "mandal": "Vangara",
    "boundaryIndex": 16,
    "rainBeforeMm": 581.9,
-   "rainAfterMm": 711.7,
+   "rainAfterMm": 755.8,
    "soil30Before": 43.4,
    "soil30After": 100.0
   },
@@ -6283,7 +6283,7 @@
    "mandal": "Vepada",
    "boundaryIndex": 63,
    "rainBeforeMm": 789.5,
-   "rainAfterMm": 1033.4,
+   "rainAfterMm": 1098.7,
    "soil30Before": 67.4,
    "soil30After": 100.0
   },
@@ -6293,7 +6293,7 @@
    "mandal": "Vizianagaram Rural",
    "boundaryIndex": 67,
    "rainBeforeMm": 664.8,
-   "rainAfterMm": 867.6,
+   "rainAfterMm": 919.6,
    "soil30Before": 38.2,
    "soil30After": 100.0
   },
@@ -6303,7 +6303,7 @@
    "mandal": "Vizianagaram Urban",
    "boundaryIndex": 67,
    "rainBeforeMm": 594.7,
-   "rainAfterMm": 784.6,
+   "rainAfterMm": 833.7,
    "soil30Before": 44.2,
    "soil30After": 100.0
   },
@@ -6313,7 +6313,7 @@
    "mandal": "AKIVEEDU",
    "boundaryIndex": 212,
    "rainBeforeMm": 452.8,
-   "rainAfterMm": 494.5,
+   "rainAfterMm": 562.1,
    "soil30Before": 61.2,
    "soil30After": 100.0
   },
@@ -6323,7 +6323,7 @@
    "mandal": "Achanta",
    "boundaryIndex": 218,
    "rainBeforeMm": 630.7,
-   "rainAfterMm": 670.0,
+   "rainAfterMm": 766.3,
    "soil30Before": 37.7,
    "soil30After": 100.0
   },
@@ -6333,7 +6333,7 @@
    "mandal": "Attili",
    "boundaryIndex": 210,
    "rainBeforeMm": 410.2,
-   "rainAfterMm": 445.3,
+   "rainAfterMm": 556.4,
    "soil30Before": 26.4,
    "soil30After": 100.0
   },
@@ -6343,7 +6343,7 @@
    "mandal": "Bhimavaram",
    "boundaryIndex": 221,
    "rainBeforeMm": 634.2,
-   "rainAfterMm": 671.5,
+   "rainAfterMm": 734.4,
    "soil30Before": 85.2,
    "soil30After": 100.0
   },
@@ -6353,7 +6353,7 @@
    "mandal": "Ganapavaram",
    "boundaryIndex": 211,
    "rainBeforeMm": 683.5,
-   "rainAfterMm": 717.8,
+   "rainAfterMm": 824.8,
    "soil30Before": 33.1,
    "soil30After": 100.0
   },
@@ -6363,7 +6363,7 @@
    "mandal": "Iragavaram",
    "boundaryIndex": 216,
    "rainBeforeMm": 735.5,
-   "rainAfterMm": 817.7,
+   "rainAfterMm": 953.5,
    "soil30Before": 48.4,
    "soil30After": 100.0
   },
@@ -6373,7 +6373,7 @@
    "mandal": "Kalla",
    "boundaryIndex": 222,
    "rainBeforeMm": 452.4,
-   "rainAfterMm": 476.1,
+   "rainAfterMm": 512.0,
    "soil30Before": 66.3,
    "soil30After": 100.0
   },
@@ -6383,7 +6383,7 @@
    "mandal": "Mogalthur",
    "boundaryIndex": 223,
    "rainBeforeMm": 561.6,
-   "rainAfterMm": 611.4,
+   "rainAfterMm": 667.7,
    "soil30Before": 72.3,
    "soil30After": 100.0
   },
@@ -6393,7 +6393,7 @@
    "mandal": "Narasapuram",
    "boundaryIndex": 224,
    "rainBeforeMm": 639.5,
-   "rainAfterMm": 702.7,
+   "rainAfterMm": 740.5,
    "soil30Before": 84.9,
    "soil30After": 100.0
   },
@@ -6403,7 +6403,7 @@
    "mandal": "Palacoderu",
    "boundaryIndex": 214,
    "rainBeforeMm": 600.9,
-   "rainAfterMm": 631.1,
+   "rainAfterMm": 687.2,
    "soil30Before": 53.8,
    "soil30After": 100.0
   },
@@ -6413,7 +6413,7 @@
    "mandal": "Palacole",
    "boundaryIndex": 225,
    "rainBeforeMm": 732.8,
-   "rainAfterMm": 803.5,
+   "rainAfterMm": 843.0,
    "soil30Before": 6.8,
    "soil30After": 100.0
   },
@@ -6423,7 +6423,7 @@
    "mandal": "Pentapadu",
    "boundaryIndex": 206,
    "rainBeforeMm": 606.7,
-   "rainAfterMm": 638.2,
+   "rainAfterMm": 752.1,
    "soil30Before": 16.5,
    "soil30After": 100.0
   },
@@ -6433,7 +6433,7 @@
    "mandal": "Penugonda",
    "boundaryIndex": 217,
    "rainBeforeMm": 598.7,
-   "rainAfterMm": 665.7,
+   "rainAfterMm": 737.6,
    "soil30Before": 13.9,
    "soil30After": 100.0
   },
@@ -6443,7 +6443,7 @@
    "mandal": "Penumantra",
    "boundaryIndex": 215,
    "rainBeforeMm": 596.1,
-   "rainAfterMm": 648.0,
+   "rainAfterMm": 754.0,
    "soil30Before": 19.1,
    "soil30After": 100.0
   },
@@ -6453,7 +6453,7 @@
    "mandal": "Poduru",
    "boundaryIndex": 219,
    "rainBeforeMm": 664.6,
-   "rainAfterMm": 739.8,
+   "rainAfterMm": 832.6,
    "soil30Before": 15.7,
    "soil30After": 100.0
   },
@@ -6463,7 +6463,7 @@
    "mandal": "Tadepalligudem",
    "boundaryIndex": 198,
    "rainBeforeMm": 577.9,
-   "rainAfterMm": 610.0,
+   "rainAfterMm": 712.8,
    "soil30Before": 27.0,
    "soil30After": 100.0
   },
@@ -6473,7 +6473,7 @@
    "mandal": "Tanuku",
    "boundaryIndex": 209,
    "rainBeforeMm": 582.1,
-   "rainAfterMm": 612.5,
+   "rainAfterMm": 715.2,
    "soil30Before": 26.8,
    "soil30After": 100.0
   },
@@ -6483,7 +6483,7 @@
    "mandal": "Undi",
    "boundaryIndex": 213,
    "rainBeforeMm": 668.1,
-   "rainAfterMm": 724.0,
+   "rainAfterMm": 777.4,
    "soil30Before": 48.3,
    "soil30After": 100.0
   },
@@ -6493,7 +6493,7 @@
    "mandal": "Veeravasaram",
    "boundaryIndex": 220,
    "rainBeforeMm": 635.6,
-   "rainAfterMm": 676.8,
+   "rainAfterMm": 742.4,
    "soil30Before": 44.3,
    "soil30After": 100.0
   },
@@ -6503,7 +6503,7 @@
    "mandal": "Yelamanchili",
    "boundaryIndex": null,
    "rainBeforeMm": 568.4,
-   "rainAfterMm": 632.8,
+   "rainAfterMm": 688.7,
    "soil30Before": 83.4,
    "soil30After": 100.0
   },
@@ -6673,7 +6673,7 @@
    "mandal": "Muddanur",
    "boundaryIndex": 453,
    "rainBeforeMm": 205.9,
-   "rainAfterMm": 210.0,
+   "rainAfterMm": 210.2,
    "soil30Before": 23.5,
    "soil30After": 35.0
   },
@@ -6763,7 +6763,7 @@
    "mandal": "Rajampet",
    "boundaryIndex": 483,
    "rainBeforeMm": 215.4,
-   "rainAfterMm": 219.1,
+   "rainAfterMm": 219.2,
    "soil30Before": 35.0,
    "soil30After": 50.7
   },
@@ -6793,7 +6793,7 @@
    "mandal": "Simhadripuram",
    "boundaryIndex": 454,
    "rainBeforeMm": 275.3,
-   "rainAfterMm": 345.0,
+   "rainAfterMm": 345.4,
    "soil30Before": 18.9,
    "soil30After": 85.9
   },
@@ -6823,7 +6823,7 @@
    "mandal": "THANDUR",
    "boundaryIndex": 458,
    "rainBeforeMm": 295.0,
-   "rainAfterMm": 336.7,
+   "rainAfterMm": 337.1,
    "soil30Before": 35.5,
    "soil30After": 62.2
   },
@@ -6903,7 +6903,7 @@
    "mandal": "Yerraguntla",
    "boundaryIndex": 460,
    "rainBeforeMm": 318.2,
-   "rainAfterMm": 323.1,
+   "rainAfterMm": 323.4,
    "soil30Before": 32.4,
    "soil30After": 23.5
   }

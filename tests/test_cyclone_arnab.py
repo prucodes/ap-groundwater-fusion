@@ -11,7 +11,7 @@ def test_storm_rain_is_the_difference_between_two_readings():
     rain = [m["rainAfterMm"] - m["rainBeforeMm"] for m in capture["mandals"]]
     assert min(rain) >= 0, "a season total cannot fall between two readings"
     assert DATA["state"]["heavyMandals"] == sum(r >= DATA["heavyMm"] for r in rain)
-    assert DATA["rainWindow"]["days"] == 4
+    assert DATA["rainWindow"]["to"] == "2026-10-30", "the storm is counted to when the rain had passed, not to landfall"
 
 
 def test_watch_list_is_deep_tables_that_got_heavy_rain():

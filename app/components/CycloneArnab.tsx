@@ -33,8 +33,8 @@ export function CycloneArnab() {
           <span className={styles.eyebrow}>Cyclone Arnab · came ashore {arnabDay(d.landfall)}</span>
           <h3 className={styles.headline} id="cyclone-arnab-title">The rain fell where the water table was already high</h3>
           <p className={styles.lede}>
-            The heaviest fell on {listOf(soakedDistricts())}, where most tables sat within {d.deepM} m of the surface.
-            The deep, dry interior, which had the most room to take it, got little.
+            The heaviest fell along the coast, on {listOf(soakedDistricts())}, and most of it landed where tables sat
+            within {d.deepM} m of the surface. The deep, dry interior, which had the most room to take it, got little.
           </p>
         </div>
         <ArnabSpiral className={styles.spiral} />
