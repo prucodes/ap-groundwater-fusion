@@ -7,8 +7,8 @@
   "counts": {
     "safe": {
       "deepening": 67,
-      "steady": 197,
-      "rising": 262
+      "steady": 196,
+      "rising": 263
     },
     "semi_critical": {
       "deepening": 4,
@@ -246,18 +246,6 @@
       "lastYear": 2026
     },
     {
-      "district": "BAPATLA",
-      "mandal": "VETAPALEM",
-      "boundaryIndex": 361,
-      "category": "safe",
-      "stagePct": 36.0,
-      "driftMPerYear": 0.8,
-      "band": "deepening",
-      "years": 12,
-      "firstYear": 2015,
-      "lastYear": 2026
-    },
-    {
       "district": "NTR",
       "mandal": "VIJAYAWADA (RURAL)",
       "boundaryIndex": 248,
@@ -396,6 +384,18 @@
       "category": "safe",
       "stagePct": 15.2,
       "driftMPerYear": 0.5,
+      "band": "deepening",
+      "years": 12,
+      "firstYear": 2015,
+      "lastYear": 2026
+    },
+    {
+      "district": "EAST GODAVARI",
+      "mandal": "RANGAMPETA",
+      "boundaryIndex": 144,
+      "category": "safe",
+      "stagePct": 68.2,
+      "driftMPerYear": 0.49,
       "band": "deepening",
       "years": 12,
       "firstYear": 2015,
@@ -1196,18 +1196,6 @@
       "lastYear": 2026
     },
     {
-      "district": "CHITTOOR",
-      "mandal": "THAVANAMPALLE",
-      "boundaryIndex": 655,
-      "category": "semi_critical",
-      "stagePct": 85.5,
-      "driftMPerYear": -0.4,
-      "band": "rising",
-      "years": 11,
-      "firstYear": 2016,
-      "lastYear": 2026
-    },
-    {
       "district": "ANANTHAPURAMU",
       "mandal": "ANANTAPUR",
       "boundaryIndex": 567,
@@ -1217,6 +1205,18 @@
       "band": "rising",
       "years": 12,
       "firstYear": 2015,
+      "lastYear": 2026
+    },
+    {
+      "district": "CHITTOOR",
+      "mandal": "THAVANAMPALLE",
+      "boundaryIndex": 655,
+      "category": "semi_critical",
+      "stagePct": 85.5,
+      "driftMPerYear": -0.34,
+      "band": "rising",
+      "years": 11,
+      "firstYear": 2016,
       "lastYear": 2026
     },
     {

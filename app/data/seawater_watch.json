@@ -1,8 +1,8 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-30T04:27:29Z",
+  "generatedAt": "2026-11-03T19:24:40Z",
   "method": "Screening proxy: mandal mean terrain elevation minus mandal mean measured depth; not a surveyed well head or a verified level relative to sea level",
-  "observationPeriod": "2026-09",
+  "observationPeriod": "2026-10",
   "elevationSource": "Terrarium terrain tiles (AWS open data), zonal mean over each mandal, about 150 m a pixel",
   "classificationSource": "CGWB and the State's Dynamic Ground Water Resources assessment, via the INGRES public dashboard",
   "deepWellThresholdM": 20.0,
@@ -10,9 +10,9 @@
   "bands": [
     {
       "band": "at or below sea level",
-      "mandals": 32,
-      "salinity": 12,
-      "salinityPct": 37.5
+      "mandals": 29,
+      "salinity": 11,
+      "salinityPct": 37.9
     },
     {
       "band": "0 to 5 m",
@@ -22,76 +22,69 @@
     },
     {
       "band": "5 to 20 m",
-      "mandals": 87,
-      "salinity": 11,
-      "salinityPct": 12.6
+      "mandals": 88,
+      "salinity": 12,
+      "salinityPct": 13.6
     },
     {
       "band": "above 20 m",
-      "mandals": 498,
+      "mandals": 500,
       "salinity": 2,
       "salinityPct": 0.4
     }
   ],
-  "medianHeadSalinityM": 4.0,
-  "medianHeadOtherM": 119.0,
+  "medianHeadSalinityM": 4.1,
+  "medianHeadOtherM": 118.6,
   "salinityUnits": 40,
-  "belowSeaLevel": 32,
+  "belowSeaLevel": 29,
   "setAsideDeepWells": [
-    {
-      "district": "BAPATLA",
-      "mandal": "VETAPALEM",
-      "depthM": 44.3,
-      "headM": -38.8,
-      "category": "safe"
-    },
     {
       "district": "ELURU",
       "mandal": "DENDULURU",
-      "depthM": 48.4,
-      "headM": -31.5,
-      "category": "safe"
-    },
-    {
-      "district": "EAST GODAVARI",
-      "mandal": "RAJAHMUNDRY RURAL",
-      "depthM": 46.3,
-      "headM": -16.7,
+      "depthM": 47.5,
+      "headM": -30.6,
       "category": "safe"
     },
     {
       "district": "KRISHNA",
       "mandal": "MUDINEPALLE",
-      "depthM": 20.8,
-      "headM": -15.6,
+      "depthM": 21.2,
+      "headM": -16.0,
       "category": "salinity"
     },
     {
-      "district": "ELURU",
-      "mandal": "PEDAPADU",
-      "depthM": 25.1,
-      "headM": -14.6,
-      "category": "safe"
-    },
-    {
-      "district": "KAKINADA",
-      "mandal": "SAMALKOTA",
-      "depthM": 24.4,
-      "headM": -14.0,
+      "district": "EAST GODAVARI",
+      "mandal": "RAJAHMUNDRY RURAL",
+      "depthM": 45.3,
+      "headM": -15.7,
       "category": "safe"
     },
     {
       "district": "ELURU",
       "mandal": "ELURU",
-      "depthM": 20.3,
-      "headM": -12.4,
+      "depthM": 20.4,
+      "headM": -12.5,
+      "category": "safe"
+    },
+    {
+      "district": "KAKINADA",
+      "mandal": "SAMALKOTA",
+      "depthM": 22.5,
+      "headM": -12.1,
+      "category": "safe"
+    },
+    {
+      "district": "ELURU",
+      "mandal": "PEDAPADU",
+      "depthM": 21.9,
+      "headM": -11.4,
       "category": "safe"
     },
     {
       "district": "WEST GODAVARI",
       "mandal": "TADEPALLIGUDEM",
-      "depthM": 26.3,
-      "headM": -2.1,
+      "depthM": 26.4,
+      "headM": -2.2,
       "category": "safe"
     }
   ],
@@ -99,17 +92,17 @@
     {
       "district": "ELURU",
       "mandal": "MANDAVALLI",
-      "depthM": 19.7,
+      "depthM": 19.9,
       "groundM": 5.6,
-      "headM": -14.1,
+      "headM": -14.3,
       "category": "salinity"
     },
     {
       "district": "KRISHNA",
       "mandal": "GUDLAVALLERU",
-      "depthM": 17.8,
+      "depthM": 17.9,
       "groundM": 7.2,
-      "headM": -10.6,
+      "headM": -10.7,
       "category": "salinity"
     },
     {
@@ -123,9 +116,9 @@
     {
       "district": "KRISHNA",
       "mandal": "PEDANA",
-      "depthM": 13.9,
+      "depthM": 14.0,
       "groundM": 6.1,
-      "headM": -7.8,
+      "headM": -7.9,
       "category": "salinity"
     },
     {
@@ -139,17 +132,17 @@
     {
       "district": "WEST GODAVARI",
       "mandal": "PALACOLE",
-      "depthM": 14.1,
+      "depthM": 16.7,
       "groundM": 9.9,
-      "headM": -4.2,
+      "headM": -6.8,
       "category": "salinity"
     },
     {
       "district": "KRISHNA",
       "mandal": "KODURU",
-      "depthM": 8.2,
+      "depthM": 8.3,
       "groundM": 4.7,
-      "headM": -3.5,
+      "headM": -3.6,
       "category": "salinity"
     },
     {
@@ -161,27 +154,19 @@
       "category": "salinity"
     },
     {
-      "district": "ELURU",
-      "mandal": "NIDAMARRU",
-      "depthM": 9.2,
-      "groundM": 7.4,
-      "headM": -1.8,
-      "category": "salinity"
-    },
-    {
-      "district": "KRISHNA",
-      "mandal": "GUDURU",
-      "depthM": 8.2,
-      "groundM": 6.7,
-      "headM": -1.5,
-      "category": "salinity"
-    },
-    {
       "district": "KRISHNA",
       "mandal": "NAGAYALANKA",
-      "depthM": 5.0,
+      "depthM": 4.8,
       "groundM": 4.0,
-      "headM": -1.0,
+      "headM": -0.8,
+      "category": "salinity"
+    },
+    {
+      "district": "ELURU",
+      "mandal": "NIDAMARRU",
+      "depthM": 7.5,
+      "groundM": 7.4,
+      "headM": -0.1,
       "category": "salinity"
     }
   ],
@@ -189,12 +174,23 @@
     {
       "district": "KRISHNA",
       "mandal": "PAMARRU",
-      "depthM": 17.3,
+      "depthM": 17.4,
       "groundM": 7.5,
       "groundP10M": 5.3,
       "reliefM": 72.0,
-      "headM": -9.8,
-      "headP10M": -12.0,
+      "headM": -9.9,
+      "headP10M": -12.1,
+      "category": "safe"
+    },
+    {
+      "district": "SRI POTTI SRIRAMULU NELLORE",
+      "mandal": "MANUBOLU",
+      "depthM": 19.0,
+      "groundM": 12.8,
+      "groundP10M": 4.0,
+      "reliefM": 80.0,
+      "headM": -6.2,
+      "headP10M": -15.0,
       "category": "safe"
     },
     {
@@ -209,124 +205,102 @@
       "category": "safe"
     },
     {
-      "district": "TIRUPATI",
-      "mandal": "TADA",
-      "depthM": 4.3,
-      "groundM": -0.7,
-      "groundP10M": -7.3,
-      "reliefM": 120.0,
-      "headM": -5.0,
-      "headP10M": -11.6,
-      "category": "safe"
-    },
-    {
       "district": "KRISHNA",
       "mandal": "VUYYURU",
-      "depthM": 16.4,
+      "depthM": 17.2,
       "groundM": 11.5,
       "groundP10M": 10.0,
       "reliefM": 10.0,
+      "headM": -5.7,
+      "headP10M": -7.2,
+      "category": "safe"
+    },
+    {
+      "district": "TIRUPATI",
+      "mandal": "TADA",
+      "depthM": 4.2,
+      "groundM": -0.7,
+      "groundP10M": -7.3,
+      "reliefM": 120.0,
       "headM": -4.9,
-      "headP10M": -6.4,
+      "headP10M": -11.5,
       "category": "safe"
     },
     {
       "district": "KRISHNA",
       "mandal": "GHANTASALA",
-      "depthM": 12.2,
+      "depthM": 11.9,
       "groundM": 7.7,
       "groundP10M": 6.0,
       "reliefM": 17.0,
-      "headM": -4.5,
-      "headP10M": -6.2,
+      "headM": -4.2,
+      "headP10M": -5.9,
       "category": "safe"
     },
     {
       "district": "ELURU",
       "mandal": "BHIMADOLE",
-      "depthM": 13.9,
+      "depthM": 12.9,
       "groundM": 9.7,
       "groundP10M": 4.0,
       "reliefM": 55.0,
-      "headM": -4.2,
-      "headP10M": -9.9,
-      "category": "safe"
-    },
-    {
-      "district": "SRI POTTI SRIRAMULU NELLORE",
-      "mandal": "VIDAVALUR",
-      "depthM": 10.0,
-      "groundM": 6.5,
-      "groundP10M": 3.0,
-      "reliefM": 74.0,
-      "headM": -3.5,
-      "headP10M": -7.0,
-      "category": "safe"
-    },
-    {
-      "district": "KRISHNA",
-      "mandal": "PEDAPARUPUDI",
-      "depthM": 11.2,
-      "groundM": 8.5,
-      "groundP10M": 7.0,
-      "reliefM": 11.0,
-      "headM": -2.7,
-      "headP10M": -4.2,
+      "headM": -3.2,
+      "headP10M": -8.9,
       "category": "safe"
     },
     {
       "district": "KRISHNA",
       "mandal": "PENAMALURU",
-      "depthM": 19.7,
+      "depthM": 19.9,
       "groundM": 17.0,
       "groundP10M": 15.0,
       "reliefM": 16.0,
-      "headM": -2.7,
-      "headP10M": -4.7,
+      "headM": -2.9,
+      "headP10M": -4.9,
       "category": "safe"
     },
     {
-      "district": "TIRUPATI",
-      "mandal": "SULLURPETA",
-      "depthM": 7.5,
-      "groundM": 5.8,
-      "groundP10M": -1.0,
-      "reliefM": 382.0,
-      "headM": -1.7,
-      "headP10M": -8.5,
+      "district": "KRISHNA",
+      "mandal": "PEDAPARUPUDI",
+      "depthM": 11.0,
+      "groundM": 8.5,
+      "groundP10M": 7.0,
+      "reliefM": 11.0,
+      "headM": -2.5,
+      "headP10M": -4.0,
+      "category": "safe"
+    },
+    {
+      "district": "SRI POTTI SRIRAMULU NELLORE",
+      "mandal": "VIDAVALUR",
+      "depthM": 8.6,
+      "groundM": 6.5,
+      "groundP10M": 3.0,
+      "reliefM": 74.0,
+      "headM": -2.1,
+      "headP10M": -5.6,
       "category": "safe"
     },
     {
       "district": "EAST GODAVARI",
       "mandal": "NIDADAVOLE",
-      "depthM": 18.4,
+      "depthM": 19.6,
       "groundM": 18.2,
       "groundP10M": 13.0,
       "reliefM": 114.0,
-      "headM": -0.2,
-      "headP10M": -5.4,
+      "headM": -1.4,
+      "headP10M": -6.6,
       "category": "safe"
     },
     {
-      "district": "KRISHNA",
-      "mandal": "UNGUTURU",
-      "depthM": 17.6,
-      "groundM": 17.4,
-      "groundP10M": 8.0,
-      "reliefM": 66.0,
-      "headM": -0.2,
-      "headP10M": -9.6,
-      "category": "safe"
-    },
-    {
-      "district": "KAKINADA",
-      "mandal": "KAKINADA (RURAL)",
-      "depthM": 5.9,
+      "district": "TIRUPATI",
+      "mandal": "SULLURPETA",
+      "depthM": 7.0,
       "groundM": 5.8,
-      "groundP10M": 2.3,
-      "reliefM": 21.0,
-      "headM": -0.1,
-      "headP10M": -3.6,
+      "groundP10M": -1.0,
+      "reliefM": 382.0,
+      "headM": -1.2,
+      "headP10M": -8.0,
       "category": "safe"
     }
   ],

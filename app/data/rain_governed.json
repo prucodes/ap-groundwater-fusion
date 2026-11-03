@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-10-30T04:27:29Z",
+  "generatedAt": "2026-11-03T19:24:39Z",
   "method": "Each mandal's May to November change in depth, fitted against that season's June to September rainfall, over every season it has both readings.",
   "window": {
     "preMonsoonMonth": 5,
@@ -34,25 +34,25 @@
     },
     {
       "class": "partly",
-      "mandals": 129,
+      "mandals": 130,
       "aquifers": {
         "hard_rock": 54,
         "coastal": 41,
-        "alluvial": 34
+        "alluvial": 35
       },
-      "medianIrrigatedPct": 29.4,
-      "stressedPct": 7.8,
-      "medianRisePer100mm": 1.52
+      "medianIrrigatedPct": 29.5,
+      "stressedPct": 7.7,
+      "medianRisePer100mm": 1.54
     },
     {
       "class": "not rain",
-      "mandals": 301,
+      "mandals": 300,
       "aquifers": {
-        "alluvial": 121,
+        "alluvial": 120,
         "coastal": 119,
         "hard_rock": 61
       },
-      "medianIrrigatedPct": 33.5,
+      "medianIrrigatedPct": 33.4,
       "stressedPct": 4.0,
       "medianRisePer100mm": 0.09
     }
@@ -255,9 +255,9 @@
       40.8
     ],
     "ELURU|KAMAVARAPUKOTA": [
-      0.12,
+      0.07,
       2,
-      0.47,
+      0.38,
       8,
       95.7
     ],
@@ -1020,7 +1020,7 @@
     "CHITTOOR|THAVANAMPALLE": [
       0.53,
       0,
-      2.48,
+      2.47,
       7,
       4.0
     ],
@@ -1039,9 +1039,9 @@
       null
     ],
     "NANDYAL|SANJAMALA": [
-      0.12,
+      0.11,
       2,
-      0.5,
+      0.48,
       8,
       33.3
     ],
@@ -2747,9 +2747,9 @@
       5.8
     ],
     "EAST GODAVARI|RANGAMPETA": [
-      0.05,
-      2,
-      2.12,
+      0.16,
+      1,
+      3.89,
       8,
       38.5
     ],

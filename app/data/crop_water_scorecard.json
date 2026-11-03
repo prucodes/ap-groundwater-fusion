@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-10-30T04:44:39+00:00",
+ "generatedAt": "2026-11-03T19:39:43+00:00",
  "method": "Each week's calls, made on that week's ECMWF forecast and frozen the day they were made, compared three weeks later with the NOAA STAR vegetation index over rainfed cropland, inside the same mandal and season, as the track record compares them. Seasons: kharif June-September, rabi October-May.",
  "rainfedMandals": 437,
- "frozen": 7,
- "scored": 0,
+ "frozen": 8,
+ "scored": 2,
  "firstFrozen": "2026-10-04",
- "nextDue": "2026-10-31",
+ "nextDue": "2026-11-07",
  "weeks": [
   {
    "issued": "2026-10-04",
@@ -15,7 +15,7 @@
     43
    ],
    "due": "2026-10-31",
-   "scored": false,
+   "scored": true,
    "fieldScored": false,
    "fieldMandals": 0
   },
@@ -27,7 +27,7 @@
     43
    ],
    "due": "2026-10-31",
-   "scored": false,
+   "scored": true,
    "fieldScored": false,
    "fieldMandals": 0
   },
@@ -90,384 +90,543 @@
    "scored": false,
    "fieldScored": false,
    "fieldMandals": 0
+  },
+  {
+   "issued": "2026-11-04",
+   "season": "2026-27 rabi",
+   "outcomeWeek": [
+    2026,
+    47
+   ],
+   "due": "2026-11-28",
+   "scored": false,
+   "fieldScored": false,
+   "fieldMandals": 0
   }
  ],
  "record": {
   "maize-0": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 59,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 59,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 59,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "maize-1": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 42,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 42,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 42,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "maize-2": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 9,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 9,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 9,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "groundnut-0": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 60,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 60,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 60,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "groundnut-1": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 30,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 30,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 30,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "groundnut-2": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 33,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 33,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 33,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "cotton-0": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 74,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 74,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 74,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "cotton-1": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 13,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 13,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 13,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "cotton-2": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 10,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 10,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 10,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "chilli-0": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 19,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 19,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 19,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "chilli-1": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 28,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 28,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 28,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "chilli-2": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 30,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 30,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 30,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "redgram-0": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 64,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 64,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 64,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "redgram-1": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 50,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 50,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 50,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "redgram-2": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 19,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 19,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 19,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "bengalgram-0": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 60,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 60,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 60,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "bengalgram-1": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 47,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 47,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 47,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "bengalgram-2": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 24,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 24,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 24,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "jowar-0": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 59,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 59,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 59,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "jowar-1": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 30,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 30,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 30,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   },
   "jowar-2": {
    "within": {
     "sameSeason": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 14,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
     "acrossSeasons": {
-     "mandals": 0,
-     "changeGap": null,
-     "afterGap": null,
-     "worsePct": null
+     "mandals": 14,
+     "changeGap": 0.0,
+     "afterGap": 0.0,
+     "worsePct": 0.0
     },
-    "seasons": {}
+    "seasons": {
+     "2026-27 rabi": {
+      "mandals": 14,
+      "changeGap": 0.0,
+      "afterGap": 0.0,
+      "worsePct": 0.0
+     }
+    }
    },
    "verdict": "untested"
   }
