@@ -48,6 +48,9 @@ OUT = os.path.join(ROOT, "app", "data", "cyclone_arnab.json")
 LOG = os.path.join(HERE, "data", "cyclone_arnab_daily.json")
 CONTEXT = os.path.join(ROOT, "app", "data", "water_context.json")
 DROUGHT = os.path.join(ROOT, "app", "data", "drought_watch.json")
+# The drought flags standing when the storm arrived. The weekly refresh rebuilds the
+# drought watch with the storm's own rain in it, so the overlay reads this copy.
+DROUGHT_BEFORE = os.path.join(HERE, "data", "cyclone_arnab_drought_before.json")
 BEFORE_MONTH = "2026-09"             # the last reading before the storm
 AFTER_MONTHS = ["2026-10", "2026-11"]
 
@@ -267,9 +270,14 @@ def did_it_follow(gw_by_uuid, mandals, precedent):
 
 def drought_overlay(outline):
     """The storm's rain against the drought manual's flags, outline by outline."""
-    if not os.path.exists(DROUGHT):
-        return {}, None
-    watch = json.load(open(DROUGHT))
+    if not os.path.exists(DROUGHT_BEFORE):
+        if not os.path.exists(DROUGHT):
+            return {}, None
+        watch = json.load(open(DROUGHT))
+        json.dump({"season": {k: watch["season"][k] for k in ("asOf", "declareBy")},
+                   "mandals": [{k: row.get(k) for k in ("i", "category", "t1Why")} for row in watch["mandals"]]},
+                  open(DROUGHT_BEFORE, "w"), separators=(",", ":"))
+    watch = json.load(open(DROUGHT_BEFORE))
     flags, flagged = {}, []
     for row in watch["mandals"]:
         category = row.get("category")

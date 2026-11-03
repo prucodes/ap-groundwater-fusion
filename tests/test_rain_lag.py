@@ -29,7 +29,8 @@ def test_the_monsoon_watch_reads_the_rain_it_has_when_groundwater_runs_ahead(tmp
     assert rain is not None, "the rainfall section must not vanish while a month's rain is unpublished"
     assert payload["season"]["latestMonth"] == latest
     assert int(rain["months"][-2:]) == int(latest[5:7]) - 1, "rain should run to the month before the groundwater"
-    assert rain["notYetPublished"] == [latest]
+    # Only a monsoon month can be missing; October's rain is not part of the season total.
+    assert rain["notYetPublished"] == ([latest] if int(latest[5:7]) in watch.SW_MONSOON else [])
     assert payload["rainfallHistory"]["months"] == rain["months"], "every charted year must cover the same months"
 
 
