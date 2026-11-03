@@ -7,8 +7,9 @@ async function pointAt(page: Page, path: Locator) {
     for (let y = .15; y < 1; y += .1) for (let x = .15; x < 1; x += .1) {
       const point = new DOMPoint(box.x + box.width * x, box.y + box.height * y);
       if (element.isPointInFill(point)) {
+        // A neighbouring outline can lie over this one; hover only where this shape is on top.
         const screen = point.matrixTransform(matrix);
-        return { x: screen.x, y: screen.y };
+        if (document.elementFromPoint(screen.x, screen.y) === element) return { x: screen.x, y: screen.y };
       }
     }
     throw new Error("No interior point in this map shape");
