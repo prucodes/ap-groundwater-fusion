@@ -8,6 +8,15 @@ export type ArnabPrecedent = { band: string; mandals: number; extraRiseM: number
 export type ArnabDay = { date: string; rainTo: string; rainSinceTmc: number; soilMedian30: number; reservoirTmc: number; reservoirPct: number };
 export type ArnabGain = { name: string; basin: string; district: string; capacityTmc: number; beforeTmc: number; nowTmc: number; gainTmc: number; beforePct: number; nowPct: number };
 export type ArnabWatch = { district: string; mandal: string; stormMm: number; depthM: number; precedentM: number | null; octRiseM?: number; novExtraRiseM?: number };
+export type Murasu = {
+  landfall: string; landfallNear: string; depthMonth: string;
+  rainWindow: { from: string; to: string; closes: string; days: number; open: boolean };
+  state: { rainTmc: number; normalTmc: number; seasonDeviationBefore: number; seasonDeviationAfter: number;
+    mandals: number; heavyMandals: number; deepMandals: number; deepHeavyMandals: number; bothHeavy: number };
+  districts: Array<{ district: string; mandals: number; medianMm: number; heavy: number }>;
+  drought: Arnab["drought"];
+  map: Arnab["map"];
+};
 export type Arnab = {
   landfall: string; updatedAt: string | null; rainWindow: { from: string; to: string; days: number }; groundwaterLatest: string;
   state: {
@@ -25,6 +34,7 @@ export type Arnab = {
   map: Array<[number, string, string, number, number | null, string]>;
   drought: { asOf: string; declareBy: string; flagged: number; flaggedHeavy: number; medianMm: number; severe: number; severeHeavy: number; byDrySpell: number } | null;
   watch: ArnabWatch[];
+  murasu: Murasu | null;
   caveat: string;
 };
 

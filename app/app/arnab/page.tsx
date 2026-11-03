@@ -15,15 +15,17 @@ import shared from "../rabi/Rabi.module.css";
 import styles from "./Arnab.module.css";
 
 export const metadata: Metadata = {
-  title: "Cyclone Arnab | AP Water Intelligence",
-  description: "Where Cyclone Arnab's rain fell across Andhra Pradesh, where the water went, and whether the water table rose where it had room. Updated daily.",
+  title: "Cyclones Arnab and Murasu | AP Water Intelligence",
+  description: "Where the rain of Cyclones Arnab and Murasu fell across Andhra Pradesh, where the water went, and whether the water table rose where it had room. Updated daily.",
 };
 
 const signed = (v: number, unit: string) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(1)} ${unit}`;
 
+const plusDays = (iso: string, n: number) => new Date(Date.parse(`${iso}T00:00:00Z`) + n * 864e5).toISOString().slice(0, 10);
+
 /* Storage across the State's reservoirs, day by day since the storm. A quiet line:
-   the days are few, so every reading is a labelled point. */
-function StorageLine({ days }: { days: ArnabDay[] }) {
+   the days are few, so every reading is a labelled point. A second storm gets a mark. */
+function StorageLine({ days, mark }: { days: ArnabDay[]; mark?: { date: string; label: string } }) {
   const W = 560, H = 180, L = 48, R = 34, T = 30, B = 30;
   const v = days.map(d => d.reservoirTmc);
   const lo = Math.floor((Math.min(...v) - 2) / 5) * 5, hi = Math.ceil((Math.max(...v) + 2) / 5) * 5;
@@ -32,6 +34,7 @@ function StorageLine({ days }: { days: ArnabDay[] }) {
   const line = days.map((d, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(d.reservoirTmc).toFixed(1)}`).join("");
   const area = `${line}L${x(days.length - 1).toFixed(1)},${H - B}L${x(0).toFixed(1)},${H - B}Z`;
   const ticks = [lo, Math.round((lo + hi) / 2), hi];
+  const at = mark ? days.findIndex(d => d.date >= mark.date) : -1;
   return (
     <svg className={styles.line} viewBox={`0 0 ${W} ${H}`} role="img"
       aria-label={`Reservoir storage by day: ${days.map(d => `${arnabDay(d.date)} ${d.reservoirTmc} TMC`).join(", ")}.`}>
@@ -46,6 +49,10 @@ function StorageLine({ days }: { days: ArnabDay[] }) {
         <text x={L - 8} y={y(t) + 4} textAnchor="end" className={styles.tick}>{t}</text>
       </g>)}
       <path d={area} fill="url(#arnabFill)" />
+      {at >= 0 ? <g className={styles.mark}>
+        <line x1={x(at)} x2={x(at)} y1={T - 12} y2={H - B} />
+        <text x={x(at) - 6} y={T - 14} textAnchor="end">{mark!.label}</text>
+      </g> : null}
       <path d={line} className={styles.stroke} />
       {days.map((d, i) => <g key={d.date}>
         <circle cx={x(i)} cy={y(d.reservoirTmc)} r={i === days.length - 1 ? 5 : 3.5} className={i === days.length - 1 ? styles.dotNow : styles.dot} />
@@ -57,7 +64,7 @@ function StorageLine({ days }: { days: ArnabDay[] }) {
 }
 
 export default function ArnabPage() {
-  const d = arnab, s = d.state, since = d.since, dr = d.drought;
+  const d = arnab, s = d.state, since = d.since, dr = d.drought, mu = d.murasu;
   const seen = arnabMonth(d.groundwaterLatest);
   const soaked = soakedDistricts();
   const precedent = new Map(d.precedent.bands.map(b => [b.band, b]));
@@ -66,19 +73,27 @@ export default function ArnabPage() {
   const wettest = d.districts.slice(0, 8);
   const topMm = Math.max(...wettest.map(x => x.medianMm), 1);
   const octOut = d.follow.published.includes("2026-10"), novOut = d.follow.published.includes("2026-11");
+  const mw = mu?.rainWindow, ms = mu?.state;
+  const muCounted = mu && mw && ms ? (
+    mw.to < mu.landfall
+      ? <>Gauges post their rain two days late, so the rain of landfall day reaches this page on {arnabDay(plusDays(mu.landfall, 2))}; until then these figures are the days before it.</>
+      : mw.open
+        ? <>Counted from {arnabDay(mw.from)} to {arnabDay(mw.to)}; the count stays open until the gauges reach {arnabDay(mw.closes)}.</>
+        : <>Counted from {arnabDay(mw.from)} to {arnabDay(mw.to)}: <b>{ms.heavyMandals} mandals</b> got {d.heavyMm} mm or more.</>
+  ) : null;
 
   return (
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
-        title="Cyclone Arnab"
-        brief={brief("/arnab", <><b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, most of it along the coast; only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.</>)}
+        title={mu ? "Cyclones Arnab and Murasu" : "Cyclone Arnab"}
+        brief={brief("/arnab", <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.open ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> in {mw.days} days</>}.</> : null}</>)}
         showChips={false}
         variant="compact"
       />
 
       <section className={styles.hero} aria-label="Cyclone Arnab in figures" data-testid="arnab-hero">
         <div className={styles.heroText}>
-          <span className={styles.kicker}>Came ashore {arnabDay(d.landfall)} 2026 · updated {d.updatedAt ? arnabDay(d.updatedAt) : "daily"}</span>
+          <span className={styles.kicker}>Arnab · came ashore {arnabDay(d.landfall)} 2026 · updated {d.updatedAt ? arnabDay(d.updatedAt) : "daily"}</span>
           <h2>The rain fell where the water table was already high</h2>
           <p>The heaviest fell along the coast, on {listOf(soaked)}, and most of it landed where tables sat within {d.deepM} m of the surface. The deep, dry interior, which had the most room to take it, got little.</p>
         </div>
@@ -92,8 +107,43 @@ export default function ArnabPage() {
       </section>
 
       <nav className={`jumpNav jumpNavPlain ${styles.jump}`} aria-label="Cyclone Arnab sections">
-        <a href="#arnab-rain">What fell</a><a href="#arnab-water">Where the water went</a><a href="#arnab-room">Room to rise</a><a href="#arnab-follow">Did Arnab follow?</a>
+        {mu ? <a href="#murasu">Then Murasu</a> : null}<a href="#arnab-rain">What fell</a><a href="#arnab-water">Where the water went</a><a href="#arnab-room">Room to rise</a><a href="#arnab-follow">Did Arnab follow?</a>
       </nav>
+
+      {mu && mw && ms ? (
+        <section className={shared.block} id="murasu" aria-labelledby="murasu-title" data-testid="murasu">
+          <CountedReach event="arnab/reached-murasu" title="Cyclones: reached Murasu" />
+          <header className={shared.blockHead}>
+            <span className={shared.eyebrow}><IconCyclone /> The second cyclone in a week</span>
+            <h2 id="murasu-title">Then Murasu</h2>
+            <p>Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}. Its rain is counted from {arnabDay(mw.from)}, the day after Arnab&apos;s count closed, so no day is counted twice. {muCounted}</p>
+          </header>
+          <div className={styles.status}>
+            <span data-done={!mw.open || undefined}><i />{mw.open ? `Counting, rain to ${arnabDay(mw.to)}` : `Counted, ${arnabDay(mw.from)} to ${arnabDay(mw.to)}`}</span>
+          </div>
+          <ul className={styles.figures}>
+            <li><span>Rain{mw.open ? " so far" : `, ${mw.days} days`}</span><b>{formatNumber(Math.round(ms.rainTmc))}<small> TMC</small></b><em>normal for the days, {formatNumber(Math.round(ms.normalTmc))} TMC</em></li>
+            <li><span>Heavy rain</span><b>{ms.heavyMandals}<small>{ms.heavyMandals === 1 ? " mandal" : " mandals"}</small></b><em>got {d.heavyMm} mm or more</em></li>
+            <li><span>Deep tables</span><b>{ms.deepHeavyMandals}<small> of {ms.deepMandals}</small></b><em>got {d.heavyMm} mm or more; Arnab, {s.deepHeavyMandals}</em></li>
+            {mu.drought ? <li><span>Drought flagged</span><b>{mu.drought.flaggedHeavy}<small> of {mu.drought.flagged}</small></b><em>got {d.heavyMm} mm or more; Arnab, {dr?.flaggedHeavy}</em></li> : null}
+          </ul>
+          <div className={styles.split}>
+            <ArnabRainMap id="murasu" name="Cyclone Murasu" rows={mu.map} heavyMm={d.heavyMm} window={`${arnabDay(mw.from)} to ${arnabDay(mw.to)}`}
+              aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height} />
+            <div className={styles.side}>
+              <h3>Wettest districts{mw.open ? " so far" : ""}</h3>
+              <ol className={styles.bars} aria-label="Median mandal rain by district, Murasu">
+                {mu.districts.slice(0, 8).map(x => <li key={x.district}>
+                  <span>{x.district}</span>
+                  <i style={{ width: `${(100 * x.medianMm) / Math.max(mu.districts[0]?.medianMm ?? 1, 1)}%` }} />
+                  <b>{x.medianMm} mm</b>
+                </li>)}
+              </ol>
+              <p className={styles.small}>Median mandal in each district. {ms.bothHeavy && mw.to >= mu.landfall ? <>{ms.bothHeavy} {ms.bothHeavy === 1 ? "mandal has" : "mandals have"} now had {d.heavyMm} mm or more from each storm. </> : null}Depth is the {arnabMonth(mu.depthMonth)} reading. The November reading will carry both storms together.</p>
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       <section className={shared.block} id="arnab-rain" aria-labelledby="arnab-rain-title">
         <header className={shared.blockHead}>
@@ -132,12 +182,12 @@ export default function ArnabPage() {
           <header className={shared.blockHead}>
             <span className={shared.eyebrow}><IconWaves /> Reservoirs, read daily</span>
             <h2 id="arnab-water-title">Where the water went</h2>
-            <p>The State&apos;s {formatNumber(Math.round(since.days[0].reservoirTmc))} TMC of reservoir storage on {arnabDay(since.from)}, read every morning since. The smaller north-coast reservoirs filled first; water reaches the large Krishna and Godavari reservoirs later, if at all.</p>
+            <p>The State&apos;s {formatNumber(Math.round(since.days[0].reservoirTmc))} TMC of reservoir storage on {arnabDay(since.from)}, read every morning since. The smaller north-coast reservoirs filled first; water reaches the large Krishna and Godavari reservoirs later, if at all.{mu && since.to >= mu.landfall ? <> From {arnabDay(mu.landfall)} the readings carry Murasu&apos;s water too.</> : null}</p>
           </header>
           <div className={styles.split}>
             <div className={styles.side}>
               <h3>All reservoirs, storage</h3>
-              <StorageLine days={since.days} />
+              <StorageLine days={since.days} mark={mu ? { date: mu.landfall, label: "Murasu" } : undefined} />
               <h3>By river basin</h3>
               <ul className={styles.dumbbells}>
                 {since.basins.map(b => <li key={b.basin}>
@@ -201,7 +251,7 @@ export default function ArnabPage() {
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconTarget /> Checked when the readings arrive</span>
           <h2 id="arnab-follow-title">Did Arnab follow?</h2>
-          <p>The {d.watch.length} mandals where heavy rain met a deep table. The State publishes each month&apos;s reading after the month ends; when October and November arrive, this fills in by itself.</p>
+          <p>The {d.watch.length} mandals where heavy rain met a deep table. The State publishes each month&apos;s reading after the month ends; when October and November arrive, this fills in by itself.{mu ? " November carries Murasu's rain as well, so it shows the two storms together." : ""}</p>
         </header>
         <div className={styles.status}>
           <span data-done={octOut || undefined}><i />October {octOut ? "in" : "awaited"}</span>

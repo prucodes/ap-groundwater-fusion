@@ -58,6 +58,17 @@
 .tick { font: 500 10px var(--font-mono); fill: var(--muted-2); }
 .stroke { fill: none; stroke: #12b5cb; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
 .dot { fill: var(--card); stroke: #12b5cb; stroke-width: 2; }
+.mark line { stroke: var(--muted-2); stroke-width: 1; stroke-dasharray: 3 3; }
+.mark text { font: 600 10px var(--font-mono); fill: var(--ink-soft); }
+
+/* Murasu's figures: the hero's four tiles in the light card style */
+.figures { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.figures li { display: grid; gap: 4px; align-content: start; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--field); }
+.figures span { font: 600 10px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted-2); }
+.figures b { font: 600 24px/1.1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.figures b small { font-size: 14px; font-weight: 500; color: var(--muted-2); }
+.figures em { font-style: normal; font-size: 12px; line-height: 1.4; color: var(--ink-soft); }
+
 .dotNow { fill: #12b5cb; stroke: var(--card); stroke-width: 2; }
 
 /* Basins, before and now */
@@ -143,7 +154,7 @@
 
 @media (max-width: 1080px) {
   .split { grid-template-columns: minmax(0, 1fr); }
-  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tiles, .figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
   .wideOnly { display: none; }
@@ -156,7 +167,10 @@
   .hero { grid-template-columns: minmax(0, 1fr); padding: 22px 18px; }
   .hero h2 { font-size: 25px; padding-right: 64px; }
   .kicker { padding-right: 76px; }
-  .tick { font-size: 17px; }
+  .tick, .mark text { font-size: 17px; }
+  .figures { gap: 8px; }
+  .figures li { padding: 10px 12px; }
+  .figures b { font-size: 20px; }
   .spiral { position: absolute; top: 16px; right: 14px; width: 68px; height: 68px; opacity: .55; }
   .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .tiles li { padding: 12px; }

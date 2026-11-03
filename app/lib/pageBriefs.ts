@@ -38,8 +38,8 @@ export const BRIEFS = {
     use: "Plan bore wells, hand-pump repairs and tankers where it is heading past its record first; it updates every Monday.",
   },
   "/arnab": {
-    what: "Cyclone Arnab measured: the rain by mandal, the reservoirs filling after it, and whether the water table rose where it had room.",
-    use: "Look to the deep-table mandals that got heavy rain; the November readings will show what the storm put into the ground.",
+    what: "Cyclones Arnab and Murasu measured: the rain by mandal, the reservoirs filling after them, and whether the water table rose where it had room.",
+    use: "Look to the deep-table mandals that got heavy rain; the November readings will show what the two storms put into the ground.",
   },
   "/rabi": {
     what: "What the rabi season starts with: water in the reservoirs, moisture in rainfed fields, and the northeast monsoon.",
