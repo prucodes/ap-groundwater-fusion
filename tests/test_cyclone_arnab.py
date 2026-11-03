@@ -55,3 +55,21 @@ def test_drought_overlay_counts_only_settled_flags_and_says_it_is_not_a_declarat
     assert drought["severeHeavy"] <= drought["severe"] <= drought["flagged"]
     page = open(os.path.join(ROOT, "app", "app", "arnab", "page.tsx")).read()
     assert "not a declaration" in page
+
+
+def test_murasu_starts_where_arnab_stopped_and_stays_open_until_the_gauges_pass():
+    murasu = DATA["murasu"]
+    window = murasu["rainWindow"]
+    assert window["from"] == "2026-10-31", "the day after Arnab's count closed, so no day is counted twice"
+    assert window["to"] <= window["closes"]
+    assert window["open"] == (window["to"] < window["closes"])
+    kept = json.load(open(os.path.join(ROOT, "phase3_levels", "data", "cyclone_murasu_rain.json")))
+    assert kept["from"] == DATA["rainWindow"]["to"] and kept["to"] == window["to"]
+
+
+def test_murasu_rain_is_never_negative_and_uses_arnab_drought_base():
+    murasu = DATA["murasu"]
+    assert min(row[3] for row in murasu["map"]) >= 0
+    assert murasu["state"]["heavyMandals"] >= murasu["state"]["deepHeavyMandals"]
+    assert murasu["drought"]["flagged"] == DATA["drought"]["flagged"], "both storms read the same pre-storm drought flags"
+    assert "both storms" in DATA["caveat"]

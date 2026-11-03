@@ -5,7 +5,7 @@ import { StateOutlineMap } from "./StateOutlineMap";
 import { RAIN_SCALE } from "../lib/arnabScale";
 import { countEvent } from "../lib/visit-counter";
 
-/* What Arnab's rain fell on. Storm rain alone, or the same rain against the drought
+/* What a storm's rain fell on (Arnab's, and Murasu's after it). Storm rain alone, or the same rain against the drought
    manual's flags: which flagged mandals it reached and which it missed. The mandals
    the manual reads as severe, or possibly severe, keep an ink ring. */
 
@@ -18,7 +18,8 @@ const FLAGS = {
   o: { label: "Not flagged", color: "#e6ebf1" },
 };
 
-export function ArnabRainMap({ rows, heavyMm, window, aspect }: { rows: Row[]; heavyMm: number; window: string; aspect: number }) {
+export function ArnabRainMap({ rows, heavyMm, window, aspect, id = "arnab", name = "Cyclone Arnab" }:
+  { rows: Row[]; heavyMm: number; window: string; aspect: number; id?: string; name?: string }) {
   const [view, setView] = useState<View>("rain");
   const count = rows.reduce((n, r) => Math.max(n, r[0] + 1), 0);
   const keys = Array<string>(count).fill("i"), notes = Array<string>(count).fill("No reading.");
@@ -34,17 +35,17 @@ export function ArnabRainMap({ rows, heavyMm, window, aspect }: { rows: Row[]; h
     : Object.fromEntries(Object.entries(FLAGS).map(([k, v]) => [k, v.color]));
   colors.i = "#e6ebf1";
   const pick = (next: View, label: string) => {
-    if (next !== view) countEvent(`arnab/map-${next}`, `Arnab: viewed the map as ${label}`);
+    if (next !== view) countEvent(id === "arnab" ? `arnab/map-${next}` : `arnab/${id}-map-${next}`, `${name}: viewed the map as ${label}`);
     setView(next);
   };
 
   return <div className="arnabMap">
     <div className="segmented" role="group" aria-label="Map view">
-      <button type="button" className={`segBtn ${view === "rain" ? "active" : ""}`} aria-pressed={view === "rain"} onClick={() => pick("rain", "storm rain")} data-testid="arnab-view-rain">Storm rain</button>
-      <button type="button" className={`segBtn ${view === "drought" ? "active" : ""}`} aria-pressed={view === "drought"} onClick={() => pick("drought", "drought flags")} data-testid="arnab-view-drought">Drought flags</button>
+      <button type="button" className={`segBtn ${view === "rain" ? "active" : ""}`} aria-pressed={view === "rain"} onClick={() => pick("rain", "storm rain")} data-testid={`${id}-view-rain`}>Storm rain</button>
+      <button type="button" className={`segBtn ${view === "drought" ? "active" : ""}`} aria-pressed={view === "drought"} onClick={() => pick("drought", "drought flags")} data-testid={`${id}-view-drought`}>Drought flags</button>
     </div>
-    <StateOutlineMap testId="arnab-rain-map" aspect={aspect} keys={keys} colors={colors} notes={notes} marks={view === "drought" ? marks : undefined}
-      label={`Cyclone Arnab's rain, ${window}: ${view === "rain" ? "storm rain" : "against the drought flags"}.`}
+    <StateOutlineMap testId={`${id}-rain-map`} aspect={aspect} keys={keys} colors={colors} notes={notes} marks={view === "drought" ? marks : undefined}
+      label={`${name}'s rain, ${window}: ${view === "rain" ? "storm rain" : "against the drought flags"}.`}
       legend={view === "rain"
         ? <>{RAIN_SCALE.map(b => <span key={b.key}><i style={{ background: b.color }} />{b.label}</span>)}</>
         : <>

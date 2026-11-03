@@ -134,3 +134,14 @@ test("the Cyclone Arnab page sets the rain against room to rise and waits for th
   await expect(follow).toContainText("November awaited");
   await expect(page.locator("#arnab-room")).toContainText("not a forecast");
 });
+
+test("Murasu is counted from where Arnab stopped, on its own map", async ({ page }) => {
+  await page.goto("/arnab/");
+  const murasu = page.getByTestId("murasu");
+  await expect(murasu).toContainText("no day is counted twice");
+  await expect(murasu).toContainText(/Count(ing|ed), /);
+  await page.getByTestId("murasu-view-drought").click();
+  await expect(page.getByTestId("murasu-rain-map")).toContainText("Flagged, little rain");
+  await expect(page.getByTestId("arnab-view-rain")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByTestId("arnab-follow")).toContainText("the two storms together");
+});

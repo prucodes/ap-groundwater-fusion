@@ -25,6 +25,12 @@ soil moisture, and storage in every reservoir, so the page can show where the
 water went as the rivers bring it down. And once the State publishes October
 and November readings, it sets what the water table did against the precedent.
 
+Cyclone Murasu came ashore near Ongole on 3 November 2026, a week later. Its rain
+is counted from 31 October, the day after Arnab's count closed, so the two never
+overlap: each run reads the season total again and keeps it in
+phase3_levels/data/cyclone_murasu_rain.json, until the gauges reach MURASU_CLOSES.
+The November groundwater reading carries both storms; it cannot tell them apart.
+
 Run daily by .github/workflows/arnab_daily.yml until 15 November 2026, and by
 the weekly refresh after that.
 
@@ -52,6 +58,12 @@ DROUGHT = os.path.join(ROOT, "app", "data", "drought_watch.json")
 # drought watch with the storm's own rain in it, so the overlay reads this copy.
 DROUGHT_BEFORE = os.path.join(HERE, "data", "cyclone_arnab_drought_before.json")
 BEFORE_MONTH = "2026-09"             # the last reading before the storm
+MURASU = os.path.join(HERE, "data", "cyclone_murasu_rain.json")
+MURASU_LANDFALL = "2026-11-03"
+# Gauge rain is counted to this day and no further. IMD expected Murasu to weaken
+# over north coastal Andhra Pradesh by 5 November; one day more lets its last
+# bands in. Gauges post two days late, so the count closes on the 8 November run.
+MURASU_CLOSES = "2026-11-06"
 AFTER_MONTHS = ["2026-10", "2026-11"]
 
 RAIN_BASE_TMC = None
@@ -298,6 +310,75 @@ def drought_overlay(outline):
     }
 
 
+def murasu_reading(cap):
+    """Keep the latest season total that falls inside Murasu's window; once the gauges pass
+    MURASU_CLOSES the kept reading stops moving."""
+    kept = json.load(open(MURASU)) if os.path.exists(MURASU) else None
+    if not os.path.exists(CONTEXT):
+        return kept
+    context = json.load(open(CONTEXT))
+    rain = context["rainfall"]
+    end = rain["window"]["end"]
+    if end <= cap["rainWindow"]["after"] or end > MURASU_CLOSES or (kept and end <= kept["to"]):
+        return kept
+    kept = {"from": cap["rainWindow"]["after"], "to": end,
+            "state": {"rainTmc": rain["state"]["actualTmc"], "normalTmc": rain["state"]["normalTmc"],
+                      "seasonDeviation": rain["state"]["deviationPct"]},
+            "mandals": {m["uuid"]: m["actualMm"] for m in rain["mandals"] if m.get("actualMm") is not None}}
+    with open(MURASU, "w") as handle:
+        json.dump(kept, handle, separators=(",", ":"))
+    return kept
+
+
+def murasu(cap, gw_by_uuid, arnab_mm):
+    """Murasu's rain, the season total now less Arnab's closing reading, on the same terms as Arnab's."""
+    reading = murasu_reading(cap)
+    if not reading:
+        return None
+    month = "2026-10" if any("2026-10" in s for s in gw_by_uuid.values()) else BEFORE_MONTH
+    mandals = []
+    for m in cap["mandals"]:
+        now = reading["mandals"].get(m["uuid"])
+        if now is None:
+            continue
+        depth = gw_by_uuid.get(m["uuid"], {}).get(month)
+        # A revision to the season total can pull a reading below the last one; that is not rain.
+        mandals.append({**m, "stormMm": round(max(0.0, now - m["rainAfterMm"]), 1),
+                        "arnabMm": arnab_mm.get(m["uuid"]), "depthM": round(depth, 2) if depth is not None else None})
+    heavy = [m for m in mandals if m["stormMm"] >= HEAVY_MM]
+    deep = [m for m in mandals if m["depthM"] is not None and m["depthM"] >= DEEP_M]
+    districts = defaultdict(list)
+    for m in mandals:
+        districts[m["district"]].append(m["stormMm"])
+    outline = {}
+    for m in mandals:
+        i = m.get("boundaryIndex")
+        if i is not None and (i not in outline or m["stormMm"] > outline[i]["stormMm"]):
+            outline[i] = m
+    flags, drought = drought_overlay(outline)
+    s = cap["state"]
+    start = datetime.date.fromisoformat(reading["from"]) + datetime.timedelta(days=1)
+    return {
+        "event": "Cyclone Murasu", "landfall": MURASU_LANDFALL, "landfallNear": "Ongole",
+        "rainWindow": {"from": start.isoformat(), "to": reading["to"], "closes": MURASU_CLOSES,
+                       "days": (datetime.date.fromisoformat(reading["to"]) - start).days + 1,
+                       "open": reading["to"] < MURASU_CLOSES},
+        "depthMonth": month,
+        "state": {
+            "rainTmc": round(reading["state"]["rainTmc"] - s["rainTmcAfter"], 1),
+            "normalTmc": round(reading["state"]["normalTmc"] - s["normalTmcAfter"], 1),
+            "seasonDeviationBefore": s["seasonDeviationAfter"], "seasonDeviationAfter": reading["state"]["seasonDeviation"],
+            "mandals": len(mandals), "heavyMandals": len(heavy),
+            "deepMandals": len(deep), "deepHeavyMandals": sum(m["stormMm"] >= HEAVY_MM for m in deep),
+            "bothHeavy": sum(m["stormMm"] >= HEAVY_MM and (m["arnabMm"] or 0) >= HEAVY_MM for m in mandals),
+        },
+        "districts": sorted(({"district": d, "mandals": len(v), "medianMm": round(statistics.median(v), 0),
+                              "heavy": sum(x >= HEAVY_MM for x in v)} for d, v in districts.items()), key=lambda r: -r["medianMm"]),
+        "drought": drought,
+        "map": [[i, m["mandal"], m["district"], round(m["stormMm"]), m["depthM"], flags.get(i, "")] for i, m in sorted(outline.items())],
+    }
+
+
 def main():
     if "--capture" in sys.argv:
         i = sys.argv.index("--capture")
@@ -345,6 +426,7 @@ def main():
     flags, drought = drought_overlay(outline)
     map_rows = [[i, m["mandal"], m["district"], round(m["stormMm"]), m["depthM"], flags.get(i, "")] for i, m in sorted(outline.items())]
 
+    second = murasu(cap, gw_by_uuid, {m["uuid"]: m["stormMm"] for m in mandals})
     precedent = {"event": "Cyclone Montha", "landfall": "2025-10-28", **montha_precedent(gw_by_name)}
     follow, follow_rows = did_it_follow(gw_by_uuid, mandals, precedent)
     expected = {b["band"]: b["extraRiseM"] for b in precedent["bands"]}
@@ -377,12 +459,15 @@ def main():
         "precedent": precedent,
         "since": where_it_went(log),
         "follow": follow,
+        "murasu": second,
         "updatedAt": log["days"][-1]["date"] if log["days"] else None,
         "map": map_rows,
         "watch": [{"district": m["district"], "mandal": m["mandal"], "stormMm": m["stormMm"], "depthM": m["depthM"],
                    "precedentM": expected.get(band_of(m["depthM"])), **follow_rows.get(m["uuid"], {})} for m in watch],
         "caveat": ("Rain is the State's gauge network, the difference between its season totals before and after the storm. "
-                   "Groundwater after the storm is not published yet; the November reading is the first that will show it. "
+                   "Murasu's rain is counted the same way, from the day after Arnab's count closed, so no day is counted twice. "
+                   "Groundwater after the storm is not published yet; the November reading is the first that will show it, "
+                   "and it carries both storms together. "
                    "Last year's figures are a precedent, not a forecast: October 2025 was wet before Montha too, and the deepest "
                    "band holds few mandals. The three-month forecasts frozen before the storm did not know about it."),
     }
@@ -391,6 +476,10 @@ def main():
     st = payload["state"]
     print(f"  {st['rainTmc']} TMC in {window_days} days against a normal {st['normalTmc']}; {st['heavyMandals']} mandals had {HEAVY_MM} mm or more")
     print(f"  of {st['deepMandals']} mandals deeper than {DEEP_M} m, {st['deepHeavyMandals']} had {HEAVY_MM} mm or more")
+    if second:
+        ms = second["state"]
+        print(f"  Murasu, {second['rainWindow']['from']} to {second['rainWindow']['to']}: {ms['rainTmc']} TMC against a normal "
+              f"{ms['normalTmc']}; {ms['heavyMandals']} mandals {HEAVY_MM} mm or more; {ms['deepHeavyMandals']} of {ms['deepMandals']} deep")
     for b in payload["precedent"]["bands"]:
         print(f"  Montha precedent, {b['band']}: {b['mandals']} mandals, {b['extraRiseM']} m beyond the usual, {b['roseMorePct']}% rose more")
 
