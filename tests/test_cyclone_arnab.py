@@ -53,7 +53,7 @@ def test_drought_overlay_counts_only_settled_flags_and_says_it_is_not_a_declarat
     rain = {row[0]: row[3] for row in DATA["map"]}
     assert drought["flaggedHeavy"] == sum(rain[m["i"]] >= DATA["heavyMm"] for m in settled if m["i"] in rain)
     assert drought["severeHeavy"] <= drought["severe"] <= drought["flagged"]
-    page = open(os.path.join(ROOT, "app", "app", "arnab", "page.tsx")).read()
+    page = open(os.path.join(ROOT, "app", "app", "cyclones", "page.tsx")).read()
     assert "not a declaration" in page
 
 

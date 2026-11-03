@@ -119,11 +119,11 @@ test("Monsoon Watch points to the Cyclone Arnab page", async ({ page }) => {
   const card = page.getByTestId("cyclone-arnab");
   await expect(card).toContainText("Deep tables, heavy rain");
   await card.getByTestId("arnab-open").click();
-  await expect(page).toHaveURL(/\/arnab\/$/);
+  await expect(page).toHaveURL(/\/cyclones\/$/);
 });
 
 test("the Cyclone Arnab page sets the rain against room to rise and waits for the readings", async ({ page }) => {
-  await page.goto("/arnab/");
+  await page.goto("/cyclones/");
   await expect(page.getByTestId("arnab-hero")).toContainText("The rain fell where the water table was already high");
   await expect(page.getByTestId("arnab-view-meet")).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByTestId("arnab-drought")).toContainText("flagged mandals got 100 mm or more");
@@ -136,7 +136,7 @@ test("the Cyclone Arnab page sets the rain against room to rise and waits for th
 });
 
 test("Murasu is counted from where Arnab stopped, on its own map", async ({ page }) => {
-  await page.goto("/arnab/");
+  await page.goto("/cyclones/");
   const murasu = page.getByTestId("murasu");
   await expect(murasu).toContainText("no day is counted twice");
   await expect(murasu).toContainText(/Count(ing|ed), /);
@@ -144,4 +144,10 @@ test("Murasu is counted from where Arnab stopped, on its own map", async ({ page
   await expect(page.getByTestId("murasu-rain-map")).toContainText("Flagged, little rain");
   await expect(page.getByTestId("arnab-view-rain")).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByTestId("arnab-follow")).toContainText("the two storms together");
+});
+
+test("the first cyclone link, already shared, lands on the cyclones page and keeps its section", async ({ page }) => {
+  await page.goto("/arnab/#murasu");
+  await expect(page).toHaveURL(/\/cyclones\/#murasu$/);
+  await expect(page.getByTestId("murasu")).toBeVisible();
 });

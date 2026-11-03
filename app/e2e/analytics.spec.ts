@@ -148,7 +148,7 @@ test("records nothing for a browser that sends Global Privacy Control", async ({
 });
 
 test("records how far down the Cyclone Arnab page a visit read, and how it opened the map", async ({ page }) => {
-  await page.goto("/arnab/");
+  await page.goto("/cyclones/");
   const sent = await recordSends(page);
   const paths = async () => (await sent()).map((row) => row.path);
   expect(await paths()).not.toContain("ap-gw/arnab/reached-follow");

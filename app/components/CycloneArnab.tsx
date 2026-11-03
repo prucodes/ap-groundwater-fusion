@@ -5,7 +5,7 @@ import { IconArrowRight } from "./icons";
 import styles from "./CycloneArnab.module.css";
 
 /* Cyclone Arnab on Monsoon Watch: the finding and three figures in a storm band,
- * pointing to its own page (/arnab/), where the maps, the reservoirs day by day
+ * pointing to its own page (/cyclones/), where the maps, the reservoirs day by day
  * and the groundwater check live. */
 
 /* A cyclone's mark: two arms wound round an eye, turning slowly. */
