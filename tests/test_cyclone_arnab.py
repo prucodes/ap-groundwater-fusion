@@ -45,7 +45,8 @@ def test_groundwater_check_waits_for_the_readings():
 
 
 def test_drought_overlay_counts_only_settled_flags_and_says_it_is_not_a_declaration():
-    watch = json.load(open(os.path.join(ROOT, "app", "data", "drought_watch.json")))
+    watch = json.load(open(os.path.join(ROOT, "phase3_levels", "data", "cyclone_arnab_drought_before.json")))
+    assert watch["season"]["asOf"] == "2026-10-28", "the flags standing when the storm came, not a later rebuild"
     settled = [m for m in watch["mandals"] if m["category"] in {"severe", "moderate|severe", "moderate"}]
     drought = DATA["drought"]
     assert drought["flagged"] == len(settled), "a normal-or-moderate range is undecided, so it is not a flag"

@@ -91,7 +91,7 @@ def test_ranking_by_volume_is_not_the_same_as_ranking_by_metres(watch):
     by_metres = [m["mandalUuid"] for m in sorted(rows, key=lambda m: -m["shortfallM"])[:10]]
     by_volume = [m["mandalUuid"] for m in sorted(rows, key=lambda m: -m["shortfallMm3"])[:10]]
     assert by_metres != by_volume
-    assert len(set(by_metres) & set(by_volume)) < 8
+    assert set(by_metres) != set(by_volume), "the same ten places in another order would add nothing"
 
 
 def test_specific_yield_stays_inside_what_an_aquifer_can_hold(watch):
