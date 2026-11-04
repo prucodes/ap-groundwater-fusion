@@ -41,7 +41,7 @@ import pandas as pd
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from fetch_apwrims_history import AP_STATE_UUID, BASE, post  # same portal client: verified TLS, bounded retries
+from fetch_apwrims_history import AP_STATE_UUID, BASE, is_transient, post  # same portal client: verified TLS, bounded retries
 from build_levels_engine import resolve_locations  # same boundary reconciliation as the groundwater
 
 APP = os.path.join(HERE, "..", "app", "data")
@@ -66,6 +66,10 @@ MIN_BASELINE_YEARS = 5
 AS_OF_LOOKBACK_DAYS = 10
 # Gauges report late; the newest days are left to settle before they count.
 RAIN_SETTLE_DAYS = 2
+# Every mandal section hangs on the location tree. post() rides out a dropped
+# connection in seconds; a runner's DNS can stay down for longer (4 Nov 2026),
+# so the tree gets a few more tries, minutes apart, before the run gives up.
+TREE_RETRY_WAITS_S = (30, 90, 180)
 SHRINK_TOLERANCE = 0.10   # a district's season-to-date rain may be revised down this much, no more
 # Below these, a response is a truncated or failed one, not the state.
 MIN_MANDALS = 600
@@ -120,6 +124,18 @@ def location_tree():
     if len(tree) < MIN_MANDALS:
         raise RuntimeError(f"location tree has {len(tree)} mandals, expected about 690")
     return tree
+
+
+def location_tree_with_retries(fetch=location_tree):
+    """The tree, retried on a transient failure only; a refusal or a short answer still stops it."""
+    for wait_s in TREE_RETRY_WAITS_S + (None,):
+        try:
+            return fetch()
+        except Exception as error:
+            if wait_s is None or not is_transient(error):
+                raise
+            print(f"  [retry] location tree: {error}; trying again in {wait_s} s", flush=True)
+            time.sleep(wait_s)
 
 
 def boundaries_for(tree):
@@ -775,7 +791,7 @@ def main():
     previous = load_previous()
     print(f"APWRIMS water context for {today.isoformat()} (IST)")
     try:
-        tree = location_tree()
+        tree = location_tree_with_retries()
         boundaries = boundaries_for(tree)
         print(f"  {len(tree)} mandals in the location tree; {len(boundaries)} reconciled to a boundary")
     except Exception as error:

@@ -23,6 +23,38 @@ def snapshot(value, mandals=700):
     return {f"m{i}": {"name": f"M{i}", "pct": [value, value + 1, value + 2, value + 3]} for i in range(mandals)}
 
 
+def test_the_location_tree_outlasts_a_dns_outage(monkeypatch):
+    # The 4 Nov 2026 daily run: the runner could not resolve the portal for longer than post() retries.
+    import urllib.error
+    waits, outcomes = [], [urllib.error.URLError("Temporary failure in name resolution")] * 3 + [{"m1": ("D", "M")}]
+
+    def fetch():
+        outcome = outcomes.pop(0)
+        if isinstance(outcome, Exception):
+            raise outcome
+        return outcome
+
+    monkeypatch.setattr(context.time, "sleep", waits.append)
+    assert context.location_tree_with_retries(fetch) == {"m1": ("D", "M")}
+    assert waits == list(context.TREE_RETRY_WAITS_S)
+
+
+@pytest.mark.parametrize("error", [RuntimeError("location tree has 12 mandals, expected about 690"),
+                                   ConnectionResetError("reset")])
+def test_the_location_tree_stops_on_a_short_answer_or_after_the_last_try(monkeypatch, error):
+    calls, waits = [], []
+
+    def fetch():
+        calls.append(1)
+        raise error
+
+    monkeypatch.setattr(context.time, "sleep", waits.append)
+    with pytest.raises(type(error)):
+        context.location_tree_with_retries(fetch)
+    expected = 1 if isinstance(error, RuntimeError) else len(context.TREE_RETRY_WAITS_S) + 1
+    assert len(calls) == expected and len(waits) == expected - 1
+
+
 def test_the_as_of_date_is_the_model_run_not_the_request_date():
     run = datetime.date(2026, 10, 1)
     # Dates after the run are answered with the run's values; earlier dates differ.
