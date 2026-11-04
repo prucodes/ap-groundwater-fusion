@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-03T19:24:24+00:00",
+ "generatedAt": "2026-11-04T18:26:10+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -322,33 +322,41 @@
     "soilMedian30": 89.5,
     "reservoirTmc": 505.3,
     "reservoirPct": 43.5
+   },
+   {
+    "date": "2026-11-04",
+    "rainTo": "2026-11-02",
+    "rainSinceTmc": 384.5,
+    "soilMedian30": 98.5,
+    "reservoirTmc": 507.1,
+    "reservoirPct": 43.7
    }
   ],
-  "gainTmc": 5.7,
+  "gainTmc": 7.5,
   "basins": [
    {
     "basin": "OTHERS",
     "beforePct": 52.0,
-    "nowPct": 65.4,
-    "gainTmc": 12.0
+    "nowPct": 68.4,
+    "gainTmc": 14.7
    },
    {
     "basin": "GODAVARI",
     "beforePct": 77.1,
-    "nowPct": 76.7,
-    "gainTmc": -0.1
+    "nowPct": 77.6,
+    "gainTmc": 0.1
    },
    {
     "basin": "PENNAR",
     "beforePct": 37.0,
-    "nowPct": 36.5,
-    "gainTmc": -1.5
+    "nowPct": 36.4,
+    "gainTmc": -1.7
    },
    {
     "basin": "KRISHNA",
     "beforePct": 43.1,
-    "nowPct": 42.5,
-    "gainTmc": -4.7
+    "nowPct": 42.4,
+    "gainTmc": -5.6
    }
   ],
   "reservoirs": [
@@ -358,10 +366,10 @@
     "district": "Kakinada",
     "capacityTmc": 24.11,
     "beforeTmc": 17.96,
-    "nowTmc": 20.76,
-    "gainTmc": 2.8,
+    "nowTmc": 21.32,
+    "gainTmc": 3.36,
     "beforePct": 74.5,
-    "nowPct": 86.1
+    "nowPct": 88.4
    },
    {
     "name": "RAIWADA RESERVOIR",
@@ -369,10 +377,21 @@
     "district": "Anakapalli",
     "capacityTmc": 3.6,
     "beforeTmc": 0.96,
-    "nowTmc": 3.39,
-    "gainTmc": 2.43,
+    "nowTmc": 3.1,
+    "gainTmc": 2.14,
     "beforePct": 26.6,
-    "nowPct": 94.1
+    "nowPct": 86.1
+   },
+   {
+    "name": "YERRAKALVA RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Eluru",
+    "capacityTmc": 4.43,
+    "beforeTmc": 1.5,
+    "nowTmc": 3.22,
+    "gainTmc": 1.73,
+    "beforePct": 33.7,
+    "nowPct": 72.8
    },
    {
     "name": "THATIPUDI RESERVOIR",
@@ -380,10 +399,10 @@
     "district": "Vizianagaram",
     "capacityTmc": 3.325,
     "beforeTmc": 1.52,
-    "nowTmc": 3.05,
-    "gainTmc": 1.53,
+    "nowTmc": 3.06,
+    "gainTmc": 1.54,
     "beforePct": 45.7,
-    "nowPct": 91.7
+    "nowPct": 92.1
    },
    {
     "name": "HIRAMANDALAM RESERVOIR",
@@ -391,10 +410,10 @@
     "district": "Srikakulam",
     "capacityTmc": 10.0,
     "beforeTmc": 5.54,
-    "nowTmc": 6.81,
-    "gainTmc": 1.27,
+    "nowTmc": 7.01,
+    "gainTmc": 1.47,
     "beforePct": 55.4,
-    "nowPct": 68.1
+    "nowPct": 70.1
    },
    {
     "name": "TANDAVA RESERVOIR",
@@ -402,10 +421,21 @@
     "district": "Alluri Sitharama Raju",
     "capacityTmc": 4.96,
     "beforeTmc": 2.63,
-    "nowTmc": 3.87,
-    "gainTmc": 1.24,
+    "nowTmc": 3.96,
+    "gainTmc": 1.33,
     "beforePct": 53.0,
-    "nowPct": 78.0
+    "nowPct": 79.8
+   },
+   {
+    "name": "PULICHINTHALA PROJECT",
+    "basin": "KRISHNA",
+    "district": "Palnadu",
+    "capacityTmc": 45.77,
+    "beforeTmc": 27.49,
+    "nowTmc": 28.19,
+    "gainTmc": 0.7,
+    "beforePct": 60.1,
+    "nowPct": 61.6
    },
    {
     "name": "MEHADRIGADD RESERVOIR",
@@ -413,32 +443,10 @@
     "district": "Visakhapatnam",
     "capacityTmc": 1.169,
     "beforeTmc": 0.54,
-    "nowTmc": 1.07,
-    "gainTmc": 0.53,
+    "nowTmc": 1.09,
+    "gainTmc": 0.55,
     "beforePct": 46.2,
-    "nowPct": 91.4
-   },
-   {
-    "name": "Sileru (Guntawada) Reservoir",
-    "basin": "GODAVARI",
-    "district": "Alluri Sitharama Raju",
-    "capacityTmc": 4.334,
-    "beforeTmc": 1.18,
-    "nowTmc": 1.69,
-    "gainTmc": 0.5,
-    "beforePct": 27.2,
-    "nowPct": 38.9
-   },
-   {
-    "name": "SUNKESULA BARRAGE",
-    "basin": "KRISHNA",
-    "district": "Kurnool",
-    "capacityTmc": 1.235,
-    "beforeTmc": 0.78,
-    "nowTmc": 1.24,
-    "gainTmc": 0.45,
-    "beforePct": 63.3,
-    "nowPct": 100.0
+    "nowPct": 93.2
    }
   ]
  },
@@ -5670,7 +5678,7 @@
    ]
   ]
  },
- "updatedAt": "2026-11-03",
+ "updatedAt": "2026-11-04",
  "map": [
   [
    0,
