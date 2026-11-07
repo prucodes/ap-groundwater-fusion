@@ -64,7 +64,7 @@ function StorageLine({ days, mark }: { days: ArnabDay[]; mark?: { date: string; 
 }
 
 export default function ArnabPage() {
-  const d = arnab, s = d.state, since = d.since, dr = d.drought, mu = d.murasu;
+  const d = arnab, s = d.state, since = d.since, dr = d.drought, mu = d.murasu, tg = d.together, ts = tg?.state;
   const seen = arnabMonth(d.groundwaterLatest);
   const soaked = soakedDistricts();
   const precedent = new Map(d.precedent.bands.map(b => [b.band, b]));
@@ -86,7 +86,7 @@ export default function ArnabPage() {
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
         title={mu ? "Cyclones Arnab and Murasu" : "Cyclone Arnab"}
-        brief={brief("/cyclones", <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
+        brief={brief("/cyclones", tg && ts ? <>Arnab and Murasu brought <b>{formatNumber(Math.round(ts.rainTmc))} TMC</b> in {tg.rainWindow.days} days{tg.rainWindow.open ? " so far" : ""}, but it fell on the coast: <b>{ts.deepStillDry} of {ts.deepMandals}</b> deep-table mandals got under {tg.stillDryMm} mm from both, most in {listOf(tg.stillDry.slice(0, 3).map(x => x.district))}.</> : <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
         showChips={false}
         variant="compact"
       />
@@ -107,8 +107,41 @@ export default function ArnabPage() {
       </section>
 
       <nav className={`jumpNav jumpNavPlain ${styles.jump}`} aria-label="Cyclone Arnab sections">
-        {mu ? <a href="#murasu">Then Murasu</a> : null}<a href="#arnab-rain">What fell</a><a href="#arnab-water">Where the water went</a><a href="#arnab-room">Room to rise</a><a href="#arnab-follow">Did Arnab follow?</a>
+        {tg ? <a href="#together">Together</a> : null}{mu ? <a href="#murasu">Then Murasu</a> : null}<a href="#arnab-rain">What fell</a><a href="#arnab-water">Where the water went</a><a href="#arnab-room">Room to rise</a><a href="#arnab-follow">Did Arnab follow?</a>
       </nav>
+
+      {tg && ts ? (
+        <section className={shared.block} id="together" aria-labelledby="together-title" data-testid="together">
+          <CountedReach event="arnab/reached-together" title="Cyclones: reached both storms together" />
+          <header className={shared.blockHead}>
+            <span className={shared.eyebrow}><IconTarget /> Two cyclones in {tg.rainWindow.days} days</span>
+            <h2 id="together-title">Both storms together, and where they missed</h2>
+            <p>Arnab and Murasu brought <b>{formatNumber(Math.round(ts.rainTmc))} TMC</b> from {arnabDay(tg.rainWindow.from)} to {arnabDay(tg.rainWindow.to)}{tg.rainWindow.open ? ", still counting" : ""}, {(ts.rainTmc / ts.normalTmc).toFixed(1)}× the normal for those days. It fell on the coast. Of the {ts.deepMandals} mandals whose water table was deeper than {d.deepM} m in {arnabMonth(tg.depthMonth)}, <b>{ts.deepHeavyMandals}</b> got {d.heavyMm} mm or more and <b>{ts.deepStillDry}</b> got under {tg.stillDryMm} mm.</p>
+          </header>
+          <ul className={styles.figures}>
+            <li><span>Rain, {tg.rainWindow.days} days</span><b>{formatNumber(Math.round(ts.rainTmc))}<small> TMC</small></b><em>normal for the days, {formatNumber(Math.round(ts.normalTmc))} TMC</em></li>
+            <li><span>Season shortfall</span><b>{ts.seasonDeviationBefore}<small>%</small> → {ts.seasonDeviationAfter}<small>%</small></b><em>since 1 June, before Arnab and now</em></li>
+            <li><span>Deep tables reached</span><b>{ts.deepHeavyMandals}<small> of {ts.deepMandals}</small></b><em>got {d.heavyMm} mm or more from the two</em></li>
+            <li className={styles.dryTile}><span>Deep tables missed</span><b>{ts.deepStillDry}<small> of {ts.deepMandals}</small></b><em>got under {tg.stillDryMm} mm from the two</em></li>
+          </ul>
+          <div className={styles.split}>
+            <ArnabRainMap id="together" name="Both cyclones" rows={tg.map} heavyMm={d.heavyMm} window={`${arnabDay(tg.rainWindow.from)} to ${arnabDay(tg.rainWindow.to)}`}
+              aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height} />
+            <div className={styles.side}>
+              <h3>Deep tables the storms missed</h3>
+              <ol className={`${styles.bars} ${styles.dryBars}`} aria-label="Deep-table mandals that got little rain from both storms, by district">
+                {tg.stillDry.slice(0, 8).map(x => <li key={x.district} title={`Median ${x.medianMm} mm of rain; median depth ${x.medianDepthM} m`}>
+                  <span>{x.district}</span>
+                  <i style={{ width: `${(100 * x.mandals) / Math.max(tg.stillDry[0]?.mandals ?? 1, 1)}%` }} />
+                  <b>{x.mandals}</b>
+                </li>)}
+              </ol>
+              <p className={styles.small}>Mandals deeper than {d.deepM} m in {arnabMonth(tg.depthMonth)} that got under {tg.stillDryMm} mm from both storms, by district. They have the most room to take water and got the least. The northeast monsoon runs to December and can still reach them.</p>
+              {tg.drought ? <p className={styles.small}><b>{tg.drought.flaggedHeavy} of {tg.drought.flagged}</b> drought-flagged mandals got {d.heavyMm} mm or more from the two; {tg.drought.severeHeavy} of the {tg.drought.severe} severe. Flags as of {arnabDay(tg.drought.asOf)}.</p> : null}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {mu && mw && ms ? (
         <section className={shared.block} id="murasu" aria-labelledby="murasu-title" data-testid="murasu">

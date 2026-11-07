@@ -5301,6 +5301,8 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
   font-variant-numeric: tabular-nums;
 }
 .monsoonStripCell > em { font-style: normal; font-size: 12px; line-height: 1.45; color: var(--muted); }
+/* An event beside the season (the cyclones) takes the full row after the regular cells. */
+.monsoonStripWide { grid-column: 2 / -1; }
 .monsoonStripCell > em a { color: var(--teal); font-weight: 600; }
 
 @media (max-width: 1080px) {
@@ -5310,6 +5312,7 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
   .monsoonStrip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .monsoonStripIntro { grid-column: 1 / -1; padding-bottom: 12px; }
   .monsoonStrip > .validationLink { grid-column: 1 / -1; grid-row: auto; margin: 14px 22px 18px; }
+  .monsoonStripWide { grid-column: 1 / -1; }
 }
 @media (max-width: 720px) {
   .monsoonStripCell { padding: 14px 16px; }

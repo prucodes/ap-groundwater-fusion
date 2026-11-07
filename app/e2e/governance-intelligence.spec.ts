@@ -114,10 +114,11 @@ test("Monsoon Watch shows canal water by delta and never adds canals into one St
   await expect(card).toContainText("not added into one State figure");
 });
 
-test("Monsoon Watch points to the Cyclone Arnab page", async ({ page }) => {
+test("Monsoon Watch points to the cyclones page", async ({ page }) => {
   await page.goto("/monsoon/");
   const card = page.getByTestId("cyclone-arnab");
   await expect(card).toContainText("Deep tables, heavy rain");
+  await expect(card).toContainText(/Deep tables missed|Soil, 30 cm/);
   await card.getByTestId("arnab-open").click();
   await expect(page).toHaveURL(/\/cyclones\/$/);
 });
@@ -144,6 +145,26 @@ test("Murasu is counted from where Arnab stopped, on its own map", async ({ page
   await expect(page.getByTestId("murasu-rain-map")).toContainText("Flagged, little rain");
   await expect(page.getByTestId("arnab-view-rain")).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByTestId("arnab-follow")).toContainText("the two storms together");
+});
+
+test("the two storms are added together and the deep tables they missed are named", async ({ page }) => {
+  await page.goto("/cyclones/");
+  const together = page.getByTestId("together");
+  await expect(together).toContainText("Both storms together, and where they missed");
+  await expect(together).toContainText(/Deep tables missed\s*\d+ of \d+/);
+  await expect(together.getByRole("list", { name: /Deep-table mandals that got little rain/ }).locator("li").first()).toBeVisible();
+  await together.getByTestId("together-view-drought").click();
+  await expect(page.getByTestId("together-rain-map")).toContainText("Flagged, little rain");
+  await expect(page.getByTestId("murasu-view-rain")).toHaveAttribute("aria-pressed", "true");
+});
+
+test("the overview carries the two cyclones and opens them together", async ({ page }) => {
+  await page.goto("/");
+  const cell = page.getByTestId("cyclones-cell");
+  await expect(cell).toContainText(/\d+ TMC/);
+  await expect(cell).toContainText(/deep-table mandals got under \d+ mm/);
+  await cell.getByRole("link", { name: "Cyclones" }).click();
+  await expect(page).toHaveURL(/\/cyclones\/?#together$/);
 });
 
 test("the first cyclone link, already shared, lands on the cyclones page and keeps its section", async ({ page }) => {

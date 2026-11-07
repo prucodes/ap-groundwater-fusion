@@ -74,6 +74,7 @@ FLAGGED = SEVERE | {"moderate"}
 HEAVY_MM = 100                       # the storm's rain counted as heavy for a mandal
 BANDS = [(0, 3, "under 3 m"), (3, 8, "3 to 8 m"), (8, 20, "8 to 20 m"), (20, 1e9, "over 20 m")]
 DEEP_M = 8                           # a water table with real room to rise
+STILL_DRY_MM = 50                    # both storms together left a mandal with less than this
 COPIED_MONTHS = {"2021-03", "2021-04", "2021-06", "2021-09", "2021-10", "2021-11", "2021-12"}
 USUAL_YEARS = range(2015, 2025)
 NORMAL_YEARS = range(2014, 2025)
@@ -334,7 +335,7 @@ def murasu(cap, gw_by_uuid, arnab_mm):
     """Murasu's rain, the season total now less Arnab's closing reading, on the same terms as Arnab's."""
     reading = murasu_reading(cap)
     if not reading:
-        return None
+        return None, {}
     month = "2026-10" if any("2026-10" in s for s in gw_by_uuid.values()) else BEFORE_MONTH
     mandals = []
     for m in cap["mandals"]:
@@ -374,6 +375,44 @@ def murasu(cap, gw_by_uuid, arnab_mm):
         },
         "districts": sorted(({"district": d, "mandals": len(v), "medianMm": round(statistics.median(v), 0),
                               "heavy": sum(x >= HEAVY_MM for x in v)} for d, v in districts.items()), key=lambda r: -r["medianMm"]),
+        "drought": drought,
+        "map": [[i, m["mandal"], m["district"], round(m["stormMm"]), m["depthM"], flags.get(i, "")] for i, m in sorted(outline.items())],
+    }, {m["uuid"]: m["stormMm"] for m in mandals}
+
+
+def together(arnab_payload, mandals, murasu_mm, second):
+    """Both storms on one count: each mandal's Arnab rain plus its Murasu rain, against the
+    water table as it stood before either (September), so the room to rise is the room they found."""
+    if not second or second["rainWindow"]["to"] < MURASU_LANDFALL:
+        return None
+    rows = [{**m, "stormMm": round(m["stormMm"] + murasu_mm[m["uuid"]], 1)} for m in mandals if m["uuid"] in murasu_mm]
+    deep = [m for m in rows if m["depthM"] is not None and m["depthM"] >= DEEP_M]
+    dry = [m for m in deep if m["stormMm"] < STILL_DRY_MM]
+    by_district = defaultdict(list)
+    for m in dry:
+        by_district[m["district"]].append(m)
+    outline = {}
+    for m in rows:
+        i = m.get("boundaryIndex")
+        if i is not None and (i not in outline or m["stormMm"] > outline[i]["stormMm"]):
+            outline[i] = m
+    flags, drought = drought_overlay(outline)
+    a, b, w = arnab_payload["state"], second["state"], second["rainWindow"]
+    return {
+        "rainWindow": {"from": arnab_payload["rainWindow"]["from"], "to": w["to"], "open": w["open"],
+                       "days": (datetime.date.fromisoformat(w["to"]) - datetime.date.fromisoformat(arnab_payload["rainWindow"]["from"])).days + 1},
+        "depthMonth": BEFORE_MONTH,
+        "state": {
+            "rainTmc": round(a["rainTmc"] + b["rainTmc"], 1), "normalTmc": round(a["normalTmc"] + b["normalTmc"], 1),
+            "seasonDeviationBefore": a["seasonDeviationBefore"], "seasonDeviationAfter": b["seasonDeviationAfter"],
+            "mandals": len(rows), "heavyMandals": sum(m["stormMm"] >= HEAVY_MM for m in rows),
+            "deepMandals": len(deep), "deepHeavyMandals": sum(m["stormMm"] >= HEAVY_MM for m in deep),
+            "deepStillDry": len(dry),
+        },
+        "stillDryMm": STILL_DRY_MM,
+        "stillDry": sorted(({"district": d, "mandals": len(ms), "medianMm": round(statistics.median(m["stormMm"] for m in ms)),
+                             "medianDepthM": round(statistics.median(m["depthM"] for m in ms), 1)} for d, ms in by_district.items()),
+                           key=lambda r: (-r["mandals"], r["district"])),
         "drought": drought,
         "map": [[i, m["mandal"], m["district"], round(m["stormMm"]), m["depthM"], flags.get(i, "")] for i, m in sorted(outline.items())],
     }
@@ -426,7 +465,7 @@ def main():
     flags, drought = drought_overlay(outline)
     map_rows = [[i, m["mandal"], m["district"], round(m["stormMm"]), m["depthM"], flags.get(i, "")] for i, m in sorted(outline.items())]
 
-    second = murasu(cap, gw_by_uuid, {m["uuid"]: m["stormMm"] for m in mandals})
+    second, murasu_mm = murasu(cap, gw_by_uuid, {m["uuid"]: m["stormMm"] for m in mandals})
     precedent = {"event": "Cyclone Montha", "landfall": "2025-10-28", **montha_precedent(gw_by_name)}
     follow, follow_rows = did_it_follow(gw_by_uuid, mandals, precedent)
     expected = {b["band"]: b["extraRiseM"] for b in precedent["bands"]}
@@ -460,6 +499,7 @@ def main():
         "since": where_it_went(log),
         "follow": follow,
         "murasu": second,
+        "together": None,
         "updatedAt": log["days"][-1]["date"] if log["days"] else None,
         "map": map_rows,
         "watch": [{"district": m["district"], "mandal": m["mandal"], "stormMm": m["stormMm"], "depthM": m["depthM"],
@@ -471,6 +511,7 @@ def main():
                    "Last year's figures are a precedent, not a forecast: October 2025 was wet before Montha too, and the deepest "
                    "band holds few mandals. The three-month forecasts frozen before the storm did not know about it."),
     }
+    payload["together"] = together(payload, mandals, murasu_mm, second)
     with open(OUT, "w") as handle:
         json.dump(payload, handle, indent=1)
     st = payload["state"]
@@ -480,6 +521,11 @@ def main():
         ms = second["state"]
         print(f"  Murasu, {second['rainWindow']['from']} to {second['rainWindow']['to']}: {ms['rainTmc']} TMC against a normal "
               f"{ms['normalTmc']}; {ms['heavyMandals']} mandals {HEAVY_MM} mm or more; {ms['deepHeavyMandals']} of {ms['deepMandals']} deep")
+    both = payload["together"]
+    if both:
+        tb = both["state"]
+        print(f"  Together, {both['rainWindow']['from']} to {both['rainWindow']['to']}: {tb['rainTmc']} TMC; "
+              f"{tb['deepHeavyMandals']} of {tb['deepMandals']} deep tables {HEAVY_MM} mm or more, {tb['deepStillDry']} under {STILL_DRY_MM} mm")
     for b in payload["precedent"]["bands"]:
         print(f"  Montha precedent, {b['band']}: {b['mandals']} mandals, {b['extraRiseM']} m beyond the usual, {b['roseMorePct']}% rose more")
 
