@@ -1,42 +1,42 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-03T19:24:40Z",
+  "generatedAt": "2026-11-07T20:13:41Z",
   "method": "Screening proxy: mandal mean terrain elevation minus mandal mean measured depth; not a surveyed well head or a verified level relative to sea level",
   "observationPeriod": "2026-10",
   "elevationSource": "Terrarium terrain tiles (AWS open data), zonal mean over each mandal, about 150 m a pixel",
   "classificationSource": "CGWB and the State's Dynamic Ground Water Resources assessment, via the INGRES public dashboard",
   "deepWellThresholdM": 20.0,
-  "scored": 669,
+  "scored": 667,
   "bands": [
     {
       "band": "at or below sea level",
-      "mandals": 29,
-      "salinity": 11,
-      "salinityPct": 37.9
+      "mandals": 30,
+      "salinity": 12,
+      "salinityPct": 40.0
     },
     {
       "band": "0 to 5 m",
-      "mandals": 52,
-      "salinity": 15,
-      "salinityPct": 28.8
+      "mandals": 51,
+      "salinity": 14,
+      "salinityPct": 27.5
     },
     {
       "band": "5 to 20 m",
-      "mandals": 88,
+      "mandals": 87,
       "salinity": 12,
-      "salinityPct": 13.6
+      "salinityPct": 13.8
     },
     {
       "band": "above 20 m",
-      "mandals": 500,
+      "mandals": 499,
       "salinity": 2,
       "salinityPct": 0.4
     }
   ],
   "medianHeadSalinityM": 4.1,
-  "medianHeadOtherM": 118.6,
+  "medianHeadOtherM": 119.3,
   "salinityUnits": 40,
-  "belowSeaLevel": 29,
+  "belowSeaLevel": 30,
   "setAsideDeepWells": [
     {
       "district": "ELURU",
@@ -151,6 +151,14 @@
       "depthM": 9.5,
       "groundM": 6.6,
       "headM": -2.9,
+      "category": "salinity"
+    },
+    {
+      "district": "KRISHNA",
+      "mandal": "GUDURU",
+      "depthM": 8.6,
+      "groundM": 6.7,
+      "headM": -1.9,
       "category": "salinity"
     },
     {

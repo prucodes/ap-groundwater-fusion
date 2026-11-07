@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-03T19:24:39Z",
+  "generatedAt": "2026-11-07T20:13:40Z",
   "method": "Each mandal's May to November change in depth, fitted against that season's June to September rainfall, over every season it has both readings.",
   "window": {
     "preMonsoonMonth": 5,
@@ -17,8 +17,8 @@
     "governedR2": 0.4,
     "partlyR2": 0.15
   },
-  "scored": 541,
-  "medianR2": 0.13,
+  "scored": 539,
+  "medianR2": 0.14,
   "groups": [
     {
       "class": "rain governed",
@@ -46,13 +46,13 @@
     },
     {
       "class": "not rain",
-      "mandals": 300,
+      "mandals": 298,
       "aquifers": {
         "alluvial": 120,
-        "coastal": 119,
+        "coastal": 117,
         "hard_rock": 61
       },
-      "medianIrrigatedPct": 33.4,
+      "medianIrrigatedPct": 33.8,
       "stressedPct": 4.0,
       "medianRisePer100mm": 0.09
     }
@@ -1073,13 +1073,6 @@
       8,
       11.3
     ],
-    "PRAKASAM|SANTHAMAGULURU": [
-      0.0,
-      2,
-      -0.36,
-      8,
-      5.1
-    ],
     "SRI SATHYA SAI|KADIRI": [
       0.69,
       0,
@@ -2080,13 +2073,6 @@
       -0.65,
       8,
       0.1
-    ],
-    "PRAKASAM|KANDUKUR": [
-      0.01,
-      2,
-      0.18,
-      8,
-      2.1
     ],
     "ANANTHAPURAMU|KANEKAL": [
       0.66,

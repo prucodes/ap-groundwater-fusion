@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-11-03T19:43:55+00:00",
-  "onlineCheckedAt": "2026-11-03T19:43:55+00:00",
+  "checkedAt": "2026-11-07T20:33:45+00:00",
+  "onlineCheckedAt": "2026-11-07T20:33:45+00:00",
   "snapshotPeriod": "2026-10",
-  "snapshotHash": "024dd0633227103d87fde5934cb5e30f156fb97f22bef8716c1fbb1da22f1752",
-  "historyHash": "37b5666aea23f65ff7564432ac3cae6a42a9d1d90a41ab5ef642813696e7b649",
+  "snapshotHash": "16406bc449a9adf0e80fe7711b9ece1197a91d0c1f351e831415a0bd9591be06",
+  "historyHash": "b51354b61ab8eb25c686af27459d1b1eb255972290d7302859304a4bd2867f79",
   "localReconciliation": {
-    "checkedSeries": 571,
+    "checkedSeries": 569,
     "mismatches": []
   },
   "unfilteredHistoryComparison": {
-    "checkedSeries": 571,
+    "checkedSeries": 569,
     "mismatches": [
       {
         "mandalUuid": "c4b43404-f1b5-4a8a-95d4-215cfa9442fc",
@@ -251,13 +251,6 @@
         "fields": [
           "typicalM",
           "shortfallM",
-          "comparableYears"
-        ],
-        "statusMatches": true
-      },
-      {
-        "mandalUuid": "40241aa0-24cc-49ed-9f4c-69152554baac",
-        "fields": [
           "comparableYears"
         ],
         "statusMatches": true
@@ -3025,15 +3018,6 @@
         "statusMatches": true
       },
       {
-        "mandalUuid": "80e52e6e-95b0-4c32-b9bf-7c04e8d94179",
-        "fields": [
-          "typicalM",
-          "shortfallM",
-          "comparableYears"
-        ],
-        "statusMatches": true
-      },
-      {
         "mandalUuid": "15d24770-389a-4d4a-bea7-07393c154227",
         "fields": [
           "comparableYears"
@@ -4792,11 +4776,11 @@
     "enso": {
       "status": "checked",
       "source": "https://psl.noaa.gov/data/correlation/oni.data",
-      "sha256": "7bdc80c08e8669492d922a6aebe30518b9654deca1e866f5cd1bfb0f2a8d453d",
+      "sha256": "27af499bc406f8e5f5e9655013d2299a97d6a1cc92f27db30990b04dbc872f60",
       "latest": {
-        "date": "2026-08",
-        "season": "JAS",
-        "oni_c": 2.16
+        "date": "2026-09",
+        "season": "ASO",
+        "oni_c": 2.46
       },
       "snapshotMatches": true
     },
@@ -4815,23 +4799,15 @@
           "mandal": "Sirvel",
           "district": "Nandyal",
           "sourceSeriesId": "c4b43404-f1b5-4a8a-95d4-215cfa9442fc",
-          "status": "checked",
-          "latestPeriod": "2026-10",
-          "portalDepthM": 13.61,
-          "snapshotDepthM": 13.61,
-          "snapshotMatches": true,
-          "responseSha256": "b410c2d9f25c3373df9a541b5b58045863b88b604508499b4847b5e4f279cb99"
+          "status": "unavailable",
+          "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
         },
         {
           "mandal": "Rentachintala",
           "district": "Palnadu",
           "sourceSeriesId": "0766db38-2384-4607-954c-1dfbc6c8637b",
-          "status": "checked",
-          "latestPeriod": "2026-10",
-          "portalDepthM": 8.5,
-          "snapshotDepthM": 8.5,
-          "snapshotMatches": true,
-          "responseSha256": "e4eca0690e89b9e9ab22df337daba927524709b3162619d975d39334aaafdd80"
+          "status": "unavailable",
+          "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
         },
         {
           "mandal": "Vinjamur",
