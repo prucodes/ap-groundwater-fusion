@@ -86,7 +86,7 @@ export default function ArnabPage() {
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
         title={mu ? "Cyclones Arnab and Murasu" : "Cyclone Arnab"}
-        brief={brief("/cyclones", <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.open ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> in {mw.days} days</>}.</> : null}</>)}
+        brief={brief("/cyclones", <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
         showChips={false}
         variant="compact"
       />
