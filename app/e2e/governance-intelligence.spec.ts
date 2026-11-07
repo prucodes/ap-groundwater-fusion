@@ -158,6 +158,15 @@ test("the two storms are added together and the deep tables they missed are name
   await expect(page.getByTestId("murasu-view-rain")).toHaveAttribute("aria-pressed", "true");
 });
 
+test("the overview carries the two cyclones and opens them together", async ({ page }) => {
+  await page.goto("/");
+  const cell = page.getByTestId("cyclones-cell");
+  await expect(cell).toContainText(/\d+ TMC/);
+  await expect(cell).toContainText(/deep-table mandals got under \d+ mm/);
+  await cell.getByRole("link", { name: "Cyclones" }).click();
+  await expect(page).toHaveURL(/\/cyclones\/?#together$/);
+});
+
 test("the first cyclone link, already shared, lands on the cyclones page and keeps its section", async ({ page }) => {
   await page.goto("/arnab/#murasu");
   await expect(page).toHaveURL(/\/cyclones\/#murasu$/);

@@ -52,8 +52,12 @@ export type OverviewProof = {
   crossForecastPct: number; crossMeasuredPct: number; ledgerTracked: number;
 };
 
-export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof = null }: {
+/** The two cyclones on one count, worked out on the server (the cyclone file carries three maps). */
+export type OverviewCyclones = { from: string; to: string; rainTmc: number; deepStillDry: number; deepMandals: number; stillDryMm: number };
+
+export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof = null, cyclones = null }: {
   agreement: OverviewAgreement | null; summer?: OverviewSummer | null;
+  cyclones?: OverviewCyclones | null;
   /** Mandals whose drought manual reading moved since last week, as the This Week map counts them. */
   droughtWeek?: { worse: number; better: number } | null;
   /** Findings from other pages (tanks, drinking water, the independent check, the ledger), as numbers. */
@@ -326,6 +330,16 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
               <em>
                 {`below ground on average · ${stateSummary.state.sinceMayM !== null ? `${stateSummary.state.sinceMayM.toFixed(1)} m deeper than May` : ""} · `}
                 {`${stateSummary.state.vsYearAgoM !== null ? `${stateSummary.state.vsYearAgoM.toFixed(1)} m deeper than a year ago` : ""} · ${stateSummary.state.stationsTotal.toLocaleString("en-US")} stations (AWARE)`}
+              </em>
+            </div>
+          ) : null}
+          {cyclones ? (
+            <div className="monsoonStripCell monsoonStripWide" data-testid="cyclones-cell">
+              <span>Cyclones Arnab and Murasu</span>
+              <strong>{formatNumber(Math.round(cyclones.rainTmc))} TMC</strong>
+              <em>
+                {shortDay(cyclones.from)} to {shortDay(cyclones.to)} · {cyclones.deepStillDry} of {cyclones.deepMandals} deep-table mandals got under {cyclones.stillDryMm} mm ·{" "}
+                <Link href="/cyclones#together">Cyclones</Link>
               </em>
             </div>
           ) : null}
