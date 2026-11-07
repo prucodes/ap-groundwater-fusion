@@ -4,9 +4,10 @@ import { ArnabOpenLink } from "./ArnabOpenLink";
 import { IconArrowRight } from "./icons";
 import styles from "./CycloneArnab.module.css";
 
-/* Cyclone Arnab on Monsoon Watch: the finding and three figures in a storm band,
- * pointing to its own page (/cyclones/), where the maps, the reservoirs day by day
- * and the groundwater check live. */
+/* The cyclones on Monsoon Watch: the finding and three figures in a storm band,
+ * pointing to their own page (/cyclones/), where the maps, the reservoirs day by day
+ * and the groundwater check live. Once Murasu's landfall day is counted, the band
+ * gives the two storms together; until then, Arnab alone. */
 
 /* A cyclone's mark: two arms wound round an eye, turning slowly. */
 export function ArnabSpiral({ className }: { className?: string }) {
@@ -24,8 +25,44 @@ export function ArnabSpiral({ className }: { className?: string }) {
 }
 
 export function CycloneArnab() {
-  const d = arnab, s = d.state;
+  const d = arnab, s = d.state, tg = d.together, ts = tg?.state;
   if (!s || !d.byDepth?.length) return null;
+  if (tg && ts) return (
+    <section className={`card ${styles.card}`} id="cyclone-arnab" aria-labelledby="cyclone-arnab-title" data-testid="cyclone-arnab">
+      <div className={styles.band}>
+        <div className={styles.bandText}>
+          <span className={styles.eyebrow}>Cyclones Arnab and Murasu · {arnabDay(tg.rainWindow.from)} to {arnabDay(tg.rainWindow.to)}</span>
+          <h3 className={styles.headline} id="cyclone-arnab-title">Two cyclones fell on the coast and missed the deep interior</h3>
+          <p className={styles.lede}>
+            {formatNumber(Math.round(ts.rainTmc))} TMC in {tg.rainWindow.days} days, {(ts.rainTmc / ts.normalTmc).toFixed(1)}× the normal. Of
+            the {ts.deepMandals} mandals with a water table deeper than {d.deepM} m, {ts.deepStillDry} got under {tg.stillDryMm} mm from
+            both, most in {listOf(tg.stillDry.slice(0, 3).map(x => x.district))}.
+          </p>
+        </div>
+        <ArnabSpiral className={styles.spiral} />
+        <div className={styles.stats}>
+          <div>
+            <span>Rain in {tg.rainWindow.days} days</span>
+            <strong>{formatNumber(Math.round(ts.rainTmc))} TMC</strong>
+            <em>normal {formatNumber(Math.round(ts.normalTmc))} · season {ts.seasonDeviationBefore}% → {ts.seasonDeviationAfter}%</em>
+          </div>
+          <div>
+            <span>Deep tables, heavy rain</span>
+            <strong>{ts.deepHeavyMandals} <small>of {ts.deepMandals}</small></strong>
+            <em>{d.heavyMm} mm or more from the two</em>
+          </div>
+          <div className={styles.key}>
+            <span>Deep tables missed</span>
+            <strong>{ts.deepStillDry} <small>of {ts.deepMandals}</small></strong>
+            <em>under {tg.stillDryMm} mm from the two</em>
+          </div>
+        </div>
+        <ArnabOpenLink className={styles.open}>
+          Both storms on the map, reservoirs day by day, and the groundwater check <IconArrowRight />
+        </ArnabOpenLink>
+      </div>
+    </section>
+  );
   return (
     <section className={`card ${styles.card}`} id="cyclone-arnab" aria-labelledby="cyclone-arnab-title" data-testid="cyclone-arnab">
       <div className={styles.band}>

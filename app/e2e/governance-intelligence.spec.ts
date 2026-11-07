@@ -114,10 +114,11 @@ test("Monsoon Watch shows canal water by delta and never adds canals into one St
   await expect(card).toContainText("not added into one State figure");
 });
 
-test("Monsoon Watch points to the Cyclone Arnab page", async ({ page }) => {
+test("Monsoon Watch points to the cyclones page", async ({ page }) => {
   await page.goto("/monsoon/");
   const card = page.getByTestId("cyclone-arnab");
   await expect(card).toContainText("Deep tables, heavy rain");
+  await expect(card).toContainText(/Deep tables missed|Soil, 30 cm/);
   await card.getByTestId("arnab-open").click();
   await expect(page).toHaveURL(/\/cyclones\/$/);
 });

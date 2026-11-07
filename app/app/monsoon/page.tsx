@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CanalWater } from "../../components/CanalWater";
 import { CycloneArnab } from "../../components/CycloneArnab";
+import { arnab } from "../../lib/arnab";
 import tankFill from "../../data/tank_fill.json";
 import { HeaderHero } from "../../components/HeaderHero";
 import { EvidenceComparison } from "../../components/EvidenceComparison";
@@ -94,7 +95,7 @@ export default function MonsoonPage() {
       </div>
 
       <WatchEvidenceStatus />
-      <nav className={`${styles.nav} jumpNav`} aria-label="Monsoon sections"><a href="#chapter-season">This season</a><a href="#cyclone-arnab">Cyclone Arnab</a><a href="#monsoon-map">Groundwater map</a><a href="#monsoon-shortfall">Shortfall</a><a href="#monsoon-queue">Review queue</a>{w.banked ? <a href="#water-banked">What it banked</a> : null}<a href="#chapter-pacific">El Niño and the Pacific</a><a href="#enso-outlook">El Niño outlook</a><a href="#monsoon-film-title">Film brief</a><a href="#chapter-heat">Heat</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
+      <nav className={`${styles.nav} jumpNav`} aria-label="Monsoon sections"><a href="#chapter-season">This season</a><a href="#cyclone-arnab">{arnab.together ? "Cyclones" : "Cyclone Arnab"}</a><a href="#monsoon-map">Groundwater map</a><a href="#monsoon-shortfall">Shortfall</a><a href="#monsoon-queue">Review queue</a>{w.banked ? <a href="#water-banked">What it banked</a> : null}<a href="#chapter-pacific">El Niño and the Pacific</a><a href="#enso-outlook">El Niño outlook</a><a href="#monsoon-film-title">Film brief</a><a href="#chapter-heat">Heat</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
 
 
       <h2 className="pageChapter" id="chapter-season">This season in the ground<span>what the monsoon did to groundwater, and where to look</span></h2>
