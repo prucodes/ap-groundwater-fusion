@@ -146,6 +146,17 @@ test("Murasu is counted from where Arnab stopped, on its own map", async ({ page
   await expect(page.getByTestId("arnab-follow")).toContainText("the two storms together");
 });
 
+test("the two storms are added together and the deep tables they missed are named", async ({ page }) => {
+  await page.goto("/cyclones/");
+  const together = page.getByTestId("together");
+  await expect(together).toContainText("Both storms together, and where they missed");
+  await expect(together).toContainText(/Deep tables missed\s*\d+ of \d+/);
+  await expect(together.getByRole("list", { name: /Deep-table mandals that got little rain/ }).locator("li").first()).toBeVisible();
+  await together.getByTestId("together-view-drought").click();
+  await expect(page.getByTestId("together-rain-map")).toContainText("Flagged, little rain");
+  await expect(page.getByTestId("murasu-view-rain")).toHaveAttribute("aria-pressed", "true");
+});
+
 test("the first cyclone link, already shared, lands on the cyclones page and keeps its section", async ({ page }) => {
   await page.goto("/arnab/#murasu");
   await expect(page).toHaveURL(/\/cyclones\/#murasu$/);

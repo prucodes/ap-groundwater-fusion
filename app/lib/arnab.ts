@@ -17,6 +17,17 @@ export type Murasu = {
   drought: Arnab["drought"];
   map: Arnab["map"];
 };
+/* Both storms on one count, against the water table as it stood before either (September). */
+export type Together = {
+  rainWindow: { from: string; to: string; days: number; open: boolean };
+  depthMonth: string;
+  state: { rainTmc: number; normalTmc: number; seasonDeviationBefore: number; seasonDeviationAfter: number;
+    mandals: number; heavyMandals: number; deepMandals: number; deepHeavyMandals: number; deepStillDry: number };
+  stillDryMm: number;
+  stillDry: Array<{ district: string; mandals: number; medianMm: number; medianDepthM: number }>;
+  drought: Arnab["drought"];
+  map: Arnab["map"];
+};
 export type Arnab = {
   landfall: string; updatedAt: string | null; rainWindow: { from: string; to: string; days: number }; groundwaterLatest: string;
   state: {
@@ -35,6 +46,7 @@ export type Arnab = {
   drought: { asOf: string; declareBy: string; flagged: number; flaggedHeavy: number; medianMm: number; severe: number; severeHeavy: number; byDrySpell: number } | null;
   watch: ArnabWatch[];
   murasu: Murasu | null;
+  together: Together | null;
   caveat: string;
 };
 

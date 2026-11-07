@@ -73,3 +73,23 @@ def test_murasu_rain_is_never_negative_and_uses_arnab_drought_base():
     assert murasu["state"]["heavyMandals"] >= murasu["state"]["deepHeavyMandals"]
     assert murasu["drought"]["flagged"] == DATA["drought"]["flagged"], "both storms read the same pre-storm drought flags"
     assert "both storms" in DATA["caveat"]
+
+
+def test_together_is_each_mandals_two_storms_added_on_the_depth_before_either():
+    both, murasu = DATA["together"], DATA["murasu"]
+    if murasu["rainWindow"]["to"] < "2026-11-03":
+        assert both is None, "nothing to add until landfall day reaches the gauges"
+        return
+    st, a, m = both["state"], DATA["state"], murasu["state"]
+    assert st["rainTmc"] == round(a["rainTmc"] + m["rainTmc"], 1)
+    assert both["rainWindow"]["from"] == DATA["rainWindow"]["from"] and both["rainWindow"]["to"] == murasu["rainWindow"]["to"]
+    assert both["depthMonth"] == DATA["groundwaterLatest"] == "2026-09", "the room the storms found, not the room they left"
+    assert st["deepMandals"] == a["deepMandals"]
+    assert st["deepHeavyMandals"] >= a["deepHeavyMandals"], "adding rain cannot take a mandal below 100 mm"
+    assert st["deepHeavyMandals"] + st["deepStillDry"] <= st["deepMandals"]
+    assert sum(r["mandals"] for r in both["stillDry"]) == st["deepStillDry"]
+    first = {row[0]: row[3] for row in DATA["map"]}
+    for i, _, _, mm, depth, _ in both["map"]:
+        assert mm >= first.get(i, 0) - 1, "an outline's rain from both storms is at least Arnab's"
+    assert both["drought"]["flagged"] == DATA["drought"]["flagged"]
+    assert both["drought"]["flaggedHeavy"] >= DATA["drought"]["flaggedHeavy"]

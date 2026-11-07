@@ -61,6 +61,11 @@
 .mark line { stroke: var(--muted-2); stroke-width: 1; stroke-dasharray: 3 3; }
 .mark text { font: 600 10px var(--font-mono); fill: var(--ink-soft); }
 
+/* Both storms together: the missed deep tables carry the one warm accent on the page */
+.figures .dryTile { background: color-mix(in srgb, var(--amber) 12%, var(--field)); }
+.figures .dryTile b { color: var(--amber-ink); }
+.dryBars li i { background: linear-gradient(90deg, color-mix(in srgb, var(--amber) 55%, transparent), var(--amber)); }
+
 /* Murasu's figures: the hero's four tiles in the light card style */
 .figures { list-style: none; margin: 0 0 20px; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .figures li { display: grid; gap: 4px; align-content: start; padding: 12px 14px; border-radius: var(--radius-sm); background: var(--field); }
