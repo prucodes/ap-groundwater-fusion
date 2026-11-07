@@ -1,11 +1,11 @@
 {
   "source": "https://psl.noaa.gov/data/correlation/oni.data",
-  "fetchedAt": "2026-11-03T19:18:02+00:00",
-  "months": 920,
+  "fetchedAt": "2026-11-07T20:07:29+00:00",
+  "months": 921,
   "latest": {
-    "date": "2026-08",
-    "season": "JAS",
-    "oni_c": 2.16
+    "date": "2026-09",
+    "season": "ASO",
+    "oni_c": 2.46
   },
   "classification": "el_nino"
 }

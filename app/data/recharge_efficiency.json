@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-03T19:24:34Z",
+  "generatedAt": "2026-11-07T20:13:35Z",
   "method": "Water-table fluctuation, the GEC-2015 method: the May to November rise times specific yield times area, as a share of June to September rainfall, for every year a mandal has both readings. The median year is published, and a year whose table fell counts as zero.",
   "window": {
     "preMonsoonMonth": 5,
@@ -14,8 +14,8 @@
     "minYears": 5,
     "minRainMm": 100.0
   },
-  "scored": 574,
-  "ranked": 515,
+  "scored": 572,
+  "ranked": 513,
   "yearsAvailable": [
     2015,
     2026
@@ -24,8 +24,8 @@
     "set aside": 58,
     "imports": 1,
     "strong": 201,
-    "moderate": 269,
-    "weak": 45
+    "moderate": 268,
+    "weak": 44
   },
   "stateMedianSharePct": 11.8,
   "byAquifer": [
@@ -36,8 +36,8 @@
     },
     {
       "aquifer": "coastal",
-      "mandals": 179,
-      "medianSharePct": 8.3
+      "mandals": 177,
+      "medianSharePct": 8.4
     },
     {
       "aquifer": "hard_rock",
@@ -2917,12 +2917,6 @@
       8,
       8.8
     ],
-    "PRAKASAM|SANTHAMAGULURU": [
-      5.2,
-      1,
-      8,
-      3.0
-    ],
     "PARVATHIPURAM MANYAM|PARVATHIPURAM": [
       5.2,
       1,
@@ -3360,12 +3354,6 @@
       0,
       8,
       9.8
-    ],
-    "PRAKASAM|KANDUKUR": [
-      1.5,
-      0,
-      8,
-      2.8
     ],
     "PRAKASAM|PONNALURU": [
       1.4,
