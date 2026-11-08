@@ -20,9 +20,9 @@ import argparse
 import csv
 import json
 import os
-import ssl
 import sys
-import urllib.request
+
+from build_enso_pacific import download
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -53,25 +53,12 @@ FIRST_YEAR = 1948
 EL_NINO, LA_NINA = 0.5, -0.5
 
 
-def tls_context():
-    if not ssl.get_default_verify_paths().cafile:
-        try:
-            import certifi
-            return ssl.create_default_context(cafile=certifi.where())
-        except ImportError:
-            pass
-    return ssl.create_default_context()
-
-
 def cached(spec):
     os.makedirs(CACHE, exist_ok=True)
     path = os.path.join(CACHE, spec["file"])
     if not os.path.exists(path):
         print(f"  fetching {spec['label']}")
-        request = urllib.request.Request(spec["url"], headers={"User-Agent": "ap-groundwater-fusion"})
-        with urllib.request.urlopen(request, timeout=900, context=tls_context()) as response, \
-                open(path, "wb") as handle:
-            handle.write(response.read())
+        download(spec["url"], path)
     return path
 
 

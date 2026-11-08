@@ -25,7 +25,10 @@ import json
 import os
 import ssl
 import sys
+import time
 import urllib.request
+
+from fetch_apwrims_history import is_transient
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -42,6 +45,7 @@ BLUE_MARBLE = ("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73909/"
 # explainer shows and is exactly what leaves a reader here stranded.
 LON0, LON1 = 62, 292
 LAT0, LAT1 = 42, -42
+WINDOW = {"lon0": LON0, "lon1": LON1, "lat0": LAT0, "lat1": LAT1}
 # Eighteen months, which covers the run-up to the present state without
 # shipping two years of frames to every visitor.
 MONTHS = 18
@@ -51,6 +55,10 @@ MONTHS = 18
 FRAME_WIDTH = 640
 FRAME_QUALITY = 68
 BASEMAP_WIDTH = 900
+
+# The monthly job failed twice on a moment's network loss reaching NASA and NOAA
+# (8 Oct, 8 Nov 2026); a rerun minutes later went through both times.
+DOWNLOAD_RETRY_WAITS_S = (30, 120, 300)
 
 # Where to put the marker, from the state's own bounding box.
 AP_LON, AP_LAT = 80.5, 15.9
@@ -66,27 +74,63 @@ def tls_context():
     return ssl.create_default_context()
 
 
+def fetch_to(url, path):
+    """Download to a side file and move it into place, so a dropped transfer never leaves a
+    partial file in the cache that the next run would take as complete."""
+    partial = path + ".part"
+    request = urllib.request.Request(url, headers={"User-Agent": "ap-groundwater-fusion"})
+    with urllib.request.urlopen(request, timeout=900, context=tls_context()) as response, \
+            open(partial, "wb") as handle:
+        handle.write(response.read())
+    os.replace(partial, path)
+
+
+def download(url, path, fetch=fetch_to):
+    for wait_s in DOWNLOAD_RETRY_WAITS_S + (None,):
+        try:
+            return fetch(url, path)
+        except Exception as error:
+            if wait_s is None or not is_transient(error):
+                raise
+            print(f"  [retry] {url}: {error}; trying again in {wait_s} s", flush=True)
+            time.sleep(wait_s)
+
+
 def cached(url, name, note):
     os.makedirs(CACHE, exist_ok=True)
     path = os.path.join(CACHE, name)
     if not os.path.exists(path):
         print(f"  fetching {note}")
-        request = urllib.request.Request(url, headers={"User-Agent": "ap-groundwater-fusion"})
-        with urllib.request.urlopen(request, timeout=900, context=tls_context()) as response, \
-                open(path, "wb") as handle:
-            handle.write(response.read())
+        download(url, path)
     return path
 
 
-def basemap():
+def published_window():
+    if not os.path.exists(os.path.join(APP, "enso_pacific.json")):
+        return None
+    with open(os.path.join(APP, "enso_pacific.json")) as handle:
+        return json.load(handle).get("window")
+
+
+def basemap(rebuild=False):
     """A dark Earth for the frames to sit on, cropped to the same window.
 
     The source runs 180W to 180E, so a window that starts at 62E and ends at
     292E wraps off the right-hand edge and comes back at the left. Cropping it
     without rolling first gave Africa and the Atlantic under a Pacific anomaly
     field. Rolling so that 62E sits at x=0 makes the window continuous.
+
+    The picture is a 2004 composite and the window is fixed, so the published
+    crop is reused while it still matches; NASA's image server is only asked
+    when the window or the width changes, or with --basemap.
     """
     from PIL import Image
+
+    out = os.path.join(PUBLIC, "pacific.jpg")
+    if not rebuild and os.path.exists(out) and published_window() == WINDOW:
+        with Image.open(out) as kept:
+            if kept.width == BASEMAP_WIDTH:
+                return kept.size
 
     source = Image.open(cached(BLUE_MARBLE, "blue_marble.jpg", "NASA Blue Marble (public domain)"))
     width, height = source.size
@@ -107,7 +151,7 @@ def basemap():
     scale = BASEMAP_WIDTH / crop.width
     crop = crop.resize((BASEMAP_WIDTH, max(1, round(crop.height * scale))), Image.LANCZOS)
     os.makedirs(PUBLIC, exist_ok=True)
-    crop.convert("RGB").save(os.path.join(PUBLIC, "pacific.jpg"), quality=78, optimize=True)
+    crop.convert("RGB").save(out, quality=78, optimize=True)
     return crop.size
 
 
@@ -171,9 +215,10 @@ def frames():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.parse_args()
+    parser.add_argument("--basemap", action="store_true", help="re-crop the Earth image from NASA's original")
+    args = parser.parse_args()
 
-    width, height = basemap()
+    width, height = basemap(rebuild=args.basemap)
     months = frames()
     marker = {
         "xPct": round((AP_LON - LON0) / (LON1 - LON0) * 100, 2),
@@ -181,7 +226,7 @@ def main():
     }
     payload = {
         "contractVersion": "1.0.0",
-        "window": {"lon0": LON0, "lon1": LON1, "lat0": LAT0, "lat1": LAT1},
+        "window": WINDOW,
         "basemap": "enso/pacific.jpg",
         "aspect": round(width / height, 4),
         "andhraPradesh": marker,

@@ -6,12 +6,19 @@ reader comparing them will assume one is broken unless they really do line up
 when reduced to the same quantity. This checks that they do.
 """
 import csv
+import errno
 import json
 import os
+import sys
+import urllib.error
 
 import pytest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "phase3_levels"))
+
+import build_enso_pacific as pacific  # noqa: E402
+
 PANEL = os.path.join(ROOT, "app", "data", "enso_pacific.json")
 ONI = os.path.join(ROOT, "phase3_levels", "data", "enso_oni.csv")
 PUBLIC = os.path.join(ROOT, "app", "public")
@@ -76,3 +83,39 @@ def test_the_months_run_in_order_and_end_recently(panel):
     months = [m["month"] for m in panel["months"]]
     assert months == sorted(months)
     assert len(set(months)) == len(months)
+
+
+def test_a_dropped_connection_is_tried_again_before_the_month_is_given_up(monkeypatch):
+    """8 Nov 2026: NOAA and NASA briefly unreachable from the runner, and the panels stayed a month old."""
+    calls, waits = [], []
+
+    def fetch(url, path):
+        calls.append(url)
+        if len(calls) < 3:
+            raise urllib.error.URLError(OSError(errno.ENETUNREACH, "Network is unreachable"))
+
+    monkeypatch.setattr(pacific.time, "sleep", waits.append)
+    pacific.download("https://example.org/sst.nc", "/nowhere", fetch)
+    assert len(calls) == 3 and waits == list(pacific.DOWNLOAD_RETRY_WAITS_S[:2])
+
+
+def test_a_refusal_is_not_retried(monkeypatch):
+    calls = []
+
+    def fetch(url, path):
+        calls.append(url)
+        raise urllib.error.HTTPError(url, 404, "Not Found", {}, None)
+
+    monkeypatch.setattr(pacific.time, "sleep", lambda s: pytest.fail("waited on a 404"))
+    with pytest.raises(urllib.error.HTTPError):
+        pacific.download("https://example.org/gone.jpg", "/nowhere", fetch)
+    assert len(calls) == 1
+
+
+def test_the_published_earth_is_reused_without_asking_nasa(monkeypatch, panel):
+    """The Blue Marble is a 2004 composite on a fixed window; a NASA outage must not stop the month."""
+    pytest.importorskip("PIL")
+    monkeypatch.setattr(pacific, "cached", lambda *a: pytest.fail("fetched the Earth image again"))
+    width, height = pacific.basemap()
+    assert width == pacific.BASEMAP_WIDTH
+    assert round(width / height, 4) == panel["aspect"]
