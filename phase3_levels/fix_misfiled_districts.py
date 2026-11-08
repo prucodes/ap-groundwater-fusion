@@ -42,6 +42,7 @@ FIXES = os.path.join(HERE, "data", "mandal_boundary_district_fixes.csv")
 GEOMETRY = os.path.join(APP, "ap_map_geometry.json")
 DISPLAY = os.path.join(APP, "ap_map_display.json")
 DISTRICTS = os.path.join(APP, "ap_district_geometry.json")
+SNAPSHOT = os.path.join(APP, "gw_state_snapshot.json")
 ALIASES = [os.path.join(HERE, "data", name)
            for name in ("mandal_boundary_aliases.csv", "mandal_boundary_confirmed.csv")]
 
@@ -102,6 +103,24 @@ def relabel_aliases(fixes):
             writer.writerows(rows)
 
 
+def rekey_snapshot(fixes, mandals):
+    """The State snapshot is keyed DISTRICT|MANDAL and rebuilt only from the data lake
+    extract a signed-in user fetches. A row filed under an outline's old key, where
+    that key no longer exists on the map, is that outline's row: it was matched by a
+    name unique in the state. Move it to the outline's new key."""
+    data = json.load(open(SNAPSHOT))
+    keys = {f'{m["d"]}|{m["m"]}' for m in mandals}
+    moved = 0
+    for fix in fixes:
+        old, new = f'{fix["claimed_district"]}|{fix["mandal"]}', f'{fix["district"]}|{fix["mandal"]}'
+        if old in data["mandals"] and old not in keys and new not in data["mandals"]:
+            data["mandals"][new] = data["mandals"].pop(old)
+            moved += 1
+    with open(SNAPSHOT, "w") as handle:
+        json.dump(data, handle, separators=(",", ":"))
+    return moved
+
+
 def main():
     fixes = load_fixes()
     geometry, moved = refile(GEOMETRY, fixes, compact=False)
@@ -109,7 +128,9 @@ def main():
     touched = {fix["district"] for fix in fixes} | {fix["claimed_district"] for fix in fixes}
     redraw(geometry["mandals"], touched)
     relabel_aliases(fixes)
-    print(f"  {moved} of {len(fixes)} outlines refiled; {len(touched)} district outlines redrawn")
+    rows = rekey_snapshot(fixes, geometry["mandals"])
+    print(f"  {moved} of {len(fixes)} outlines refiled; {len(touched)} district outlines redrawn; "
+          f"{rows} State snapshot rows moved to their outline's new key")
     return 0
 
 
