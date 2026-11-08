@@ -328,12 +328,12 @@
         }
       ],
       "enso": {
-        "elNinoYears": 15,
-        "laNinaYears": 17,
-        "elNinoAnomalyC": 0.17,
-        "laNinaAnomalyC": -0.17,
-        "differenceC": 0.34,
-        "pValue": 0.0034,
+        "elNinoYears": 14,
+        "laNinaYears": 14,
+        "elNinoAnomalyC": 0.18,
+        "laNinaAnomalyC": -0.14,
+        "differenceC": 0.32,
+        "pValue": 0.01,
         "trendRSquared": 0.819,
         "trendCPerDecade": 0.285
       }
@@ -664,12 +664,12 @@
         }
       ],
       "enso": {
-        "elNinoYears": 15,
-        "laNinaYears": 17,
-        "elNinoAnomalyC": 0.08,
-        "laNinaAnomalyC": -0.07,
-        "differenceC": 0.15,
-        "pValue": 0.022,
+        "elNinoYears": 14,
+        "laNinaYears": 14,
+        "elNinoAnomalyC": 0.09,
+        "laNinaAnomalyC": -0.04,
+        "differenceC": 0.13,
+        "pValue": 0.055,
         "trendRSquared": 0.609,
         "trendCPerDecade": 0.105
       }

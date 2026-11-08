@@ -14,114 +14,114 @@
   },
   "months": [
     {
-      "month": "2025-04",
-      "file": "enso/sst_00.webp",
-      "nino34C": -0.14,
-      "nino34ThreeMonthC": -0.09
-    },
-    {
       "month": "2025-05",
-      "file": "enso/sst_01.webp",
-      "nino34C": -0.13,
-      "nino34ThreeMonthC": -0.11
+      "file": "enso/sst_00.webp",
+      "nino34C": -0.12,
+      "nino34ThreeMonthC": -0.12
     },
     {
       "month": "2025-06",
-      "file": "enso/sst_02.webp",
-      "nino34C": -0.07,
-      "nino34ThreeMonthC": -0.11
+      "file": "enso/sst_01.webp",
+      "nino34C": -0.04,
+      "nino34ThreeMonthC": -0.07
     },
     {
       "month": "2025-07",
-      "file": "enso/sst_03.webp",
-      "nino34C": -0.14,
-      "nino34ThreeMonthC": -0.19
+      "file": "enso/sst_02.webp",
+      "nino34C": -0.06,
+      "nino34ThreeMonthC": -0.15
     },
     {
       "month": "2025-08",
-      "file": "enso/sst_04.webp",
-      "nino34C": -0.36,
-      "nino34ThreeMonthC": -0.33
-    },
-    {
-      "month": "2025-09",
-      "file": "enso/sst_05.webp",
-      "nino34C": -0.47,
-      "nino34ThreeMonthC": -0.45
-    },
-    {
-      "month": "2025-10",
-      "file": "enso/sst_06.webp",
-      "nino34C": -0.5,
-      "nino34ThreeMonthC": -0.56
-    },
-    {
-      "month": "2025-11",
-      "file": "enso/sst_07.webp",
-      "nino34C": -0.7,
-      "nino34ThreeMonthC": -0.62
-    },
-    {
-      "month": "2025-12",
-      "file": "enso/sst_08.webp",
-      "nino34C": -0.67,
-      "nino34ThreeMonthC": -0.65
-    },
-    {
-      "month": "2026-01",
-      "file": "enso/sst_09.webp",
-      "nino34C": -0.58,
-      "nino34ThreeMonthC": -0.51
-    },
-    {
-      "month": "2026-02",
-      "file": "enso/sst_10.webp",
-      "nino34C": -0.27,
+      "file": "enso/sst_03.webp",
+      "nino34C": -0.33,
       "nino34ThreeMonthC": -0.29
     },
     {
+      "month": "2025-09",
+      "file": "enso/sst_04.webp",
+      "nino34C": -0.46,
+      "nino34ThreeMonthC": -0.46
+    },
+    {
+      "month": "2025-10",
+      "file": "enso/sst_05.webp",
+      "nino34C": -0.6,
+      "nino34ThreeMonthC": -0.62
+    },
+    {
+      "month": "2025-11",
+      "file": "enso/sst_06.webp",
+      "nino34C": -0.78,
+      "nino34ThreeMonthC": -0.67
+    },
+    {
+      "month": "2025-12",
+      "file": "enso/sst_07.webp",
+      "nino34C": -0.63,
+      "nino34ThreeMonthC": -0.7
+    },
+    {
+      "month": "2026-01",
+      "file": "enso/sst_08.webp",
+      "nino34C": -0.68,
+      "nino34ThreeMonthC": -0.52
+    },
+    {
+      "month": "2026-02",
+      "file": "enso/sst_09.webp",
+      "nino34C": -0.25,
+      "nino34ThreeMonthC": -0.33
+    },
+    {
       "month": "2026-03",
-      "file": "enso/sst_11.webp",
-      "nino34C": -0.01,
-      "nino34ThreeMonthC": 0.01
+      "file": "enso/sst_10.webp",
+      "nino34C": -0.06,
+      "nino34ThreeMonthC": 0.0
     },
     {
       "month": "2026-04",
-      "file": "enso/sst_12.webp",
-      "nino34C": 0.3,
-      "nino34ThreeMonthC": 0.4
+      "file": "enso/sst_11.webp",
+      "nino34C": 0.32,
+      "nino34ThreeMonthC": 0.36
     },
     {
       "month": "2026-05",
-      "file": "enso/sst_13.webp",
-      "nino34C": 0.9,
-      "nino34ThreeMonthC": 0.91
+      "file": "enso/sst_12.webp",
+      "nino34C": 0.82,
+      "nino34ThreeMonthC": 0.85
     },
     {
       "month": "2026-06",
-      "file": "enso/sst_14.webp",
-      "nino34C": 1.54,
-      "nino34ThreeMonthC": 1.48
+      "file": "enso/sst_13.webp",
+      "nino34C": 1.41,
+      "nino34ThreeMonthC": 1.33
     },
     {
       "month": "2026-07",
-      "file": "enso/sst_15.webp",
-      "nino34C": 1.99,
-      "nino34ThreeMonthC": 2.02
+      "file": "enso/sst_14.webp",
+      "nino34C": 1.75,
+      "nino34ThreeMonthC": 1.77
     },
     {
       "month": "2026-08",
-      "file": "enso/sst_16.webp",
-      "nino34C": 2.53,
-      "nino34ThreeMonthC": 2.46
+      "file": "enso/sst_15.webp",
+      "nino34C": 2.14,
+      "nino34ThreeMonthC": 2.14
     },
     {
       "month": "2026-09",
+      "file": "enso/sst_16.webp",
+      "nino34C": 2.53,
+      "nino34ThreeMonthC": 2.44
+    },
+    {
+      "month": "2026-10",
       "file": "enso/sst_17.webp",
-      "nino34C": 2.86,
-      "nino34ThreeMonthC": 2.69
+      "nino34C": 2.64,
+      "nino34ThreeMonthC": null
     }
   ],
-  "source": "NOAA Extended Reconstructed SST v5; anomaly against 1991-2020",
+  "source": "NOAA Extended Reconstructed SST v6; anomaly against 1991-2020",
   "basemapSource": "NASA Blue Marble Next Generation (public domain)"
 }

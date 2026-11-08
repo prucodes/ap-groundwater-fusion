@@ -1,8 +1,9 @@
 """The post-monsoon card reads the official window and does not close it early.
 
-GEC compares pre-monsoon with post-monsoon. The site is at September, so the
-card places this September against every past September and shows what the
-remaining stretch has done -- without putting a number on November.
+GEC compares pre-monsoon with post-monsoon. The open season is read at its
+latest month before November, so the card places that month against the same
+month in every past season and shows what the remaining stretch has done --
+without putting a number on November.
 
 It also has to get its axis the right way round: changeM is depth below ground,
 so a positive change means the table FELL. The first version labelled the ends
@@ -29,18 +30,31 @@ def read():
         return handle.read()
 
 
-def seasons(watch):
+def read_month(watch):
+    """The open season's latest month, kept to September or October as the card does."""
+    open_season = next(row for row in watch["trajectory"] if row["current"])
+    return min(10, max(9, *(point["month"] for point in open_season["points"])))
+
+
+def seasons(watch, month=9):
     out = []
     for row in watch["trajectory"]:
         points = {point["month"]: point["changeM"] for point in row["points"]}
-        if 9 in points:
+        if month in points:
             out.append({"year": row["year"], "current": row["current"],
-                        "sep": points[9], "nov": points.get(11)})
+                        "sep": points[month], "nov": points.get(11)})
     return out
 
 
-def test_this_september_is_the_only_one_on_its_side_of_zero(watch):
-    rows = seasons(watch)
+def test_this_season_is_placed_at_its_latest_month_not_september(watch):
+    """Oct 2026: September had the table 0.18 m deeper than May, October 0.13 m higher, after the cyclones."""
+    page = read()
+    assert "points.get(month)" in page and "points.get(9)" not in page
+    assert read_month(watch) == int(watch["season"]["latestMonth"][5:7]) or read_month(watch) == 10
+
+
+def test_this_season_is_the_only_one_on_its_side_of_zero(watch):
+    rows = seasons(watch, read_month(watch))
     now = next(r for r in rows if r["current"])
     past = [r for r in rows if not r["current"]]
     assert past, "no earlier season to compare against"

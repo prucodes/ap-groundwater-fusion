@@ -15,6 +15,8 @@ export function TemperatureRecord() {
   const data = apTemperature;
   const records = Object.values(data.records);
   const fine = records.find((r) => r.canRankYears) ?? records[0];
+  // A record that finds the same direction but not past p < 0.05 is named as such.
+  const edge = records.filter((r) => r !== fine && r.enso!.pValue >= 0.05);
   const colours = ["#e2705a", "#5aa8e0"];
 
   const years = fine.series.map((p) => p.year);
@@ -103,9 +105,11 @@ export function TemperatureRecord() {
           </strong>
           <em>
             hotter than La Niña years across {records[0].enso!.elNinoYears} and{" "}
-            {records[0].enso!.laNinaYears} events, in <strong>both</strong>{" "}
-            records (p&nbsp;={" "}
-            {records.map((r) => r.enso!.pValue).sort((a, b) => a - b).map((p) => p.toString()).join(" and ")}).
+            {records[0].enso!.laNinaYears} events, in <strong>both</strong> records
+            {edge.length === 0
+              ? <> (p&nbsp;= {records.map((r) => r.enso!.pValue).sort((a, b) => a - b).map((p) => p.toString()).join(" and ")})</>
+              : <>: clearly in {fine.label} (p&nbsp;= {fine.enso!.pValue}), and only at the edge of chance in{" "}
+                {edge.map((r) => `${r.label} (p = ${r.enso!.pValue})`).join(" and ")}, whose cells are larger than the state</>}.
             The warming trend is removed first, or this would only say that El Niño years fell later.
           </em>
         </div>
