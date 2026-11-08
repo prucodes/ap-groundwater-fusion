@@ -1,13 +1,13 @@
 """Mandal polygons must sit inside the district they are filed under.
 
-Nineteen do not. They stretch the district outlines, which are made of their
-mandals' rings -- KONASEEMA currently reaches from 79.2E to 82.4E because a
-Ramachandrapuram belonging near Tirupati is filed under it -- and they are why
-sixteen rows in mandal_boundary_unresolved.csv look unresolvable: the district
-appears to hold two polygons of one name, so the reconciler refuses to choose.
-
-These tests hold the count where it is. It may fall as the list is reviewed; a
-rise means a refreshed boundary file brought new ones in unnoticed.
+Nineteen did not, plus a second Unguturu too close to be flagged by distance.
+They stretched the district outlines, which are made of their mandals' rings --
+KONASEEMA reached from 79.2E to 82.4E because a Ramachandrapuram belonging near
+Tirupati was filed under it -- and they made the reconciler refuse mandals whose
+district appeared to hold two polygons of one name. fix_misfiled_districts.py
+refiled all twenty (Nov 2026), each on APWRIMS's own district list and the
+polygon's neighbours. A rise from zero means a refreshed boundary file brought
+new ones in unnoticed.
 """
 import csv
 import json
@@ -24,7 +24,9 @@ sys.path.insert(0, os.path.join(ROOT, "phase3_levels"))
 import build_boundary_misplacements as mis
 
 LIST = os.path.join(ROOT, "phase3_levels", "data", "mandal_boundary_misplaced.csv")
-KNOWN = 19
+KNOWN = 0
+FIXES = os.path.join(ROOT, "phase3_levels", "data", "mandal_boundary_district_fixes.csv")
+WATER = os.path.join(ROOT, "app", "data", "water_context.json")
 
 
 @pytest.fixture(scope="module")
@@ -71,7 +73,6 @@ def test_the_threshold_is_clear_of_ordinary_border_mandals(features):
 def test_every_flagged_polygon_carries_its_evidence():
     with open(LIST) as handle:
         rows = list(csv.DictReader(handle))
-    assert rows
     for row in rows:
         assert float(row["km_from_district_centre"]) >= mis.MIN_KM
         assert float(row["times_district_spread"]) >= mis.MIN_RATIO
@@ -115,3 +116,45 @@ def test_a_polygon_far_from_its_district_is_flagged_and_a_border_one_is_not():
     flagged = mis.flag(base + [edge, far])
     assert 91 in flagged
     assert 90 not in flagged
+
+
+@pytest.fixture(scope="module")
+def fixes():
+    with open(FIXES) as handle:
+        return list(csv.DictReader(handle))
+
+
+def test_each_refiled_outline_is_where_the_fix_says(fixes):
+    for name in ("ap_map_geometry.json", "ap_map_display.json"):
+        mandals = json.load(open(os.path.join(ROOT, "app", "data", name)))["mandals"]
+        for fix in fixes:
+            feature = mandals[int(fix["boundary_index"])]
+            assert (feature["d"], feature["m"]) == (fix["district"], fix["mandal"]), (name, fix)
+
+
+def test_each_move_is_backed_by_apwrims_listing_that_mandal_in_that_district(fixes):
+    """The state's own district list decides; the neighbours only corroborate."""
+    water = json.load(open(WATER))
+    listed = {(mis.norm(m["district"]), mis.norm(m["mandal"]))
+              for section in ("soilMoisture", "rainfall") for m in water[section]["mandals"]}
+    for fix in fixes:
+        assert (mis.norm(fix["district"]), mis.norm(fix["apwrims_mandal"])) in listed, fix
+        assert fix["district"] != fix["claimed_district"]
+
+
+def test_no_district_holds_two_outlines_of_one_name():
+    import collections
+
+    mandals = json.load(open(os.path.join(ROOT, "app", "data", "ap_map_geometry.json")))["mandals"]
+    counts = collections.Counter((m["d"], m["m"]) for m in mandals)
+    assert not [key for key, count in counts.items() if count > 1]
+
+
+def test_each_district_outline_holds_its_own_mandals_only():
+    """A district's mandal count and outline come from the same refiled map."""
+    import collections
+
+    mandals = json.load(open(os.path.join(ROOT, "app", "data", "ap_map_geometry.json")))["mandals"]
+    per = collections.Counter(m["d"] for m in mandals)
+    for district in json.load(open(os.path.join(ROOT, "app", "data", "ap_district_geometry.json")))["districts"]:
+        assert district["mandal_count"] == per[district["d"]], district["d"]
