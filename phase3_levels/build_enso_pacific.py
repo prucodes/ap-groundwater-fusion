@@ -36,7 +36,9 @@ APP = os.path.join(ROOT, "app", "data")
 PUBLIC = os.path.join(ROOT, "app", "public", "enso")
 CACHE = os.path.join("/tmp", "ap-gw-video-assets")
 
-ERSST = "https://downloads.psl.noaa.gov/Datasets/noaa.ersst.v5/sst.mnmean.nc"
+# v6, the version NOAA CPC builds the published ONI from. On v5 the panel ran about
+# 0.3 C warm of the index in the 2026 event (ASO 2.81 against 2.46); v6 gives 2.44.
+ERSST = "https://downloads.psl.noaa.gov/Datasets/noaa.ersst.v6/sst.mnmean.nc"
 BLUE_MARBLE = ("https://eoimages.gsfc.nasa.gov/images/imagerecords/73000/73909/"
                "world.topo.bathy.200412.3x5400x2700.jpg")
 
@@ -162,7 +164,7 @@ def frames():
     from PIL import Image
     from scipy.ndimage import zoom
 
-    data = xr.open_dataset(cached(ERSST, "sst.mnmean.nc", "NOAA ERSST v5 (no constraints on use)"))
+    data = xr.open_dataset(cached(ERSST, "ersst_v6.nc", "NOAA ERSST v6 (no constraints on use)"))
     climatology = data.sst.sel(time=slice("1991-01-01", "2020-12-31")).groupby("time.month").mean("time")
     anomaly = data.sst.groupby("time.month") - climatology
     lons = np.arange(LON0, LON1 + 1, 2) % 360
@@ -209,7 +211,8 @@ def frames():
         i = order.index(row["month"])
         near = [series[m] for m in order[max(0, i - 1): i + 2]]
         row["nino34C"] = round(series[row["month"]], 2)
-        row["nino34ThreeMonthC"] = round(sum(near) / len(near), 2)
+        # The newest month has no month after it yet; a two-month mean is not the index.
+        row["nino34ThreeMonthC"] = round(sum(near) / 3, 2) if len(near) == 3 else None
     return written
 
 
@@ -231,7 +234,7 @@ def main():
         "aspect": round(width / height, 4),
         "andhraPradesh": marker,
         "months": months,
-        "source": "NOAA Extended Reconstructed SST v5; anomaly against 1991-2020",
+        "source": "NOAA Extended Reconstructed SST v6; anomaly against 1991-2020",
         "basemapSource": "NASA Blue Marble Next Generation (public domain)",
     }
     out = os.path.join(APP, "enso_pacific.json")

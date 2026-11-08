@@ -544,7 +544,7 @@ export type PacificEnsoData = {
   basemap: string;
   aspect: number;
   andhraPradesh: { xPct: number; yPct: number };
-  months: Array<{ month: string; file: string; nino34C: number; nino34ThreeMonthC: number }>;
+  months: Array<{ month: string; file: string; nino34C: number; nino34ThreeMonthC: number | null }>;
   source: string;
   basemapSource: string;
 };

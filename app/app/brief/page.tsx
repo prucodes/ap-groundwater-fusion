@@ -224,7 +224,7 @@ const CLIMATE: SourceRow[] = [
   ["NASA POWER", "MERRA-2 reanalysis", "Rainfall", "≈55 km · monthly", "Fallback where CHIRPS is missing"],
   ["TerraClimate", "University of Idaho", "Actual evapotranspiration, water balance", "≈4 km · monthly", "Rain-minus-ET context (not recharge)"],
   ["NOAA CPC", "Oceanic Niño Index, ENSO outlook", "El Niño state and official outlook", "index · monthly", "El Niño context and composites"],
-  ["NOAA ERSST v5 · GHCN-CAMS", "with NOAAGlobalTemp", "Sea-surface and air temperature", "2° / 0.5° · monthly", "Pacific panel, temperature record"],
+  ["NOAA ERSST v6 · GHCN-CAMS", "with NOAAGlobalTemp", "Sea-surface and air temperature", "2° / 0.5° · monthly", "Pacific panel, temperature record"],
   ["ECMWF open forecast", "via Open-Meteo", "Reference ET and rain, 7 to 10 days ahead", "0.25° · daily", "The weekly crop water check"],
 ];
 const LAND: SourceRow[] = [
@@ -502,7 +502,7 @@ export default function BriefPage() {
                 <div><b>Platform</b> prucodes.github.io/ap-groundwater-fusion · /methodology</div>
                 <div><b>Groundwater</b> apwrims.ap.gov.in · ingres.iith.ac.in · indiadataportal.com (CGWB wells) · nasagrace.unl.edu · ejalshakti.gov.in (drinking water)</div>
                 <div><b>Rain</b> data.chc.ucsb.edu/products/CHIRPS/v3.0 · imdpune.gov.in (gridded) · power.larc.nasa.gov · climatologylab.org/terraclimate</div>
-                <div><b>Climate</b> cpc.ncep.noaa.gov (ONI) · psl.noaa.gov (ERSST v5) · open-meteo.com (ECMWF open data)</div>
+                <div><b>Climate</b> cpc.ncep.noaa.gov (ONI) · psl.noaa.gov (ERSST v6) · open-meteo.com (ECMWF open data)</div>
                 <div><b>Land</b> star.nesdis.noaa.gov (VHP) · earth-search.aws.element84.com (Sentinel-2) · global-surface-water.appspot.com (JRC) · esa-worldcereal.org · esa-worldcover.org · soilgrids.org · worldpop.org</div>
                 <div><b>Methods</b> Manual for Drought Management 2020 · FAO-56 (Allen et al., 1998) · scikit-learn</div>
               </div>
