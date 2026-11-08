@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-07T20:07:16+00:00",
+ "generatedAt": "2026-11-08T10:42:45+00:00",
  "authorizationStatus": "research_pending",
  "rain": {
   "start": "2026-06-01",
@@ -225,50 +225,50 @@
   }
  },
  "soil": {
-  "asOf": "2026-11-05",
-  "weekAgo": "2026-10-29",
+  "asOf": "2026-11-07",
+  "weekAgo": "2026-10-31",
   "depthCm": 30,
   "firstYear": 2014,
   "lastYear": 2025,
   "url": "https://apwrims.ap.gov.in/mis/soilmoisture",
   "mandals": 686,
-  "medianPct": 98.2,
-  "belowOwnMedian": 227,
+  "medianPct": 94.0,
+  "belowOwnMedian": 239,
   "withBaseline": 667,
-  "driestOnRecord": 13
+  "driestOnRecord": 12
  },
  "reservoirs": {
-  "asOf": "2026-11-07T23:49+05:30",
+  "asOf": "2026-11-08T15:58+05:30",
   "staleCount": 2,
   "url": "https://apwrims.ap.gov.in/mis/reservoir",
   "count": 114,
   "capacityTmc": 1161.357,
-  "storageTmc": 505.107,
+  "storageTmc": 505.48,
   "storagePct": 43.5,
-  "lastYearPct": 86.6,
+  "lastYearPct": 86.4,
   "byBasin": [
    {
     "basin": "KRISHNA",
     "capacityTmc": 749.345,
-    "storagePct": 41.8,
-    "lastYearPct": 88.3
+    "storagePct": 41.7,
+    "lastYearPct": 87.9
    },
    {
     "basin": "PENNAR",
     "capacityTmc": 295.463,
     "storagePct": 36.2,
-    "lastYearPct": 86.7
+    "lastYearPct": 86.9
    },
    {
     "basin": "OTHERS",
     "capacityTmc": 89.81,
-    "storagePct": 72.7,
-    "lastYearPct": 78.4
+    "storagePct": 73.3,
+    "lastYearPct": 78.1
    },
    {
     "basin": "GODAVARI",
     "capacityTmc": 26.739,
-    "storagePct": 73.3,
+    "storagePct": 74.6,
     "lastYearPct": 65.6
    }
   ]
@@ -285,7 +285,7 @@
    },
    "soil": {
     "mandals": 11,
-    "medianPct": 99.4,
+    "medianPct": 99.5,
     "withBaseline": 11,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -309,7 +309,7 @@
    },
    "soil": {
     "mandals": 24,
-    "medianPct": 99.9,
+    "medianPct": 99.1,
     "withBaseline": 24,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -317,9 +317,9 @@
    "reservoirs": {
     "count": 5,
     "capacityTmc": 5.476,
-    "storageTmc": 4.703,
-    "storagePct": 85.9,
-    "lastYearPct": 84.7
+    "storageTmc": 4.789,
+    "storagePct": 87.5,
+    "lastYearPct": 83.5
    }
   },
   {
@@ -333,17 +333,17 @@
    },
    "soil": {
     "mandals": 32,
-    "medianPct": 14.5,
+    "medianPct": 13.2,
     "withBaseline": 31,
-    "belowOwnMedian": 29,
-    "driestOnRecord": 1
+    "belowOwnMedian": 30,
+    "driestOnRecord": 2
    },
    "reservoirs": {
     "count": 9,
     "capacityTmc": 16.631,
-    "storageTmc": 9.209,
-    "storagePct": 55.4,
-    "lastYearPct": 84.7
+    "storageTmc": 9.298,
+    "storagePct": 55.9,
+    "lastYearPct": 85.4
    }
   },
   {
@@ -357,15 +357,15 @@
    },
    "soil": {
     "mandals": 25,
-    "medianPct": 75.8,
+    "medianPct": 78.3,
     "withBaseline": 25,
-    "belowOwnMedian": 16,
+    "belowOwnMedian": 14,
     "driestOnRecord": 0
    },
    "reservoirs": {
     "count": 6,
     "capacityTmc": 8.759,
-    "storageTmc": 3.584,
+    "storageTmc": 3.585,
     "storagePct": 40.9,
     "lastYearPct": 66.0
    }
@@ -381,7 +381,7 @@
    },
    "soil": {
     "mandals": 20,
-    "medianPct": 100.0,
+    "medianPct": 99.1,
     "withBaseline": 20,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -398,9 +398,9 @@
    },
    "soil": {
     "mandals": 28,
-    "medianPct": 85.3,
+    "medianPct": 83.2,
     "withBaseline": 27,
-    "belowOwnMedian": 19,
+    "belowOwnMedian": 26,
     "driestOnRecord": 0
    },
    "reservoirs": {
@@ -422,7 +422,7 @@
    },
    "soil": {
     "mandals": 22,
-    "medianPct": 100.0,
+    "medianPct": 99.2,
     "withBaseline": 22,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -446,7 +446,7 @@
    },
    "soil": {
     "mandals": 28,
-    "medianPct": 99.9,
+    "medianPct": 96.3,
     "withBaseline": 27,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -454,9 +454,9 @@
    "reservoirs": {
     "count": 5,
     "capacityTmc": 7.97,
-    "storageTmc": 6.1,
-    "storagePct": 76.5,
-    "lastYearPct": 69.1
+    "storageTmc": 6.168,
+    "storagePct": 77.4,
+    "lastYearPct": 69.0
    }
   },
   {
@@ -470,7 +470,7 @@
    },
    "soil": {
     "mandals": 18,
-    "medianPct": 100.0,
+    "medianPct": 96.9,
     "withBaseline": 16,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -487,7 +487,7 @@
    },
    "soil": {
     "mandals": 21,
-    "medianPct": 100.0,
+    "medianPct": 99.1,
     "withBaseline": 21,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -495,9 +495,9 @@
    "reservoirs": {
     "count": 3,
     "capacityTmc": 24.768,
-    "storageTmc": 22.654,
-    "storagePct": 91.5,
-    "lastYearPct": 91.3
+    "storageTmc": 22.822,
+    "storagePct": 92.1,
+    "lastYearPct": 91.0
    }
   },
   {
@@ -511,7 +511,7 @@
    },
    "soil": {
     "mandals": 19,
-    "medianPct": 100.0,
+    "medianPct": 98.9,
     "withBaseline": 19,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -519,8 +519,8 @@
    "reservoirs": {
     "count": 1,
     "capacityTmc": 2.93,
-    "storageTmc": 2.58,
-    "storagePct": 88.1,
+    "storageTmc": 2.93,
+    "storagePct": 100.0,
     "lastYearPct": 100.0
    }
   },
@@ -535,7 +535,7 @@
    },
    "soil": {
     "mandals": 26,
-    "medianPct": 100.0,
+    "medianPct": 98.6,
     "withBaseline": 25,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -552,17 +552,17 @@
    },
    "soil": {
     "mandals": 27,
-    "medianPct": 13.4,
+    "medianPct": 16.9,
     "withBaseline": 25,
-    "belowOwnMedian": 25,
-    "driestOnRecord": 4
+    "belowOwnMedian": 24,
+    "driestOnRecord": 2
    },
    "reservoirs": {
     "count": 4,
     "capacityTmc": 7.025,
-    "storageTmc": 4.706,
-    "storagePct": 67.0,
-    "lastYearPct": 86.1
+    "storageTmc": 4.599,
+    "storagePct": 65.5,
+    "lastYearPct": 86.6
    }
   },
   {
@@ -576,7 +576,7 @@
    },
    "soil": {
     "mandals": 21,
-    "medianPct": 28.9,
+    "medianPct": 26.2,
     "withBaseline": 21,
     "belowOwnMedian": 21,
     "driestOnRecord": 5
@@ -600,7 +600,7 @@
    },
    "soil": {
     "mandals": 17,
-    "medianPct": 99.6,
+    "medianPct": 95.7,
     "withBaseline": 16,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -610,7 +610,7 @@
     "capacityTmc": 3.201,
     "storageTmc": 3.111,
     "storagePct": 97.2,
-    "lastYearPct": 99.0
+    "lastYearPct": 98.7
    }
   },
   {
@@ -624,17 +624,17 @@
    },
    "soil": {
     "mandals": 30,
-    "medianPct": 25.1,
+    "medianPct": 26.1,
     "withBaseline": 29,
     "belowOwnMedian": 28,
-    "driestOnRecord": 1
+    "driestOnRecord": 0
    },
    "reservoirs": {
     "count": 7,
     "capacityTmc": 251.533,
-    "storageTmc": 69.992,
-    "storagePct": 27.8,
-    "lastYearPct": 95.4
+    "storageTmc": 69.743,
+    "storagePct": 27.7,
+    "lastYearPct": 94.9
    }
   },
   {
@@ -648,7 +648,7 @@
    },
    "soil": {
     "mandals": 28,
-    "medianPct": 94.1,
+    "medianPct": 86.9,
     "withBaseline": 28,
     "belowOwnMedian": 7,
     "driestOnRecord": 0
@@ -656,9 +656,9 @@
    "reservoirs": {
     "count": 3,
     "capacityTmc": 361.28,
-    "storageTmc": 210.754,
+    "storageTmc": 210.514,
     "storagePct": 58.3,
-    "lastYearPct": 99.7
+    "lastYearPct": 99.5
    }
   },
   {
@@ -672,7 +672,7 @@
    },
    "soil": {
     "mandals": 15,
-    "medianPct": 94.7,
+    "medianPct": 95.1,
     "withBaseline": 15,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -680,9 +680,9 @@
    "reservoirs": {
     "count": 4,
     "capacityTmc": 6.241,
-    "storageTmc": 5.155,
-    "storagePct": 82.6,
-    "lastYearPct": 79.4
+    "storageTmc": 5.24,
+    "storagePct": 84.0,
+    "lastYearPct": 78.5
    }
   },
   {
@@ -696,7 +696,7 @@
    },
    "soil": {
     "mandals": 12,
-    "medianPct": 98.5,
+    "medianPct": 94.7,
     "withBaseline": 11,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -704,9 +704,9 @@
    "reservoirs": {
     "count": 4,
     "capacityTmc": 3.009,
-    "storageTmc": 1.844,
-    "storagePct": 61.3,
-    "lastYearPct": 61.7
+    "storageTmc": 1.84,
+    "storagePct": 61.1,
+    "lastYearPct": 61.5
    }
   },
   {
@@ -720,17 +720,17 @@
    },
    "soil": {
     "mandals": 28,
-    "medianPct": 97.0,
+    "medianPct": 94.1,
     "withBaseline": 27,
-    "belowOwnMedian": 4,
+    "belowOwnMedian": 7,
     "driestOnRecord": 0
    },
    "reservoirs": {
     "count": 4,
     "capacityTmc": 7.135,
-    "storageTmc": 2.57,
+    "storageTmc": 2.568,
     "storagePct": 36.0,
-    "lastYearPct": 91.6
+    "lastYearPct": 90.1
    }
   },
   {
@@ -744,17 +744,17 @@
    },
    "soil": {
     "mandals": 36,
-    "medianPct": 99.2,
+    "medianPct": 98.3,
     "withBaseline": 34,
-    "belowOwnMedian": 2,
+    "belowOwnMedian": 5,
     "driestOnRecord": 0
    },
    "reservoirs": {
     "count": 8,
     "capacityTmc": 154.767,
-    "storageTmc": 41.147,
+    "storageTmc": 41.154,
     "storagePct": 26.6,
-    "lastYearPct": 87.6
+    "lastYearPct": 87.8
    }
   },
   {
@@ -768,17 +768,17 @@
    },
    "soil": {
     "mandals": 32,
-    "medianPct": 15.3,
+    "medianPct": 13.5,
     "withBaseline": 32,
-    "belowOwnMedian": 26,
-    "driestOnRecord": 1
+    "belowOwnMedian": 27,
+    "driestOnRecord": 2
    },
    "reservoirs": {
     "count": 7,
     "capacityTmc": 6.884,
-    "storageTmc": 3.464,
-    "storagePct": 50.3,
-    "lastYearPct": 61.2
+    "storageTmc": 3.483,
+    "storagePct": 50.6,
+    "lastYearPct": 61.3
    }
   },
   {
@@ -792,7 +792,7 @@
    },
    "soil": {
     "mandals": 30,
-    "medianPct": 99.9,
+    "medianPct": 98.5,
     "withBaseline": 30,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -816,7 +816,7 @@
    },
    "soil": {
     "mandals": 36,
-    "medianPct": 94.9,
+    "medianPct": 93.7,
     "withBaseline": 36,
     "belowOwnMedian": 10,
     "driestOnRecord": 0
@@ -824,9 +824,9 @@
    "reservoirs": {
     "count": 5,
     "capacityTmc": 3.219,
-    "storageTmc": 0.792,
+    "storageTmc": 0.793,
     "storagePct": 24.6,
-    "lastYearPct": 74.8
+    "lastYearPct": 74.9
    }
   },
   {
@@ -837,7 +837,7 @@
     "capacityTmc": 105.79,
     "storageTmc": 36.286,
     "storagePct": 34.3,
-    "lastYearPct": 75.0
+    "lastYearPct": 74.3
    }
   },
   {
@@ -851,7 +851,7 @@
    },
    "soil": {
     "mandals": 11,
-    "medianPct": 99.5,
+    "medianPct": 94.7,
     "withBaseline": 7,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -861,7 +861,7 @@
     "capacityTmc": 1.169,
     "storageTmc": 1.108,
     "storagePct": 94.8,
-    "lastYearPct": 73.4
+    "lastYearPct": 74.1
    }
   },
   {
@@ -875,7 +875,7 @@
    },
    "soil": {
     "mandals": 28,
-    "medianPct": 100.0,
+    "medianPct": 99.8,
     "withBaseline": 27,
     "belowOwnMedian": 0,
     "driestOnRecord": 0
@@ -883,9 +883,9 @@
    "reservoirs": {
     "count": 3,
     "capacityTmc": 7.678,
-    "storageTmc": 6.922,
-    "storagePct": 90.2,
-    "lastYearPct": 87.8
+    "storageTmc": 7.06,
+    "storagePct": 92.0,
+    "lastYearPct": 88.1
    }
   },
   {
@@ -916,7 +916,7 @@
    },
    "soil": {
     "mandals": 40,
-    "medianPct": 31.1,
+    "medianPct": 30.5,
     "withBaseline": 40,
     "belowOwnMedian": 39,
     "driestOnRecord": 1
@@ -924,8 +924,8 @@
    "reservoirs": {
     "count": 16,
     "capacityTmc": 79.158,
-    "storageTmc": 33.141,
-    "storagePct": 41.9,
+    "storageTmc": 33.104,
+    "storagePct": 41.8,
     "lastYearPct": 90.8
    }
   }
