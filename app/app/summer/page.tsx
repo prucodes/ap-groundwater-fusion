@@ -12,9 +12,10 @@ import styles from "./Summer.module.css";
 import { brief } from "../../lib/pageBriefs";
 import drinking from "../../data/drinking_water.json";
 import { waterQuality } from "../../lib/waterQuality";
-import { titleCase } from "../../lib/data";
+import { mapGeometry, titleCase } from "../../lib/data";
 import { BAND_LABEL, priorityCsv, SIGNS, signLabel, summerPriority, type PriorityBand, type PriorityRow, type PrioritySign } from "../../lib/summerPriority";
 import { DownloadTextButton } from "../../components/ExportButtons";
+import { PriorityMap } from "../../components/PriorityMap";
 
 export const metadata: Metadata = {
   title: "Summer Water Outlook | AP Water Intelligence",
@@ -183,6 +184,8 @@ function SummerPriority() {
   const total = first.mandals + next.mandals + watch.mandals;
   const firstRows = p.mandals.filter(r => r.band === "first");
   const places = p.districts.filter(d => d.first);
+  const byIndex = new Map(p.mandals.map(r => [r.index, r]));
+  const onMap = mapGeometry.mandals.map((_, i) => byIndex.get(i) ?? null);
   const widest = Math.max(...firstRows.slice(0, SHOWN).map(r => r.pastRecordM), 1);
   return (
     <section className={styles.priority} aria-labelledby="summer-priority" data-testid="summer-priority">
@@ -220,9 +223,25 @@ function SummerPriority() {
       </div>
 
       <div className={`${shared.block} ${styles.pBody}`}>
-        <div className={styles.pPlaces}>
-          <span>Where they are</span>
-          <ul>{places.map(d => <li key={d.district}>{d.district}<b>{d.first}</b></li>)}</ul>
+        <div className={styles.pMapRow}>
+          <PriorityMap aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height} counts={first.signs}
+            bands={onMap.map(r => r?.band ?? null)} signs={onMap.map(r => r?.signs ?? [])}
+            notes={onMap.map(r => r
+              ? `${BAND_LABEL[r.band]} · ${r.pastRecordM.toFixed(1)} m past its deepest May · ${r.people ? `${lakhs(r.people)} people · ` : ""}${r.signs.length ? r.signs.map(sg => signLabel(sg).short.toLowerCase()).join(", ") : "no other sign yet"}`
+              : "Not on the list: within its record, or past it only in a dry winter without three signs.")} />
+          <div className={styles.pPlaces}>
+            <h3>Where they are</h3>
+            <ol>
+              {places.slice(0, 8).map(d => (
+                <li key={d.district}>
+                  <span><b>{d.district}</b><small>{lakhs(d.people)} people in the {d.first} to plan first{d.next ? ` · ${d.next} next` : ""}{d.watch ? ` · ${d.watch} to watch` : ""}</small></span>
+                  <span className={styles.pPlaceBar} aria-hidden="true"><i style={{ width: `${(100 * d.first) / places[0].first}%` }} /></span>
+                  <strong>{d.first}</strong>
+                </li>
+              ))}
+            </ol>
+            {places.length > 8 ? <p>And {places.length - 8} more districts with one or two each.</p> : null}
+          </div>
         </div>
         <ol className={styles.pCards} data-testid="priority-first">
           {firstRows.slice(0, SHOWN).map((r, i) => (

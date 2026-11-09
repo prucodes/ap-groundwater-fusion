@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
 import { MandalStatusMap } from "../../components/MandalStatusMap";
@@ -29,6 +30,7 @@ import { isWaterLayer, WATER_LAYER_META, waterLayerGradient, waterMandals, type 
 import { FIELD_LAYER_META, fieldLegend, isFieldLayer, type FieldLayer } from "../../lib/fieldSignals";
 import { RECHARGE_LAYER_META, isRechargeLayer, recharge, rechargeLegend, type RechargeLayer } from "../../lib/rechargeEfficiency";
 import { QUALITY_LAYER_META, isQualityLayer, qualityLegend, waterQuality, type QualityLayer } from "../../lib/waterQuality";
+import { PRIORITY_COLORS, PRIORITY_LAYER_META, isPriorityLayer, priorityLegend, prioritySummary, type PriorityLayer } from "../../lib/priorityLayer";
 import { RAIN_LAYER_META, isRainLayer, rainGoverned, rainLegend, type RainLayer } from "../../lib/rainGoverned";
 import { brief } from "../../lib/pageBriefs";
 import { groundwaterStressNow } from "../../lib/pageNow";
@@ -41,7 +43,7 @@ const LAYERS: { key: DistrictLayerKey; label: string }[] = [
   { key: "rainfall_mm", label: "Rainfall" },
 ];
 
-type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer | QualityLayer;
+type MandalView = "status" | MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer | QualityLayer | PriorityLayer;
 const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "status", label: "Fusion status" },
   { key: "water_balance_mm", label: "Water Balance" },
@@ -53,6 +55,7 @@ const MANDAL_VIEWS: { key: MandalView; label: string }[] = [
   { key: "recharge_share", label: "Rain reaching the aquifer" },
   { key: "rain_governed", label: "Does rain still drive it?" },
   { key: "water_quality", label: "Unsafe drinking water" },
+  { key: "drinking_priority", label: "Drinking-water priority" },
 ];
 
 // The groups and aquifers the two water notes compare, read from the data so the
@@ -136,9 +139,11 @@ export default function MapPage() {
                 </span>
                 {level === "district" ? "Andhra Pradesh · District Heat-Map"
                   : mandalView === "status" ? "Andhra Pradesh · Mandal Fusion Status"
-                    : `Andhra Pradesh · ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isRechargeLayer(mandalView) ? RECHARGE_LAYER_META[mandalView].label : isQualityLayer(mandalView) ? QUALITY_LAYER_META[mandalView].label : isRainLayer(mandalView) ? RAIN_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
+                    : `Andhra Pradesh · ${isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].label : isRechargeLayer(mandalView) ? RECHARGE_LAYER_META[mandalView].label : isQualityLayer(mandalView) ? QUALITY_LAYER_META[mandalView].label : isPriorityLayer(mandalView) ? PRIORITY_LAYER_META[mandalView].label : isRainLayer(mandalView) ? RAIN_LAYER_META[mandalView].label : isFieldLayer(mandalView) ? FIELD_LAYER_META[mandalView].label : MANDAL_VIEWS.find(v => v.key === mandalView)?.label ?? ""}`}
                 {level === "mandal" && (isWaterLayer(mandalView) || isFieldLayer(mandalView)) ? (
                   <span className="dataAsOf">{isWaterLayer(mandalView) ? WATER_LAYER_META[mandalView].period : FIELD_LAYER_META[mandalView].period}</span>
+                ) : level === "mandal" && isPriorityLayer(mandalView) ? (
+                  <span className="dataAsOf">{PRIORITY_LAYER_META[mandalView].badge}</span>
                 ) : level === "mandal" && mandalView !== "status" ? (
                   <span className="dataAsOf">{mandalView === "rainfall_mm" ? formatPeriod(mandalHeat.rainfall_period) : mandalHeat.balance_year}</span>
                 ) : latestObservationPeriod ? (
@@ -224,6 +229,24 @@ export default function MapPage() {
                       <summary>How this is measured, and what it cannot say</summary>
                       <p>{RAIN_LAYER_META[mandalView].note}</p>
                       <ul>{rainGoverned.limits.map((limit, i) => <li key={i}>{limit}</li>)}</ul>
+                    </details>
+                  </div>
+                ) : isPriorityLayer(mandalView) ? (
+                  <div className="choroLegend" data-testid="priority-layer-legend">
+                    <div className="choroHead">
+                      <span>{PRIORITY_LAYER_META[mandalView].label}</span>
+                      <span className="choroPeriod">{PRIORITY_LAYER_META[mandalView].period}</span>
+                    </div>
+                    <ul className="categoryLegend">
+                      {priorityLegend().map(item => <li key={item.key}><i style={{ background: item.color }} />{item.label}<b>{item.count}</b></li>)}
+                      <li><i style={{ background: PRIORITY_COLORS.none }} />Not on the list</li>
+                    </ul>
+                    <div className="mapHint">
+                      <IconInfo style={{ width: 13, height: 13 }} /> {prioritySummary.first.mandals} mandals to plan summer drinking water first, home to about {Math.round(prioritySummary.first.people / 1e5)} lakh people and {prioritySummary.first.sources.toLocaleString("en-IN")} drinking-water sources. <Link href="/summer/#summer-priority">The ranked list, with every reason</Link>.
+                    </div>
+                    <details className="rechargeMethod">
+                      <summary>Where this comes from, and what it cannot say</summary>
+                      <p>{PRIORITY_LAYER_META[mandalView].note}</p>
                     </details>
                   </div>
                 ) : isQualityLayer(mandalView) ? (

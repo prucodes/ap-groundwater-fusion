@@ -53,3 +53,23 @@ test("the drinking-water priority list leads with the first group, folds the res
   expect(rows.length - 1).toBe(p.mandals.length);
   expect(rows[1]).toContain(first[0].mandal);
 });
+
+test("the drinking-water map colours each group and filters by sign, and the Mandal Map carries it as a layer", async ({ page }) => {
+  const p = priorityJson as unknown as { summary: Record<"first" | "next" | "watch", { mandals: number; signs: Record<string, number> }> };
+  await page.goto("/summer/");
+  const map = page.getByTestId("priority-map");
+  await expect(map).toHaveAttribute("data-ready", "true");
+  await expect(map.locator('path[data-key="f"]')).toHaveCount(p.summary.first.mandals);
+  await expect(map.locator('path[data-key="x"]')).toHaveCount(p.summary.next.mandals);
+  await expect(map.locator('path[data-key="w"]')).toHaveCount(p.summary.watch.mandals);
+  await page.getByRole("button", { name: /Cyclones missed it/ }).click();
+  await expect(map.locator('path[data-key="f"]')).toHaveCount(p.summary.first.signs.storms);
+  await page.getByRole("button", { name: "All signs" }).click();
+  await expect(map.locator('path[data-key="f"]')).toHaveCount(p.summary.first.mandals);
+
+  await page.goto("/map/");
+  await page.getByRole("button", { name: "Drinking-water priority" }).click();
+  const legend = page.getByTestId("priority-layer-legend");
+  await expect(legend).toContainText(String(p.summary.first.mandals));
+  await expect(legend.getByRole("link", { name: /ranked list/ })).toHaveAttribute("href", /\/summer\/#summer-priority/);
+});
