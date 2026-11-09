@@ -53,6 +53,7 @@ from fetch_nasa_power_rainfall import _tls_context, is_transient  # noqa: E402 -
 
 APP = os.path.join(HERE, "..", "app", "data")
 OUT = os.path.join(APP, "field_signals.json")
+FROZEN_CALLS = os.path.join(HERE, "data", "field_calls")   # score_field_calls.py writes each week's calls here
 MANDALS_OUT = os.path.join(APP, "field_signals_mandals.json")
 GEOMETRY = os.path.join(APP, "ap_map_geometry.json")
 WATER_CONTEXT = os.path.join(APP, "water_context.json")
@@ -629,13 +630,21 @@ def soil_by_boundary(context, count):
     return [seen.get(i) for i in range(count)]
 
 
-def check_for(weather, refreshed, previous, capacity, context):
+def check_for(weather, refreshed, previous, capacity, context, calls_dir=None):
     """This run's cross-check. A forecast kept from an earlier run keeps that run's check:
     the calls frozen for its issue date were made on that run's soil reading, and running
     the old forecast on this week's soil would publish counts nobody froze, failing the
-    scorecard's own test and with it the whole weekly refresh (12 October 2026)."""
+    scorecard's own test and with it the whole weekly refresh (12 October 2026).
+
+    The same holds when the forecast was fetched again under an issue date whose calls are
+    already frozen: a second run that day (9 November 2026, a day-old soil reading behind
+    the frozen calls) would otherwise recount them on newer soil."""
     kept = previous.get("crossCheck")
-    if not refreshed and kept and (previous.get("weather") or {}).get("issued") == (weather or {}).get("issued"):
+    issued = (weather or {}).get("issued")
+    if not refreshed and kept and (previous.get("weather") or {}).get("issued") == issued:
+        return kept
+    frozen = issued and os.path.exists(os.path.join(calls_dir or FROZEN_CALLS, f"{issued}.json"))
+    if frozen and kept and kept.get("issued") == issued:
         return kept
     return cross_check(weather, capacity, context)
 
