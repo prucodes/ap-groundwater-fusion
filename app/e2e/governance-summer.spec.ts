@@ -40,8 +40,8 @@ test("the drinking-water priority list leads with the first group, folds the res
   const section = page.getByTestId("summer-priority");
   await expect(section).toContainText(`${p.summary.first.mandals} mandals`);
   const first = p.mandals.filter(r => r.band === "first");
-  await expect(page.getByTestId("priority-first").locator("tbody tr")).toHaveCount(Math.min(10, first.length));
-  await expect(page.getByTestId("priority-first").locator("tbody tr").first()).toContainText(first[0].mandal);
+  await expect(page.getByTestId("priority-first").locator(":scope > li")).toHaveCount(Math.min(10, first.length));
+  await expect(page.getByTestId("priority-first").locator(":scope > li").first()).toContainText(first[0].mandal);
   // The rest are on the page, folded.
   await expect(page.getByTestId("priority-first-rest").locator("tbody tr")).toHaveCount(Math.max(0, first.length - 10));
   await expect(page.getByTestId("priority-next").locator("tbody tr")).toHaveCount(p.summary.next.mandals);
