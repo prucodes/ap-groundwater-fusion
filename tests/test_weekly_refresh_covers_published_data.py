@@ -35,6 +35,10 @@ STATIC_BY_DESIGN = {
         "ap_district_geometry.json; tests/test_label_area.py fails if it no longer covers the districts"
     ),
     "dashboard_summary.json": "a July 2026 snapshot; the UI derives its live figures in data.ts instead",
+    "mandal_moved_ids.json": (
+        "old page addresses of the 20 mandals refiled to their right district in Nov 2026 "
+        "(fix_misfiled_districts.py); a record of a one-time change, so links already sent keep working"
+    ),
     "source_readiness.json": "hand-maintained description of which sources are live",
     "water_quality.json": (
         "habitations the Jal Jeevan Mission marks as quality affected; the public report encrypts its query, "
