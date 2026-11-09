@@ -35,7 +35,7 @@ export const BRIEFS = {
   },
   "/summer": {
     what: "Where the water table may stand next May, mandal by mandal, against each mandal's own deepest May on record.",
-    use: "Plan bore wells, hand-pump repairs and tankers where it is heading past its record first; it updates every Monday.",
+    use: "Start summer drinking-water plans with the ranked list below: bore wells, hand-pump repairs and tankers where the record breaks and other signs agree. It updates every Monday.",
   },
   "/cyclones": {
     what: "Cyclones Arnab and Murasu measured: the rain by mandal, the reservoirs filling after them, and whether the water table rose where it had room.",

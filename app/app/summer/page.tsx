@@ -12,6 +12,8 @@ import { brief } from "../../lib/pageBriefs";
 import drinking from "../../data/drinking_water.json";
 import { waterQuality } from "../../lib/waterQuality";
 import { titleCase } from "../../lib/data";
+import { BAND_LABEL, priorityCsv, SIGNS, signLabel, summerPriority, type PriorityBand, type PriorityRow } from "../../lib/summerPriority";
+import { DownloadTextButton } from "../../components/ExportButtons";
 
 export const metadata: Metadata = {
   title: "Summer Water Outlook | AP Water Intelligence",
@@ -60,6 +62,8 @@ export default function SummerPage() {
           {bt ? <li><span>Track record</span><b>1 in {Math.round(100 / (bt.pastRecordPct.beyond ?? 100))}</b><em>&ldquo;Beyond&rdquo; calls that set a new record, against 1 in {Math.round(100 / bt.baseRatePct)} overall ({bt.years[0]}–{String(bt.years[bt.years.length - 1]).slice(2)})</em></li> : null}
         </ul>
       </section>
+
+      <SummerPriority />
 
       <section className={shared.block} aria-labelledby="summer-map" data-testid="summer-map-section">
         <header className={shared.blockHead}>
@@ -167,6 +171,82 @@ export default function SummerPage() {
       <p className={shared.foot}>
         Source: {o.source}, {o.firstYear} to {month(o.anchor)}.{people ? ` People: ${people.source} (CC BY 4.0), a modelled estimate for ${people.year} that counts everyone in the mandal, towns included, not only those on wells.` : ""} A mandal is projected when it has at least four past winters with readings in both months. APWRIMS reports a mandal&rsquo;s average across its piezometers; one village&rsquo;s wells can sit well above or below it. Rain this winter, recharge structures and new pumping all move the answer; the outlook is refreshed as each month&rsquo;s readings arrive. <Link href="/methodology/">Methodology <IconArrowRight /></Link>
       </p>
+    </div>
+  );
+}
+
+/** The ranked list: where to start summer drinking-water plans, with every reason beside each name. */
+function SummerPriority() {
+  const p = summerPriority, first = p.summary.first, next = p.summary.next, watch = p.summary.watch;
+  if (!first.mandals) return null;
+  const lead = p.districts.filter(d => d.first).slice(0, 3);
+  const firstRows = p.mandals.filter(r => r.band === "first");
+  return (
+    <section className={shared.block} aria-labelledby="summer-priority" data-testid="summer-priority">
+      <header className={shared.blockHead}>
+        <span className={shared.eyebrow}><IconDroplet /> Drinking water first</span>
+        <h2 id="summer-priority">Where to plan summer drinking water first</h2>
+        <p>
+          <b>{first.mandals} mandals</b>, home to about <b>{lakhs(first.people)} people</b> and {count(first.sources)} drinking-water
+          sources, are heading past their deepest May on record, and at least {p.rules.firstSigns} other signs from this season
+          agree. Most are in {lead.map((d, i) => <span key={d.district}>{i ? (i === lead.length - 1 ? " and " : ", ") : ""}{d.district} ({d.first})</span>)}.
+        </p>
+      </header>
+      <ul className={styles.priorityTiles}>
+        <li><span>{BAND_LABEL.first}</span><b data-tone="bad">{first.mandals}<small> mandals</small></b><em>past the record, {p.rules.firstSigns} or more signs · {lakhs(first.people)} people</em></li>
+        <li><span>{BAND_LABEL.next}</span><b>{next.mandals}<small> mandals</small></b><em>past the record, fewer signs · {lakhs(next.people)} people</em></li>
+        <li><span>{BAND_LABEL.watch}</span><b>{watch.mandals}<small> mandals</small></b><em>past it only in a dry winter, over {p.deepM} m down, {p.rules.watchSigns} or more signs</em></li>
+      </ul>
+      <ul className={styles.signKey} aria-label="The four signs, and how many of the first list carry each">
+        {SIGNS.map(sign => <li key={sign}><i data-sign={sign} /><div><b>{signLabel(sign).short}</b> <span>{first.signs[sign]} of {first.mandals}</span><small>{signLabel(sign).long}</small></div></li>)}
+      </ul>
+      <PriorityTable rows={firstRows.slice(0, SHOWN)} band="first" />
+      {firstRows.length > SHOWN ? <details className="foldMore" data-testid="priority-first-rest">
+        <summary><span>Show all {firstRows.length} to plan first</span><span>The other {firstRows.length - SHOWN}, in the same order</span></summary>
+        <PriorityTable rows={firstRows.slice(SHOWN)} band="first" from={SHOWN} />
+      </details> : null}
+      <details className="foldMore">
+        <summary><span>{BAND_LABEL.next}: {next.mandals} more heading past the record</span><span>Fewer than {p.rules.firstSigns} signs agree so far</span></summary>
+        <PriorityTable rows={p.mandals.filter(r => r.band === "next")} band="next" />
+      </details>
+      {watch.mandals ? <details className="foldMore">
+        <summary><span>{BAND_LABEL.watch}: {watch.mandals} that break the record only in a dry winter</span><span>More than {p.deepM} m down, and {p.rules.watchSigns} or more signs agree</span></summary>
+        <PriorityTable rows={p.mandals.filter(r => r.band === "watch")} band="watch" />
+      </details> : null}
+      <div className={styles.priorityFoot}>
+        <DownloadTextButton filename={`ap_summer_${p.targetMay.slice(0, 4)}_drinking_water_priority.csv`} content={priorityCsv()}
+          label="Download the full list (CSV)" event={["summer/priority-csv", "Summer: downloaded the drinking-water priority list"]} />
+        <p className="cardNote">
+          An order to start planning in, not a forecast of wells failing: the depth a well fails at depends on how deep it was
+          drilled, which no public record gives. The four signs come from sources the outlook does not use, so each is a second
+          opinion: State rain gauges, the monsoon recharge watch, Sentinel-2 over the tank beds and Jal Jeevan Mission tests. Inside
+          each group, more signs first, then more people. Refreshed every Monday with the outlook.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+const SHOWN = 10;   // the rest of the first list folds: ten names are what a meeting reads
+
+function PriorityTable({ rows, band, from = 0 }: { rows: PriorityRow[]; band: PriorityBand; from?: number }) {
+  return (
+    <div className="tableWrap">
+      <table className={`dataTable compact ${styles.priorityTable}`} data-testid={`priority-${band}${from ? "-rest" : ""}`}>
+        <thead><tr><th>#</th><th>Mandal</th><th>People</th><th>Drinking-water sources</th><th>{band === "watch" ? "Dry-winter May" : "Typical May"}</th><th>Signs that agree</th></tr></thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={r.index}>
+              <td>{from + i + 1}</td>
+              <td>{r.id ? <Link href={`/mandals/${r.id}`}><b>{r.mandal}</b></Link> : <b>{r.mandal}</b>}<small>{r.district}</small></td>
+              <td data-label="People">{r.people ? lakhs(r.people) : "–"}</td>
+              <td data-label="Sources">{r.sources === null ? "–" : count(r.sources)}</td>
+              <td>{(band === "watch" ? r.dryM : r.typicalM).toFixed(1)} m<small>{r.pastRecordM.toFixed(1)} m past its record</small></td>
+              <td><span className={styles.signs}>{SIGNS.map(sign => <i key={sign} data-sign={sign} data-on={r.signs.includes(sign) ? "" : undefined} title={signLabel(sign).short} />)}<span>{r.signs.length ? r.signs.map(sign => signLabel(sign).short).join(" · ") : "none yet"}</span></span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

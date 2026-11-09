@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import outlookJson from "../data/summer_outlook.json";
+import priorityJson from "../data/summer_priority.json";
 
 /* The summer drinking-water outlook: the counts the pipeline published, the map
    coloured from the same tiers, and the record it carries. */
@@ -31,4 +32,24 @@ test("the summer outlook fits a phone", async ({ page }) => {
   await page.goto("/summer/");
   await expect(page.getByTestId("summer-map")).toHaveAttribute("data-ready", "true");
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
+});
+
+test("the drinking-water priority list leads with the first group, folds the rest and downloads whole", async ({ page }) => {
+  const p = priorityJson as unknown as { summary: Record<"first" | "next" | "watch", { mandals: number }>; mandals: Array<{ band: string; mandal: string }> };
+  await page.goto("/summer/");
+  const section = page.getByTestId("summer-priority");
+  await expect(section).toContainText(`${p.summary.first.mandals} mandals`);
+  const first = p.mandals.filter(r => r.band === "first");
+  await expect(page.getByTestId("priority-first").locator("tbody tr")).toHaveCount(Math.min(10, first.length));
+  await expect(page.getByTestId("priority-first").locator("tbody tr").first()).toContainText(first[0].mandal);
+  // The rest are on the page, folded.
+  await expect(page.getByTestId("priority-first-rest").locator("tbody tr")).toHaveCount(Math.max(0, first.length - 10));
+  await expect(page.getByTestId("priority-next").locator("tbody tr")).toHaveCount(p.summary.next.mandals);
+  const download = page.waitForEvent("download");
+  await section.getByRole("button", { name: /Download the full list/ }).click();
+  const file = await (await download).path();
+  const text = require("fs").readFileSync(file, "utf8") as string;
+  const rows = text.split("\n").filter(line => line && !line.startsWith("#"));
+  expect(rows.length - 1).toBe(p.mandals.length);
+  expect(rows[1]).toContain(first[0].mandal);
 });

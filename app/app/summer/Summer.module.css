@@ -95,3 +95,48 @@
 .unsafe { margin: 14px 0 6px; max-width: 980px; font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
 .unsafe b { color: var(--ink); font-weight: 600; }
 .unsafe a { color: var(--teal); }
+
+/* Where to plan drinking water first */
+.priorityTiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; padding: 0; margin: 0 0 14px; list-style: none; border-block: 1px solid var(--line); }
+.priorityTiles li { display: grid; align-content: start; gap: 6px; min-width: 0; padding: 14px 16px; }
+.priorityTiles li + li { border-left: 1px solid var(--line); }
+.priorityTiles span { font: 600 10px var(--font-mono); text-transform: uppercase; color: var(--muted); }
+.priorityTiles b { font: 600 26px/1.1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.priorityTiles b small { font: 500 12px var(--font-sans); color: var(--muted); }
+.priorityTiles b[data-tone="bad"] { color: #a33b2c; }
+.priorityTiles em { font-size: 12px; font-style: normal; line-height: 1.5; color: var(--ink-soft); }
+.signKey { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 22px; margin: 0 0 16px; padding: 0; list-style: none; font-size: 12px; line-height: 1.45; color: var(--ink-soft); }
+.signKey li { display: grid; grid-template-columns: 12px 1fr; column-gap: 8px; }
+.signKey i { width: 10px; height: 10px; margin-top: 3px; border-radius: 50%; }
+.signKey b { color: var(--ink); font-weight: 600; }
+.signKey span { color: var(--muted); font-variant-numeric: tabular-nums; }
+.signKey small { display: block; font-size: 11px; color: var(--muted); }
+.signKey i[data-sign="storms"], .signs i[data-sign="storms"][data-on] { background: #4f7ca8; }
+.signKey i[data-sign="monsoon"], .signs i[data-sign="monsoon"][data-on] { background: #a33b2c; }
+.signKey i[data-sign="tanks"], .signs i[data-sign="tanks"][data-on] { background: #d79b2e; }
+.signKey i[data-sign="quality"], .signs i[data-sign="quality"][data-on] { background: #7a5ea8; }
+.priorityTable td small { display: block; font-size: 11px; color: var(--muted); }
+.priorityTable td a { color: var(--ink); text-decoration: none; }
+.priorityTable td a:hover b { text-decoration: underline; }
+.priorityTable td:nth-child(3), .priorityTable td:nth-child(4), .priorityTable td:nth-child(5) { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.signs { display: inline-flex; align-items: center; gap: 4px; }
+.signs i { width: 9px; height: 9px; border-radius: 50%; background: var(--chart-track); flex: none; }
+.signs span { margin-left: 6px; font-size: 11px; color: var(--ink-soft); }
+.priorityFoot { display: grid; gap: 10px; justify-items: start; margin-top: 14px; }
+@media (max-width: 760px) {
+  /* A card a row: name and May depth on top, people and sources beneath, the signs last. */
+  .priorityTable thead { display: none; }
+  .priorityTable, .priorityTable tbody { display: block; width: 100%; min-width: 0 !important; }
+  .priorityTable tr { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; grid-template-areas: "n m d" "n p q" "n s s"; gap: 4px 10px; padding: 10px 0; border-bottom: 1px solid var(--hairline); }
+  .priorityTable td { display: block; padding: 0 !important; border: 0 !important; }
+  .priorityTable td:nth-child(1) { grid-area: n; color: var(--muted); }
+  .priorityTable td:nth-child(2) { grid-area: m; }
+  .priorityTable td:nth-child(3) { grid-area: p; }
+  .priorityTable td:nth-child(4) { grid-area: q; text-align: right; }
+  .priorityTable td:nth-child(5) { grid-area: d; text-align: right; }
+  .priorityTable td:nth-child(6) { grid-area: s; }
+  .priorityTable td[data-label]::before { content: attr(data-label) " "; font-size: 11px; color: var(--muted); }
+  .priorityTiles { grid-template-columns: 1fr; }
+  .priorityTiles li + li { border-left: 0; border-top: 1px solid var(--line); }
+  .signKey { grid-template-columns: 1fr; }
+}
