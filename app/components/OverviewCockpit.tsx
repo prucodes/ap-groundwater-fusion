@@ -412,9 +412,9 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
             {s.avg_water_balance_mm !== null && s.avg_water_balance_mm !== undefined && (
               <KpiCard
                 icon={<IconCloudRain />}
-                label="Water Deficit"
+                label="Low water balance"
                 value={<CountUp value={s.deficit_mandals} />}
-                foot={`TerraClimate ${s.balance_year}`}
+                foot={`Under 50 mm/yr, ${s.below_zero_mandals ?? 0} below zero · TerraClimate ${s.balance_year}`}
                 footAccent
                 accent="var(--rust)"
               />
