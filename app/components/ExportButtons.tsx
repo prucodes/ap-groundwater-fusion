@@ -51,3 +51,20 @@ export function PrintButton({ label = "Print / PDF" }: { label?: string }) {
     </button>
   );
 }
+
+/** A file the server already wrote, handed over as is: the page carries the text, not the data behind it. */
+export function DownloadTextButton({ filename, content, label, event }: { filename: string; content: string; label: string; event: [string, string] }) {
+  return (
+    <button
+      className="ghostBtn"
+      type="button"
+      onClick={() => {
+        countEvent(...event);
+        downloadCsv(filename, content);
+      }}
+    >
+      <IconDownload />
+      {label}
+    </button>
+  );
+}

@@ -22,6 +22,7 @@ import { FIELD_LAYER_META, fieldLayerColor, fieldLayerText, isFieldLayer, type F
 import { RECHARGE_LAYER_META, isRechargeLayer, rechargeColor, rechargeText, type RechargeLayer } from "../lib/rechargeEfficiency";
 import { RAIN_LAYER_META, isRainLayer, rainColor, rainText, type RainLayer } from "../lib/rainGoverned";
 import { QUALITY_LAYER_META, isQualityLayer, qualityColor, qualityText, type QualityLayer } from "../lib/waterQuality";
+import { PRIORITY_LAYER_META, isPriorityLayer, priorityColor, priorityText, type PriorityLayer } from "../lib/priorityLayer";
 import { mapTooltipStyle } from "../lib/mapTooltip";
 import { HoverHydrograph } from "./HoverHydrograph";
 
@@ -37,7 +38,7 @@ export function MandalStatusMap({
 }: {
   selectedId?: string;
   onSelect: (id: string) => void;
-  layer?: MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer | QualityLayer | null;
+  layer?: MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer | QualityLayer | PriorityLayer | null;
   /** Cap height (px); omit to fill the container width and scale by aspect. */
   maxHeight?: number;
 }) {
@@ -51,6 +52,7 @@ export function MandalStatusMap({
       : isRechargeLayer(layer) ? rechargeColor(d, m)
       : isRainLayer(layer) ? rainColor(d, m)
       : isQualityLayer(layer) ? qualityColor(d, m)
+      : isPriorityLayer(layer) ? priorityColor(d, m)
       : isFieldLayer(layer) ? fieldLayerColor(layer, d, m) : mandalHeatColor(layer, d, m, dark);
     const record = mandalByMapKey(d, m);
     return record?.status_bucket ? statusMeta(record.status_bucket).color : "var(--field)";
@@ -121,6 +123,11 @@ export function MandalStatusMap({
             <div className="estHoverRow">
               <span>{RAIN_LAYER_META[layer].label}</span>
               <strong>{rainText(hover.d, hover.m) ?? "Too few seasons"}</strong>
+            </div>
+          ) : layer && isPriorityLayer(layer) ? (
+            <div className="estHoverRow">
+              <span>{PRIORITY_LAYER_META[layer].label}</span>
+              <strong>{priorityText(hover.d, hover.m) ?? "Not on the list"}</strong>
             </div>
           ) : layer && isQualityLayer(layer) ? (
             <div className="estHoverRow">

@@ -166,6 +166,10 @@ STEPS = [
     # tank-bed masks, 15 September to 15 October, against the same weeks since 2019.
     # Re-reads only the latest window (about a minute of small files); optional.
     ("build tank fill", [PY, os.path.join(HERE, "build_tank_fill.py")], False, 1200),
+    # Where to plan summer drinking water first: the outlook's mandals heading past
+    # their record, ranked by how many of the storms, monsoon, tank and water-quality
+    # signs built above agree. After all four; reads only local files. Optional.
+    ("rank summer drinking-water priority", [PY, os.path.join(HERE, "build_summer_priority.py")], False, 120),
     # The Crystal 3D view embeds its own dataset: the measured May series published
     # above, and next May's outlook just built for its outlook mode. Optional: a
     # failure keeps last week's view, and the test suite blocks publication if a

@@ -95,3 +95,135 @@
 .unsafe { margin: 14px 0 6px; max-width: 980px; font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
 .unsafe b { color: var(--ink); font-weight: 600; }
 .unsafe a { color: var(--teal); }
+
+/* Where to plan drinking water first: the navy band the Rabi and cyclone pages open on, then the cards. */
+.priority { margin-top: 18px; }
+.pHero {
+  position: relative; overflow: hidden; display: grid; gap: 22px; padding: 28px 30px 26px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0; color: #eaf3fb; box-shadow: var(--shadow-pop);
+  background: radial-gradient(900px 320px at 100% -40%, rgba(198, 90, 70, .26), transparent 60%),
+              radial-gradient(700px 260px at 0% -30%, rgba(18, 181, 203, .18), transparent 60%),
+              var(--band-navy);
+}
+.pHero::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 28px 28px; mask-image: linear-gradient(180deg, #000, transparent 85%);
+}
+.pHero > * { position: relative; z-index: 1; }
+.pHeroText { max-width: 860px; }
+.pKicker { display: inline-flex; align-items: center; gap: 7px; font: 600 11px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #f2c46d; }
+.pKicker svg { width: 14px; height: 14px; }
+.pHero h2 { margin: 10px 0 8px; font: 500 24px/1.35 var(--font-display); color: #fff; text-wrap: balance; }
+.pHero h2 b { font-weight: 650; color: #ffb39f; }
+.pHero p { margin: 0; max-width: 760px; font-size: 13px; line-height: 1.55; color: #9fb6cc; }
+
+.pBands { display: grid; gap: 10px; }
+.pBar { display: flex; gap: 3px; height: 10px; }
+.pBar i { display: block; min-width: 6px; border-radius: 5px; }
+.pBar i[data-band="first"], .pBandKey li[data-band="first"]::before { background: linear-gradient(90deg, #e2725c, #c65a46); }
+.pBar i[data-band="next"], .pBandKey li[data-band="next"]::before { background: rgba(255, 179, 159, .38); }
+.pBar i[data-band="watch"], .pBandKey li[data-band="watch"]::before { background: rgba(242, 196, 109, .5); }
+.pBandKey { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.pBandKey li { position: relative; padding-left: 16px; font-size: 13px; color: #d7e3ef; }
+.pBandKey li::before { content: ""; position: absolute; left: 0; top: 5px; width: 8px; height: 8px; border-radius: 50%; }
+.pBandKey b { font: 600 20px var(--font-display); color: #fff; font-variant-numeric: tabular-nums; margin-right: 4px; }
+.pBandKey small { display: block; margin-top: 2px; font-size: 11.5px; line-height: 1.45; color: #9fb6cc; }
+.pTotal { font: 600 10px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: #7f98b1; }
+
+.pSigns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.pSigns li { display: grid; gap: 7px; align-content: start; padding: 14px 15px; border-radius: var(--radius-sm); background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.1); }
+.pSigns b { font-size: 13px; font-weight: 600; color: #fff; }
+.pSigns em { font-style: normal; font-size: 11.5px; line-height: 1.45; color: #9fb6cc; }
+.pSigns em strong { color: #fff; font-weight: 600; }
+.pSignIcon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: color-mix(in srgb, var(--sign) 26%, transparent); color: var(--sign); }
+.pSignIcon svg { width: 16px; height: 16px; }
+.pMeter { height: 4px; border-radius: 2px; background: rgba(255,255,255,.1); overflow: hidden; }
+.pMeter i { display: block; height: 100%; border-radius: 2px; background: var(--sign); }
+.pSigns li[data-sign="storms"] { --sign: #7fb2e5; }
+.pSigns li[data-sign="monsoon"] { --sign: #ff9a85; }
+.pSigns li[data-sign="tanks"] { --sign: #f2c46d; }
+.pSigns li[data-sign="quality"] { --sign: #b9a2ec; }
+
+.pBody { margin-top: 0; border-radius: 0 0 var(--radius) var(--radius); border-top: 0; }
+.pMapRow { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 26px; align-items: start; margin-bottom: 20px; }
+.pPlaces h3 { margin: 0 0 10px; font: 600 10px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.pPlaces ol { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.pPlaces li { display: grid; grid-template-columns: minmax(0, 1fr) 90px 28px; gap: 12px; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--hairline); }
+.pPlaces li b { display: block; font-size: 13px; font-weight: 600; color: var(--ink); }
+.pPlaces li small { font-size: 11px; color: var(--muted); }
+.pPlaces li strong { font: 600 18px var(--font-display); color: #a33b2c; text-align: right; font-variant-numeric: tabular-nums; }
+.pPlaceBar { height: 6px; border-radius: 3px; background: var(--chart-track); overflow: hidden; }
+.pPlaceBar i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, #e2725c, #a33b2c); }
+.pPlaces p { margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+
+.pCards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0 0 6px; padding: 0; list-style: none; }
+.pCards li {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "rank who past" "rank facts facts" "rank chips chips";
+  gap: 10px 14px; padding: 16px 18px; border-radius: var(--radius-sm); background: var(--card); border: 1px solid var(--line);
+  box-shadow: 0 1px 0 rgba(13, 33, 56, .03); transition: border-color .2s, box-shadow .2s, transform .2s;
+}
+.pCards li:hover { border-color: var(--line-strong); box-shadow: var(--shadow-card); transform: translateY(-1px); }
+.pRank { grid-area: rank; font: 600 13px var(--font-mono); color: var(--muted); padding-top: 3px; }
+.pWho { grid-area: who; min-width: 0; }
+.pWho a, .pWho > span { display: block; font: 600 16px/1.25 var(--font-display); color: var(--ink); text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pWho a:hover { color: var(--teal); }
+.pWho small { font-size: 12px; color: var(--muted); }
+.pPast { grid-area: past; display: grid; justify-items: end; gap: 2px; min-width: 104px; }
+.pPast b { font: 600 20px/1 var(--font-display); color: #a33b2c; font-variant-numeric: tabular-nums; }
+.pPast b small { font-size: 12px; font-weight: 500; color: var(--muted); }
+.pPast > small { font-size: 10.5px; color: var(--muted); }
+.pPastBar { width: 100%; height: 3px; margin-top: 3px; border-radius: 2px; background: var(--chart-track); overflow: hidden; }
+.pPastBar i { display: block; height: 100%; margin-left: auto; background: linear-gradient(90deg, #e0a24a, #a33b2c); border-radius: 2px; }
+.pFacts { grid-area: facts; display: flex; gap: 22px; margin: 0; }
+.pFacts div { display: grid; gap: 1px; }
+.pFacts dt { font: 600 9.5px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.pFacts dd { margin: 0; font-size: 14px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.pCards .pChips { grid-area: chips; }
+
+.pChips { display: flex; flex-wrap: wrap; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.pChips li { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px 3px 6px; border-radius: 999px; font-size: 11px; font-weight: 600; color: var(--muted); background: var(--field); border: 1px solid transparent; opacity: .55; }
+.pChips li svg { width: 12px; height: 12px; }
+.pChips li[data-on] { opacity: 1; color: var(--chip-ink); background: color-mix(in srgb, var(--chip) 14%, transparent); border-color: color-mix(in srgb, var(--chip) 35%, transparent); }
+.pChips li[data-sign="storms"] { --chip: #4f7ca8; --chip-ink: #2f5d8a; }
+.pChips li[data-sign="monsoon"] { --chip: #c65a46; --chip-ink: #a33b2c; }
+.pChips li[data-sign="tanks"] { --chip: #d79b2e; --chip-ink: #8f6516; }
+.pChips li[data-sign="quality"] { --chip: #7a5ea8; --chip-ink: #5e4590; }
+:global(:root[data-theme="dark"]) .pChips li[data-on] { --chip-ink: color-mix(in srgb, var(--chip) 55%, #fff); }
+:global(:root[data-theme="dark"]) .pPast b { color: #ff9a85; }
+:global(:root[data-theme="dark"]) .pPlaces li strong { color: #ff9a85; }
+
+.priorityTable td small { display: block; font-size: 11px; color: var(--muted); }
+.priorityTable td a { color: var(--ink); text-decoration: none; }
+.priorityTable td a:hover b { text-decoration: underline; }
+.priorityTable td:nth-child(3), .priorityTable td:nth-child(4), .priorityTable td:nth-child(5) { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.priorityFoot { display: grid; gap: 10px; justify-items: start; margin-top: 14px; }
+@media (max-width: 1000px) {
+  .pSigns { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pMapRow { grid-template-columns: 1fr; }
+  .pCards { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .pHero { padding: 22px 18px 20px; }
+  .pHero h2 { font-size: 20px; }
+  .pBandKey { grid-template-columns: 1fr; gap: 8px; }
+  .pCards li { padding: 14px; grid-template-columns: auto minmax(0, 1fr) auto; }
+  .pFacts { gap: 16px; }
+  /* A card a row: name and May depth on top, people and sources beneath, the signs last. */
+  .priorityTable thead { display: none; }
+  .priorityTable, .priorityTable tbody { display: block; width: 100%; min-width: 0 !important; }
+  .priorityTable tr { display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; grid-template-areas: "n m d" "n p q" "n s s"; gap: 4px 10px; padding: 10px 0; border-bottom: 1px solid var(--hairline); }
+  .priorityTable td { display: block; padding: 0 !important; border: 0 !important; }
+  .priorityTable td:nth-child(1) { grid-area: n; color: var(--muted); }
+  .priorityTable td:nth-child(2) { grid-area: m; }
+  .priorityTable td:nth-child(3) { grid-area: p; }
+  .priorityTable td:nth-child(4) { grid-area: q; text-align: right; }
+  .priorityTable td:nth-child(5) { grid-area: d; text-align: right; }
+  .priorityTable td:nth-child(6) { grid-area: s; }
+  .priorityTable td[data-label]::before { content: attr(data-label) " "; font-size: 11px; color: var(--muted); }
+}
+@media (max-width: 420px) {
+  .pSigns { grid-template-columns: 1fr; }
+  .pChips li span { display: none; }
+  .pChips li { padding: 4px 6px; }
+}

@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
+import type { ReactElement } from "react";
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
 import { StateOutlineMap } from "../../components/StateOutlineMap";
-import { IconArrowRight, IconDroplet, IconMap, IconShield, IconSun } from "../../components/icons";
+import { IconArrowRight, IconCyclone, IconDroplet, IconFlask, IconMap, IconShield, IconSun, IconWaves } from "../../components/icons";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
 import { lakhs, SHALLOW_BEYOND, SUMMER_TIERS, summerOutlook, summerRows, type SummerTier } from "../../lib/summer";
 import { rabiView } from "../../lib/rabi";
@@ -11,7 +12,10 @@ import styles from "./Summer.module.css";
 import { brief } from "../../lib/pageBriefs";
 import drinking from "../../data/drinking_water.json";
 import { waterQuality } from "../../lib/waterQuality";
-import { titleCase } from "../../lib/data";
+import { mapGeometry, titleCase } from "../../lib/data";
+import { BAND_LABEL, priorityCsv, SIGNS, signLabel, summerPriority, type PriorityBand, type PriorityRow, type PrioritySign } from "../../lib/summerPriority";
+import { DownloadTextButton } from "../../components/ExportButtons";
+import { PriorityMap } from "../../components/PriorityMap";
 
 export const metadata: Metadata = {
   title: "Summer Water Outlook | AP Water Intelligence",
@@ -60,6 +64,8 @@ export default function SummerPage() {
           {bt ? <li><span>Track record</span><b>1 in {Math.round(100 / (bt.pastRecordPct.beyond ?? 100))}</b><em>&ldquo;Beyond&rdquo; calls that set a new record, against 1 in {Math.round(100 / bt.baseRatePct)} overall ({bt.years[0]}–{String(bt.years[bt.years.length - 1]).slice(2)})</em></li> : null}
         </ul>
       </section>
+
+      <SummerPriority />
 
       <section className={shared.block} aria-labelledby="summer-map" data-testid="summer-map-section">
         <header className={shared.blockHead}>
@@ -167,6 +173,167 @@ export default function SummerPage() {
       <p className={shared.foot}>
         Source: {o.source}, {o.firstYear} to {month(o.anchor)}.{people ? ` People: ${people.source} (CC BY 4.0), a modelled estimate for ${people.year} that counts everyone in the mandal, towns included, not only those on wells.` : ""} A mandal is projected when it has at least four past winters with readings in both months. APWRIMS reports a mandal&rsquo;s average across its piezometers; one village&rsquo;s wells can sit well above or below it. Rain this winter, recharge structures and new pumping all move the answer; the outlook is refreshed as each month&rsquo;s readings arrive. <Link href="/methodology/">Methodology <IconArrowRight /></Link>
       </p>
+    </div>
+  );
+}
+
+/** The ranked list: where to start summer drinking-water plans, with every reason beside each name. */
+function SummerPriority() {
+  const p = summerPriority, first = p.summary.first, next = p.summary.next, watch = p.summary.watch;
+  if (!first.mandals) return null;
+  const total = first.mandals + next.mandals + watch.mandals;
+  const firstRows = p.mandals.filter(r => r.band === "first");
+  const places = p.districts.filter(d => d.first);
+  const byIndex = new Map(p.mandals.map(r => [r.index, r]));
+  const onMap = mapGeometry.mandals.map((_, i) => byIndex.get(i) ?? null);
+  const widest = Math.max(...firstRows.slice(0, SHOWN).map(r => r.pastRecordM), 1);
+  return (
+    <section className={styles.priority} aria-labelledby="summer-priority" data-testid="summer-priority">
+      <div className={styles.pHero}>
+        <div className={styles.pHeroText}>
+          <span className={styles.pKicker}><IconDroplet /> Summer {p.targetMay.slice(0, 4)} · drinking water first</span>
+          <h2 id="summer-priority">
+            Start with <b>{first.mandals} mandals</b>: heading past their deepest May on record, and the season&rsquo;s other signs agree.
+          </h2>
+          <p>Home to about {lakhs(first.people)} people and {count(first.sources)} drinking-water sources. Four sources the outlook does not use each had to agree, at least {p.rules.firstSigns} of them.</p>
+        </div>
+        <div className={styles.pBands} role="img" aria-label={`${first.mandals} to plan first, ${next.mandals} next, ${watch.mandals} to watch`}>
+          <div className={styles.pBar}>
+            <i data-band="first" style={{ flexGrow: first.mandals }} />
+            <i data-band="next" style={{ flexGrow: next.mandals }} />
+            <i data-band="watch" style={{ flexGrow: watch.mandals }} />
+          </div>
+          <ul className={styles.pBandKey}>
+            <li data-band="first"><b>{first.mandals}</b> {BAND_LABEL.first.toLowerCase()}<small>past the record, {p.rules.firstSigns}+ signs · {lakhs(first.people)} people</small></li>
+            <li data-band="next"><b>{next.mandals}</b> {BAND_LABEL.next.toLowerCase()}<small>past the record, fewer signs · {lakhs(next.people)} people</small></li>
+            <li data-band="watch"><b>{watch.mandals}</b> to watch<small>only in a dry winter, over {p.deepM} m down, {p.rules.watchSigns}+ signs</small></li>
+          </ul>
+          <span className={styles.pTotal}>{total} mandals in all</span>
+        </div>
+        <ul className={styles.pSigns} aria-label="The four signs, and how many of the first list carry each">
+          {SIGNS.map(sign => (
+            <li key={sign} data-sign={sign}>
+              <span className={styles.pSignIcon}><SignIcon sign={sign} /></span>
+              <b>{signLabel(sign).short}</b>
+              <span className={styles.pMeter}><i style={{ width: `${(first.signs[sign] / first.mandals) * 100}%` }} /></span>
+              <em><strong>{first.signs[sign]}</strong> of {first.mandals} · {signLabel(sign).long}</em>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className={`${shared.block} ${styles.pBody}`}>
+        <div className={styles.pMapRow}>
+          <PriorityMap aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height} counts={first.signs}
+            bands={onMap.map(r => r?.band ?? null)} signs={onMap.map(r => r?.signs ?? [])}
+            notes={onMap.map(r => r
+              ? `${BAND_LABEL[r.band]} · ${r.pastRecordM.toFixed(1)} m past its deepest May · ${r.people ? `${lakhs(r.people)} people · ` : ""}${r.signs.length ? r.signs.map(sg => signLabel(sg).short.toLowerCase()).join(", ") : "no other sign yet"}`
+              : "Not on the list: within its record, or past it only in a dry winter without three signs.")} />
+          <div className={styles.pPlaces}>
+            <h3>Where they are</h3>
+            <ol>
+              {places.slice(0, 8).map(d => (
+                <li key={d.district}>
+                  <span><b>{d.district}</b><small>{lakhs(d.people)} people in the {d.first} to plan first{d.next ? ` · ${d.next} next` : ""}{d.watch ? ` · ${d.watch} to watch` : ""}</small></span>
+                  <span className={styles.pPlaceBar} aria-hidden="true"><i style={{ width: `${(100 * d.first) / places[0].first}%` }} /></span>
+                  <strong>{d.first}</strong>
+                </li>
+              ))}
+            </ol>
+            {places.length > 8 ? <p>And {places.length - 8} more districts with one or two each.</p> : null}
+          </div>
+        </div>
+        <ol className={styles.pCards} data-testid="priority-first">
+          {firstRows.slice(0, SHOWN).map((r, i) => (
+            <li key={r.index}>
+              <span className={styles.pRank}>{String(i + 1).padStart(2, "0")}</span>
+              <div className={styles.pWho}>
+                {r.id ? <Link href={`/mandals/${r.id}`}>{r.mandal}</Link> : <span>{r.mandal}</span>}
+                <small>{r.district}</small>
+              </div>
+              <div className={styles.pPast}>
+                <b>{r.pastRecordM.toFixed(1)}<small> m</small></b>
+                <small>past its deepest May</small>
+                <span className={styles.pPastBar}><i style={{ width: `${Math.max(6, (r.pastRecordM / widest) * 100)}%` }} /></span>
+              </div>
+              <dl className={styles.pFacts}>
+                <div><dt>People</dt><dd>{r.people ? lakhs(r.people) : "–"}</dd></div>
+                <div><dt>Sources</dt><dd>{r.sources === null ? "–" : count(r.sources)}</dd></div>
+                <div><dt>Typical May</dt><dd>{r.typicalM.toFixed(1)} m</dd></div>
+              </dl>
+              <SignChips row={r} />
+            </li>
+          ))}
+        </ol>
+        {firstRows.length > SHOWN ? <details className="foldMore" data-testid="priority-first-rest">
+          <summary><span>Show all {firstRows.length} to plan first</span><span>The other {firstRows.length - SHOWN}, in the same order</span></summary>
+          <PriorityTable rows={firstRows.slice(SHOWN)} band="first" from={SHOWN} />
+        </details> : null}
+        <details className="foldMore">
+          <summary><span>{BAND_LABEL.next}: {next.mandals} more heading past the record</span><span>Fewer than {p.rules.firstSigns} signs agree so far</span></summary>
+          <PriorityTable rows={p.mandals.filter(r => r.band === "next")} band="next" />
+        </details>
+        {watch.mandals ? <details className="foldMore">
+          <summary><span>{BAND_LABEL.watch}: {watch.mandals} that break the record only in a dry winter</span><span>More than {p.deepM} m down, and {p.rules.watchSigns} or more signs agree</span></summary>
+          <PriorityTable rows={p.mandals.filter(r => r.band === "watch")} band="watch" />
+        </details> : null}
+        <div className={styles.priorityFoot}>
+          <DownloadTextButton filename={`ap_summer_${p.targetMay.slice(0, 4)}_drinking_water_priority.csv`} content={priorityCsv()}
+            label="Download the full list (CSV)" event={["summer/priority-csv", "Summer: downloaded the drinking-water priority list"]} />
+          <p className="cardNote">
+            An order to start planning in, not a forecast of wells failing: the depth a well fails at depends on how deep it was
+            drilled, which no public record gives. Each sign is a second opinion from a source the outlook does not use: State rain
+            gauges, the monsoon recharge watch, Sentinel-2 over the tank beds and Jal Jeevan Mission tests. Inside each group, more
+            signs first, then more people. Refreshed every Monday with the outlook.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const SIGN_ICON: Record<PrioritySign, () => ReactElement> = {
+  storms: () => <IconCyclone />, monsoon: () => <IconWaves />, tanks: () => <IconDroplet />, quality: () => <IconFlask />,
+};
+const SIGN_WORD: Record<PrioritySign, string> = { storms: "Storms", monsoon: "Monsoon", tanks: "Tanks", quality: "Tests" };
+
+function SignIcon({ sign }: { sign: PrioritySign }) {
+  return SIGN_ICON[sign]();
+}
+
+/** All four signs in a fixed order, lit where this mandal carries it, so rows compare at a glance. */
+function SignChips({ row }: { row: PriorityRow }) {
+  return (
+    <ul className={styles.pChips} aria-label={row.signs.length ? `Signs that agree: ${row.signs.map(s => signLabel(s).short).join(", ")}` : "No other sign agrees yet"}>
+      {SIGNS.map(sign => (
+        <li key={sign} data-sign={sign} data-on={row.signs.includes(sign) ? "" : undefined} title={signLabel(sign).short} aria-hidden="true">
+          <SignIcon sign={sign} /><span>{SIGN_WORD[sign]}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+const SHOWN = 10;   // the rest of the first list folds: ten names are what a meeting reads
+
+function PriorityTable({ rows, band, from = 0 }: { rows: PriorityRow[]; band: PriorityBand; from?: number }) {
+  return (
+    <div className="tableWrap">
+      <table className={`dataTable compact ${styles.priorityTable}`} data-testid={`priority-${band}${from ? "-rest" : ""}`}>
+        <thead><tr><th>#</th><th>Mandal</th><th>People</th><th>Drinking-water sources</th><th>{band === "watch" ? "Dry-winter May" : "Typical May"}</th><th>Signs that agree</th></tr></thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={r.index}>
+              <td>{from + i + 1}</td>
+              <td>{r.id ? <Link href={`/mandals/${r.id}`}><b>{r.mandal}</b></Link> : <b>{r.mandal}</b>}<small>{r.district}</small></td>
+              <td data-label="People">{r.people ? lakhs(r.people) : "–"}</td>
+              <td data-label="Sources">{r.sources === null ? "–" : count(r.sources)}</td>
+              <td>{(band === "watch" ? r.dryM : r.typicalM).toFixed(1)} m<small>{r.pastRecordM.toFixed(1)} m past its record</small></td>
+              <td><SignChips row={r} /></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
