@@ -253,6 +253,8 @@ export type DashboardSummary = {
     avg_water_balance_mm: number | null;
     balance_year: string;
     deficit_mandals: number;
+    /** Of those, the ones whose balance actually ran below zero; the rest kept under 50 mm/yr. */
+    below_zero_mandals?: number;
     overall_data_confidence: string;
     sample_fetch_date: string;
     status_distribution: Record<string, number>;

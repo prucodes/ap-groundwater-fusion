@@ -44,7 +44,7 @@ export default function ClimatePage() {
     <div className="pageWrap">
       <HeaderHero
         title="Climate & Water Balance"
-        brief={brief("/climate", <><b>{dashboardSummary.summary.deficit_mandals} mandals</b> ran a water-balance deficit in {dashboardSummary.summary.balance_year}.</>)}
+        brief={brief("/climate", <><b>{dashboardSummary.summary.below_zero_mandals} mandals</b> ran a water-balance deficit in {dashboardSummary.summary.balance_year}, and {dashboardSummary.summary.deficit_mandals - (dashboardSummary.summary.below_zero_mandals ?? 0)} more kept under 50 mm.</>)}
         showChips={false}
         variant="compact"
       />
@@ -242,7 +242,7 @@ export default function ClimatePage() {
                     <td>{formatNumber(et + bal)} mm</td>
                     <td>{formatNumber(et)} mm</td>
                     <td className="cellPct toneText" style={{ "--tone": bm.color } as CSSProperties}>{bal > 0 ? "+" : ""}{formatNumber(bal)} mm</td>
-                    <td><span className="wetTag toneText" style={{ "--tone": bm.color, background: `${bm.color}1f` } as CSSProperties}>{bm.label}</span></td>
+                    <td><span className="wetTag toneText" style={{ "--tone": bm.color, background: `${bm.color}1f` } as CSSProperties}>{bal < 0 ? "Deficit" : bm.label}</span></td>
                   </tr>
                 );
               })}

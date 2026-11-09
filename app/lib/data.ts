@@ -727,6 +727,7 @@ export const dashboardSummary = {
     avg_water_balance_mm: meanOf(liveHeatValues.map((v) => v.water_balance_mm)),
     balance_year: liveHeat.balance_year,
     deficit_mandals: liveHeatValues.filter((v) => v.water_balance_status === "Deficit").length,
+    below_zero_mandals: liveHeatValues.filter((v) => typeof v.water_balance_mm === "number" && v.water_balance_mm < 0).length,
   },
 } as DashboardSummary;
 
@@ -1048,8 +1049,9 @@ export function balanceMeta(status: string | null | undefined): { label: string;
       return { label: "Surplus", color: "#5e9b6b", className: "surplus" };
     case "Balanced":
       return { label: "Balanced", color: "#1f8a8a", className: "balanced" };
+    // The pipeline's "Deficit" is any balance under 50 mm/yr; most of those are still above zero.
     case "Deficit":
-      return { label: "Deficit", color: "#c65a46", className: "deficit" };
+      return { label: "Low", color: "#c65a46", className: "deficit" };
     default:
       return { label: status || "No data", color: "#98a2b3", className: "none" };
   }

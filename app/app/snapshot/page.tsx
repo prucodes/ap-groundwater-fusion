@@ -147,7 +147,7 @@ export default function SnapshotPage() {
                     <td>
                       {m.water_balance_status ? (
                         <span style={{ color: balanceMeta(m.water_balance_status).color, fontWeight: 600, fontSize: 11.5 }}>
-                          {m.water_balance_status}
+                          {balanceMeta(m.water_balance_status).label}
                         </span>
                       ) : (
                         "–"
