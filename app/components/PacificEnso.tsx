@@ -57,10 +57,12 @@ export function PacificEnso() {
   return (
     <div className={styles.explorer}>
       <div className={styles.readout}>
-        <div><span className={styles.eyebrow}>NOAA / ERSST v5</span><h3>Pacific heat, month by month</h3><span className="pacMonth">{monthLabel(month.month)}</span></div>
+        <div><span className={styles.eyebrow}>NOAA / ERSST v6</span><h3>Pacific heat, month by month</h3><span className="pacMonth">{monthLabel(month.month)}</span></div>
         <div className={styles.values}>
           <div><strong style={{ color: month.nino34C >= 0 ? "#bd593c" : "#237fa4" }}>{signed(month.nino34C)}</strong><span>Niño 3.4 · monthly anomaly</span></div>
-          <div><strong>{signed(month.nino34ThreeMonthC)}</strong><span>Three-month mean · this baseline</span></div>
+          {month.nino34ThreeMonthC !== null
+            ? <div><strong>{signed(month.nino34ThreeMonthC)}</strong><span>Three-month mean · this baseline</span></div>
+            : null}
         </div>
       </div>
       <div className={styles.toolbar}>

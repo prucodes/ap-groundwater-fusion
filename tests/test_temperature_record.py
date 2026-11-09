@@ -48,13 +48,22 @@ def test_only_a_record_finer_than_the_state_may_rank_a_year(data):
 
 def test_the_el_nino_finding_holds_in_every_record(data):
     """This is the one worth publishing: a heat cost on top of the rainfall
-    cost, over dozens of events rather than the two the wells cover."""
-    for record in data["records"].values():
+    cost, over dozens of events rather than the two the wells cover.
+
+    The record fine enough to resolve the state must clear p < 0.05. The coarse
+    one must agree in direction and stay near it; since NOAA moved the ONI to
+    ERSST v6 (Nov 2026) it sits at 0.055, and the card must then say so."""
+    records = list(data["records"].values())
+    for record in records:
         enso = record["enso"]
         assert enso["differenceC"] > 0, f'{record["label"]} does not find El Nino years hotter'
-        assert enso["pValue"] < 0.05, f'{record["label"]} p = {enso["pValue"]}'
+        assert enso["pValue"] < 0.1, f'{record["label"]} p = {enso["pValue"]}'
         assert enso["elNinoYears"] >= 10 and enso["laNinaYears"] >= 10
+    fine = [r for r in records if r["canRankYears"]]
+    assert fine and all(r["enso"]["pValue"] < 0.05 for r in fine), "the finer record no longer finds it"
     assert data["agreement"]["bothHotterInElNino"] is True
+    if any(r["enso"]["pValue"] >= 0.05 for r in records):
+        assert "edge of chance" in open(COMPONENT).read()
 
 
 def test_the_records_really_do_disagree_about_the_rate(data):

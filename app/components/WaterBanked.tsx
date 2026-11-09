@@ -20,6 +20,9 @@ export function WaterBanked() {
   const banked = monsoonWatch.banked;
   if (!banked || banked.sharePct === null) return null;
 
+  const readTo = Number(monsoonWatch.season.latestMonth.slice(5, 7));
+  const toCome = readTo < 10 ? "October and November" : readTo < 11 ? "November" : null;
+
   const counts = new Array(BINS + 1).fill(0);
   for (const row of monsoonWatch.mandals) {
     if (row.bankedSharePct === null) continue;
@@ -38,8 +41,8 @@ export function WaterBanked() {
       {recharge.stateMedianSharePct != null ? (
         <p className={styles.typical} data-testid="banked-typical">
           For comparison, over the last twelve years the median mandal had stored about <b>{formatNumber(recharge.stateMedianSharePct)}%</b>{" "}of
-          its monsoon rain by November. So far this season the median mandal has stored <b>{formatNumber(banked.medianSharePct)}%</b>, with
-          October and November still to come.
+          its monsoon rain by November. So far this season the median mandal has stored <b>{formatNumber(banked.medianSharePct)}%</b>
+          {toCome ? <>, with {toCome} still to come</> : null}.
         </p>
       ) : null}
 

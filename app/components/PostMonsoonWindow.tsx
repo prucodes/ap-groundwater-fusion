@@ -3,19 +3,25 @@ import styles from "./PostMonsoonWindow.module.css";
 
 /* Where this season stands in the window the official assessment actually uses.
  *
- * GEC compares pre-monsoon (May) with post-monsoon (November). The site is at
- * September, so this does not close the window or guess at it: it places this
- * September against every past September on the same measure, and shows what the
- * remaining stretch has done in those years. The last readings decide.
+ * GEC compares pre-monsoon (May) with post-monsoon (November). The open season is
+ * read at its latest month, so this does not close the window or guess at it: it
+ * places this season's latest month against the same month in every past season,
+ * and shows what the remaining stretch to November has done in those years. The
+ * last readings decide.
  */
 
 const W = 720, PAD = 34, LANE_A = 44, LANE_B = 104, H = 140;
+const MONTH = ["", "January", "February", "March", "April", "May", "June", "July", "August",
+  "September", "October", "November", "December"];
 
 export function PostMonsoonWindow() {
+  const open = monsoonWatch.trajectory.find(row => row.current);
+  // changeM is depth: positive is a table deeper than May. Read before November only.
+  const month = Math.min(10, Math.max(9, ...(open?.points.map(point => point.month) ?? [9])));
   const rows = monsoonWatch.trajectory
     .map(row => {
       const points = new Map(row.points.map(point => [point.month, point.changeM]));
-      return { year: row.year, current: row.current, sep: points.get(9) ?? null, nov: points.get(11) ?? null };
+      return { year: row.year, current: row.current, sep: points.get(month) ?? null, nov: points.get(11) ?? null };
     })
     .filter(row => row.sep !== null);
   const now = rows.find(row => row.current);
@@ -28,26 +34,32 @@ export function PostMonsoonWindow() {
   const low = Math.min(...values, 0) - 0.3, high = Math.max(...values, 0) + 0.3;
   const x = (value: number) => PAD + ((value - low) / (high - low)) * (W - PAD * 2);
   const deeperThanAll = past.every(row => (row.sep as number) < (now.sep as number));
+  const name = MONTH[month];
 
   return (
     <div className={styles.wrap}>
       <div className={styles.lede}>
-        <span className={styles.figure}>{now.sep! > 0 ? "+" : ""}{now.sep!.toFixed(2)} m</span>
+        <span className={styles.figure}>{Math.abs(now.sep!).toFixed(2)} m</span>
         <p>
-          is where the median mandal stands against its own May{deeperThanAll ? <>, and <b>no season since {past[0].year} has been on this side of zero in September</b></> : null}.
+          {now.sep! > 0 ? "deeper" : "higher"} than its own May is where the median mandal&rsquo;s table stood in {name}
+          {deeperThanAll
+            ? now.sep! > 0
+              ? <>, and <b>no season since {past[0].year} has been on this side of zero in {name}</b></>
+              : <>, the <b>least it has risen by {name} in any season since {past[0].year}</b></>
+            : null}.
           The official assessment closes its window in November.
         </p>
       </div>
 
       <div className={styles.plotHead}>
-        <span>Each season at September, and where it ended in November</span>
+        <span>Each season at {name}, and where it ended in November</span>
         <span>metres from May</span>
       </div>
       <svg className={styles.plot} viewBox={`0 0 ${W} ${H}`} role="img"
-        aria-label={`Median change from May at September for each season since ${past[0].year}, and the November value where the season has closed`}>
+        aria-label={`Median change from May at ${name} for each season since ${past[0].year}, and the November value where the season has closed`}>
         <line className={styles.zero} x1={x(0)} x2={x(0)} y1={20} y2={H - 26} />
         <text className={styles.tick} x={x(0)} y={14} textAnchor="middle">May level</text>
-        <text className={styles.lane} x={4} y={LANE_A + 4}>Sept</text>
+        <text className={styles.lane} x={4} y={LANE_A + 4}>{name.slice(0, 3)}</text>
         <text className={styles.lane} x={4} y={LANE_B + 4}>Nov</text>
         <line className={styles.axis} x1={PAD} x2={W - PAD} y1={LANE_A} y2={LANE_A} />
         <line className={styles.axis} x1={PAD} x2={W - PAD} y1={LANE_B} y2={LANE_B} />
@@ -64,7 +76,7 @@ export function PostMonsoonWindow() {
 
       <p className={styles.note}>
         What the last stretch has done: in <b>{rose} of {closed.length}</b> closed seasons the table rose further
-        between September and November; in {closed.length - rose} it fell back. The range is{" "}
+        between {name} and November; in {closed.length - rose} it fell back. The range is{" "}
         {Math.min(...closed.map(r => r.nov - r.sep)).toFixed(2)} m to +{Math.max(...closed.map(r => r.nov - r.sep)).toFixed(2)} m,
         so November has gone both ways and <b>nothing here is projected into it</b>.
       </p>

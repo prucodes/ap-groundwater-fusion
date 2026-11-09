@@ -33,16 +33,17 @@ def panel():
 def test_the_three_month_mean_tracks_the_published_index(panel):
     """Computed from ERSST against a 1991-2020 baseline, against NOAA's own
     published ONI. A different baseline moves it a little; a wrong box, wrong
-    hemisphere or wrong sign moves it a lot."""
+    hemisphere or wrong sign moves it a lot. On the same ERSST version as the
+    index (v6) it lands within a few hundredths; v5 ran 0.35 warm in 2026."""
     with open(ONI) as handle:
         published = {row["date"]: float(row["oni_c"]) for row in csv.DictReader(handle)}
     compared = 0
     for month in panel["months"]:
         theirs = published.get(month["month"])
-        if theirs is None:
+        if theirs is None or month["nino34ThreeMonthC"] is None:
             continue
         compared += 1
-        assert abs(month["nino34ThreeMonthC"] - theirs) < 0.35, (
+        assert abs(month["nino34ThreeMonthC"] - theirs) < 0.15, (
             f'{month["month"]}: panel {month["nino34ThreeMonthC"]}, NOAA {theirs}'
         )
     assert compared >= 12
@@ -119,3 +120,9 @@ def test_the_published_earth_is_reused_without_asking_nasa(monkeypatch, panel):
     width, height = pacific.basemap()
     assert width == pacific.BASEMAP_WIDTH
     assert round(width / height, 4) == panel["aspect"]
+
+
+def test_the_newest_month_carries_no_two_month_mean(panel):
+    """The latest month has nothing after it yet; half a running mean is not the index."""
+    assert panel["months"][-1]["nino34ThreeMonthC"] is None
+    assert all(m["nino34ThreeMonthC"] is not None for m in panel["months"][1:-1])
