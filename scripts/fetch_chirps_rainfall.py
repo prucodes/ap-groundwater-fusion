@@ -25,7 +25,9 @@ import csv
 import gzip
 import hashlib
 import shutil
+import json
 import ssl
+import time
 from datetime import date
 from pathlib import Path
 from urllib.error import HTTPError, URLError
@@ -82,14 +84,49 @@ def make_context(insecure: bool) -> ssl.SSLContext | None:
     return ctx
 
 
-def try_download(url: str, context: ssl.SSLContext | None) -> bytes | None:
+# The server rate-limits (HTTP 429) and times out now and then. Neither means the
+# month is unpublished: on 7 Nov 2026 the old code read them that way, walked back
+# past June, July, August and September, and republished May as "latest".
+RETRY_WAITS_S = (20, 60, 120)
+HEAT = REPO_ROOT / "app/data/ap_mandal_heat.json"
+
+
+class Unreachable(Exception):
+    """The server did not say whether the month exists."""
+
+
+def fetch_once(url: str, context: ssl.SSLContext | None) -> bytes | None:
+    """The file, or None when the server says it does not exist. Anything else raises."""
     request = Request(url, headers={"User-Agent": "ap-groundwater-prototype/1.0"})
     try:
         with urlopen(request, timeout=90, context=context) as response:
-            if response.status != 200:
-                return None
             return response.read()
-    except (HTTPError, URLError, TimeoutError, ssl.SSLError):
+    except HTTPError as error:
+        if error.code in (403, 404):
+            return None
+        raise Unreachable(f"HTTP {error.code}") from error
+    except ssl.SSLError:
+        raise
+    except (URLError, TimeoutError, ConnectionError) as error:
+        raise Unreachable(str(error)) from error
+
+
+def try_download(url: str, context: ssl.SSLContext | None, fetch=fetch_once, sleep=time.sleep) -> bytes | None:
+    for wait_s in RETRY_WAITS_S + (None,):
+        try:
+            return fetch(url, context)
+        except Unreachable as error:
+            if wait_s is None:
+                raise
+            print(f"  [retry] {url}: {error}; trying again in {wait_s} s", flush=True)
+            sleep(wait_s)
+
+
+def published_period() -> str | None:
+    """The month the site already shows; a fetch must never go back past it."""
+    try:
+        return json.loads(HEAT.read_text(encoding="utf-8")).get("rainfall_period") or None
+    except (OSError, ValueError):
         return None
 
 
@@ -156,11 +193,20 @@ def main() -> int:
     manifest_path = args.output_dir / "download_manifest.csv"
     context = make_context(args.allow_insecure_tls)
 
+    floor = published_period()
     for year, month in candidate_months(args.max_months_back):
         period = f"{year}.{month:02d}"
+        if floor and period < floor:
+            print(f"Nothing newer than the published {floor}; keeping it.")
+            return 0
         url = f"{BASE_URL}/chirps-v3.0.{period}.tif"
         print(f"Trying CHIRPS {period} ...")
-        payload = try_download(url, context)
+        try:
+            payload = try_download(url, context)
+        except Unreachable as error:
+            # Unknown whether this month exists: an older one would be a step back, so stop here.
+            print(f"CHIRPS did not answer for {period} ({error}); keeping the published {floor or 'file'}.")
+            return 0
         if payload is None:
             continue
 
