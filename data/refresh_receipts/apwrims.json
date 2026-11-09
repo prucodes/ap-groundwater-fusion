@@ -1,11 +1,11 @@
 {
   "source": "https://apwrims.ap.gov.in/api/v2/gwlevels/chart",
   "status": "refreshed",
-  "checkedAt": "2026-11-07T20:04:02+00:00",
-  "fetchedAt": "2026-11-07T20:04:02+00:00",
+  "checkedAt": "2026-11-08T22:53:33+00:00",
+  "fetchedAt": "2026-11-08T22:53:33+00:00",
   "latestPeriod": "2026-10",
-  "historySha256": "b51354b61ab8eb25c686af27459d1b1eb255972290d7302859304a4bd2867f79",
-  "rowCount": 91838,
+  "historySha256": "37b5666aea23f65ff7564432ac3cae6a42a9d1d90a41ab5ef642813696e7b649",
+  "rowCount": 92132,
   "authorizationStatus": "research_pending",
   "scope": "monthly_history"
 }

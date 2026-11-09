@@ -1,15 +1,15 @@
 {
   "source": "NASA / NDMC GRACE-DA (nasagrace.unl.edu)",
   "station_points_sampled": 28,
-  "total_null_or_nodata_samples": 1,
-  "fetch_date": "2026-11-07",
+  "total_null_or_nodata_samples": 0,
+  "fetch_date": "2026-11-08",
   "rasters": [
     {
       "raster_name": "gws_perc_025deg_GL.tif",
       "label": "Groundwater storage",
       "signal": "GW",
       "source_url": "https://nasagrace.unl.edu/globaldata/current/gws_perc_025deg_GL.tif",
-      "fetch_date": "2026-11-07",
+      "fetch_date": "2026-11-08",
       "file_size_kb": 813,
       "sha256_short": "ef80024e0076",
       "resolution_deg": "0.25,0.25",
@@ -20,16 +20,16 @@
       "nodata": "-999.0",
       "dtype": "float32",
       "min": 0.2,
-      "mean": 21.4,
+      "mean": 21.39,
       "max": 86.8,
-      "count": 27
+      "count": 28
     },
     {
       "raster_name": "rtzsm_perc_025deg_GL.tif",
       "label": "Root-zone soil moisture",
       "signal": "Root-Zone",
       "source_url": "https://nasagrace.unl.edu/globaldata/current/rtzsm_perc_025deg_GL.tif",
-      "fetch_date": "2026-11-07",
+      "fetch_date": "2026-11-08",
       "file_size_kb": 893,
       "sha256_short": "68e4cb27bd71",
       "resolution_deg": "0.25,0.25",
@@ -40,16 +40,16 @@
       "nodata": "-999.0",
       "dtype": "float32",
       "min": 0.2,
-      "mean": 36.51,
+      "mean": 36.47,
       "max": 91.9,
-      "count": 27
+      "count": 28
     },
     {
       "raster_name": "sfsm_perc_025deg_GL.tif",
       "label": "Surface soil moisture",
       "signal": "Surface",
       "source_url": "https://nasagrace.unl.edu/globaldata/current/sfsm_perc_025deg_GL.tif",
-      "fetch_date": "2026-11-07",
+      "fetch_date": "2026-11-08",
       "file_size_kb": 912,
       "sha256_short": "dd55b245e7ee",
       "resolution_deg": "0.25,0.25",
@@ -60,9 +60,9 @@
       "nodata": "-999.0",
       "dtype": "float32",
       "min": 0.7,
-      "mean": 61.05,
+      "mean": 61.35,
       "max": 94.8,
-      "count": 27
+      "count": 28
     }
   ],
   "data_label": "satellite-model percentile (0-100); not groundwater depth"

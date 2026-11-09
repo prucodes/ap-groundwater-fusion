@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-08T10:42:46+00:00",
+ "generatedAt": "2026-11-08T23:06:22+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -212,8 +212,8 @@
   },
   {
    "band": "3 to 8 m",
-   "mandals": 242,
-   "medianMm": 42.0,
+   "mandals": 244,
+   "medianMm": 41.0,
    "heavy": 87
   },
   {
@@ -242,12 +242,12 @@
  "precedent": {
   "event": "Cyclone Montha",
   "landfall": "2025-10-28",
-  "mandalsCompared": 537,
-  "mandalsWithHeavyRain": 436,
+  "mandalsCompared": 539,
+  "mandalsWithHeavyRain": 438,
   "bands": [
    {
     "band": "under 3 m",
-    "mandals": 180,
+    "mandals": 182,
     "extraRiseM": 0.1,
     "roseMorePct": 56.0
    },
@@ -273,7 +273,7 @@
  },
  "since": {
   "from": "2026-10-26",
-  "to": "2026-11-08",
+  "to": "2026-11-09",
   "days": [
    {
     "date": "2026-10-26",
@@ -357,8 +357,8 @@
    },
    {
     "date": "2026-11-08",
-    "rainTo": "2026-11-06",
-    "rainSinceTmc": 675.6,
+    "rainTo": "2026-11-07",
+    "rainSinceTmc": 689.7,
     "soilMedian30": 94.0,
     "reservoirTmc": 505.5,
     "reservoirPct": 43.5
@@ -3225,7 +3225,7 @@
     "Santhamaguluru",
     "Prakasam",
     98,
-    null,
+    3.03,
     "m"
    ],
    [
@@ -3577,7 +3577,7 @@
     "Kandukur",
     "Prakasam",
     33,
-    null,
+    3.34,
     ""
    ],
    [
@@ -8348,7 +8348,7 @@
     "Santhamaguluru",
     "Prakasam",
     103,
-    null,
+    3.02,
     "m"
    ],
    [
@@ -8700,7 +8700,7 @@
     "Kandukur",
     "Prakasam",
     34,
-    null,
+    3.7,
     ""
    ],
    [
@@ -13368,7 +13368,7 @@
    "Santhamaguluru",
    "Prakasam",
    4,
-   null,
+   3.02,
    "m"
   ],
   [
@@ -13720,7 +13720,7 @@
    "Kandukur",
    "Prakasam",
    2,
-   null,
+   3.7,
    ""
   ],
   [

@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-07T20:13:40Z",
+  "generatedAt": "2026-11-08T23:06:31Z",
   "method": "Each mandal's May to November change in depth, fitted against that season's June to September rainfall, over every season it has both readings.",
   "window": {
     "preMonsoonMonth": 5,
@@ -17,43 +17,43 @@
     "governedR2": 0.4,
     "partlyR2": 0.15
   },
-  "scored": 539,
-  "medianR2": 0.14,
+  "scored": 554,
+  "medianR2": 0.13,
   "groups": [
     {
       "class": "rain governed",
-      "mandals": 111,
+      "mandals": 114,
       "aquifers": {
-        "hard_rock": 85,
-        "coastal": 19,
-        "alluvial": 7
+        "hard_rock": 86,
+        "coastal": 20,
+        "alluvial": 8
       },
-      "medianIrrigatedPct": 16.9,
-      "stressedPct": 9.0,
-      "medianRisePer100mm": 4.01
+      "medianIrrigatedPct": 17.2,
+      "stressedPct": 8.8,
+      "medianRisePer100mm": 3.91
     },
     {
       "class": "partly",
-      "mandals": 130,
+      "mandals": 132,
       "aquifers": {
-        "hard_rock": 54,
+        "hard_rock": 56,
         "coastal": 41,
         "alluvial": 35
       },
       "medianIrrigatedPct": 29.5,
-      "stressedPct": 7.7,
-      "medianRisePer100mm": 1.54
+      "stressedPct": 7.6,
+      "medianRisePer100mm": 1.46
     },
     {
       "class": "not rain",
-      "mandals": 298,
+      "mandals": 308,
       "aquifers": {
-        "alluvial": 120,
-        "coastal": 117,
-        "hard_rock": 61
+        "alluvial": 126,
+        "coastal": 119,
+        "hard_rock": 63
       },
-      "medianIrrigatedPct": 33.8,
-      "stressedPct": 4.0,
+      "medianIrrigatedPct": 33.0,
+      "stressedPct": 4.2,
       "medianRisePer100mm": 0.09
     }
   ],
@@ -358,6 +358,13 @@
       -1.12,
       8,
       6.2
+    ],
+    "KONASEEMA|RAMACHANDRAPURAM": [
+      0.0,
+      2,
+      -0.01,
+      8,
+      40.0
     ],
     "WEST GODAVARI|PENUMANTRA": [
       0.03,
@@ -713,6 +720,13 @@
       0.61,
       0,
       4.38,
+      8,
+      null
+    ],
+    "Y.S.R KADAPA|MYLAVARAM": [
+      0.25,
+      1,
+      1.0,
       8,
       null
     ],
@@ -1073,6 +1087,13 @@
       8,
       11.3
     ],
+    "PRAKASAM|SANTHAMAGULURU": [
+      0.0,
+      2,
+      -0.36,
+      8,
+      5.1
+    ],
     "SRI SATHYA SAI|KADIRI": [
       0.69,
       0,
@@ -1199,6 +1220,13 @@
       8,
       18.1
     ],
+    "PALNADU|VELDURTHI": [
+      0.05,
+      2,
+      2.45,
+      8,
+      2.8
+    ],
     "MARKAPURAM|PEDACHERLOPALLE": [
       0.18,
       1,
@@ -1254,6 +1282,13 @@
       1.77,
       8,
       35.6
+    ],
+    "CHITTOOR|ROMPICHERLA": [
+      0.65,
+      0,
+      3.04,
+      7,
+      null
     ],
     "Y.S.R KADAPA|KHAJIPET": [
       0.14,
@@ -2074,6 +2109,13 @@
       8,
       0.1
     ],
+    "PRAKASAM|KANDUKUR": [
+      0.01,
+      2,
+      0.18,
+      8,
+      2.1
+    ],
     "ANANTHAPURAMU|KANEKAL": [
       0.66,
       0,
@@ -2108,6 +2150,13 @@
       15.8,
       8,
       5.4
+    ],
+    "WEST GODAVARI|YELAMANCHILI": [
+      0.03,
+      2,
+      0.45,
+      8,
+      null
     ],
     "KURNOOL|C BELAGAL": [
       0.01,
@@ -2346,6 +2395,13 @@
       6.69,
       8,
       58.9
+    ],
+    "Y.S.R KADAPA|RAJU PALEM": [
+      0.29,
+      1,
+      1.08,
+      7,
+      null
     ],
     "ANAKAPALLI|MUNAGAPAKA": [
       0.02,
@@ -2669,6 +2725,13 @@
       8,
       66.4
     ],
+    "EAST GODAVARI|DEVARAPALLE": [
+      0.04,
+      2,
+      -0.72,
+      8,
+      null
+    ],
     "SRI POTTI SRIRAMULU NELLORE|PODLAKUR": [
       0.24,
       1,
@@ -2942,6 +3005,13 @@
       8,
       93.5
     ],
+    "Y.S.R KADAPA|KONDAPURAM": [
+      0.02,
+      2,
+      -0.36,
+      8,
+      23.3
+    ],
     "TIRUPATI|YERPEDU": [
       0.74,
       0,
@@ -2990,6 +3060,13 @@
       -0.05,
       8,
       32.4
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|GUDUR": [
+      0.55,
+      0,
+      2.01,
+      8,
+      null
     ],
     "KURNOOL|MANTRALAYAM": [
       0.22,
@@ -3488,6 +3565,13 @@
       7,
       13.8
     ],
+    "KRISHNA|UNGUTURU": [
+      0.42,
+      0,
+      0.29,
+      8,
+      85.1
+    ],
     "PALNADU|IPURU": [
       0.22,
       1,
@@ -3593,12 +3677,26 @@
       7,
       3.2
     ],
+    "EAST GODAVARI|SEETHANAGARAM": [
+      0.07,
+      2,
+      0.58,
+      8,
+      98.8
+    ],
     "SRI SATHYA SAI|SOMANDEPALLE": [
       0.6,
       0,
       7.96,
       7,
       17.5
+    ],
+    "PALNADU|RAJUPALEM": [
+      0.01,
+      2,
+      -0.12,
+      8,
+      17.7
     ],
     "KURNOOL|KRISHNAGIRI": [
       0.0,
@@ -3711,6 +3809,13 @@
       0.81,
       8,
       null
+    ],
+    "ANANTHAPURAMU|ATMAKUR": [
+      0.11,
+      2,
+      0.46,
+      8,
+      25.5
     ],
     "KURNOOL|HALAHARVI": [
       0.17,

@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-07T20:13:35Z",
+  "generatedAt": "2026-11-08T23:06:28Z",
   "method": "Water-table fluctuation, the GEC-2015 method: the May to November rise times specific yield times area, as a share of June to September rainfall, for every year a mandal has both readings. The median year is published, and a year whose table fell counts as zero.",
   "window": {
     "preMonsoonMonth": 5,
@@ -14,35 +14,35 @@
     "minYears": 5,
     "minRainMm": 100.0
   },
-  "scored": 572,
-  "ranked": 513,
+  "scored": 587,
+  "ranked": 526,
   "yearsAvailable": [
     2015,
     2026
   ],
   "counts": {
-    "set aside": 58,
+    "set aside": 60,
     "imports": 1,
-    "strong": 201,
-    "moderate": 268,
-    "weak": 44
+    "strong": 205,
+    "moderate": 274,
+    "weak": 47
   },
-  "stateMedianSharePct": 11.8,
+  "stateMedianSharePct": 11.6,
   "byAquifer": [
     {
       "aquifer": "alluvial",
-      "mandals": 154,
-      "medianSharePct": 14.4
+      "mandals": 159,
+      "medianSharePct": 14.3
     },
     {
       "aquifer": "coastal",
-      "mandals": 177,
-      "medianSharePct": 8.4
+      "mandals": 180,
+      "medianSharePct": 8.2
     },
     {
       "aquifer": "hard_rock",
-      "mandals": 182,
-      "medianSharePct": 14.6
+      "mandals": 187,
+      "medianSharePct": 14.3
     }
   ],
   "thresholds": {
@@ -72,6 +72,12 @@
       4,
       6,
       42.6
+    ],
+    "PALNADU|VELDURTHI": [
+      237.3,
+      4,
+      8,
+      29.6
     ],
     "MARKAPURAM|BESTAVARIPETA": [
       136.7,
@@ -379,6 +385,12 @@
       7,
       11.3
     ],
+    "EAST GODAVARI|DEVARAPALLE": [
+      40.9,
+      4,
+      8,
+      23.1
+    ],
     "BAPATLA|BHATTIPROLU": [
       40.1,
       2,
@@ -601,6 +613,12 @@
       8,
       17.7
     ],
+    "KRISHNA|UNGUTURU": [
+      32.7,
+      2,
+      8,
+      6.8
+    ],
     "Y.S.R KADAPA|CHINTHA KOMMADINNE": [
       32.6,
       2,
@@ -697,6 +715,12 @@
       8,
       11.2
     ],
+    "EAST GODAVARI|SEETHANAGARAM": [
+      29.8,
+      2,
+      8,
+      7.0
+    ],
     "EAST GODAVARI|ANAPARTHI": [
       29.4,
       2,
@@ -792,6 +816,12 @@
       2,
       8,
       8.5
+    ],
+    "CHITTOOR|ROMPICHERLA": [
+      26.9,
+      2,
+      7,
+      12.7
     ],
     "ANNAMAYYA|SOMALA": [
       26.7,
@@ -966,6 +996,12 @@
       2,
       8,
       8.3
+    ],
+    "Y.S.R KADAPA|MYLAVARAM": [
+      23.3,
+      2,
+      8,
+      4.3
     ],
     "Y.S.R KADAPA|SIDHOUT": [
       23.3,
@@ -2227,6 +2263,12 @@
       8,
       3.5
     ],
+    "PALNADU|RAJUPALEM": [
+      9.5,
+      1,
+      8,
+      6.0
+    ],
     "TIRUPATI|PICHATUR": [
       9.4,
       1,
@@ -2250,6 +2292,12 @@
       1,
       8,
       3.4
+    ],
+    "Y.S.R KADAPA|KONDAPURAM": [
+      9.3,
+      1,
+      8,
+      7.2
     ],
     "Y.S.R KADAPA|GOPAVARAM": [
       9.3,
@@ -2527,6 +2575,12 @@
       7,
       7.3
     ],
+    "WEST GODAVARI|YELAMANCHILI": [
+      7.5,
+      1,
+      8,
+      2.0
+    ],
     "CHITTOOR|RAMA KUPPAM": [
       7.5,
       1,
@@ -2586,6 +2640,12 @@
       1,
       8,
       3.8
+    ],
+    "Y.S.R KADAPA|RAJU PALEM": [
+      7.1,
+      1,
+      7,
+      7.7
     ],
     "VIZIANAGARAM|REGIDIAMADALAVALASA": [
       7.1,
@@ -2706,6 +2766,12 @@
       1,
       8,
       3.1
+    ],
+    "SRI POTTI SRIRAMULU NELLORE|GUDUR": [
+      6.4,
+      1,
+      8,
+      9.1
     ],
     "PALNADU|AMARAVATHI": [
       6.4,
@@ -2916,6 +2982,12 @@
       1,
       8,
       8.8
+    ],
+    "PRAKASAM|SANTHAMAGULURU": [
+      5.2,
+      1,
+      8,
+      3.0
     ],
     "PARVATHIPURAM MANYAM|PARVATHIPURAM": [
       5.2,
@@ -3325,6 +3397,12 @@
       8,
       12.7
     ],
+    "KONASEEMA|RAMACHANDRAPURAM": [
+      1.7,
+      0,
+      8,
+      1.6
+    ],
     "SRIKAKULAM|LAKSHMINARSUPETA": [
       1.7,
       0,
@@ -3355,6 +3433,12 @@
       8,
       9.8
     ],
+    "PRAKASAM|KANDUKUR": [
+      1.5,
+      0,
+      8,
+      2.8
+    ],
     "PRAKASAM|PONNALURU": [
       1.4,
       0,
@@ -3378,6 +3462,12 @@
       0,
       8,
       14.1
+    ],
+    "ANANTHAPURAMU|ATMAKUR": [
+      1.1,
+      0,
+      8,
+      8.4
     ],
     "KAKINADA|KAKINADA (RURAL)": [
       0.9,
@@ -3676,6 +3766,16 @@
       "class": "set aside"
     },
     {
+      "district": "Palnadu",
+      "mandal": "Veldurthi",
+      "aquifer": "alluvial",
+      "medianSharePct": 237.3,
+      "years": 8,
+      "typicalDepthM": 29.6,
+      "specificYield": 0.11,
+      "class": "set aside"
+    },
+    {
       "district": "Markapuram",
       "mandal": "BESTAVARIPETA",
       "aquifer": "coastal",
@@ -3733,16 +3833,6 @@
       "years": 6,
       "typicalDepthM": 47.4,
       "specificYield": 0.119,
-      "class": "set aside"
-    },
-    {
-      "district": "Y.S.R Kadapa",
-      "mandal": "Porumamilla",
-      "aquifer": "hard_rock",
-      "medianSharePct": 71.0,
-      "years": 7,
-      "typicalDepthM": 22.1,
-      "specificYield": 0.018,
       "class": "set aside"
     }
   ],

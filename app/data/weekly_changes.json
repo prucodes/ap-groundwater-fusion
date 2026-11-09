@@ -1,10 +1,10 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-07T20:33:17+00:00",
+ "generatedAt": "2026-11-08T23:51:57+00:00",
  "comparedWith": {
   "label": "the data the site was showing before this refresh",
-  "commit": "5208b2d",
-  "committedAt": "2026-11-07T14:01:50-05:00"
+  "commit": "0292df7",
+  "committedAt": "2026-11-08T17:39:58-05:00"
  },
  "items": [
   {
@@ -14,11 +14,11 @@
    "better": "higher",
    "href": "/climate/",
    "before": -25.7,
-   "after": -25.7,
-   "beforeAsOf": "2026-11-05",
-   "afterAsOf": "2026-11-06",
-   "change": 0.0,
-   "direction": "same",
+   "after": -25.9,
+   "beforeAsOf": "2026-11-06",
+   "afterAsOf": "2026-11-07",
+   "change": -0.2,
+   "direction": "worse",
    "refreshed": true
   },
   {
@@ -27,10 +27,10 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 227,
-   "after": 227,
-   "beforeAsOf": "2026-11-05",
-   "afterAsOf": "2026-11-05",
+   "before": 239,
+   "after": 239,
+   "beforeAsOf": "2026-11-07",
+   "afterAsOf": "2026-11-07",
    "change": 0,
    "direction": "same",
    "refreshed": false
@@ -41,10 +41,10 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 13,
-   "after": 13,
-   "beforeAsOf": "2026-11-05",
-   "afterAsOf": "2026-11-05",
+   "before": 12,
+   "after": 12,
+   "beforeAsOf": "2026-11-07",
+   "afterAsOf": "2026-11-07",
    "change": 0,
    "direction": "same",
    "refreshed": false
@@ -57,8 +57,8 @@
    "href": "/agriculture/",
    "before": 43.5,
    "after": 43.5,
-   "beforeAsOf": "2026-11-07T15:53+05:30",
-   "afterAsOf": "2026-11-07T23:49+05:30",
+   "beforeAsOf": "2026-11-08T15:58+05:30",
+   "afterAsOf": "2026-11-09T02:47+05:30",
    "change": 0.0,
    "direction": "same",
    "refreshed": true
@@ -70,12 +70,12 @@
    "better": "lower",
    "href": "/drought/",
    "before": 509,
-   "after": 509,
+   "after": 523,
    "beforeAsOf": "2026-11-02",
-   "afterAsOf": "2026-11-02",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "afterAsOf": "2026-11-07",
+   "change": 14,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "droughtSevere",
@@ -84,12 +84,12 @@
    "better": "lower",
    "href": "/drought/",
    "before": 38,
-   "after": 38,
+   "after": 29,
    "beforeAsOf": "2026-11-02",
-   "afterAsOf": "2026-11-02",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "afterAsOf": "2026-11-07",
+   "change": -9,
+   "direction": "better",
+   "refreshed": true
   },
   {
    "key": "droughtModerate",
@@ -98,12 +98,12 @@
    "better": "lower",
    "href": "/drought/",
    "before": 311,
-   "after": 311,
+   "after": 260,
    "beforeAsOf": "2026-11-02",
-   "afterAsOf": "2026-11-02",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "afterAsOf": "2026-11-07",
+   "change": -51,
+   "direction": "better",
+   "refreshed": true
   },
   {
    "key": "gwStress",
@@ -111,12 +111,12 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/map/",
-   "before": 433,
-   "after": 431,
+   "before": 431,
+   "after": 433,
    "beforeAsOf": "2026-10",
    "afterAsOf": "2026-10",
-   "change": -2,
-   "direction": "better",
+   "change": 2,
+   "direction": "worse",
    "refreshed": false
   },
   {
@@ -125,13 +125,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 271,
+   "before": 270,
    "after": 270,
-   "beforeAsOf": "2026-10-28",
+   "beforeAsOf": "2026-11-04",
    "afterAsOf": "2026-11-04",
-   "change": -1,
-   "direction": "better",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "cropsShort",
@@ -139,12 +139,12 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/#field-week",
-   "before": 49,
-   "after": 72,
-   "beforeAsOf": "2026-11-04",
-   "afterAsOf": "2026-11-08",
-   "change": 23,
-   "direction": "worse",
+   "before": 72,
+   "after": 70,
+   "beforeAsOf": "2026-11-08",
+   "afterAsOf": "2026-11-09",
+   "change": -2,
+   "direction": "better",
    "refreshed": true
   },
   {
@@ -164,19 +164,11 @@
   }
  ],
  "groundwater": {
-  "worse": 2,
-  "better": 2,
+  "worse": 1,
+  "better": 3,
   "moved": [
    {
-    "id": "ap-temp-mandal-krishna-guduru-269",
-    "mandal": "GUDURU",
-    "district": "KRISHNA",
-    "from": "watch",
-    "to": "stress",
-    "worse": true
-   },
-   {
-    "id": "ap-temp-mandal-nandyal-kothapalle-148",
+    "id": "ap-temp-mandal-nandyal-kothapalle-501",
     "mandal": "KOTHAPALLE",
     "district": "NANDYAL",
     "from": "watch",
@@ -184,17 +176,25 @@
     "worse": true
    },
    {
-    "id": "ap-temp-mandal-krishna-gudur-495",
-    "mandal": "GUDUR",
+    "id": "ap-temp-mandal-krishna-guduru-269",
+    "mandal": "GUDURU",
     "district": "KRISHNA",
     "from": "stress",
     "to": "watch",
     "worse": false
    },
    {
-    "id": "ap-temp-mandal-nandyal-kothapalle-501",
-    "mandal": "KOTHAPALLE",
-    "district": "NANDYAL",
+    "id": "ap-temp-mandal-krishna-unguturu-251",
+    "mandal": "UNGUTURU",
+    "district": "KRISHNA",
+    "from": "stress",
+    "to": "stable",
+    "worse": false
+   },
+   {
+    "id": "ap-temp-mandal-palnadu-rompicherla-304",
+    "mandal": "ROMPICHERLA",
+    "district": "PALNADU",
     "from": "stress",
     "to": "watch",
     "worse": false
@@ -209,88 +209,39 @@
  "drought": {
   "worse": [
    {
-    "i": 24,
-    "d": "SRIKAKULAM",
-    "m": "SARUBUJJILI",
-    "from": "normal|moderate",
-    "to": "moderate"
-   },
-   {
-    "i": 34,
-    "d": "SRIKAKULAM",
-    "m": "PONDURU",
-    "from": "normal",
-    "to": "moderate"
-   },
-   {
-    "i": 58,
+    "i": 55,
     "d": "VIZIANAGARAM",
-    "m": "CHEEPURUPALLE",
-    "from": "normal",
-    "to": "moderate"
-   },
-   {
-    "i": 89,
-    "d": "ANAKAPALLI",
-    "m": "CHEEDIKADA",
-    "from": "normal",
-    "to": "moderate"
-   },
-   {
-    "i": 117,
-    "d": "POLAVARAM",
-    "m": "CHINTUR",
+    "m": "MENTADA",
     "from": "moderate",
     "to": "moderate|severe"
    },
    {
-    "i": 238,
-    "d": "ELURU",
-    "m": "CHATRAI",
-    "from": "moderate",
-    "to": "severe"
-   },
-   {
-    "i": 240,
-    "d": "ELURU",
-    "m": "NUZVID",
+    "i": 74,
+    "d": "ALLURI SITHARAMA RAJU",
+    "m": "DUMBRIGUDA",
     "from": "normal",
     "to": "moderate"
    },
    {
-    "i": 297,
+    "i": 77,
+    "d": "ALLURI SITHARAMA RAJU",
+    "m": "HUKUMPETA",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 193,
+    "d": "EAST GODAVARI",
+    "m": "NALLAJERLA",
+    "from": "normal",
+    "to": "moderate"
+   },
+   {
+    "i": 286,
     "d": "PALNADU",
-    "m": "NEKARIKALLU",
+    "m": "BELLAMKONDA",
     "from": "moderate",
     "to": "severe"
-   },
-   {
-    "i": 304,
-    "d": "PALNADU",
-    "m": "NARASARAOPET",
-    "from": "moderate",
-    "to": "severe"
-   },
-   {
-    "i": 391,
-    "d": "SRI POTTI SRIRAMULU NELLORE",
-    "m": "UDAYAGIRI",
-    "from": "normal",
-    "to": "moderate"
-   },
-   {
-    "i": 394,
-    "d": "SRI POTTI SRIRAMULU NELLORE",
-    "m": "JALADANKI",
-    "from": "normal",
-    "to": "moderate"
-   },
-   {
-    "i": 441,
-    "d": "Y.S.R KADAPA",
-    "m": "S.MYDUKUR",
-    "from": "normal",
-    "to": "moderate"
    },
    {
     "i": 455,
@@ -307,35 +258,14 @@
     "to": "severe"
    },
    {
-    "i": 545,
+    "i": 554,
     "d": "ANANTHAPURAMU",
-    "m": "VIDAPANAKAL",
-    "from": "moderate",
-    "to": "severe"
-   },
-   {
-    "i": 575,
-    "d": "SRI SATHYA SAI",
-    "m": "TADIMARRI",
-    "from": "moderate",
-    "to": "severe"
-   },
-   {
-    "i": 592,
-    "d": "SRI SATHYA SAI",
-    "m": "PARIGI",
+    "m": "URAVAKONDA",
     "from": "normal",
     "to": "moderate"
    }
   ],
   "better": [
-   {
-    "i": 1,
-    "d": "PARVATHIPURAM MANYAM",
-    "m": "SEETHAMPETA",
-    "from": "moderate",
-    "to": "normal"
-   },
    {
     "i": 6,
     "d": "SRIKAKULAM",
@@ -344,46 +274,144 @@
     "to": "normal"
    },
    {
-    "i": 55,
-    "d": "VIZIANAGARAM",
-    "m": "MENTADA",
-    "from": "moderate|severe",
-    "to": "moderate"
+    "i": 9,
+    "d": "SRIKAKULAM",
+    "m": "ICHCHAPURAM",
+    "from": "moderate",
+    "to": "normal|moderate"
    },
    {
-    "i": 59,
-    "d": "VIZIANAGARAM",
-    "m": "GURLA",
-    "from": "moderate|severe",
-    "to": "moderate"
+    "i": 14,
+    "d": "SRIKAKULAM",
+    "m": "HIRAMANDALAM",
+    "from": "moderate",
+    "to": "normal"
    },
    {
-    "i": 68,
+    "i": 17,
     "d": "VIZIANAGARAM",
-    "m": "NELLIMARLA",
+    "m": "REGIDI AMADALAVALASA",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 24,
+    "d": "SRIKAKULAM",
+    "m": "SARUBUJJILI",
+    "from": "moderate",
+    "to": "normal|moderate"
+   },
+   {
+    "i": 36,
+    "d": "SRIKAKULAM",
+    "m": "RANASTALAM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 37,
+    "d": "SRIKAKULAM",
+    "m": "ETCHERLA",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 41,
+    "d": "PARVATHIPURAM MANYAM",
+    "m": "JIYYAMMAVALASA",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 58,
+    "d": "VIZIANAGARAM",
+    "m": "CHEEPURUPALLE",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 63,
+    "d": "VIZIANAGARAM",
+    "m": "VEPADA",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 71,
+    "d": "VIZIANAGARAM",
+    "m": "BHOGAPURAM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 78,
+    "d": "ALLURI SITHARAMA RAJU",
+    "m": "PADERU",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 80,
+    "d": "ALLURI SITHARAMA RAJU",
+    "m": "CHINTAPALLE",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 95,
+    "d": "VISAKHAPATNAM",
+    "m": "PADMANABHAM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 96,
+    "d": "VISAKHAPATNAM",
+    "m": "BHEEMUNIPATNAM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 102,
+    "d": "ANAKAPALLI",
+    "m": "ANAKAPALLE",
     "from": "severe",
     "to": "moderate"
    },
    {
-    "i": 93,
-    "d": "VISAKHAPATNAM",
-    "m": "PENDURTHI",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 105,
+    "i": 111,
     "d": "ANAKAPALLI",
-    "m": "KOTAURATLA",
+    "m": "NAKKAPALLE",
     "from": "moderate",
     "to": "normal"
    },
    {
-    "i": 142,
-    "d": "EAST GODAVARI",
-    "m": "RAJAHMUNDRY RURAL",
-    "from": "moderate",
+    "i": 113,
+    "d": "ANAKAPALLI",
+    "m": "S.RAYAVARAM",
+    "from": "moderate|severe",
     "to": "normal|moderate"
+   },
+   {
+    "i": 117,
+    "d": "POLAVARAM",
+    "m": "CHINTUR",
+    "from": "moderate|severe",
+    "to": "normal|moderate"
+   },
+   {
+    "i": 136,
+    "d": "KAKINADA",
+    "m": "THONDANGI",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 146,
+    "d": "KAKINADA",
+    "m": "PITHAPURAM",
+    "from": "moderate",
+    "to": "normal"
    },
    {
     "i": 151,
@@ -393,173 +421,138 @@
     "to": "normal"
    },
    {
-    "i": 182,
-    "d": "ELURU",
-    "m": "LINGAPALEM",
-    "from": "severe",
-    "to": "moderate"
+    "i": 157,
+    "d": "KAKINADA",
+    "m": "KARAPA",
+    "from": "moderate",
+    "to": "normal"
    },
    {
-    "i": 200,
+    "i": 161,
+    "d": "KONASEEMA",
+    "m": "RAVULAPALEM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 162,
+    "d": "KONASEEMA",
+    "m": "KOTHAPETA",
+    "from": "moderate",
+    "to": "normal|moderate"
+   },
+   {
+    "i": 183,
     "d": "ELURU",
-    "m": "BHIMADOLE",
+    "m": "T.NARASAPURAM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 189,
+    "d": "ELURU",
+    "m": "KOYYALAGUDEM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 195,
+    "d": "EAST GODAVARI",
+    "m": "KOVVUR",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 196,
+    "d": "EAST GODAVARI",
+    "m": "CHAGALLU",
     "from": "moderate|severe",
     "to": "moderate"
    },
    {
-    "i": 258,
+    "i": 207,
+    "d": "EAST GODAVARI",
+    "m": "UNDRAJAVARAM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 209,
+    "d": "WEST GODAVARI",
+    "m": "TANUKU",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 212,
+    "d": "WEST GODAVARI",
+    "m": "AKIVIDU",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 214,
+    "d": "WEST GODAVARI",
+    "m": "PALACODERU",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 222,
+    "d": "WEST GODAVARI",
+    "m": "KALLA",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 240,
+    "d": "ELURU",
+    "m": "NUZVID",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 249,
     "d": "KRISHNA",
-    "m": "GUDIVADA",
+    "m": "GANNAVARAM",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 250,
+    "d": "KRISHNA",
+    "m": "UNGUTURU",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 260,
+    "d": "KRISHNA",
+    "m": "KANKIPADU",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 272,
+    "d": "KRISHNA",
+    "m": "CHALLAPALLE",
     "from": "severe",
     "to": "moderate"
    },
    {
-    "i": 310,
-    "d": "GUNTUR",
-    "m": "MEDIKONDURU",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 345,
-    "d": "BAPATLA",
-    "m": "PARCHUR",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 361,
-    "d": "BAPATLA",
-    "m": "VETAPALEM",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 378,
-    "d": "PRAKASAM",
-    "m": "TANGUTUR",
-    "from": "moderate|severe",
-    "to": "moderate"
-   },
-   {
-    "i": 386,
-    "d": "PRAKASAM",
-    "m": "SINGARAYAKONDA",
-    "from": "moderate|severe",
-    "to": "moderate"
-   },
-   {
-    "i": 418,
-    "d": "SRI POTTI SRIRAMULU NELLORE",
-    "m": "MUTHUKUR",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 429,
-    "d": "TIRUPATI",
-    "m": "VAKADU",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 474,
-    "d": "ANNAMAYYA",
-    "m": "SAMBEPALLE",
+    "i": 273,
+    "d": "KRISHNA",
+    "m": "MOPIDEVI",
     "from": "severe",
     "to": "moderate"
-   },
-   {
-    "i": 544,
-    "d": "ANANTHAPURAMU",
-    "m": "BOMMANAHAL",
-    "from": "severe",
-    "to": "moderate"
-   },
-   {
-    "i": 614,
-    "d": "TIRUPATI",
-    "m": "YERPEDU",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 615,
-    "d": "TIRUPATI",
-    "m": "SRIKALAHASTI",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 625,
-    "d": "ANNAMAYYA",
-    "m": "VALMIKIPURAM",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 629,
-    "d": "ANNAMAYYA",
-    "m": "MADANAPALLE",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 630,
-    "d": "ANNAMAYYA",
-    "m": "NIMMANAPALLE",
-    "from": "moderate",
-    "to": "normal|moderate"
-   },
-   {
-    "i": 646,
-    "d": "CHITTOOR",
-    "m": "PENUMURU",
-    "from": "moderate",
-    "to": "normal|moderate"
-   },
-   {
-    "i": 661,
-    "d": "CHITTOOR",
-    "m": "VENKATAGIRIKOTA",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 663,
-    "d": "CHITTOOR",
-    "m": "GUDUPALLE",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 665,
-    "d": "CHITTOOR",
-    "m": "RAMAKUPPAM",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 667,
-    "d": "CHITTOOR",
-    "m": "YADAMARRI",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 668,
-    "d": "CHITTOOR",
-    "m": "GUDIPALA",
-    "from": "moderate",
-    "to": "normal"
    }
   ],
   "basis": "each mandal's manual reading now against the same reading one week of rain earlier"
  },
  "counts": {
-  "better": 2,
-  "worse": 1,
-  "same": 8,
+  "better": 3,
+  "worse": 3,
+  "same": 5,
   "unknown": 0
  }
 }

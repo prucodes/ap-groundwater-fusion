@@ -3,17 +3,17 @@
   "assessmentYear": "2025-2026",
   "previousYear": "2024-2025",
   "rule": "Least-squares slope through each mandal's own May readings, 7 years or more. Steady is within 0.2 m a year either way; positive is a falling table.",
-  "mandalsScored": 603,
+  "mandalsScored": 588,
   "counts": {
     "safe": {
       "deepening": 67,
-      "steady": 196,
-      "rising": 261
+      "steady": 192,
+      "rising": 254
     },
     "semi_critical": {
-      "deepening": 4,
-      "steady": 5,
-      "rising": 19
+      "deepening": 3,
+      "steady": 4,
+      "rising": 18
     },
     "critical": {
       "deepening": 1,
@@ -27,7 +27,7 @@
     },
     "salinity": {
       "deepening": 14,
-      "steady": 18,
+      "steady": 17,
       "rising": 4
     }
   },
@@ -380,7 +380,7 @@
     {
       "district": "KRISHNA",
       "mandal": "PAMARRU",
-      "boundaryIndex": 164,
+      "boundaryIndex": 265,
       "category": "safe",
       "stagePct": 15.2,
       "driftMPerYear": 0.5,
@@ -944,18 +944,6 @@
       "lastYear": 2026
     },
     {
-      "district": "POLAVARAM",
-      "mandal": "PEDDAPANJANI",
-      "boundaryIndex": 653,
-      "category": "semi_critical",
-      "stagePct": 75.0,
-      "driftMPerYear": -1.8,
-      "band": "rising",
-      "years": 11,
-      "firstYear": 2016,
-      "lastYear": 2026
-    },
-    {
       "district": "SRI SATHYA SAI",
       "mandal": "AMADAGUR",
       "boundaryIndex": 598,
@@ -1066,7 +1054,7 @@
     {
       "district": "ANANTHAPURAMU",
       "mandal": "ATMAKUR",
-      "boundaryIndex": 401,
+      "boundaryIndex": 559,
       "category": "semi_critical",
       "stagePct": 70.0,
       "driftMPerYear": -0.75,
