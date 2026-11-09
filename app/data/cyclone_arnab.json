@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-09T11:59:43+00:00",
+ "generatedAt": "2026-11-09T13:55:35+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -212,8 +212,8 @@
   },
   {
    "band": "3 to 8 m",
-   "mandals": 244,
-   "medianMm": 41.0,
+   "mandals": 243,
+   "medianMm": 40.0,
    "heavy": 87
   },
   {
@@ -242,13 +242,13 @@
  "precedent": {
   "event": "Cyclone Montha",
   "landfall": "2025-10-28",
-  "mandalsCompared": 539,
-  "mandalsWithHeavyRain": 438,
+  "mandalsCompared": 538,
+  "mandalsWithHeavyRain": 437,
   "bands": [
    {
     "band": "under 3 m",
-    "mandals": 182,
-    "extraRiseM": 0.1,
+    "mandals": 181,
+    "extraRiseM": 0.11,
     "roseMorePct": 56.0
    },
    {
@@ -1017,7 +1017,7 @@
     "Kurupam",
     "Parvathipuram Manyam",
     12,
-    4.33,
+    null,
     "m"
    ],
    [
@@ -6140,7 +6140,7 @@
     "Kurupam",
     "Parvathipuram Manyam",
     94,
-    5.72,
+    null,
     "m"
    ],
    [
@@ -11160,7 +11160,7 @@
    "Kurupam",
    "Parvathipuram Manyam",
    82,
-   5.72,
+   null,
    "m"
   ],
   [

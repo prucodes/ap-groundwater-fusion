@@ -3,17 +3,17 @@
   "assessmentYear": "2025-2026",
   "previousYear": "2024-2025",
   "rule": "Least-squares slope through each mandal's own May readings, 7 years or more. Steady is within 0.2 m a year either way; positive is a falling table.",
-  "mandalsScored": 588,
+  "mandalsScored": 604,
   "counts": {
     "safe": {
       "deepening": 67,
-      "steady": 192,
-      "rising": 254
+      "steady": 196,
+      "rising": 264
     },
     "semi_critical": {
       "deepening": 3,
       "steady": 4,
-      "rising": 18
+      "rising": 19
     },
     "critical": {
       "deepening": 1,
@@ -21,7 +21,7 @@
       "rising": 3
     },
     "over_exploited": {
-      "deepening": 1,
+      "deepening": 2,
       "steady": 3,
       "rising": 6
     },
@@ -312,6 +312,18 @@
       "category": "safe",
       "stagePct": 44.8,
       "driftMPerYear": 0.73,
+      "band": "deepening",
+      "years": 12,
+      "firstYear": 2015,
+      "lastYear": 2026
+    },
+    {
+      "district": "SRI POTTI SRIRAMULU NELLORE",
+      "mandal": "ATMAKUR",
+      "boundaryIndex": 401,
+      "category": "safe",
+      "stagePct": 37.0,
+      "driftMPerYear": 0.7,
       "band": "deepening",
       "years": 12,
       "firstYear": 2015,
@@ -726,18 +738,6 @@
       "lastYear": 2026
     },
     {
-      "district": "PALNADU",
-      "mandal": "VELDURTHI",
-      "boundaryIndex": 278,
-      "category": "safe",
-      "stagePct": 38.7,
-      "driftMPerYear": 0.24,
-      "band": "deepening",
-      "years": 12,
-      "firstYear": 2015,
-      "lastYear": 2026
-    },
-    {
       "district": "SRIKAKULAM",
       "mandal": "NANDIGAM",
       "boundaryIndex": 13,
@@ -941,6 +941,18 @@
       "band": "rising",
       "years": 12,
       "firstYear": 2015,
+      "lastYear": 2026
+    },
+    {
+      "district": "CHITTOOR",
+      "mandal": "PEDDAPANJANI",
+      "boundaryIndex": 653,
+      "category": "semi_critical",
+      "stagePct": 75.0,
+      "driftMPerYear": -1.8,
+      "band": "rising",
+      "years": 11,
+      "firstYear": 2016,
       "lastYear": 2026
     },
     {

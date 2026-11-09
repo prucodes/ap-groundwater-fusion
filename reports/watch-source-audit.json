@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-11-08T23:52:06+00:00",
-  "onlineCheckedAt": "2026-11-08T23:52:06+00:00",
+  "checkedAt": "2026-11-09T14:14:33+00:00",
+  "onlineCheckedAt": "2026-11-09T14:14:33+00:00",
   "snapshotPeriod": "2026-10",
-  "snapshotHash": "600c05f99e7e2531d1e20a01c0620cba80080d552ef0264716a4e3a550235371",
-  "historyHash": "37b5666aea23f65ff7564432ac3cae6a42a9d1d90a41ab5ef642813696e7b649",
+  "snapshotHash": "76659909139186aac717a7d942320b01b448335af0ff83902968b9687db6ff5a",
+  "historyHash": "9e8cbe9987390e95be9478e8c6ed539ac36bc2b4f0fe8d5addb95d09cdeedf85",
   "localReconciliation": {
-    "checkedSeries": 571,
+    "checkedSeries": 570,
     "mismatches": []
   },
   "unfilteredHistoryComparison": {
-    "checkedSeries": 571,
+    "checkedSeries": 570,
     "mismatches": [
       {
         "mandalUuid": "c4b43404-f1b5-4a8a-95d4-215cfa9442fc",
@@ -1779,13 +1779,6 @@
       },
       {
         "mandalUuid": "98aa48f3-6abd-430a-aba0-3031d65241e1",
-        "fields": [
-          "comparableYears"
-        ],
-        "statusMatches": true
-      },
-      {
-        "mandalUuid": "c7b721b6-0dd4-4b17-9d02-bf28cdca4acb",
         "fields": [
           "comparableYears"
         ],

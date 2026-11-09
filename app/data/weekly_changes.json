@@ -1,10 +1,10 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-08T23:51:57+00:00",
+ "generatedAt": "2026-11-09T14:14:19+00:00",
  "comparedWith": {
   "label": "the data the site was showing before this refresh",
-  "commit": "0292df7",
-  "committedAt": "2026-11-08T17:39:58-05:00"
+  "commit": "e08e786",
+  "committedAt": "2026-11-09T08:04:05-05:00"
  },
  "items": [
   {
@@ -13,13 +13,13 @@
    "unit": "%",
    "better": "higher",
    "href": "/climate/",
-   "before": -25.7,
+   "before": -25.9,
    "after": -25.9,
-   "beforeAsOf": "2026-11-06",
+   "beforeAsOf": "2026-11-07",
    "afterAsOf": "2026-11-07",
-   "change": -0.2,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0.0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "soilBelow",
@@ -27,10 +27,10 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 239,
-   "after": 239,
-   "beforeAsOf": "2026-11-07",
-   "afterAsOf": "2026-11-07",
+   "before": 245,
+   "after": 245,
+   "beforeAsOf": "2026-11-08",
+   "afterAsOf": "2026-11-08",
    "change": 0,
    "direction": "same",
    "refreshed": false
@@ -41,10 +41,10 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 12,
-   "after": 12,
-   "beforeAsOf": "2026-11-07",
-   "afterAsOf": "2026-11-07",
+   "before": 11,
+   "after": 11,
+   "beforeAsOf": "2026-11-08",
+   "afterAsOf": "2026-11-08",
    "change": 0,
    "direction": "same",
    "refreshed": false
@@ -55,10 +55,10 @@
    "unit": "%",
    "better": "higher",
    "href": "/agriculture/",
-   "before": 43.5,
-   "after": 43.5,
-   "beforeAsOf": "2026-11-08T15:58+05:30",
-   "afterAsOf": "2026-11-09T02:47+05:30",
+   "before": 43.4,
+   "after": 43.4,
+   "beforeAsOf": "2026-11-09T16:54+05:30",
+   "afterAsOf": "2026-11-09T17:51+05:30",
    "change": 0.0,
    "direction": "same",
    "refreshed": true
@@ -69,13 +69,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 509,
+   "before": 523,
    "after": 523,
-   "beforeAsOf": "2026-11-02",
+   "beforeAsOf": "2026-11-07",
    "afterAsOf": "2026-11-07",
-   "change": 14,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "droughtSevere",
@@ -83,13 +83,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 38,
-   "after": 29,
-   "beforeAsOf": "2026-11-02",
+   "before": 29,
+   "after": 30,
+   "beforeAsOf": "2026-11-07",
    "afterAsOf": "2026-11-07",
-   "change": -9,
-   "direction": "better",
-   "refreshed": true
+   "change": 1,
+   "direction": "worse",
+   "refreshed": false
   },
   {
    "key": "droughtModerate",
@@ -97,13 +97,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 311,
-   "after": 260,
-   "beforeAsOf": "2026-11-02",
+   "before": 260,
+   "after": 279,
+   "beforeAsOf": "2026-11-07",
    "afterAsOf": "2026-11-07",
-   "change": -51,
-   "direction": "better",
-   "refreshed": true
+   "change": 19,
+   "direction": "worse",
+   "refreshed": false
   },
   {
    "key": "gwStress",
@@ -111,12 +111,12 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/map/",
-   "before": 431,
+   "before": 433,
    "after": 433,
    "beforeAsOf": "2026-10",
    "afterAsOf": "2026-10",
-   "change": 2,
-   "direction": "worse",
+   "change": 0,
+   "direction": "same",
    "refreshed": false
   },
   {
@@ -139,13 +139,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/#field-week",
-   "before": 72,
+   "before": 70,
    "after": 70,
-   "beforeAsOf": "2026-11-08",
+   "beforeAsOf": "2026-11-09",
    "afterAsOf": "2026-11-09",
-   "change": -2,
-   "direction": "better",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "ensoPeak",
@@ -164,42 +164,9 @@
   }
  ],
  "groundwater": {
-  "worse": 1,
-  "better": 3,
-  "moved": [
-   {
-    "id": "ap-temp-mandal-nandyal-kothapalle-501",
-    "mandal": "KOTHAPALLE",
-    "district": "NANDYAL",
-    "from": "watch",
-    "to": "stress",
-    "worse": true
-   },
-   {
-    "id": "ap-temp-mandal-krishna-guduru-269",
-    "mandal": "GUDURU",
-    "district": "KRISHNA",
-    "from": "stress",
-    "to": "watch",
-    "worse": false
-   },
-   {
-    "id": "ap-temp-mandal-krishna-unguturu-251",
-    "mandal": "UNGUTURU",
-    "district": "KRISHNA",
-    "from": "stress",
-    "to": "stable",
-    "worse": false
-   },
-   {
-    "id": "ap-temp-mandal-palnadu-rompicherla-304",
-    "mandal": "ROMPICHERLA",
-    "district": "PALNADU",
-    "from": "stress",
-    "to": "watch",
-    "worse": false
-   }
-  ],
+  "worse": 0,
+  "better": 0,
+  "moved": [],
   "truncated": false,
   "latestMonth": {
    "before": "2026-10",
@@ -288,25 +255,11 @@
     "to": "normal"
    },
    {
-    "i": 17,
-    "d": "VIZIANAGARAM",
-    "m": "REGIDI AMADALAVALASA",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
     "i": 24,
     "d": "SRIKAKULAM",
     "m": "SARUBUJJILI",
     "from": "moderate",
     "to": "normal|moderate"
-   },
-   {
-    "i": 36,
-    "d": "SRIKAKULAM",
-    "m": "RANASTALAM",
-    "from": "moderate",
-    "to": "normal"
    },
    {
     "i": 37,
@@ -316,6 +269,13 @@
     "to": "normal"
    },
    {
+    "i": 40,
+    "d": "PARVATHIPURAM MANYAM",
+    "m": "KURUPAM",
+    "from": "moderate|severe",
+    "to": "moderate"
+   },
+   {
     "i": 41,
     "d": "PARVATHIPURAM MANYAM",
     "m": "JIYYAMMAVALASA",
@@ -323,11 +283,11 @@
     "to": "normal"
    },
    {
-    "i": 58,
-    "d": "VIZIANAGARAM",
-    "m": "CHEEPURUPALLE",
-    "from": "moderate",
-    "to": "normal"
+    "i": 43,
+    "d": "PARVATHIPURAM MANYAM",
+    "m": "PARVATHIPURAM",
+    "from": "severe",
+    "to": "moderate"
    },
    {
     "i": 63,
@@ -379,34 +339,6 @@
     "to": "moderate"
    },
    {
-    "i": 111,
-    "d": "ANAKAPALLI",
-    "m": "NAKKAPALLE",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
-    "i": 113,
-    "d": "ANAKAPALLI",
-    "m": "S.RAYAVARAM",
-    "from": "moderate|severe",
-    "to": "normal|moderate"
-   },
-   {
-    "i": 117,
-    "d": "POLAVARAM",
-    "m": "CHINTUR",
-    "from": "moderate|severe",
-    "to": "normal|moderate"
-   },
-   {
-    "i": 136,
-    "d": "KAKINADA",
-    "m": "THONDANGI",
-    "from": "moderate",
-    "to": "normal"
-   },
-   {
     "i": 146,
     "d": "KAKINADA",
     "m": "PITHAPURAM",
@@ -442,9 +374,9 @@
     "to": "normal|moderate"
    },
    {
-    "i": 183,
+    "i": 180,
     "d": "ELURU",
-    "m": "T.NARASAPURAM",
+    "m": "KUKUNOOR",
     "from": "moderate",
     "to": "normal"
    },
@@ -456,9 +388,9 @@
     "to": "normal"
    },
    {
-    "i": 195,
+    "i": 194,
     "d": "EAST GODAVARI",
-    "m": "KOVVUR",
+    "m": "DEVARAPALLE",
     "from": "moderate",
     "to": "normal"
    },
@@ -505,11 +437,11 @@
     "to": "normal"
    },
    {
-    "i": 240,
+    "i": 238,
     "d": "ELURU",
-    "m": "NUZVID",
-    "from": "moderate",
-    "to": "normal"
+    "m": "CHATRAI",
+    "from": "severe",
+    "to": "moderate"
    },
    {
     "i": 249,
@@ -526,9 +458,9 @@
     "to": "normal"
    },
    {
-    "i": 260,
+    "i": 261,
     "d": "KRISHNA",
-    "m": "KANKIPADU",
+    "m": "PENAMALURU",
     "from": "moderate",
     "to": "normal"
    },
@@ -545,14 +477,49 @@
     "m": "MOPIDEVI",
     "from": "severe",
     "to": "moderate"
+   },
+   {
+    "i": 290,
+    "d": "GUNTUR",
+    "m": "THULLUR",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 292,
+    "d": "GUNTUR",
+    "m": "MANGALAGIRI",
+    "from": "severe",
+    "to": "moderate"
+   },
+   {
+    "i": 293,
+    "d": "GUNTUR",
+    "m": "TADIKONDA",
+    "from": "moderate",
+    "to": "normal"
+   },
+   {
+    "i": 304,
+    "d": "PALNADU",
+    "m": "NARASARAOPET",
+    "from": "severe",
+    "to": "moderate"
+   },
+   {
+    "i": 307,
+    "d": "BAPATLA",
+    "m": "CHILAKALURIPET H/O.PURUSHOTH*",
+    "from": "severe",
+    "to": "moderate"
    }
   ],
   "basis": "each mandal's manual reading now against the same reading one week of rain earlier"
  },
  "counts": {
-  "better": 3,
-  "worse": 3,
-  "same": 5,
+  "better": 0,
+  "worse": 2,
+  "same": 9,
   "unknown": 0
  }
 }
