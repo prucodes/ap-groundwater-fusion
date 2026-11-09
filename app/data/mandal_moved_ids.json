@@ -1,0 +1,25 @@
+{
+ "note": "Mandal pages whose address changed when their outline was refiled to the right district (Nov 2026, fix_misfiled_districts.py). The old address stays and forwards.",
+ "moved": {
+  "ap-temp-mandal-anakapalli-devarapalle-195": "ap-temp-mandal-east-godavari-devarapalle-195",
+  "ap-temp-mandal-anakapalli-yelamanchili-227": "ap-temp-mandal-west-godavari-yelamanchili-227",
+  "ap-temp-mandal-ananthapuramu-atmakur-402": "ap-temp-mandal-sri-potti-sriramulu-nellore-atmakur-402",
+  "ap-temp-mandal-ananthapuramu-atmakur-503": "ap-temp-mandal-nandyal-atmakur-503",
+  "ap-temp-mandal-east-godavari-seethanagaram-046": "ap-temp-mandal-parvathipuram-manyam-seethanagaram-046",
+  "ap-temp-mandal-kakinada-prathipadu-319": "ap-temp-mandal-guntur-prathipadu-319",
+  "ap-temp-mandal-konaseema-ramachandrapuram-636": "ap-temp-mandal-tirupati-ramachandrapuram-636",
+  "ap-temp-mandal-krishna-gudur-422": "ap-temp-mandal-sri-potti-sriramulu-nellore-gudur-422",
+  "ap-temp-mandal-krishna-gudur-495": "ap-temp-mandal-kurnool-gudur-495",
+  "ap-temp-mandal-krishna-pamarru-165": "ap-temp-mandal-konaseema-pamarru-165",
+  "ap-temp-mandal-krishna-unguturu-200": "ap-temp-mandal-eluru-unguturu-200",
+  "ap-temp-mandal-nandyal-kothapalle-148": "ap-temp-mandal-kakinada-kothapalle-148",
+  "ap-temp-mandal-ntr-mylavaram-438": "ap-temp-mandal-y-s-r-kadapa-mylavaram-438",
+  "ap-temp-mandal-palnadu-rajupalem-440": "ap-temp-mandal-y-s-r-kadapa-rajupalem-440",
+  "ap-temp-mandal-palnadu-rompicherla-611": "ap-temp-mandal-chittoor-rompicherla-611",
+  "ap-temp-mandal-palnadu-veldurthi-516": "ap-temp-mandal-kurnool-veldurthi-516",
+  "ap-temp-mandal-palnadu-yerravaripalem-612": "ap-temp-mandal-tirupati-yerravaripalem-612",
+  "ap-temp-mandal-polavaram-gangavaram-655": "ap-temp-mandal-chittoor-gangavaram-655",
+  "ap-temp-mandal-polavaram-peddapanjani-654": "ap-temp-mandal-chittoor-peddapanjani-654",
+  "ap-temp-mandal-y-s-r-kadapa-kondapuram-394": "ap-temp-mandal-sri-potti-sriramulu-nellore-kondapuram-394"
+ }
+}

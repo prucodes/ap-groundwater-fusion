@@ -1,42 +1,42 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-07T20:13:41Z",
+  "generatedAt": "2026-11-08T23:06:31Z",
   "method": "Screening proxy: mandal mean terrain elevation minus mandal mean measured depth; not a surveyed well head or a verified level relative to sea level",
   "observationPeriod": "2026-10",
   "elevationSource": "Terrarium terrain tiles (AWS open data), zonal mean over each mandal, about 150 m a pixel",
   "classificationSource": "CGWB and the State's Dynamic Ground Water Resources assessment, via the INGRES public dashboard",
   "deepWellThresholdM": 20.0,
-  "scored": 667,
+  "scored": 669,
   "bands": [
     {
       "band": "at or below sea level",
-      "mandals": 30,
-      "salinity": 12,
-      "salinityPct": 40.0
+      "mandals": 29,
+      "salinity": 11,
+      "salinityPct": 37.9
     },
     {
       "band": "0 to 5 m",
-      "mandals": 51,
-      "salinity": 14,
-      "salinityPct": 27.5
+      "mandals": 53,
+      "salinity": 15,
+      "salinityPct": 28.3
     },
     {
       "band": "5 to 20 m",
-      "mandals": 87,
+      "mandals": 92,
       "salinity": 12,
-      "salinityPct": 13.8
+      "salinityPct": 13.0
     },
     {
       "band": "above 20 m",
-      "mandals": 499,
-      "salinity": 2,
-      "salinityPct": 0.4
+      "mandals": 495,
+      "salinity": 1,
+      "salinityPct": 0.2
     }
   ],
-  "medianHeadSalinityM": 4.1,
-  "medianHeadOtherM": 119.3,
-  "salinityUnits": 40,
-  "belowSeaLevel": 30,
+  "medianHeadSalinityM": 4.0,
+  "medianHeadOtherM": 113.9,
+  "salinityUnits": 39,
+  "belowSeaLevel": 29,
   "setAsideDeepWells": [
     {
       "district": "ELURU",
@@ -155,14 +155,6 @@
     },
     {
       "district": "KRISHNA",
-      "mandal": "GUDURU",
-      "depthM": 8.6,
-      "groundM": 6.7,
-      "headM": -1.9,
-      "category": "salinity"
-    },
-    {
-      "district": "KRISHNA",
       "mandal": "NAGAYALANKA",
       "depthM": 4.8,
       "groundM": 4.0,
@@ -183,11 +175,11 @@
       "district": "KRISHNA",
       "mandal": "PAMARRU",
       "depthM": 17.4,
-      "groundM": 7.5,
-      "groundP10M": 5.3,
-      "reliefM": 72.0,
-      "headM": -9.9,
-      "headP10M": -12.1,
+      "groundM": 7.9,
+      "groundP10M": 6.0,
+      "reliefM": 12.0,
+      "headM": -9.5,
+      "headP10M": -11.4,
       "category": "safe"
     },
     {

@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-07T20:13:30+00:00",
+  "generatedAt": "2026-11-08T23:06:25+00:00",
   "season": {
     "year": 2026,
     "preMonsoonMonth": "2026-05",
@@ -140,14 +140,14 @@
     "index": "Oceanic Nino Index (NOAA CPC, ERSST v6)"
   },
   "recharge": {
-    "mandals": 569,
-    "falling": 264,
-    "fallingPct": 46.4,
-    "shortOfNormal": 481,
-    "shortOfNormalPct": 84.5,
-    "flaggedShort": 87,
-    "flaggedSevere": 72,
-    "flaggedWithoutBoundary": 5,
+    "mandals": 571,
+    "falling": 266,
+    "fallingPct": 46.6,
+    "shortOfNormal": 483,
+    "shortOfNormalPct": 84.6,
+    "flaggedShort": 88,
+    "flaggedSevere": 73,
+    "flaggedWithoutBoundary": 4,
     "medianShortfallM": 1.59,
     "byAquifer": [
       {
@@ -155,42 +155,42 @@
         "mandals": 171,
         "medianShortfallM": 1.15,
         "medianSpecificYield": 0.11,
-        "shortfallMm3": 3247.0,
+        "shortfallMm3": 4203.0,
         "fallingPct": 32.2
       },
       {
         "aquifer": "coastal",
-        "mandals": 190,
+        "mandals": 192,
         "medianShortfallM": 0.98,
         "medianSpecificYield": 0.023,
-        "shortfallMm3": 3147.0,
-        "fallingPct": 29.5
+        "shortfallMm3": 3110.0,
+        "fallingPct": 30.2
       },
       {
         "aquifer": "hard_rock",
         "mandals": 208,
         "medianShortfallM": 3.37,
         "medianSpecificYield": 0.023,
-        "shortfallMm3": 5628.0,
+        "shortfallMm3": 5692.0,
         "fallingPct": 73.6
       }
     ],
     "volume": {
-      "shortfallMm3": 12022.0,
-      "mandals": 530,
-      "ofMandals": 569,
-      "areaKm2": 129618.0,
-      "asDepthMm": 92.8,
+      "shortfallMm3": 13005.0,
+      "mandals": 545,
+      "ofMandals": 571,
+      "areaKm2": 133023.0,
+      "asDepthMm": 97.8,
       "note": "shortfall in metres of water table x the mandal's specific yield x its area; specific yield is the CGWB measurement where one exists for that mandal, otherwise the documented aquifer proxy"
     },
     "rule": "May-to-2026-10 change against the same mandal's median over the previous 10 years; flagged short at >= 1.0 m AND >= 2.0x its own year-to-year spread"
   },
   "banked": {
-    "mandals": 525,
+    "mandals": 540,
     "rising": 303,
-    "bankedMm3": 4120.0,
-    "rainMm3": 56270.0,
-    "sharePct": 7.3,
+    "bankedMm3": 4259.0,
+    "rainMm3": 57567.0,
+    "sharePct": 7.4,
     "medianSharePct": 1.2,
     "shareFloorMm": 100.0,
     "thinRain": 5,
@@ -200,65 +200,65 @@
   "seasons": [
     {
       "year": 2016,
-      "mandals": 465,
+      "mandals": 467,
       "medianChangeM": -1.551,
-      "fallingPct": 29.7,
+      "fallingPct": 29.8,
       "oniJjaC": -0.19
     },
     {
       "year": 2017,
-      "mandals": 567,
-      "medianChangeM": -3.407,
+      "mandals": 569,
+      "medianChangeM": -3.36,
       "fallingPct": 11.1,
       "oniJjaC": 0.14
     },
     {
       "year": 2018,
-      "mandals": 569,
+      "mandals": 571,
       "medianChangeM": -0.733,
-      "fallingPct": 39.0,
+      "fallingPct": 39.1,
       "oniJjaC": 0.2
     },
     {
       "year": 2019,
-      "mandals": 569,
-      "medianChangeM": -4.008,
+      "mandals": 571,
+      "medianChangeM": -4.007,
       "fallingPct": 5.1,
       "oniJjaC": 0.38
     },
     {
       "year": 2020,
-      "mandals": 569,
+      "mandals": 571,
       "medianChangeM": -0.59,
-      "fallingPct": 22.3,
+      "fallingPct": 22.4,
       "oniJjaC": -0.29
     },
     {
       "year": 2023,
-      "mandals": 567,
+      "mandals": 569,
       "medianChangeM": -0.54,
-      "fallingPct": 40.0,
+      "fallingPct": 39.9,
       "oniJjaC": 1.0
     },
     {
       "year": 2024,
-      "mandals": 569,
-      "medianChangeM": -2.89,
-      "fallingPct": 8.3,
+      "mandals": 571,
+      "medianChangeM": -2.895,
+      "fallingPct": 8.2,
       "oniJjaC": 0.06
     },
     {
       "year": 2025,
-      "mandals": 569,
-      "medianChangeM": -2.3,
-      "fallingPct": 4.9,
+      "mandals": 571,
+      "medianChangeM": -2.294,
+      "fallingPct": 5.1,
       "oniJjaC": -0.11
     },
     {
       "year": 2026,
-      "mandals": 569,
-      "medianChangeM": -0.132,
-      "fallingPct": 46.4,
+      "mandals": 571,
+      "medianChangeM": -0.13,
+      "fallingPct": 46.6,
       "oniJjaC": 1.8
     }
   ],
@@ -273,11 +273,11 @@
         },
         {
           "month": 6,
-          "changeM": -0.51
+          "changeM": -0.508
         },
         {
           "month": 7,
-          "changeM": -0.864
+          "changeM": -0.851
         },
         {
           "month": 8,
@@ -323,19 +323,19 @@
         },
         {
           "month": 9,
-          "changeM": -2.185
+          "changeM": -2.184
         },
         {
           "month": 10,
-          "changeM": -3.407
+          "changeM": -3.36
         },
         {
           "month": 11,
-          "changeM": -3.344
+          "changeM": -3.304
         },
         {
           "month": 12,
-          "changeM": -2.294
+          "changeM": -2.26
         }
       ]
     },
@@ -349,15 +349,15 @@
         },
         {
           "month": 6,
-          "changeM": 0.062
+          "changeM": 0.063
         },
         {
           "month": 7,
-          "changeM": -0.074
+          "changeM": -0.07
         },
         {
           "month": 8,
-          "changeM": -0.535
+          "changeM": -0.525
         },
         {
           "month": 9,
@@ -387,7 +387,7 @@
         },
         {
           "month": 6,
-          "changeM": 0.195
+          "changeM": 0.197
         },
         {
           "month": 7,
@@ -395,23 +395,23 @@
         },
         {
           "month": 8,
-          "changeM": -0.533
+          "changeM": -0.508
         },
         {
           "month": 9,
-          "changeM": -2.192
+          "changeM": -2.17
         },
         {
           "month": 10,
-          "changeM": -4.008
+          "changeM": -4.007
         },
         {
           "month": 11,
-          "changeM": -3.502
+          "changeM": -3.483
         },
         {
           "month": 12,
-          "changeM": -3.602
+          "changeM": -3.589
         }
       ]
     },
@@ -437,7 +437,7 @@
         },
         {
           "month": 9,
-          "changeM": -2.05
+          "changeM": -2.042
         },
         {
           "month": 10,
@@ -445,11 +445,11 @@
         },
         {
           "month": 11,
-          "changeM": -3.364
+          "changeM": -3.348
         },
         {
           "month": 12,
-          "changeM": -3.186
+          "changeM": -3.145
         }
       ]
     },
@@ -463,11 +463,11 @@
         },
         {
           "month": 7,
-          "changeM": -0.585
+          "changeM": -0.586
         },
         {
           "month": 8,
-          "changeM": -1.006
+          "changeM": -1.013
         }
       ]
     },
@@ -489,7 +489,7 @@
         },
         {
           "month": 8,
-          "changeM": -0.349
+          "changeM": -0.359
         },
         {
           "month": 9,
@@ -505,7 +505,7 @@
         },
         {
           "month": 12,
-          "changeM": -0.861
+          "changeM": -0.866
         }
       ]
     },
@@ -527,19 +527,19 @@
         },
         {
           "month": 8,
-          "changeM": -1.45
+          "changeM": -1.442
         },
         {
           "month": 9,
-          "changeM": -2.41
+          "changeM": -2.4
         },
         {
           "month": 10,
-          "changeM": -2.89
+          "changeM": -2.895
         },
         {
           "month": 11,
-          "changeM": -2.91
+          "changeM": -2.932
         },
         {
           "month": 12,
@@ -565,19 +565,19 @@
         },
         {
           "month": 8,
-          "changeM": -1.005
+          "changeM": -1.0
         },
         {
           "month": 9,
-          "changeM": -1.772
+          "changeM": -1.755
         },
         {
           "month": 10,
-          "changeM": -2.3
+          "changeM": -2.294
         },
         {
           "month": 11,
-          "changeM": -2.68
+          "changeM": -2.673
         },
         {
           "month": 12,
@@ -603,15 +603,15 @@
         },
         {
           "month": 8,
-          "changeM": 0.434
+          "changeM": 0.435
         },
         {
           "month": 9,
-          "changeM": 0.183
+          "changeM": 0.187
         },
         {
           "month": 10,
-          "changeM": -0.132
+          "changeM": -0.13
         }
       ]
     }
@@ -1755,19 +1755,19 @@
       "shortMandals": 1
     },
     {
-      "district": "Prakasam",
-      "mandals": 21,
-      "thisSeasonM": 1.8,
-      "typicalM": -0.63,
-      "shortfallM": 2.63,
-      "shortMandals": 4
-    },
-    {
       "district": "Eluru",
       "mandals": 24,
       "thisSeasonM": -0.42,
       "typicalM": -3.39,
       "shortfallM": 2.5,
+      "shortMandals": 5
+    },
+    {
+      "district": "Prakasam",
+      "mandals": 23,
+      "thisSeasonM": 1.46,
+      "typicalM": -0.63,
+      "shortfallM": 2.35,
       "shortMandals": 5
     },
     {
@@ -2577,6 +2577,28 @@
       "bankedSharePct": 0.0
     },
     {
+      "mandalUuid": "40241aa0-24cc-49ed-9f4c-69152554baac",
+      "boundaryIndex": 341,
+      "district": "Prakasam",
+      "mandal": "Santhamaguluru",
+      "aquifer": "coastal",
+      "thisSeasonM": 0.56,
+      "typicalM": -1.75,
+      "shortfallM": 2.31,
+      "specificYield": 0.0199,
+      "areaKm2": 205.1,
+      "shortfallMm3": 9.4,
+      "spreadM": 0.79,
+      "latestDepthM": 3.03,
+      "comparableYears": 8,
+      "severity": 1.47,
+      "status": "severe",
+      "riseM": -0.56,
+      "bankedMm3": 0.0,
+      "seasonRainMm": 561.1,
+      "bankedSharePct": 0.0
+    },
+    {
       "mandalUuid": "6f4e05db-fec9-44ef-b911-86b92eed9710",
       "boundaryIndex": 598,
       "district": "Sri Sathya Sai",
@@ -2688,7 +2710,7 @@
     },
     {
       "mandalUuid": "a8920649-0067-48c0-b39a-96613bf5e402",
-      "boundaryIndex": null,
+      "boundaryIndex": 194,
       "district": "East Godavari",
       "mandal": "Devarapalle",
       "aquifer": "alluvial",
@@ -2696,17 +2718,17 @@
       "typicalM": -2.94,
       "shortfallM": 3.57,
       "specificYield": 0.11,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 232.9,
+      "shortfallMm3": 91.3,
       "spreadM": 1.29,
       "latestDepthM": 27.1,
       "comparableYears": 8,
       "severity": 1.39,
       "status": "severe",
       "riseM": -0.63,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 0.0,
+      "seasonRainMm": 775.7,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "6d6e4494-4e40-4895-83e0-cb63be62e7a1",
@@ -4140,7 +4162,7 @@
     },
     {
       "mandalUuid": "93ff3954-7cf9-42c3-a43d-32503a9bc1d2",
-      "boundaryIndex": null,
+      "boundaryIndex": 439,
       "district": "Y.S.R Kadapa",
       "mandal": "RAJU PALEM",
       "aquifer": "hard_rock",
@@ -4148,17 +4170,17 @@
       "typicalM": -1.48,
       "shortfallM": 1.46,
       "specificYield": 0.02,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 186.9,
+      "shortfallMm3": 5.5,
       "spreadM": 0.8,
       "latestDepthM": 7.17,
       "comparableYears": 7,
       "severity": 0.91,
       "status": "normal",
       "riseM": 0.02,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 0.07,
+      "seasonRainMm": 281.5,
+      "bankedSharePct": 0.1
     },
     {
       "mandalUuid": "a5533d96-6cc8-4d96-90a6-2eeb4972d090",
@@ -4250,7 +4272,7 @@
     },
     {
       "mandalUuid": "e9fb8430-50ea-4570-8383-a87f982d4919",
-      "boundaryIndex": null,
+      "boundaryIndex": 296,
       "district": "Palnadu",
       "mandal": "Rajupalem",
       "aquifer": "alluvial",
@@ -4258,17 +4280,17 @@
       "typicalM": -3.32,
       "shortfallM": 3.27,
       "specificYield": 0.018,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 147.2,
+      "shortfallMm3": 8.7,
       "spreadM": 1.84,
       "latestDepthM": 5.96,
       "comparableYears": 8,
       "severity": 0.89,
       "status": "normal",
       "riseM": 0.05,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 0.13,
+      "seasonRainMm": 437.8,
+      "bankedSharePct": 0.2
     },
     {
       "mandalUuid": "79fd8a8f-a4b2-461e-bb2a-2f1b367969a3",
@@ -4998,7 +5020,7 @@
     },
     {
       "mandalUuid": "bb2620c3-5437-4c64-b412-54d1611d1a17",
-      "boundaryIndex": null,
+      "boundaryIndex": 436,
       "district": "Y.S.R Kadapa",
       "mandal": "Kondapuram",
       "aquifer": "hard_rock",
@@ -5006,17 +5028,17 @@
       "typicalM": -0.92,
       "shortfallM": 1.59,
       "specificYield": 0.02,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 365.0,
+      "shortfallMm3": 11.6,
       "spreadM": 1.04,
       "latestDepthM": 8.05,
       "comparableYears": 8,
       "severity": 0.76,
       "status": "normal",
       "riseM": -0.67,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 0.0,
+      "seasonRainMm": 197.5,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "3cee18dc-6dd3-469b-925a-9d2a32b110c4",
@@ -5218,7 +5240,7 @@
     },
     {
       "mandalUuid": "dfac8f90-d3b8-4dca-a920-aee17e7ed0c8",
-      "boundaryIndex": null,
+      "boundaryIndex": 250,
       "district": "Krishna",
       "mandal": "Unguturu",
       "aquifer": "alluvial",
@@ -5226,17 +5248,17 @@
       "typicalM": -2.62,
       "shortfallM": 1.81,
       "specificYield": 0.1053,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 148.3,
+      "shortfallMm3": 28.3,
       "spreadM": 1.26,
       "latestDepthM": 6.4,
       "comparableYears": 8,
       "severity": 0.72,
       "status": "normal",
       "riseM": 0.81,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 12.65,
+      "seasonRainMm": 696.4,
+      "bankedSharePct": 12.2
     },
     {
       "mandalUuid": "8002ca6e-7b95-4a0d-bd69-16de5938c50a",
@@ -5592,7 +5614,7 @@
     },
     {
       "mandalUuid": "4d0d8890-c13e-420a-be8d-410916e21c3a",
-      "boundaryIndex": null,
+      "boundaryIndex": 610,
       "district": "Chittoor",
       "mandal": "Rompicherla",
       "aquifer": "hard_rock",
@@ -5600,17 +5622,17 @@
       "typicalM": -3.78,
       "shortfallM": 5.64,
       "specificYield": 0.02,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 133.8,
+      "shortfallMm3": 15.1,
       "spreadM": 4.12,
       "latestDepthM": 14.59,
       "comparableYears": 7,
       "severity": 0.68,
       "status": "normal",
       "riseM": -1.86,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 0.0,
+      "seasonRainMm": 219.5,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "0707c7f1-5f97-44ce-977d-6ba1752a1796",
@@ -5812,7 +5834,7 @@
     },
     {
       "mandalUuid": "485a7081-4134-4344-91fd-1f808bd16fd6",
-      "boundaryIndex": null,
+      "boundaryIndex": 278,
       "district": "Palnadu",
       "mandal": "Veldurthi",
       "aquifer": "alluvial",
@@ -5820,17 +5842,17 @@
       "typicalM": -10.21,
       "shortfallM": 14.57,
       "specificYield": 0.11,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 526.1,
+      "shortfallMm3": 843.0,
       "spreadM": 11.43,
       "latestDepthM": 39.54,
       "comparableYears": 8,
       "severity": 0.64,
       "status": "normal",
       "riseM": -4.35,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 0.0,
+      "seasonRainMm": 344.4,
+      "bankedSharePct": 0.0
     },
     {
       "mandalUuid": "2a146091-2f7e-4f8d-a7c8-b45a4c6a7bfe",
@@ -6142,7 +6164,7 @@
     },
     {
       "mandalUuid": "27d41f9d-2526-4152-ab6e-39818b05a2bd",
-      "boundaryIndex": null,
+      "boundaryIndex": 437,
       "district": "Y.S.R Kadapa",
       "mandal": "Mylavaram",
       "aquifer": "hard_rock",
@@ -6150,17 +6172,17 @@
       "typicalM": -4.45,
       "shortfallM": 3.44,
       "specificYield": 0.02,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 398.9,
+      "shortfallMm3": 27.4,
       "spreadM": 2.88,
       "latestDepthM": 4.96,
       "comparableYears": 8,
       "severity": 0.6,
       "status": "normal",
       "riseM": 1.01,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 8.06,
+      "seasonRainMm": 247.3,
+      "bankedSharePct": 8.2
     },
     {
       "mandalUuid": "d8da8a39-4b53-4f06-bc14-716250ee9f05",
@@ -9771,6 +9793,28 @@
       "bankedSharePct": 12.5
     },
     {
+      "mandalUuid": "80e52e6e-95b0-4c32-b9bf-7c04e8d94179",
+      "boundaryIndex": 385,
+      "district": "Prakasam",
+      "mandal": "Kandukur",
+      "aquifer": "coastal",
+      "thisSeasonM": 0.64,
+      "typicalM": 0.11,
+      "shortfallM": 0.53,
+      "specificYield": 0.0183,
+      "areaKm2": 225.4,
+      "shortfallMm3": 2.2,
+      "spreadM": 0.97,
+      "latestDepthM": 3.34,
+      "comparableYears": 8,
+      "severity": 0.27,
+      "status": "normal",
+      "riseM": -0.64,
+      "bankedMm3": 0.0,
+      "seasonRainMm": 252.2,
+      "bankedSharePct": 0.0
+    },
+    {
       "mandalUuid": "15d24770-389a-4d4a-bea7-07393c154227",
       "boundaryIndex": 32,
       "district": "Srikakulam",
@@ -10520,7 +10564,7 @@
     },
     {
       "mandalUuid": "f62abe72-4ee7-4c9f-847a-a5de163c8bb9",
-      "boundaryIndex": null,
+      "boundaryIndex": 559,
       "district": "Ananthapuramu",
       "mandal": "Atmakur",
       "aquifer": "hard_rock",
@@ -10528,17 +10572,17 @@
       "typicalM": -1.01,
       "shortfallM": 0.75,
       "specificYield": 0.02,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 278.5,
+      "shortfallMm3": 4.2,
       "spreadM": 1.96,
       "latestDepthM": 6.54,
       "comparableYears": 8,
       "severity": 0.19,
       "status": "normal",
       "riseM": 0.26,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 1.45,
+      "seasonRainMm": 253.9,
+      "bankedSharePct": 2.0
     },
     {
       "mandalUuid": "f6f01a67-2199-4715-b4f5-267653dd425f",
@@ -13116,7 +13160,7 @@
     },
     {
       "mandalUuid": "e9467991-fbb0-465b-955e-9469a29c6170",
-      "boundaryIndex": null,
+      "boundaryIndex": 131,
       "district": "East Godavari",
       "mandal": "Seethanagaram",
       "aquifer": "alluvial",
@@ -13124,17 +13168,17 @@
       "typicalM": -3.56,
       "shortfallM": -0.38,
       "specificYield": 0.11,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 135.0,
+      "shortfallMm3": -5.6,
       "spreadM": 1.38,
       "latestDepthM": 5.49,
       "comparableYears": 8,
       "severity": -0.38,
       "status": "normal",
       "riseM": 3.94,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 58.51,
+      "seasonRainMm": 694.6,
+      "bankedSharePct": 62.4
     },
     {
       "mandalUuid": "f7baf7ba-35ea-4fe1-94a6-9dcd7739d7d4",
@@ -13204,7 +13248,7 @@
     },
     {
       "mandalUuid": "11c6ca26-db81-499c-a8fc-dc17372ef4c8",
-      "boundaryIndex": null,
+      "boundaryIndex": 159,
       "district": "Konaseema",
       "mandal": "Ramachandrapuram",
       "aquifer": "alluvial",
@@ -13212,17 +13256,17 @@
       "typicalM": -0.88,
       "shortfallM": -0.43,
       "specificYield": 0.023,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 106.1,
+      "shortfallMm3": -1.0,
       "spreadM": 1.35,
       "latestDepthM": 1.08,
       "comparableYears": 8,
       "severity": -0.43,
       "status": "normal",
       "riseM": 1.31,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 3.2,
+      "seasonRainMm": 648.6,
+      "bankedSharePct": 4.6
     },
     {
       "mandalUuid": "76fa9279-79b6-4f52-8a4a-fc787daefb18",
@@ -13600,7 +13644,7 @@
     },
     {
       "mandalUuid": "84196691-4762-480a-98f0-3a03a843d7ba",
-      "boundaryIndex": null,
+      "boundaryIndex": 226,
       "district": "West Godavari",
       "mandal": "Yelamanchili",
       "aquifer": "alluvial",
@@ -13608,17 +13652,17 @@
       "typicalM": -0.95,
       "shortfallM": -0.9,
       "specificYield": 0.11,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 82.7,
+      "shortfallMm3": -8.2,
       "spreadM": 1.05,
       "latestDepthM": 1.43,
       "comparableYears": 8,
       "severity": -0.9,
       "status": "normal",
       "riseM": 1.84,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 16.74,
+      "seasonRainMm": 687.6,
+      "bankedSharePct": 29.4
     },
     {
       "mandalUuid": "8adef9ed-a21d-446c-a9f2-d73d07445b85",
@@ -14282,7 +14326,7 @@
     },
     {
       "mandalUuid": "bff9cb90-8c08-4510-bfde-fa69bdd3774e",
-      "boundaryIndex": null,
+      "boundaryIndex": 421,
       "district": "Sri Potti Sriramulu Nellore",
       "mandal": "Gudur",
       "aquifer": "coastal",
@@ -14290,17 +14334,17 @@
       "typicalM": 0.6,
       "shortfallM": -2.62,
       "specificYield": 0.08,
-      "areaKm2": null,
-      "shortfallMm3": null,
+      "areaKm2": 233.7,
+      "shortfallMm3": -48.9,
       "spreadM": 1.32,
       "latestDepthM": 7.08,
       "comparableYears": 8,
       "severity": -2.62,
       "status": "normal",
       "riseM": 2.02,
-      "bankedMm3": null,
-      "seasonRainMm": null,
-      "bankedSharePct": null
+      "bankedMm3": 37.77,
+      "seasonRainMm": 224.2,
+      "bankedSharePct": 72.1
     },
     {
       "mandalUuid": "f441cc30-1c9a-4bdf-914f-6e31c29ea200",

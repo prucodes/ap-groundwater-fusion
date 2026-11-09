@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-11-07T20:33:45+00:00",
-  "onlineCheckedAt": "2026-11-07T20:33:45+00:00",
+  "checkedAt": "2026-11-08T23:52:06+00:00",
+  "onlineCheckedAt": "2026-11-08T23:52:06+00:00",
   "snapshotPeriod": "2026-10",
-  "snapshotHash": "16406bc449a9adf0e80fe7711b9ece1197a91d0c1f351e831415a0bd9591be06",
-  "historyHash": "b51354b61ab8eb25c686af27459d1b1eb255972290d7302859304a4bd2867f79",
+  "snapshotHash": "600c05f99e7e2531d1e20a01c0620cba80080d552ef0264716a4e3a550235371",
+  "historyHash": "37b5666aea23f65ff7564432ac3cae6a42a9d1d90a41ab5ef642813696e7b649",
   "localReconciliation": {
-    "checkedSeries": 569,
+    "checkedSeries": 571,
     "mismatches": []
   },
   "unfilteredHistoryComparison": {
-    "checkedSeries": 569,
+    "checkedSeries": 571,
     "mismatches": [
       {
         "mandalUuid": "c4b43404-f1b5-4a8a-95d4-215cfa9442fc",
@@ -251,6 +251,13 @@
         "fields": [
           "typicalM",
           "shortfallM",
+          "comparableYears"
+        ],
+        "statusMatches": true
+      },
+      {
+        "mandalUuid": "40241aa0-24cc-49ed-9f4c-69152554baac",
+        "fields": [
           "comparableYears"
         ],
         "statusMatches": true
@@ -3018,6 +3025,15 @@
         "statusMatches": true
       },
       {
+        "mandalUuid": "80e52e6e-95b0-4c32-b9bf-7c04e8d94179",
+        "fields": [
+          "typicalM",
+          "shortfallM",
+          "comparableYears"
+        ],
+        "statusMatches": true
+      },
+      {
         "mandalUuid": "15d24770-389a-4d4a-bea7-07393c154227",
         "fields": [
           "comparableYears"
@@ -4799,15 +4815,23 @@
           "mandal": "Sirvel",
           "district": "Nandyal",
           "sourceSeriesId": "c4b43404-f1b5-4a8a-95d4-215cfa9442fc",
-          "status": "unavailable",
-          "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
+          "status": "checked",
+          "latestPeriod": "2026-10",
+          "portalDepthM": 13.61,
+          "snapshotDepthM": 13.61,
+          "snapshotMatches": true,
+          "responseSha256": "b410c2d9f25c3373df9a541b5b58045863b88b604508499b4847b5e4f279cb99"
         },
         {
           "mandal": "Rentachintala",
           "district": "Palnadu",
           "sourceSeriesId": "0766db38-2384-4607-954c-1dfbc6c8637b",
-          "status": "unavailable",
-          "error": "<urlopen error [Errno -3] Temporary failure in name resolution>"
+          "status": "checked",
+          "latestPeriod": "2026-10",
+          "portalDepthM": 8.5,
+          "snapshotDepthM": 8.5,
+          "snapshotMatches": true,
+          "responseSha256": "e4eca0690e89b9e9ab22df337daba927524709b3162619d975d39334aaafdd80"
         },
         {
           "mandal": "Vinjamur",

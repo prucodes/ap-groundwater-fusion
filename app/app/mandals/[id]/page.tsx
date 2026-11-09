@@ -1,7 +1,12 @@
 import { notFound } from "next/navigation";
 import { HeaderHero } from "../../../components/HeaderHero";
 import { MandalDetail } from "../../../components/MandalDetail";
-import { mandals } from "../../../lib/data";
+import { MovedTo } from "../../../components/MovedTo";
+import { mandals, prototypeNotice } from "../../../lib/data";
+import movedIds from "../../../data/mandal_moved_ids.json";
+
+// Pages whose address changed when their outline was refiled to the right district.
+const moved: Record<string, string> = movedIds.moved;
 
 // Rendered on-demand (SSR). Pre-generating all ~640 mandal pages at build time
 // pulls the 7 MB observation-series JSON into every render and overwhelms the
@@ -13,11 +18,15 @@ import { mandals } from "../../../lib/data";
 export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
-  return mandals.map((m) => ({ id: m.id }));
+  return [...mandals.map((m) => ({ id: m.id })), ...Object.keys(moved).map((id) => ({ id }))];
 }
 
 export default async function MandalDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const forward = moved[id] ? mandals.find((m) => m.id === moved[id]) : undefined;
+  if (forward) {
+    return <MovedTo href={`/mandals/${forward.id}/`} label={`${forward.mandal_name}, ${forward.district_name}`} notice={prototypeNotice} />;
+  }
   const mandal = mandals.find((m) => m.id === id);
   if (!mandal) notFound();
 

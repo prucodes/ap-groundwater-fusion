@@ -1,39 +1,39 @@
 {
-  "ran_at": "2026-11-07T20:33:47",
+  "ran_at": "2026-11-08T18:52:08",
   "steps": [
     {
       "step": "fetch GRACE-DA",
       "ok": true,
       "rc": 0,
-      "secs": 1.3,
+      "secs": 1.4,
       "required": false
     },
     {
       "step": "fetch CHIRPS rain",
       "ok": true,
       "rc": 0,
-      "secs": 4.1,
+      "secs": 3.1,
       "required": false
     },
     {
       "step": "refresh TerraClimate",
       "ok": true,
       "rc": 0,
-      "secs": 4.7,
+      "secs": 7.1,
       "required": false
     },
     {
       "step": "fetch APWRIMS sensor history",
       "ok": true,
       "rc": 0,
-      "secs": 2923.3,
+      "secs": 803.4,
       "required": false
     },
     {
       "step": "fetch APWRIMS water context",
       "ok": true,
       "rc": 0,
-      "secs": 194.3,
+      "secs": 352.6,
       "required": false
     },
     {
@@ -45,30 +45,30 @@
     },
     {
       "step": "resample GRACE at districts",
-      "ok": false,
-      "rc": 1,
-      "secs": 2.6,
+      "ok": true,
+      "rc": 0,
+      "secs": 3.2,
       "required": false
     },
     {
       "step": "rebuild mandal rainfall/balance heat",
       "ok": true,
       "rc": 0,
-      "secs": 5.8,
+      "secs": 2.4,
       "required": false
     },
     {
       "step": "extend CHIRPS rainfall history (model input)",
       "ok": true,
       "rc": 0,
-      "secs": 2.6,
+      "secs": 1.7,
       "required": false
     },
     {
       "step": "fetch NASA POWER rainfall (fallback)",
       "ok": true,
       "rc": 0,
-      "secs": 1.3,
+      "secs": 15.8,
       "required": false
     },
     {
@@ -82,42 +82,42 @@
       "step": "fetch ENSO outlook",
       "ok": true,
       "rc": 0,
-      "secs": 1.0,
+      "secs": 0.5,
       "required": false
     },
     {
       "step": "build holdout-safe nowcasts",
       "ok": true,
       "rc": 0,
-      "secs": 39.9,
+      "secs": 84.7,
       "required": true
     },
     {
       "step": "evaluate model tasks",
       "ok": true,
       "rc": 0,
-      "secs": 296.1,
+      "secs": 281.1,
       "required": true
     },
     {
       "step": "build released 3-month forecast",
       "ok": true,
       "rc": 0,
-      "secs": 16.2,
+      "secs": 24.3,
       "required": true
     },
     {
       "step": "publish V2 app data",
       "ok": true,
       "rc": 0,
-      "secs": 1.7,
+      "secs": 0.9,
       "required": true
     },
     {
       "step": "build forecast reliability",
       "ok": true,
       "rc": 0,
-      "secs": 1.2,
+      "secs": 0.6,
       "required": false
     },
     {
@@ -138,35 +138,35 @@
       "step": "follow Cyclone Arnab",
       "ok": true,
       "rc": 0,
-      "secs": 0.6,
+      "secs": 0.3,
       "required": false
     },
     {
       "step": "build monsoon watch",
       "ok": true,
       "rc": 0,
-      "secs": 4.8,
+      "secs": 3.1,
       "required": false
     },
     {
       "step": "build recharge efficiency",
       "ok": true,
       "rc": 0,
-      "secs": 4.8,
+      "secs": 2.9,
       "required": false
     },
     {
       "step": "build rain governed",
       "ok": true,
       "rc": 0,
-      "secs": 4.8,
+      "secs": 2.9,
       "required": false
     },
     {
       "step": "build depth time-lapse",
       "ok": true,
       "rc": 0,
-      "secs": 0.2,
+      "secs": 0.1,
       "required": false
     },
     {
@@ -199,79 +199,79 @@
     },
     {
       "step": "build drought watch",
-      "ok": false,
-      "rc": 1,
-      "secs": 335.8,
+      "ok": true,
+      "rc": 0,
+      "secs": 298.4,
       "required": false
     },
     {
       "step": "fetch field signals",
       "ok": true,
       "rc": 0,
-      "secs": 235.2,
+      "secs": 121.3,
       "required": false
     },
     {
       "step": "score field calls",
       "ok": true,
       "rc": 0,
-      "secs": 372.0,
+      "secs": 217.7,
       "required": false
     },
     {
       "step": "build summer outlook",
       "ok": true,
       "rc": 0,
-      "secs": 0.9,
+      "secs": 0.5,
       "required": false
     },
     {
       "step": "build drinking water beside the outlook",
       "ok": true,
       "rc": 0,
-      "secs": 168.3,
+      "secs": 2044.7,
       "required": false
     },
     {
       "step": "build tank fill",
       "ok": true,
       "rc": 0,
-      "secs": 63.6,
+      "secs": 42.4,
       "required": false
     },
     {
       "step": "rebuild Crystal view data",
       "ok": true,
       "rc": 0,
-      "secs": 0.2,
+      "secs": 0.1,
       "required": false
     },
     {
       "step": "build constituencies",
       "ok": true,
       "rc": 0,
-      "secs": 0.3,
+      "secs": 0.2,
       "required": false
     },
     {
       "step": "build weekly changes",
       "ok": true,
       "rc": 0,
-      "secs": 0.1,
+      "secs": 0.2,
       "required": false
     },
     {
       "step": "audit Monsoon Watch against its sources",
       "ok": true,
       "rc": 0,
-      "secs": 28.0,
+      "secs": 9.4,
       "required": false
     },
     {
       "step": "validate V2 contract",
       "ok": true,
       "rc": 0,
-      "secs": 1.9,
+      "secs": 2.3,
       "required": true
     }
   ]
