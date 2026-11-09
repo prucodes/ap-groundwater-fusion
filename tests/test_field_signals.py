@@ -285,6 +285,19 @@ def test_a_kept_forecast_keeps_the_check_its_calls_were_frozen_with(monkeypatch)
     assert ffs.check_for(kept, False, {"weather": kept}, None, None)["fresh"]
 
 
+def test_a_second_run_on_a_frozen_day_keeps_the_frozen_check(tmp_path, monkeypatch):
+    """9 Nov 2026: the forecast was fetched again under an issue date whose calls were frozen
+    the night before, on a day-older soil reading; recounting on the new soil broke the weekly run."""
+    monkeypatch.setattr(ffs, "cross_check", lambda *a: {"fresh": True})
+    previous = {"weather": {"issued": "2026-11-09"}, "crossCheck": {"issued": "2026-11-09", "counts": {}}}
+    weather = {"issued": "2026-11-09"}
+    assert ffs.check_for(weather, True, previous, None, None, str(tmp_path))["fresh"]
+    (tmp_path / "2026-11-09.json").write_text("{}")
+    assert ffs.check_for(weather, True, previous, None, None, str(tmp_path)) is previous["crossCheck"]
+    # A new issue date is a new week: counted afresh even with an old week frozen.
+    assert ffs.check_for({"issued": "2026-11-16"}, True, previous, None, None, str(tmp_path))["fresh"]
+
+
 def test_frozen_calls_are_the_calls_the_page_counted():
     import score_field_calls as score
     field = json.load(open(FIELD))
