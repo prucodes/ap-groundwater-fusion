@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-09T13:55:35+00:00",
+ "generatedAt": "2026-11-10T11:31:19+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -273,7 +273,7 @@
  },
  "since": {
   "from": "2026-10-26",
-  "to": "2026-11-09",
+  "to": "2026-11-10",
   "days": [
    {
     "date": "2026-10-26",
@@ -370,33 +370,41 @@
     "soilMedian30": 92.1,
     "reservoirTmc": 503.5,
     "reservoirPct": 43.4
+   },
+   {
+    "date": "2026-11-10",
+    "rainTo": "2026-11-08",
+    "rainSinceTmc": 689.7,
+    "soilMedian30": 89.8,
+    "reservoirTmc": 502.1,
+    "reservoirPct": 43.2
    }
   ],
-  "gainTmc": 3.8,
+  "gainTmc": 2.4,
   "basins": [
    {
     "basin": "OTHERS",
     "beforePct": 52.0,
-    "nowPct": 73.6,
+    "nowPct": 73.7,
     "gainTmc": 19.4
    },
    {
     "basin": "GODAVARI",
     "beforePct": 77.1,
-    "nowPct": 75.3,
-    "gainTmc": -0.5
+    "nowPct": 75.7,
+    "gainTmc": -0.4
    },
    {
     "basin": "PENNAR",
     "beforePct": 37.0,
-    "nowPct": 36.1,
-    "gainTmc": -2.6
+    "nowPct": 36.0,
+    "gainTmc": -2.9
    },
    {
     "basin": "KRISHNA",
     "beforePct": 43.1,
-    "nowPct": 41.4,
-    "gainTmc": -12.5
+    "nowPct": 41.3,
+    "gainTmc": -13.8
    }
   ],
   "reservoirs": [
@@ -406,10 +414,10 @@
     "district": "Kakinada",
     "capacityTmc": 24.11,
     "beforeTmc": 17.96,
-    "nowTmc": 22.48,
-    "gainTmc": 4.52,
+    "nowTmc": 22.58,
+    "gainTmc": 4.62,
     "beforePct": 74.5,
-    "nowPct": 93.2
+    "nowPct": 93.7
    },
    {
     "name": "YERRAKALVA RESERVOIR",
@@ -417,10 +425,10 @@
     "district": "Eluru",
     "capacityTmc": 4.43,
     "beforeTmc": 1.5,
-    "nowTmc": 4.09,
-    "gainTmc": 2.59,
+    "nowTmc": 4.11,
+    "gainTmc": 2.61,
     "beforePct": 33.7,
-    "nowPct": 92.3
+    "nowPct": 92.7
    },
    {
     "name": "RAIWADA RESERVOIR",
@@ -428,10 +436,10 @@
     "district": "Anakapalli",
     "capacityTmc": 3.6,
     "beforeTmc": 0.96,
-    "nowTmc": 3.26,
-    "gainTmc": 2.3,
+    "nowTmc": 3.36,
+    "gainTmc": 2.41,
     "beforePct": 26.6,
-    "nowPct": 90.6
+    "nowPct": 93.4
    },
    {
     "name": "THATIPUDI RESERVOIR",
@@ -10841,7 +10849,7 @@
    ]
   ]
  },
- "updatedAt": "2026-11-09",
+ "updatedAt": "2026-11-10",
  "map": [
   [
    0,
