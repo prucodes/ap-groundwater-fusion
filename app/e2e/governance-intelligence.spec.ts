@@ -189,3 +189,16 @@ test("the cloud film fills in the State's readings as it reaches each day", asyn
   const src = await film.locator("video").getAttribute("src");
   expect((await request.head(src!)).ok()).toBe(true);
 });
+
+test("the village tanks are shown before and after the storms", async ({ page }) => {
+  await page.goto("/cyclones/");
+  const tanks = page.getByTestId("cyclone-tanks");
+  await expect(tanks).toContainText(/tank beds holding water went from \d+ km² before Arnab to \d+ km² after Murasu/);
+  const swipe = page.getByTestId("tank-swipe");
+  await expect(swipe.locator("img")).toHaveCount(2);
+  await swipe.getByRole("slider", { name: "Drag between before and after" }).fill("20");
+  await expect(swipe.locator("figure")).toHaveAttribute("style", /--at: 20%/);
+  await swipe.getByRole("button", { name: /Chintalapudi/ }).click();
+  await expect(swipe).toContainText("Chintalapudi");
+  await expect(page.getByTestId("cloud-film")).toContainText("see them fill");
+});
