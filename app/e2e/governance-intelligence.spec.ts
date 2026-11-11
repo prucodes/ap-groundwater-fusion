@@ -198,3 +198,12 @@ test("water from space sets GRACE beside the wells and follows the month", async
   await expect(film.locator("figcaption")).toContainText("2002");
   await expect(film.locator("figcaption")).toContainText(/cm of water against 2004–09/);
 });
+
+test("the season's rain from space is checked against the gauges", async ({ page }) => {
+  await page.goto("/monsoon/");
+  const film = page.getByTestId("rain-film");
+  await expect(page.getByTestId("rain-compare")).toContainText(/From space \(IMERG\)\s*[\d,]+ mm/);
+  await expect(page.getByTestId("rain-compare")).toContainText(/gauges\s*[\d,]+ mm/);
+  await film.getByRole("slider", { name: "Day of the film" }).fill("0");
+  await expect(film.locator("figcaption")).toContainText("1 Jun 2026");
+});

@@ -25,6 +25,8 @@ import { WaterBanked } from "../../components/WaterBanked";
 import { PostMonsoonWindow } from "../../components/PostMonsoonWindow";
 import { GraceFilm, type GraceFilmData } from "../../components/GraceFilm";
 import graceFilm from "../../data/grace_film.json";
+import { RainFilm, type RainFilmData } from "../../components/RainFilm";
+import rainFilm from "../../data/rain_film.json";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { CountedReach } from "../../components/CountedReach";
 import { RowFold, foldAt } from "../../components/RowFold";
@@ -403,7 +405,23 @@ export default function MonsoonPage() {
         </p>
       </section>
 
-      <h2 className="pageChapter" id="chapter-space">Water from space<span>a satellite that weighs the water, beside the State&rsquo;s wells</span></h2>
+      <h2 className="pageChapter" id="chapter-space">From space<span>the season&rsquo;s rain as it fell, and the water it left, weighed from orbit</span></h2>
+      <section className="card" id="rain-from-space" aria-labelledby="rain-from-space-title">
+        <div className="cardHead">
+          <div className="cardTitle" id="rain-from-space-title">
+            <span className="titleIcon"><IconCloudRain /></span>
+            The season&rsquo;s rain, day by day, from space
+          </div>
+          <span className="cardSub">NASA IMERG, {rainFilm.days[0].slice(8, 10).replace(/^0/, "")} June to {rainFilm.days[rainFilm.days.length - 1].slice(8, 10).replace(/^0/, "")} November {rainFilm.days[0].slice(0, 4)}</span>
+        </div>
+        <p className="cardNote">
+          Every rain-measuring satellite, merged into one picture a day: watch the monsoon reach the State, stall through the breaks, and give way
+          to the two cyclones at the end. The bars under it are the State&rsquo;s average for each day; the totals check the satellite against the
+          State&rsquo;s own gauges before the picture is trusted.
+        </p>
+        <RainFilm d={rainFilm as unknown as RainFilmData} />
+      </section>
+
       <section className="card" id="water-from-space" aria-labelledby="water-from-space-title">
         <CountedReach event="monsoon/reached-space" title="Monsoon: reached water from space" />
         <div className="cardHead">
