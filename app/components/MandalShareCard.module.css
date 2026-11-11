@@ -1,0 +1,28 @@
+/* The mandal card to share: what it is on the left, the picture itself on the right. */
+
+.wrap { display: grid; grid-template-columns: minmax(0, 1fr) 220px; gap: 22px; align-items: center; }
+.text { display: grid; gap: 10px; min-width: 0; }
+.kicker { font: 600 11px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--cyan-ink, #0e7c8c); }
+.text h3 { margin: 0; font: 600 20px/1.25 var(--font-display); color: var(--ink); }
+.text p { margin: 0; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); max-width: 60ch; }
+
+.lang { display: inline-flex; gap: 4px; padding: 3px; border-radius: 999px; background: var(--field); border: 1px solid var(--line); width: max-content; }
+.lang button { padding: 6px 14px; border-radius: 999px; border: 0; cursor: pointer; background: none; font: 600 13px var(--font-sans); color: var(--ink-soft); }
+.lang button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, .12); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.actions button { display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px; border-radius: 12px; cursor: pointer; font: 600 13.5px var(--font-sans); transition: transform .15s, background .2s; }
+.actions button:active { transform: scale(.97); }
+.actions svg { width: 15px; height: 15px; }
+.share { border: 0; background: #1f8a5b; color: #fff; }
+.share:hover { background: #24a06a; }
+.save { border: 1px solid var(--line-strong); background: var(--card); color: var(--ink); }
+
+.preview img, .placeholder { display: block; width: 100%; height: auto; border-radius: 14px; box-shadow: var(--shadow-pop); }
+.placeholder { aspect-ratio: 1080 / 1350; }
+.placeholder { background: #0b1d33; }
+
+@media (max-width: 640px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); }
+  .preview { max-width: 260px; }
+}
