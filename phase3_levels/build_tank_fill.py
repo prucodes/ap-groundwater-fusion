@@ -126,6 +126,13 @@ def scene_scl(base, index):
 def year_fill(year, grids, masks, count):
     """Per mandal: the tank-bed share that held water, and the share seen, over the window."""
     start, end = f"{year}-{WINDOW[0]}", min(f"{year}-{WINDOW[1]}", datetime.date.today().isoformat())
+    out = window_fill(start, end, grids, masks, count)
+    print(f"  {year}: {out['scenes']} scenes, {start} to {end}", flush=True)
+    return out
+
+
+def window_fill(start, end, grids, masks, count):
+    """Per mandal, between two dates: the tank-bed share that held water, and the share seen."""
     bounds = [76.7, 12.6, 84.8, 19.95]
     items = search(start, end, bounds, fields={"include": ["id", "properties.mgrs:utm_zone", "properties.mgrs:latitude_band",
                                                            "properties.mgrs:grid_square", "properties.eo:cloud_cover", "assets.scl.href"],
@@ -161,7 +168,6 @@ def year_fill(year, grids, masks, count):
         np.add.at(bed, mandal, f)
         np.add.at(seen, mandal, f * looked)
         np.add.at(held, mandal, f * share)
-    print(f"  {year}: {len(jobs)} scenes over {len({j[0] for j in jobs})} tiles, {start} to {end}", flush=True)
     return {"window": [start, end], "scenes": len(jobs),
             "wet": [round(float(h / s), 4) if s > 0 else None for h, s in zip(held, seen)],
             "seen": [round(float(s / b), 3) if b > 0 else None for s, b in zip(seen, bed)]}

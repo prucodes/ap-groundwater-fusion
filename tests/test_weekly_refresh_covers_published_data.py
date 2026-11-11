@@ -44,6 +44,10 @@ STATIC_BY_DESIGN = {
         "once by phase3_levels/build_cyclone_clouds.py; the storms are over and NASA GIBS keeps "
         "Himawari only for a limited window, so it is a record, not a feed"
     ),
+    "cyclone_tanks.json": (
+        "village tank water before Cyclone Arnab and after Cyclone Murasu (Oct and Nov 2026), from Sentinel-2, with "
+        "two before-and-after pictures; built once by phase3_levels/build_cyclone_tanks.py after the storms"
+    ),
     "source_readiness.json": "hand-maintained description of which sources are live",
     "water_quality.json": (
         "habitations the Jal Jeevan Mission marks as quality affected; the public report encrypts its query, "
