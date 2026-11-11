@@ -58,7 +58,7 @@ function Spark({ values, at, label }: { values: number[]; at: number; label: str
   );
 }
 
-export function CloudToAquifer({ film, days, until, deepMissed, deepTotal, stillDryMm, precedent, novemberIn }: {
+export function CloudToAquifer({ film, days, until, deepMissed, deepTotal, stillDryMm, precedent, novemberIn, tanksKm2 }: {
   film: CloudFilm;
   days: ArnabDay[];
   /** The last gauge day the storms are counted to. */
@@ -67,6 +67,8 @@ export function CloudToAquifer({ film, days, until, deepMissed, deepTotal, still
   /** Last year's rise beyond usual in the deepest band after Cyclone Montha. */
   precedent: { band: string; extraRiseM: number } | null;
   novemberIn: boolean;
+  /** Village tank beds holding water before and after the storms, km² (build_cyclone_tanks.py). */
+  tanksKm2?: { before: number; after: number };
 }) {
   const video = useRef<HTMLVideoElement>(null);
   const box = useRef<HTMLDivElement>(null);
@@ -207,7 +209,7 @@ export function CloudToAquifer({ film, days, until, deepMissed, deepTotal, still
 
       <p className={styles.takeaway}>
         <b>{Math.round(total.rainSinceTmc)} TMC</b> fell. The State&apos;s reservoirs, net of what they released, never held more than <b>{(peak.reservoirTmc - first.reservoirTmc).toFixed(0)} TMC</b> above
-        their {shortDay(morning(first.date))} level, and by {shortDay(morning(days[days.length - 1].date))} were back near it. The rest went into the soil, village tanks and the ground, or ran to the sea; the water table will show how much reached it.
+        their {shortDay(morning(first.date))} level, and by {shortDay(morning(days[days.length - 1].date))} were back near it. {tanksKm2 ? <>Village tanks caught some of it: the water in their beds went from {tanksKm2.before} to {tanksKm2.after} km² (<a href="#tanks">see them fill</a>). </> : null}The rest went into the soil and the ground, or ran to the sea; the water table will show how much reached it.
         {" "}<b>{deepMissed} of {deepTotal}</b> deep-table mandals got under {stillDryMm} mm. <a href={`${basePath}/summer/#summer-priority`}>Where to plan summer drinking water first →</a>
       </p>
     </div>

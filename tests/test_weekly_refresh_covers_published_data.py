@@ -49,6 +49,10 @@ STATIC_BY_DESIGN = {
         "APWRIMS wells; built by phase3_levels/build_grace_film.py when CSR posts a month, two to three months late, "
         "so it is run by hand monthly rather than weekly"
     ),
+    "cyclone_tanks.json": (
+        "village tank water before Cyclone Arnab and after Cyclone Murasu (Oct and Nov 2026), from Sentinel-2, with "
+        "two before-and-after pictures; built once by phase3_levels/build_cyclone_tanks.py after the storms"
+    ),
     "rain_film.json": (
         "the 2026 season's rain from space, NASA IMERG daily from 1 June to 10 November, beside the State's gauge "
         "total; built once by phase3_levels/build_rain_film.py when the season closed"

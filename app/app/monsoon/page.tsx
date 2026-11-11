@@ -383,7 +383,7 @@ export default function MonsoonPage() {
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon"><IconActivity /></span>
-            The official window closes in November
+            {Number(monsoonWatch.season.latestMonth.slice(5, 7)) >= 11 ? "The official window has closed" : "The official window closes in November"}
           </div>
           <span className="cardSub">pre-monsoon to post-monsoon, the comparison the assessment makes</span>
         </div>

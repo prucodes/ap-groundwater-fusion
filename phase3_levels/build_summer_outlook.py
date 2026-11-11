@@ -26,6 +26,13 @@ far off the typical projection was, how often the May fell between the typical
 and dry-winter projections or shallower, and how often a mandal named "beyond
 its record" did go deeper than its earlier deepest May.
 
+The groundwater clock: the month each mandal is expected to pass its deepest May.
+The same past winters, month by month: for every month between the anchor and May,
+the depth in that month minus the depth in the anchor month, in each past year.
+Typical is the median of those changes, dry winter the largest; the clock is the
+first month either path goes deeper than the deepest May, and the May value is
+the published projection, so the clock always agrees with the tier.
+
 Output: app/data/summer_outlook.json. Weekly, after the APWRIMS history refresh.
 """
 import collections
@@ -89,6 +96,45 @@ def drawdowns(series, anchor_month, skip_year=None):
     return out
 
 
+def month_add(ym, n):
+    year, month = int(ym[:4]), int(ym[5:7]) - 1 + n
+    return f"{year + month // 12}-{month % 12 + 1:02d}"
+
+
+def passes(series, anchor, deepest, typical, dry, years):
+    """{"typical": month or None, "dry": month or None}: the first month each path goes
+    deeper than the deepest May. The anchor month itself when it already has; May is the
+    published projection, so a mandal within its record never passes."""
+    depth = series[anchor]
+    target = f"{target_year(anchor)}-{TARGET_MONTH:02d}"
+    steps, month = [], anchor
+    while month < target:
+        month = month_add(month, 1)
+        steps.append(month)
+    path = {"typical": [], "dry": []}
+    for k, month in enumerate(steps, 1):
+        if month == target:
+            path["typical"].append((month, typical))
+            path["dry"].append((month, dry))
+            continue
+        changes = [series[month_add(f"{y}-{anchor[5:]}", k)] - series[f"{y}-{anchor[5:]}"] for y in years
+                   if f"{y}-{anchor[5:]}" in series and month_add(f"{y}-{anchor[5:]}", k) in series]
+        if len(changes) >= MIN_WINTERS:
+            path["typical"].append((month, depth + statistics.median(changes)))
+            path["dry"].append((month, depth + max(changes)))
+    out = {}
+    for name, final in (("typical", typical), ("dry", dry)):
+        if final <= deepest:
+            out[name] = None
+        elif depth > deepest:
+            out[name] = anchor
+        else:
+            out[name] = next((m for m, d in path[name] if d > deepest), target)
+    if out["typical"] and (out["dry"] is None or out["dry"] > out["typical"]):
+        out["dry"] = out["typical"]  # the dry winter is never later than the typical one
+    return out
+
+
 def project(series, anchor, skip_year=None, before=None):
     """Typical and dry-winter May depths from the anchor reading, or None with too few past winters.
     `before` limits the record (deepest May, winters) to Mays before that year: what was known then."""
@@ -109,7 +155,7 @@ def project(series, anchor, skip_year=None, before=None):
     tier = "beyond" if typical > deepest else "dry" if dry > deepest else "within"
     return {"anchor": round(depth, 2), "typical": typical, "dry": dry, "deepestMay": deepest,
             "winters": len(past), "medianDrawdown": round(statistics.median(past.values()), 2), "maxDrawdown": round(max(past.values()), 2),
-            "tier": tier}
+            "tier": tier, "passes": passes(series, anchor, deepest, typical, dry, past.keys())}
 
 
 def at_depth(result):

@@ -189,3 +189,7 @@
   .verdict { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) { .spiral, .status i { animation: none; } }
+
+/* Tanks: the before-to-after share needs a wider value column than a rain figure */
+.tankBars li { grid-template-columns: minmax(90px, 132px) minmax(0, 1fr) 76px; }
+.tankBars li b { white-space: nowrap; }
