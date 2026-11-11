@@ -13,3 +13,6 @@ netCDF4
 pytest
 
 scipy
+
+# Pictures: the cyclone cloud film and its tests
+pillow
