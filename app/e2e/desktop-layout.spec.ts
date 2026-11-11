@@ -306,8 +306,9 @@ test.describe("the recharge map reads in metres and in water", () => {
       await page.goto("/monsoon");
       await settle(page);
 
+      // Focus, not a pointer at the cell's centre: that point can sit over a neighbouring outline.
       const cell = page.locator(".rechargeCell:not(.noData)").nth(150);
-      await cell.hover({ force: true });
+      await cell.focus();
       await page.waitForTimeout(200);
       const inMetres = await page.locator(".rechargeTip").innerText();
       expect(inMetres).toMatch(/against its own normal/);
@@ -322,7 +323,7 @@ test.describe("the recharge map reads in metres and in water", () => {
         [...document.querySelectorAll(".rechargeCell")].slice(0, 120).map((c) => c.getAttribute("fill")).join("|"));
       expect(fillsAfter).not.toBe(fillsBefore);
 
-      await cell.hover({ force: true });
+      await cell.focus();
       await page.waitForTimeout(200);
       expect(await page.locator(".rechargeTip").innerText()).toMatch(/Mm³ storage proxy/);
       await expect(page.locator(".rechargeLegend")).toContainText("Mm³");
