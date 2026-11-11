@@ -1,0 +1,59 @@
+/* Water from space: the same navy band as the cyclone film, the film on the left and
+   the two lines, orbit and wells, on the right. Rust for less water, cyan for more. */
+
+.wrap { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px 26px; padding: 22px; border-radius: var(--radius-lg);
+  color: #e8f1fa; box-shadow: var(--shadow-pop); background: radial-gradient(720px 300px at 0% -20%, rgba(74, 196, 230, .16), transparent 62%), var(--band-navy); }
+.stage { display: grid; gap: 12px; min-width: 0; }
+.film { position: relative; margin: 0; overflow: hidden; border-radius: 12px; background: #081526; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.film video, .overlay { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.film video { object-fit: cover; }
+.overlay path { fill: none; stroke: #fff; stroke-width: 1.6; opacity: .9; vector-effect: non-scaling-stroke; }
+.clock { position: absolute; left: 12px; top: 12px; display: grid; gap: 2px; padding: 8px 11px; border-radius: 10px; max-width: calc(100% - 24px);
+  background: rgba(8, 21, 38, .74); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.clock b { font: 600 14px var(--font-display); color: #fff; }
+.clock span { font-size: 12px; color: rgba(232, 241, 250, .75); }
+.clock span[data-tone="dry"] { color: #f0a283; }
+.clock span[data-tone="wet"] { color: #8fdcf2; }
+.key { position: absolute; right: 12px; bottom: 12px; display: flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px;
+  font: 600 10.5px var(--font-mono); text-transform: uppercase; letter-spacing: .06em; color: rgba(232, 241, 250, .85); background: rgba(8, 21, 38, .7); }
+.key i { width: 10px; height: 10px; border-radius: 50%; }
+.key i[data-tone="dry"] { background: #d67048; }
+.key i[data-tone="wet"] { background: #4ac4e6; margin-left: 6px; }
+.controls { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; }
+.controls button { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; border: 0; cursor: pointer; background: #12b5cb; color: #06202b; }
+.controls button:hover { background: #3fd0e2; }
+.controls button svg { width: 15px; height: 15px; }
+.controls input { width: 100%; accent-color: #12b5cb; cursor: pointer; }
+
+.side { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.agree { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; padding: 14px 16px; border-radius: var(--radius-sm);
+  background: rgba(74, 196, 230, .12); border: 1px solid rgba(143, 220, 242, .35); }
+.agree b { font: 650 42px/1 var(--font-display); color: #8fdcf2; font-variant-numeric: tabular-nums; }
+.agree span { font-size: 13px; line-height: 1.45; color: rgba(232, 241, 250, .85); }
+.chart { width: 100%; height: auto; display: block; cursor: pointer; }
+.wetBand { fill: rgba(74, 196, 230, .06); }
+.dryBand { fill: rgba(214, 112, 72, .07); }
+.zero { stroke: rgba(232, 241, 250, .3); stroke-width: 1; }
+.tick { font: 500 10px var(--font-mono); fill: rgba(232, 241, 250, .55); }
+.grace { fill: none; stroke: #4ac4e6; stroke-width: 2; stroke-linejoin: round; }
+.wells { fill: none; stroke: #f2c46d; stroke-width: 1.6; stroke-dasharray: 4 3; opacity: .9; }
+.cursor { stroke: #fff; stroke-width: 1; opacity: .5; }
+.dot { fill: #fff; stroke: #4ac4e6; stroke-width: 2; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: rgba(232, 241, 250, .75); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 18px; height: 0; border-top: 2px solid; }
+.keyGrace { border-color: #4ac4e6 !important; }
+.keyWells { border-color: #f2c46d !important; border-top-style: dashed !important; }
+.tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tiles li { display: grid; gap: 2px; padding: 10px 12px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, .055); border: 1px solid rgba(255, 255, 255, .1); }
+.tiles span { font: 600 10px var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: rgba(232, 241, 250, .62); }
+.tiles b { font: 600 22px var(--font-display); color: #fff; font-variant-numeric: tabular-nums; }
+.tiles em { font-style: normal; font-size: 11.5px; color: rgba(232, 241, 250, .7); }
+
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); padding: 14px; }
+}
+@media (max-width: 420px) {
+  .tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .agree b { font-size: 34px; }
+}

@@ -23,6 +23,8 @@ import { EnsoOutlook } from "../../components/monsoon/EnsoOutlook";
 import { TemperatureRecord } from "../../components/TemperatureRecord";
 import { WaterBanked } from "../../components/WaterBanked";
 import { PostMonsoonWindow } from "../../components/PostMonsoonWindow";
+import { GraceFilm, type GraceFilmData } from "../../components/GraceFilm";
+import graceFilm from "../../data/grace_film.json";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { CountedReach } from "../../components/CountedReach";
 import { RowFold, foldAt } from "../../components/RowFold";
@@ -398,6 +400,30 @@ export default function MonsoonPage() {
         <p className="cardNote">
           Plotted as change from May, with a historical range from the retained comparison seasons.
           A rise or fall in water level alone does not isolate recharge from pumping, geology or changes in monitoring.
+        </p>
+      </section>
+
+      <h2 className="pageChapter" id="chapter-space">Water from space<span>a satellite that weighs the water, beside the State&rsquo;s wells</span></h2>
+      <section className="card" id="water-from-space" aria-labelledby="water-from-space-title">
+        <CountedReach event="monsoon/reached-space" title="Monsoon: reached water from space" />
+        <div className="cardHead">
+          <div className="cardTitle" id="water-from-space-title">
+            <span className="titleIcon"><IconWaves /></span>
+            An instrument in orbit and a tape in a well tell the same story
+          </div>
+          <span className="cardSub">GRACE and GRACE-FO, {graceFilm.months[0].slice(0, 4)} to {graceFilm.latest.month.slice(0, 4)}</span>
+        </div>
+        <p className="cardNote">
+          Two satellites flying 220 km apart feel the pull of the water below them: a region holding more water pulls a little harder.
+          Month by month since 2002, that is how much water Andhra Pradesh held against its 2004–09 average, soil, rivers and groundwater together.
+          The State&rsquo;s wells, measured by hand and by sensor, rise and fall with it. Rust is less water than usual, cyan more.
+        </p>
+        <GraceFilm d={graceFilm as unknown as GraceFilmData} />
+        <p className="cardNote">
+          GRACE sees a region a few hundred kilometres across, not a mandal: it says how the whole State is doing, and the wells say where.
+          Mascons: CSR RL06.3 (University of Texas at Austin), from NASA&rsquo;s GRACE and the NASA and GFZ GRACE-FO missions; no measurements from
+          July 2017 to May 2018, between the two missions. Wells: APWRIMS monthly readings, the median mandal against its own average, drawn on the
+          satellite&rsquo;s scale at {graceFilm.agreement.cmPerMetre} cm of water per metre of water table.
         </p>
       </section>
 
