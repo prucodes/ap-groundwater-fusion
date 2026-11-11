@@ -39,7 +39,7 @@ export const BRIEFS = {
   },
   "/cyclones": {
     what: "Cyclones Arnab and Murasu measured: the rain by mandal, the reservoirs filling after them, and whether the water table rose where it had room.",
-    use: "Look to the deep-table mandals that got heavy rain, and plan for a dry summer in the deep-table mandals the storms missed. The November readings will show what the two put into the ground.",
+    use: "Look to the deep-table mandals that got heavy rain, and plan for a dry summer in the deep-table mandals the storms missed. Whether the two reached the ground shows in the November readings, checked below as they arrive.",
   },
   "/rabi": {
     what: "What the rabi season starts with: water in the reservoirs, moisture in rainfed fields, and the northeast monsoon.",
@@ -92,6 +92,10 @@ export const BRIEFS = {
   "/settings": {
     what: "Appearance, the dataset edition and the data policy.",
     use: "Set the theme, or check which edition of the data is loaded.",
+  },
+  "/facts": {
+    what: "Andhra Pradesh groundwater, one sentence at a time: each figure with its source, its date and the page that explains it.",
+    use: "Quote a figure in a note or a meeting; copy it with its source, or send it on WhatsApp.",
   },
   "/field-report": {
     what: "For teams sent to the listed mandals: record what the fields and wells show, beside what the site called.",

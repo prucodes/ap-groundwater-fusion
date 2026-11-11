@@ -3,7 +3,8 @@ import type { ReactElement } from "react";
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
 import { StateOutlineMap } from "../../components/StateOutlineMap";
-import { IconArrowRight, IconCyclone, IconDroplet, IconFlask, IconMap, IconShield, IconSun, IconWaves } from "../../components/icons";
+import { IconArrowRight, IconClock, IconCyclone, IconDroplet, IconFlask, IconMap, IconShield, IconSun, IconWaves } from "../../components/icons";
+import { GroundwaterClock } from "../../components/GroundwaterClock";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
 import { lakhs, SHALLOW_BEYOND, SUMMER_TIERS, summerOutlook, summerRows, type SummerTier } from "../../lib/summer";
 import { rabiView } from "../../lib/rabi";
@@ -26,6 +27,56 @@ const MONTHS = ["January", "February", "March", "April", "May", "June", "July", 
 const month = (ym: string) => `${MONTHS[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}`;
 const m = (value: number) => `${value.toFixed(1)} m`;
 const ORDER: SummerTier[] = ["beyond", "dry", "within"];
+
+/** The months from the reading to May: "2026-10", "2026-11" ... "2027-05". */
+function monthsToMay(anchor: string, target: string) {
+  const out = [anchor];
+  while (out[out.length - 1] < target) {
+    const [y, mo] = out[out.length - 1].split("-").map(Number);
+    out.push(mo === 12 ? `${y + 1}-01` : `${y}-${String(mo + 1).padStart(2, "0")}`);
+  }
+  return out;
+}
+
+/* The groundwater clock: when each mandal is expected to pass its deepest May. */
+function ClockSection() {
+  const o = summerOutlook;
+  const rows = summerRows();
+  const months = monthsToMay(o.anchor, o.targetMay);
+  // A mandal whose own latest reading is older than the State's is already past at its own reading.
+  const at = (ym: string | null | undefined) => {
+    if (!ym) return null;
+    const i = months.indexOf(ym);
+    return i >= 0 ? i : ym < months[0] ? 0 : null;
+  };
+  const typical = rows.map(r => (r ? at(r.passes?.typical) : null));
+  const dry = rows.map(r => (r ? at(r.passes?.dry) : null));
+  const count = (by: number) => typical.filter(i => i !== null && i <= by).length;
+  const already = count(0);
+  const january = months.findIndex(ym => ym.endsWith("-01"));
+  const byMay = count(months.length - 1);
+  const built = o.generatedAt.slice(0, 7);
+  const startAt = Math.min(months.length - 1, Math.max(0, months.indexOf(built)));
+  const firsts = rows.filter((r): r is NonNullable<typeof r> => r !== null && typical[r.index] === 0)
+    .sort((a, b) => (b.anchor - b.deepestMay) - (a.anchor - a.deepestMay));
+  return (
+    <section className={shared.block} id="clock" aria-labelledby="clock-title" data-testid="groundwater-clock">
+      <header className={shared.blockHead}>
+        <span className={shared.eyebrow}><IconClock /> The groundwater clock</span>
+        <h2 id="clock-title">{already} mandals are already deeper than any May on record</h2>
+        <p>That is the {month(o.anchor)} reading, before the dry months begin. On a typical winter <b>{january > 0 ? count(january) : byMay}</b> will be past their deepest May by {january > 0 ? "January" : "May"}, and <b>{byMay}</b> by May. Each mandal&rsquo;s own past winters, month by month, give the month it passes: a calendar to start work by, not a forecast of wells failing.</p>
+      </header>
+      <GroundwaterClock months={months} typical={typical} dry={dry} projected={rows.map(r => r !== null)}
+        people={rows.map(r => r?.people ?? null)} names={rows.map((r, i) => r?.mandal ?? titleCase(mapGeometry.mandals[i]?.m ?? ""))}
+        aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height} startAt={startAt} />
+      {firsts.length ? <p className={styles.clockFirsts}>
+        <b>Already past, furthest first:</b>{" "}
+        {firsts.slice(0, 8).map(r => `${r.mandal} (${r.district}, ${(r.anchor - r.deepestMay).toFixed(1)} m)`).join(", ")}{firsts.length > 8 ? `, and ${firsts.length - 8} more` : ""}.
+        {" "}<a href="#summer-priority">Where to plan first →</a>
+      </p> : null}
+    </section>
+  );
+}
 
 export default function SummerPage() {
   const o = summerOutlook, s = o.summary, bt = o.backtest, people = o.people;
@@ -64,6 +115,8 @@ export default function SummerPage() {
           {bt ? <li><span>Track record</span><b>1 in {Math.round(100 / (bt.pastRecordPct.beyond ?? 100))}</b><em>&ldquo;Beyond&rdquo; calls that set a new record, against 1 in {Math.round(100 / bt.baseRatePct)} overall ({bt.years[0]}–{String(bt.years[bt.years.length - 1]).slice(2)})</em></li> : null}
         </ul>
       </section>
+
+      <ClockSection />
 
       <SummerPriority />
 

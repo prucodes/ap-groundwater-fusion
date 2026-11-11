@@ -73,3 +73,18 @@ test("the drinking-water map colours each group and filters by sign, and the Man
   await expect(legend).toContainText(String(p.summary.first.mandals));
   await expect(legend.getByRole("link", { name: /ranked list/ })).toHaveAttribute("href", /\/summer\/#summer-priority/);
 });
+
+test("the groundwater clock counts the mandals past their record month by month", async ({ page }) => {
+  await page.goto("/summer/");
+  const clock = page.getByTestId("groundwater-clock");
+  await expect(clock.getByRole("heading", { level: 2 })).toHaveText(/\d+ mandals are already deeper than any May on record/);
+  const readout = page.getByTestId("clock-readout");
+  await clock.getByRole("button", { name: /^May: \d+ mandals past their record/ }).click();
+  await expect(readout).toContainText("By May");
+  const may = Number((await readout.locator("b").innerText()).replace(/\D/g, ""));
+  await clock.getByRole("button", { name: /reading: \d+ mandals past their record/ }).click();
+  await expect(readout).toContainText("Already");
+  const now = Number((await readout.locator("b").innerText()).replace(/\D/g, ""));
+  expect(may).toBeGreaterThan(now);
+  await expect(page.getByTestId("clock-map")).toBeVisible();
+});

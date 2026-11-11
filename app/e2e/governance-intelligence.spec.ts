@@ -197,4 +197,15 @@ test("water from space sets GRACE beside the wells and follows the month", async
   await film.getByRole("slider", { name: "Month of the film" }).fill("0");
   await expect(film.locator("figcaption")).toContainText("2002");
   await expect(film.locator("figcaption")).toContainText(/cm of water against 2004–09/);
+test("the village tanks are shown before and after the storms", async ({ page }) => {
+  await page.goto("/cyclones/");
+  const tanks = page.getByTestId("cyclone-tanks");
+  await expect(tanks).toContainText(/tank beds holding water went from \d+ km² before Arnab to \d+ km² after Murasu/);
+  const swipe = page.getByTestId("tank-swipe");
+  await expect(swipe.locator("img")).toHaveCount(2);
+  await swipe.getByRole("slider", { name: "Drag between before and after" }).fill("20");
+  await expect(swipe.locator("figure")).toHaveAttribute("style", /--at: 20%/);
+  await swipe.getByRole("button", { name: /Chintalapudi/ }).click();
+  await expect(swipe).toContainText("Chintalapudi");
+  await expect(page.getByTestId("cloud-film")).toContainText("see them fill");
 });

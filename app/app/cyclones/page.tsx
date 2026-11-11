@@ -8,6 +8,9 @@ import { RowFold, foldAt } from "../../components/RowFold";
 import { CountedReach } from "../../components/CountedReach";
 import { CloudToAquifer, type CloudFilm } from "../../components/CloudToAquifer";
 import cloudFilm from "../../data/cyclone_clouds.json";
+import cycloneTanks from "../../data/cyclone_tanks.json";
+import { TankSwipe } from "../../components/TankSwipe";
+import { mapGeometry } from "../../lib/data";
 import { IconCloudRain, IconCyclone, IconDroplet, IconTarget, IconWaves } from "../../components/icons";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
 import { formatNumber, titleCase } from "../../lib/data";
@@ -65,6 +68,45 @@ function StorageLine({ days, mark }: { days: ArnabDay[]; mark?: { date: string; 
   );
 }
 
+/* Village tanks before Arnab and after Murasu, from Sentinel-2 (build_cyclone_tanks.py). */
+function TanksSection() {
+  const t = cycloneTanks;
+  const name = (i: number) => titleName(mapGeometry.mandals[i]?.m ?? "");
+  const district = (i: number) => titleName(mapGeometry.mandals[i]?.d ?? "");
+  // By water gained in hectares, so a large tank that filled counts for more than a pond.
+  const gained = [...t.rows].sort((a, b) => (b[2] - b[1]) * b[3] - (a[2] - a[1]) * a[3]).slice(0, 6);
+  const pictures = t.pictures.map(p => ({ ...p, mandal: titleName(p.mandal), district: titleName(p.district), }));
+  const up = Math.round(100 * (t.wetHaAfter / t.wetHaBefore - 1));
+  return (
+    <section className={shared.block} id="tanks" aria-labelledby="tanks-title" data-testid="cyclone-tanks">
+      <CountedReach event="arnab/reached-tanks" title="Cyclones: reached the village tanks" />
+      <header className={shared.blockHead}>
+        <span className={shared.eyebrow}><IconDroplet /> Village tanks, from Sentinel-2</span>
+        <h2 id="tanks-title">The tanks filled where the rain fell</h2>
+        <p>Across the {t.mandals} mandals the satellite saw clearly both times, the tank beds holding water went from <b>{formatNumber(Math.round(t.wetHaBefore / 100))} km²</b> before Arnab to <b>{formatNumber(Math.round(t.wetHaAfter / 100))} km²</b> after Murasu, <b>{up}% more</b>. They filled in {t.rose} mandals and emptied in {t.fell}. Through the winter a full tank recharges the wells around it.</p>
+      </header>
+      <div className={styles.split}>
+        <TankSwipe pictures={pictures} />
+        <div className={styles.side}>
+          <div className={styles.drought}>
+            <div><b>{formatNumber(Math.round(t.wetHaBefore / 100))}<small> km²</small></b><span>tank water before, {arnabDay(t.before[0])} to {arnabDay(t.before[1])}</span></div>
+            <div><b>{formatNumber(Math.round(t.wetHaAfter / 100))}<small> km²</small></b><span>after, {arnabDay(t.after[0])} to {arnabDay(t.after[1])}</span></div>
+          </div>
+          <h3>Gained the most tank water</h3>
+          <ol className={`${styles.bars} ${styles.tankBars}`} aria-label="Mandals whose tank beds filled most">
+            {gained.map(([i, before, after, ha]) => <li key={i} title={`${Math.round(100 * before)}% before, ${Math.round(100 * after)}% after, of ${formatNumber(ha)} ha of tank bed`}>
+              <span>{name(i)}</span>
+              <i style={{ width: `${100 * after}%` }} />
+              <b>{Math.round(100 * before)}→{Math.round(100 * after)}%</b>
+            </li>)}
+          </ol>
+          <p className={styles.small}>Share of each mandal&rsquo;s tank beds holding water, before and after. Ranked by the water gained, in hectares; {listOf([...new Set(gained.map(([i]) => district(i)))])}. Tank beds from the JRC Global Surface Water record; water from Sentinel-2&rsquo;s scene classification at 80 m, counting only clear looks. A mandal is compared only where half its tank bed was seen clear both times, so cloudy mandals are left out, not counted dry.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function ArnabPage() {
   const d = arnab, s = d.state, since = d.since, dr = d.drought, mu = d.murasu, tg = d.together, ts = tg?.state;
   const seen = arnabMonth(d.groundwaterLatest);
@@ -109,7 +151,7 @@ export default function ArnabPage() {
       </section>
 
       <nav className={`jumpNav jumpNavPlain ${styles.jump}`} aria-label="Cyclone Arnab sections">
-        {tg ? <a href="#from-space">From space</a> : null}{tg ? <a href="#together">Together</a> : null}{mu ? <a href="#murasu">Then Murasu</a> : null}<a href="#arnab-rain">What fell</a><a href="#arnab-water">Where the water went</a><a href="#arnab-room">Room to rise</a><a href="#arnab-follow">Did Arnab follow?</a>
+        {tg ? <a href="#from-space">From space</a> : null}<a href="#tanks">Village tanks</a>{tg ? <a href="#together">Together</a> : null}{mu ? <a href="#murasu">Then Murasu</a> : null}<a href="#arnab-rain">What fell</a><a href="#arnab-water">Where the water went</a><a href="#arnab-room">Room to rise</a><a href="#arnab-follow">Did Arnab follow?</a>
       </nav>
 
       {tg && ts && since ? (
@@ -122,10 +164,13 @@ export default function ArnabPage() {
           </header>
           <CloudToAquifer film={cloudFilm as CloudFilm} days={since.days} until={tg.rainWindow.to}
             deepMissed={ts.deepStillDry} deepTotal={ts.deepMandals} stillDryMm={tg.stillDryMm}
-            precedent={d.precedent.bands[d.precedent.bands.length - 1] ?? null} novemberIn={novOut} />
+            precedent={d.precedent.bands[d.precedent.bands.length - 1] ?? null} novemberIn={novOut}
+            tanksKm2={{ before: Math.round(cycloneTanks.wetHaBefore / 100), after: Math.round(cycloneTanks.wetHaAfter / 100) }} />
           <p className={styles.small}>Cloud: Himawari-9 infrared (10.4 µm), Japan Meteorological Agency, served by NASA GIBS; bright is cold, high cloud, the tops that rain hardest. {cloudFilm.missing.length ? `${cloudFilm.missing.length} hours the service could not fill hold the hour before. ` : ""}Readings: APWRIMS, as on the rest of this page; a gauge day ends at 8:30 am.</p>
         </section>
       ) : null}
+
+      <TanksSection />
 
       {tg && ts ? (
         <section className={shared.block} id="together" aria-labelledby="together-title" data-testid="together">
