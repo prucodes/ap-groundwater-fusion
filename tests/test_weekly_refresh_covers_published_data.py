@@ -39,6 +39,11 @@ STATIC_BY_DESIGN = {
         "old page addresses of the 20 mandals refiled to their right district in Nov 2026 "
         "(fix_misfiled_districts.py); a record of a one-time change, so links already sent keep working"
     ),
+    "cyclone_clouds.json": (
+        "the hourly Himawari-9 cloud film of Cyclones Arnab and Murasu (25 Oct to 6 Nov 2026), built "
+        "once by phase3_levels/build_cyclone_clouds.py; the storms are over and NASA GIBS keeps "
+        "Himawari only for a limited window, so it is a record, not a feed"
+    ),
     "source_readiness.json": "hand-maintained description of which sources are live",
     "water_quality.json": (
         "habitations the Jal Jeevan Mission marks as quality affected; the public report encrypts its query, "

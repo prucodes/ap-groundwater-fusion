@@ -6,6 +6,8 @@ import { CycloneArnabMap } from "../../components/CycloneArnabMap";
 import { ArnabSpiral } from "../../components/CycloneArnab";
 import { RowFold, foldAt } from "../../components/RowFold";
 import { CountedReach } from "../../components/CountedReach";
+import { CloudToAquifer, type CloudFilm } from "../../components/CloudToAquifer";
+import cloudFilm from "../../data/cyclone_clouds.json";
 import { IconCloudRain, IconCyclone, IconDroplet, IconTarget, IconWaves } from "../../components/icons";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
 import { formatNumber, titleCase } from "../../lib/data";
@@ -107,8 +109,23 @@ export default function ArnabPage() {
       </section>
 
       <nav className={`jumpNav jumpNavPlain ${styles.jump}`} aria-label="Cyclone Arnab sections">
-        {tg ? <a href="#together">Together</a> : null}{mu ? <a href="#murasu">Then Murasu</a> : null}<a href="#arnab-rain">What fell</a><a href="#arnab-water">Where the water went</a><a href="#arnab-room">Room to rise</a><a href="#arnab-follow">Did Arnab follow?</a>
+        {tg ? <a href="#from-space">From space</a> : null}{tg ? <a href="#together">Together</a> : null}{mu ? <a href="#murasu">Then Murasu</a> : null}<a href="#arnab-rain">What fell</a><a href="#arnab-water">Where the water went</a><a href="#arnab-room">Room to rise</a><a href="#arnab-follow">Did Arnab follow?</a>
       </nav>
+
+      {tg && ts && since ? (
+        <section className={shared.block} id="from-space" aria-labelledby="from-space-title" data-testid="from-space">
+          <CountedReach event="arnab/reached-from-space" title="Cyclones: reached from cloud to aquifer" />
+          <header className={shared.blockHead}>
+            <span className={shared.eyebrow}><IconCyclone /> From space to the water table</span>
+            <h2 id="from-space-title">From cloud to aquifer</h2>
+            <p>Himawari-9 watched both storms come ashore, hour by hour. Play the film, and the State&apos;s own readings fill in beside it as it reaches the day each was taken: rain at the gauges, water in the soil, storage at the dams. The water table comes last.</p>
+          </header>
+          <CloudToAquifer film={cloudFilm as CloudFilm} days={since.days} until={tg.rainWindow.to}
+            deepMissed={ts.deepStillDry} deepTotal={ts.deepMandals} stillDryMm={tg.stillDryMm}
+            precedent={d.precedent.bands[d.precedent.bands.length - 1] ?? null} novemberIn={novOut} />
+          <p className={styles.small}>Cloud: Himawari-9 infrared (10.4 µm), Japan Meteorological Agency, served by NASA GIBS; bright is cold, high cloud, the tops that rain hardest. {cloudFilm.missing.length ? `${cloudFilm.missing.length} hours the service could not fill hold the hour before. ` : ""}Readings: APWRIMS, as on the rest of this page; a gauge day ends at 8:30 am.</p>
+        </section>
+      ) : null}
 
       {tg && ts ? (
         <section className={shared.block} id="together" aria-labelledby="together-title" data-testid="together">

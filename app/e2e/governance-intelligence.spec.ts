@@ -172,3 +172,20 @@ test("the first cyclone link, already shared, lands on the cyclones page and kee
   await expect(page).toHaveURL(/\/cyclones\/#murasu$/);
   await expect(page.getByTestId("murasu")).toBeVisible();
 });
+
+test("the cloud film fills in the State's readings as it reaches each day", async ({ page, request }) => {
+  await page.goto("/cyclones/");
+  const film = page.getByTestId("cloud-film");
+  await expect(film).toContainText("Himawari-9");
+  const hour = film.getByRole("slider", { name: "Hour of the film" });
+  await hour.fill("10");
+  await expect(film.locator("figcaption")).toContainText("Arnab, over the Bay");
+  await expect(page.getByTestId("cloud-rain")).toHaveText("0 TMC");
+  await hour.fill("225");
+  await expect(film.locator("figcaption")).toContainText("Murasu comes ashore near Ongole");
+  await expect(page.getByTestId("cloud-rain")).not.toHaveText("0 TMC");
+  await expect(film).toContainText(/\d+ TMC fell\. The State's reservoirs, net of what they released/);
+  await expect(film.getByRole("link", { name: /Where to plan summer drinking water first/ })).toHaveAttribute("href", /\/summer\/#summer-priority$/);
+  const src = await film.locator("video").getAttribute("src");
+  expect((await request.head(src!)).ok()).toBe(true);
+});
