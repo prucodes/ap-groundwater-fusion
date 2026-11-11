@@ -227,3 +227,8 @@
   .pChips li span { display: none; }
   .pChips li { padding: 4px 6px; }
 }
+
+/* The groundwater clock's line of mandals already past their record */
+.clockFirsts { margin: 14px 0 0; font-size: 13px; line-height: 1.6; color: var(--ink-soft); }
+.clockFirsts b { color: var(--ink); }
+.clockFirsts a { font-weight: 600; white-space: nowrap; }

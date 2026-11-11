@@ -61,3 +61,42 @@ def test_the_committed_outlook_is_consistent():
         assert r["tier"] == expected
     bt = outlook["backtest"]
     assert sum(bt["tierCounts"].values()) == bt["comparisons"]
+
+
+def winters(path_by_year, deepest_may):
+    """A series with a monthly path from October to May in each past year, plus one May that sets the record."""
+    out = {}
+    for year, path in path_by_year.items():
+        for k, depth in enumerate(path):
+            out[summer.month_add(f"{year}-10", k)] = depth
+    out["2019-05"] = deepest_may
+    return out
+
+
+def test_the_clock_names_the_month_the_typical_path_passes_the_record():
+    # Each past winter falls 1 m a month from 10 m in October: November 11, ..., May 17.
+    s = winters({y: [10 + k for k in range(8)] for y in (2020, 2021, 2022, 2023)}, 14.5)
+    s["2024-10"] = 10.0
+    result = summer.project(s, "2024-10")
+    # Typical path from 10 m: 11, 12, 13, 14, 15 in March; the deepest May (17, from the past winters) is never passed.
+    assert result["tier"] == "within" and result["passes"] == {"typical": None, "dry": None}
+    s["2024-10"] = 13.2
+    result = summer.project(s, "2024-10")
+    # 13.2 + 1 + 1 + 1 = 16.2 in January, 17.2 in February: past 17 m in February, and the May projection agrees.
+    assert result["tier"] == "beyond" and result["passes"]["typical"] == "2025-02"
+    assert result["passes"]["dry"] <= result["passes"]["typical"]
+
+
+def test_a_mandal_already_past_its_record_is_past_in_its_reading_month():
+    s = winters({y: [10 + k for k in range(8)] for y in (2020, 2021, 2022, 2023)}, 14.5)
+    s["2024-10"] = 17.5
+    assert summer.project(s, "2024-10")["passes"] == {"typical": "2024-10", "dry": "2024-10"}
+
+
+def test_the_published_clock_agrees_with_the_tiers():
+    outlook = json.load(open(os.path.join(ROOT, "app", "data", "summer_outlook.json")))
+    for row in filter(None, outlook["mandals"]):
+        passes = row["passes"]
+        assert (passes["typical"] is not None) == (row["tier"] == "beyond"), row["mandal"]
+        assert (passes["dry"] is not None) == (row["tier"] != "within"), row["mandal"]
+        assert passes["typical"] is None or (passes["dry"] <= passes["typical"] <= outlook["targetMay"])

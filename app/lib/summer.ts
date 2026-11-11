@@ -11,6 +11,8 @@ export type SummerTier = "beyond" | "dry" | "within";
 type Projection = {
   anchor: number; typical: number; dry: number; deepestMay: number; winters: number; medianDrawdown: number; maxDrawdown: number;
   tier: SummerTier; anchorMonth: string; district: string; mandal: string; people?: number | null;
+  /** The month the typical and dry-winter paths go deeper than the deepest May; null when they never do. */
+  passes?: { typical: string | null; dry: string | null };
 };
 type Outlook = {
   generatedAt: string; source: string; anchor: string; targetMay: string; firstYear: number; method: string; deepM: number;
