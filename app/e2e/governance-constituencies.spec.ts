@@ -33,9 +33,11 @@ test("a mandal page shows the State network's latest reading and its constituenc
   await expect(card).toContainText("Assembly constituency");
 });
 
-test("the overview and monsoon page carry the State wells line", async ({ page }) => {
+test("the overview carries today's sensors and the monsoon page the State wells line", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByTestId("state-network-cell")).toContainText(`${summary.state!.stationsTotal.toLocaleString("en-US")} stations`);
+  // The overview's State network cell now reads the automatic sensors daily (fetch_apwrims_sensors.py).
+  await expect(page.getByTestId("state-network-cell")).toContainText("State sensors, today");
+  await expect(page.getByTestId("state-network-cell")).toContainText(/\d+% of [\d,]+ reporting sensors deeper than a year ago/);
   await page.goto("/monsoon/");
   await expect(page.getByTestId("state-network-stat")).toContainText(`of ${summary.summary.withChange} mandals deeper than in May`);
 });

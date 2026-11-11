@@ -8,6 +8,7 @@ import drinking from "../data/drinking_water.json";
 import crossNetwork from "../data/cross_network_check.json";
 import ledger from "../data/forecast_ledger.json";
 import { arnab } from "../lib/arnab";
+import { sensorSummary } from "../lib/sensors";
 
 export const metadata: Metadata = {
   description: "Prototype research cockpit for Andhra Pradesh groundwater: measured readings, modelled nowcasts and this water year's rainfall, soil moisture and reservoir context. Not an official result.",
@@ -32,5 +33,5 @@ export default function OverviewPage() {
   };
   const tg = arnab.together;
   const cyclones = tg ? { from: tg.rainWindow.from, to: tg.rainWindow.to, rainTmc: tg.state.rainTmc, deepStillDry: tg.state.deepStillDry, deepMandals: tg.state.deepMandals, stillDryMm: tg.stillDryMm } : null;
-  return <OverviewCockpit agreement={{ agreeAll: counts.agreeAll, allKnown: counts.allKnown, agreeTwo: counts.agreeTwo }} summer={summer} droughtWeek={droughtWeek} proof={proof} cyclones={cyclones} />;
+  return <OverviewCockpit agreement={{ agreeAll: counts.agreeAll, allKnown: counts.allKnown, agreeTwo: counts.agreeTwo }} summer={summer} droughtWeek={droughtWeek} proof={proof} cyclones={cyclones} sensors={sensorSummary()} />;
 }

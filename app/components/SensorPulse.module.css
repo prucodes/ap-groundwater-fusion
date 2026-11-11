@@ -1,0 +1,37 @@
+/* Today from the sensors: the dot map on the left, what it says on the right, in the navy band the films use. */
+
+.wrap { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 20px 26px; padding: 22px; border-radius: var(--radius-lg);
+  color: #e8f1fa; box-shadow: var(--shadow-pop); background: radial-gradient(700px 280px at 100% -20%, rgba(214, 112, 72, .16), transparent 62%), var(--band-navy); }
+.map { width: 100%; height: auto; display: block; }
+.district { fill: rgba(255, 255, 255, .035); stroke: rgba(232, 241, 250, .22); stroke-width: .8; }
+.side { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.big { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; align-items: center; }
+.big b { font: 650 52px/1 var(--font-display); color: #f0a283; font-variant-numeric: tabular-nums; }
+.big span { font-size: 13.5px; line-height: 1.45; color: rgba(232, 241, 250, .85); }
+.big strong { color: #fff; }
+.tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.tiles li { display: grid; gap: 2px; padding: 10px 12px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, .055); border: 1px solid rgba(255, 255, 255, .1); }
+.tiles span { font: 600 10px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: rgba(232, 241, 250, .62); }
+.tiles b { font: 600 22px var(--font-display); color: #fff; font-variant-numeric: tabular-nums; }
+.tiles em { font-style: normal; font-size: 11.5px; color: rgba(232, 241, 250, .7); }
+.side h3 { margin: 4px 0 0; font: 600 13px var(--font-display); color: #fff; }
+.list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.list li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: baseline; font-size: 13px; }
+.list li span { color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.list li small { margin-left: 6px; color: rgba(232, 241, 250, .6); font-size: 11.5px; }
+.list li b { font: 600 13px var(--font-mono); color: #f0a283; }
+.list li em { font-style: normal; font: 500 11.5px var(--font-mono); color: rgba(232, 241, 250, .6); }
+.key { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 11.5px; color: rgba(232, 241, 250, .7); }
+.key i { width: 10px; height: 10px; border-radius: 50%; }
+.deeper { background: #d67048; }
+.shallower { background: #4ac4e6; margin-left: 10px; }
+.note { margin: 0; font-size: 11.5px; line-height: 1.5; color: rgba(232, 241, 250, .6); }
+
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); padding: 14px; }
+  .big b { font-size: 42px; }
+}
+@media (max-width: 420px) {
+  .tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .list li em { display: none; }
+}

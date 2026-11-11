@@ -55,9 +55,13 @@ export type OverviewProof = {
 /** The two cyclones on one count, worked out on the server (the cyclone file carries three maps). */
 export type OverviewCyclones = { from: string; to: string; rainTmc: number; deepStillDry: number; deepMandals: number; stillDryMm: number };
 
-export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof = null, cyclones = null }: {
+/** The State's automatic sensors today, summarised on the server (lib/sensors.ts). */
+export type OverviewSensors = { latest: string; active: number; stations: number; medianM: number; yearAgoM: number; deeperPct: number };
+
+export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof = null, cyclones = null, sensors = null }: {
   agreement: OverviewAgreement | null; summer?: OverviewSummer | null;
   cyclones?: OverviewCyclones | null;
+  sensors?: OverviewSensors | null;
   /** Mandals whose drought manual reading moved since last week, as the This Week map counts them. */
   droughtWeek?: { worse: number; better: number } | null;
   /** Findings from other pages (tanks, drinking water, the independent check, the ledger), as numbers. */
@@ -323,7 +327,16 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
               <Link href="/drought">Drought Watch</Link>
             </em>
           </div>
-          {stateSummary.state?.currentM !== null && stateSummary.state ? (
+          {sensors ? (
+            <div className="monsoonStripCell" data-testid="state-network-cell">
+              <span>State sensors, today</span>
+              <strong>{`${sensors.medianM.toFixed(1)} m`}</strong>
+              <em>
+                {`median below ground · ${sensors.deeperPct}% of ${sensors.active.toLocaleString("en-IN")} reporting sensors deeper than a year ago (${sensors.yearAgoM.toFixed(1)} m then) · `}
+                <Link href="/changes#sensors-today">Today</Link>
+              </em>
+            </div>
+          ) : stateSummary.state?.currentM !== null && stateSummary.state ? (
             <div className="monsoonStripCell" data-testid="state-network-cell">
               <span>State wells, early Sep</span>
               <strong>{`${stateSummary.state.currentM?.toFixed(1)} m`}</strong>
