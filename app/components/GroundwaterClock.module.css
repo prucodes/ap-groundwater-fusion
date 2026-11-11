@@ -1,0 +1,44 @@
+/* The groundwater clock: the map with its month on top, the months down the side like
+   a dial read top to bottom. Red and amber as the rest of the Summer page uses them. */
+
+.wrap { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(250px, 1fr); gap: 24px; align-items: start;
+  --map-calm: #dbe5eb; }
+.mapCol { display: grid; gap: 12px; min-width: 0; }
+
+.readout { display: grid; gap: 2px; padding: 14px 16px; border-radius: var(--radius-sm); background: var(--field); border: 1px solid var(--line); }
+.readout span { font: 600 10.5px var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--muted-2); }
+.readout b { font: 600 34px/1.1 var(--font-display); color: #a33b2c; font-variant-numeric: tabular-nums; }
+.readout b small { font-size: 15px; font-weight: 500; color: var(--muted-2); }
+.readout em { font-style: normal; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+.readout strong { font-weight: 650; color: var(--amber-ink, #9a6a14); }
+
+.face { display: grid; gap: 10px; min-width: 0; }
+.faceHead { display: flex; align-items: center; gap: 10px; font: 600 12px var(--font-display); color: var(--ink); }
+.faceHead button { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; border: 0; cursor: pointer;
+  background: #12b5cb; color: #06202b; transition: transform .15s, background .2s; }
+.faceHead button:hover { background: #3fd0e2; }
+.faceHead button:active { transform: scale(.94); }
+.faceHead button svg { width: 14px; height: 14px; }
+
+.months { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.months button { width: 100%; display: grid; grid-template-columns: 40px minmax(0, 1fr) 34px; align-items: center; gap: 10px;
+  padding: 7px 10px; border-radius: 10px; border: 1px solid transparent; background: none; cursor: pointer; text-align: left;
+  color: var(--ink-soft); transition: background .2s, border-color .2s; }
+.months button:hover { background: var(--field); }
+.months button[aria-pressed="true"] { background: var(--field); border-color: var(--line-strong); color: var(--ink); }
+.month { font: 600 12px var(--font-mono); }
+.bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: color-mix(in srgb, var(--line) 60%, transparent); }
+.bar i { display: block; background: #a33b2c; transition: width .35s ease; }
+.bar u { display: block; background: #e0a24a; opacity: .75; transition: width .35s ease; }
+.months b { font: 600 13px var(--font-mono); text-align: right; font-variant-numeric: tabular-nums; color: var(--ink); }
+.note { margin: 0; font-size: 12px; line-height: 1.5; color: var(--muted-2); }
+
+:global(:root[data-theme="dark"]) .wrap { --map-calm: #2b4058; }
+:global(:root[data-theme="dark"]) .readout b { color: #ff9f8c; }
+
+@media (max-width: 900px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bar i, .bar u { transition: none; }
+}
