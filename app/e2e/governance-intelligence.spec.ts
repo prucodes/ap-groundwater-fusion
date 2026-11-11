@@ -190,6 +190,15 @@ test("the cloud film fills in the State's readings as it reaches each day", asyn
   expect((await request.head(src!)).ok()).toBe(true);
 });
 
+test("water from space sets GRACE beside the wells and follows the month", async ({ page }) => {
+  await page.goto("/monsoon/");
+  const film = page.getByTestId("grace-film");
+  await expect(page.getByTestId("grace-agreement")).toContainText(/0\.\d\d/);
+  await film.getByRole("slider", { name: "Month of the film" }).fill("0");
+  await expect(film.locator("figcaption")).toContainText("2002");
+  await expect(film.locator("figcaption")).toContainText(/cm of water against 2004–09/);
+});
+
 test("the village tanks are shown before and after the storms", async ({ page }) => {
   await page.goto("/cyclones/");
   const tanks = page.getByTestId("cyclone-tanks");

@@ -44,6 +44,11 @@ STATIC_BY_DESIGN = {
         "once by phase3_levels/build_cyclone_clouds.py; the storms are over and NASA GIBS keeps "
         "Himawari only for a limited window, so it is a record, not a feed"
     ),
+    "grace_film.json": (
+        "Andhra Pradesh's water from space, GRACE and GRACE-FO monthly mascons (CSR, University of Texas) beside the "
+        "APWRIMS wells; built by phase3_levels/build_grace_film.py when CSR posts a month, two to three months late, "
+        "so it is run by hand monthly rather than weekly"
+    ),
     "cyclone_tanks.json": (
         "village tank water before Cyclone Arnab and after Cyclone Murasu (Oct and Nov 2026), from Sentinel-2, with "
         "two before-and-after pictures; built once by phase3_levels/build_cyclone_tanks.py after the storms"

@@ -109,10 +109,11 @@ def test_events_are_namespaced_and_labelled():
 def test_the_monsoon_page_reports_how_far_down_it_is_read():
     page = read(MONSOON)
     reached = set(re.findall(r'event="(monsoon/reached-[^"]+)"', page))
-    # Three markers in reading order make a funnel out of one page view.
-    assert reached == {"monsoon/reached-map", "monsoon/reached-heat", "monsoon/reached-flagged"}
-    # Since the page was grouped into chapters the review queue sits in the first one, ahead of heat.
-    assert page.index("reached-map") < page.index("reached-flagged") < page.index("reached-heat")
+    # Markers in reading order make a funnel out of one page view.
+    assert reached == {"monsoon/reached-map", "monsoon/reached-heat", "monsoon/reached-flagged", "monsoon/reached-space"}
+    # Since the page was grouped into chapters the review queue sits in the first one; water from space
+    # closes that chapter, ahead of the Pacific and heat.
+    assert page.index("reached-map") < page.index("reached-flagged") < page.index("reached-space") < page.index("reached-heat")
 
 
 def test_the_site_says_what_it_records():
