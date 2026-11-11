@@ -39,7 +39,7 @@ export const BRIEFS = {
   },
   "/cyclones": {
     what: "Cyclones Arnab and Murasu measured: the rain by mandal, the reservoirs filling after them, and whether the water table rose where it had room.",
-    use: "Look to the deep-table mandals that got heavy rain, and plan for a dry summer in the deep-table mandals the storms missed. The November readings will show what the two put into the ground.",
+    use: "Look to the deep-table mandals that got heavy rain, and plan for a dry summer in the deep-table mandals the storms missed. Whether the two reached the ground shows in the November readings, checked below as they arrive.",
   },
   "/rabi": {
     what: "What the rabi season starts with: water in the reservoirs, moisture in rainfed fields, and the northeast monsoon.",
