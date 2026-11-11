@@ -5,7 +5,7 @@ test("In Numbers gives each figure with its source, date and a link", async ({ p
   const facts = page.getByTestId("fact");
   expect(await facts.count()).toBeGreaterThanOrEqual(8);
   const first = facts.first();
-  await expect(first).toContainText(/as of \w+ \d{4}/);
+  await expect(first).toContainText(/as of (\d+ )?\w+ \d{4}/);
   await expect(first.getByRole("link", { name: "where it comes from →" })).toBeVisible();
   const id = await first.getAttribute("id");
   await expect(first.getByRole("link", { name: "Link to this fact" })).toHaveAttribute("href", `#${id}`);
