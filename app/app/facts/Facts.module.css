@@ -1,0 +1,22 @@
+/* In Numbers: one sentence a card, its source under it, and a way to pass it on. */
+
+.group { margin-top: 22px; }
+.group h2 { margin: 0 0 10px; font: 600 11px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--cyan-ink, #0e7c8c); }
+.list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.fact { display: grid; gap: 10px; align-content: start; padding: 18px 20px; border-radius: var(--radius-md, 14px); background: var(--card);
+  border: 1px solid var(--line); box-shadow: var(--shadow-card, none); scroll-margin-top: 90px; }
+.fact:target { border-color: #12b5cb; box-shadow: 0 0 0 3px color-mix(in srgb, #12b5cb 25%, transparent); }
+.fact p { margin: 0; font: 500 17px/1.45 var(--font-display); color: var(--ink); text-wrap: pretty; }
+.meta { font-size: 12px; line-height: 1.5; color: var(--muted-2); }
+.meta a { font-weight: 600; white-space: nowrap; }
+.actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.actions button, .actions a { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; cursor: pointer;
+  font: 600 12px var(--font-sans); color: var(--ink-soft); background: var(--field); border: 1px solid var(--line); text-decoration: none; }
+.actions button:hover, .actions a:hover { color: var(--ink); border-color: var(--line-strong); }
+.actions svg { width: 13px; height: 13px; }
+.note { margin: 22px 0 0; font-size: 12px; color: var(--muted-2); }
+
+@media (max-width: 760px) {
+  .list { grid-template-columns: minmax(0, 1fr); }
+  .fact p { font-size: 16px; }
+}

@@ -14,6 +14,7 @@ import {
   IconSun,
   IconTarget,
   IconCalendar,
+  IconHash,
   IconClock,
   IconCompass,
   IconDatabase,
@@ -52,6 +53,7 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
   { label: "This week", items: [
       { href: "/", label: "Overview", Icon: IconLayers, desc: "Executive cockpit: status map, priority mandals, source readiness and selected-area evidence." },
       { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "What moved since the last weekly refresh: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its date." },
+      { href: "/facts", label: "In Numbers", Icon: IconHash, desc: "The figures to quote, one sentence each, with source, date and link; rebuilt at every refresh." },
   ] },
   { label: "Water now", items: [
       { href: "/cyclones", label: "Cyclones", Icon: IconCyclone, desc: "Arnab and Murasu: where the rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },

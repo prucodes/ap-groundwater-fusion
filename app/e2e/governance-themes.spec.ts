@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 // Report once made React rebuild the page and drop it), the page's own ground must be dark,
 // and no surface may glare light: Leaflet's #ddd backdrop, the light wetness tags and an
 // inverted sort pill all did. The Brief and Digest are A4 paper by design and are not here.
-const PAGES = ["/", "/monsoon/", "/drought/", "/summer/", "/nasa/", "/field-report/", "/constituencies/", "/compare/", "/estimates/", "/scenario/"];
+const PAGES = ["/", "/monsoon/", "/drought/", "/summer/", "/nasa/", "/field-report/", "/constituencies/", "/compare/", "/estimates/", "/scenario/", "/facts/"];
 
 for (const path of PAGES) {
   test(`the dark theme holds on ${path} with no light surface`, async ({ page }) => {

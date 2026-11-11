@@ -93,6 +93,10 @@ export const BRIEFS = {
     what: "Appearance, the dataset edition and the data policy.",
     use: "Set the theme, or check which edition of the data is loaded.",
   },
+  "/facts": {
+    what: "Andhra Pradesh groundwater, one sentence at a time: each figure with its source, its date and the page that explains it.",
+    use: "Quote a figure in a note or a meeting; copy it with its source, or send it on WhatsApp.",
+  },
   "/field-report": {
     what: "For teams sent to the listed mandals: record what the fields and wells show, beside what the site called.",
     use: "Write one report per mandal visited and share it; a collector reads them back in one table.",
