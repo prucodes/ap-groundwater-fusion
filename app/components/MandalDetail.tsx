@@ -28,6 +28,8 @@ import { ActionOutputPreview } from "./ActionOutputPreview";
 import { MandalSeasonContext } from "./MandalSeasonContext";
 import { MandalDroughtCheck } from "./drought/MandalDroughtCheck";
 import { MandalStateReading } from "./MandalStateReading";
+import { MandalShareCard } from "./MandalShareCard";
+import { mandalCardFacts } from "../lib/mandalCard";
 import {
   IconArrowRight,
   IconCalendar,
@@ -87,6 +89,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
   const cycle = seasonalCycle(fullSeries);
 
   const awarePayload = mandal.aware_apwrims_action_preview;
+  const cardFacts = mandalCardFacts(mandal.id);
 
   return (
     <div className="contentGrid" style={{ gap: 16 }}>
@@ -126,6 +129,8 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
           </div>
         </div>
       </section>
+
+      {cardFacts ? <MandalShareCard facts={cardFacts} /> : null}
 
       {/* metric row */}
       <div className="metricRow stagger">
