@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-10T11:31:19+00:00",
+ "generatedAt": "2026-11-11T11:22:04+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -273,7 +273,7 @@
  },
  "since": {
   "from": "2026-10-26",
-  "to": "2026-11-10",
+  "to": "2026-11-11",
   "days": [
    {
     "date": "2026-10-26",
@@ -378,33 +378,41 @@
     "soilMedian30": 89.8,
     "reservoirTmc": 502.1,
     "reservoirPct": 43.2
+   },
+   {
+    "date": "2026-11-11",
+    "rainTo": "2026-11-09",
+    "rainSinceTmc": 689.7,
+    "soilMedian30": 89.2,
+    "reservoirTmc": 500.2,
+    "reservoirPct": 43.1
    }
   ],
-  "gainTmc": 2.4,
+  "gainTmc": 0.6,
   "basins": [
    {
     "basin": "OTHERS",
     "beforePct": 52.0,
-    "nowPct": 73.7,
-    "gainTmc": 19.4
+    "nowPct": 73.8,
+    "gainTmc": 19.5
    },
    {
     "basin": "GODAVARI",
     "beforePct": 77.1,
-    "nowPct": 75.7,
-    "gainTmc": -0.4
+    "nowPct": 76.4,
+    "gainTmc": -0.2
    },
    {
     "basin": "PENNAR",
     "beforePct": 37.0,
-    "nowPct": 36.0,
-    "gainTmc": -2.9
+    "nowPct": 35.9,
+    "gainTmc": -3.2
    },
    {
     "basin": "KRISHNA",
     "beforePct": 43.1,
-    "nowPct": 41.3,
-    "gainTmc": -13.8
+    "nowPct": 41.0,
+    "gainTmc": -15.6
    }
   ],
   "reservoirs": [
@@ -414,10 +422,10 @@
     "district": "Kakinada",
     "capacityTmc": 24.11,
     "beforeTmc": 17.96,
-    "nowTmc": 22.58,
-    "gainTmc": 4.62,
+    "nowTmc": 22.62,
+    "gainTmc": 4.66,
     "beforePct": 74.5,
-    "nowPct": 93.7
+    "nowPct": 93.8
    },
    {
     "name": "YERRAKALVA RESERVOIR",
@@ -436,10 +444,10 @@
     "district": "Anakapalli",
     "capacityTmc": 3.6,
     "beforeTmc": 0.96,
-    "nowTmc": 3.36,
-    "gainTmc": 2.41,
+    "nowTmc": 3.39,
+    "gainTmc": 2.43,
     "beforePct": 26.6,
-    "nowPct": 93.4
+    "nowPct": 94.1
    },
    {
     "name": "THATIPUDI RESERVOIR",
@@ -447,10 +455,10 @@
     "district": "Vizianagaram",
     "capacityTmc": 3.325,
     "beforeTmc": 1.52,
-    "nowTmc": 3.25,
-    "gainTmc": 1.73,
+    "nowTmc": 3.24,
+    "gainTmc": 1.72,
     "beforePct": 45.7,
-    "nowPct": 97.7
+    "nowPct": 97.4
    },
    {
     "name": "HIRAMANDALAM RESERVOIR",
@@ -491,10 +499,10 @@
     "district": "Palnadu",
     "capacityTmc": 45.77,
     "beforeTmc": 27.49,
-    "nowTmc": 28.27,
-    "gainTmc": 0.79,
+    "nowTmc": 28.23,
+    "gainTmc": 0.75,
     "beforePct": 60.1,
-    "nowPct": 61.8
+    "nowPct": 61.7
    }
   ]
  },
@@ -10849,7 +10857,7 @@
    ]
   ]
  },
- "updatedAt": "2026-11-10",
+ "updatedAt": "2026-11-11",
  "map": [
   [
    0,
