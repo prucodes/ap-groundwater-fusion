@@ -1,0 +1,56 @@
+name: Groundwater sensors — daily
+
+# Every evening: one request to the APWRIMS telemetry service for every automatic
+# water-level recorder's latest reading (the request its public groundwater dashboard
+# makes), reduced to app/data/gw_sensors.json and a point on the State's daily line.
+# The weekly refresh runs the same step.
+#
+# 13:00 UTC is 18:30 IST: the day's readings are in. The weekly refresh pushes without
+# rebasing, so the two share its concurrency group and this one rebases before pushing.
+on:
+  schedule:
+    - cron: "0 13 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: apwrims-water-data
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: pip install -r requirements.txt pytest
+      - name: Read the sensors
+        run: python phase3_levels/fetch_apwrims_sensors.py
+      - name: Check what the page may say
+        run: python -m pytest -q tests/test_sensors.py
+      - name: Commit the day
+        id: publish
+        run: |
+          git config user.name "phase3-bot"
+          git config user.email "bot@local"
+          git add app/data/gw_sensors.json app/data/gw_sensors_history.json
+          if git diff --cached --quiet; then
+            echo "nothing new today"
+            exit 0
+          fi
+          git commit -m "chore(sensors): daily groundwater sensors $(date -u +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push
+          echo "published=true" >> "$GITHUB_OUTPUT"
+      - name: Deploy
+        # A push made with this workflow's own token starts no other workflow; a dispatch does.
+        if: steps.publish.outputs.published == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

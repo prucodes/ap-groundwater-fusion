@@ -13,6 +13,7 @@ import { fieldSignals } from "../../lib/fieldSignalsServer";
 import styles from "./Changes.module.css";
 import { RowFold, foldAt } from "../../components/RowFold";
 import { brief } from "../../lib/pageBriefs";
+import { SensorPulse } from "../../components/SensorPulse";
 
 export const metadata: Metadata = {
   title: "This Week | AP Water Intelligence",
@@ -138,6 +139,11 @@ export default function ChangesPage() {
           <li data-tone="unknown"><b>{changes.counts.unknown}</b>new</li>
         </ul>
         {steady.length ? <a href="#weekly-register" className={styles.registerLink}>Source register <IconArrowRight /></a> : null}
+      </section>
+      <section className={styles.today} id="sensors-today" aria-labelledby="sensors-today-title">
+        <h2 id="sensors-today-title">Today, from the State&rsquo;s sensors</h2>
+        <p>The rest of this page compares one weekly refresh with the last. The State&rsquo;s automatic water-level recorders report every few hours: this is where the water table stands today, sensor by sensor, against the same date last year.</p>
+        <SensorPulse />
       </section>
       <section className={styles.headlines} aria-label="Headlines this week" data-testid="weekly-changes">
       <div className={styles.briefingGrid}>

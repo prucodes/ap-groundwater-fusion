@@ -108,6 +108,8 @@ jobs:
             app/data/assessment_trajectory.json \
             app/data/seawater_watch.json \
             app/data/field_queue.json \
+            app/data/gw_sensors.json \
+            app/data/gw_sensors_history.json \
             app/public/geo/depth-timelapse.json \
             app/public/geo/mandal-hydrographs.json \
             app/public/water-crystal-3d.html \

@@ -170,6 +170,9 @@ STEPS = [
     # their record, ranked by how many of the storms, monsoon, tank and water-quality
     # signs built above agree. After all four; reads only local files. Optional.
     ("rank summer drinking-water priority", [PY, os.path.join(HERE, "build_summer_priority.py")], False, 120),
+    # One request for every automatic sensor's latest reading; the daily job does the same. Optional:
+    # a bad day at the telemetry service keeps yesterday's file.
+    ("read today's water table from the sensors", [PY, os.path.join(HERE, "fetch_apwrims_sensors.py")], False, 300),
     # The Crystal 3D view embeds its own dataset: the measured May series published
     # above, and next May's outlook just built for its outlook mode. Optional: a
     # failure keeps last week's view, and the test suite blocks publication if a
