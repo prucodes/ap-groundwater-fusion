@@ -25,10 +25,13 @@
 .live figcaption em { grid-column: 2; font-style: normal; font-size: 11.5px; color: rgba(232, 241, 250, .7); }
 
 /* The State at night: StateOutlineMap with its sea and strokes turned to the band. */
-.night { --map-sea-a: #0d2340; --map-sea-b: #0a1a30; --map-held: #1c3550; min-width: 0; border-radius: 14px; overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+/* Its own ocean blue, lighter than the page and the band so the panel reads as a window even
+   in the dark theme, the land a clear step lighter again, and a faint glow along the coast. */
+.night { --map-sea-a: #10294a; --map-sea-b: #0b1f3a; --map-held: #33598a; --map-held-dark: #33598a; min-width: 0; border-radius: 14px; overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(143, 220, 242, .18), 0 10px 30px rgba(2, 8, 18, .35); }
 .night :global(figure) { height: 100%; border-radius: 0; }
-.night :global(svg path[data-key]) { stroke: rgba(8, 21, 38, .9); stroke-width: .45; }
+.night :global(svg) { filter: drop-shadow(0 0 1px rgba(143, 220, 242, .55)) drop-shadow(0 0 16px rgba(74, 196, 230, .22)); }
+.night :global(svg path[data-key]) { stroke: rgba(4, 12, 24, .85); stroke-width: .45; }
 .night :global(svg path[data-key="m"]) { filter: drop-shadow(0 0 3px rgba(242, 178, 74, .55)); }
 .night :global(svg path:not([data-key])) { stroke: rgba(143, 220, 242, .3); stroke-width: .9; }
 .night :global(svg path[data-mark]) { stroke: #f2b24a; stroke-width: 1.3; }
