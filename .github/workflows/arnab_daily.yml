@@ -91,7 +91,7 @@ jobs:
           for attempt in 1 2 3; do
             git push && break
             [ "$attempt" = 3 ] && exit 1
-            git pull --rebase -X theirs origin main || { git rebase --abort; exit 1; }
+            git pull --rebase --autostash -X theirs origin main || { git rebase --abort; exit 1; }
           done
           echo "published=true" >> "$GITHUB_OUTPUT"
       - name: Deploy
