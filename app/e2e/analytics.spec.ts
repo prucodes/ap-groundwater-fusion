@@ -160,6 +160,8 @@ test("records how far down the Cyclone Arnab page a visit read, and how it opene
   const sent = await recordSends(page);
   const paths = async () => (await sent()).map((row) => row.path);
   expect(await paths()).not.toContain("ap-gw/arnab/reached-follow");
+  // Arnab and Murasu are a completed event, folded beneath the live storm.
+  await page.locator("#completed-cyclones > summary").click();
   await page.getByRole("heading", { name: "Did Arnab follow?" }).scrollIntoViewIfNeeded();
   await expect.poll(paths).toContain("ap-gw/arnab/reached-follow");
   await page.getByTestId("arnab-view-drought").click();

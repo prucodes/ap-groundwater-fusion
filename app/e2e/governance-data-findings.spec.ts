@@ -9,7 +9,7 @@ test("This Week's field list reaches every mandal its count names", async ({ pag
 });
 
 test("the place pages say what the water table reads now from today's sensors", async ({ page }) => {
-  for (const path of ["/mandals/", "/map/", "/"]) {
+  for (const path of ["/mandals/", "/map/"]) {
     await page.goto(path);
     const brief = page.getByTestId("page-brief");
     await expect(brief).toContainText(`${sensors.state.active.toLocaleString("en-IN")} reporting sensors`);

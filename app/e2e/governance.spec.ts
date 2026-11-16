@@ -24,18 +24,12 @@ test("missing depth is not normal, non-finite inputs fail closed, score ceiling 
   expect(alertFor({ ...base, confidence_label: "Limited" }).score).toBe(alertFor(base).score);
 });
 
-test("review queue filters, pages, and keeps unassessed records separate", async ({ page }) => {
+test("the retired review queue and snapshot forward to the pages that replace them", async ({ page }) => {
   await page.goto("/alerts");
-  await expect(page.getByRole("heading", { name: "Groundwater Review Queue" })).toBeVisible();
-  expect(await page.getByLabel("Review results").locator("article").count()).toBe(12);
-  const first = await page.getByLabel("Review results").locator("h3").first().innerText();
-  await page.getByRole("button", { name: "Next review page" }).click();
-  expect(await page.getByLabel("Review results").locator("h3").first().innerText()).not.toBe(first);
-  await page.getByRole("button", { name: /Not assessed/ }).click();
-  await expect(page.getByLabel("Review results")).toContainText("unscored");
-  await expect(page.getByLabel("Review results")).not.toContainText("Modelled scoring basis");
-  await page.getByLabel("Search mandal").fill("no-such-location");
-  await expect(page.getByText("No records match these filters.")).toBeVisible();
+  await expect(page).toHaveURL(/\/changes\/#field-teams$/);
+  await expect(page.getByTestId("field-teams")).toBeVisible();
+  await page.goto("/snapshot");
+  await expect(page).toHaveURL(/\/digest\/$/);
 });
 
 test("district profile selects evidence and drills into a filtered watchlist", async ({ page }) => {

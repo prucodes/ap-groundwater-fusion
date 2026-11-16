@@ -27,7 +27,6 @@ test("the menu is grouped by question and leaves out the retired screens", async
   await expect(nav.getByRole("link", { name: "Methodology", exact: true })).toHaveCount(0);
   await nav.getByRole("button", { name: /Evidence/ }).click();
   await expect(nav.getByRole("link", { name: "Methodology", exact: true })).toBeVisible();
-  await page.goto("/watchlist/");
-  await expect(page).toHaveURL(/\/changes\/#field-teams$/);
-  await expect(page.getByTestId("field-teams")).toBeVisible();
+  // The full mandal list stays as an analyst tool under Evidence and tools, not the main menu.
+  await expect(nav.getByRole("link", { name: "Mandal Watchlist", exact: true })).toBeVisible();
 });

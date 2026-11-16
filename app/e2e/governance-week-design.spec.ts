@@ -24,7 +24,7 @@ for (const width of [320, 390, 768, 1440]) {
       for (const item of changes.items.filter(item => item.direction === "same")) {
         const row = page.locator(`a[data-key="${item.key}"]`);
         await expect(row).toBeVisible();
-        if (item.refreshed === false) await expect(row).toContainText("source has not updated");
+        if (item.refreshed === false) await expect(row).toContainText("observation period unchanged");
       }
       await page.getByTestId("week-moves").locator("details > summary").click();
       await expect(page.getByTestId("week-moves").getByRole("link", { name: "Open the Drought Watch" })).toBeVisible();

@@ -623,6 +623,7 @@ export default function MethodologyPage() {
           supports. Citing this work is welcome; reusing it beyond citation needs written permission.
         </p>
       </section></details>
+      <Verse verse={VERSES.reflect} />
     </div>
   );
 }
