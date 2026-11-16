@@ -133,6 +133,16 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
       {/* Four lines first: what moved in the ground, the rain, the manual and the
           summer ahead, one figure each. The full set of numbers waits below. */}
       <section className="overviewHeadlines evidenceStrip" aria-label="This week in four lines">
+        {sensors ? (
+          <Link className="headlineCard" href="/changes/#sensors-today">
+            <span className="headlineKicker"><IconDroplet /> Groundwater today</span>
+            <strong>{sensors.deeperPct}%<small>of the State&rsquo;s sensors deeper than a year ago</small></strong>
+            <span className="headlineText">
+              {`Median ${sensors.medianM.toFixed(1)} m below ground against ${sensors.yearAgoM.toFixed(1)} m on the same date last year, across ${sensors.active.toLocaleString("en-IN")} automatic recorders read today.`}
+            </span>
+            <span className="headlineGo">Today&rsquo;s sensors <IconArrowRight /></span>
+          </Link>
+        ) : (
         <Link className="headlineCard" href="/map/">
           <span className="headlineKicker"><IconDroplet /> Groundwater</span>
           <strong>{stateSummary.state?.currentM != null ? <>{stateSummary.state.currentM.toFixed(1)}<small>m below ground</small></> : "No reading"}</strong>
@@ -141,6 +151,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
           </span>
           <span className="headlineGo">Mandal Map <IconArrowRight /></span>
         </Link>
+        )}
         <Link className="headlineCard" href="/monsoon/">
           <span className="headlineKicker"><IconCloudRain /> Monsoon</span>
           <strong>{formatNumber(watch.recharge.fallingPct)}%<small>of mandal series lower than in May</small></strong>

@@ -17,7 +17,7 @@ function Arrow() {
 // Pages people are likely to be sent, named as the sidebar names them.
 const PAGE_NAMES: Record<string, string> = {
   brief: "Project brief", digest: "Weekly digest", reports: "Reports", "field-report": "Field report",
-  changes: "This Week", arnab: "Cyclones Arnab and Murasu", cyclones: "Cyclones Arnab and Murasu", monsoon: "Monsoon Watch", drought: "Drought Watch", map: "Mandal Map",
+  changes: "This Week", arnab: "Cyclones Arnab, Murasu and Akvan", cyclones: "Cyclones Arnab, Murasu and Akvan", monsoon: "Monsoon Watch", drought: "Drought Watch", map: "Mandal Map",
   crystal: "Water Depth 3D", summer: "Summer Outlook", rabi: "Rabi Outlook", agriculture: "Agriculture & Water",
   districts: "Districts", constituencies: "Constituencies", mandals: "Mandal Insights", compare: "Compare",
   methodology: "Methodology", readiness: "Data Readiness", estimates: "Modelled Levels", nasa: "NASA Signals",
@@ -148,7 +148,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
             <section className={styles.story} aria-labelledby="welcome-title">
               <p className={styles.eyebrow}><span /> ANDHRA PRADESH · INDIA</p>
               <h1 id="welcome-title" tabIndex={-1}>Every drop<br />has a <em>deeper</em><br />story.</h1>
-              <p className={styles.description}><strong>From the monsoon above to the water beneath.</strong>Groundwater intelligence for Andhra Pradesh: measured water levels, modelled outlooks, and the rainfall and crops around them.</p>
+              <p className={styles.description}><strong>From the monsoon above to the water beneath.</strong>Groundwater intelligence for Andhra Pradesh: the State&rsquo;s sensors read every day, satellites watching from orbit, measured water levels and modelled outlooks, and the rainfall and crops around them.</p>
               <div className={styles.creator}>
                 <div><span className={styles.creatorLabel}>AN EXPLORATION BY</span><span className={styles.creatorName}>{CREATOR_NAME}<span className={styles.creatorSignature} aria-hidden="true">py.</span></span></div>
               </div>

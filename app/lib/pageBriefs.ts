@@ -38,7 +38,7 @@ export const BRIEFS = {
     use: "Start summer drinking-water plans with the ranked list below: bore wells, hand-pump repairs and tankers where the record breaks and other signs agree. It updates every Monday.",
   },
   "/cyclones": {
-    what: "Cyclones Arnab and Murasu measured: the rain by mandal, the reservoirs filling after them, and whether the water table rose where it had room.",
+    what: "Cyclone Akvan as it comes, live from orbit and the State's sensors; Cyclones Arnab and Murasu measured: the rain by mandal, the reservoirs filling after them, and whether the water table rose where it had room.",
     use: "Look to the deep-table mandals that got heavy rain, and plan for a dry summer in the deep-table mandals the storms missed. Whether the two reached the ground shows in the November readings, checked below as they arrive.",
   },
   "/rabi": {

@@ -21,8 +21,8 @@ import shared from "../rabi/Rabi.module.css";
 import styles from "./Arnab.module.css";
 
 export const metadata: Metadata = {
-  title: "Cyclones Arnab and Murasu | AP Water Intelligence",
-  description: "Where the rain of Cyclones Arnab and Murasu fell across Andhra Pradesh, where the water went, and whether the water table rose where it had room. Updated daily.",
+  title: "Cyclones Arnab, Murasu and Akvan | AP Water Intelligence",
+  description: "Cyclone Akvan as it comes, and where the rain of Cyclones Arnab and Murasu fell across Andhra Pradesh, where the water went, and whether the water table rose where it had room. Updated daily.",
 };
 
 const signed = (v: number, unit: string) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(1)} ${unit}`;
@@ -130,7 +130,7 @@ export default function ArnabPage() {
   return (
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
-        title={mu ? "Cyclones Arnab and Murasu" : "Cyclone Arnab"}
+        title={mu ? "Cyclones Arnab, Murasu and Akvan" : "Cyclone Arnab"}
         brief={brief("/cyclones", tg && ts ? <>Arnab and Murasu brought <b>{formatNumber(Math.round(ts.rainTmc))} TMC</b> in {tg.rainWindow.days} days{tg.rainWindow.open ? " so far" : ""}, but it fell on the coast: <b>{ts.deepStillDry} of {ts.deepMandals}</b> deep-table mandals got under {tg.stillDryMm} mm from both, most in {listOf(tg.stillDry.slice(0, 3).map(x => x.district))}.</> : <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
         showChips={false}
         variant="compact"

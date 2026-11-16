@@ -56,7 +56,7 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
       { href: "/facts", label: "In Numbers", Icon: IconHash, desc: "The figures to quote, one sentence each, with source, date and link; rebuilt at every refresh." },
   ] },
   { label: "Water now", items: [
-      { href: "/cyclones", label: "Cyclones", Icon: IconCyclone, desc: "Arnab and Murasu: where the rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },
+      { href: "/cyclones", label: "Cyclones", Icon: IconCyclone, desc: "Akvan as it comes, live from Himawari; Arnab and Murasu: where the rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },
       { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
       { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
       { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
@@ -288,7 +288,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="statusChevron" aria-hidden="true" />
           </button>
           <div className="statusFeed">
-            <span className="feedDot" /> Sensor readings · {formatPeriod(periods.latestObservationPeriod)}
+            <span className="feedDot" /> Monthly well readings · {formatPeriod(periods.latestObservationPeriod)}
           </div>
           <div className="statusFeed">
             <span className="feedDot" /> NASA GRACE-DA · {formatDay(periods.graceFetchDate)}
@@ -313,7 +313,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           ) : null}
           {stateSummary.readingDates.last ? (
             <div className="statusFeed">
-              <span className="feedDot" /> State wells · {formatDay(stateSummary.readingDates.last)}
+              <span className="feedDot" /> State wells (data lake) · {formatDay(stateSummary.readingDates.last)}
             </div>
           ) : null}
           {statusOpen ? <OrbitGlobe3D /> : null}
