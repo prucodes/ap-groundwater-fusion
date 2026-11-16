@@ -15,7 +15,9 @@ on:
 # deploy is never left half-published.
 concurrency:
   group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'pages' }}
-  cancel-in-progress: false
+  # A new push to a pull request makes its older run moot, so stop it rather than queue
+  # behind it. Deploys from main never cancel: a live deploy always finishes.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -110,7 +112,13 @@ jobs:
     # The full browser suite against this commit, built at the root as the tests
     # expect. It reports and never holds back the deploy: a test that new data
     # breaks shows a red cross on this run the same day, not a week later.
+    # Split four ways across parallel runners: about a quarter of the wait.
+    name: browser-tests (${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -137,4 +145,4 @@ jobs:
         run: |
           node scripts/serve-static.mjs --port 3217 --bind 127.0.0.1 --directory out &
           for i in $(seq 1 50); do curl -sf http://127.0.0.1:3217/ >/dev/null && break; sleep 0.2; done
-          npx playwright test --retries=1
+          npx playwright test --retries=1 --shard=${{ matrix.shard }}/4
