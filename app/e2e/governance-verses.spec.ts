@@ -14,7 +14,7 @@ test("the welcome screen carries Narada's question on tanks, in Telugu script an
   await expect.poll(() => page.evaluate(async () => { await document.fonts.ready; return document.fonts.check('17px "Verse Telugu"', "కచ్చిద్"); })).toBe(true);
 });
 
-for (const [path, id] of [["/methodology/", "reflect"], ["/monsoon/", "rain"], ["/crystal/", "bhishma"], ["/summer/", "yaksha"]] as const) {
+for (const [path, id] of [["/methodology/", "reflect"], ["/monsoon/", "rain"], ["/summer/", "yaksha"]] as const) {
   test(`${path} closes with one verse`, async ({ page }) => {
     await page.goto(path);
     await expect(page.getByTestId("verse")).toHaveCount(1);
@@ -22,10 +22,18 @@ for (const [path, id] of [["/methodology/", "reflect"], ["/monsoon/", "rain"], [
   });
 }
 
-test("on Water Depth 3D the verse opens over the scene, then leaves it and every touch to the scene", async ({ page }) => {
+test("on Water Depth 3D the verse rests on the sea beside the State, then sinks, and never takes a touch", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/crystal/");
   const verse = page.locator('[data-verse="bhishma"]');
   await expect(verse).toBeVisible();
   expect(await verse.evaluate(el => getComputedStyle(el).pointerEvents)).toBe("none");
-  await expect(verse).toBeHidden({ timeout: 12000 });
+  await expect(verse).toBeHidden({ timeout: 15000 });
+});
+
+test("on a phone Water Depth 3D keeps the whole screen for the scene", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/crystal/");
+  await page.waitForTimeout(1500);
+  await expect(page.locator('[data-verse="bhishma"]')).toBeHidden();
 });

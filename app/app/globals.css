@@ -4651,19 +4651,40 @@ pre.jsonBody {
 }
 .crystalFrame { border: 0; width: 100%; flex: 1 1 auto; min-height: 0; display: block; }
 .crystalFrameWrap { position: relative; }
-.crystalFrameWrap .crystalVerse {
-  --verse-script: #ead9ab; --verse-text: #ead9ab; --verse-cite: #9fbcd0; --verse-mark: #d9c48a; --verse-rule: rgba(217, 196, 138, .6);
-  position: absolute; z-index: 2; left: 50%; top: 46%; width: min(560px, calc(100% - 48px)); margin: 0; padding: 28px 24px;
-  transform: translate(-50%, -50%); pointer-events: none; visibility: hidden;
-  background: radial-gradient(closest-side, rgba(5, 18, 34, .78), rgba(5, 18, 34, .5) 60%, transparent);
-  animation: crystalVerse 7s ease .3s both;
+/* On a wide screen the verse rests on the open sea to the south-east of the State, then
+   sinks: its lines settle down through a soft waterline at its foot and are gone, the way
+   water goes into the ground. Phones skip it; there every pixel belongs to the scene. */
+.crystalFrameWrap .crystalVerse { display: none; }
+@media (min-width: 1100px) {
+  .crystalFrameWrap .crystalVerse {
+    --verse-script: #ead9ab; --verse-text: #e9dcb6; --verse-cite: #8fb0c6; --verse-mark: #d9c48a; --verse-rule: rgba(217, 196, 138, .6);
+    display: block; position: absolute; z-index: 2; right: 4%; bottom: 196px; width: min(380px, 30%); margin: 0; padding: 0 0 56px;
+    text-align: left; pointer-events: none; visibility: hidden;
+    /* The waterline: whatever drifts below it fades into the sea. */
+    -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 60px), transparent calc(100% - 8px));
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 60px), transparent calc(100% - 8px));
+    animation: crystalVerseLife 12s linear .8s both;
+  }
+  .crystalFrameWrap .crystalVerse > * { animation: crystalVerseSink 11.4s cubic-bezier(.33, 0, .2, 1) .8s both; }
+  .crystalFrameWrap .crystalVerse > p { animation-delay: 1s; }
+  .crystalFrameWrap .crystalVerse > figcaption { animation-delay: 1.2s; }
+  .crystalFrameWrap .crystalVerse > span:first-child { justify-content: flex-start; margin-bottom: 12px; }
+  .crystalFrameWrap .crystalVerse > span:first-child i:first-child { display: none; }
+  .crystalFrameWrap .crystalVerse p { margin: 0; font-size: 17px; line-height: 1.6; text-shadow: 0 1px 12px rgba(4, 14, 28, .9); }
+  .crystalFrameWrap .crystalVerse figcaption { text-shadow: 0 1px 8px rgba(4, 14, 28, .9); }
 }
-.crystalFrameWrap .crystalVerse p { font-size: clamp(16px, 1.7vw, 20px); line-height: 1.55; }
-@keyframes crystalVerse {
-  0% { opacity: 0; visibility: visible; }
-  12%, 72% { opacity: 1; visibility: visible; }
-  100% { opacity: 0; visibility: hidden; }
+@keyframes crystalVerseLife { 0%, 99% { visibility: visible; } 100% { visibility: hidden; } }
+/* Surfaces softly, rests, then settles down through the waterline, slowing as it goes. */
+@keyframes crystalVerseSink {
+  0% { opacity: 0; transform: translateY(10px); filter: blur(3px); }
+  15% { opacity: 1; transform: none; filter: blur(0); }
+  58% { opacity: 1; transform: none; filter: blur(0); }
+  100% { opacity: 0; transform: translateY(96px); filter: blur(4px); }
 }
+@media (prefers-reduced-motion: reduce) {
+  .crystalFrameWrap .crystalVerse > * { animation-name: crystalVerseStill; }
+}
+@keyframes crystalVerseStill { 0%, 85% { opacity: 1; } 100% { opacity: 0; } }
 .crystalNotice {
   flex: none;
   margin: 0;
