@@ -29,6 +29,7 @@ import { MandalSeasonContext } from "./MandalSeasonContext";
 import { MandalDroughtCheck } from "./drought/MandalDroughtCheck";
 import { MandalStateReading } from "./MandalStateReading";
 import { MandalShareCard } from "./MandalShareCard";
+import { MandalSensors } from "./MandalSensors";
 import { mandalCardFacts } from "../lib/mandalCard";
 import {
   IconArrowRight,
@@ -131,6 +132,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
       </section>
 
       {cardFacts ? <MandalShareCard facts={cardFacts} /> : null}
+      <MandalSensors mandalId={mandal.id} />
 
       {/* metric row */}
       <div className="metricRow stagger">
