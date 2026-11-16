@@ -60,13 +60,19 @@ REQUIRED_IMPROVEMENT = 0.05
 
 NUM = ["lat", "lon", "specific_yield", "cur", "lag1", "lag2", "lag3", "lag6", "lag12",
        "roll3", "move_1m", "move_3m", "move_12m", "rain_1m", "rain_3m", "rain_12m",
-       "tgt_sin", "tgt_cos", "mandal_base", "clim_change", "clim_max"]
+       "tgt_sin", "tgt_cos", "mandal_base", "clim_change", "clim_max", "sm150"]
 # clim_change and clim_max: the mandal's own median and largest change from the origin's
 # calendar month to the target's, over earlier years only, the summer outlook's drawdown
 # brought into the forecast. Added 16 Nov 2026 after a rolling-origin trial: 3-month MAE
 # 1.912 -> 1.831 m (hard rock 7.9% -> 13.0% better than no change), 6-month 2.509 -> 2.283 m.
 # The El Nino index made both worse and was left out; GRACE storage added little for a
 # 114 MB monthly download.
+# sm150: plant-available water 150 cm down at the end of the origin month (NRSC VIC via
+# APWRIMS, fetch_soil_moisture_history.py), water still on its way to the water table.
+# Added 16 Nov 2026 after the same trial (experiment_soil_moisture.py): 3-month MAE
+# 1.831 -> 1.791 m, every terrain cohort better (hard rock 13.0% -> 15.0% better than no
+# change). The 30 and 100 cm layers and an anomaly against the mandal's own month added nothing.
+SOIL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "soil_moisture_monthly.json")
 CAT = ["aquifer_type"]
 
 
@@ -109,7 +115,26 @@ def make_horizon(df, h):
     frame["tgt_sin"] = np.sin(2 * np.pi * (target_month - 1) / 12)
     frame["tgt_cos"] = np.cos(2 * np.pi * (target_month - 1) / 12)
     frame = frame.dropna(subset=["target", "seasonal_base"])
-    return add_climatology(frame).reset_index(drop=True)
+    return add_soil(add_climatology(frame)).reset_index(drop=True)
+
+
+def soil_table(path=SOIL):
+    """sm150 by (mkey, date): empty when the history has not been fetched, so the model
+    still trains, with the column missing throughout."""
+    if not os.path.exists(path):
+        return pd.DataFrame(columns=["mkey", "date", "sm150"])
+    d = json.load(open(path))
+    rows = [(uid, month, value) for uid, values in d["mandals"].items()
+            for month, value in zip(d["months"], values) if value is not None]
+    return pd.DataFrame(rows, columns=["mkey", "date", "sm150"])
+
+
+def add_soil(frame, soil=None):
+    """The origin month's deep soil moisture, matched on the mandal's source UUID."""
+    soil = soil_table() if soil is None else soil
+    out = frame.drop(columns=["sm150"], errors="ignore").merge(soil, on=["mkey", "date"], how="left")
+    out.index = frame.index
+    return out
 
 
 def add_climatology(frame):

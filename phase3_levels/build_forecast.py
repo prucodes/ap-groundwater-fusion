@@ -26,7 +26,7 @@ from build_levels_engine import (  # noqa: E402
     BLEND_EDGES, NOMINAL_COVERAGE, apply_conformal, band_label, conformal_offsets,
     build_frame, depth_band_index, reset_mandal_base, sha256,
 )
-from train_multihorizon import CAT, NUM, climatology_at_origin, est, make_horizon  # noqa: E402
+from train_multihorizon import CAT, NUM, add_soil, climatology_at_origin, est, make_horizon  # noqa: E402
 
 HORIZON_MONTHS = 3
 MODEL_VERSION = "phase0-forecast-3m-1.0.0"
@@ -140,7 +140,7 @@ def main():
     frame = make_horizon(df, HORIZON_MONTHS)
     weights, offsets, calibration_period = calibrate(frame)
 
-    latest = climatology_at_origin(frame, origin_rows(df))
+    latest = add_soil(climatology_at_origin(frame, origin_rows(df)))
     train, latest = reset_mandal_base(frame, latest)
     models = fit_quantiles(train)
     lower, point, upper = predict_quantiles(models, latest)
