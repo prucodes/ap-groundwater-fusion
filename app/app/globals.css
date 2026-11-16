@@ -4653,12 +4653,13 @@ pre.jsonBody {
 .crystalFrameWrap { position: relative; }
 /* On a wide screen the verse rests on the open sea to the south-east of the State, then
    sinks: its lines settle down through a soft waterline at its foot and are gone, the way
-   water goes into the ground. Phones skip it; there every pixel belongs to the scene. */
+   water goes into the ground. Below 1240px the State reaches the sea it would sit on, so
+   narrower screens skip it; there every pixel belongs to the scene. */
 .crystalFrameWrap .crystalVerse { display: none; }
-@media (min-width: 1100px) {
+@media (min-width: 1240px) {
   .crystalFrameWrap .crystalVerse {
     --verse-script: #ead9ab; --verse-text: #e9dcb6; --verse-cite: #8fb0c6; --verse-mark: #d9c48a; --verse-rule: rgba(217, 196, 138, .6);
-    display: block; position: absolute; z-index: 2; right: 4%; bottom: 196px; width: min(380px, 30%); margin: 0; padding: 0 0 56px;
+    display: block; position: absolute; z-index: 2; right: 2.5%; bottom: 146px; width: min(360px, 28%); margin: 0; padding: 0 0 56px;
     text-align: left; pointer-events: none; visibility: hidden;
     /* The waterline: whatever drifts below it fades into the sea. */
     -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 60px), transparent calc(100% - 8px));
