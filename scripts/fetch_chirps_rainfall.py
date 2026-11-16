@@ -187,6 +187,16 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def held_period(manifest_path: Path, tif_path: Path) -> str | None:
+    """The month of the raster already on disk (restored from the workflow cache), if any."""
+    try:
+        with manifest_path.open(encoding="utf-8", newline="") as handle:
+            rows = list(csv.DictReader(handle))
+        return rows[-1]["data_period"] if tif_path.exists() and rows and rows[-1].get("fetch_status") == "ok" else None
+    except (OSError, KeyError):
+        return None
+
+
 def main() -> int:
     args = parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -194,10 +204,15 @@ def main() -> int:
     context = make_context(args.allow_insecure_tls)
 
     floor = published_period()
+    held = held_period(manifest_path, args.output_dir / TARGET_TIF)
     for year, month in candidate_months(args.max_months_back):
         period = f"{year}.{month:02d}"
         if floor and period < floor:
             print(f"Nothing newer than the published {floor}; keeping it.")
+            return 0
+        # The month on the site, already on disk: a global raster is not fetched twice.
+        if period == floor and held == floor:
+            print(f"CHIRPS {period} is the published month and already on disk; nothing newer yet.")
             return 0
         url = f"{BASE_URL}/chirps-v3.0.{period}.tif"
         print(f"Trying CHIRPS {period} ...")
