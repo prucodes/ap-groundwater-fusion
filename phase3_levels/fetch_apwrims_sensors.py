@@ -41,6 +41,7 @@ APP = os.path.join(ROOT, "app", "data")
 OUT = os.path.join(APP, "gw_sensors.json")
 GEOMETRY = os.path.join(APP, "ap_map_display.json")
 HISTORY = os.path.join(APP, "gw_sensors_history.json")
+STATE = os.path.join(APP, "gw_sensors_state.json")   # a few figures for the site's sidebar, which runs in the browser
 SERVICE = "https://apwrims2.0.vassarlabs.com/iot/api/groundwater/lastknown/aggregated"
 ACTIVE_HOURS = 48          # a station counts as reporting if its latest reading is this recent
 MIN_ACTIVE = 800           # fewer than this and the service is having a bad day: keep yesterday's file
@@ -128,6 +129,9 @@ def main():
         handle.write("\n")
     os.replace(OUT + ".tmp", OUT)
     st = payload["state"]
+    with open(STATE, "w") as handle:
+        json.dump({"latestReading": payload["latestReading"], "state": st}, handle, separators=(",", ":"))
+        handle.write("\n")
     # The State's line, a point a day by the date of the latest reading in India.
     day = (datetime.datetime.fromtimestamp(latest / 1000, datetime.timezone.utc) + datetime.timedelta(hours=5, minutes=30)).date().isoformat()
     history = json.load(open(HISTORY)) if os.path.exists(HISTORY) else {"note": "one point a day from fetch_apwrims_sensors.py", "days": []}

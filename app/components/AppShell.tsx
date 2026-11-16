@@ -39,6 +39,7 @@ import { CommandPalette } from "./CommandPalette";
 import { datasetManifest, formatPeriod } from "../lib/data";
 import { waterSummary } from "../lib/waterSummary";
 import { stateSummary } from "../lib/stateSummary";
+import sensorsState from "../data/gw_sensors_state.json";
 import { PageTransition } from "./PageTransition";
 import { useWelcome } from "./welcome/WelcomeGate";
 import { CREATOR_NAME } from "../lib/creator";
@@ -309,6 +310,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {waterSummary.reservoirs ? (
             <div className="statusFeed">
               <span className="feedDot" /> Reservoirs · {formatDay(waterSummary.reservoirs.asOf)}
+            </div>
+          ) : null}
+          {sensorsState.latestReading ? (
+            <div className="statusFeed">
+              <span className="feedDot" /> Sensors · {formatDay(sensorsState.latestReading)}
             </div>
           ) : null}
           {stateSummary.readingDates.last ? (

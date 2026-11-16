@@ -11,6 +11,9 @@ import { checkRecord } from "../../lib/cropWaterRecord";
 import { summerOutlook as summer } from "../../lib/summer";
 import { brief } from "../../lib/pageBriefs";
 import crossNetwork from "../../data/cross_network_check.json";
+import graceFilm from "../../data/grace_film.json";
+import rainFilm from "../../data/rain_film.json";
+import { sensors } from "../../lib/sensors";
 
 const labels = [
   { code: "APWRIMS (AP-GWD)", text: "Recorded mandal depth history. Modelled nowcasts are separate derived values; neither is presented as a certified official output." },
@@ -317,6 +320,45 @@ export default function MethodologyPage() {
             {summer.backtest.baseRatePct.toFixed(0)}% of all mandal-years and {summer.backtest.pastRecordPct.within?.toFixed(0)}% of those called
             within it. A ranking of where to look first, not a forecast of this winter&rsquo;s rain.
           </p> : null}
+          <p>
+            <strong>The groundwater clock.</strong>{" "}The same past winters, month by month: for every month between the reading and May, the
+            median and the largest change from the reading month in earlier years. The clock is the first month either path goes deeper than
+            the deepest May on record; the May value is the published projection, so the clock always agrees with the outlook.
+          </p>
+        </div>
+      </section>
+
+      <section className="card" aria-labelledby="method-live" data-testid="method-live">
+        <div className="cardHead">
+          <div className="cardTitle" id="method-live">
+            <span className="titleIcon"><IconSatellite /></span>
+            Live sensors, and checks from space
+          </div>
+          <span className="cardSub">APWRIMS telemetry / GRACE and GRACE-FO / NASA IMERG / Himawari-9 / Sentinel-2</span>
+        </div>
+        <div className="methodSteps">
+          <p>
+            <strong>The State&rsquo;s sensors, daily.</strong>{" "}About {sensors.state.stations.toLocaleString("en-IN")} automatic water-level recorders report
+            every few hours; the site reads each one&rsquo;s latest level once a day, as the public APWRIMS dashboard does, and sets each sensor
+            only against its own reading on the same date last year. The sensors stand in different wells from the monthly hand readings the
+            model and the outlooks use: across mandals the two agree in pattern (r 0.9) but differ by about 1.4 m in the typical mandal, so a
+            sensor is never compared with the hand-read record. Readings past 100 m, or 50 m from a year ago, are kept off quoted lists as
+            likely dry wells or faulty sensors. The service keeps only the latest reading, so the daily history starts with the site&rsquo;s own
+            archive in November 2026.
+          </p>
+          <p>
+            <strong>Water from space.</strong>{" "}GRACE and GRACE-FO weigh the water a region holds through its pull on two satellites; CSR&rsquo;s
+            RL06.3 mascons give it as centimetres of water against 2004&ndash;09, monthly since 2002. Averaged over the State, it moves with the
+            median mandal&rsquo;s water table at r {graceFilm.agreement.r} over {graceFilm.agreement.months} months ({graceFilm.agreement.rSwings} with
+            the seasons removed): an independent check on the well record. It sees a region a few hundred kilometres across, not a mandal.
+          </p>
+          <p>
+            <strong>Rain from space, checked.</strong>{" "}NASA&rsquo;s IMERG merges every rain satellite into a daily picture. Over the 2026 season it
+            put {rainFilm.satelliteSeasonMm} mm on the State against {rainFilm.gauges.mm} mm from the State&rsquo;s {rainFilm.gauges.gauges.toLocaleString("en-IN")} gauges;
+            the films are shown only because the two agree. Cloud pictures come from Himawari-9&rsquo;s infrared band, its colour scale turned
+            back into cloud-top temperature; village tank water from Sentinel-2&rsquo;s scene classification over the JRC tank beds, counting only
+            clear looks.
+          </p>
         </div>
       </section>
 
