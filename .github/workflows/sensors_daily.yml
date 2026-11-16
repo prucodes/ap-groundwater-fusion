@@ -32,14 +32,17 @@ jobs:
         run: pip install -r requirements.txt pytest
       - name: Read the sensors
         run: python phase3_levels/fetch_apwrims_sensors.py
+      - name: Count the third cyclone's sensors
+        # Each sensor against its own reading before the storm; the rain half moves with the morning job.
+        run: python phase3_levels/build_cyclone_akvan.py
       - name: Check what the page may say
-        run: python -m pytest -q tests/test_sensors.py
+        run: python -m pytest -q tests/test_sensors.py tests/test_cyclone_akvan.py
       - name: Commit the day
         id: publish
         run: |
           git config user.name "phase3-bot"
           git config user.email "bot@local"
-          git add app/data/gw_sensors.json app/data/gw_sensors_history.json
+          git add app/data/gw_sensors.json app/data/gw_sensors_history.json app/data/cyclone_akvan.json
           if git diff --cached --quiet; then
             echo "nothing new today"
             exit 0

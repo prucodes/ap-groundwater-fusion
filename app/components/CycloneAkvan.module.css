@@ -1,0 +1,35 @@
+/* The third cyclone: a storm-blue card ahead of the two that came before it, a short
+   line of where the count stands, then the map and three figures. */
+
+.wrap { display: grid; gap: 16px; margin-top: 18px; padding: 22px; border-radius: var(--radius-lg); background: var(--card);
+  border: 1px solid var(--line); box-shadow: var(--shadow-pop); border-top: 4px solid #2f63b4; }
+.head { display: grid; gap: 8px; }
+.kicker { font: 600 11px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #2f63b4; }
+.head h2 { margin: 0; font: 600 26px/1.2 var(--font-display); color: var(--ink); text-wrap: balance; }
+.head p { margin: 0; max-width: 82ch; font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
+.head b { color: var(--ink); }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; counter-reset: step; }
+.steps li { position: relative; display: grid; gap: 2px; padding: 10px 12px 10px 34px; border-radius: var(--radius-sm); background: var(--field); border: 1px solid var(--line); }
+.steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 10px; top: 10px; width: 16px; height: 16px; border-radius: 50%;
+  display: grid; place-items: center; font: 600 10px var(--font-mono); color: var(--muted-2); border: 1.5px solid var(--line-strong); }
+.steps li[data-done]::before { content: "✓"; color: #fff; background: #2f63b4; border-color: #2f63b4; }
+.steps b { font: 600 13px var(--font-display); color: var(--ink); }
+.steps span { font-size: 11.5px; line-height: 1.45; color: var(--muted-2); }
+
+.body { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(260px, 1fr); gap: 22px; align-items: start; }
+.tiles { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.tiles li { display: grid; gap: 3px; padding: 14px 16px; border-radius: var(--radius-sm); background: var(--field); border: 1px solid var(--line); }
+.tiles li[data-key] { background: color-mix(in srgb, #d79b2e 12%, var(--card)); border-color: color-mix(in srgb, #d79b2e 40%, var(--line)); }
+.tiles span { font: 600 10.5px var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: var(--muted-2); }
+.tiles b { font: 600 30px/1.1 var(--font-display); color: var(--ink); font-variant-numeric: tabular-nums; }
+.tiles b small { font-size: 15px; font-weight: 500; color: var(--muted-2); }
+.tiles em { font-style: normal; font-size: 12px; line-height: 1.45; color: var(--ink-soft); }
+.ring { background: transparent !important; box-shadow: inset 0 0 0 2px var(--ink); }
+.note { margin: 0; font-size: 11.5px; line-height: 1.55; color: var(--muted-2); }
+
+@media (max-width: 900px) {
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .body { grid-template-columns: minmax(0, 1fr); }
+  .head h2 { font-size: 21px; }
+}
