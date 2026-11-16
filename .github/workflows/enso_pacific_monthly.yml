@@ -69,7 +69,13 @@ jobs:
           git commit -m "chore(enso): climate panels through $latest"
           # Rebase rather than fail if the weekly refresh landed while this ran.
           git pull --rebase --autostash origin main
-          git push
+          # main may have moved while this ran (a merged pull request, another bot): replay this
+          # commit on top of it, keeping this run's own data where both touched a file, and retry.
+          for attempt in 1 2 3; do
+            git push && break
+            [ "$attempt" = 3 ] && exit 1
+            git pull --rebase -X theirs origin main || { git rebase --abort; exit 1; }
+          done
           echo "published=true" >> "$GITHUB_OUTPUT"
 
       - name: Deploy the new month

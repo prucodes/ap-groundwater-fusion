@@ -120,7 +120,13 @@ jobs:
             git add data/refresh_receipts
           fi
           git commit -m "chore(phase3): weekly levels refresh" || echo "no changes"
-          git push
+          # main may have moved while this ran (a merged pull request, another bot): replay this
+          # commit on top of it, keeping this run's own data where both touched a file, and retry.
+          for attempt in 1 2 3; do
+            git push && break
+            [ "$attempt" = 3 ] && exit 1
+            git pull --rebase -X theirs origin main || { git rebase --abort; exit 1; }
+          done
 
       - name: Print the weekly digest to PDF
         # This Monday's one-page digest, beside the page that shows it. Never blocks the publish.
