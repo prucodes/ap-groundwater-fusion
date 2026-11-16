@@ -32,7 +32,7 @@ type Changes = {
   items: Item[];
   groundwater: { worse: number; better: number; moved: Mover[]; truncated: boolean; latestMonth: { before: string | null; after: string | null } };
   drought: { worse: Mover[]; better: Mover[]; basis: string };
-  counts: { better: number; worse: number; same: number; unknown: number };
+  counts: { better: number; worse: number; same: number; unknown: number; revised?: number };
 };
 
 const changes = changesJson as unknown as Changes;
@@ -60,7 +60,7 @@ function delta(item: Item) {
   return `${sign}${item.unit === "°C" ? size.toFixed(2) : item.unit === "%" ? size.toFixed(1) : size}${unit}`;
 }
 
-const DIRECTION_TEXT: Record<string, string> = { better: "Better", worse: "Worse", same: "No change", moved: "Moved" };
+const DIRECTION_TEXT: Record<string, string> = { better: "Better", worse: "Worse", same: "No change", moved: "Moved", revised: "Revised, same reading period" };
 const STATUS_TEXT: Record<string, string> = { stable: "Stable", watch: "Watch", stress: "Stress" };
 
 function categoryLabel(key: string) {
@@ -110,7 +110,7 @@ export default function ChangesPage() {
   const first = items.every(item => item.before === null);
   const priorityCount = fieldPriority().rows.filter(r => r.lit >= 4).length;
   // Moved figures lead, worse first; the ones that held steady follow as a slim row.
-  const ORDER: Record<string, number> = { worse: 0, better: 1, moved: 2, new: 3, same: 4 };
+  const ORDER: Record<string, number> = { worse: 0, better: 1, moved: 2, revised: 3, new: 4, same: 5 };
   const rank = (item: Item) => ORDER[item.direction ?? "new"];
   const sorted = items.map((item, index) => ({ item, index })).sort((a, b) => rank(a.item) - rank(b.item) || a.index - b.index).map(({ item }) => item);
   const moved = sorted.filter(item => item.direction !== "same");
@@ -128,13 +128,14 @@ export default function ChangesPage() {
         <Link href="/digest/" className={styles.digestLink} data-testid="digest-link"><IconFile />One-page digest<IconArrowRight /></Link>
       </header>
       <div className={styles.brief}>
-        <PageBriefList brief={brief("/changes", first ? <>No earlier headline snapshot to compare yet; <b>{priorityCount} mandals</b> have four or more stress signals.</> : <>{changes.counts.worse} headlines worse and {changes.counts.better} better since the previous refresh; <b>{priorityCount} mandals</b> have four or more stress signals.</>)} />
+        <PageBriefList brief={brief("/changes", first ? <>No earlier headline snapshot to compare yet; <b>{priorityCount} mandals</b> have four or more stress signals.</> : <>{changes.counts.worse} headlines worse and {changes.counts.better} better since the previous weekly refresh; <b>{priorityCount} mandals</b> have four or more stress signals.</>)} />
       </div>
       <section className={styles.summary} aria-label="Week at a glance">
-        <span className={styles.summaryText}>Headline changes <small>since the previous refresh</small></span>
+        <span className={styles.summaryText}>Headline changes <small>since the previous weekly refresh</small></span>
         <ul className={styles.tally} aria-label="Headline comparison counts">
           <li data-tone="worse"><b>{changes.counts.worse}</b>worse</li>
           <li data-tone="better"><b>{changes.counts.better}</b>better</li>
+          {changes.counts.revised ? <li data-tone="same"><b>{changes.counts.revised}</b>revised</li> : null}
           <li data-tone="same"><b>{changes.counts.same}</b>unchanged</li>
           <li data-tone="unknown"><b>{changes.counts.unknown}</b>new</li>
         </ul>

@@ -10,7 +10,7 @@ for (const width of [320, 390, 768, 1440]) {
       await page.goto(`/changes/?theme=${theme}`);
       await expect(page.getByTestId("week-move-map")).toHaveAttribute("data-ready", "true");
       await expect(page.getByRole("heading", { level: 1 })).toContainText("This Week");
-      await expect(page.getByTestId("page-brief")).toContainText("previous refresh");
+      await expect(page.getByTestId("page-brief")).toContainText("previous weekly refresh");
       const moved = changes.items.filter(item => item.direction !== "same");
       for (const item of moved) {
         const card = page.locator(`a[data-key="${item.key}"]`);

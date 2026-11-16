@@ -408,7 +408,9 @@ def season_history(levels, keys, year, target_mm, oni):
 
 
 def build():
-    frame = build_frame()
+    # Every genuine reading (months the State carried forward are already out), not only
+    # the rows the models can use: the seasonal baseline is a comparison, not a model input.
+    frame = build_frame(model_inputs=False)
     geo = json.load(open(os.path.join(APP, "ap_map_geometry.json")))
     _, _, boundary_index = resolve_locations(
         frame.drop_duplicates("mkey")[["mandal_uuid", "district", "mandal"]], geo)
@@ -537,6 +539,9 @@ def build():
         },
         "enso": enso_context(oni),
         "recharge": {
+            # Versioned: until 16 Nov 2026 the baseline read only rows the forecast model can use
+            # (a reading a month and a year before), which dropped 50 of 571 flags' worth of evidence.
+            "baselineVersion": "all-readings-2026-11-16",
             "mandals": int(len(table)),
             "falling": int((table.thisSeasonM > 0).sum()),
             "fallingPct": round(float(100 * (table.thisSeasonM > 0).mean()), 1),

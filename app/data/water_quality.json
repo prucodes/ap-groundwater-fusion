@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-10-22T19:04:21+00:00",
+ "generatedAt": "2026-11-16T21:23:44+00:00",
  "source": "Jal Jeevan Mission WQMIS, Format L3: quality affected habitations reported on or after 01/04/2019 (Department of Drinking Water and Sanitation, Ministry of Jal Shakti)",
  "url": "https://ejalshakti.gov.in/WQMIS/Report/quality_affected_habitation",
  "since": "2019-04-01",
@@ -367,7 +367,7 @@
    221,
    202
   ],
-  "ANANTHAPURAMU|ATMAKUR": [
+  "SRI POTTI SRIRAMULU NELLORE|ATMAKUR": [
    3,
    0,
    0,
@@ -422,7 +422,7 @@
    935,
    903
   ],
-  "Y.S.R KADAPA|KONDAPURAM": [
+  "SRI POTTI SRIRAMULU NELLORE|KONDAPURAM": [
    10,
    0,
    0,
@@ -740,10 +740,10 @@
   }
  ],
  "where": {
-  "fluorideMedianDepthM": 8.7,
-  "otherMedianDepthM": 7.3,
-  "fluorideHardRockPct": 37,
-  "otherHardRockPct": 36,
-  "fluorideWithDepth": 41
+  "fluorideMedianDepthM": 8.5,
+  "otherMedianDepthM": 6.9,
+  "fluorideHardRockPct": 38,
+  "otherHardRockPct": 37,
+  "fluorideWithDepth": 42
  }
 }

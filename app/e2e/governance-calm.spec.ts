@@ -57,7 +57,7 @@ test("This Week leads with what moved, worse first, and keeps the steady figures
   const directions = await page.getByTestId("weekly-changes").locator("a[data-direction]")
     .evaluateAll(cards => cards.map(card => (card as HTMLElement).dataset.direction ?? ""));
   expect(directions).toHaveLength(changes.items.length);
-  const rank: Record<string, number> = { worse: 0, better: 1, moved: 2, new: 3, same: 4 };
+  const rank: Record<string, number> = { worse: 0, better: 1, moved: 2, revised: 3, new: 4, same: 5 };
   expect(directions.map(d => rank[d])).toEqual([...directions.map(d => rank[d])].sort((a, b) => a - b));
   await expect(page.getByRole("heading", { name: /Changes in this briefing/ })).toBeVisible();
 });

@@ -149,9 +149,12 @@ def main():
     watch = json.loads(watch_path.read_text())
     with history_path.open() as handle:
         history = list(csv.DictReader(handle))
-    from build_levels_engine import build_frame
-    published_history = build_frame().to_dict("records")
-    raw_check = reconcile(watch, history)
+    from build_levels_engine import build_frame, history_carried_forward
+    published_history = build_frame(model_inputs=False).to_dict("records")
+    # Independent of the engine: the raw source file, less only the months the State carried
+    # forward rather than measured (they are not readings), as the published baseline reads it.
+    carried = set(history_carried_forward())
+    raw_check = reconcile(watch, [row for row in history if row["date"] not in carried])
     baseline_check = reconcile(watch, published_history)
     online = online_checks(watch, history) if args.online else None
     checked_at = dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")
@@ -163,7 +166,8 @@ def main():
     report = {"checkedAt": checked_at, "onlineCheckedAt": online_checked_at,
               "snapshotPeriod": watch["season"]["latestMonth"], "snapshotHash": sha(watch_path), "historyHash": sha(history_path),
               "localReconciliation": baseline_check, "unfilteredHistoryComparison": raw_check, "online": online,
-              "baselineCaveat": "The published seasonal baseline reuses the model-eligible observation frame (location and lag-1/lag-12 availability). This omits otherwise valid source observations. Recomputed values match that implementation, not an independently approved hydrological baseline. Rebuilding on unfiltered observations requires a versioned data and film update.",
+              "baselineVersion": watch["recharge"].get("baselineVersion"),
+              "baselineCaveat": "Since 16 Nov 2026 the seasonal baseline reads every genuine source reading (months the State carried forward excluded), not only the rows the forecast model can use; the earlier version dropped readings that lacked a reading a month or a year before. The unfiltered comparison recomputes it from the raw source file alone. It remains this project's baseline, not an independently approved hydrological one.",
               "limitations": ["No real-time feed or field certification.",
                               "Crop inputs are illustrative; crop booking and canal delivery to fields are not connected. Gauge rainfall, modelled soil moisture and reservoir storage are dated APWRIMS context, not verified here.",
                               "Public prototype boundaries and source-use authorization require departmental approval."]}

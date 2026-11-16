@@ -49,6 +49,21 @@ def published(name, ref="HEAD"):
         return None
 
 
+WEEKLY_SUBJECT = "chore(phase3): weekly levels refresh"
+
+
+def weekly_baseline():
+    """The previous weekly refresh: the one fixed point every headline is set against, so a daily
+    sensors or cyclone commit in between does not shorten one comparison and not another.
+    None when no such commit is in reach (a shallow checkout), and the page says so."""
+    try:
+        out = subprocess.run(["git", "log", "-1", "--format=%H %h %cI", f"--grep={WEEKLY_SUBJECT}", "--fixed-strings"],
+                             cwd=ROOT, capture_output=True, text=True, check=True, timeout=30).stdout.split()
+        return {"ref": out[0], "commit": out[1], "committedAt": out[2]} if len(out) == 3 else None
+    except (OSError, subprocess.SubprocessError):
+        return None
+
+
 def head_commit():
     try:
         out = subprocess.run(["git", "log", "-1", "--format=%h %cI"], cwd=ROOT, capture_output=True,
@@ -83,6 +98,10 @@ def item(key, label, unit, better, href, before, after, before_as_of, after_as_o
            "change": round(after - before, 1) if isinstance(before, (int, float)) and isinstance(after, (int, float)) else None,
            "direction": direction(before, after, better),
            "refreshed": before_as_of != after_as_of if before_as_of and after_as_of else None}
+    # The same reading period on both sides with a different figure is a revision of that
+    # reading, not a change in conditions: never "better" or "worse".
+    if out["refreshed"] is False and out["direction"] in ("better", "worse", "moved"):
+        out["direction"] = "revised"
     if note:
         out["note"] = note
     return out
@@ -165,7 +184,10 @@ def field_items(old, new):
     ]
 
 
-def build(load_before=published, load_after=current):
+def build(load_before=None, load_after=current, baseline=None):
+    if load_before is None:
+        baseline = weekly_baseline()
+        load_before = (lambda name: published(name, baseline["ref"])) if baseline else published
     old = {key: load_before(name) for key, name in FILES.items()}
     new = {key: load_after(name) for key, name in FILES.items()}
     gw_items, gw_summary = groundwater_items(old["groundwater"], new["groundwater"])
@@ -175,7 +197,8 @@ def build(load_before=published, load_after=current):
     return {
         "contractVersion": CONTRACT_VERSION,
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
-        "comparedWith": {"label": "the data the site was showing before this refresh", **(head_commit() or {})},
+        "comparedWith": ({"label": "the previous weekly refresh", "commit": baseline["commit"], "committedAt": baseline["committedAt"]}
+                         if baseline else {"label": "the data the site was showing before this refresh", **(head_commit() or {})}),
         "items": items,
         "groundwater": gw_summary,
         "drought": {"worse": drought_changes.get("worse", [])[:MOVED_LIMIT],
@@ -185,6 +208,7 @@ def build(load_before=published, load_after=current):
             "better": sum(1 for i in items if i["direction"] == "better"),
             "worse": sum(1 for i in items if i["direction"] == "worse"),
             "same": sum(1 for i in items if i["direction"] == "same"),
+            "revised": sum(1 for i in items if i["direction"] == "revised"),
             "unknown": sum(1 for i in items if i["direction"] is None),
         },
     }
