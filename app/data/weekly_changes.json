@@ -1,10 +1,10 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-16T10:09:03+00:00",
+ "generatedAt": "2026-11-16T22:59:10+00:00",
  "comparedWith": {
-  "label": "the data the site was showing before this refresh",
-  "commit": "7d4b582",
-  "committedAt": "2026-11-15T19:17:12Z"
+  "label": "the previous weekly refresh",
+  "commit": "2f65743",
+  "committedAt": "2026-11-16T10:11:18Z"
  },
  "items": [
   {
@@ -13,13 +13,13 @@
    "unit": "%",
    "better": "higher",
    "href": "/climate/",
-   "before": -28.1,
+   "before": -28.0,
    "after": -28.0,
-   "beforeAsOf": "2026-11-13",
+   "beforeAsOf": "2026-11-14",
    "afterAsOf": "2026-11-14",
-   "change": 0.1,
-   "direction": "better",
-   "refreshed": true
+   "change": 0.0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "soilBelow",
@@ -55,13 +55,13 @@
    "unit": "%",
    "better": "higher",
    "href": "/agriculture/",
-   "before": 42.5,
+   "before": 42.3,
    "after": 42.3,
-   "beforeAsOf": "2026-11-15T11:05+05:30",
+   "beforeAsOf": "2026-11-16T12:02+05:30",
    "afterAsOf": "2026-11-16T12:02+05:30",
-   "change": -0.2,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0.0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "trigger1",
@@ -71,11 +71,11 @@
    "href": "/drought/",
    "before": 523,
    "after": 523,
-   "beforeAsOf": "2026-11-07",
+   "beforeAsOf": "2026-11-14",
    "afterAsOf": "2026-11-14",
    "change": 0,
    "direction": "same",
-   "refreshed": true
+   "refreshed": false
   },
   {
    "key": "droughtSevere",
@@ -83,13 +83,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 30,
+   "before": 22,
    "after": 22,
-   "beforeAsOf": "2026-11-07",
+   "beforeAsOf": "2026-11-14",
    "afterAsOf": "2026-11-14",
-   "change": -8,
-   "direction": "better",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "droughtModerate",
@@ -97,13 +97,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 279,
+   "before": 214,
    "after": 214,
-   "beforeAsOf": "2026-11-07",
+   "beforeAsOf": "2026-11-14",
    "afterAsOf": "2026-11-14",
-   "change": -65,
-   "direction": "better",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "gwStress",
@@ -111,12 +111,12 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/map/",
-   "before": 433,
+   "before": 432,
    "after": 432,
    "beforeAsOf": "2026-10",
    "afterAsOf": "2026-10",
-   "change": -1,
-   "direction": "better",
+   "change": 0,
+   "direction": "same",
    "refreshed": false
   },
   {
@@ -125,13 +125,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 270,
+   "before": 212,
    "after": 212,
-   "beforeAsOf": "2026-11-04",
+   "beforeAsOf": "2026-11-11",
    "afterAsOf": "2026-11-11",
-   "change": -58,
-   "direction": "better",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "cropsShort",
@@ -139,13 +139,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/#field-week",
-   "before": 70,
+   "before": 137,
    "after": 137,
-   "beforeAsOf": "2026-11-09",
+   "beforeAsOf": "2026-11-16",
    "afterAsOf": "2026-11-16",
-   "change": 67,
-   "direction": "worse",
-   "refreshed": true
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "ensoPeak",
@@ -153,13 +153,13 @@
    "unit": "°C",
    "better": "context",
    "href": "/monsoon/",
-   "before": 2.74,
+   "before": 2.53,
    "after": 2.53,
-   "beforeAsOf": "2026-10-08",
+   "beforeAsOf": "2026-11-12",
    "afterAsOf": "2026-11-12",
-   "change": -0.2,
-   "direction": "moved",
-   "refreshed": true,
+   "change": 0.0,
+   "direction": "same",
+   "refreshed": false,
    "note": "El Niño Advisory"
   }
  ],
@@ -460,9 +460,10 @@
   "basis": "each mandal's manual reading now against the same reading one week of rain earlier"
  },
  "counts": {
-  "better": 5,
-  "worse": 2,
-  "same": 3,
+  "better": 0,
+  "worse": 0,
+  "same": 11,
+  "revised": 0,
   "unknown": 0
  }
 }

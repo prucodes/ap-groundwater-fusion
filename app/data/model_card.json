@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "modelName": "AP Mandal Groundwater Temporal Nowcast",
   "modelVersion": "phase0-nowcast-3.0.0",
-  "buildTimestamp": "2026-11-16T09:40:34+00:00",
+  "buildTimestamp": "2026-11-16T22:52:22+00:00",
   "trainingPeriod": {
     "start": "2015-06",
     "end": "2026-09"
@@ -159,7 +159,7 @@
     },
     "spatialEstimation": {
       "task": "whole_mandal_spatial_estimation",
-      "generatedAt": "2026-11-16T09:44:48+00:00",
+      "generatedAt": "2026-11-16T22:57:06+00:00",
       "validation": "5-fold GroupKFold with whole mandals held out",
       "rowCount": 82971,
       "mandalCount": 651,
@@ -221,7 +221,7 @@
     },
     "directForecast": {
       "task": "direct_multi_horizon_forecast",
-      "generatedAt": "2026-11-16T09:45:30+00:00",
+      "generatedAt": "2026-11-16T22:58:24+00:00",
       "featureTiming": "features available at forecast origin; no future rainfall",
       "baselineDefinitions": {
         "noChange": "the level at the forecast origin",
@@ -248,9 +248,9 @@
           },
           "sampleCount": 21667,
           "model": {
-            "maeM": 1.3307,
-            "rmseM": 2.3492,
-            "r2": 0.9159
+            "maeM": 1.297,
+            "rmseM": 2.3234,
+            "r2": 0.9177
           },
           "baselines": {
             "noChange": {
@@ -284,9 +284,9 @@
           },
           "sampleCount": 21619,
           "model": {
-            "maeM": 2.4713,
-            "rmseM": 3.982,
-            "r2": 0.7564
+            "maeM": 2.277,
+            "rmseM": 3.6971,
+            "r2": 0.79
           },
           "baselines": {
             "noChange": {
@@ -364,7 +364,7 @@
               }
             ],
             "sampleCount": 21619,
-            "maeM": 1.9029,
+            "maeM": 1.792,
             "baselines": {
               "noChange": {
                 "maeM": 2.2095
@@ -377,21 +377,21 @@
             "terrainCohorts": {
               "alluvial": {
                 "sampleCount": 6430,
-                "maeM": 1.4756,
+                "maeM": 1.4306,
                 "noChangeMaeM": 1.6662,
-                "improvementPct": 11.44
+                "improvementPct": 14.14
               },
               "coastal": {
                 "sampleCount": 7268,
-                "maeM": 1.4688,
+                "maeM": 1.3722,
                 "noChangeMaeM": 1.9394,
-                "improvementPct": 24.27
+                "improvementPct": 29.25
               },
               "hard_rock": {
                 "sampleCount": 7921,
-                "maeM": 2.6482,
+                "maeM": 2.4705,
                 "noChangeMaeM": 2.8983,
-                "improvementPct": 8.63
+                "improvementPct": 14.76
               }
             },
             "everyTerrainCohortImproves": true
@@ -413,9 +413,9 @@
           },
           "sampleCount": 21577,
           "model": {
-            "maeM": 3.669,
-            "rmseM": 5.8286,
-            "r2": 0.4812
+            "maeM": 3.1425,
+            "rmseM": 4.912,
+            "r2": 0.6315
           },
           "baselines": {
             "noChange": {
@@ -493,7 +493,7 @@
               }
             ],
             "sampleCount": 21577,
-            "maeM": 2.5105,
+            "maeM": 2.2558,
             "baselines": {
               "noChange": {
                 "maeM": 2.9944
@@ -502,33 +502,31 @@
                 "maeM": 2.388
               }
             },
-            "beatsBothBaselinesByFivePct": false,
+            "beatsBothBaselinesByFivePct": true,
             "terrainCohorts": {
               "alluvial": {
                 "sampleCount": 6421,
-                "maeM": 1.6974,
+                "maeM": 1.6723,
                 "noChangeMaeM": 2.198,
-                "improvementPct": 22.78
+                "improvementPct": 23.92
               },
               "coastal": {
                 "sampleCount": 7254,
-                "maeM": 1.9105,
+                "maeM": 1.7158,
                 "noChangeMaeM": 2.6361,
-                "improvementPct": 27.52
+                "improvementPct": 34.91
               },
               "hard_rock": {
                 "sampleCount": 7902,
-                "maeM": 3.7221,
+                "maeM": 3.2255,
                 "noChangeMaeM": 3.9705,
-                "improvementPct": 6.26
+                "improvementPct": 18.76
               }
             },
             "everyTerrainCohortImproves": true
           },
           "rollingOriginValidated": true,
-          "releaseBlockers": [
-            "does_not_beat_both_baselines_by_five_pct_under_rolling_origin"
-          ],
+          "releaseBlockers": [],
           "releaseStatus": "research_only"
         },
         {
@@ -544,9 +542,9 @@
           },
           "sampleCount": 21683,
           "model": {
-            "maeM": 4.8184,
-            "rmseM": 7.9201,
-            "r2": 0.0483
+            "maeM": 4.0509,
+            "rmseM": 6.4327,
+            "r2": 0.3722
           },
           "baselines": {
             "noChange": {
@@ -573,7 +571,7 @@
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",
-      "generatedAt": "2026-11-16T09:45:31+00:00",
+      "generatedAt": "2026-11-16T22:58:25+00:00",
       "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
       "overlapPeriod": {
         "start": "2014-06",
@@ -615,9 +613,13 @@
       "requiresReconciledTerrainCohorts": true
     },
     "horizonsClearingTheGate": [
-      3
+      3,
+      6
     ],
-    "reason": "Released horizons: [3]. A horizon is published only when it both clears the gate and is listed in RELEASED_FORECAST_HORIZONS; clearing the gate alone does not publish it."
+    "heldHorizons": [
+      6
+    ],
+    "reason": "Released horizons: [3]. A horizon is published only when it both clears the gate and is listed in RELEASED_FORECAST_HORIZONS; clearing the gate alone does not publish it. Held: [6] clear the gate but are not yet released, until they hold over several weekly runs."
   },
   "cohortDefinitions": {
     "temporalNowcast": "source-UUID mandal-months with exact calendar lag1 and lag12 and a resolved location; missing rainfall stays missing",
@@ -658,13 +660,13 @@
   },
   "inputHashes": {
     "apwrimsHistory": "37b5666aea23f65ff7564432ac3cae6a42a9d1d90a41ab5ef642813696e7b649",
-    "nowcasts": "cf43188e30356f738044acc1bc9aabb6c908a38126a70f9ef6359b542401131c",
+    "nowcasts": "0a7cdd0fdb00aee0353d542b8629568e4d1801cfcfc2d368fabc6ae885e5a8e6",
     "geometry": "4ef01e0616be0f395c85b6d4bac386768f469c998af74fb09a7f2c6714698afc",
     "districtSignals": "7fe4b04d3a9db14f43a66512ba3b8cce54f31f48c906beb22a44d8c13db29527",
     "climateContext": "c422f0218e598cc019917d3d0f47839362ef3d41b717609464d9f1c5b5d68b39",
     "graceProvenance": "f8ed4e296a4acc1e58c55e8b37985c8617b0f0890d96b31c85c5f71b6192eafe",
     "extractionCategories": "72c07dd37afe92af99dd414fab9866c55043b49ae147678f8a82cf7eac5b358e",
-    "evaluations": "417183276c49b8b98068d9af207c006a1051e7e151c531599da80c6db988de5d"
+    "evaluations": "06829242eafb807fbb0254ba96ee76d3c2de8bedd3605027eb5f802b7617dc53"
   },
-  "generatedAt": "2026-11-16T09:45:46+00:00"
+  "generatedAt": "2026-11-16T22:58:48+00:00"
 }

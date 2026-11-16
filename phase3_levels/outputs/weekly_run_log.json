@@ -1,130 +1,138 @@
 {
-  "ran_at": "2026-11-16T10:09:51",
+  "ran_at": "2026-11-16T22:59:17",
+  "mode": "rebuild",
   "steps": [
-    {
-      "step": "fetch GRACE-DA",
-      "ok": true,
-      "rc": 0,
-      "secs": 1.8,
-      "required": false
-    },
-    {
-      "step": "fetch CHIRPS rain",
-      "ok": true,
-      "rc": 0,
-      "secs": 560.5,
-      "required": false
-    },
-    {
-      "step": "refresh TerraClimate",
-      "ok": true,
-      "rc": 0,
-      "secs": 5.0,
-      "required": false
-    },
     {
       "step": "fetch APWRIMS sensor history",
       "ok": true,
-      "rc": 0,
-      "secs": 817.2,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "fetch APWRIMS water context",
       "ok": true,
-      "rc": 0,
-      "secs": 155.0,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
-      "step": "fetch IMD forecasts (needs IMD_API_KEY)",
+      "step": "fetch soil moisture history",
       "ok": true,
-      "rc": 0,
-      "secs": 0.1,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
-      "step": "resample GRACE at districts",
+      "step": "fetch CHIRPS rain",
       "ok": true,
-      "rc": 0,
-      "secs": 3.5,
-      "required": false
-    },
-    {
-      "step": "rebuild mandal rainfall/balance heat",
-      "ok": true,
-      "rc": 0,
-      "secs": 0.0,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "extend CHIRPS rainfall history (model input)",
       "ok": true,
-      "rc": 0,
-      "secs": 635.4,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "fetch NASA POWER rainfall (fallback)",
       "ok": true,
-      "rc": 0,
-      "secs": 1.0,
+      "skipped": "rebuild",
+      "secs": 0,
+      "required": false
+    },
+    {
+      "step": "fetch GRACE-DA",
+      "ok": true,
+      "skipped": "rebuild",
+      "secs": 0,
+      "required": false
+    },
+    {
+      "step": "refresh TerraClimate",
+      "ok": true,
+      "skipped": "rebuild",
+      "secs": 0,
+      "required": false
+    },
+    {
+      "step": "fetch IMD forecasts (needs IMD_API_KEY)",
+      "ok": true,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "fetch ENSO index",
       "ok": true,
-      "rc": 0,
-      "secs": 0.2,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "fetch ENSO outlook",
       "ok": true,
-      "rc": 0,
-      "secs": 0.2,
+      "skipped": "rebuild",
+      "secs": 0,
+      "required": false
+    },
+    {
+      "step": "resample GRACE at districts",
+      "ok": true,
+      "skipped": "rebuild",
+      "secs": 0,
+      "required": false
+    },
+    {
+      "step": "rebuild mandal rainfall/balance heat",
+      "ok": true,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "build holdout-safe nowcasts",
       "ok": true,
       "rc": 0,
-      "secs": 36.5,
+      "secs": 42.0,
       "required": true
     },
     {
       "step": "evaluate model tasks",
       "ok": true,
       "rc": 0,
-      "secs": 273.1,
+      "secs": 336.3,
       "required": true
     },
     {
       "step": "build released 3-month forecast",
       "ok": true,
       "rc": 0,
-      "secs": 14.9,
+      "secs": 22.8,
       "required": true
     },
     {
       "step": "publish V2 app data",
       "ok": true,
       "rc": 0,
-      "secs": 1.4,
+      "secs": 1.7,
       "required": true
     },
     {
       "step": "build forecast reliability",
       "ok": true,
       "rc": 0,
-      "secs": 1.0,
+      "secs": 1.2,
       "required": false
     },
     {
       "step": "add up canal releases",
       "ok": true,
       "rc": 0,
-      "secs": 14.2,
+      "secs": 0.0,
       "required": false
     },
     {
@@ -138,35 +146,35 @@
       "step": "follow Cyclone Arnab",
       "ok": true,
       "rc": 0,
-      "secs": 0.5,
+      "secs": 0.6,
       "required": false
     },
     {
       "step": "build monsoon watch",
       "ok": true,
       "rc": 0,
-      "secs": 4.4,
+      "secs": 5.0,
       "required": false
     },
     {
       "step": "build recharge efficiency",
       "ok": true,
       "rc": 0,
-      "secs": 4.3,
+      "secs": 5.0,
       "required": false
     },
     {
       "step": "build rain governed",
       "ok": true,
       "rc": 0,
-      "secs": 4.3,
+      "secs": 5.0,
       "required": false
     },
     {
       "step": "build depth time-lapse",
       "ok": true,
       "rc": 0,
-      "secs": 0.1,
+      "secs": 0.2,
       "required": false
     },
     {
@@ -194,63 +202,70 @@
       "step": "build field queue",
       "ok": true,
       "rc": 0,
-      "secs": 0.0,
+      "secs": 0.1,
       "required": false
     },
     {
       "step": "build drought watch",
       "ok": true,
-      "rc": 0,
-      "secs": 376.9,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "fetch field signals",
       "ok": true,
-      "rc": 0,
-      "secs": 118.1,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "score field calls",
       "ok": true,
-      "rc": 0,
-      "secs": 466.2,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "build summer outlook",
       "ok": true,
       "rc": 0,
-      "secs": 1.4,
+      "secs": 1.6,
       "required": false
     },
     {
       "step": "build drinking water beside the outlook",
       "ok": true,
-      "rc": 0,
-      "secs": 338.9,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "build tank fill",
       "ok": true,
-      "rc": 0,
-      "secs": 59.8,
+      "skipped": "rebuild",
+      "secs": 0,
       "required": false
     },
     {
       "step": "rank summer drinking-water priority",
       "ok": true,
       "rc": 0,
-      "secs": 0.0,
+      "secs": 0.1,
       "required": false
     },
     {
       "step": "read today's water table from the sensors",
       "ok": true,
+      "skipped": "rebuild",
+      "secs": 0,
+      "required": false
+    },
+    {
+      "step": "count the third cyclone",
+      "ok": true,
       "rc": 0,
-      "secs": 4.5,
+      "secs": 0.0,
       "required": false
     },
     {
@@ -264,7 +279,7 @@
       "step": "build constituencies",
       "ok": true,
       "rc": 0,
-      "secs": 0.2,
+      "secs": 0.3,
       "required": false
     },
     {
@@ -278,14 +293,14 @@
       "step": "audit Monsoon Watch against its sources",
       "ok": true,
       "rc": 0,
-      "secs": 46.9,
+      "secs": 5.5,
       "required": false
     },
     {
       "step": "validate V2 contract",
       "ok": true,
       "rc": 0,
-      "secs": 1.5,
+      "secs": 2.0,
       "required": true
     }
   ]
