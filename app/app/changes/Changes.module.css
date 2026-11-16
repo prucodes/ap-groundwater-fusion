@@ -184,3 +184,9 @@
 .today { display: grid; gap: 8px; margin: 18px 0 6px; }
 .today h2 { margin: 0; font: 600 22px/1.25 var(--font-display); color: var(--ink); }
 .today > p { margin: 0 0 6px; max-width: 78ch; font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+
+/* The headlines arrive one after another, worse first, as the page opens. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .card[data-rise] { animation: cardRise .6s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(120ms + var(--rise, 0) * 70ms); }
+}
+@keyframes cardRise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
