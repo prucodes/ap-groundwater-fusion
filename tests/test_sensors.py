@@ -26,9 +26,8 @@ def test_the_history_keeps_one_point_a_day():
     assert HISTORY["days"][-1][2] == DATA["state"]["medianM"]
 
 
-def test_compact_sensor_summary_matches_the_full_published_snapshot():
-    from pathlib import Path
-    data = Path(__file__).resolve().parents[1] / "app" / "data"
-    full = json.loads((data / "gw_sensors.json").read_text())
-    compact = json.loads((data / "gw_sensors_state.json").read_text())
-    assert compact == {key: full[key] for key in ("latestReading", "state")}
+def test_the_compact_summary_is_the_same_reading_as_the_full_file():
+    # The sidebar and page briefs read the compact file; both must describe one fetch.
+    compact = json.load(open(os.path.join(ROOT, "app", "data", "gw_sensors_state.json")))
+    assert compact["latestReading"] == DATA["latestReading"]
+    assert compact["state"] == DATA["state"]

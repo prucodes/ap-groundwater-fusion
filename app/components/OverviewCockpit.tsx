@@ -132,7 +132,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
           summer ahead, one figure each. The full set of numbers waits below. */}
       <section className="overviewHeadlines evidenceStrip" aria-label="This week in four lines">
         {sensors ? (
-          <Link className="headlineCard" href="/changes/#sensors-today">
+          <Link className="headlineCard" href="/changes/#sensors-today" data-testid="state-network-cell">
             <span className="headlineKicker"><IconDroplet /> Daily groundwater snapshot</span>
             <strong>{sensors.deeperPct}%<small>of the State&rsquo;s sensors deeper than a year ago</small></strong>
             <span className="headlineText">
@@ -330,24 +330,9 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
               <em>mandals where groundwater, gauge rain and soil all point to stress</em>
             </div>
           ) : null}
-          <div className="monsoonStripCell">
-            <span>Drought manual, step 1</span>
-            <strong>{droughtSummary.state.trigger1}</strong>
-            <em>
-              mandals with a dry spell · {droughtSummary.state.counts.severe} severe, {droughtSummary.state.counts.moderate} moderate on impact ·{" "}
-              <Link href="/drought">Drought Watch</Link>
-            </em>
-          </div>
-          {sensors ? (
-            <div className="monsoonStripCell" data-testid="state-network-cell">
-              <span>State sensors, today</span>
-              <strong>{`${sensors.medianM.toFixed(1)} m`}</strong>
-              <em>
-                {`median below ground · ${sensors.deeperPct}% of ${sensors.active.toLocaleString("en-IN")} reporting sensors deeper than a year ago (${sensors.yearAgoM.toFixed(1)} m then) · `}
-                <Link href="/changes#sensors-today">Today</Link>
-              </em>
-            </div>
-          ) : stateSummary.state?.currentM !== null && stateSummary.state ? (
+          {/* The drought trigger and today's sensors lead the headline cards above, so they are not
+              repeated here; the September wells line stays only for a day the sensors are missing. */}
+          {!sensors && stateSummary.state?.currentM !== null && stateSummary.state ? (
             <div className="monsoonStripCell" data-testid="state-network-cell">
               <span>State wells, early Sep</span>
               <strong>{`${stateSummary.state.currentM?.toFixed(1)} m`}</strong>

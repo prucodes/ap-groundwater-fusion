@@ -53,5 +53,5 @@ test("a mandal page carries its own drought manual check", async ({ page }) => {
 test("the sidebar and the overview lead to the drought watch", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("link", { name: /Drought Watch/ }).first()).toBeVisible();
-  await expect(page.getByRole("region", { name: "This water year so far" })).toContainText(String(state.trigger1));
+  await expect(page.getByRole("region", { name: "This week in four lines" })).toContainText(String(state.trigger1));
 });

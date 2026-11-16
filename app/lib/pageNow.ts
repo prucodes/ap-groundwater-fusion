@@ -1,7 +1,8 @@
 import changesJson from "../data/weekly_changes.json";
 import { droughtSummary } from "./droughtSummary";
-import sensorState from "../data/gw_sensors_state.json";
+import { stateSummary } from "./stateSummary";
 import { waterSummary } from "./waterSummary";
+import sensorsState from "../data/gw_sensors_state.json";
 
 /* "What it says now" for the page briefs, from the small summary files only (a few KB each),
    so a client page can import it without carrying the full data. Pages with their own heavy
@@ -17,10 +18,18 @@ const metres = (value: number) => `${value.toFixed(1)} m`;
 type Item = { key: string; after: number | null };
 const item = (key: string) => (changesJson as unknown as { items: Item[] }).items.find(i => i.key === key)?.after ?? null;
 
-/** The State's wells, as the latest snapshot reads them. */
+/** The State's water table now: today's automatic sensors, each against itself a year ago. The
+    September well snapshot (a different network and aggregation) stands in only if they are missing. */
 export function wellsNow() {
-  const s = sensorState.state;
-  return `Daily sensor snapshot, ${day(sensorState.latestReading)}: ${s.active.toLocaleString("en-IN")} reporting automatic recorders, median depth ${metres(s.medianM)} below ground, against ${metres(s.medianYearAgoM)} for the same sensors a year ago.`;
+  const live = sensorsState?.state;
+  if (live && live.compared) {
+    const deeper = Math.round((100 * live.deeperThanYearAgo) / live.compared);
+    return `The State's ${live.active.toLocaleString("en-IN")} reporting sensors read a median ${metres(live.medianM)} below ground on ${day(sensorsState.latestReading)}; ${deeper}% are deeper than on the same date last year.`;
+  }
+  const s = stateSummary.state;
+  if (!s || s.currentM === null) return null;
+  const change = s.vsYearAgoM;
+  return `The State's ${s.stationsTotal.toLocaleString("en-IN")} wells averaged ${metres(s.currentM)} below ground on ${day(s.date)}${change !== null ? `, ${metres(Math.abs(change))} ${change >= 0 ? "deeper" : "shallower"} than a year ago` : ""}.`;
 }
 
 export function groundwaterStressNow() {
