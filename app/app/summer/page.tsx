@@ -17,6 +17,8 @@ import { mapGeometry, titleCase } from "../../lib/data";
 import { BAND_LABEL, priorityCsv, SIGNS, signLabel, summerPriority, type PriorityBand, type PriorityRow, type PrioritySign } from "../../lib/summerPriority";
 import { DownloadTextButton } from "../../components/ExportButtons";
 import { PriorityMap } from "../../components/PriorityMap";
+import { Verse } from "../../components/Verse";
+import { VERSES } from "../../lib/verses";
 
 export const metadata: Metadata = {
   title: "Summer Water Outlook | AP Water Intelligence",
@@ -222,6 +224,8 @@ export default function SummerPage() {
           </figure>
         </div>
       </section> : null}
+
+      <Verse verse={VERSES.yaksha} />
 
       <p className={shared.foot}>
         Source: {o.source}, {o.firstYear} to {month(o.anchor)}.{people ? ` People: ${people.source} (CC BY 4.0), a modelled estimate for ${people.year} that counts everyone in the mandal, towns included, not only those on wells.` : ""} A mandal is projected when it has at least four past winters with readings in both months. APWRIMS reports a mandal&rsquo;s average across its piezometers; one village&rsquo;s wells can sit well above or below it. Rain this winter, recharge structures and new pumping all move the answer; the outlook is refreshed as each month&rsquo;s readings arrive. <Link href="/methodology/">Methodology <IconArrowRight /></Link>

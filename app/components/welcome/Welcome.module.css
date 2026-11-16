@@ -69,7 +69,18 @@
 .noScript { color: #edc2a0; font-size: 12px; }
 .landscape { position: relative; min-width: 0; margin: -20px -25px 0 -35px; }
 .scene { width: 100%; height: auto; overflow: visible; }
-.landscape figcaption { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 13px; margin: -18px 0 0; color: #9bbcb3; font: 10px var(--font-mono); letter-spacing: .12em; }
+/* Narada's question on tanks, set in the open sky above the landscape: warm against the teal, and quiet. */
+.verse {
+  --verse-script: #ead9ab; --verse-text: #a9c4ba; --verse-cite: #86a399; --verse-mark: #d9c48a; --verse-rule: rgba(217, 196, 138, .55);
+  position: absolute; z-index: 2; top: 0; left: 7%; max-width: 380px; margin: 0; padding: 0; text-align: left;
+  animation: verseIn 1.8s ease .9s both;
+}
+.verse > span:first-child { justify-content: flex-start; margin-bottom: 14px; }
+.verse > span:first-child i:first-child { display: none; }
+.verse blockquote { font-size: 17px; line-height: 1.9; }
+.verse p { margin-left: 0; font-size: 14px; }
+@keyframes verseIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.landscape > figcaption { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 13px; margin: -18px 0 0; color: #9bbcb3; font: 10px var(--font-mono); letter-spacing: .12em; }
 .figureIndex { color: #78978e; }
 .figureNote { padding-left: 12px; border-left: 1px solid #43685e; color: #8ea69c; letter-spacing: 0; font-family: var(--font-sans); }
 .sceneLabels { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; fill: #c1d5c2; }
@@ -114,10 +125,14 @@
 @keyframes enter { 0% { opacity: 0; transform: translate(-50%, -50%) scale(0); } 45% { opacity: .13; } 100% { opacity: .9; transform: translate(-50%, -50%) scale(100); } }
 @media (min-width: 1600px) { .content { padding-top: 60px; padding-bottom: 75px; } .description { font-size: 16px; } .form { max-width: 440px; } }
 @media (max-width: 1120px) {
+  .verse { position: static; max-width: 520px; margin: 8px auto 28px; text-align: center; }
+  .verse > span:first-child { justify-content: center; }
+  .verse > span:first-child i:first-child { display: block; }
+  .verse p { margin-left: auto; }
   .content { grid-template-columns: minmax(355px, .95fr) minmax(0, 1.15fr); padding-left: 5%; padding-right: 3%; }
   .story h1 { font-size: 70px; }
   .landscape { margin-left: -35px; margin-right: -10px; }
-  .landscape figcaption { gap: 9px; font-size: 10px; }
+  .landscape > figcaption { gap: 9px; font-size: 10px; }
   .figureNote { flex-basis: 100%; text-align: center; border: 0; padding: 0; }
   .footer > p { flex-direction: column; gap: 3px; text-align: right; }
 }
@@ -144,7 +159,10 @@
   .inputRow button { padding: 11px 15px; gap: 18px; }
   .formHelp { font-size: 10px; min-height: 42px; }
   .landscape { width: calc(100% + 12%); max-width: 580px; margin: -5px -6% 6px; }
-  .landscape figcaption { margin-top: -30px; font-size: 10px; gap: 9px; }
+  .verse { padding: 0 calc(6% + 8px); }
+  .verse blockquote { font-size: 16px; }
+  .verse p { font-size: 14px; }
+  .landscape > figcaption { margin-top: -30px; font-size: 10px; gap: 9px; }
   .figureNote { flex-basis: auto; border-left: 1px solid #43685e; padding-left: 9px; }
   .rainDrop:nth-child(even) { display: none; }
   .footer { margin: 0 7%; padding: 21px 0 25px; flex-direction: column; align-items: flex-start; gap: 21px; }

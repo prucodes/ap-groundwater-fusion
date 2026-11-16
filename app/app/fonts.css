@@ -49,3 +49,7 @@
   --font-space: "Space Grotesk", "Space Grotesk Fallback";
   --font-jetbrains: "JetBrains Mono", "JetBrains Mono Fallback";
 }
+
+/* Noto Serif Telugu (SIL OFL 1.1), regular weight, cut down to the letters of the verses in
+   lib/verses.ts so it costs a few kilobytes. Change a verse and rerun scripts/subset_verse_font.py. */
+@font-face { font-family: "Verse Telugu"; font-style: normal; font-weight: 400; font-display: swap; src: url("./fonts/noto-serif-telugu-verses.woff2") format("woff2"); unicode-range: U+0C00-0C7F, U+0964-0965, U+200C-200D, U+25CC; }

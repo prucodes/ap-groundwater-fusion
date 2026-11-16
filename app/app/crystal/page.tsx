@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Verse } from "../../components/Verse";
+import { VERSES } from "../../lib/verses";
 
 export const metadata: Metadata = {
   title: "Crystal Water Table · Andhra Pradesh | Cinematic 3D",
@@ -28,6 +30,7 @@ export default function CrystalWaterTablePage() {
         allow="fullscreen"
         className="crystalFrame"
       />
+    <Verse verse={VERSES.bhishma} />
     </div>
   );
 }

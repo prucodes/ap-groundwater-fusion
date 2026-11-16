@@ -37,6 +37,8 @@ import { day } from "../../components/agriculture/waterContextFormat";
 import styles from "./MonsoonPage.module.css";
 import { brief } from "../../lib/pageBriefs";
 import { currentFilmFigures } from "../../lib/filmLiveFigures";
+import { Verse } from "../../components/Verse";
+import { VERSES } from "../../lib/verses";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -655,6 +657,7 @@ export default function MonsoonPage() {
         </p>
         </details>
       </section>
+    <Verse verse={VERSES.rain} />
     </div>
   );
 }

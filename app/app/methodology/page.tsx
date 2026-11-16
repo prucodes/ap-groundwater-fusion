@@ -11,6 +11,8 @@ import { checkRecord } from "../../lib/cropWaterRecord";
 import { summerOutlook as summer } from "../../lib/summer";
 import { brief } from "../../lib/pageBriefs";
 import crossNetwork from "../../data/cross_network_check.json";
+import { Verse } from "../../components/Verse";
+import { VERSES } from "../../lib/verses";
 
 const labels = [
   { code: "APWRIMS (AP-GWD)", text: "Recorded mandal depth history. Modelled nowcasts are separate derived values; neither is presented as a certified official output." },
@@ -559,6 +561,7 @@ export default function MethodologyPage() {
         </div>
       </section>
 
+      <Verse verse={VERSES.reflect} />
       <section className="card" id="ownership" aria-labelledby="method-ownership" data-testid="method-ownership">
         <div className="cardHead">
           <div className="cardTitle" id="method-ownership"><span className="titleIcon"><IconInfo /></span>Ownership and reuse</div>

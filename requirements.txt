@@ -16,3 +16,5 @@ scipy
 
 # Pictures: the cyclone cloud film and its tests
 pillow
+fonttools
+brotli
