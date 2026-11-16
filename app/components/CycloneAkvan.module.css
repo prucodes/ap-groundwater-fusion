@@ -1,0 +1,63 @@
+/* The third cyclone on the night-sky band the satellite films use: the storm from
+   orbit beside the State at night, the mandals that matter lit amber, then three
+   figures and where the count stands. Dark in both themes. */
+
+.wrap { position: relative; overflow: hidden; display: grid; gap: 18px; margin-top: 18px; padding: 24px; border-radius: var(--radius-lg);
+  color: #e8f1fa; box-shadow: var(--shadow-pop);
+  background: radial-gradient(900px 340px at 85% -15%, rgba(74, 196, 230, .2), transparent 60%),
+              radial-gradient(700px 300px at 0% 110%, rgba(242, 178, 74, .12), transparent 60%), var(--band-navy); }
+.head { display: grid; gap: 8px; max-width: 980px; }
+.kicker { display: inline-flex; align-items: center; gap: 8px; font: 600 11px var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: #8fdcf2; }
+.liveDot { width: 8px; height: 8px; border-radius: 50%; background: #ff6b5a; box-shadow: 0 0 0 0 rgba(255, 107, 90, .6); animation: pulse 1.8s ease-out infinite; }
+@keyframes pulse { to { box-shadow: 0 0 0 9px rgba(255, 107, 90, 0); } }
+.head h2 { margin: 0; font: 600 28px/1.2 var(--font-display); color: #fff; text-wrap: balance; letter-spacing: -.01em; }
+.head p { margin: 0; max-width: 84ch; font-size: 14.5px; line-height: 1.6; color: rgba(232, 241, 250, .82); }
+.head b { color: #f7c977; }
+
+.panels { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 16px; align-items: stretch; }
+.live { position: relative; margin: 0; overflow: hidden; border-radius: 14px; background: #0b1d33; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.live video, .live svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.live video { object-fit: cover; }
+.live svg path { fill: none; stroke: #f7c977; stroke-width: 1.5; vector-effect: non-scaling-stroke; opacity: .9; }
+.live figcaption { position: absolute; left: 12px; top: 12px; display: grid; grid-template-columns: auto 1fr; gap: 0 8px; align-items: center; padding: 8px 12px;
+  border-radius: 10px; background: rgba(8, 21, 38, .72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.live figcaption b { font: 600 13px var(--font-mono); color: #fff; font-variant-numeric: tabular-nums; }
+.live figcaption em { grid-column: 2; font-style: normal; font-size: 11.5px; color: rgba(232, 241, 250, .7); }
+
+/* The State at night: StateOutlineMap with its sea and strokes turned to the band. */
+.night { --map-sea-a: #0d2340; --map-sea-b: #0a1a30; --map-held: #1c3550; min-width: 0; border-radius: 14px; overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.night :global(figure) { height: 100%; border-radius: 0; }
+.night :global(svg path[data-key]) { stroke: rgba(8, 21, 38, .9); stroke-width: .45; }
+.night :global(svg path[data-key="m"]) { filter: drop-shadow(0 0 3px rgba(242, 178, 74, .55)); }
+.night :global(svg path:not([data-key])) { stroke: rgba(143, 220, 242, .3); stroke-width: .9; }
+.night :global(svg path[data-mark]) { stroke: #f2b24a; stroke-width: 1.3; }
+.night :global(figcaption) { color: rgba(232, 241, 250, .78); }
+.ring { background: transparent !important; box-shadow: inset 0 0 0 2px #f2b24a; }
+
+.tiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.tiles li { display: grid; gap: 3px; align-content: start; padding: 14px 16px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, .055); border: 1px solid rgba(255, 255, 255, .1); }
+.tiles li[data-key] { background: rgba(242, 178, 74, .12); border-color: rgba(247, 201, 119, .4); }
+.tiles span { font: 600 10.5px var(--font-mono); letter-spacing: .09em; text-transform: uppercase; color: rgba(232, 241, 250, .62); }
+.tiles b { font: 600 30px/1.1 var(--font-display); color: #fff; font-variant-numeric: tabular-nums; }
+.tiles li[data-key] b { color: #f7c977; }
+.tiles b small { font-size: 15px; font-weight: 500; color: rgba(232, 241, 250, .62); }
+.tiles em { font-style: normal; font-size: 12px; line-height: 1.45; color: rgba(232, 241, 250, .75); }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; counter-reset: step; }
+.steps li { position: relative; display: grid; gap: 2px; padding: 10px 12px 10px 34px; border-radius: var(--radius-sm); background: rgba(255, 255, 255, .04); border: 1px solid rgba(255, 255, 255, .08); }
+.steps li::before { counter-increment: step; content: counter(step); position: absolute; left: 10px; top: 10px; width: 16px; height: 16px; border-radius: 50%;
+  display: grid; place-items: center; font: 600 10px var(--font-mono); color: rgba(232, 241, 250, .6); border: 1.5px solid rgba(232, 241, 250, .3); }
+.steps li[data-done]::before { content: "✓"; color: #06202b; background: #8fdcf2; border-color: #8fdcf2; }
+.steps b { font: 600 13px var(--font-display); color: #fff; }
+.steps span { font-size: 11.5px; line-height: 1.45; color: rgba(232, 241, 250, .62); }
+.note { margin: 0; font-size: 11.5px; line-height: 1.55; color: rgba(232, 241, 250, .55); }
+
+@media (max-width: 900px) {
+  .wrap { padding: 16px; }
+  .panels { grid-template-columns: minmax(0, 1fr); }
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .head h2 { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { .liveDot { animation: none; } }

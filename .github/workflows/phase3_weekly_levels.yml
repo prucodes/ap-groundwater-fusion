@@ -111,6 +111,7 @@ jobs:
             app/data/gw_sensors.json \
             app/data/gw_sensors_history.json \
             app/data/gw_sensors_state.json \
+            app/data/cyclone_akvan.json \
             app/public/geo/depth-timelapse.json \
             app/public/geo/mandal-hydrographs.json \
             app/public/water-crystal-3d.html \

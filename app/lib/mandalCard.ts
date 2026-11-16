@@ -2,6 +2,7 @@ import { mandalByMapKey, mapGeometry, titleCase } from "./data";
 import { summerOutlook } from "./summer";
 import { summerPriority, type PriorityBand } from "./summerPriority";
 import { arnab } from "./arnab";
+import { sensors } from "./sensors";
 
 /* One mandal's season on a card to share: the latest reading, its deepest May,
    the month the groundwater clock says it passes it, its place on the summer
@@ -17,6 +18,8 @@ export type MandalCardFacts = {
   band: PriorityBand | null;
   cycloneMm: number | null; cycloneDays: number | null;
   targetMay: string;
+  /** The median of the mandal's automatic sensors today and the same sensors a year ago. */
+  sensorsToday: { todayM: number; yearAgoM: number | null; count: number; reading: string } | null;
 };
 
 const place = (value: string) => (/[a-z]/.test(value) ? value : titleCase(value));
@@ -38,5 +41,9 @@ export function mandalCardFacts(id: string): MandalCardFacts | null {
     clock, band,
     cycloneMm: storm ? storm[3] : null, cycloneDays: storm ? arnab.together?.rainWindow.days ?? null : null,
     targetMay: summerOutlook.targetMay,
+    sensorsToday: (() => {
+      const row = sensors.mandals.find(m => m[0] === index);
+      return row ? { todayM: row[2], yearAgoM: row[3], count: row[1], reading: sensors.latestReading } : null;
+    })(),
   };
 }

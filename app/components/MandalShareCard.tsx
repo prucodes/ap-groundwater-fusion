@@ -36,6 +36,15 @@ function words(f: MandalCardFacts, lang: Lang) {
     { label: te ? "రికార్డులో అత్యంత లోతైన మే" : "Deepest May on record", value: m(f.deepestMayM) },
     clock,
   ];
+  if (f.sensorsToday) {
+    const st = f.sensorsToday, deeper = st.yearAgoM !== null && st.todayM - st.yearAgoM > 0.1;
+    rows.splice(1, 0, {
+      label: te ? "సెన్సార్ల నీటి మట్టం, ఈరోజు" : "Sensors today", value: m(st.todayM),
+      note: st.yearAgoM === null ? (te ? `${st.count} సెన్సార్లు` : `${st.count} sensor${st.count === 1 ? "" : "s"}`)
+        : te ? `ఏడాది క్రితం ${m(st.yearAgoM)} · ${st.count} సెన్సార్లు` : `a year ago ${m(st.yearAgoM)} · ${st.count} sensor${st.count === 1 ? "" : "s"}`,
+      tone: deeper ? "bad" : "calm",
+    });
+  }
   if (f.band) rows.push({ label: te ? "వేసవి తాగునీరు" : "Summer drinking water", value: BAND[lang][f.band], tone: f.band === "watch" ? "warn" : "bad" });
   if (f.cycloneMm !== null) rows.push({ label: te ? "అర్ణబ్, మురసు తుఫాన్లు" : "Cyclones Arnab and Murasu", value: te ? `${Math.round(f.cycloneMm)} మి.మీ. వర్షం` : `${Math.round(f.cycloneMm)} mm of rain`, note: f.cycloneDays ? (te ? `${f.cycloneDays} రోజుల్లో` : `in ${f.cycloneDays} days`) : undefined });
   return {

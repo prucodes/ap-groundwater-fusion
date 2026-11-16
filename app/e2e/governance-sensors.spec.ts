@@ -9,3 +9,11 @@ test("This Week opens on today's sensors, each against itself a year ago", async
   await expect(pulse).toContainText("not official data");
   expect(await pulse.locator("circle").count()).toBeGreaterThan(800);
 });
+
+test("a mandal page lists its own sensors today, each against itself a year ago", async ({ page }) => {
+  await page.goto("/mandals/ap-temp-mandal-markapuram-giddalur-371/");
+  const card = page.getByTestId("mandal-sensors");
+  await expect(card).toContainText(/from the \d+ sensors in this mandal|from the sensor in this mandal/);
+  await expect(card).toContainText(/than a year ago|level with a year ago/);
+  await expect(card).toContainText("not official data");
+});
