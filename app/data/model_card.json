@@ -567,7 +567,9 @@
           ],
           "releaseStatus": "research_only"
         }
-      ]
+      ],
+      "publicationStatusSource": "forecastRelease",
+      "note": "Evaluation-only record. Publication status is recorded separately in forecastRelease; rollingOrigin defines the release gate."
     },
     "crossNetworkComparison": {
       "task": "cross_network_comparison",

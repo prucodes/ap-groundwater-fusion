@@ -6158,3 +6158,8 @@ button.statusLive:focus-visible { outline: 2px solid var(--cyan); outline-offset
 .overviewProof { margin: 14px 2px 4px; font-size: 12px; line-height: 1.6; color: var(--ink-soft); }
 .overviewProof b { color: var(--ink); font-weight: 600; }
 .overviewProof a { color: var(--teal); }
+
+.sidebarNav details > summary { list-style: none; cursor: pointer; }
+.sidebarNav details > summary::-webkit-details-marker { display: none; }
+.sidebarNav details[open] > summary > svg { transform: rotate(90deg); }
+@media print { .foldMore { display: block; } }

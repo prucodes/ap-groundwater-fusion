@@ -118,6 +118,7 @@ export default function MapPage() {
         showChips={false}
         variant="compact"
       />
+      <p className="cardNote"><Link href="/crystal/">Water Depth 3D →</Link> · <Link href="/compare/">Compare places →</Link></p>
 
       <section className="card" id="time-lapse" aria-label="Twelve years of the water table">
         <div className="cardHead">

@@ -140,3 +140,31 @@ test("a shared link to the brief fits a 320px phone and names the brief", async 
   await continueIn(page);
   await expect(page).toHaveURL(/\/brief\/$/);
 });
+
+
+test("the welcome quote releases its space and can be restored", async ({ page }) => {
+  await page.clock.install();
+  await page.goto("/");
+  const quote = page.getByTestId("welcome-quote");
+  const text = page.locator("#welcome-quote-text");
+  await expect(quote).toHaveAttribute("data-visible", "true");
+  const before = await text.boundingBox();
+  expect(before!.height).toBeGreaterThan(80);
+  await page.clock.fastForward(21_500);
+  await expect(quote).toHaveAttribute("data-visible", "false");
+  await page.getByRole("button", { name: "Read the quote", exact: true }).click();
+  await expect(quote).toHaveAttribute("data-visible", "true");
+  await page.clock.fastForward(30_000);
+  await expect(quote).toHaveAttribute("data-visible", "true");
+});
+
+test("reduced motion keeps the quote available until manually hidden", async ({ page }) => {
+  await page.clock.install();
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+  await page.clock.fastForward(30_000);
+  const quote = page.getByTestId("welcome-quote");
+  await expect(quote).toHaveAttribute("data-visible", "true");
+  await page.getByRole("button", { name: "Hide the quote", exact: true }).click();
+  await expect(quote).toHaveAttribute("data-visible", "false");
+});

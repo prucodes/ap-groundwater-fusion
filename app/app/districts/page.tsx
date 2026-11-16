@@ -261,6 +261,7 @@ export default function DistrictsPage() {
         <FieldQueue />
       </section>
 
+      <details className="foldMore" id="district-research"><summary><span>Long-term assessment and village research</span><span>Methods, comparisons and limits</span></summary>
       <section className="card" id="assessment-trajectory">
         <div className="cardHead">
           <div className="cardTitle">
@@ -302,6 +303,7 @@ export default function DistrictsPage() {
         <span className="dotsep" />
         {officialStatusLine}
       </div>
+      </details>
     </div>
   );
 }

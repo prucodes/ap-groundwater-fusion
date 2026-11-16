@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
    plain link for the moment before it does. */
 export function MovedTo({ href, label, notice }: { href: string; label: string; notice: string }) {
   const router = useRouter();
-  useEffect(() => { router.replace(`${href}${window.location.hash}`); }, [router, href]);
+  useEffect(() => { router.replace(`${href}${href.includes("#") ? "" : window.location.hash}`); }, [router, href]);
   return <div className="pageWrap">
     <p>This page has moved to <Link href={href}>{label}</Link>.</p>
     <p><small><strong>Prototype.</strong> {notice}</small></p>

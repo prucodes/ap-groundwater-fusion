@@ -88,7 +88,7 @@ test("the footer and methodology state ownership without claiming the source dat
 test("buried findings now sit where a reader looks for them", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator(".monsoonStripCell").filter({ hasText: "Reservoir storage" })).toContainText("village tanks hold");
-  await expect(page.locator(".headlineCard").filter({ hasText: "Next summer" })).toContainText("rural drinking-water schemes draw on this groundwater");
+  await expect(page.locator(".headlineCard").filter({ hasText: "Next summer" })).toContainText("A projection from past winters");
   await page.getByText("All figures and model accuracy").click();
   await expect(page.getByTestId("overview-proof")).toContainText("Checked on wells it never saw");
   await page.goto("/monsoon/");
@@ -116,15 +116,14 @@ test("Monsoon Watch shows canal water by delta and never adds canals into one St
 
 test("Monsoon Watch points to the cyclones page", async ({ page }) => {
   await page.goto("/monsoon/");
-  const card = page.getByTestId("cyclone-arnab");
-  await expect(card).toContainText("Deep tables, heavy rain");
-  await expect(card).toContainText(/Deep tables missed|Soil, 30 cm/);
-  await card.getByTestId("arnab-open").click();
+  await page.getByRole("link", { name: "Cyclone rain, storage and sensor response →", exact: true }).click();
   await expect(page).toHaveURL(/\/cyclones\/$/);
 });
 
 test("the Cyclone Arnab page sets the rain against room to rise and waits for the readings", async ({ page }) => {
   await page.goto("/cyclones/");
+  await expect(page.locator("#completed-cyclones")).not.toHaveAttribute("open", "");
+  await page.locator("#completed-cyclones > summary").click();
   await expect(page.getByTestId("arnab-hero")).toContainText("The rain fell where the water table was already high");
   await expect(page.getByTestId("arnab-view-meet")).toHaveAttribute("aria-pressed", "true");
   await expect(page.getByTestId("arnab-drought")).toContainText("flagged mandals got 100 mm or more");
@@ -138,6 +137,8 @@ test("the Cyclone Arnab page sets the rain against room to rise and waits for th
 
 test("Murasu is counted from where Arnab stopped, on its own map", async ({ page }) => {
   await page.goto("/cyclones/");
+  await expect(page.locator("#completed-cyclones")).not.toHaveAttribute("open", "");
+  await page.locator("#completed-cyclones > summary").click();
   const murasu = page.getByTestId("murasu");
   await expect(murasu).toContainText("no day is counted twice");
   await expect(murasu).toContainText(/Count(ing|ed), /);
@@ -149,6 +150,8 @@ test("Murasu is counted from where Arnab stopped, on its own map", async ({ page
 
 test("the two storms are added together and the deep tables they missed are named", async ({ page }) => {
   await page.goto("/cyclones/");
+  await expect(page.locator("#completed-cyclones")).not.toHaveAttribute("open", "");
+  await page.locator("#completed-cyclones > summary").click();
   const together = page.getByTestId("together");
   await expect(together).toContainText("Both storms together, and where they missed");
   await expect(together).toContainText(/Deep tables missed\s*\d+ of \d+/);
@@ -160,6 +163,7 @@ test("the two storms are added together and the deep tables they missed are name
 
 test("the overview carries the two cyclones and opens them together", async ({ page }) => {
   await page.goto("/");
+  await page.locator("details.overviewMore > summary").click();
   const cell = page.getByTestId("cyclones-cell");
   await expect(cell).toContainText(/\d+ TMC/);
   await expect(cell).toContainText(/deep-table mandals got under \d+ mm/);
@@ -175,6 +179,8 @@ test("the first cyclone link, already shared, lands on the cyclones page and kee
 
 test("the cloud film fills in the State's readings as it reaches each day", async ({ page, request }) => {
   await page.goto("/cyclones/");
+  await expect(page.locator("#completed-cyclones")).not.toHaveAttribute("open", "");
+  await page.locator("#completed-cyclones > summary").click();
   const film = page.getByTestId("cloud-film");
   await expect(film).toContainText("Himawari-9");
   const hour = film.getByRole("slider", { name: "Hour of the film" });
@@ -201,6 +207,8 @@ test("water from space sets GRACE beside the wells and follows the month", async
 
 test("the village tanks are shown before and after the storms", async ({ page }) => {
   await page.goto("/cyclones/");
+  await expect(page.locator("#completed-cyclones")).not.toHaveAttribute("open", "");
+  await page.locator("#completed-cyclones > summary").click();
   const tanks = page.getByTestId("cyclone-tanks");
   await expect(tanks).toContainText(/tank beds holding water went from \d+ km² before Arnab to \d+ km² after Murasu/);
   const swipe = page.getByTestId("tank-swipe");

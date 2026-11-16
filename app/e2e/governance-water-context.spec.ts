@@ -8,6 +8,8 @@ import summary from "../data/water_context_summary.json";
 
 test("the overview carries this water year beside the groundwater", async ({ page }) => {
   await page.goto("/");
+  // The season strip sits in the Overview's folded "All figures" section.
+  await page.locator("details.overviewMore > summary").click();
   const season = page.getByRole("region", { name: "This water year so far" });
   await expect(season).toContainText("Gauge rain vs normal");
   await expect(season).toContainText("mandals below their usual");
@@ -78,10 +80,10 @@ test("methodology and readiness document the new sources and their limits", asyn
   await expect(page.locator("main")).toContainText("APWRIMS already holds crop-sown and crop-stress dashboards behind a login");
 });
 
-test("snapshot, season CSV and AWARE preview carry the season as context", async ({ page }) => {
-  await page.goto("/snapshot/");
-  await expect(page.locator("main")).toContainText("Rain gauges,");
-  await expect(page.locator("main")).toContainText("Reservoirs hold");
+test("the digest, season CSV and AWARE preview carry the season as context", async ({ page }) => {
+  await page.goto("/digest/");
+  await expect(page.locator("main")).toContainText("Rain since 1 June");
+  await expect(page.locator("main")).toContainText("Reservoir storage");
   await page.goto("/reports/");
   let download = page.waitForEvent("download");
   await page.getByRole("button", { name: /Season context by district/ }).click();

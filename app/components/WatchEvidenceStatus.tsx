@@ -26,14 +26,14 @@ export function WatchEvidenceStatus() {
     <details>
       <summary>
         <span className={styles.tag}>RESEARCH SNAPSHOT</span>
-        <strong>Real source inputs. Not live telemetry.</strong>
+        <strong>Dated source snapshots; separate update clocks.</strong>
         <span className={styles.pendingTag}><strong>Baseline review pending.</strong> Seasonal flags are provisional.</span>
         <span className={styles.through}>Groundwater through {month(w.season.latestMonth)}</span>
         <span className={styles.open}>Sources, checks and release gates</span>
       </summary>
       <p className={styles.pending}>Seasonal flags are provisional, not operational advisories.{check ? ` ${check.flagDifferences} source-series flags change with an unfiltered history baseline.` : ""}</p>
       <div className={styles.sources}>
-        <div><span>GROUNDWATER</span><strong>APWRIMS monthly series</strong><p>{month(w.season.latestMonth)} observations. Retained research history; source-use authorization pending.</p><a href="https://apwrims.ap.gov.in/mis/groundwater/levels" target="_blank" rel="noreferrer">APWRIMS source</a></div>
+        <div><span>GROUNDWATER</span><strong>APWRIMS monthly series</strong><p>{month(w.season.latestMonth)} observations. Not live telemetry: monthly hand-read history. Retained research history; source-use authorization pending.</p><a href="https://apwrims.ap.gov.in/mis/groundwater/levels" target="_blank" rel="noreferrer">APWRIMS source</a></div>
         <div><span>RAINFALL</span><strong>{w.rainfall ? w.rainfall.product.split(" monthly")[0] : "CHIRPS"} estimates and AP gauges</strong><p>{w.rainfall ? `${w.rainfall.months} / ${w.season.year}` : "Period unavailable"} monthly satellite-and-gauge product, equal-weight mandal means, for the history since {w.rainfall?.firstYear ?? 1981}.{rain ? ` AP DES mandal gauges to ${day(rain.end)}: ${signed(rain.deviationPct)} against the department's normal, area-weighted.` : " Not an official state rainfall total."}</p><a href={w.rainfall?.source ?? "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/"} target="_blank" rel="noreferrer">Publisher catalogue</a></div>
         <div><span>PACIFIC CONTEXT</span><strong>NOAA ONI</strong><p>{w.enso?.season} {w.enso?.asOf.slice(0, 4)}: {w.enso?.oniC.toFixed(2)} °C. Three-month index, not a mandal forecast. Film and ocean maps have separate snapshot dates.</p><a href="https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/enso_advisory/ensodisc.shtml" target="_blank" rel="noreferrer">Current NOAA advisory</a></div>
         <div><span>SOIL, STORAGE &amp; CROPS</span><strong>{soil || store ? "Partly connected" : "Not connected"}</strong><p>{soil ? `Modelled soil moisture (NRSC, via APWRIMS) for ${day(soil.asOf)}. ` : ""}{store ? `Reservoir storage ${store.storagePct}% of capacity at ${day(store.asOf)}, measured at the headworks. ` : ""}Not connected: crop, sown area, stage and canal delivery to fields. The crop-water lab uses reference coefficients and user-set assumptions.</p><a href="https://ap.nic.in/en/publication/presentation-of-state-centre/" target="_blank" rel="noreferrer">NIC e-Panta context</a></div>

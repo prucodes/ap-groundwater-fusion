@@ -13,7 +13,7 @@ export default function ReportsPage() {
     <section className={styles.section}>
       <div className={styles.heading}><div><span className={styles.eyebrow}>Choose the decision</span><h2>From a question to its evidence.</h2></div></div>
       <div className={styles.links}>
-        <Link className={styles.link} href="/snapshot"><IconArrowRight /><strong>State review</strong><p>Printable groundwater summary, source periods and a complete mandal register.</p></Link>
+        <Link className={styles.link} href="/digest/"><IconArrowRight /><strong>State review</strong><p>Current weekly figures, priority visits and seasonal outlook. The complete mandal CSV is available below.</p></Link>
         <Link className={styles.link} href="/agriculture#agriculture-brief"><IconArrowRight /><strong>Agriculture review</strong><p>District evidence, unresolved coverage and proposed verification steps. Crop and supply feeds remain pending.</p></Link>
         <Link className={styles.link} href="/monsoon"><IconArrowRight /><strong>Seasonal review</strong><p>Satellite and gauge rainfall, reservoir storage, observed groundwater change and ENSO context. Seasonal flags remain provisional.</p></Link>
       </div>

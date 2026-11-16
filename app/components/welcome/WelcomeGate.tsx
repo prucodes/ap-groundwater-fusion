@@ -16,6 +16,27 @@ function Arrow() {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
+function WelcomeQuote({ paused, reduced }: { paused: boolean; reduced: boolean }) {
+  const [visible, setVisible] = useState(true);
+  const [held, setHeld] = useState(false);
+  const [reading, setReading] = useState(false);
+  const [pageVisible, setPageVisible] = useState(true);
+  useEffect(() => {
+    const update = () => setPageVisible(!document.hidden);
+    update(); document.addEventListener("visibilitychange", update);
+    return () => document.removeEventListener("visibilitychange", update);
+  }, []);
+  useEffect(() => {
+    if (paused || reduced || held || reading || !pageVisible) return;
+    const timer = setTimeout(() => setVisible(false), 20_000);
+    return () => clearTimeout(timer);
+  }, [paused, reduced, held, reading, pageVisible]);
+  return <div className={styles.quote} data-testid="welcome-quote" data-visible={visible} onPointerEnter={() => setReading(true)} onPointerLeave={() => setReading(false)} onFocus={() => setReading(true)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setReading(false); }}>
+    <div id="welcome-quote-text" className={styles.quoteSpace} aria-hidden={!visible}><div><Verse verse={VERSES.narada} className={styles.verse} /></div></div>
+    <button type="button" className={styles.quoteToggle} aria-expanded={visible} aria-controls="welcome-quote-text" onClick={() => { setHeld(true); setVisible(value => !value); }}>{visible ? "Hide the quote" : "Read the quote"}</button>
+  </div>;
+}
+
 // Pages people are likely to be sent, named as the sidebar names them.
 const PAGE_NAMES: Record<string, string> = {
   brief: "Project brief", digest: "Weekly digest", reports: "Reports", "field-report": "Field report",
@@ -180,7 +201,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
             </section>
 
             <figure className={styles.landscape}>
-              <Verse verse={VERSES.narada} className={styles.verse} />
+              <WelcomeQuote paused={paused} reduced={reduced} />
               <WaterLandscape />
               <figcaption><span className={styles.figureIndex}>FIG. 01</span> BENEATH THE MONSOON <span className={styles.figureNote}>Illustrative landscape · not measured data</span></figcaption>
             </figure>

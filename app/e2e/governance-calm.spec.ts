@@ -59,7 +59,7 @@ test("This Week leads with what moved, worse first, and keeps the steady figures
   expect(directions).toHaveLength(changes.items.length);
   const rank: Record<string, number> = { worse: 0, better: 1, moved: 2, new: 3, same: 4 };
   expect(directions.map(d => rank[d])).toEqual([...directions.map(d => rank[d])].sort((a, b) => a - b));
-  await expect(page.getByRole("heading", { name: /Moved this week/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Changes in this briefing/ })).toBeVisible();
 });
 
 test("the research snapshot is one line until opened, with its caveat in view", async ({ page }) => {
@@ -74,6 +74,8 @@ test("the research snapshot is one line until opened, with its caveat in view", 
 test("Methodology shows the forecast checked on wells it never saw, method folded", async ({ page }) => {
   await page.goto("/methodology/");
   const section = page.getByTestId("method-cross-network");
+  await expect(section).toBeHidden();
+  await page.getByText("Independent well-network validation", { exact: true }).click();
   await expect(section.getByRole("heading", { name: /never saw/ }).or(section.getByText("Checked on wells it never saw"))).toBeVisible();
   const share = `${Math.round(crossNetwork.overall.direction.forecast! * 100)}%`;
   await expect(section.locator(".headlineCard").first()).toContainText(share);

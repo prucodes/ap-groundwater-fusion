@@ -131,7 +131,7 @@ export default function ArnabPage() {
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
         title={mu ? "Cyclones Arnab, Murasu and Akvan" : "Cyclone Arnab"}
-        brief={brief("/cyclones", tg && ts ? <>Arnab and Murasu brought <b>{formatNumber(Math.round(ts.rainTmc))} TMC</b> in {tg.rainWindow.days} days{tg.rainWindow.open ? " so far" : ""}, but it fell on the coast: <b>{ts.deepStillDry} of {ts.deepMandals}</b> deep-table mandals got under {tg.stillDryMm} mm from both, most in {listOf(tg.stillDry.slice(0, 3).map(x => x.district))}.</> : <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
+        brief={brief("/cyclones", tg && ts ? <>Arnab and Murasu brought <b>{formatNumber(Math.round(ts.rainTmc))} TMC</b> in {tg.rainWindow.days} days{tg.rainWindow.open ? " so far" : ""}, but it fell on the coast: <b>{ts.deepStillDry} of {ts.deepMandals}</b> deep-table source records got under {tg.stillDryMm} mm from both, most in {listOf(tg.stillDry.slice(0, 3).map(x => x.district))}.</> : <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
         showChips={false}
         variant="compact"
       />
@@ -140,6 +140,7 @@ export default function ArnabPage() {
         <CycloneAkvan />
       </section>
 
+      <details className="foldMore" id="completed-cyclones"><summary><span>Arnab and Murasu: completed-event analysis</span><span>Rain, tanks, reservoirs and groundwater response</span></summary>
       <section className={styles.hero} aria-label="Cyclone Arnab in figures" data-testid="arnab-hero">
         <div className={styles.heroText}>
           <span className={styles.kicker}>Arnab · came ashore {arnabDay(d.landfall)} 2026 · updated {d.updatedAt ? arnabDay(d.updatedAt) : "daily"}</span>
@@ -398,6 +399,7 @@ export default function ArnabPage() {
         <summary><IconCyclone /> Sources and limits</summary>
         <p>{d.caveat}</p>
         <p>Rain: AP Directorate of Economics and Statistics gauges. Soil moisture: NRSC model. Reservoirs: State telemetry. All via APWRIMS, as a research sample pending authorisation. Updated every morning until 15 November, then weekly. <Link href="/monsoon/">Monsoon Watch →</Link></p>
+      </details>
       </details>
     </div>
   );

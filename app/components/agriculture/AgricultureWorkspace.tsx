@@ -244,7 +244,8 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
       <details className={styles.noticeMore}><summary>Where each figure comes from</summary><p>Gauge rainfall, modelled soil moisture and reservoir storage come from APWRIMS; reference evapotranspiration and rain from ECMWF&rsquo;s open forecast; crop vegetation from NOAA&rsquo;s satellite index; the groundwater category from the official assessment on INGRES. Each is dated. Crop booking and canal delivery to fields are not connected.</p></details>
     </div></div>
     {sourceStatus}
-    <nav className={`${styles.sectionNav} jumpNav`} aria-label="Agriculture sections"><a href="#agriculture-brief">01 <span>District brief</span></a><a href="#field-week">02 <span>This week in the fields</span></a><a href="#crop-water-lab">03 <span>Crop-water lab</span></a><a href="#agriculture-watch">04 <span>Water watch</span></a><a href="#agriculture-readiness">05 <span>Evidence readiness</span></a><Link href="/drought">06 <span>Drought manual →</span></Link><span className={styles.snapshot}>Observed window: {period(evidence.startPeriod)} to {period(evidence.period)}</span></nav>
+    <nav className={`${styles.sectionNav} jumpNav`} aria-label="Agriculture sections"><a href="#agriculture-brief">02 <span>District brief</span></a><a href="#field-week">01 <span>This week in the fields</span></a><a href="#crop-water-lab">03 <span>Crop-water lab</span></a><a href="#agriculture-watch">04 <span>Water watch</span></a><a href="#agriculture-readiness">05 <span>Evidence readiness</span></a><Link href="/drought">06 <span>Drought manual →</span></Link><span className={styles.snapshot}>Observed window: {period(evidence.startPeriod)} to {period(evidence.period)}</span></nav>
+    <LiveCropCheck live={live} evidence={evidence} mapView={mapView} onOpenLab={openLab} record={record} />
     <div className={styles.metrics} aria-label="State evidence summary">
       <div><span>Compared boundary units</span><strong>{evidence.counts.compared}<small> / {evidence.counts.boundaries}</small></strong><em>Unique joins · prototype mandals</em></div>
       <div><span>Seasonal shortfall flags</span><strong className={styles.alertNumber}>{evidence.counts.flagged}<small>{flaggedPercent === null ? "" : ` / ${flaggedPercent}%`}</small></strong><em>Of compared units · not crop loss</em></div>
@@ -262,7 +263,6 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
         heading?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
       });
     }} />
-    <LiveCropCheck live={live} evidence={evidence} mapView={mapView} onOpenLab={openLab} record={record} />
     <CropWaterLab preset={labPreset} onClearPreset={() => setLabPreset(null)} />
 
     <section id="agriculture-watch" className={styles.section} aria-labelledby="agriculture-watch-title">

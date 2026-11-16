@@ -12,7 +12,12 @@ test("the field-teams list shows each signal, most agreement first, and says wha
   const rows = section.locator("tbody tr");
   const count = await rows.count();
   expect(count).toBeGreaterThan(0);
-  // Every mandal the count names is in the list (governance-data-findings.spec.ts); it is no longer cut at 15.
+  const counts = await section.locator("ul[aria-label='Mandals by how many signals agree'] b").allTextContents();
+  expect(count).toBe(counts.reduce((sum, value) => sum + Number(value), 0));
+  if (count > 8) {
+    await section.getByText(`Show all ${count} mandals`, { exact: true }).click();
+    await expect(rows.last()).toBeVisible();
+  }
   let previous = 7;
   for (let i = 0; i < count; i++) {
     const row = rows.nth(i);

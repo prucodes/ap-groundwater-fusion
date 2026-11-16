@@ -93,7 +93,7 @@
     {
       "file": "model_card.json",
       "bytes": 22854,
-      "sha256": "65ba8ba3979539bf7527ccacdcee14cef4bda80d32df8f299a8af62cc6cd0b05"
+      "sha256": "e9c6f67916925e15eb92edea59a9aea8a2753af717633e396f084989aae690f7"
     },
     {
       "file": "ap_map_geometry.json",
@@ -152,7 +152,7 @@
         "status": "active",
         "schemaVersion": "1.0.0",
         "bytes": 22854,
-        "sha256": "65ba8ba3979539bf7527ccacdcee14cef4bda80d32df8f299a8af62cc6cd0b05"
+        "sha256": "e9c6f67916925e15eb92edea59a9aea8a2753af717633e396f084989aae690f7"
       },
       {
         "file": "app/data/ap_map_geometry.json",

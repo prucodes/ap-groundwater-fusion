@@ -17,7 +17,7 @@ import { SensorPulse } from "../../components/SensorPulse";
 
 export const metadata: Metadata = {
   title: "This Week | AP Water Intelligence",
-  description: "What moved since the last weekly refresh: gauge rain, soil moisture, reservoirs, drought-manual triggers, groundwater status and NOAA's El Niño outlook, each with its own date.",
+  description: "Changes since each source’s previous published snapshot: gauge rain, soil moisture, reservoirs, drought-manual triggers, groundwater status and NOAA's El Niño outlook, each with its own date.",
 };
 
 type Item = {
@@ -142,7 +142,7 @@ export default function ChangesPage() {
       </section>
       <section className={styles.today} id="sensors-today" aria-labelledby="sensors-today-title">
         <h2 id="sensors-today-title">Today, from the State&rsquo;s sensors</h2>
-        <p>The rest of this page compares one weekly refresh with the last. The State&rsquo;s automatic water-level recorders report every few hours: this is where the water table stands today, sensor by sensor, against the same date last year.</p>
+        <p>The comparisons below use each source’s previous published snapshot; their date ranges differ. The State&rsquo;s automatic water-level recorders report every few hours: this is where the water table stands today, sensor by sensor, against the same date last year.</p>
         <SensorPulse />
       </section>
       <section className={styles.headlines} aria-label="Headlines this week" data-testid="weekly-changes">
@@ -150,7 +150,7 @@ export default function ChangesPage() {
         <div className={styles.leadColumn}>
         {moved.length ? (
           <>
-            <h2 className={styles.groupHead}>01 / Moved this week <span>{moved.length} headline{moved.length === 1 ? "" : "s"}</span></h2>
+            <h2 className={styles.groupHead}>01 / Changes in this briefing <span>{moved.length} headline{moved.length === 1 ? "" : "s"}</span></h2>
             <div className={styles.cards}>
               {moved.map(item => <ChangeCard item={item} key={item.key} />)}
             </div>
@@ -223,7 +223,7 @@ export default function ChangesPage() {
               </p>
             )}
             {changes.groundwater.truncated ? <p className={styles.empty}>Showing the first {changes.groundwater.moved.length}; the full list is on the watchlist.</p> : null}
-            <Link href="/watchlist" className={styles.more}>Open the watchlist →</Link>
+            <Link href="/changes/#field-teams" className={styles.more}>Open the field-team register →</Link>
           </section>
         </div>
       </section>
@@ -244,7 +244,7 @@ export default function ChangesPage() {
       <p className={styles.foot}>
         Compared with {changes.comparedWith.label}{changes.comparedWith.commit ? ` (commit ${changes.comparedWith.commit}${changes.comparedWith.committedAt ? `, ${shortDate(changes.comparedWith.committedAt, true)}` : ""})` : ""}.{" "}
         Built each Monday by the weekly refresh, after every source has been fetched and before anything is published. A feed that failed or looked
-        mid-revision keeps last week&rsquo;s figure, and its date above says so. Rain, soil and reservoirs: APWRIMS. Drought readings: this site&rsquo;s reading
+        mid-revision keeps its previous figure, and its date above says so. Rain, soil and reservoirs: APWRIMS. Drought readings: this site&rsquo;s reading
         of the national drought manual, not a declaration. Groundwater: APWRIMS monthly series. El Niño: NOAA CPC.
       </p>
     </div>
@@ -280,7 +280,7 @@ function ChangeCard({ item }: { item: Item }) {
       </span> : null}
       {!comparable || item.refreshed === false ? <span className={styles.dates}>
         {item.beforeAsOf && item.beforeAsOf !== item.afterAsOf ? `${asOf(item.beforeAsOf)} → ${asOf(item.afterAsOf)}` : `As of ${asOf(item.afterAsOf)}`}
-        {item.refreshed === false ? " · source has not updated" : ""}
+        {item.refreshed === false ? " · observation period unchanged; any value change is a revision" : ""}
       </span> : null}
       {item.note ? <span className={styles.note}>{item.note}</span> : null}
       <span className={styles.cardLink}>Open evidence <IconArrowRight /></span>
