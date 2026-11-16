@@ -288,7 +288,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="statusChevron" aria-hidden="true" />
           </button>
           <div className="statusFeed">
-            <span className="feedDot" /> Sensor readings · {formatPeriod(periods.latestObservationPeriod)}
+            <span className="feedDot" /> Monthly well readings · {formatPeriod(periods.latestObservationPeriod)}
           </div>
           <div className="statusFeed">
             <span className="feedDot" /> NASA GRACE-DA · {formatDay(periods.graceFetchDate)}
@@ -313,7 +313,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           ) : null}
           {stateSummary.readingDates.last ? (
             <div className="statusFeed">
-              <span className="feedDot" /> State wells · {formatDay(stateSummary.readingDates.last)}
+              <span className="feedDot" /> State wells (data lake) · {formatDay(stateSummary.readingDates.last)}
             </div>
           ) : null}
           {statusOpen ? <OrbitGlobe3D /> : null}
