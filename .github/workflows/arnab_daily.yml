@@ -1,6 +1,7 @@
 name: Cyclone Arnab — daily
 
-# Every morning until 15 November 2026: reads the State's water context (about twenty
+# Every morning until 30 November 2026 (extended on 16 November for the third cyclone):
+# reads the State's water context (about twenty
 # requests to the public APWRIMS dashboards), adds the day to Cyclone Arnab's log,
 # rebuilds the /arnab/ page's data and redeploys. After that the weekly refresh keeps
 # the page, which runs the same builder.
@@ -32,11 +33,11 @@ jobs:
   daily:
     runs-on: ubuntu-latest
     steps:
-      - name: Stop after 15 November
+      - name: Stop after 30 November
         id: window
         run: |
-          if [ "$(date -u +%Y%m%d)" -gt 20261115 ] && [ "${{ github.event_name }}" = "schedule" ]; then
-            echo "Past 15 November; the weekly refresh keeps the page from here."
+          if [ "$(date -u +%Y%m%d)" -gt 20261130 ] && [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "Past 30 November; the weekly refresh keeps the page from here."
             echo "run=false" >> "$GITHUB_OUTPUT"
           else
             echo "run=true" >> "$GITHUB_OUTPUT"
@@ -58,16 +59,25 @@ jobs:
       - name: Add the day to Arnab's log
         if: steps.window.outputs.run == 'true'
         run: python phase3_levels/build_cyclone_arnab.py
+      - name: Count the third cyclone
+        if: steps.window.outputs.run == 'true'
+        run: python phase3_levels/build_cyclone_akvan.py
+      - name: Draw the last 48 hours from Himawari
+        # ffmpeg encodes the loop; a bad night at GIBS keeps the last loop (the step does not fail the day).
+        if: steps.window.outputs.run == 'true'
+        run: |
+          sudo apt-get install -y -qq ffmpeg > /dev/null
+          python phase3_levels/build_live_clouds.py || echo "live loop not rebuilt"
       - name: Check the page still says what it is allowed to say
         if: steps.window.outputs.run == 'true'
-        run: python -m pytest -q tests/test_cyclone_arnab.py tests/test_water_context.py
+        run: python -m pytest -q tests/test_cyclone_arnab.py tests/test_water_context.py tests/test_cyclone_akvan.py
       - name: Commit the day
         if: steps.window.outputs.run == 'true'
         id: publish
         run: |
           git config user.name "phase3-bot"
           git config user.email "bot@local"
-          git add app/data/cyclone_arnab.json phase3_levels/data/cyclone_arnab_daily.json phase3_levels/data/cyclone_murasu_rain.json
+          git add app/data/cyclone_arnab.json phase3_levels/data/cyclone_arnab_daily.json phase3_levels/data/cyclone_murasu_rain.json app/data/cyclone_akvan.json app/data/live_clouds.json app/public/cyclones/live.mp4 app/public/cyclones/live-poster.jpg
           git add app/data/water_context.json app/data/water_context_summary.json app/data/water_context_mandals.json data/refresh_receipts/apwrims_context.json
           if git diff --cached --quiet; then
             echo "nothing new today"

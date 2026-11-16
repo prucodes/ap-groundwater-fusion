@@ -166,9 +166,10 @@ def nearest(packed: np.ndarray, table: dict[int, float]) -> np.ndarray:
 def celsius(img: Image.Image, tables) -> np.ndarray:
     """Cloud-top temperature per pixel, NaN where GIBS has no data.
 
-    A patch of grey is read as the cold ramp when it is small and most of what borders
-    it is dark red or black (-62 C or colder): the coldest towers sit inside those,
-    while warm ground is wide and bordered by the warmer colours of low cloud."""
+    A patch of grey is read as the cold ramp when it sits inside the frame, is not too
+    wide, and most of what borders it is dark red or black (-62 C or colder): the
+    coldest towers sit inside those, while warm ground is wide, reaches the edge and is
+    bordered by the warmer colours of low cloud."""
     from scipy import ndimage
 
     warm, cold_greys = tables
@@ -182,8 +183,12 @@ def celsius(img: Image.Image, tables) -> np.ndarray:
         ids = np.arange(1, count + 1)
         cold_share = ndimage.mean((out <= -62).astype(np.float32), labels=edge, index=ids)
         size = ndimage.sum(grey, labels=patches, index=ids)
-        # Storm tops are compact; a patch over 2% of the frame is open ground or sea.
-        cold_patch = np.concatenate([[False], (np.nan_to_num(cold_share) > 0.5) & (size < 0.02 * grey.size)])
+        # Open ground and sea reach the frame's edge and spread wide; a storm top is ringed by cold
+        # cloud. Akvan's core (Nov 2026) was over 2% of the frame, so the size limit is 10% and a
+        # patch touching the edge is never read as cold.
+        edge_ids = np.unique(np.concatenate([patches[0], patches[-1], patches[:, 0], patches[:, -1]]))
+        inside = ~np.isin(ids, edge_ids)
+        cold_patch = np.concatenate([[False], (np.nan_to_num(cold_share) > 0.5) & (size < 0.10 * grey.size) & inside])
         in_storm = cold_patch[patches] & grey
         if in_storm.any():
             levels = np.array(sorted(cold_greys), dtype=np.float32)

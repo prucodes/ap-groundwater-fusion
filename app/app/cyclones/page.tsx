@@ -7,6 +7,7 @@ import { ArnabSpiral } from "../../components/CycloneArnab";
 import { RowFold, foldAt } from "../../components/RowFold";
 import { CountedReach } from "../../components/CountedReach";
 import { CloudToAquifer, type CloudFilm } from "../../components/CloudToAquifer";
+import { CycloneAkvan } from "../../components/CycloneAkvan";
 import cloudFilm from "../../data/cyclone_clouds.json";
 import cycloneTanks from "../../data/cyclone_tanks.json";
 import { TankSwipe } from "../../components/TankSwipe";
@@ -134,6 +135,10 @@ export default function ArnabPage() {
         showChips={false}
         variant="compact"
       />
+
+      <section id="third-cyclone" aria-label="The third cyclone">
+        <CycloneAkvan />
+      </section>
 
       <section className={styles.hero} aria-label="Cyclone Arnab in figures" data-testid="arnab-hero">
         <div className={styles.heroText}>
