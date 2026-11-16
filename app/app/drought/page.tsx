@@ -14,6 +14,7 @@ import { droughtWatch } from "../../lib/droughtWatch";
 import styles from "../../components/drought/Drought.module.css";
 import { brief } from "../../lib/pageBriefs";
 import { droughtNow } from "../../lib/pageNow";
+import { ChapterFold } from "../../components/ChapterFold";
 
 export const metadata: Metadata = {
   title: "Drought Watch | AP Water Intelligence",
@@ -126,6 +127,8 @@ export default function DroughtPage() {
           sowingAsOf={s.sowing?.asOf ?? null} changes={d.state.changes} asOf={s.rain.window.end} manualUrl={d.manual.url} />
       </section>
 
+      <ChapterFold id="chapter-dry-weeks" title="How the season dried" sub="the trigger, week by week and district by district"
+        summary={`The rainfall trigger built over ${d.season.weeks.length} weeks from ${shortDate(d.season.start)}; ${d.state.drySpell} mandals have now run a dry spell.`}>
       <section className={styles.section} aria-labelledby="drought-season">
         <div className={styles.sectionHead}>
           <div>
@@ -140,6 +143,7 @@ export default function DroughtPage() {
           <DistrictWeekHeat rows={heat} weeks={d.season.weeks} />
         </div>
       </section>
+      </ChapterFold>
 
       <section className={styles.section} aria-labelledby="drought-districts">
         <div className={styles.sectionHead}>
@@ -153,6 +157,8 @@ export default function DroughtPage() {
         <DistrictMatrix districts={d.districts} />
       </section>
 
+      <ChapterFold id="chapter-store-sown" title="Water in store, fields sown" sub="the two indicators published only by reservoir and district"
+        summary={`${d.reservoirs.filter(r => r.band === "extreme" || r.band === "severe").length} of ${d.reservoirs.length} reservoirs hold severely or extremely less than their ten-year average for the date; sown area is reported for ${d.sowingDistricts.length} districts.`}>
       <section className={styles.section} aria-labelledby="drought-water">
         <div className={styles.sectionHead}>
           <div>
@@ -166,7 +172,10 @@ export default function DroughtPage() {
           <SowingPanel data={d} />
         </div>
       </section>
+      </ChapterFold>
 
+      <ChapterFold id="chapter-state-steps" title="What the State still has to do" sub="field checks, area sown and the notification"
+        summary={`Field verification, the area sown, the irrigated share and the notification itself rest with the State; the manual\u2019s kharif window was ${shortDate(d.season.declareBy, true)}.`}>
       <section className={styles.section} aria-labelledby="drought-state">
         <div className={styles.sectionHead}>
           <div>
@@ -178,6 +187,7 @@ export default function DroughtPage() {
         </div>
         <StateActions data={d} builtOn={builtOn} />
       </section>
+      </ChapterFold>
 
       <section className={styles.section} aria-labelledby="drought-method">
         <div className={styles.sectionHead}>

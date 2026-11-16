@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { openChapters } from "./chapters";
 import watch from "../data/monsoon_watch.json";
 
 // Orvakal's figures come from the published Monsoon Watch, so these checks follow
@@ -12,6 +13,7 @@ for (const width of [1440, 390]) {
     const errors: string[] = [];
     page.on("pageerror", error => errors.push(error.message));
     await page.goto("/agriculture/", { waitUntil: "domcontentloaded" });
+    await openChapters(page);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Agriculture &\s*Water Intelligence/);
     await expect(page.locator("main > div")).toHaveCSS("opacity", "1");
     await expect(page.getByText("Prototype planning workspace.")).toBeVisible();
@@ -39,6 +41,8 @@ for (const width of [1440, 390]) {
     await page.screenshot({ path: testInfo.outputPath(`lab-${width}.png`), fullPage: true, animations: "disabled" });
     const watch = page.getByRole("region", { name: "Where does the water story need a closer look?" });
     await watch.scrollIntoViewIfNeeded();
+    // The five signals fold under one line in the water watch.
+    await page.getByTestId("agriculture-signals").locator(":scope > summary").click();
     const context = page.getByRole("group", { name: "Rainfall, soil moisture and reservoir context" });
     await expect(context.getByTestId("context-rainfall")).toContainText(/Gauge rainfall\s*Measured/);
     await expect(context.getByTestId("context-rainfall")).toContainText("against normal");
@@ -90,6 +94,7 @@ for (const width of [1440, 390]) {
 test("three-signal agreement narrows the map to corroborated mandals", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/agriculture/");
+  await openChapters(page);
   // The page fades in; under a full parallel run that can outlast the default wait.
   await expect(page.locator("main > div")).toHaveCSS("opacity", "1", { timeout: 15000 });
   const tile = page.getByTestId("agreement-tile");
@@ -110,6 +115,7 @@ test("three-signal agreement narrows the map to corroborated mandals", async ({ 
 test("agriculture respects reduced motion and stays readable in dark mode", async ({ page }, testInfo) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/agriculture/?theme=dark");
+  await openChapters(page);
   await expect(page.locator("main > div")).toHaveCSS("opacity", "1");
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   await expect(page.locator(".pageWrap")).not.toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
@@ -124,6 +130,7 @@ for (const width of [375, 768, 1920]) {
   test(`agriculture framing at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: width < 600 ? 844 : 1080 });
     await page.goto("/agriculture/");
+    await openChapters(page);
     await expect(page.locator("main > div")).toHaveCSS("opacity", "1");
     // From <body> down, the child whose content reaches furthest right, so a failure names the element.
     const wide = await page.evaluate(() => {

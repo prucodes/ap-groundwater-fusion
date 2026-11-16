@@ -19,6 +19,7 @@ import { DownloadTextButton } from "../../components/ExportButtons";
 import { PriorityMap } from "../../components/PriorityMap";
 import { Verse } from "../../components/Verse";
 import { VERSES } from "../../lib/verses";
+import { ChapterFold } from "../../components/ChapterFold";
 
 export const metadata: Metadata = {
   title: "Summer Water Outlook | AP Water Intelligence",
@@ -161,6 +162,9 @@ export default function SummerPage() {
         </div>
       </section>
 
+      {/* The deep mandals ranked by how far past their record: detail behind the priority list above. */}
+      <ChapterFold id="chapter-furthest" title="Furthest past the record" sub={`the mandals more than ${o.deepM} m down, ranked`}
+        summary={top.length ? `${top[0].mandal} leads: ${(top[0].typical - top[0].deepestMay).toFixed(1)} m past its deepest May by a typical winter. ${top.length} deep mandals ranked on one scale, each against its own record.` : "No deep mandal is projected past its record."}>
       <section className={shared.block} aria-labelledby="summer-top" data-testid="summer-top">
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconSun /> Furthest past the record</span>
@@ -191,6 +195,7 @@ export default function SummerPage() {
           <span><i className={styles.keyRecord} /> Deepest May on record</span>
         </div>
       </section>
+      </ChapterFold>
 
       <DrinkingWater beyondPeople={people?.beyond ?? null} />
 
