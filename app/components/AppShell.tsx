@@ -56,7 +56,7 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
       { href: "/facts", label: "In Numbers", Icon: IconHash, desc: "The figures to quote, one sentence each, with source, date and link; rebuilt at every refresh." },
   ] },
   { label: "Water now", items: [
-      { href: "/cyclones", label: "Cyclones", Icon: IconCyclone, desc: "Arnab and Murasu: where the rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },
+      { href: "/cyclones", label: "Cyclones", Icon: IconCyclone, desc: "Akvan as it comes, live from Himawari; Arnab and Murasu: where the rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },
       { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
       { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
       { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
