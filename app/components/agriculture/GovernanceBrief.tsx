@@ -65,7 +65,7 @@ export function GovernanceBrief({ evidence, onInspect }: { evidence: Agriculture
   }
 
   return <section id="agriculture-brief" className={styles.brief} aria-labelledby="agriculture-brief-title">
-    <header className={styles.heading}><div><span className={styles.eyebrow}>01 / District review brief</span><h2 id="agriculture-brief-title">Where should the next field review begin?</h2></div><span className={styles.release}><IconShield />Provisional evidence · approval pending</span></header>
+    <header className={styles.heading}><div><span className={styles.eyebrow}>02 / District review brief</span><h2 id="agriculture-brief-title">Where should the next field review begin?</h2></div><span className={styles.release}><IconShield />Provisional evidence · approval pending</span></header>
     <div className={styles.insight}><strong>{concentration}<small> / {total}</small></strong><p>{mode === "flagged" ? "flagged boundary units" : "unresolved boundary units"} are in <b>{top.map(d => name(d.name)).join(", ")}</b>.<span>{mode === "flagged" ? "A concentration of groundwater flags, not a ranking of crop damage." : "Missing evidence is a verification gap, never a low-risk finding."}</span></p></div>
     <div className={styles.layout}>
       <div className={styles.comparison}>

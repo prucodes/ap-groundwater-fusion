@@ -140,12 +140,18 @@ function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropK
   ];
   const scale = Math.max(record.rules.backedPoints + 2, ...rows.map(row => Math.abs(row.value)));
   const bar = 50 - (record.rules.backedPoints / scale) * 50;
-  return <div className={styles.record} data-testid="field-week-record" data-verdict={cell.verdict}>
-    <div className={styles.recordText}>
-      <div className={styles.recordVerdicts}>
+  // Folded to its verdicts: the reading, the live scorecard and the seasons open beneath.
+  return <details className={styles.record} data-testid="field-week-record" data-verdict={cell.verdict}>
+    <summary className={styles.recordSummary}>
+      <span className={styles.recordAsk}>How far to trust this call</span>
+      <span className={styles.recordVerdicts}>
         <span className={styles.recordVerdict} style={{ "--tone": verdict.tone } as CSSProperties}><i />{verdict.label}<em>4 km index, rainfed fields</em></span>
         {fieldVerdict && field ? <span className={styles.recordVerdict} style={{ "--tone": fieldVerdict.tone } as CSSProperties} data-testid="field-week-sentinel" data-verdict={field.verdict}><i />{fieldVerdict.label}<em>field scale, Sentinel-2</em></span> : null}
-      </div>
+      </span>
+      <span className={styles.recordOpen}>See the record</span>
+    </summary>
+    <div className={styles.recordBody}>
+      <div className={styles.recordText}>
       <p>{sentence} {reading}</p>
       {record.live && record.live.frozen ? (() => {
         const live = record.live, score = live.record[`${crop}-${stage}`]?.within.sameSeason;
@@ -184,7 +190,8 @@ function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropK
       })}
       <div className={styles.seasonAxis} aria-hidden="true"><span>&larr; lower after &ldquo;short&rdquo;<small>, as the check expects</small></span><span>against it &rarr;</span></div>
     </figure>
-  </div>;
+    </div>
+  </details>;
 }
 
 export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = null }: {
@@ -235,7 +242,7 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
 
   if (!live) {
     return <section id="field-week" className={styles.section} aria-labelledby="field-week-title">
-      <header className={styles.head}><div><span className={styles.eyebrow}>02 / This week in the fields</span><h2 id="field-week-title">Which crops will run short of water this week?</h2></div></header>
+      <header className={styles.head}><div><span className={styles.eyebrow}>01 / This week in the fields</span><h2 id="field-week-title">Which crops will run short of water this week?</h2></div></header>
       <p className={styles.unavailable}>The crop water check needs this week&rsquo;s soil moisture and forecast on the same dates; one of the two has not refreshed in this build.</p>
     </section>;
   }
@@ -264,7 +271,7 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
 
   return <section id="field-week" className={styles.section} aria-labelledby="field-week-title" data-testid="field-week">
     <header className={styles.head}>
-      <div><span className={styles.eyebrow}>02 / This week in the fields</span><h2 id="field-week-title">Which crops will run short of water this week?</h2></div>
+      <div><span className={styles.eyebrow}>01 / This week in the fields</span><h2 id="field-week-title">Which crops will run short of water this week?</h2></div>
       <span className={styles.liveBadge}><i aria-hidden="true" />Soil {day(live.soilAsOf, false)} · forecast {windowText}</span>
     </header>
 

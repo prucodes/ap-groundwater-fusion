@@ -59,7 +59,9 @@ test("This Week leads with what moved, worse first, and keeps the steady figures
   expect(directions).toHaveLength(changes.items.length);
   const rank: Record<string, number> = { worse: 0, better: 1, moved: 2, revised: 3, new: 4, same: 5 };
   expect(directions.map(d => rank[d])).toEqual([...directions.map(d => rank[d])].sort((a, b) => a - b));
-  await expect(page.getByRole("heading", { name: /Changes in this briefing/ })).toBeVisible();
+  // A quiet week says so instead of showing an empty group.
+  if (changes.items.some(item => item.direction !== "same")) await expect(page.getByRole("heading", { name: /Changes in this briefing/ })).toBeVisible();
+  else await expect(page.getByText("No headline changed in this comparison.")).toBeVisible();
 });
 
 test("the research snapshot is one line until opened, with its caveat in view", async ({ page }) => {

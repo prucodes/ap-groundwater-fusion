@@ -52,12 +52,20 @@ def published(name, ref="HEAD"):
 WEEKLY_SUBJECT = "chore(phase3): weekly levels refresh"
 
 
-def weekly_baseline():
-    """The previous weekly refresh: the one fixed point every headline is set against, so a daily
+# A re-run in the same week (a rebuild, a retried refresh) is not last week: the baseline is the
+# latest weekly refresh at least this many days old, so a second run never compares against the first.
+BASELINE_MIN_AGE_DAYS = 5
+
+
+def weekly_baseline(now=None):
+    """Last week's refresh: the one fixed point every headline is set against, so a daily
     sensors or cyclone commit in between does not shorten one comparison and not another.
     None when no such commit is in reach (a shallow checkout), and the page says so."""
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    before = (now - datetime.timedelta(days=BASELINE_MIN_AGE_DAYS)).isoformat()
     try:
-        out = subprocess.run(["git", "log", "-1", "--format=%H %h %cI", f"--grep={WEEKLY_SUBJECT}", "--fixed-strings"],
+        out = subprocess.run(["git", "log", "-1", "--format=%H %h %cI", f"--grep={WEEKLY_SUBJECT}", "--fixed-strings",
+                              f"--before={before}"],
                              cwd=ROOT, capture_output=True, text=True, check=True, timeout=30).stdout.split()
         return {"ref": out[0], "commit": out[1], "committedAt": out[2]} if len(out) == 3 else None
     except (OSError, subprocess.SubprocessError):

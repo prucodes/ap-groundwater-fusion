@@ -175,10 +175,21 @@
 @media (prefers-reduced-motion: reduce) { .welcome *, .welcome *::before, .welcome *::after { animation: none !important; transition: none !important; } .rainDrop { opacity: .65; } .signal, .measurementResponse { opacity: .4; } .aquiferResponse { opacity: .08; } .rechargePulse { stroke-dasharray: 3 7; opacity: .6; } .assessmentTrace { stroke-dashoffset: 0; } }
 
 /* Read first, then give the landscape its space. Controls stay in normal flow. */
-.quoteSpace { display: grid; grid-template-rows: 1fr; opacity: 1; transition: opacity 1.2s ease, grid-template-rows 1.2s ease; }
-.quoteSpace > div { min-height: 0; overflow: hidden; }
-.quote[data-visible="false"] .quoteSpace { grid-template-rows: 0fr; opacity: 0; }
-.quoteToggle { display: block; margin: 8px auto; padding: 7px 12px; border: 0; background: transparent; color: #c4d6cc; font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
-.quoteToggle:focus-visible { outline: 2px solid #c4d6cc; outline-offset: 3px; }
+/* The verse sinks as it goes: it softens, drifts down and dissolves like a stone into still water,
+   and only then does its space close. Coming back, the space opens first and the words surface. */
+.quoteSpace { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 1.4s cubic-bezier(.4, 0, .2, 1); }
+.quoteSpace > div { min-height: 0; overflow: hidden; transition: opacity 2.4s ease, transform 2.8s cubic-bezier(.3, 0, .2, 1), filter 2.4s ease; }
+.quote[data-visible="false"] .quoteSpace { grid-template-rows: 0fr; transition-delay: 2.2s; }
+.quote[data-visible="false"] .quoteSpace > div { opacity: 0; transform: translateY(18px) scale(.985); filter: blur(7px); }
+.quote[data-visible="true"] .quoteSpace > div { transition-delay: .6s; }
+/* A whisper beneath the verse, there for whoever looks for it. */
+.quoteToggle { display: block; margin: 4px auto; padding: 6px 10px; border: 0; background: transparent; color: #c4d6cc; opacity: .32; font: inherit; font-size: 11px; letter-spacing: .04em; text-decoration: none; cursor: pointer; transition: opacity .4s ease; }
+.quote:hover .quoteToggle { opacity: .5; }
+.quote .quoteToggle:hover, .quote .quoteToggle:focus-visible { opacity: .85; text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(196, 214, 204, .4); }
+.quoteToggle:focus-visible { outline: 1px solid rgba(196, 214, 204, .5); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  .quoteSpace, .quoteSpace > div { transition-duration: .01s; transition-delay: 0s !important; }
+  .quote[data-visible="false"] .quoteSpace > div { transform: none; filter: none; }
+}
 .quote .verse { position: static; max-width: 520px; margin: 0 auto 16px; padding: 0 7%; animation: none; }
 .quote { position: relative; z-index: 2; }
