@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { openChapters } from "./chapters";
 
 /**
  * Visit counting, tested against the built static export.
@@ -38,6 +39,7 @@ test("makes no request to an outside service from a local build", async ({ page 
     if (!request.url().startsWith("http://127.0.0.1")) outside.push(request.url());
   });
   await page.goto("/monsoon/");
+  await openChapters(page);
   await page.waitForLoadState("load");
   expect(outside).toEqual([]);
   expect(await page.locator('script[src*="gc.zgo.at"]').count()).toBe(0);
@@ -55,6 +57,7 @@ async function routerReady(page: Page) {
 
 test("counts a move to another page, dropping the theme it was opened with", async ({ page }) => {
   await page.goto("/monsoon/");
+  await openChapters(page);
   await routerReady(page);
   const sent = await recordSends(page);
   // Page views only: on a slow runner the welcome's app/opened event can land after the router is ready.
@@ -68,6 +71,7 @@ test("counts a move to another page, dropping the theme it was opened with", asy
 
 test("counts an interaction once, however many times a visit uses it", async ({ page }) => {
   await page.goto("/monsoon/");
+  await openChapters(page);
   const sent = await recordSends(page);
   const play = page.getByRole("button", { name: "Play through the months" });
   await play.scrollIntoViewIfNeeded();
@@ -94,6 +98,7 @@ test("counts an interaction once, however many times a visit uses it", async ({ 
 
 test("holds an interaction that happens before count.js arrives", async ({ page }) => {
   await page.goto("/monsoon/");
+  await openChapters(page);
   const volume = page.getByRole("button", { name: "Storage proxy" });
   await volume.scrollIntoViewIfNeeded();
   await volume.click();
@@ -110,6 +115,7 @@ test("holds an interaction that happens before count.js arrives", async ({ page 
 
 test("records how far down a long page a visit actually read", async ({ page }) => {
   await page.goto("/monsoon/");
+  await openChapters(page);
   const sent = await recordSends(page);
   const reached = async () =>
     (await sent()).map((row) => row.path).filter((path) => path.includes("reached-"));
@@ -123,6 +129,7 @@ test("records how far down a long page a visit actually read", async ({ page }) 
 
 test("does not invent the sections a visit skipped over", async ({ page }) => {
   await page.goto("/monsoon/");
+  await openChapters(page);
   const sent = await recordSends(page);
   // A reader who jumps to the end has not read the middle, so the middle is not counted.
   // These are reach figures per section, which is why they need not fall in reading order.
@@ -138,6 +145,7 @@ test("records nothing for a browser that sends Global Privacy Control", async ({
     Object.defineProperty(navigator, "globalPrivacyControl", { get: () => true }),
   );
   await page.goto("/monsoon/");
+  await openChapters(page);
   expect(await page.evaluate(() => "goatcounter" in window)).toBe(false);
   // The page still has to work: every control calls countEvent unconditionally.
   const play = page.getByRole("button", { name: "Play through the months" });

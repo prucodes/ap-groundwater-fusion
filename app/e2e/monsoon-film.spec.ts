@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { openChapters } from "./chapters";
 import film from "../data/monsoon_film.json";
 import { currentFilmFigures } from "../lib/filmLiveFigures";
 import { sinceThisEdition } from "../components/MonsoonFilm";
@@ -15,6 +16,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
   test(`Pacific evidence explorer at ${viewport.width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize(viewport);
     await page.goto("/monsoon/");
+    await openChapters(page);
     const explorer = page.locator("section").filter({ hasText: "Pacific evidence explorer" });
     await explorer.scrollIntoViewIfNeeded();
     await expect(explorer.locator(".pacField.on")).toHaveCount(1);
@@ -47,6 +49,7 @@ for (const viewport of [{ width: 1440, height: 900 }, { width: 390, height: 844 
     const errors: string[] = [];
     page.on("pageerror", error => errors.push(error.message));
     await page.goto("/monsoon/", { waitUntil: "domcontentloaded" });
+    await openChapters(page);
     const section = page.getByRole("region", { name: "From the Pacific to Andhra Pradesh" });
     await section.scrollIntoViewIfNeeded();
     const expectedChanges = sinceThisEdition(currentFilmFigures(), film.narrated);

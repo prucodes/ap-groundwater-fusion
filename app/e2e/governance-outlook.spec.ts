@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { openChapters } from "./chapters";
 import outlook from "../data/enso_outlook.json";
 import changes from "../data/weekly_changes.json";
 import drought from "../data/drought_watch.json";
@@ -8,6 +9,7 @@ import drought from "../data/drought_watch.json";
 
 test("the monsoon page carries NOAA's outlook beside the state's El Niño record", async ({ page }) => {
   await page.goto("/monsoon/");
+  await openChapters(page);
   const panel = page.getByRole("region", { name: /El Niño outlook/ });
   await expect(panel.getByTestId("enso-alert")).toHaveText(outlook.alert);
   await expect(panel).toContainText(outlook.synopsis);

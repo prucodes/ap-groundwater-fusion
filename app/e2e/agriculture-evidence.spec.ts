@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { openChapters } from "./chapters";
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import watch from "../data/monsoon_watch.json";
@@ -34,6 +35,7 @@ for (const route of ["agriculture", "monsoon"]) {
 
 test("Monsoon Watch does not pick a value from duplicate boundary joins", async ({ page }) => {
   await page.goto("/monsoon/");
+  await openChapters(page);
   const counts = new Map<number, number>();
   for (const row of watch.mandals) if (row.boundaryIndex !== null) counts.set(row.boundaryIndex, (counts.get(row.boundaryIndex) ?? 0) + 1);
   const ambiguous = [...counts.entries()].find(([, count]) => count > 1)![0];
@@ -54,6 +56,7 @@ for (const width of [1440, 390]) {
   test(`Monsoon briefing order and accessible map at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/monsoon/");
+    await openChapters(page);
     await expect(page.locator("main > div")).toHaveCSS("opacity", "1");
     const season = page.getByRole("region", { name: "Season evidence", exact: true });
     const film = page.getByRole("heading", { name: "From the Pacific to Andhra Pradesh" });

@@ -39,6 +39,8 @@ import { brief } from "../../lib/pageBriefs";
 import { currentFilmFigures } from "../../lib/filmLiveFigures";
 import { Verse } from "../../components/Verse";
 import { VERSES } from "../../lib/verses";
+import { ChapterFold } from "../../components/ChapterFold";
+import ensoOutlook from "../../data/enso_outlook.json";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -447,7 +449,10 @@ export default function MonsoonPage() {
         </p>
       </section>
 
-      <h2 className="pageChapter" id="chapter-pacific">El Niño and the Pacific<span>the ocean behind the rain, as context and never as a forecast</span></h2>
+      {/* Context chapters, folded to their one line so the page stays on what the monsoon did to groundwater. */}
+      <ChapterFold id="chapter-pacific" title="El Niño and the Pacific" sub="the ocean behind the rain, as context and never as a forecast"
+        summary={<>NOAA&rsquo;s {ensoOutlook.alert} is in force, with El Niño peaking near +{ensoOutlook.peak.medianC.toFixed(1)} °C over {ensoOutlook.peak.label}.
+          {sw && sw.elNinoAnomalyPct !== null ? ` In the ${sw.elNinoYears} El Niño years since ${sw.firstYear}, the south-west monsoon ran ${Math.abs(sw.elNinoAnomalyPct).toFixed(1)}% below normal on average, and below normal in ${sw.elNinoBelowNormal} of them.` : ""}</>}>
       <div className="monsoonGrid">
         <section className="card">
           <div className="cardHead">
@@ -627,7 +632,10 @@ export default function MonsoonPage() {
         </section>
       ) : null}
 
-      <h2 className="pageChapter" id="chapter-heat">Heat<span>the other cost of a dry year</span></h2>
+      </ChapterFold>
+
+      <ChapterFold id="chapter-heat" title="Heat" sub="the other cost of a dry year"
+        summary={`${apTemperature.records.ghcn_cams.warmestYear} was the State’s warmest year in the ${apTemperature.records.ghcn_cams.label} record since ${apTemperature.records.ghcn_cams.firstYear}. Two gridded temperature records, as context, never a forecast.`}>
       <section className="card" id="monsoon-heat">
         <CountedReach event="monsoon/reached-heat" title="Monsoon: reached the temperature record" />
         <div className="cardHead">
@@ -657,6 +665,7 @@ export default function MonsoonPage() {
         </p>
         </details>
       </section>
+      </ChapterFold>
     <Verse verse={VERSES.rain} />
     </div>
   );
