@@ -6106,6 +6106,27 @@ html { scroll-padding-top: 64px; }
 .pageChapter { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 40px 0 14px; padding-top: 18px; border-top: 1px solid var(--line); font-family: var(--font-display); font-size: 22px; font-weight: 600; color: var(--ink); scroll-margin-top: 64px; }
 .pageChapter span { font-family: var(--font-sans); font-size: 13px; font-weight: 400; color: var(--muted); }
 .jumpNav + .pageChapter { margin-top: 22px; padding-top: 0; border-top: 0; }
+/* A context chapter folded to one line: title, the one thing it says, and a quiet way in. */
+.chapterFold { margin: 40px 0 0; border-top: 1px solid var(--line); }
+.chapterFold > summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 20px; align-items: center; padding: 18px 2px 4px; list-style: none; cursor: pointer; }
+.chapterFold > summary::-webkit-details-marker { display: none; }
+.chapterFold > summary .pageChapter { grid-column: 1; margin: 0; padding: 0; border: 0; }
+.chapterFold > summary p { grid-column: 1; margin: 0; max-width: 78ch; font-size: 14px; line-height: 1.55; color: var(--ink-soft, var(--muted)); }
+.chapterFold > summary .chapterFoldCta { grid-column: 2; grid-row: 1 / span 2; display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 12.5px; font-weight: 600; color: var(--teal); white-space: nowrap; transition: border-color .2s, background .2s; }
+.chapterFold > summary .chapterFoldCta::before { content: "Open the chapter"; }
+.chapterFold > summary .chapterFoldCta::after { content: ""; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+.chapterFold > summary:hover .chapterFoldCta { border-color: var(--teal); }
+.chapterFold[open] > summary { margin-bottom: 14px; }
+.chapterFold[open] > summary p { display: none; }
+.chapterFold[open] > summary .chapterFoldCta::before { content: "Fold the chapter"; }
+.chapterFold[open] > summary .chapterFoldCta::after { transform: translateY(2px) rotate(-135deg); }
+.chapterFold > summary:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; border-radius: 8px; }
+@media (max-width: 760px) {
+  .chapterFold { margin-top: 30px; }
+  .chapterFold > summary { grid-template-columns: minmax(0, 1fr); }
+  .chapterFold > summary .chapterFoldCta { grid-column: 1; grid-row: auto; justify-self: start; margin-top: 6px; }
+}
+@media print { details.chapterFold::details-content { content-visibility: visible; display: contents; } .chapterFoldCta { display: none !important; } }
 @media (max-width: 760px) { .pageChapter { font-size: 18px; margin-top: 30px; } .pageChapter span { font-size: 12px; } }
 
 /* Data status folds to its one "Refreshed" line on shorter screens, so the menu

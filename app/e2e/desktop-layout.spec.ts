@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { openChapters } from "./chapters";
 
 /** Desktop must keep the persistent sidebar column the drawer work replaced on phones. */
 
@@ -151,6 +152,7 @@ test.describe("no column is left as dead space", () => {
 test.describe("the monsoon map is legible at desktop width", () => {
   test("the map is capped and its readout sits beside it", async ({ page }) => {
     await page.goto("/monsoon");
+    await openChapters(page);
     await settle(page);
 
     const map = await page.locator(".rechargeMapSvg").boundingBox();
@@ -170,6 +172,7 @@ test.describe("the monsoon map is legible at desktop width", () => {
 
   test("hovering a mandal names it", async ({ page }) => {
     await page.goto("/monsoon");
+    await openChapters(page);
     await settle(page);
 
     const before = await page.locator(".rechargeReadout").innerText();
@@ -219,6 +222,7 @@ test.describe("no route throws while hydrating", () => {
 test.describe("both monsoon charts answer the pointer", () => {
   test("a rainfall column names its year and the ocean state with it", async ({ page }) => {
     await page.goto("/monsoon");
+    await openChapters(page);
     await settle(page);
 
     const before = await page.locator(".rainHistReadout").innerText();
@@ -233,6 +237,7 @@ test.describe("both monsoon charts answer the pointer", () => {
 
   test("no SVG carries a title child, which the browser would relocate", async ({ page }) => {
     await page.goto("/monsoon");
+    await openChapters(page);
     await settle(page);
     const titles = await page.evaluate(
       () => document.querySelectorAll("svg title").length,
@@ -304,6 +309,7 @@ test.describe("the recharge map reads in metres and in water", () => {
   test("switching the view recolours the map and changes what the tooltip says",
     async ({ page }) => {
       await page.goto("/monsoon");
+      await openChapters(page);
       await settle(page);
 
       // Focus, not a pointer at the cell's centre: that point can sit over a neighbouring outline.
@@ -331,6 +337,7 @@ test.describe("the recharge map reads in metres and in water", () => {
 
   test("the season card is lowered but the chart still spans its card", async ({ page }) => {
     await page.goto("/monsoon");
+    await openChapters(page);
     await settle(page);
     const svg = await page.locator(".trajectorySvg").boundingBox();
     const card = await page.locator(".trajectoryWrap").boundingBox();
@@ -347,6 +354,7 @@ test.describe("the recharge map reads in metres and in water", () => {
 test.describe("the Pacific panel explains and stays light", () => {
   test("it shows one month at a time and the scrubber changes it", async ({ page }) => {
     await page.goto("/monsoon");
+    await openChapters(page);
     await settle(page);
 
     const frames = page.locator(".pacField");
@@ -362,6 +370,7 @@ test.describe("the Pacific panel explains and stays light", () => {
 
   test("Andhra Pradesh is marked on the map, on the India side", async ({ page }) => {
     await page.goto("/monsoon");
+    await openChapters(page);
     await settle(page);
     const stage = await page.locator(".pacStage").boundingBox();
     const pin = await page.locator(".pacPin").boundingBox();
@@ -373,6 +382,7 @@ test.describe("the Pacific panel explains and stays light", () => {
 
   test("playing advances the months", async ({ page }) => {
     await page.goto("/monsoon");
+    await openChapters(page);
     await settle(page);
     await page.locator(".pacScrub").fill("0");
     await page.waitForTimeout(200);
