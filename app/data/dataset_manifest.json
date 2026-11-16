@@ -122,8 +122,8 @@
     },
     {
       "file": "source_readiness.json",
-      "bytes": 3889,
-      "sha256": "c666b206e60d64eb1c717afc6e9c344f35367afd0ffb10ea8378e949ba07b6b6"
+      "bytes": 5481,
+      "sha256": "24c0e8521106c85a6926dfcacc68ea515d074f11e98cb80b525324d21f72c932"
     },
     {
       "file": "satellite_station_samples.json",
@@ -193,8 +193,8 @@
         "file": "app/data/source_readiness.json",
         "status": "active",
         "schemaVersion": "1.0.0",
-        "bytes": 3889,
-        "sha256": "c666b206e60d64eb1c717afc6e9c344f35367afd0ffb10ea8378e949ba07b6b6"
+        "bytes": 5481,
+        "sha256": "24c0e8521106c85a6926dfcacc68ea515d074f11e98cb80b525324d21f72c932"
       },
       {
         "file": "app/data/satellite_station_samples.json",

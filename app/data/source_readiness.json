@@ -18,13 +18,13 @@
   "official_flag": false
  },
  {
-  "label": "APWRIMS readings (session sample · authorization pending)",
+  "label": "APWRIMS readings (session sample \u00b7 authorization pending)",
   "status": "available",
   "data_label": "measured_session_pending",
   "official_flag": false
  },
  {
-  "label": "AP DES rain gauges via APWRIMS (measured · authorization pending)",
+  "label": "AP DES rain gauges via APWRIMS (measured \u00b7 authorization pending)",
   "status": "available",
   "data_label": "measured-gauge-rainfall",
   "official_flag": false
@@ -66,7 +66,49 @@
   "official_flag": false
  },
  {
-  "label": "NOAA Climate Prediction Center El Niño outlook (forecast)",
+  "label": "APWRIMS automatic water-level sensors, about 1,700 recorders, latest reading every day (telemetry, as the public groundwater dashboard reads it; authorization pending)",
+  "status": "available",
+  "data_label": "measured-sensor-telemetry",
+  "official_flag": false
+ },
+ {
+  "label": "GRACE and GRACE-FO water storage, monthly since 2002 (CSR RL06.3 mascons, University of Texas; NASA, DLR and GFZ missions)",
+  "status": "available",
+  "data_label": "satellite-gravity-storage",
+  "official_flag": false
+ },
+ {
+  "label": "NASA IMERG daily satellite rain (GPM, NASA and JAXA), via NASA GIBS",
+  "status": "available",
+  "data_label": "satellite-rainfall-daily",
+  "official_flag": false
+ },
+ {
+  "label": "Himawari-9 infrared cloud imagery, hourly (Japan Meteorological Agency, via NASA GIBS)",
+  "status": "available",
+  "data_label": "satellite-cloud-imagery",
+  "official_flag": false
+ },
+ {
+  "label": "Sentinel-2 surface water over the JRC tank beds (ESA, via Element 84; tanks before and after each storm, and going into rabi)",
+  "status": "available",
+  "data_label": "satellite-tank-water",
+  "official_flag": false
+ },
+ {
+  "label": "Jal Jeevan Mission drinking-water source tests and quality-affected habitations",
+  "status": "available",
+  "data_label": "measured-water-quality",
+  "official_flag": false
+ },
+ {
+  "label": "WorldPop 2020 population (University of Southampton; modelled, 1 km)",
+  "status": "available",
+  "data_label": "model-population",
+  "official_flag": false
+ },
+ {
+  "label": "NOAA Climate Prediction Center El Ni\u00f1o outlook (forecast)",
   "status": "available",
   "data_label": "forecast-enso-outlook",
   "official_flag": false
@@ -96,8 +138,8 @@
   "official_flag": false
  },
  {
-  "label": "Station-level well history (DWLR) from the data lake: requested",
-  "status": "pending",
+  "label": "Station-level sensor history (DWLR): the latest reading is now read daily; past readings are still requested from the data lake",
+  "status": "partial",
   "data_label": "official_station_history",
   "official_flag": false
  },
@@ -120,7 +162,7 @@
   "official_flag": false
  },
  {
-  "label": "Drought manual inputs held by the State: mandal sown area, irrigated share, 56–500 m NDVI/NDWI (APSAC / MNCFC), field verification",
+  "label": "Drought manual inputs held by the State: mandal sown area, irrigated share, 56\u2013500 m NDVI/NDWI (APSAC / MNCFC), field verification",
   "status": "pending",
   "data_label": "official_drought_inputs",
   "official_flag": false

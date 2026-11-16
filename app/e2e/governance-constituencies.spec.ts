@@ -39,7 +39,8 @@ test("the overview carries today's sensors and the monsoon page the State wells 
   await expect(page.getByTestId("state-network-cell")).toContainText("State sensors, today");
   await expect(page.getByTestId("state-network-cell")).toContainText(/\d+% of [\d,]+ reporting sensors deeper than a year ago/);
   await page.goto("/monsoon/");
-  await expect(page.getByTestId("state-network-stat")).toContainText(`of ${summary.summary.withChange} mandals deeper than in May`);
+  // Monsoon Watch's State network card reads the daily sensors too, each against itself a year ago.
+  await expect(page.getByTestId("state-network-stat")).toContainText(/sensors deeper than a year ago/);
 });
 
 test("each constituency has a one-page brief that prints on its own", async ({ page }) => {
