@@ -62,6 +62,12 @@ jobs:
       - name: Count the third cyclone
         if: steps.window.outputs.run == 'true'
         run: python phase3_levels/build_cyclone_akvan.py
+      - name: Draw the last 48 hours from Himawari
+        # ffmpeg encodes the loop; a bad night at GIBS keeps the last loop (the step does not fail the day).
+        if: steps.window.outputs.run == 'true'
+        run: |
+          sudo apt-get install -y -qq ffmpeg > /dev/null
+          python phase3_levels/build_live_clouds.py || echo "live loop not rebuilt"
       - name: Check the page still says what it is allowed to say
         if: steps.window.outputs.run == 'true'
         run: python -m pytest -q tests/test_cyclone_arnab.py tests/test_water_context.py tests/test_cyclone_akvan.py
@@ -71,7 +77,7 @@ jobs:
         run: |
           git config user.name "phase3-bot"
           git config user.email "bot@local"
-          git add app/data/cyclone_arnab.json phase3_levels/data/cyclone_arnab_daily.json phase3_levels/data/cyclone_murasu_rain.json app/data/cyclone_akvan.json
+          git add app/data/cyclone_arnab.json phase3_levels/data/cyclone_arnab_daily.json phase3_levels/data/cyclone_murasu_rain.json app/data/cyclone_akvan.json app/data/live_clouds.json app/public/cyclones/live.mp4 app/public/cyclones/live-poster.jpg
           git add app/data/water_context.json app/data/water_context_summary.json app/data/water_context_mandals.json data/refresh_receipts/apwrims_context.json
           if git diff --cached --quiet; then
             echo "nothing new today"

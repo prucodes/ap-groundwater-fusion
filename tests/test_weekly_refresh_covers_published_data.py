@@ -57,6 +57,10 @@ STATIC_BY_DESIGN = {
         "the 2026 season's rain from space, NASA IMERG daily from 1 June to 10 November, beside the State's gauge "
         "total; built once by phase3_levels/build_rain_film.py when the season closed"
     ),
+    "live_clouds.json": (
+        "the last 48 hours of Himawari-9 over the Bay, rebuilt by phase3_levels/build_live_clouds.py in the cyclone "
+        "page's morning job and the sensors' evening job while a storm is near; between storms it stands as the last one left it"
+    ),
     "source_readiness.json": "hand-maintained description of which sources are live",
     "water_quality.json": (
         "habitations the Jal Jeevan Mission marks as quality affected; the public report encrypts its query, "
