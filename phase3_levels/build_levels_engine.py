@@ -92,7 +92,13 @@ def mk_est(quantile=None):
     return Pipeline([("pre", pre), ("reg", reg)])
 
 
-def build_frame():
+def build_frame(model_inputs=True):
+    """Every reading, joined to place, rain and the engine's features.
+
+    With model_inputs (the default) only rows the models can learn from are kept: those
+    with a location and a reading one month and twelve months before. A seasonal
+    comparison needs none of that, and dropping a May reading for want of an April one
+    removes real evidence from it, so build_monsoon_watch asks for every reading."""
     lv = pd.read_csv(os.path.join(HERE, "apwrims", "apwrims_gw_history.csv"))
     lv = lv[(lv.level_mbgl > 0) & (lv.level_mbgl < 60)].copy()
     # Months the State carried forward rather than measured are missing, not readings.
@@ -141,8 +147,9 @@ def build_frame():
     df["location_basis"] = df.mkey.map(basis).fillna("none")
     df["boundary_index"] = df.mkey.map(boundary_index)
     df["mandal_base"] = current_regime_mean(df)
-    df = df.dropna(subset=["lat", "lon", "lag1", "lag12"]).reset_index(drop=True)
-    return df
+    if model_inputs:
+        df = df.dropna(subset=["lat", "lon", "lag1", "lag12"])
+    return df.reset_index(drop=True)
 
 
 def rainfall_series(lv, geo, boundary_index):

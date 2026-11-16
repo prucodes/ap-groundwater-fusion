@@ -54,7 +54,13 @@ jobs:
           fi
           git commit -m "chore(sensors): daily groundwater sensors $(date -u +%Y-%m-%d)"
           git pull --rebase origin main
-          git push
+          # main may have moved while this ran (a merged pull request, another bot): replay this
+          # commit on top of it, keeping this run's own data where both touched a file, and retry.
+          for attempt in 1 2 3; do
+            git push && break
+            [ "$attempt" = 3 ] && exit 1
+            git pull --rebase -X theirs origin main || { git rebase --abort; exit 1; }
+          done
           echo "published=true" >> "$GITHUB_OUTPUT"
       - name: Deploy
         # A push made with this workflow's own token starts no other workflow; a dispatch does.

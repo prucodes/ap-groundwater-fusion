@@ -74,6 +74,23 @@ def test_weekly_changes_compare_like_with_like_and_say_which_way_is_better():
     assert next(i for i in built["items"] if i["key"] == "trigger1")["direction"] is None
 
 
+def test_a_figure_revised_for_the_same_reading_period_is_not_called_better_or_worse():
+    record = lambda status: {"identity": {"mandalId": "a", "mandalName": "A", "districtName": "D"},  # noqa: E731
+                             "assessment": {"monitoringStatus": status}, "observation": {"observationPeriod": "2026-10"}}
+    before = {"mandal_groundwater_records_v2.json": {"records": [record("stress"), {**record("stress"), "identity": {"mandalId": "b"}}]}}
+    after = {"mandal_groundwater_records_v2.json": {"records": [record("stress"), {**record("watch"), "identity": {"mandalId": "b"}}]}}
+    built = changes.build(load_before=before.get, load_after=after.get)
+    stress = next(i for i in built["items"] if i["key"] == "gwStress")
+    assert (stress["before"], stress["after"], stress["refreshed"], stress["direction"]) == (2, 1, False, "revised")
+    assert built["counts"]["revised"] == 1 and built["counts"]["better"] == 0
+
+
+def test_the_weekly_baseline_is_the_previous_weekly_refresh_or_nothing():
+    found = changes.weekly_baseline()
+    # A shallow checkout cannot reach it; a full one finds the refresh commit itself.
+    assert found is None or set(found) == {"ref", "commit", "committedAt"}
+
+
 def test_health_report_names_failed_steps_and_kept_feeds_and_is_silent_otherwise():
     assert health.problems({"steps": [{"step": "x", "ok": True}]}, {"sections": {"rainfall": {"status": "refreshed"}}}) == []
     lines = health.problems({"steps": [{"step": "build drought watch", "ok": False, "rc": 1, "secs": 3, "required": False}]},

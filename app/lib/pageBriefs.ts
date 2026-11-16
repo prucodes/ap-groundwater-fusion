@@ -10,7 +10,7 @@ export const BRIEFS = {
     use: "Start here; open a district or mandal for its record, or This Week for what changed.",
   },
   "/changes": {
-    what: "Changes since each source’s previous published snapshot: rain, soil, reservoirs, the drought manual, groundwater and El Niño.",
+    what: "What moved since the previous weekly refresh: rain, soil, reservoirs, the drought manual, groundwater and El Niño, each with its own reading dates.",
     use: "Send field teams to the listed mandals and forward the one-page digest.",
   },
   "/map": {

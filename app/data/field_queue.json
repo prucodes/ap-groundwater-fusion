@@ -1,22 +1,22 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-16T09:46:16Z",
+  "generatedAt": "2026-11-16T21:23:44Z",
   "method": "the rank of the published interval width, of population and of irrigated area, multiplied; each mandal's three raw figures travel with its row",
-  "scored": 524,
+  "scored": 557,
   "published": 40,
   "populationSource": "WorldPop (University of Southampton) 2020 population counts, 1 km, UN-adjusted, India; summed over each mandal outline at 250 m 2020",
   "populationCaveat": "A modelled estimate that spreads the national total over settlements, not a census count; mandal totals include towns.",
   "minIrrigatedKm2": 1.0,
   "totals": {
-    "peopleInTopTwenty": 2131422,
-    "irrigatedKm2InTopTwenty": 4165.0,
+    "peopleInTopTwenty": 2003560,
+    "irrigatedKm2InTopTwenty": 4146.0,
     "belowSeaLevelInTop": 1,
-    "disagreeInTop": 6
+    "disagreeInTop": 9
   },
   "queue": [
     {
       "rank": 1,
-      "index": 75.9,
+      "index": 75.8,
       "district": "NANDYAL",
       "mandal": "ALLAGADDA",
       "intervalWidthM": 10.4,
@@ -30,13 +30,13 @@
       "disagrees": null,
       "rankParts": {
         "uncertainty": 1.0,
-        "people": 0.807,
+        "people": 0.806,
         "irrigated": 0.941
       }
     },
     {
       "rank": 2,
-      "index": 71.6,
+      "index": 70.7,
       "district": "Y.S.R KADAPA",
       "mandal": "S.MYDUKUR",
       "intervalWidthM": 5.71,
@@ -49,14 +49,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.9,
-        "people": 0.822,
-        "irrigated": 0.967
+        "uncertainty": 0.891,
+        "people": 0.82,
+        "irrigated": 0.968
       }
     },
     {
       "rank": 3,
-      "index": 70.7,
+      "index": 69.5,
       "district": "PALNADU",
       "mandal": "MACHERLA",
       "intervalWidthM": 4.7,
@@ -69,14 +69,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.866,
-        "people": 0.887,
-        "irrigated": 0.92
+        "uncertainty": 0.853,
+        "people": 0.885,
+        "irrigated": 0.921
       }
     },
     {
       "rank": 4,
-      "index": 69.8,
+      "index": 69.3,
       "district": "EAST GODAVARI",
       "mandal": "RAJANAGARAM",
       "intervalWidthM": 5.93,
@@ -89,14 +89,14 @@
       "belowSeaLevel": false,
       "disagrees": "safe but deepening",
       "rankParts": {
-        "uncertainty": 0.911,
-        "people": 0.847,
-        "irrigated": 0.904
+        "uncertainty": 0.904,
+        "people": 0.845,
+        "irrigated": 0.906
       }
     },
     {
       "rank": 5,
-      "index": 69.7,
+      "index": 68.3,
       "district": "WEST GODAVARI",
       "mandal": "TADEPALLIGUDEM",
       "intervalWidthM": 3.73,
@@ -109,14 +109,14 @@
       "belowSeaLevel": false,
       "disagrees": "safe but deepening",
       "rankParts": {
-        "uncertainty": 0.793,
-        "people": 0.912,
+        "uncertainty": 0.781,
+        "people": 0.908,
         "irrigated": 0.964
       }
     },
     {
       "rank": 6,
-      "index": 67.1,
+      "index": 66.7,
       "district": "Y.S.R KADAPA",
       "mandal": "PORUMAMILLA",
       "intervalWidthM": 9.1,
@@ -129,14 +129,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.977,
+        "uncertainty": 0.971,
         "people": 0.7,
-        "irrigated": 0.981
+        "irrigated": 0.982
       }
     },
     {
       "rank": 7,
-      "index": 61.1,
+      "index": 60.1,
       "district": "ELURU",
       "mandal": "CHINTALAPUDI",
       "intervalWidthM": 3.88,
@@ -149,14 +149,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.814,
-        "people": 0.778,
+        "uncertainty": 0.799,
+        "people": 0.779,
         "irrigated": 0.966
       }
     },
     {
       "rank": 8,
-      "index": 59.1,
+      "index": 58.5,
       "district": "NANDYAL",
       "mandal": "CHAGALAMARRI",
       "intervalWidthM": 9.23,
@@ -169,14 +169,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.979,
-        "people": 0.635,
+        "uncertainty": 0.973,
+        "people": 0.633,
         "irrigated": 0.95
       }
     },
     {
       "rank": 9,
-      "index": 58.7,
+      "index": 57.7,
       "district": "EAST GODAVARI",
       "mandal": "DEVARAPALLE",
       "intervalWidthM": 3.34,
@@ -189,53 +189,33 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.74,
-        "people": 0.83,
-        "irrigated": 0.956
+        "uncertainty": 0.728,
+        "people": 0.827,
+        "irrigated": 0.957
       }
     },
     {
       "rank": 10,
-      "index": 56.0,
+      "index": 56.1,
       "district": "ELURU",
-      "mandal": "NUZVID",
-      "intervalWidthM": 2.71,
-      "people": 136822,
-      "irrigatedKm2": 202.5,
-      "irrigatedPct": 72.7,
-      "stagePct": 46.7,
+      "mandal": "DENDULURU",
+      "intervalWidthM": 4.96,
+      "people": 75400,
+      "irrigatedKm2": 144.3,
+      "irrigatedPct": 81.9,
+      "stagePct": 26.7,
       "category": "safe",
-      "confidence": "high",
+      "confidence": "moderate",
       "belowSeaLevel": false,
-      "disagrees": null,
+      "disagrees": "safe but deepening",
       "rankParts": {
-        "uncertainty": 0.644,
-        "people": 0.92,
-        "irrigated": 0.945
+        "uncertainty": 0.86,
+        "people": 0.739,
+        "irrigated": 0.883
       }
     },
     {
       "rank": 11,
-      "index": 55.8,
-      "district": "KONASEEMA",
-      "mandal": "ATREYAPURAM",
-      "intervalWidthM": 2.55,
-      "people": 175268,
-      "irrigatedKm2": 247.6,
-      "irrigatedPct": 95.2,
-      "stagePct": 31.4,
-      "category": "safe",
-      "confidence": "high",
-      "belowSeaLevel": false,
-      "disagrees": null,
-      "rankParts": {
-        "uncertainty": 0.607,
-        "people": 0.945,
-        "irrigated": 0.973
-      }
-    },
-    {
-      "rank": 12,
       "index": 55.8,
       "district": "NANDYAL",
       "mandal": "RUDRAVARAM",
@@ -249,54 +229,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.996,
-        "people": 0.564,
-        "irrigated": 0.992
+        "uncertainty": 0.995,
+        "people": 0.565,
+        "irrigated": 0.993
       }
     },
     {
-      "rank": 13,
-      "index": 55.5,
-      "district": "Y.S.R KADAPA",
-      "mandal": "SIDHOUT",
-      "intervalWidthM": 3.87,
-      "people": 72052,
-      "irrigatedKm2": 320.6,
-      "irrigatedPct": 75.4,
-      "stagePct": 44.6,
-      "category": "safe",
-      "confidence": "moderate",
-      "belowSeaLevel": false,
-      "disagrees": null,
-      "rankParts": {
-        "uncertainty": 0.81,
-        "people": 0.692,
-        "irrigated": 0.99
-      }
-    },
-    {
-      "rank": 14,
-      "index": 55.2,
-      "district": "NTR",
-      "mandal": "VIJAYAWADA (RURAL)",
-      "intervalWidthM": 2.69,
-      "people": 243752,
-      "irrigatedKm2": 149.4,
-      "irrigatedPct": 82.5,
-      "stagePct": 10.3,
-      "category": "safe",
-      "confidence": "high",
-      "belowSeaLevel": false,
-      "disagrees": "safe but deepening",
-      "rankParts": {
-        "uncertainty": 0.641,
-        "people": 0.971,
-        "irrigated": 0.887
-      }
-    },
-    {
-      "rank": 15,
-      "index": 55.1,
+      "rank": 12,
+      "index": 55.0,
       "district": "PALNADU",
       "mandal": "GURAZALA",
       "intervalWidthM": 8.56,
@@ -309,14 +249,94 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.969,
-        "people": 0.713,
-        "irrigated": 0.797
+        "uncertainty": 0.964,
+        "people": 0.712,
+        "irrigated": 0.8
+      }
+    },
+    {
+      "rank": 13,
+      "index": 54.6,
+      "district": "Y.S.R KADAPA",
+      "mandal": "SIDHOUT",
+      "intervalWidthM": 3.87,
+      "people": 72052,
+      "irrigatedKm2": 320.6,
+      "irrigatedPct": 75.4,
+      "stagePct": 44.6,
+      "category": "safe",
+      "confidence": "moderate",
+      "belowSeaLevel": false,
+      "disagrees": null,
+      "rankParts": {
+        "uncertainty": 0.796,
+        "people": 0.692,
+        "irrigated": 0.991
+      }
+    },
+    {
+      "rank": 14,
+      "index": 54.3,
+      "district": "ELURU",
+      "mandal": "NUZVID",
+      "intervalWidthM": 2.71,
+      "people": 136822,
+      "irrigatedKm2": 202.5,
+      "irrigatedPct": 72.7,
+      "stagePct": 46.7,
+      "category": "safe",
+      "confidence": "high",
+      "belowSeaLevel": false,
+      "disagrees": null,
+      "rankParts": {
+        "uncertainty": 0.628,
+        "people": 0.915,
+        "irrigated": 0.944
+      }
+    },
+    {
+      "rank": 15,
+      "index": 54.2,
+      "district": "KONASEEMA",
+      "mandal": "ATREYAPURAM",
+      "intervalWidthM": 2.55,
+      "people": 175268,
+      "irrigatedKm2": 247.6,
+      "irrigatedPct": 95.2,
+      "stagePct": 31.4,
+      "category": "safe",
+      "confidence": "high",
+      "belowSeaLevel": false,
+      "disagrees": null,
+      "rankParts": {
+        "uncertainty": 0.593,
+        "people": 0.941,
+        "irrigated": 0.973
       }
     },
     {
       "rank": 16,
-      "index": 54.7,
+      "index": 53.9,
+      "district": "NTR",
+      "mandal": "VIJAYAWADA (RURAL)",
+      "intervalWidthM": 2.69,
+      "people": 243752,
+      "irrigatedKm2": 149.4,
+      "irrigatedPct": 82.5,
+      "stagePct": 10.3,
+      "category": "safe",
+      "confidence": "high",
+      "belowSeaLevel": false,
+      "disagrees": "safe but deepening",
+      "rankParts": {
+        "uncertainty": 0.624,
+        "people": 0.969,
+        "irrigated": 0.89
+      }
+    },
+    {
+      "rank": 17,
+      "index": 53.5,
       "district": "NANDYAL",
       "mandal": "BANAGANAPALLE",
       "intervalWidthM": 3.25,
@@ -329,34 +349,54 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.734,
-        "people": 0.864,
-        "irrigated": 0.862
-      }
-    },
-    {
-      "rank": 17,
-      "index": 51.7,
-      "district": "ANAKAPALLI",
-      "mandal": "PAYAKARAOPETA",
-      "intervalWidthM": 3.24,
-      "people": 119703,
-      "irrigatedKm2": 116.5,
-      "irrigatedPct": 96.3,
-      "stagePct": 32.0,
-      "category": "safe",
-      "confidence": "high",
-      "belowSeaLevel": false,
-      "disagrees": null,
-      "rankParts": {
-        "uncertainty": 0.732,
-        "people": 0.883,
-        "irrigated": 0.799
+        "uncertainty": 0.718,
+        "people": 0.863,
+        "irrigated": 0.863
       }
     },
     {
       "rank": 18,
-      "index": 51.7,
+      "index": 52.4,
+      "district": "MARKAPURAM",
+      "mandal": "DORNALA",
+      "intervalWidthM": 9.61,
+      "people": 80211,
+      "irrigatedKm2": 92.8,
+      "irrigatedPct": 5.5,
+      "stagePct": 68.2,
+      "category": "safe",
+      "confidence": "limited",
+      "belowSeaLevel": false,
+      "disagrees": "safe but deepening",
+      "rankParts": {
+        "uncertainty": 0.983,
+        "people": 0.768,
+        "irrigated": 0.694
+      }
+    },
+    {
+      "rank": 19,
+      "index": 52.3,
+      "district": "EAST GODAVARI",
+      "mandal": "NALLAJERLA",
+      "intervalWidthM": 4.57,
+      "people": 66891,
+      "irrigatedKm2": 217.8,
+      "irrigatedPct": 100.0,
+      "stagePct": 71.0,
+      "category": "semi_critical",
+      "confidence": "moderate",
+      "belowSeaLevel": false,
+      "disagrees": "stressed but rising",
+      "rankParts": {
+        "uncertainty": 0.849,
+        "people": 0.646,
+        "irrigated": 0.953
+      }
+    },
+    {
+      "rank": 20,
+      "index": 50.7,
       "district": "NANDYAL",
       "mandal": "OWK",
       "intervalWidthM": 4.55,
@@ -369,14 +409,34 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.862,
-        "people": 0.623,
+        "uncertainty": 0.847,
+        "people": 0.622,
         "irrigated": 0.962
       }
     },
     {
-      "rank": 19,
-      "index": 51.3,
+      "rank": 21,
+      "index": 50.6,
+      "district": "ANAKAPALLI",
+      "mandal": "PAYAKARAOPETA",
+      "intervalWidthM": 3.24,
+      "people": 119703,
+      "irrigatedKm2": 116.5,
+      "irrigatedPct": 96.3,
+      "stagePct": 32.0,
+      "category": "safe",
+      "confidence": "high",
+      "belowSeaLevel": false,
+      "disagrees": null,
+      "rankParts": {
+        "uncertainty": 0.716,
+        "people": 0.881,
+        "irrigated": 0.802
+      }
+    },
+    {
+      "rank": 22,
+      "index": 50.5,
       "district": "SRI POTTI SRIRAMULU NELLORE",
       "mandal": "PODALAKUR",
       "intervalWidthM": 3.75,
@@ -389,14 +449,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.797,
-        "people": 0.686,
+        "uncertainty": 0.784,
+        "people": 0.687,
         "irrigated": 0.937
       }
     },
     {
-      "rank": 20,
-      "index": 51.1,
+      "rank": 23,
+      "index": 49.8,
       "district": "KAKINADA",
       "mandal": "SAMALKOTA",
       "intervalWidthM": 2.56,
@@ -409,14 +469,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.612,
-        "people": 0.933,
-        "irrigated": 0.895
+        "uncertainty": 0.597,
+        "people": 0.93,
+        "irrigated": 0.897
       }
     },
     {
-      "rank": 21,
-      "index": 49.7,
+      "rank": 24,
+      "index": 49.0,
       "district": "TIRUPATI",
       "mandal": "PULLAMPETA",
       "intervalWidthM": 4.93,
@@ -429,14 +489,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.872,
+        "uncertainty": 0.858,
         "people": 0.595,
-        "irrigated": 0.958
+        "irrigated": 0.959
       }
     },
     {
-      "rank": 22,
-      "index": 48.9,
+      "rank": 25,
+      "index": 47.9,
       "district": "GUNTUR",
       "mandal": "GUNTUR",
       "intervalWidthM": 2.74,
@@ -449,14 +509,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.654,
+        "uncertainty": 0.638,
         "people": 1.0,
-        "irrigated": 0.748
+        "irrigated": 0.75
       }
     },
     {
-      "rank": 23,
-      "index": 48.1,
+      "rank": 26,
+      "index": 47.0,
       "district": "KAKINADA",
       "mandal": "PEDDAPURAM",
       "intervalWidthM": 2.74,
@@ -469,14 +529,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.654,
-        "people": 0.925,
-        "irrigated": 0.795
+        "uncertainty": 0.638,
+        "people": 0.923,
+        "irrigated": 0.799
       }
     },
     {
-      "rank": 24,
-      "index": 48.0,
+      "rank": 27,
+      "index": 46.9,
       "district": "TIRUPATI",
       "mandal": "VENKATAGIRI",
       "intervalWidthM": 2.82,
@@ -489,14 +549,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.676,
-        "people": 0.805,
-        "irrigated": 0.881
+        "uncertainty": 0.659,
+        "people": 0.804,
+        "irrigated": 0.885
       }
     },
     {
-      "rank": 25,
-      "index": 47.3,
+      "rank": 28,
+      "index": 46.1,
       "district": "TIRUPATI",
       "mandal": "SRIKALAHASTI",
       "intervalWidthM": 2.64,
@@ -509,14 +569,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.633,
-        "people": 0.891,
-        "irrigated": 0.839
+        "uncertainty": 0.617,
+        "people": 0.888,
+        "irrigated": 0.842
       }
     },
     {
-      "rank": 26,
-      "index": 46.5,
+      "rank": 29,
+      "index": 45.8,
       "district": "KAKINADA",
       "mandal": "GOLLAPROLU",
       "intervalWidthM": 3.68,
@@ -529,14 +589,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.784,
-        "people": 0.801,
-        "irrigated": 0.741
+        "uncertainty": 0.772,
+        "people": 0.8,
+        "irrigated": 0.742
       }
     },
     {
-      "rank": 27,
-      "index": 45.4,
+      "rank": 30,
+      "index": 45.1,
       "district": "PALNADU",
       "mandal": "BOLLAPALLE",
       "intervalWidthM": 6.99,
@@ -549,34 +609,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.945,
-        "people": 0.679,
-        "irrigated": 0.707
+        "uncertainty": 0.939,
+        "people": 0.678,
+        "irrigated": 0.709
       }
     },
     {
-      "rank": 28,
-      "index": 45.3,
-      "district": "PALNADU",
-      "mandal": "DACHEPALLE",
-      "intervalWidthM": 3.82,
-      "people": 97273,
-      "irrigatedKm2": 87.9,
-      "irrigatedPct": 30.9,
-      "stagePct": 22.7,
-      "category": "safe",
-      "confidence": "high",
-      "belowSeaLevel": false,
-      "disagrees": null,
-      "rankParts": {
-        "uncertainty": 0.807,
-        "people": 0.845,
-        "irrigated": 0.664
-      }
-    },
-    {
-      "rank": 29,
-      "index": 45.0,
+      "rank": 31,
+      "index": 44.7,
       "district": "EAST GODAVARI",
       "mandal": "DWARAKATIRUMALA",
       "intervalWidthM": 4.98,
@@ -589,14 +629,34 @@
       "belowSeaLevel": false,
       "disagrees": "safe but deepening",
       "rankParts": {
-        "uncertainty": 0.874,
-        "people": 0.526,
-        "irrigated": 0.979
+        "uncertainty": 0.862,
+        "people": 0.529,
+        "irrigated": 0.98
       }
     },
     {
-      "rank": 30,
-      "index": 43.7,
+      "rank": 32,
+      "index": 44.6,
+      "district": "PALNADU",
+      "mandal": "DACHEPALLE",
+      "intervalWidthM": 3.82,
+      "people": 97273,
+      "irrigatedKm2": 87.9,
+      "irrigatedPct": 30.9,
+      "stagePct": 22.7,
+      "category": "safe",
+      "confidence": "high",
+      "belowSeaLevel": false,
+      "disagrees": null,
+      "rankParts": {
+        "uncertainty": 0.793,
+        "people": 0.844,
+        "irrigated": 0.666
+      }
+    },
+    {
+      "rank": 33,
+      "index": 43.1,
       "district": "ANANTHAPURAMU",
       "mandal": "KANEKAL",
       "intervalWidthM": 3.67,
@@ -609,14 +669,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.782,
-        "people": 0.717,
-        "irrigated": 0.78
+        "uncertainty": 0.77,
+        "people": 0.716,
+        "irrigated": 0.782
       }
     },
     {
-      "rank": 31,
-      "index": 43.2,
+      "rank": 34,
+      "index": 43.1,
       "district": "SRI SATHYA SAI",
       "mandal": "DHARMAVARAM",
       "intervalWidthM": 5.49,
@@ -629,14 +689,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.893,
-        "people": 0.937,
-        "irrigated": 0.516
+        "uncertainty": 0.883,
+        "people": 0.933,
+        "irrigated": 0.523
       }
     },
     {
-      "rank": 32,
-      "index": 41.8,
+      "rank": 35,
+      "index": 40.7,
       "district": "EAST GODAVARI",
       "mandal": "NIDADAVOLE",
       "intervalWidthM": 2.32,
@@ -649,14 +709,14 @@
       "belowSeaLevel": true,
       "disagrees": "safe but deepening",
       "rankParts": {
-        "uncertainty": 0.537,
-        "people": 0.885,
-        "irrigated": 0.88
+        "uncertainty": 0.523,
+        "people": 0.883,
+        "irrigated": 0.881
       }
     },
     {
-      "rank": 33,
-      "index": 41.0,
+      "rank": 36,
+      "index": 39.9,
       "district": "NANDYAL",
       "mandal": "NANDYAL",
       "intervalWidthM": 2.16,
@@ -669,14 +729,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.478,
-        "people": 0.983,
+        "uncertainty": 0.466,
+        "people": 0.982,
         "irrigated": 0.872
       }
     },
     {
-      "rank": 34,
-      "index": 40.8,
+      "rank": 37,
+      "index": 39.8,
       "district": "ELURU",
       "mandal": "ELURU",
       "intervalWidthM": 2.19,
@@ -689,34 +749,14 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.493,
+        "uncertainty": 0.48,
         "people": 0.987,
-        "irrigated": 0.837
+        "irrigated": 0.84
       }
     },
     {
-      "rank": 35,
-      "index": 40.7,
-      "district": "GUNTUR",
-      "mandal": "PONNUR",
-      "intervalWidthM": 2.2,
-      "people": 136733,
-      "irrigatedKm2": 157.5,
-      "irrigatedPct": 95.0,
-      "stagePct": 19.1,
-      "category": "safe",
-      "confidence": "high",
-      "belowSeaLevel": false,
-      "disagrees": null,
-      "rankParts": {
-        "uncertainty": 0.497,
-        "people": 0.918,
-        "irrigated": 0.891
-      }
-    },
-    {
-      "rank": 36,
-      "index": 40.6,
+      "rank": 38,
+      "index": 39.6,
       "district": "EAST GODAVARI",
       "mandal": "KORUKONDA",
       "intervalWidthM": 2.47,
@@ -729,14 +769,14 @@
       "belowSeaLevel": false,
       "disagrees": "safe but deepening",
       "rankParts": {
-        "uncertainty": 0.589,
-        "people": 0.792,
-        "irrigated": 0.87
+        "uncertainty": 0.576,
+        "people": 0.791,
+        "irrigated": 0.871
       }
     },
     {
-      "rank": 37,
-      "index": 40.6,
+      "rank": 39,
+      "index": 39.5,
       "district": "ELURU",
       "mandal": "JANGAREDDIGUDEM",
       "intervalWidthM": 2.2,
@@ -749,69 +789,29 @@
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.497,
-        "people": 0.859,
-        "irrigated": 0.952
-      }
-    },
-    {
-      "rank": 38,
-      "index": 39.6,
-      "district": "WEST GODAVARI",
-      "mandal": "PALACOLE",
-      "intervalWidthM": 2.73,
-      "people": 145555,
-      "irrigatedKm2": 87.5,
-      "irrigatedPct": 100.0,
-      "stagePct": null,
-      "category": "salinity",
-      "confidence": "high",
-      "belowSeaLevel": false,
-      "disagrees": null,
-      "rankParts": {
-        "uncertainty": 0.649,
-        "people": 0.924,
-        "irrigated": 0.661
-      }
-    },
-    {
-      "rank": 39,
-      "index": 39.2,
-      "district": "KRISHNA",
-      "mandal": "GANNAVARAM",
-      "intervalWidthM": 2.42,
-      "people": 112292,
-      "irrigatedKm2": 110.9,
-      "irrigatedPct": 54.5,
-      "stagePct": 24.7,
-      "category": "safe",
-      "confidence": "high",
-      "belowSeaLevel": false,
-      "disagrees": null,
-      "rankParts": {
-        "uncertainty": 0.574,
-        "people": 0.874,
-        "irrigated": 0.783
+        "uncertainty": 0.484,
+        "people": 0.858,
+        "irrigated": 0.951
       }
     },
     {
       "rank": 40,
-      "index": 38.7,
-      "district": "NANDYAL",
-      "mandal": "PANYAM",
-      "intervalWidthM": 6.05,
-      "people": 55013,
-      "irrigatedKm2": 269.4,
-      "irrigatedPct": 58.5,
-      "stagePct": 7.9,
+      "index": 39.5,
+      "district": "GUNTUR",
+      "mandal": "PONNUR",
+      "intervalWidthM": 2.2,
+      "people": 136733,
+      "irrigatedKm2": 157.5,
+      "irrigatedPct": 95.0,
+      "stagePct": 19.1,
       "category": "safe",
-      "confidence": "moderate",
+      "confidence": "high",
       "belowSeaLevel": false,
       "disagrees": null,
       "rankParts": {
-        "uncertainty": 0.92,
-        "people": 0.428,
-        "irrigated": 0.983
+        "uncertainty": 0.484,
+        "people": 0.914,
+        "irrigated": 0.894
       }
     }
   ],

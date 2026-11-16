@@ -53,7 +53,7 @@ type NavItem = { href: string; label: string; Icon: (props: React.SVGProps<SVGSV
 const navGroups: Array<{ label: string; items: NavItem[] }> = [
   { label: "This week", items: [
       { href: "/", label: "Overview", Icon: IconLayers, desc: "Executive cockpit: status map, priority mandals, source readiness and selected-area evidence." },
-      { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "Changes since each source’s previous published snapshot: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its date." },
+      { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "What moved since the previous weekly refresh: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its own reading dates." },
       { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
   ] },
   { label: "Watches", items: [
