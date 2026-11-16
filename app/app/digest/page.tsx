@@ -9,6 +9,7 @@ import { fieldSignals } from "../../lib/fieldSignalsServer";
 import { checkRecord } from "../../lib/cropWaterRecord";
 import { rabiView } from "../../lib/rabi";
 import { stateSummary } from "../../lib/stateSummary";
+import sensorsState from "../../data/gw_sensors_state.json";
 import { lakhs, summerOutlook } from "../../lib/summer";
 import styles from "./Digest.module.css";
 
@@ -75,7 +76,9 @@ export default function DigestPage() {
           {res ? <div><span>Reservoir storage</span><b>{pct(res.state.storagePct)}</b><em>{pct(res.state.lastYearPct)} a year ago · {day(rabi.asOf.reservoirs, false)}</em></div> : null}
           {rabi.rain ? <div><span>Rain since 1 June</span><b data-tone={rabi.rain.deviationPct !== null && rabi.rain.deviationPct < -19 ? "bad" : undefined}>{signed(rabi.rain.deviationPct)}</b><em>State gauges · to {day(rabi.rain.end, false)}</em></div> : null}
           <div><span>Drought manual</span><b data-tone={severe ? "bad" : undefined}>{severe}<small> severe</small></b><em>{moderate} moderate, of {drought.state.assessed} mandals assessed</em></div>
-          {gw && gw.currentM !== null && gw.vsYearAgoM !== null ? <div><span>State wells</span><b>{gw.currentM.toFixed(1)}<small> m</small></b><em>{gw.vsYearAgoM >= 0 ? `${gw.vsYearAgoM.toFixed(1)} m deeper` : `${Math.abs(gw.vsYearAgoM).toFixed(1)} m shallower`} than a year ago · {gw.stationsTotal.toLocaleString("en-IN")} wells · {day(gw.date, false)}</em></div> : null}
+          {/* Today's sensors, each against itself a year ago; the September well snapshot only if they are missing. */}
+          {sensorsState.state.compared ? <div><span>State sensors</span><b>{sensorsState.state.medianM.toFixed(1)}<small> m</small></b><em>median below ground · {Math.round((100 * sensorsState.state.deeperThanYearAgo) / sensorsState.state.compared)}% of {sensorsState.state.compared.toLocaleString("en-IN")} deeper than a year ago · {day(sensorsState.latestReading, false)}</em></div>
+          : gw && gw.currentM !== null && gw.vsYearAgoM !== null ? <div><span>State wells</span><b>{gw.currentM.toFixed(1)}<small> m</small></b><em>{gw.vsYearAgoM >= 0 ? `${gw.vsYearAgoM.toFixed(1)} m deeper` : `${Math.abs(gw.vsYearAgoM).toFixed(1)} m shallower`} than a year ago · {gw.stationsTotal.toLocaleString("en-IN")} wells · {day(gw.date, false)}</em></div> : null}
           {mostShort !== null ? <div><span>Most crops short of water</span><b data-tone={mostShort > 50 ? "bad" : undefined}>{mostShort}<small> mandals</small></b><em>4 or more of 7 crops at mid-season · forecast from {day(week, false)}</em></div> : null}
           <div><span>El Niño, Oct–Dec</span><b>{rabi.enso.ondElNinoPct !== null ? `${Math.round(rabi.enso.ondElNinoPct)}%` : "–"}</b><em>{rabi.enso.alert} · NOAA, {day(rabi.enso.issued, false)}</em></div>
         </section>

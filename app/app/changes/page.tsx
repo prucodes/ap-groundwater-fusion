@@ -291,7 +291,8 @@ function ChangeCard({ item }: { item: Item }) {
 /** Where several published signals point the same way: a list for field verification visits. */
 function FieldTeams() {
   const { rows, soilAsOf, window } = fieldPriority();
-  const shown = rows.filter(row => row.lit >= 4).slice(0, 15);
+  // Every mandal the count above names: eight show first and the rest open in place.
+  const shown = rows.filter(row => row.lit >= 4);
   const tally = [6, 5, 4].map(n => ({ n, count: rows.filter(row => row.lit === n).length }));
   const veg = fieldSignals.vegetation, gw = fieldSignals.assessment;
   if (!shown.length) return null;
