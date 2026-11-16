@@ -4650,6 +4650,20 @@ pre.jsonBody {
   margin: 0;
 }
 .crystalFrame { border: 0; width: 100%; flex: 1 1 auto; min-height: 0; display: block; }
+.crystalFrameWrap { position: relative; }
+.crystalFrameWrap .crystalVerse {
+  --verse-script: #ead9ab; --verse-text: #ead9ab; --verse-cite: #9fbcd0; --verse-mark: #d9c48a; --verse-rule: rgba(217, 196, 138, .6);
+  position: absolute; z-index: 2; left: 50%; top: 46%; width: min(560px, calc(100% - 48px)); margin: 0; padding: 28px 24px;
+  transform: translate(-50%, -50%); pointer-events: none; visibility: hidden;
+  background: radial-gradient(closest-side, rgba(5, 18, 34, .78), rgba(5, 18, 34, .5) 60%, transparent);
+  animation: crystalVerse 7s ease .3s both;
+}
+.crystalFrameWrap .crystalVerse p { font-size: clamp(16px, 1.7vw, 20px); line-height: 1.55; }
+@keyframes crystalVerse {
+  0% { opacity: 0; visibility: visible; }
+  12%, 72% { opacity: 1; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
 .crystalNotice {
   flex: none;
   margin: 0;

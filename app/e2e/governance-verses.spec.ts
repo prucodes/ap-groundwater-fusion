@@ -21,3 +21,11 @@ for (const [path, id] of [["/methodology/", "reflect"], ["/monsoon/", "rain"], [
     await expect(page.locator(`[data-verse="${id}"]`)).toContainText(VERSES[id].english);
   });
 }
+
+test("on Water Depth 3D the verse opens over the scene, then leaves it and every touch to the scene", async ({ page }) => {
+  await page.goto("/crystal/");
+  const verse = page.locator('[data-verse="bhishma"]');
+  await expect(verse).toBeVisible();
+  expect(await verse.evaluate(el => getComputedStyle(el).pointerEvents)).toBe("none");
+  await expect(verse).toBeHidden({ timeout: 12000 });
+});

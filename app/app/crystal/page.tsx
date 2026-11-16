@@ -30,7 +30,9 @@ export default function CrystalWaterTablePage() {
         allow="fullscreen"
         className="crystalFrame"
       />
-    <Verse verse={VERSES.bhishma} />
+      {/* An epigraph over the scene while it loads, then gone: laid over the frame, never
+          beside it, so the scene keeps every pixel and every touch. */}
+      <Verse verse={VERSES.bhishma} className="crystalVerse" />
     </div>
   );
 }
