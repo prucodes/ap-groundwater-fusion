@@ -1,10 +1,10 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-16T22:59:10+00:00",
+ "generatedAt": "2026-11-16T23:17:34+00:00",
  "comparedWith": {
   "label": "the previous weekly refresh",
-  "commit": "2f65743",
-  "committedAt": "2026-11-16T10:11:18Z"
+  "commit": "d7b6aac",
+  "committedAt": "2026-11-09T14:15:56Z"
  },
  "items": [
   {
@@ -13,13 +13,13 @@
    "unit": "%",
    "better": "higher",
    "href": "/climate/",
-   "before": -28.0,
+   "before": -25.9,
    "after": -28.0,
-   "beforeAsOf": "2026-11-14",
+   "beforeAsOf": "2026-11-07",
    "afterAsOf": "2026-11-14",
-   "change": 0.0,
-   "direction": "same",
-   "refreshed": false
+   "change": -2.1,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "soilBelow",
@@ -27,13 +27,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 268,
+   "before": 245,
    "after": 268,
-   "beforeAsOf": "2026-11-11",
+   "beforeAsOf": "2026-11-08",
    "afterAsOf": "2026-11-11",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "change": 23,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "soilDriest",
@@ -41,13 +41,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 15,
+   "before": 11,
    "after": 15,
-   "beforeAsOf": "2026-11-11",
+   "beforeAsOf": "2026-11-08",
    "afterAsOf": "2026-11-11",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "change": 4,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "reservoirs",
@@ -55,13 +55,13 @@
    "unit": "%",
    "better": "higher",
    "href": "/agriculture/",
-   "before": 42.3,
+   "before": 43.4,
    "after": 42.3,
-   "beforeAsOf": "2026-11-16T12:02+05:30",
+   "beforeAsOf": "2026-11-09T17:51+05:30",
    "afterAsOf": "2026-11-16T12:02+05:30",
-   "change": 0.0,
-   "direction": "same",
-   "refreshed": false
+   "change": -1.1,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "trigger1",
@@ -71,11 +71,11 @@
    "href": "/drought/",
    "before": 523,
    "after": 523,
-   "beforeAsOf": "2026-11-14",
+   "beforeAsOf": "2026-11-07",
    "afterAsOf": "2026-11-14",
    "change": 0,
    "direction": "same",
-   "refreshed": false
+   "refreshed": true
   },
   {
    "key": "droughtSevere",
@@ -83,13 +83,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 22,
+   "before": 30,
    "after": 22,
-   "beforeAsOf": "2026-11-14",
+   "beforeAsOf": "2026-11-07",
    "afterAsOf": "2026-11-14",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "change": -8,
+   "direction": "better",
+   "refreshed": true
   },
   {
    "key": "droughtModerate",
@@ -97,13 +97,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/drought/",
-   "before": 214,
+   "before": 279,
    "after": 214,
-   "beforeAsOf": "2026-11-14",
+   "beforeAsOf": "2026-11-07",
    "afterAsOf": "2026-11-14",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "change": -65,
+   "direction": "better",
+   "refreshed": true
   },
   {
    "key": "gwStress",
@@ -111,12 +111,12 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/map/",
-   "before": 432,
+   "before": 433,
    "after": 432,
    "beforeAsOf": "2026-10",
    "afterAsOf": "2026-10",
-   "change": 0,
-   "direction": "same",
+   "change": -1,
+   "direction": "revised",
    "refreshed": false
   },
   {
@@ -125,13 +125,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/",
-   "before": 212,
+   "before": 270,
    "after": 212,
-   "beforeAsOf": "2026-11-11",
+   "beforeAsOf": "2026-11-04",
    "afterAsOf": "2026-11-11",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "change": -58,
+   "direction": "better",
+   "refreshed": true
   },
   {
    "key": "cropsShort",
@@ -139,13 +139,13 @@
    "unit": "mandals",
    "better": "lower",
    "href": "/agriculture/#field-week",
-   "before": 137,
+   "before": 70,
    "after": 137,
-   "beforeAsOf": "2026-11-16",
+   "beforeAsOf": "2026-11-09",
    "afterAsOf": "2026-11-16",
-   "change": 0,
-   "direction": "same",
-   "refreshed": false
+   "change": 67,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "ensoPeak",
@@ -153,13 +153,13 @@
    "unit": "°C",
    "better": "context",
    "href": "/monsoon/",
-   "before": 2.53,
+   "before": 2.74,
    "after": 2.53,
-   "beforeAsOf": "2026-11-12",
+   "beforeAsOf": "2026-10-08",
    "afterAsOf": "2026-11-12",
-   "change": 0.0,
-   "direction": "same",
-   "refreshed": false,
+   "change": -0.2,
+   "direction": "moved",
+   "refreshed": true,
    "note": "El Niño Advisory"
   }
  ],
@@ -460,10 +460,10 @@
   "basis": "each mandal's manual reading now against the same reading one week of rain earlier"
  },
  "counts": {
-  "better": 0,
-  "worse": 0,
-  "same": 11,
-  "revised": 0,
+  "better": 3,
+  "worse": 5,
+  "same": 1,
+  "revised": 1,
   "unknown": 0
  }
 }

@@ -91,19 +91,26 @@ export function StateActions({ data, builtOn }: { data: Pick<DroughtWatch, "seas
     { date: today, label: "This build", kind: "today" },
     { date: season.declareBy, label: "Declare drought", kind: "deadline" },
     { date: extended, label: "+3 weeks at most", kind: "extended", align: "end" },
-  ];
+  ].sort((a, b) => a.date.localeCompare(b.date));
   const span = Math.max(1, daysBetween(season.start, extended));
   const at = (date: string) => Math.min(100, Math.max(0, (daysBetween(season.start, date) / span) * 100));
+  // Near another mark (as after the deadline, when the build sits beside the line's end), today
+  // drops its date and reads as one line beneath the others, so the two never print over each other.
+  const crowded = marks.some(mark => mark.kind !== "today" && Math.abs(at(mark.date) - at(today)) < 12);
   const fieldMandals = state.counts.severe + state.counts["moderate|severe"] + state.counts.moderate;
   return (
     <div>
-      <div className={styles.timeline} aria-label="The manual's calendar for kharif drought">
+      <div className={styles.timeline} aria-label="The manual's calendar for kharif drought" data-crowded={crowded || undefined}>
         <div className={styles.timelineLine} />
         <div className={styles.timelinePast} style={{ width: `${at(today)}%` }} />
         {marks.map(mark => (
-          <div key={mark.kind} className={styles.mark} data-kind={mark.kind} data-align={mark.align} style={{ left: `${at(mark.date)}%` }}>
-            <b>{shortDate(mark.date)}</b><i />{mark.label}
-          </div>
+          mark.kind === "today" && crowded
+            ? <div key={mark.kind} className={styles.mark} data-kind={mark.kind} data-crowded data-align={at(today) > 80 ? "end" : at(today) < 20 ? "start" : undefined} style={{ left: `${at(mark.date)}%` }}>
+                <b aria-hidden="true">&nbsp;</b><i /><span>{mark.label}, {shortDate(mark.date)}</span>
+              </div>
+            : <div key={mark.kind} className={styles.mark} data-kind={mark.kind} data-align={mark.align} style={{ left: `${at(mark.date)}%` }}>
+                <b>{shortDate(mark.date)}</b><i />{mark.label}
+              </div>
         ))}
       </div>
       <div className={styles.actions}>

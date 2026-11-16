@@ -1,6 +1,7 @@
 """The El Nino outlook parser, the weekly-changes comparison and the refresh
 health report: each reads someone else's output and must fail loudly, or say
 nothing, rather than guess."""
+import datetime
 import json
 import os
 import sys
@@ -89,6 +90,10 @@ def test_the_weekly_baseline_is_the_previous_weekly_refresh_or_nothing():
     found = changes.weekly_baseline()
     # A shallow checkout cannot reach it; a full one finds the refresh commit itself.
     assert found is None or set(found) == {"ref", "commit", "committedAt"}
+    if found:
+        # Never a run from the same week: a rebuild an hour after a refresh still compares with last week.
+        age = datetime.datetime.now(datetime.timezone.utc) - datetime.datetime.fromisoformat(found["committedAt"])
+        assert age >= datetime.timedelta(days=changes.BASELINE_MIN_AGE_DAYS)
 
 
 def test_health_report_names_failed_steps_and_kept_feeds_and_is_silent_otherwise():

@@ -190,6 +190,16 @@
 .mark[data-align="end"] { transform: translateX(-100%); text-align: right; }
 .mark[data-align="end"] i { margin-right: 0; }
 .mark[data-kind="extended"] i { border-style: dashed; }
+.timeline[data-crowded] { height: 96px; }
+.mark[data-crowded] span { display: block; margin-top: 4px; padding-top: 22px; font-weight: 600; color: var(--rust); }
+/* Too narrow for five labels on one line: the calendar reads as a dated list, in order. */
+@media (max-width: 1360px) {
+  .timeline, .timeline[data-crowded] { height: auto; display: grid; gap: 8px; margin: 4px 0 18px; }
+  .timelineLine, .timelinePast { display: none; }
+  .mark, .mark[data-align] { position: static; transform: none; display: grid; grid-template-columns: 56px 12px minmax(0, 1fr); align-items: center; gap: 10px; text-align: left; white-space: normal; }
+  .mark i, .mark[data-align] i { margin: 0; }
+  .mark[data-crowded] span { margin: 0; padding: 0; }
+}
 .actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
 .action { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 14px 12px; box-shadow: var(--shadow-card); position: relative; }
 .action[data-owner="state"] { border-top: 3px solid var(--rust); }
