@@ -28,81 +28,97 @@ PY = sys.executable
 DEFAULT_STEP_TIMEOUT = 1800
 
 
-def step(name, args, cwd=ROOT, required=False, timeout=DEFAULT_STEP_TIMEOUT):
+def step(name, args, cwd=ROOT, required=False, timeout=DEFAULT_STEP_TIMEOUT, out=None):
+    """Run one step. With `out`, its lines go there instead of straight to the log, so a lane
+    running beside others prints as one block."""
+    say = out.append if out is not None else print
     started = datetime.datetime.now()
-    print(f"\n→ {name}")
+    say(f"\n→ {name}")
     try:
         r = subprocess.run(args, cwd=cwd, capture_output=True, text=True, timeout=timeout)
         ok = r.returncode == 0
         tail = (r.stdout or r.stderr).strip().splitlines()[-3:]
         for ln in tail:
-            print("   " + ln)
+            say("   " + ln)
         if not ok and required:
-            print(f"   [!] required step failed (rc={r.returncode}); publication stopped")
+            say(f"   [!] required step failed (rc={r.returncode}); publication stopped")
         return {"step": name, "ok": ok, "rc": r.returncode,
                 "secs": round((datetime.datetime.now() - started).total_seconds(), 1)}
     except FileNotFoundError:
-        print(f"   [skip] not found: {args}")
+        say(f"   [skip] not found: {args}")
         return {"step": name, "ok": False, "rc": "missing", "secs": 0}
     except Exception as e:
-        print(f"   [err] {e}")
+        say(f"   [err] {e}")
         return {"step": name, "ok": False, "rc": "error", "secs": 0}
 
 
+# The downloads come first, in three lanes that reach different sources and write
+# different files, so a full run waits for the longest lane rather than the sum of all
+# (66 minutes end to end on 16 Nov 2026). Within a lane the order holds: the APWRIMS
+# portal is asked one thing at a time, and CHIRPS's history follows its latest month.
+FETCH_LANES = [
+    [
+        # The APWRIMS sensor history — the model's training labels. These endpoints
+        # need no authentication (verified 2026-08-28), so this runs unattended like
+        # the satellite sources. It walks ~670 mandals with a deliberate crawl delay,
+        # so it needs well over the default timeout. Optional by design: on any
+        # failure it refuses to publish a degraded pull and the previous history is
+        # reused, exactly like a failed raster fetch.
+        ("fetch APWRIMS sensor history",
+         [PY, os.path.join(HERE, "fetch_apwrims_history.py")], False, 5400),
+        # The same portal's other public dashboards: NRSC-model soil moisture, DES
+        # gauge rainfall, and reservoir storage with the release into each canal.
+        # About twenty requests. Optional: a feed that fails keeps its previous
+        # section, which carries its own as-of date, so the page shows its age.
+        ("fetch APWRIMS water context",
+         [PY, os.path.join(HERE, "fetch_apwrims_context.py")], False, 900),
+        # The forecast's deep soil moisture: one statewide request for each month not yet
+        # held, so a few a week. Optional: without it the forecast trains on what is held.
+        ("fetch soil moisture history",
+         [PY, os.path.join(HERE, "fetch_soil_moisture_history.py")], False, 600),
+    ],
+    [
+        ("fetch CHIRPS rain",    [PY, os.path.join(SCRIPTS, "fetch_chirps_rainfall.py")], False),
+        # The model's own rainfall input (rain_1m / rain_3m / rain_12m), from NASA
+        # POWER. Until 2026-09-19 this was loaded once and stopped at 2025-12, so every
+        # 2026 month reached the model with no rainfall. Incremental: most weeks it
+        # finds the last complete month already stored and fetches nothing.
+        # CHIRPS at 5.5 km is the model's rainfall; this appends the one new month
+        # rather than walking the archive. POWER stays as the fallback behind it.
+        ("extend CHIRPS rainfall history (model input)",
+         [PY, os.path.join(HERE, "fetch_chirps_history.py")], False, 1800),
+        ("fetch NASA POWER rainfall (fallback)",
+         [PY, os.path.join(HERE, "fetch_nasa_power_rainfall.py")], False, 2700),
+    ],
+    [
+        # GRACE-DA publishes to a rolling "current/" URL: same filenames, new content
+        # each week. Without --overwrite the downloader reuses the stale local copy
+        # forever and the weekly refresh silently never updates.
+        ("fetch GRACE-DA",       [PY, os.path.join(SCRIPTS, "download_nasa_grace_da.py"), "--overwrite"], False),
+        ("refresh TerraClimate", [PY, os.path.join(SCRIPTS, "fetch_terraclimate_balance.py")], False),
+        # IMD district forecasts and warnings. Dormant until the IMD_API_KEY secret
+        # exists (it skips and writes nothing), and private until IMD_PUBLISH=1.
+        ("fetch IMD forecasts (needs IMD_API_KEY)",
+         [PY, os.path.join(HERE, "fetch_imd_context.py")], False, 300),
+        # The ocean state. One small text file from NOAA, no account, no licence --
+        # the only climate index in this project that can run unattended. Optional:
+        # the monsoon watch's own numbers come from the readings and CHIRPS, so a
+        # failed fetch costs the context line and nothing else.
+        ("fetch ENSO index", [PY, os.path.join(HERE, "fetch_enso_index.py")], False),
+        # What NOAA's forecasters expect next: four small public pages, monthly.
+        # Optional: a failure, or a page that has changed shape, keeps last
+        # month's outlook, which carries its own issue date.
+        ("fetch ENSO outlook", [PY, os.path.join(HERE, "fetch_enso_outlook.py")], False),
+    ],
+]
+
 # Fetchers that exist in the project are used; others are no-ops until wired.
 STEPS = [
-    # GRACE-DA publishes to a rolling "current/" URL: same filenames, new content
-    # each week. Without --overwrite the downloader reuses the stale local copy
-    # forever and the weekly refresh silently never updates.
-    ("fetch GRACE-DA",       [PY, os.path.join(SCRIPTS, "download_nasa_grace_da.py"), "--overwrite"], False),
-    ("fetch CHIRPS rain",    [PY, os.path.join(SCRIPTS, "fetch_chirps_rainfall.py")], False),
-    ("refresh TerraClimate", [PY, os.path.join(SCRIPTS, "fetch_terraclimate_balance.py")], False),
-    # The APWRIMS sensor history — the model's training labels. These endpoints
-    # need no authentication (verified 2026-08-28), so this runs unattended like
-    # the satellite sources. It walks ~670 mandals with a deliberate crawl delay,
-    # so it needs well over the default timeout. Optional by design: on any
-    # failure it refuses to publish a degraded pull and the previous history is
-    # reused, exactly like a failed raster fetch.
-    ("fetch APWRIMS sensor history",
-     [PY, os.path.join(HERE, "fetch_apwrims_history.py")], False, 5400),
-    # The same portal's other public dashboards: NRSC-model soil moisture, DES
-    # gauge rainfall, and reservoir storage with the release into each canal.
-    # About twenty requests. Optional: a feed that fails keeps its previous
-    # section, which carries its own as-of date, so the page shows its age.
-    ("fetch APWRIMS water context",
-     [PY, os.path.join(HERE, "fetch_apwrims_context.py")], False, 900),
-    # The forecast's deep soil moisture: one statewide request for each month not yet
-    # held, so a few a week. Optional: without it the forecast trains on what is held.
-    ("fetch soil moisture history",
-     [PY, os.path.join(HERE, "fetch_soil_moisture_history.py")], False, 600),
-    # IMD district forecasts and warnings. Dormant until the IMD_API_KEY secret
-    # exists (it skips and writes nothing), and private until IMD_PUBLISH=1.
-    ("fetch IMD forecasts (needs IMD_API_KEY)",
-     [PY, os.path.join(HERE, "fetch_imd_context.py")], False, 300),
-    # The fetch steps above only land rasters on disk. These two resample them
-    # into the per-district / per-mandal context the publisher actually reads —
-    # without them the new rasters are downloaded and then ignored.
+    # The fetch lanes only land rasters on disk. These two resample them into the
+    # per-district / per-mandal context the publisher actually reads -- without them
+    # the new rasters are downloaded and then ignored.
     ("resample GRACE at districts", [PY, os.path.join(HERE, "refresh_nasa_districts.py")], False),
     ("rebuild mandal rainfall/balance heat", [PY, os.path.join(SCRIPTS, "build_mandal_heat.py")], False),
-    # The model's own rainfall input (rain_1m / rain_3m / rain_12m), from NASA
-    # POWER. Until 2026-09-19 this was loaded once and stopped at 2025-12, so every
-    # 2026 month reached the model with no rainfall. Incremental: most weeks it
-    # finds the last complete month already stored and fetches nothing.
-    # CHIRPS at 5.5 km is the model's rainfall; this appends the one new month
-    # rather than walking the archive. POWER stays as the fallback behind it.
-    ("extend CHIRPS rainfall history (model input)",
-     [PY, os.path.join(HERE, "fetch_chirps_history.py")], False, 1800),
-    ("fetch NASA POWER rainfall (fallback)",
-     [PY, os.path.join(HERE, "fetch_nasa_power_rainfall.py")], False, 2700),
-    # The ocean state. One small text file from NOAA, no account, no licence --
-    # the only climate index in this project that can run unattended. Optional:
-    # the monsoon watch's own numbers come from the readings and CHIRPS, so a
-    # failed fetch costs the context line and nothing else.
-    ("fetch ENSO index", [PY, os.path.join(HERE, "fetch_enso_index.py")], False),
-    # What NOAA's forecasters expect next: four small public pages, monthly.
-    # Optional: a failure, or a page that has changed shape, keeps last
-    # month's outlook, which carries its own issue date.
-    ("fetch ENSO outlook", [PY, os.path.join(HERE, "fetch_enso_outlook.py")], False),
     ("build holdout-safe nowcasts", [PY, os.path.join(HERE, "build_levels_engine.py")], True),
     # Rolling-origin forecast validation retrains once per quarterly cut per
     # candidate horizon, which is slow on a 2-core runner.
@@ -202,21 +218,65 @@ STEPS = [
 ]
 
 
+# Steps a rebuild skips along with the lanes, keeping each one's last published file:
+# builders that fetch their own sources, and the two that only re-process the rasters
+# the lanes download (with no downloads they would fail and read as a broken refresh).
+NETWORK_STEPS = {
+    "build drought watch", "fetch field signals", "score field calls",
+    "build drinking water beside the outlook", "build tank fill",
+    "read today's water table from the sensors",
+    "resample GRACE at districts", "rebuild mandal rainfall/balance heat",
+}
+
+
+def run_entry(entry, out=None):
+    # Entries are (name, args, required) with an optional 4th timeout override.
+    name, args, required = entry[0], entry[1], entry[2]
+    timeout = entry[3] if len(entry) > 3 else DEFAULT_STEP_TIMEOUT
+    result = step(name, args, required=required, timeout=timeout, out=out)
+    result["required"] = required
+    return result
+
+
+def run_lane(lane):
+    out, results = [], []
+    for entry in lane:
+        results.append(run_entry(entry, out))
+    return out, results
+
+
 def main():
-    print(f"=== Phase 3 weekly run · {datetime.datetime.now().isoformat(timespec='seconds')} ===")
+    # REFRESH_MODE=rebuild (a manual run after a code change): no downloads; the model,
+    # forecast and pages are rebuilt from the data already committed. The scheduled
+    # Monday run is always full.
+    mode = os.environ.get("REFRESH_MODE", "full").strip() or "full"
+    print(f"=== Phase 3 weekly run ({mode}) · {datetime.datetime.now().isoformat(timespec='seconds')} ===")
     log = []
     failed_required = False
+    if mode == "rebuild":
+        for lane in FETCH_LANES:
+            log += [{"step": entry[0], "ok": True, "skipped": "rebuild", "secs": 0, "required": entry[2]} for entry in lane]
+    else:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=len(FETCH_LANES)) as pool:
+            for out, results in pool.map(run_lane, FETCH_LANES):
+                print("\n".join(out), flush=True)
+                log += results
     for entry in STEPS:
-        # Entries are (name, args, required) with an optional 4th timeout override.
-        name, args, required = entry[0], entry[1], entry[2]
-        timeout = entry[3] if len(entry) > 3 else DEFAULT_STEP_TIMEOUT
-        result = step(name, args, required=required, timeout=timeout)
-        result["required"] = required
+        name = entry[0]
+        if mode == "rebuild" and name in NETWORK_STEPS:
+            print(f"\n→ {name}\n   [skip] rebuild: keeps the last published file")
+            log.append({"step": name, "ok": True, "skipped": "rebuild", "secs": 0, "required": entry[2]})
+            continue
+        if mode == "rebuild" and "--online" in entry[1]:
+            # The audit still recomputes every figure; its few public requests wait for a full run.
+            entry = (name, [a for a in entry[1] if a != "--online"], *entry[2:])
+        result = run_entry(entry)
         log.append(result)
-        if required and not result["ok"]:
+        if entry[2] and not result["ok"]:
             failed_required = True
             break
-    run = {"ran_at": datetime.datetime.now().isoformat(timespec="seconds"), "steps": log}
+    run = {"ran_at": datetime.datetime.now().isoformat(timespec="seconds"), "mode": mode, "steps": log}
     os.makedirs(os.path.join(HERE, "outputs"), exist_ok=True)
     json.dump(run, open(os.path.join(HERE, "outputs", "weekly_run_log.json"), "w"), indent=2)
     ok = sum(1 for s in log if s["ok"])
