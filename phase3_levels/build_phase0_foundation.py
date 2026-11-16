@@ -893,10 +893,15 @@ def build_model_card(context, generated_at):
                 horizon["horizonMonths"] for horizon in direct["horizons"]
                 if not horizon.get("releaseBlockers")
             ],
+            # Cleared but not released: the owner has not yet chosen to publish it. Named, so
+            # nothing that clears the gate sits unpublished without saying why.
+            "heldHorizons": [h for h in clearing if h not in released],
             "reason": (
                 f"Released horizons: {released}. A horizon is published only when it both clears "
                 "the gate and is listed in RELEASED_FORECAST_HORIZONS; clearing the gate alone "
                 "does not publish it."
+                + (f" Held: {[h for h in clearing if h not in released]} clear the gate but are not yet "
+                   "released, until they hold over several weekly runs." if [h for h in clearing if h not in released] else "")
             ),
         },
         "cohortDefinitions": {
