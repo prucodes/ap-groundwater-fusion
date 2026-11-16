@@ -630,6 +630,15 @@ def soil_by_boundary(context, count):
     return [seen.get(i) for i in range(count)]
 
 
+def soil_fingerprint(context):
+    """Exactly which soil reading a cross-check was counted on. The portal can revise the values
+    for a date it has already published (16 November 2026: the 11 November reading changed
+    between two runs that day), so the date alone does not say."""
+    rows = ((context or {}).get("soilMoisture") or {}).get("mandals") or []
+    items = sorted((row.get("boundaryIndex"), row.get("pct")) for row in rows if isinstance(row.get("boundaryIndex"), int))
+    return hashlib.sha256(json.dumps(items).encode()).hexdigest()[:16]
+
+
 def check_for(weather, refreshed, previous, capacity, context, calls_dir=None):
     """This run's cross-check. A forecast kept from an earlier run keeps that run's check:
     the calls frozen for its issue date were made on that run's soil reading, and running
@@ -660,7 +669,7 @@ def cross_check(weather, capacity, context):
     if soil["asOf"] not in dates or weather["issued"] not in dates:
         return {"soilAsOf": soil["asOf"], "note": "soil-moisture date outside the weather window"}
     start, today = dates.index(soil["asOf"]), dates.index(weather["issued"])
-    out = {"soilAsOf": soil["asOf"], "issued": weather["issued"], "counts": {}}
+    out = {"soilAsOf": soil["asOf"], "soilFingerprint": soil_fingerprint(context), "issued": weather["issued"], "counts": {}}
     short_mid, known_mid = [0] * count, [0] * count
     for crop in crop_water.CROPS:
         for stage in range(3):
