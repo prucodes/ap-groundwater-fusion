@@ -223,6 +223,15 @@ export default function MethodologyPage() {
             on rolling origin and made the forecast worse: 1.776 m to 1.850 m mean error, and worse in every aquifer.
             The groundwater forecast experiment remains research-only. Historical ENSO associations do not establish a local forecast or causation.
           </p>
+          <p data-sourced="phase3_levels/experiment_forecast_inputs.py phase3_levels/experiment_soil_moisture.py">
+            <strong>Two inputs added in November 2026, each kept only because it passed the same rolling-origin test.</strong>{" "}Each
+            mandal&rsquo;s own past change over the same months, from earlier years only, took the three-month forecast&rsquo;s mean
+            error from 1.91 m to 1.83 m. The State&rsquo;s soil moisture 150 cm down at the end of the origin month (the NRSC model
+            APWRIMS publishes, back to 2014), water still on its way to the water table, took it to 1.79 m: 19% better than
+            assuming no change, and better in every terrain, most in hard rock (13% to 15%). GRACE storage and the shallower soil
+            layers added little and were left out. With both inputs the six-month forecast clears the release test for the first
+            time, by under 1%; it stays unpublished until it holds over several weekly runs.
+          </p>
           <p data-sourced="phase3_levels/data/mandal_rain_history_imd.csv reports/imd_rainfall_experiment.json">
             <strong>Checked against IMD&rsquo;s own rainfall grid.</strong>{" "}The India Meteorological Department&rsquo;s 0.25° grid
             (Pai et al. 2014), the rainfall officials quote, agrees with the CHIRPS record the model reads: across 604 mandals from

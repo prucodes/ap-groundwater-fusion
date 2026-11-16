@@ -71,6 +71,10 @@ STEPS = [
     # section, which carries its own as-of date, so the page shows its age.
     ("fetch APWRIMS water context",
      [PY, os.path.join(HERE, "fetch_apwrims_context.py")], False, 900),
+    # The forecast's deep soil moisture: one statewide request for each month not yet
+    # held, so a few a week. Optional: without it the forecast trains on what is held.
+    ("fetch soil moisture history",
+     [PY, os.path.join(HERE, "fetch_soil_moisture_history.py")], False, 600),
     # IMD district forecasts and warnings. Dormant until the IMD_API_KEY secret
     # exists (it skips and writes nothing), and private until IMD_PUBLISH=1.
     ("fetch IMD forecasts (needs IMD_API_KEY)",
