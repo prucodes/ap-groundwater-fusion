@@ -4,6 +4,8 @@ import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { CREATOR_CREDIT, CREATOR_NAME, WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE } from "../../lib/creator";
 import { countEvent } from "../../lib/visit-counter";
+import { Verse } from "../Verse";
+import { VERSES } from "../../lib/verses";
 import { WaterLandscape } from "./WaterLandscape";
 import styles from "./Welcome.module.css";
 
@@ -178,6 +180,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
             </section>
 
             <figure className={styles.landscape}>
+              <Verse verse={VERSES.narada} className={styles.verse} />
               <WaterLandscape />
               <figcaption><span className={styles.figureIndex}>FIG. 01</span> BENEATH THE MONSOON <span className={styles.figureNote}>Illustrative landscape · not measured data</span></figcaption>
             </figure>
