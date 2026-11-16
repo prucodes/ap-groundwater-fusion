@@ -49,6 +49,7 @@ HEAVY_MM = 100
 DEEP_M = 8
 STILL_DRY_MM = 50
 RISE_M = 0.1                        # a sensor counts as risen past this
+MIN_DISTRICT_SENSORS = 10           # a district needs this many sensors to be ranked
 
 
 def freeze_baselines():
@@ -102,8 +103,34 @@ def sensors_now(before):
             seen.add(key)
             then, index = before["stations"][key]
             # Positive is a rise: the water table nearer the surface than before the storm.
-            rises.append([st[0], st[1], st[2], index, round(then - st[5], 2)])
+            rises.append([st[0], st[1], st[2], index, round(then - st[5], 2), st[3]])
     return s["latestReading"], rises
+
+
+def ist_day(iso):
+    return (datetime.datetime.fromisoformat(iso) + datetime.timedelta(hours=5, minutes=30)).date().isoformat()
+
+
+def timeline(reading, rises, rain_tmc):
+    """One point per IST day, kept across runs: the day's last reading replaces its earlier one."""
+    try:
+        points = json.load(open(OUT)).get("timeline", [])
+    except (OSError, ValueError):
+        points = []
+    today = ist_day(reading)
+    point = {"day": today, "compared": len(rises), "risen": sum(r[4] > RISE_M for r in rises),
+             "medianRiseM": round(statistics.median(r[4] for r in rises), 2) if rises else None, "rainTmc": rain_tmc}
+    return sorted([p for p in points if p["day"] != today] + [point], key=lambda p: p["day"])
+
+
+def district_response(rises):
+    """Each district's sensors: how many, how many risen, and the median rise."""
+    by = defaultdict(list)
+    for r in rises:
+        by[r[5]].append(r[4])
+    rows = [{"district": d, "compared": len(v), "risen": sum(x > RISE_M for x in v), "medianRiseM": round(statistics.median(v), 2)}
+            for d, v in by.items() if d and len(v) >= MIN_DISTRICT_SENSORS]
+    return sorted(rows, key=lambda r: (-r["risen"] / r["compared"], -r["medianRiseM"], r["district"]))
 
 
 def main():
@@ -150,8 +177,11 @@ def main():
             "risen": len(risen), "medianRiseM": round(statistics.median(r[4] for r in rises), 2) if rises else None,
             "inMissed": len(in_missed), "risenInMissed": sum(r[4] > RISE_M for r in in_missed),
             # [name, lat, lng, boundary index, rise since the baseline m]
-            "stations": rises,
+            "stations": [r[:5] for r in rises],
+            "districts": district_response(rises),
         },
+        # The water table's answer day by day, beside the rain: one point per IST day.
+        "timeline": timeline(reading, rises, round(state["rainTmc"], 1) if counting else None),
     }
     with open(OUT, "w") as handle:
         json.dump(payload, handle, separators=(",", ":"))
