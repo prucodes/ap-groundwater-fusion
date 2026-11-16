@@ -34,7 +34,7 @@ export function SeasonBuildup({ timeline, facts = [] }: {
     <div className={styles.chartCard}>
       <h3>How the season dried</h3>
       <p>Mandals by rainfall so far at the end of each week, and how many had already run four dry weeks in a row (the line). Measured, AP DES gauges.</p>
-      <svg className={styles.chart} viewBox={`0 0 ${width} ${height}`} role="img"
+      <svg data-draw className={styles.chart} viewBox={`0 0 ${width} ${height}`} role="img"
         aria-label={`By ${shortDate(last.end)}, ${last.classes.deficient} mandals deficient and ${last.classes.largeDeficient} large deficient for the season; ${last.drySpell} had run a four-week dry spell.`}>
         {ticks.map(value => (
           <g key={value}>

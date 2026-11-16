@@ -41,6 +41,7 @@ import { waterSummary } from "../lib/waterSummary";
 import { stateSummary } from "../lib/stateSummary";
 import sensorsState from "../data/gw_sensors_state.json";
 import { PageTransition } from "./PageTransition";
+import { ChartReveal } from "./ChartReveal";
 import { useWelcome } from "./welcome/WelcomeGate";
 import { CREATOR_NAME } from "../lib/creator";
 import { countEvent } from "../lib/visit-counter";
@@ -357,7 +358,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </button>
       </aside>
 
-      <main className="main" tabIndex={-1}><PageTransition>{children}</PageTransition><footer className="appCreatorFooter"><span>AP Water Intelligence · Created by <strong>{CREATOR_NAME}</strong> · &copy; 2026</span><button type="button" onClick={showWelcome}>The story behind the project <span aria-hidden="true">↗</span></button></footer></main>
+      <main className="main" tabIndex={-1}><ChartReveal /><PageTransition>{children}</PageTransition><footer className="appCreatorFooter"><span>AP Water Intelligence · Created by <strong>{CREATOR_NAME}</strong> · &copy; 2026</span><button type="button" onClick={showWelcome}>The story behind the project <span aria-hidden="true">↗</span></button></footer></main>
       <CommandPalette />
     </div>
   );

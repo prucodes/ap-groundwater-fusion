@@ -153,7 +153,7 @@ export default function ChangesPage() {
           <>
             <h2 className={styles.groupHead}>01 / Changes in this briefing <span>{moved.length} headline{moved.length === 1 ? "" : "s"}</span></h2>
             <div className={styles.cards}>
-              {moved.map(item => <ChangeCard item={item} key={item.key} />)}
+              {moved.map((item, order) => <ChangeCard item={item} key={item.key} order={order} />)}
             </div>
           </>
         ) : <p className={styles.empty}>No headline changed in this comparison. A retained figure is not evidence that conditions are safe.</p>}
@@ -253,13 +253,13 @@ export default function ChangesPage() {
 }
 
 /** One headline: its figure now, which way it moved, what it was, and the dates of both readings. */
-function ChangeCard({ item }: { item: Item }) {
+function ChangeCard({ item, order }: { item: Item; order?: number }) {
   const comparable = item.before !== null && item.after !== null && Number.isFinite(item.before) && Number.isFinite(item.after) && item.direction !== "same";
   const low = Math.min(0, item.before ?? 0, item.after ?? 0);
   const high = Math.max(0, item.before ?? 0, item.after ?? 0);
   const position = (value: number) => 4 + 92 * (value - low) / (high - low || 1);
   return (
-    <Link href={item.href} className={styles.card} data-direction={item.direction ?? "new"} data-key={item.key}>
+    <Link href={item.href} className={styles.card} data-direction={item.direction ?? "new"} data-key={item.key} data-rise={order === undefined ? undefined : ""} style={order === undefined ? undefined : { "--rise": order } as React.CSSProperties}>
       <span className={styles.cardLabel}>{item.label}</span>
       <strong className={styles.value}>{format(item.after, item.unit)}</strong>
       <span className={styles.status}>

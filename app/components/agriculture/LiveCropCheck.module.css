@@ -9,7 +9,13 @@
 @keyframes pulse { 50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--lc-green) 0%, transparent); } }
 
 .controls { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 20px; padding: 12px 0 14px; border-top: 1px solid var(--line); }
-.cropPicker, .stagePicker { display: flex; flex-wrap: wrap; gap: 4px; }
+.cropPicker, .stagePicker { position: relative; display: flex; flex-wrap: wrap; gap: 4px; }
+.cropPicker { --glide-bg: var(--lc-green); --glide-border: var(--lc-green); --glide-radius: 999px; }
+.stagePicker { --glide-bg: var(--card); --glide-border: var(--line); --glide-radius: 4px; --glide-shadow: 0 1px 3px #0000000a; }
+.cropPicker button, .stagePicker button { position: relative; z-index: 1; }
+/* Once the glide has measured, it carries the pressed fill and the button goes clear. */
+.cropPicker:has(> :global(.pickerGlide[data-ready])) button[aria-pressed="true"],
+.stagePicker:has(> :global(.pickerGlide[data-ready])) button[aria-pressed="true"] { background: transparent; border-color: transparent; box-shadow: none; }
 .cropPicker button { min-height: 34px; padding: 6px 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); color: var(--ink-soft); font-size: 12px; font-weight: 500; transition: border-color .15s, background .15s, color .15s; }
 .cropPicker button:hover { border-color: color-mix(in srgb, var(--lc-green) 45%, var(--line)); color: var(--lc-green); }
 .cropPicker button[aria-pressed="true"] { border-color: var(--lc-green); background: var(--lc-green); color: #fff; }

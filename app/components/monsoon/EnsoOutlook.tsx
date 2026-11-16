@@ -47,7 +47,7 @@ function FanChart() {
   const ticks: number[] = [];
   for (let c = Math.ceil(lo); c <= hi; c += 1) ticks.push(c);
   return (
-    <svg className={styles.fan} viewBox={`0 0 ${W} ${H}`} role="img"
+    <svg data-draw className={styles.fan} viewBox={`0 0 ${W} ${H}`} role="img"
       aria-label={`NOAA's forecast of the Niño 3.4 index: median peaking at ${outlook.peak.medianC} °C in ${outlook.peak.label}`}>
       {ticks.map(c => (
         <g key={c}>

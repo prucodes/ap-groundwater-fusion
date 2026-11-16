@@ -68,7 +68,7 @@ export function DistrictTrendGrid({ series, selected, onSelect }: Props) {
             >
               <span className="dtgName">{titleCase(s.district_name)}</span>
 
-              <svg viewBox={`0 0 ${W} ${H}`} className="dtgSpark" aria-hidden="true" preserveAspectRatio="none">
+              <svg data-draw viewBox={`0 0 ${W} ${H}`} className="dtgSpark" aria-hidden="true" preserveAspectRatio="none">
                 {/* Shared state median: the common baseline that makes 28 separate
                     tiles readable as one comparison. */}
                 <line x1="0" y1={medianY} x2={W} y2={medianY} stroke="var(--line-strong)" strokeWidth="1" strokeDasharray="3 3" />

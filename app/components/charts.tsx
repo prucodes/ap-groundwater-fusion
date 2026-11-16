@@ -134,7 +134,7 @@ export function Sparkline({
   const sid = `spark-${reactId.replace(/:/g, "")}`;
 
   return (
-    <svg width="100%" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Sensor vs satellite trend">
+    <svg data-draw width="100%" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Sensor vs satellite trend">
       {markerIndex !== undefined && (
         <line
           x1={x(markerIndex)}

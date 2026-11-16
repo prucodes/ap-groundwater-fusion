@@ -137,6 +137,7 @@ export function Hydrograph({ series, nowcast = null, height = 260, compact = fal
       </div>
 
       <svg
+        data-draw
         viewBox={`0 0 ${VIEW_W} ${height}`}
         className="hgSvg"
         role="img"

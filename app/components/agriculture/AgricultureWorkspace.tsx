@@ -15,7 +15,7 @@ import styles from "./AgricultureWorkspace.module.css";
 import { PageBriefBand } from "../PageBrief";
 import type { PageBrief } from "../../lib/pageBriefs";
 import { mapTooltipStyle } from "../../lib/mapTooltip";
-import { ChapterFold } from "../ChapterFold";
+import { ChapterFold, openFold } from "../ChapterFold";
 
 const assetRoot = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/assets`;
 function label(value: string) {
@@ -193,7 +193,7 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
   function openLab(preset: LabPreset) {
     setLabPreset(preset);
     // The lab is folded until asked for: open it, then bring it into view.
-    document.getElementById("crop-water-lab")?.closest("details")?.setAttribute("open", "");
+    openFold(document.getElementById("crop-water-lab")?.closest("details"));
     requestAnimationFrame(() => document.getElementById("crop-water-lab")?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" }));
   }
   const [district, setDistrict] = useState("all");

@@ -12,6 +12,7 @@ import { CROP_REFERENCE, CROP_REFERENCE_URL, CROP_STAGES, DEFAULT_BUDGET, ROOT_R
 import { CROP_WATER_STATES, MAX_ROOT_M, OUTLOOK_DAYS, RECORD_VERDICTS, SEVERE_COLOR, cropWaterCheck, cropWaterCounts, type CheckRecord, type CropWaterResult, type CropWaterState, type LiveField } from "../../lib/cropWater";
 import { IconArrowRight, IconCloudRain, IconDroplet, IconLeaf, IconSun } from "../icons";
 import { day, placeName } from "./waterContextFormat";
+import { PickerGlide } from "../PickerGlide";
 import styles from "./LiveCropCheck.module.css";
 import { ChartData } from "../chart/ChartKit";
 import { mapTooltipStyle } from "../../lib/mapTooltip";
@@ -57,7 +58,7 @@ function RootZoneChart({ result, dates, today }: { result: CropWaterResult; date
   const gradient = useId().replace(/:/g, "");
   const label = `Water the roots can draw in a ${result.zr.toFixed(1)} m root zone, from ${day(dates[0], false)} to ${day(dates[n - 1], false)}: ${mm(result.taw - result.drNow)} of ${mm(result.taw)} now; stress begins below ${mm(result.taw - result.raw)}${onsetIndex !== null ? `, reached by ${day(dates[onsetIndex], false)}` : ""}.`;
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className={styles.chart} role="img" aria-label={label} data-testid="root-zone-chart">
+    <svg data-draw viewBox={`0 0 ${W} ${H}`} className={styles.chart} role="img" aria-label={label} data-testid="root-zone-chart">
       <defs>
         <linearGradient id={gradient} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#2789af" stopOpacity=".28" /><stop offset="1" stopColor="#2789af" stopOpacity=".02" /></linearGradient>
       </defs>
@@ -174,7 +175,7 @@ function RecordPanel({ record, crop, stage }: { record: CheckRecord; crop: CropK
         <small>{record.rainfed.text} {record.acrossCaveat} Weather as it happened (ERA5), not the forecast; vegetation from the satellite index, which the soil model does not use.</small>
       </details>
     </div>
-    <figure className={styles.recordSeasons} aria-label={rows.map(row => `${row.label}: ${row.value} points, ${row.count}`).join("; ")}>
+    <figure data-draw className={styles.recordSeasons} aria-label={rows.map(row => `${row.label}: ${row.value} points, ${row.count}`).join("; ")}>
       <figcaption>Vegetation after &ldquo;short&rdquo;, against after &ldquo;comfortable&rdquo; <span>Index points, same mandal and season. Dashed: the {record.rules.backedPoints}-point bar for &ldquo;backed&rdquo;.</span></figcaption>
       {rows.map(row => {
         const width = (Math.abs(row.value) / scale) * 50;
@@ -277,10 +278,10 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
 
     <div className={styles.controls}>
       <div className={styles.cropPicker} role="group" aria-label="Crop">
-        {(Object.keys(CROP_REFERENCE) as CropKey[]).map(key => <button key={key} type="button" aria-pressed={crop === key} onClick={() => setCrop(key)}>{CROP_REFERENCE[key].name}</button>)}
+        {(Object.keys(CROP_REFERENCE) as CropKey[]).map(key => <button key={key} type="button" aria-pressed={crop === key} onClick={() => setCrop(key)}>{CROP_REFERENCE[key].name}</button>)}<PickerGlide />
       </div>
       <div className={styles.stagePicker} role="group" aria-label="Growth stage">
-        {CROP_STAGES.map((name, index) => <button key={name} type="button" aria-label={`${name} stage, Kc ${profile.kc[index].toFixed(2)}`} aria-pressed={stage === index} onClick={() => setStage(index)}>{name}<small>Kc {profile.kc[index].toFixed(2)}</small></button>)}
+        {CROP_STAGES.map((name, index) => <button key={name} type="button" aria-label={`${name} stage, Kc ${profile.kc[index].toFixed(2)}`} aria-pressed={stage === index} onClick={() => setStage(index)}>{name}<small>Kc {profile.kc[index].toFixed(2)}</small></button>)}<PickerGlide />
       </div>
     </div>
 
