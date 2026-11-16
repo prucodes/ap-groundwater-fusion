@@ -36,8 +36,8 @@ test("a mandal page shows the State network's latest reading and its constituenc
 test("the overview carries today's sensors and the monsoon page the State wells line", async ({ page }) => {
   await page.goto("/");
   // The overview's State network cell now reads the automatic sensors daily (fetch_apwrims_sensors.py).
-  await expect(page.getByTestId("state-network-cell")).toContainText("State sensors, today");
-  await expect(page.getByTestId("state-network-cell")).toContainText(/\d+% of [\d,]+ reporting sensors deeper than a year ago/);
+  await expect(page.getByTestId("state-network-cell")).toContainText("Groundwater today");
+  await expect(page.getByTestId("state-network-cell")).toContainText(/\d+%\s*of the State.s sensors deeper than a year ago/);
   await page.goto("/monsoon/");
   // Monsoon Watch's State network card reads the daily sensors too, each against itself a year ago.
   await expect(page.getByTestId("state-network-stat")).toContainText(/sensors deeper than a year ago/);

@@ -30,33 +30,36 @@
    narrow column of cards no longer leaves the right half of the page empty. */
 .briefingGrid { display:grid; grid-template-columns:minmax(0,1fr); gap:34px; align-items:start; }
 .leadColumn .cards { grid-template-columns:repeat(3,minmax(0,1fr)); }
+/* Eight headlines sit in two rows on a wide screen rather than three. */
+@media (min-width:1280px) { .leadColumn .cards { grid-template-columns:repeat(4,minmax(0,1fr)); } }
 .leadColumn { min-width:0; }
 .groupHead { display:flex; align-items:center; justify-content:space-between; gap:10px; font:600 10px var(--font-mono); color:var(--week-accent); text-transform:uppercase; margin:0 0 12px; }
 .groupHead span { color:var(--muted); font-weight:400; text-transform:none; }
 .cards { display:grid; gap:12px; }
-.card { --signal:var(--week-accent); display:grid; gap:12px; position:relative; padding:22px; border:1px solid var(--line-strong); border-radius:6px; border-top:3px solid var(--signal); background:var(--card); color:var(--ink); text-decoration:none; transition:border-color .18s ease; }
+.card { --signal:var(--week-accent); display:grid; gap:10px; position:relative; padding:18px; border:1px solid var(--line-strong); border-radius:6px; border-top:3px solid var(--signal); background:var(--card); color:var(--ink); text-decoration:none; transition:border-color .18s ease; }
 .card[data-direction="better"] { --signal:var(--week-good); }
 .card[data-direction="worse"] { --signal:var(--week-bad); }
 .leadColumn .card { background:color-mix(in srgb,var(--signal) 3%,var(--card)); }
 .card:hover { border-color:var(--signal); }
-.cardLabel { font-size:16px; font-weight:500; line-height:1.45; max-width:420px; }
-.value { font:500 54px/1.05 var(--font-display); font-variant-numeric:tabular-nums; }
+.cardLabel { font-size:14.5px; font-weight:500; line-height:1.45; max-width:420px; }
+.value { font:500 40px/1.05 var(--font-display); font-variant-numeric:tabular-nums; }
 .status { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; }
 .badge { font-size:12px; font-weight:600; color:var(--signal); }
 .was { font-size:11px; color:var(--muted); }
-.comparison { display:grid; gap:10px; padding:15px 0 8px; margin-top:3px; border-top:1px solid var(--line); }
+.comparison { display:grid; gap:8px; padding:12px 0 4px; margin-top:3px; border-top:1px solid var(--line); }
 .comparisonLabels, .comparisonDates { display:flex; justify-content:space-between; gap:16px; font-size:10px; color:var(--muted); }
 .comparisonLabels > span:last-child, .comparisonDates > span:last-child { text-align:right; }
 .comparisonLabels b { display:block; font:500 18px var(--font-mono); color:var(--ink); }
 .previousKey, .currentKey { display:inline-block; width:7px; height:7px; border-radius:50%; border:1.5px solid var(--ink-soft); margin-right:5px; }
 .currentKey { background:var(--signal); border-color:var(--signal); }
-.comparisonAxis { display:flex; justify-content:space-between; padding-inline:4%; font:400 10px var(--font-mono); color:var(--muted); }
+/* The axis ends repeat the previous and current figures printed just above, so they stay out. */
+.comparisonAxis { display:none; justify-content:space-between; padding-inline:4%; font:400 10px var(--font-mono); color:var(--muted); }
 .comparisonTrack { position:relative; display:block; height:2px; margin:7px 0; background:var(--line-strong); }
 .changeRange { position:absolute; top:-2px; height:6px; background:var(--signal); }
 .beforePoint, .afterPoint { position:absolute; top:-5px; width:12px; height:12px; transform:translateX(-50%); border-radius:50%; border:2px solid var(--ink-soft); background:var(--card); }
 .afterPoint { border-color:var(--signal); background:var(--signal); box-shadow:0 0 0 4px color-mix(in srgb,var(--signal) 12%,transparent); }
 .dates, .note { font-size:11px; color:var(--muted); line-height:1.5; }
-.cardLink { display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid var(--line); font-size:11px; font-weight:600; color:var(--signal); }
+.cardLink { display:flex; align-items:center; justify-content:space-between; padding-top:10px; border-top:1px solid var(--line); font-size:11px; font-weight:600; color:var(--signal); }
 .priority { display:grid; grid-template-columns:32px minmax(0,1fr) 15px; gap:12px; align-items:start; margin-top:22px; padding:18px 0; border-block:1px solid var(--line); }
 .priorityIcon { display:grid; place-items:center; width:32px; height:32px; color:var(--week-bad); background:color-mix(in srgb,var(--week-bad) 9%,var(--card)); border-radius:50%; }
 .priorityIcon svg { width:19px; height:19px; }
