@@ -33,13 +33,13 @@ const a = akvanJson as unknown as Akvan;
 
 /** Storm rain on a night map: deep slate for a little, through cyan, to near white for 200 mm. */
 const NIGHT_RAIN = [
-  { key: "0", max: 25, label: "Under 25 mm", color: "#36608a" },
+  { key: "0", max: 25, label: "Under 25 mm", color: "#3d6898" },
   { key: "1", max: 50, label: "25 to 50", color: "#2c6688" },
   { key: "2", max: 100, label: "50 to 100", color: "#3b9cc2" },
   { key: "3", max: 200, label: "100 to 200", color: "#7fd3ea" },
   { key: "4", max: Infinity, label: "200 mm or more", color: "#e8f9ff" },
 ];
-const AMBER = "#f2b24a", SLATE = "#2c5078";
+const AMBER = "#f2b24a", SLATE = "#33598a";
 /** A sensor counts as risen past 10 cm (build_cyclone_akvan.RISE_M); a 2 m rise glows fullest. */
 const RISE_M = 0.1, FULL_GLOW_M = 2;
 const DAY_MS = 86_400_000;
