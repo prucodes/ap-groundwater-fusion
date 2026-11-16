@@ -1,27 +1,27 @@
 {
-  "checkedAt": "2026-11-09T14:04:32+00:00",
+  "checkedAt": "2026-11-16T09:54:31+00:00",
   "status": "partial",
   "sections": {
     "weather": {
       "status": "refreshed",
-      "seconds": 141.9
+      "seconds": 85.6
     },
     "vegetation": {
       "status": "refreshed",
-      "seconds": 8.2
+      "seconds": 1.8
     },
     "assessment": {
       "status": "retained",
-      "error": "<urlopen error [Errno -5] No address associated with hostname>"
+      "error": "<urlopen error [Errno -2] Name or service not known>"
     }
   },
-  "weatherIssued": "2026-11-09",
+  "weatherIssued": "2026-11-16",
   "vegetationWeeks": [
-    "2026-10-08",
     "2026-10-15",
     "2026-10-22",
-    "2026-10-29"
+    "2026-10-29",
+    "2026-11-05"
   ],
   "assessmentYear": "2025-2026",
-  "outputSha256": "e01c6330c8f09605f9210bdfb42bbf4bd14541994b4e266895b8017f92b35501"
+  "outputSha256": "13513aa52883638621c6c6ddcb4b7797063297b6e8a27aab32475312ee491843"
 }

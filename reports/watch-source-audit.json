@@ -1,15 +1,15 @@
 {
-  "checkedAt": "2026-11-09T14:14:33+00:00",
-  "onlineCheckedAt": "2026-11-09T14:14:33+00:00",
+  "checkedAt": "2026-11-16T10:09:49+00:00",
+  "onlineCheckedAt": "2026-11-16T10:09:49+00:00",
   "snapshotPeriod": "2026-10",
-  "snapshotHash": "76659909139186aac717a7d942320b01b448335af0ff83902968b9687db6ff5a",
-  "historyHash": "9e8cbe9987390e95be9478e8c6ed539ac36bc2b4f0fe8d5addb95d09cdeedf85",
+  "snapshotHash": "9bf45cacd360fc3538c138a8b53b436a3f6b31dac316549c8f35fbfbac3e6395",
+  "historyHash": "37b5666aea23f65ff7564432ac3cae6a42a9d1d90a41ab5ef642813696e7b649",
   "localReconciliation": {
-    "checkedSeries": 570,
+    "checkedSeries": 571,
     "mismatches": []
   },
   "unfilteredHistoryComparison": {
-    "checkedSeries": 570,
+    "checkedSeries": 571,
     "mismatches": [
       {
         "mandalUuid": "c4b43404-f1b5-4a8a-95d4-215cfa9442fc",
@@ -1779,6 +1779,13 @@
       },
       {
         "mandalUuid": "98aa48f3-6abd-430a-aba0-3031d65241e1",
+        "fields": [
+          "comparableYears"
+        ],
+        "statusMatches": true
+      },
+      {
+        "mandalUuid": "c7b721b6-0dd4-4b17-9d02-bf28cdca4acb",
         "fields": [
           "comparableYears"
         ],
@@ -4794,11 +4801,9 @@
       "snapshotMatches": true
     },
     "rainfall": {
-      "status": "availability_checked",
+      "status": "unavailable",
       "source": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global/tifs/",
-      "latest": "2026.09",
-      "snapshotMonthAvailable": false,
-      "scope": "Publisher file listing checked; historical raster pixel values not re-downloaded in this audit."
+      "error": "<urlopen error timed out>"
     },
     "groundwater": {
       "source": "https://apwrims.ap.gov.in/api/v2/gwlevels/chart",

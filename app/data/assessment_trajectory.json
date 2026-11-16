@@ -3,11 +3,11 @@
   "assessmentYear": "2025-2026",
   "previousYear": "2024-2025",
   "rule": "Least-squares slope through each mandal's own May readings, 7 years or more. Steady is within 0.2 m a year either way; positive is a falling table.",
-  "mandalsScored": 604,
+  "mandalsScored": 605,
   "counts": {
     "safe": {
       "deepening": 67,
-      "steady": 196,
+      "steady": 197,
       "rising": 264
     },
     "semi_critical": {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-09T13:51:32+00:00",
+  "generatedAt": "2026-11-16T09:40:58+00:00",
   "modelVersion": "phase0-nowcast-3.0.0",
   "temporalNowcast": {
     "task": "rolling_temporal_holdout_nowcast",
@@ -13,50 +13,50 @@
       "start": "2024-01",
       "end": "2026-10"
     },
-    "sampleCount": 23079,
+    "sampleCount": 23113,
     "model": {
-      "maeM": 1.0128,
-      "rmseM": 2.2156,
+      "maeM": 1.0174,
+      "rmseM": 2.2142,
       "r2": 0.9279
     },
     "baseline": {
       "name": "same_month_previous_year",
-      "maeM": 2.4325
+      "maeM": 2.4309
     },
     "lastReadingBaseline": {
       "name": "carry_last_reading_forward",
-      "maeM": 1.1419,
-      "skillPct": 11.31
+      "maeM": 1.1422,
+      "skillPct": 10.92
     },
     "depthBands": [
       {
         "band": "0-5m",
-        "sampleCount": 9161,
-        "maeM": 0.58,
-        "lastReadingMaeM": 0.6693
+        "sampleCount": 9170,
+        "maeM": 0.5813,
+        "lastReadingMaeM": 0.6699
       },
       {
         "band": "5-10m",
-        "sampleCount": 7458,
-        "maeM": 0.8071,
-        "lastReadingMaeM": 0.9464
+        "sampleCount": 7476,
+        "maeM": 0.8143,
+        "lastReadingMaeM": 0.9478
       },
       {
         "band": "10-20m",
-        "sampleCount": 4637,
-        "maeM": 1.3953,
-        "lastReadingMaeM": 1.5757
+        "sampleCount": 4644,
+        "maeM": 1.4052,
+        "lastReadingMaeM": 1.5742
       },
       {
         "band": "20-30m",
         "sampleCount": 1073,
-        "maeM": 2.5225,
+        "maeM": 2.5249,
         "lastReadingMaeM": 2.7103
       },
       {
         "band": "30m+",
         "sampleCount": 750,
-        "maeM": 3.8203,
+        "maeM": 3.8155,
         "lastReadingMaeM": 3.935
       }
     ],
@@ -66,53 +66,53 @@
         "end": "2023-12"
       },
       "blendWeightOnModel": {
-        "0-5m": 0.7,
-        "5-10m": 0.8,
-        "10-20m": 0.65,
-        "20-30m": 0.35,
-        "30m+": 0.4
+        "0-5m": 0.6,
+        "5-10m": 0.7,
+        "10-20m": 0.55,
+        "20-30m": 0.45,
+        "30m+": 0.5
       },
       "conformalWidenM": {
-        "alluvial": 0.1691,
-        "alluvial|monsoon": 0.3111,
-        "alluvial|post_monsoon": 0.1336,
-        "alluvial|rabi": -0.0305,
-        "alluvial|summer": 0.2423,
-        "coastal": 0.215,
-        "coastal|monsoon": 0.0882,
-        "coastal|post_monsoon": 0.466,
-        "coastal|rabi": -0.0205,
-        "coastal|summer": 0.5284,
-        "hard_rock": 0.6606,
-        "hard_rock|monsoon": 0.3559,
-        "hard_rock|post_monsoon": 0.8614,
-        "hard_rock|rabi": -0.1586,
-        "hard_rock|summer": 3.1092
+        "alluvial": 0.1356,
+        "alluvial|monsoon": 0.2635,
+        "alluvial|post_monsoon": 0.1079,
+        "alluvial|rabi": -0.0133,
+        "alluvial|summer": 0.2402,
+        "coastal": 0.2097,
+        "coastal|monsoon": 0.0904,
+        "coastal|post_monsoon": 0.4736,
+        "coastal|rabi": 0.0303,
+        "coastal|summer": 0.4534,
+        "hard_rock": 0.6154,
+        "hard_rock|monsoon": 0.3343,
+        "hard_rock|post_monsoon": 0.8285,
+        "hard_rock|rabi": -0.2019,
+        "hard_rock|summer": 3.0068
       }
     },
     "terrainCohorts": {
       "alluvial": {
         "sampleCount": 6763,
-        "maeM": 0.8335,
-        "empiricalCoveragePct": 80.17
+        "maeM": 0.8362,
+        "empiricalCoveragePct": 80.07
       },
       "coastal": {
-        "sampleCount": 7896,
-        "maeM": 0.7862,
-        "empiricalCoveragePct": 83.0
+        "sampleCount": 7930,
+        "maeM": 0.7922,
+        "empiricalCoveragePct": 82.95
       },
       "hard_rock": {
         "sampleCount": 8420,
-        "maeM": 1.3694,
-        "empiricalCoveragePct": 80.62
+        "maeM": 1.375,
+        "empiricalCoveragePct": 79.25
       }
     },
     "intervalEvaluation": {
       "intervalType": "conformalised_quantile_p10_p90",
       "nominalCoveragePct": 80,
-      "empiricalCoveragePct": 81.3,
-      "meanWidthM": 3.1151,
-      "sampleCount": 23079
+      "empiricalCoveragePct": 80.76,
+      "meanWidthM": 3.0622,
+      "sampleCount": 23113
     }
   },
   "rollingOriginNowcast": {
@@ -123,83 +123,83 @@
       "start": "2024-11",
       "end": "2026-10"
     },
-    "sampleCount": 16287,
-    "maeM": 0.8953,
-    "lastReadingMaeM": 1.0207,
-    "skillVsLastReadingPct": 12.28
+    "sampleCount": 16311,
+    "maeM": 0.8964,
+    "lastReadingMaeM": 1.0209,
+    "skillVsLastReadingPct": 12.2
   },
   "intervalEvaluation": {
     "intervalType": "conformalised_quantile_p10_p90",
     "nominalCoveragePct": 80,
-    "empiricalCoveragePct": 81.3,
-    "meanWidthM": 3.1151,
-    "sampleCount": 23079
+    "empiricalCoveragePct": 80.76,
+    "meanWidthM": 3.0622,
+    "sampleCount": 23113
   },
   "spatialEstimation": {
     "task": "whole_mandal_spatial_estimation",
-    "generatedAt": "2026-11-09T13:54:36+00:00",
+    "generatedAt": "2026-11-16T09:44:48+00:00",
     "validation": "5-fold GroupKFold with whole mandals held out",
-    "rowCount": 82833,
-    "mandalCount": 650,
+    "rowCount": 82971,
+    "mandalCount": 651,
     "reportedMethod": "inverse_distance_weighted_same_month_neighbours",
     "reportedMetric": {
-      "rmseM": 7.4069,
-      "maeM": 4.8842,
-      "r2": 0.4182
+      "rmseM": 7.5656,
+      "maeM": 4.9344,
+      "r2": 0.3922
     },
     "methods": {
       "A naive (predict average)": {
-        "rmseM": 9.7103,
-        "maeM": 6.8789,
+        "rmseM": 9.704,
+        "maeM": 6.8717,
         "r2": 0.0
       },
       "B static ML": {
-        "rmseM": 8.0135,
-        "maeM": 5.3582,
-        "r2": 0.3189
+        "rmseM": 8.2913,
+        "maeM": 5.4696,
+        "r2": 0.27
       },
       "C IDW neighbours": {
-        "rmseM": 7.4069,
-        "maeM": 4.8842,
-        "r2": 0.4182
+        "rmseM": 7.5656,
+        "maeM": 4.9344,
+        "r2": 0.3922
       },
       "D fusion (static + IDW)": {
-        "rmseM": 8.0205,
-        "maeM": 5.2855,
-        "r2": 0.3178
+        "rmseM": 8.295,
+        "maeM": 5.4015,
+        "r2": 0.2693
       }
     },
     "terrainCohortsForReportedMethod": {
       "alluvial": {
         "sampleCount": 24389,
-        "rmseM": 8.1786,
-        "maeM": 5.2788,
-        "r2": 0.3307
+        "rmseM": 8.5892,
+        "maeM": 5.4442,
+        "r2": 0.2618
       },
       "coastal": {
-        "sampleCount": 28884,
-        "rmseM": 5.6948,
-        "maeM": 3.8188,
-        "r2": 0.4602
+        "sampleCount": 29022,
+        "rmseM": 5.5767,
+        "maeM": 3.7545,
+        "r2": 0.4804
       },
       "hard_rock": {
         "sampleCount": 29560,
-        "rmseM": 8.1766,
-        "maeM": 5.5996,
-        "r2": 0.4014
+        "rmseM": 8.3222,
+        "maeM": 5.6721,
+        "r2": 0.3799
       }
     },
     "selfNeighbourExcluded": true,
     "gapFillDiagnostic": {
       "task": "random_cell_gap_fill_with_mandal_history",
-      "rmseM": 3.6982,
-      "maeM": 2.2107,
-      "r2": 0.8549
+      "rmseM": 3.6986,
+      "maeM": 2.2094,
+      "r2": 0.8547
     }
   },
   "directForecast": {
     "task": "direct_multi_horizon_forecast",
-    "generatedAt": "2026-11-09T13:55:09+00:00",
+    "generatedAt": "2026-11-16T09:45:30+00:00",
     "featureTiming": "features available at forecast origin; no future rainfall",
     "baselineDefinitions": {
       "noChange": "the level at the forecast origin",
@@ -224,18 +224,18 @@
           "start": "2023-12",
           "end": "2026-09"
         },
-        "sampleCount": 21637,
+        "sampleCount": 21667,
         "model": {
-          "maeM": 1.3298,
-          "rmseM": 2.3469,
-          "r2": 0.9162
+          "maeM": 1.3307,
+          "rmseM": 2.3492,
+          "r2": 0.9159
         },
         "baselines": {
           "noChange": {
-            "maeM": 1.127
+            "maeM": 1.1273
           },
           "seasonal": {
-            "maeM": 2.3949
+            "maeM": 2.3935
           }
         },
         "beatsBothBaselinesByFivePct": false,
@@ -260,18 +260,18 @@
           "start": "2023-10",
           "end": "2026-07"
         },
-        "sampleCount": 21589,
+        "sampleCount": 21619,
         "model": {
-          "maeM": 2.4819,
-          "rmseM": 4.0057,
-          "r2": 0.7538
+          "maeM": 2.4713,
+          "rmseM": 3.982,
+          "r2": 0.7564
         },
         "baselines": {
           "noChange": {
-            "maeM": 2.2076
+            "maeM": 2.2095
           },
           "seasonal": {
-            "maeM": 2.3918
+            "maeM": 2.3904
           }
         },
         "beatsBothBaselinesByFivePct": false,
@@ -282,94 +282,94 @@
           "origins": [
             {
               "cut": "2024-01",
-              "trainRows": 33041,
-              "testRows": 1387
+              "trainRows": 33099,
+              "testRows": 1388
             },
             {
               "cut": "2024-04",
-              "trainRows": 34428,
-              "testRows": 1387
+              "trainRows": 34487,
+              "testRows": 1388
             },
             {
               "cut": "2024-07",
-              "trainRows": 35815,
-              "testRows": 1988
+              "trainRows": 35875,
+              "testRows": 1991
             },
             {
               "cut": "2024-10",
-              "trainRows": 37803,
-              "testRows": 2020
+              "trainRows": 37866,
+              "testRows": 2023
             },
             {
               "cut": "2025-01",
-              "trainRows": 39823,
-              "testRows": 2036
+              "trainRows": 39889,
+              "testRows": 2039
             },
             {
               "cut": "2025-04",
-              "trainRows": 41859,
-              "testRows": 2028
-            },
-            {
-              "cut": "2025-07",
-              "trainRows": 43887,
-              "testRows": 2017
-            },
-            {
-              "cut": "2025-10",
-              "trainRows": 45904,
-              "testRows": 2032
-            },
-            {
-              "cut": "2026-01",
-              "trainRows": 47936,
+              "trainRows": 41928,
               "testRows": 2031
             },
             {
+              "cut": "2025-07",
+              "trainRows": 43959,
+              "testRows": 2020
+            },
+            {
+              "cut": "2025-10",
+              "trainRows": 45979,
+              "testRows": 2035
+            },
+            {
+              "cut": "2026-01",
+              "trainRows": 48014,
+              "testRows": 2034
+            },
+            {
               "cut": "2026-04",
-              "trainRows": 49967,
-              "testRows": 2024
+              "trainRows": 50048,
+              "testRows": 2027
             },
             {
               "cut": "2026-07",
-              "trainRows": 51991,
-              "testRows": 1979
+              "trainRows": 52075,
+              "testRows": 1982
             },
             {
               "cut": "2026-10",
-              "trainRows": 53970,
-              "testRows": 660
+              "trainRows": 54057,
+              "testRows": 661
             }
           ],
-          "sampleCount": 21589,
-          "maeM": 1.909,
+          "sampleCount": 21619,
+          "maeM": 1.9029,
           "baselines": {
             "noChange": {
-              "maeM": 2.2076
+              "maeM": 2.2095
             },
             "seasonal": {
-              "maeM": 2.3918
+              "maeM": 2.3904
             }
           },
           "beatsBothBaselinesByFivePct": true,
           "terrainCohorts": {
             "alluvial": {
               "sampleCount": 6430,
-              "maeM": 1.4678,
+              "maeM": 1.4756,
               "noChangeMaeM": 1.6662,
-              "improvementPct": 11.91
+              "improvementPct": 11.44
             },
             "coastal": {
-              "sampleCount": 7238,
-              "maeM": 1.4783,
-              "noChangeMaeM": 1.9326,
-              "improvementPct": 23.51
+              "sampleCount": 7268,
+              "maeM": 1.4688,
+              "noChangeMaeM": 1.9394,
+              "improvementPct": 24.27
             },
             "hard_rock": {
               "sampleCount": 7921,
-              "maeM": 2.6606,
+              "maeM": 2.6482,
               "noChangeMaeM": 2.8983,
-              "improvementPct": 8.2
+              "improvementPct": 8.63
             }
           },
           "everyTerrainCohortImproves": true
@@ -389,18 +389,18 @@
           "start": "2023-07",
           "end": "2026-04"
         },
-        "sampleCount": 21547,
+        "sampleCount": 21577,
         "model": {
-          "maeM": 3.7007,
-          "rmseM": 5.8734,
-          "r2": 0.4738
+          "maeM": 3.669,
+          "rmseM": 5.8286,
+          "r2": 0.4812
         },
         "baselines": {
           "noChange": {
-            "maeM": 2.9915
+            "maeM": 2.9944
           },
           "seasonal": {
-            "maeM": 2.3894
+            "maeM": 2.388
           }
         },
         "beatsBothBaselinesByFivePct": false,
@@ -411,94 +411,94 @@
           "origins": [
             {
               "cut": "2024-01",
-              "trainRows": 33653,
-              "testRows": 1364
+              "trainRows": 33711,
+              "testRows": 1365
             },
             {
               "cut": "2024-04",
-              "trainRows": 35017,
-              "testRows": 1385
+              "trainRows": 35076,
+              "testRows": 1386
             },
             {
               "cut": "2024-07",
-              "trainRows": 36402,
-              "testRows": 1997
+              "trainRows": 36462,
+              "testRows": 2000
             },
             {
               "cut": "2024-10",
-              "trainRows": 38399,
-              "testRows": 2020
+              "trainRows": 38462,
+              "testRows": 2023
             },
             {
               "cut": "2025-01",
-              "trainRows": 40419,
-              "testRows": 2022
+              "trainRows": 40485,
+              "testRows": 2025
             },
             {
               "cut": "2025-04",
-              "trainRows": 42441,
-              "testRows": 2027
+              "trainRows": 42510,
+              "testRows": 2030
             },
             {
               "cut": "2025-07",
-              "trainRows": 44468,
-              "testRows": 2020
+              "trainRows": 44540,
+              "testRows": 2023
             },
             {
               "cut": "2025-10",
-              "trainRows": 46488,
-              "testRows": 2027
+              "trainRows": 46563,
+              "testRows": 2030
             },
             {
               "cut": "2026-01",
-              "trainRows": 48515,
-              "testRows": 2028
+              "trainRows": 48593,
+              "testRows": 2031
             },
             {
               "cut": "2026-04",
-              "trainRows": 50543,
-              "testRows": 2019
+              "trainRows": 50624,
+              "testRows": 2022
             },
             {
               "cut": "2026-07",
-              "trainRows": 52562,
-              "testRows": 1978
+              "trainRows": 52646,
+              "testRows": 1981
             },
             {
               "cut": "2026-10",
-              "trainRows": 54540,
-              "testRows": 660
+              "trainRows": 54627,
+              "testRows": 661
             }
           ],
-          "sampleCount": 21547,
-          "maeM": 2.5208,
+          "sampleCount": 21577,
+          "maeM": 2.5105,
           "baselines": {
             "noChange": {
-              "maeM": 2.9915
+              "maeM": 2.9944
             },
             "seasonal": {
-              "maeM": 2.3894
+              "maeM": 2.388
             }
           },
           "beatsBothBaselinesByFivePct": false,
           "terrainCohorts": {
             "alluvial": {
               "sampleCount": 6421,
-              "maeM": 1.7026,
+              "maeM": 1.6974,
               "noChangeMaeM": 2.198,
-              "improvementPct": 22.54
+              "improvementPct": 22.78
             },
             "coastal": {
-              "sampleCount": 7224,
-              "maeM": 1.9282,
-              "noChangeMaeM": 2.626,
-              "improvementPct": 26.57
+              "sampleCount": 7254,
+              "maeM": 1.9105,
+              "noChangeMaeM": 2.6361,
+              "improvementPct": 27.52
             },
             "hard_rock": {
               "sampleCount": 7902,
-              "maeM": 3.7274,
+              "maeM": 3.7221,
               "noChangeMaeM": 3.9705,
-              "improvementPct": 6.12
+              "improvementPct": 6.26
             }
           },
           "everyTerrainCohortImproves": true
@@ -520,18 +520,18 @@
           "start": "2023-01",
           "end": "2025-10"
         },
-        "sampleCount": 21653,
+        "sampleCount": 21683,
         "model": {
-          "maeM": 4.8168,
-          "rmseM": 7.8819,
-          "r2": 0.0586
+          "maeM": 4.8184,
+          "rmseM": 7.9201,
+          "r2": 0.0483
         },
         "baselines": {
           "noChange": {
-            "maeM": 2.3958
+            "maeM": 2.3944
           },
           "seasonal": {
-            "maeM": 2.3958
+            "maeM": 2.3944
           }
         },
         "beatsBothBaselinesByFivePct": false,
@@ -549,7 +549,7 @@
   },
   "crossNetworkComparison": {
     "task": "cross_network_comparison",
-    "generatedAt": "2026-11-09T13:55:10+00:00",
+    "generatedAt": "2026-11-16T09:45:31+00:00",
     "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
     "overlapPeriod": {
       "start": "2014-06",
@@ -557,11 +557,11 @@
     },
     "maximumDistanceKm": 20,
     "sampleCount": 16097,
-    "maeM": 6.1208,
-    "rmseM": 9.8065,
-    "correlation": 0.4048,
-    "medianAbsoluteDifferenceM": 3.374,
-    "biasCgwbMinusApwrimsM": -4.2973,
+    "maeM": 6.123,
+    "rmseM": 9.8073,
+    "correlation": 0.405,
+    "medianAbsoluteDifferenceM": 3.375,
+    "biasCgwbMinusApwrimsM": -4.301,
     "interpretation": "network comparability diagnostic; not model accuracy",
     "limitations": [
       "Different wells and sites",

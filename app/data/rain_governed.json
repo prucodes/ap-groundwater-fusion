@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-09T13:55:46Z",
+  "generatedAt": "2026-11-16T09:46:16Z",
   "method": "Each mandal's May to November change in depth, fitted against that season's June to September rainfall, over every season it has both readings.",
   "window": {
     "preMonsoonMonth": 5,
@@ -17,7 +17,7 @@
     "governedR2": 0.4,
     "partlyR2": 0.15
   },
-  "scored": 553,
+  "scored": 554,
   "medianR2": 0.13,
   "groups": [
     {
@@ -34,15 +34,15 @@
     },
     {
       "class": "partly",
-      "mandals": 131,
+      "mandals": 132,
       "aquifers": {
         "hard_rock": 56,
-        "coastal": 40,
+        "coastal": 41,
         "alluvial": 35
       },
-      "medianIrrigatedPct": 30.1,
+      "medianIrrigatedPct": 29.8,
       "stressedPct": 7.6,
-      "medianRisePer100mm": 1.52
+      "medianRisePer100mm": 1.46
     },
     {
       "class": "not rain",
@@ -3193,6 +3193,13 @@
       0.22,
       8,
       10.4
+    ],
+    "PARVATHIPURAM MANYAM|KURUPAM": [
+      0.17,
+      1,
+      0.71,
+      8,
+      8.6
     ],
     "PALNADU|MUPPALLA": [
       0.06,

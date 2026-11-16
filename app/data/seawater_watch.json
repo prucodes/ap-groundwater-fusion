@@ -1,12 +1,12 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-09T13:55:47Z",
+  "generatedAt": "2026-11-16T09:46:16Z",
   "method": "Screening proxy: mandal mean terrain elevation minus mandal mean measured depth; not a surveyed well head or a verified level relative to sea level",
   "observationPeriod": "2026-10",
   "elevationSource": "Terrarium terrain tiles (AWS open data), zonal mean over each mandal, about 150 m a pixel",
   "classificationSource": "CGWB and the State's Dynamic Ground Water Resources assessment, via the INGRES public dashboard",
   "deepWellThresholdM": 20.0,
-  "scored": 668,
+  "scored": 669,
   "bands": [
     {
       "band": "at or below sea level",
@@ -28,13 +28,13 @@
     },
     {
       "band": "above 20 m",
-      "mandals": 494,
+      "mandals": 495,
       "salinity": 0,
       "salinityPct": 0.0
     }
   ],
   "medianHeadSalinityM": 4.0,
-  "medianHeadOtherM": 111.2,
+  "medianHeadOtherM": 113.9,
   "salinityUnits": 39,
   "belowSeaLevel": 29,
   "setAsideDeepWells": [

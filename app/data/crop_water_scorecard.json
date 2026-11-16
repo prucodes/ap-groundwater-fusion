@@ -1,11 +1,11 @@
 {
- "generatedAt": "2026-11-09T14:09:59+00:00",
+ "generatedAt": "2026-11-16T10:02:17+00:00",
  "method": "Each week's calls, made on that week's ECMWF forecast and frozen the day they were made, compared three weeks later with the NOAA STAR vegetation index over rainfed cropland, inside the same mandal and season, as the track record compares them. Seasons: kharif June-September, rabi October-May.",
  "rainfedMandals": 437,
- "frozen": 10,
- "scored": 4,
+ "frozen": 11,
+ "scored": 5,
  "firstFrozen": "2026-10-04",
- "nextDue": "2026-11-14",
+ "nextDue": "2026-11-21",
  "weeks": [
   {
    "issued": "2026-10-04",
@@ -63,7 +63,7 @@
     45
    ],
    "due": "2026-11-14",
-   "scored": false,
+   "scored": true,
    "fieldScored": false,
    "fieldMandals": 0
   },
@@ -126,29 +126,41 @@
    "scored": false,
    "fieldScored": false,
    "fieldMandals": 0
+  },
+  {
+   "issued": "2026-11-16",
+   "season": "2026-27 rabi",
+   "outcomeWeek": [
+    2026,
+    49
+   ],
+   "due": "2026-12-12",
+   "scored": false,
+   "fieldScored": false,
+   "fieldMandals": 0
   }
  ],
  "record": {
   "maize-0": {
    "within": {
     "sameSeason": {
-     "mandals": 170,
-     "changeGap": 1.2,
-     "afterGap": 2.0,
-     "worsePct": 40.6
+     "mandals": 233,
+     "changeGap": 1.0,
+     "afterGap": 0.2,
+     "worsePct": 45.1
     },
     "acrossSeasons": {
-     "mandals": 170,
-     "changeGap": 1.2,
-     "afterGap": 2.0,
-     "worsePct": 40.6
+     "mandals": 233,
+     "changeGap": 1.0,
+     "afterGap": 0.2,
+     "worsePct": 45.1
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 170,
-      "changeGap": 1.2,
-      "afterGap": 2.0,
-      "worsePct": 40.6
+      "mandals": 233,
+      "changeGap": 1.0,
+      "afterGap": 0.2,
+      "worsePct": 45.1
      }
     }
    },
@@ -157,23 +169,23 @@
   "maize-1": {
    "within": {
     "sameSeason": {
-     "mandals": 166,
-     "changeGap": 0.8,
-     "afterGap": 1.7,
-     "worsePct": 34.9
+     "mandals": 198,
+     "changeGap": 0.6,
+     "afterGap": 0.7,
+     "worsePct": 41.4
     },
     "acrossSeasons": {
-     "mandals": 166,
-     "changeGap": 0.8,
-     "afterGap": 1.7,
-     "worsePct": 34.9
+     "mandals": 198,
+     "changeGap": 0.6,
+     "afterGap": 0.7,
+     "worsePct": 41.4
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 166,
-      "changeGap": 0.8,
-      "afterGap": 1.7,
-      "worsePct": 34.9
+      "mandals": 198,
+      "changeGap": 0.6,
+      "afterGap": 0.7,
+      "worsePct": 41.4
      }
     }
    },
@@ -182,23 +194,23 @@
   "maize-2": {
    "within": {
     "sameSeason": {
-     "mandals": 15,
-     "changeGap": 0.9,
-     "afterGap": 2.5,
-     "worsePct": 40.0
+     "mandals": 45,
+     "changeGap": 1.7,
+     "afterGap": 3.4,
+     "worsePct": 35.6
     },
     "acrossSeasons": {
-     "mandals": 15,
-     "changeGap": 0.9,
-     "afterGap": 2.5,
-     "worsePct": 40.0
+     "mandals": 45,
+     "changeGap": 1.7,
+     "afterGap": 3.4,
+     "worsePct": 35.6
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 15,
-      "changeGap": 0.9,
-      "afterGap": 2.5,
-      "worsePct": 40.0
+      "mandals": 45,
+      "changeGap": 1.7,
+      "afterGap": 3.4,
+      "worsePct": 35.6
      }
     }
    },
@@ -207,48 +219,48 @@
   "groundnut-0": {
    "within": {
     "sameSeason": {
-     "mandals": 156,
-     "changeGap": 1.3,
-     "afterGap": 0.5,
-     "worsePct": 41.0
+     "mandals": 236,
+     "changeGap": 0.9,
+     "afterGap": -1.3,
+     "worsePct": 47.0
     },
     "acrossSeasons": {
-     "mandals": 156,
-     "changeGap": 1.3,
-     "afterGap": 0.5,
-     "worsePct": 41.0
+     "mandals": 236,
+     "changeGap": 0.9,
+     "afterGap": -1.3,
+     "worsePct": 47.0
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 156,
-      "changeGap": 1.3,
-      "afterGap": 0.5,
-      "worsePct": 41.0
+      "mandals": 236,
+      "changeGap": 0.9,
+      "afterGap": -1.3,
+      "worsePct": 47.0
      }
     }
    },
-   "verdict": "not borne out"
+   "verdict": "weak"
   },
   "groundnut-1": {
    "within": {
     "sameSeason": {
-     "mandals": 127,
-     "changeGap": -0.3,
-     "afterGap": -2.1,
-     "worsePct": 48.0
+     "mandals": 198,
+     "changeGap": -0.1,
+     "afterGap": -2.9,
+     "worsePct": 52.0
     },
     "acrossSeasons": {
-     "mandals": 127,
-     "changeGap": -0.3,
-     "afterGap": -2.1,
-     "worsePct": 48.0
+     "mandals": 198,
+     "changeGap": -0.1,
+     "afterGap": -2.9,
+     "worsePct": 52.0
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 127,
-      "changeGap": -0.3,
-      "afterGap": -2.1,
-      "worsePct": 48.0
+      "mandals": 198,
+      "changeGap": -0.1,
+      "afterGap": -2.9,
+      "worsePct": 52.0
      }
     }
    },
@@ -257,23 +269,23 @@
   "groundnut-2": {
    "within": {
     "sameSeason": {
-     "mandals": 128,
+     "mandals": 167,
      "changeGap": 1.3,
-     "afterGap": 2.7,
-     "worsePct": 32.8
+     "afterGap": 1.9,
+     "worsePct": 37.1
     },
     "acrossSeasons": {
-     "mandals": 128,
+     "mandals": 167,
      "changeGap": 1.3,
-     "afterGap": 2.7,
-     "worsePct": 32.8
+     "afterGap": 1.9,
+     "worsePct": 37.1
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 128,
+      "mandals": 167,
       "changeGap": 1.3,
-      "afterGap": 2.7,
-      "worsePct": 32.8
+      "afterGap": 1.9,
+      "worsePct": 37.1
      }
     }
    },
@@ -282,23 +294,23 @@
   "cotton-0": {
    "within": {
     "sameSeason": {
-     "mandals": 200,
-     "changeGap": 1.3,
-     "afterGap": 2.3,
-     "worsePct": 37.5
+     "mandals": 240,
+     "changeGap": 0.6,
+     "afterGap": 0.5,
+     "worsePct": 42.5
     },
     "acrossSeasons": {
-     "mandals": 200,
-     "changeGap": 1.3,
-     "afterGap": 2.3,
-     "worsePct": 37.5
+     "mandals": 240,
+     "changeGap": 0.6,
+     "afterGap": 0.5,
+     "worsePct": 42.5
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 200,
-      "changeGap": 1.3,
-      "afterGap": 2.3,
-      "worsePct": 37.5
+      "mandals": 240,
+      "changeGap": 0.6,
+      "afterGap": 0.5,
+      "worsePct": 42.5
      }
     }
    },
@@ -307,48 +319,48 @@
   "cotton-1": {
    "within": {
     "sameSeason": {
-     "mandals": 85,
-     "changeGap": 1.3,
-     "afterGap": 2.9,
-     "worsePct": 31.8
+     "mandals": 119,
+     "changeGap": 1.2,
+     "afterGap": 2.0,
+     "worsePct": 42.0
     },
     "acrossSeasons": {
-     "mandals": 85,
-     "changeGap": 1.3,
-     "afterGap": 2.9,
-     "worsePct": 31.8
+     "mandals": 119,
+     "changeGap": 1.2,
+     "afterGap": 2.0,
+     "worsePct": 42.0
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 85,
-      "changeGap": 1.3,
-      "afterGap": 2.9,
-      "worsePct": 31.8
+      "mandals": 119,
+      "changeGap": 1.2,
+      "afterGap": 2.0,
+      "worsePct": 42.0
      }
     }
    },
-   "verdict": "untested"
+   "verdict": "not borne out"
   },
   "cotton-2": {
    "within": {
     "sameSeason": {
-     "mandals": 20,
-     "changeGap": 1.1,
-     "afterGap": 2.5,
-     "worsePct": 30.0
+     "mandals": 45,
+     "changeGap": 2.1,
+     "afterGap": 4.2,
+     "worsePct": 31.1
     },
     "acrossSeasons": {
-     "mandals": 20,
-     "changeGap": 1.1,
-     "afterGap": 2.5,
-     "worsePct": 30.0
+     "mandals": 45,
+     "changeGap": 2.1,
+     "afterGap": 4.2,
+     "worsePct": 31.1
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 20,
-      "changeGap": 1.1,
-      "afterGap": 2.5,
-      "worsePct": 30.0
+      "mandals": 45,
+      "changeGap": 2.1,
+      "afterGap": 4.2,
+      "worsePct": 31.1
      }
     }
    },
@@ -357,123 +369,123 @@
   "chilli-0": {
    "within": {
     "sameSeason": {
-     "mandals": 53,
-     "changeGap": 0.7,
-     "afterGap": 1.7,
-     "worsePct": 39.6
+     "mandals": 129,
+     "changeGap": 0.2,
+     "afterGap": -2.1,
+     "worsePct": 46.5
     },
     "acrossSeasons": {
-     "mandals": 53,
-     "changeGap": 0.7,
-     "afterGap": 1.7,
-     "worsePct": 39.6
+     "mandals": 129,
+     "changeGap": 0.2,
+     "afterGap": -2.1,
+     "worsePct": 46.5
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 53,
-      "changeGap": 0.7,
-      "afterGap": 1.7,
-      "worsePct": 39.6
+      "mandals": 129,
+      "changeGap": 0.2,
+      "afterGap": -2.1,
+      "worsePct": 46.5
      }
     }
    },
-   "verdict": "untested"
+   "verdict": "weak"
   },
   "chilli-1": {
    "within": {
     "sameSeason": {
-     "mandals": 78,
-     "changeGap": 1.1,
-     "afterGap": -0.0,
-     "worsePct": 33.3
+     "mandals": 148,
+     "changeGap": 1.3,
+     "afterGap": -1.0,
+     "worsePct": 42.6
     },
     "acrossSeasons": {
-     "mandals": 78,
-     "changeGap": 1.1,
-     "afterGap": -0.0,
-     "worsePct": 33.3
+     "mandals": 148,
+     "changeGap": 1.3,
+     "afterGap": -1.0,
+     "worsePct": 42.6
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 78,
-      "changeGap": 1.1,
-      "afterGap": -0.0,
-      "worsePct": 33.3
+      "mandals": 148,
+      "changeGap": 1.3,
+      "afterGap": -1.0,
+      "worsePct": 42.6
      }
     }
    },
-   "verdict": "untested"
+   "verdict": "weak"
   },
   "chilli-2": {
    "within": {
     "sameSeason": {
-     "mandals": 99,
-     "changeGap": 1.2,
-     "afterGap": -0.9,
-     "worsePct": 38.4
+     "mandals": 167,
+     "changeGap": 1.5,
+     "afterGap": -1.6,
+     "worsePct": 42.5
     },
     "acrossSeasons": {
-     "mandals": 99,
-     "changeGap": 1.2,
-     "afterGap": -0.9,
-     "worsePct": 38.4
+     "mandals": 167,
+     "changeGap": 1.5,
+     "afterGap": -1.6,
+     "worsePct": 42.5
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 99,
-      "changeGap": 1.2,
-      "afterGap": -0.9,
-      "worsePct": 38.4
+      "mandals": 167,
+      "changeGap": 1.5,
+      "afterGap": -1.6,
+      "worsePct": 42.5
      }
     }
    },
-   "verdict": "untested"
+   "verdict": "weak"
   },
   "redgram-0": {
    "within": {
     "sameSeason": {
-     "mandals": 147,
-     "changeGap": 1.1,
-     "afterGap": 0.1,
-     "worsePct": 40.1
+     "mandals": 226,
+     "changeGap": 0.4,
+     "afterGap": -1.9,
+     "worsePct": 48.2
     },
     "acrossSeasons": {
-     "mandals": 147,
-     "changeGap": 1.1,
-     "afterGap": 0.1,
-     "worsePct": 40.1
+     "mandals": 226,
+     "changeGap": 0.4,
+     "afterGap": -1.9,
+     "worsePct": 48.2
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 147,
-      "changeGap": 1.1,
-      "afterGap": 0.1,
-      "worsePct": 40.1
+      "mandals": 226,
+      "changeGap": 0.4,
+      "afterGap": -1.9,
+      "worsePct": 48.2
      }
     }
    },
-   "verdict": "not borne out"
+   "verdict": "weak"
   },
   "redgram-1": {
    "within": {
     "sameSeason": {
-     "mandals": 161,
-     "changeGap": 0.2,
-     "afterGap": 0.6,
-     "worsePct": 43.5
+     "mandals": 206,
+     "changeGap": 0.7,
+     "afterGap": 0.0,
+     "worsePct": 47.6
     },
     "acrossSeasons": {
-     "mandals": 161,
-     "changeGap": 0.2,
-     "afterGap": 0.6,
-     "worsePct": 43.5
+     "mandals": 206,
+     "changeGap": 0.7,
+     "afterGap": 0.0,
+     "worsePct": 47.6
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 161,
-      "changeGap": 0.2,
-      "afterGap": 0.6,
-      "worsePct": 43.5
+      "mandals": 206,
+      "changeGap": 0.7,
+      "afterGap": 0.0,
+      "worsePct": 47.6
      }
     }
    },
@@ -482,23 +494,23 @@
   "redgram-2": {
    "within": {
     "sameSeason": {
-     "mandals": 34,
-     "changeGap": -1.0,
-     "afterGap": 0.4,
-     "worsePct": 52.9
+     "mandals": 75,
+     "changeGap": 1.6,
+     "afterGap": 3.8,
+     "worsePct": 44.0
     },
     "acrossSeasons": {
-     "mandals": 34,
-     "changeGap": -1.0,
-     "afterGap": 0.4,
-     "worsePct": 52.9
+     "mandals": 75,
+     "changeGap": 1.6,
+     "afterGap": 3.8,
+     "worsePct": 44.0
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 34,
-      "changeGap": -1.0,
-      "afterGap": 0.4,
-      "worsePct": 52.9
+      "mandals": 75,
+      "changeGap": 1.6,
+      "afterGap": 3.8,
+      "worsePct": 44.0
      }
     }
    },
@@ -507,48 +519,48 @@
   "bengalgram-0": {
    "within": {
     "sameSeason": {
-     "mandals": 156,
-     "changeGap": 1.3,
-     "afterGap": 0.5,
-     "worsePct": 41.0
+     "mandals": 236,
+     "changeGap": 0.9,
+     "afterGap": -1.3,
+     "worsePct": 47.0
     },
     "acrossSeasons": {
-     "mandals": 156,
-     "changeGap": 1.3,
-     "afterGap": 0.5,
-     "worsePct": 41.0
+     "mandals": 236,
+     "changeGap": 0.9,
+     "afterGap": -1.3,
+     "worsePct": 47.0
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 156,
-      "changeGap": 1.3,
-      "afterGap": 0.5,
-      "worsePct": 41.0
+      "mandals": 236,
+      "changeGap": 0.9,
+      "afterGap": -1.3,
+      "worsePct": 47.0
      }
     }
    },
-   "verdict": "not borne out"
+   "verdict": "weak"
   },
   "bengalgram-1": {
    "within": {
     "sameSeason": {
-     "mandals": 144,
-     "changeGap": 0.4,
-     "afterGap": 0.6,
-     "worsePct": 41.7
+     "mandals": 206,
+     "changeGap": 0.6,
+     "afterGap": -0.6,
+     "worsePct": 46.1
     },
     "acrossSeasons": {
-     "mandals": 144,
-     "changeGap": 0.4,
-     "afterGap": 0.6,
-     "worsePct": 41.7
+     "mandals": 206,
+     "changeGap": 0.6,
+     "afterGap": -0.6,
+     "worsePct": 46.1
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 144,
-      "changeGap": 0.4,
-      "afterGap": 0.6,
-      "worsePct": 41.7
+      "mandals": 206,
+      "changeGap": 0.6,
+      "afterGap": -0.6,
+      "worsePct": 46.1
      }
     }
    },
@@ -557,23 +569,23 @@
   "bengalgram-2": {
    "within": {
     "sameSeason": {
-     "mandals": 54,
-     "changeGap": -0.4,
-     "afterGap": 0.9,
-     "worsePct": 42.6
+     "mandals": 88,
+     "changeGap": 0.7,
+     "afterGap": 2.1,
+     "worsePct": 47.7
     },
     "acrossSeasons": {
-     "mandals": 54,
-     "changeGap": -0.4,
-     "afterGap": 0.9,
-     "worsePct": 42.6
+     "mandals": 88,
+     "changeGap": 0.7,
+     "afterGap": 2.1,
+     "worsePct": 47.7
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 54,
-      "changeGap": -0.4,
-      "afterGap": 0.9,
-      "worsePct": 42.6
+      "mandals": 88,
+      "changeGap": 0.7,
+      "afterGap": 2.1,
+      "worsePct": 47.7
      }
     }
    },
@@ -582,23 +594,23 @@
   "jowar-0": {
    "within": {
     "sameSeason": {
-     "mandals": 170,
-     "changeGap": 1.2,
-     "afterGap": 2.0,
-     "worsePct": 40.6
+     "mandals": 233,
+     "changeGap": 1.0,
+     "afterGap": 0.2,
+     "worsePct": 45.1
     },
     "acrossSeasons": {
-     "mandals": 170,
-     "changeGap": 1.2,
-     "afterGap": 2.0,
-     "worsePct": 40.6
+     "mandals": 233,
+     "changeGap": 1.0,
+     "afterGap": 0.2,
+     "worsePct": 45.1
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 170,
-      "changeGap": 1.2,
-      "afterGap": 2.0,
-      "worsePct": 40.6
+      "mandals": 233,
+      "changeGap": 1.0,
+      "afterGap": 0.2,
+      "worsePct": 45.1
      }
     }
    },
@@ -607,23 +619,23 @@
   "jowar-1": {
    "within": {
     "sameSeason": {
-     "mandals": 125,
-     "changeGap": 1.1,
-     "afterGap": 2.3,
-     "worsePct": 33.6
+     "mandals": 159,
+     "changeGap": 1.3,
+     "afterGap": 2.0,
+     "worsePct": 37.7
     },
     "acrossSeasons": {
-     "mandals": 125,
-     "changeGap": 1.1,
-     "afterGap": 2.3,
-     "worsePct": 33.6
+     "mandals": 159,
+     "changeGap": 1.3,
+     "afterGap": 2.0,
+     "worsePct": 37.7
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 125,
-      "changeGap": 1.1,
-      "afterGap": 2.3,
-      "worsePct": 33.6
+      "mandals": 159,
+      "changeGap": 1.3,
+      "afterGap": 2.0,
+      "worsePct": 37.7
      }
     }
    },
@@ -632,23 +644,23 @@
   "jowar-2": {
    "within": {
     "sameSeason": {
-     "mandals": 33,
-     "changeGap": -0.3,
-     "afterGap": 1.8,
-     "worsePct": 48.5
+     "mandals": 65,
+     "changeGap": 0.7,
+     "afterGap": 2.6,
+     "worsePct": 46.2
     },
     "acrossSeasons": {
-     "mandals": 33,
-     "changeGap": -0.3,
-     "afterGap": 1.8,
-     "worsePct": 48.5
+     "mandals": 65,
+     "changeGap": 0.7,
+     "afterGap": 2.6,
+     "worsePct": 46.2
     },
     "seasons": {
      "2026-27 rabi": {
-      "mandals": 33,
-      "changeGap": -0.3,
-      "afterGap": 1.8,
-      "worsePct": 48.5
+      "mandals": 65,
+      "changeGap": 0.7,
+      "afterGap": 2.6,
+      "worsePct": 46.2
      }
     }
    },

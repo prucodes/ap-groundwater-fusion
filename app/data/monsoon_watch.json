@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-09T13:55:39+00:00",
+  "generatedAt": "2026-11-16T09:46:07+00:00",
   "season": {
     "year": 2026,
     "preMonsoonMonth": "2026-05",
@@ -140,10 +140,10 @@
     "index": "Oceanic Nino Index (NOAA CPC, ERSST v6)"
   },
   "recharge": {
-    "mandals": 570,
+    "mandals": 571,
     "falling": 266,
-    "fallingPct": 46.7,
-    "shortOfNormal": 482,
+    "fallingPct": 46.6,
+    "shortOfNormal": 483,
     "shortOfNormalPct": 84.6,
     "flaggedShort": 88,
     "flaggedSevere": 73,
@@ -160,11 +160,11 @@
       },
       {
         "aquifer": "coastal",
-        "mandals": 191,
-        "medianShortfallM": 0.97,
+        "mandals": 192,
+        "medianShortfallM": 0.98,
         "medianSpecificYield": 0.023,
-        "shortfallMm3": 3091.0,
-        "fallingPct": 30.4
+        "shortfallMm3": 3110.0,
+        "fallingPct": 30.2
       },
       {
         "aquifer": "hard_rock",
@@ -176,22 +176,22 @@
       }
     ],
     "volume": {
-      "shortfallMm3": 12986.0,
-      "mandals": 544,
-      "ofMandals": 570,
-      "areaKm2": 132630.0,
-      "asDepthMm": 97.9,
+      "shortfallMm3": 13005.0,
+      "mandals": 545,
+      "ofMandals": 571,
+      "areaKm2": 133023.0,
+      "asDepthMm": 97.8,
       "note": "shortfall in metres of water table x the mandal's specific yield x its area; specific yield is the CGWB measurement where one exists for that mandal, otherwise the documented aquifer proxy"
     },
     "rule": "May-to-2026-10 change against the same mandal's median over the previous 10 years; flagged short at >= 1.0 m AND >= 2.0x its own year-to-year spread"
   },
   "banked": {
-    "mandals": 539,
-    "rising": 302,
-    "bankedMm3": 4209.0,
-    "rainMm3": 57161.0,
+    "mandals": 540,
+    "rising": 303,
+    "bankedMm3": 4259.0,
+    "rainMm3": 57567.0,
     "sharePct": 7.4,
-    "medianSharePct": 0.9,
+    "medianSharePct": 1.2,
     "shareFloorMm": 100.0,
     "thinRain": 5,
     "aboveRain": 3,
@@ -200,65 +200,65 @@
   "seasons": [
     {
       "year": 2016,
-      "mandals": 466,
-      "medianChangeM": -1.549,
+      "mandals": 467,
+      "medianChangeM": -1.551,
       "fallingPct": 29.8,
       "oniJjaC": -0.19
     },
     {
       "year": 2017,
-      "mandals": 568,
-      "medianChangeM": -3.359,
+      "mandals": 569,
+      "medianChangeM": -3.36,
       "fallingPct": 11.1,
       "oniJjaC": 0.14
     },
     {
       "year": 2018,
-      "mandals": 570,
-      "medianChangeM": -0.728,
+      "mandals": 571,
+      "medianChangeM": -0.733,
       "fallingPct": 39.1,
       "oniJjaC": 0.2
     },
     {
       "year": 2019,
-      "mandals": 570,
-      "medianChangeM": -3.997,
+      "mandals": 571,
+      "medianChangeM": -4.007,
       "fallingPct": 5.1,
       "oniJjaC": 0.38
     },
     {
       "year": 2020,
-      "mandals": 570,
-      "medianChangeM": -0.582,
-      "fallingPct": 22.5,
+      "mandals": 571,
+      "medianChangeM": -0.59,
+      "fallingPct": 22.4,
       "oniJjaC": -0.29
     },
     {
       "year": 2023,
-      "mandals": 568,
+      "mandals": 569,
       "medianChangeM": -0.54,
-      "fallingPct": 40.0,
+      "fallingPct": 39.9,
       "oniJjaC": 1.0
     },
     {
       "year": 2024,
-      "mandals": 570,
-      "medianChangeM": -2.893,
+      "mandals": 571,
+      "medianChangeM": -2.895,
       "fallingPct": 8.2,
       "oniJjaC": 0.06
     },
     {
       "year": 2025,
-      "mandals": 570,
+      "mandals": 571,
       "medianChangeM": -2.294,
       "fallingPct": 5.1,
       "oniJjaC": -0.11
     },
     {
       "year": 2026,
-      "mandals": 570,
-      "medianChangeM": -0.127,
-      "fallingPct": 46.7,
+      "mandals": 571,
+      "medianChangeM": -0.13,
+      "fallingPct": 46.6,
       "oniJjaC": 1.8
     }
   ],
@@ -273,15 +273,15 @@
         },
         {
           "month": 6,
-          "changeM": -0.509
+          "changeM": -0.508
         },
         {
           "month": 7,
-          "changeM": -0.85
+          "changeM": -0.851
         },
         {
           "month": 8,
-          "changeM": -0.878
+          "changeM": -0.88
         },
         {
           "month": 9,
@@ -289,15 +289,15 @@
         },
         {
           "month": 10,
-          "changeM": -1.549
+          "changeM": -1.551
         },
         {
           "month": 11,
-          "changeM": -1.075
+          "changeM": -1.087
         },
         {
           "month": 12,
-          "changeM": -0.802
+          "changeM": -0.805
         }
       ]
     },
@@ -311,31 +311,31 @@
         },
         {
           "month": 6,
-          "changeM": -0.101
+          "changeM": -0.103
         },
         {
           "month": 7,
-          "changeM": -0.388
+          "changeM": -0.389
         },
         {
           "month": 8,
-          "changeM": -1.135
+          "changeM": -1.141
         },
         {
           "month": 9,
-          "changeM": -2.182
+          "changeM": -2.184
         },
         {
           "month": 10,
-          "changeM": -3.359
+          "changeM": -3.36
         },
         {
           "month": 11,
-          "changeM": -3.274
+          "changeM": -3.304
         },
         {
           "month": 12,
-          "changeM": -2.237
+          "changeM": -2.26
         }
       ]
     },
@@ -349,31 +349,31 @@
         },
         {
           "month": 6,
-          "changeM": 0.064
+          "changeM": 0.063
         },
         {
           "month": 7,
-          "changeM": -0.068
+          "changeM": -0.07
         },
         {
           "month": 8,
-          "changeM": -0.519
+          "changeM": -0.525
         },
         {
           "month": 9,
-          "changeM": -0.708
+          "changeM": -0.716
         },
         {
           "month": 10,
-          "changeM": -0.728
+          "changeM": -0.733
         },
         {
           "month": 11,
-          "changeM": -0.614
+          "changeM": -0.615
         },
         {
           "month": 12,
-          "changeM": -0.527
+          "changeM": -0.528
         }
       ]
     },
@@ -391,27 +391,27 @@
         },
         {
           "month": 7,
-          "changeM": 0.014
+          "changeM": 0.013
         },
         {
           "month": 8,
-          "changeM": -0.505
+          "changeM": -0.508
         },
         {
           "month": 9,
-          "changeM": -2.16
+          "changeM": -2.17
         },
         {
           "month": 10,
-          "changeM": -3.997
+          "changeM": -4.007
         },
         {
           "month": 11,
-          "changeM": -3.482
+          "changeM": -3.483
         },
         {
           "month": 12,
-          "changeM": -3.584
+          "changeM": -3.589
         }
       ]
     },
@@ -425,7 +425,7 @@
         },
         {
           "month": 6,
-          "changeM": -0.432
+          "changeM": -0.433
         },
         {
           "month": 7,
@@ -433,23 +433,23 @@
         },
         {
           "month": 8,
-          "changeM": -0.558
+          "changeM": -0.56
         },
         {
           "month": 9,
-          "changeM": -2.031
+          "changeM": -2.042
         },
         {
           "month": 10,
-          "changeM": -0.582
+          "changeM": -0.59
         },
         {
           "month": 11,
-          "changeM": -3.333
+          "changeM": -3.348
         },
         {
           "month": 12,
-          "changeM": -3.12
+          "changeM": -3.145
         }
       ]
     },
@@ -489,11 +489,11 @@
         },
         {
           "month": 8,
-          "changeM": -0.358
+          "changeM": -0.359
         },
         {
           "month": 9,
-          "changeM": -0.635
+          "changeM": -0.643
         },
         {
           "month": 10,
@@ -501,11 +501,11 @@
         },
         {
           "month": 11,
-          "changeM": -0.23
+          "changeM": -0.24
         },
         {
           "month": 12,
-          "changeM": -0.865
+          "changeM": -0.866
         }
       ]
     },
@@ -523,11 +523,11 @@
         },
         {
           "month": 7,
-          "changeM": -1.091
+          "changeM": -1.093
         },
         {
           "month": 8,
-          "changeM": -1.439
+          "changeM": -1.442
         },
         {
           "month": 9,
@@ -535,15 +535,15 @@
         },
         {
           "month": 10,
-          "changeM": -2.893
+          "changeM": -2.895
         },
         {
           "month": 11,
-          "changeM": -2.921
+          "changeM": -2.932
         },
         {
           "month": 12,
-          "changeM": -2.906
+          "changeM": -2.907
         }
       ]
     },
@@ -565,11 +565,11 @@
         },
         {
           "month": 8,
-          "changeM": -0.993
+          "changeM": -1.0
         },
         {
           "month": 9,
-          "changeM": -1.753
+          "changeM": -1.755
         },
         {
           "month": 10,
@@ -577,11 +577,11 @@
         },
         {
           "month": 11,
-          "changeM": -2.661
+          "changeM": -2.673
         },
         {
           "month": 12,
-          "changeM": -2.25
+          "changeM": -2.255
         }
       ]
     },
@@ -599,19 +599,19 @@
         },
         {
           "month": 7,
-          "changeM": 0.235
+          "changeM": 0.236
         },
         {
           "month": 8,
-          "changeM": 0.436
+          "changeM": 0.435
         },
         {
           "month": 9,
-          "changeM": 0.189
+          "changeM": 0.187
         },
         {
           "month": 10,
-          "changeM": -0.127
+          "changeM": -0.13
         }
       ]
     }
@@ -1859,20 +1859,20 @@
       "shortMandals": 3
     },
     {
+      "district": "Parvathipuram Manyam",
+      "mandals": 14,
+      "thisSeasonM": -2.22,
+      "typicalM": -3.01,
+      "shortfallM": 0.62,
+      "shortMandals": 0
+    },
+    {
       "district": "East Godavari",
       "mandals": 18,
       "thisSeasonM": -1.54,
       "typicalM": -2.34,
       "shortfallM": 0.6,
       "shortMandals": 3
-    },
-    {
-      "district": "Parvathipuram Manyam",
-      "mandals": 13,
-      "thisSeasonM": -2.02,
-      "typicalM": -2.9,
-      "shortfallM": 0.55,
-      "shortMandals": 0
     },
     {
       "district": "Srikakulam",
@@ -6557,6 +6557,28 @@
       "bankedMm3": 9.31,
       "seasonRainMm": 812.0,
       "bankedSharePct": 2.5
+    },
+    {
+      "mandalUuid": "c7b721b6-0dd4-4b17-9d02-bf28cdca4acb",
+      "boundaryIndex": 40,
+      "district": "Parvathipuram Manyam",
+      "mandal": "Kurupam",
+      "aquifer": "coastal",
+      "thisSeasonM": -5.52,
+      "typicalM": -7.64,
+      "shortfallM": 2.12,
+      "specificYield": 0.023,
+      "areaKm2": 393.5,
+      "shortfallMm3": 19.2,
+      "spreadM": 1.88,
+      "latestDepthM": 4.33,
+      "comparableYears": 8,
+      "severity": 0.56,
+      "status": "normal",
+      "riseM": 5.52,
+      "bankedMm3": 49.96,
+      "seasonRainMm": 1032.1,
+      "bankedSharePct": 12.3
     },
     {
       "mandalUuid": "e5808365-a379-4c85-892f-96562344744b",
