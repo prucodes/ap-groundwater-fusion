@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import watch from "../data/monsoon_watch.json";
-import state from "../data/gw_state_summary.json";
+import { sensors } from "../lib/sensors";
 
 test("rain summaries use the source precision and source window", async ({ page }) => {
   const deficit = Math.abs(watch.rainfall.anomalyPct).toLocaleString("en-IN", { maximumFractionDigits: 2 });
@@ -18,9 +18,9 @@ test("comparison graphics preserve source values and proportional zero-based sca
   const rain = charts.filter({ hasText: "Satellite rain" });
   await expect(rain).toHaveAttribute("data-value", String(watch.rainfall.mm));
   await expect(rain).toHaveAttribute("data-reference", String(watch.rainfall.normalMm));
-  const depth = charts.filter({ hasText: "State mean depth" });
-  await expect(depth).toHaveAttribute("data-value", String(state.state.currentM));
-  await expect(depth).toHaveAttribute("data-reference", String(state.state.yearAgoM));
+  const depth = charts.filter({ hasText: "Median depth" });
+  await expect(depth).toHaveAttribute("data-value", String(sensors.state.medianM));
+  await expect(depth).toHaveAttribute("data-reference", String(sensors.state.medianYearAgoM));
   const groundwater = charts.filter({ hasText: "Past-season high" });
   await expect(groundwater).toHaveAttribute("data-value", String(watch.recharge.fallingPct));
   const priorHigh = Math.max(...watch.seasons.filter(s => s.year !== watch.season.year).map(s => s.fallingPct));

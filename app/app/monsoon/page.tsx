@@ -22,6 +22,7 @@ import { MonsoonFilm } from "../../components/MonsoonFilm";
 import { EnsoOutlook } from "../../components/monsoon/EnsoOutlook";
 import { TemperatureRecord } from "../../components/TemperatureRecord";
 import { WaterBanked } from "../../components/WaterBanked";
+import { sensors } from "../../lib/sensors";
 import { PostMonsoonWindow } from "../../components/PostMonsoonWindow";
 import { GraceFilm, type GraceFilmData } from "../../components/GraceFilm";
 import graceFilm from "../../data/grace_film.json";
@@ -32,7 +33,6 @@ import { CountedReach } from "../../components/CountedReach";
 import { RowFold, foldAt } from "../../components/RowFold";
 import { apTemperature, formatNumber, monsoonWatch, pacificEnso, titleCase } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
-import { stateSummary } from "../../lib/stateSummary";
 import { day } from "../../components/agriculture/waterContextFormat";
 import styles from "./MonsoonPage.module.css";
 import { brief } from "../../lib/pageBriefs";
@@ -128,17 +128,17 @@ export default function MonsoonPage() {
             <EvidenceComparison label={`May to ${MONTHS[Number(w.season.latestMonth.slice(5, 7))]}`} value={r.fallingPct}
               reference={priorHigh} referenceLabel="Past-season high" unit="%" maximum={100} />
           </div>
-          {stateSummary.state && stateSummary.summary.withChange ? (
-            <div className="headlineCard headlineStatic" data-testid="state-network-stat">
-              <span className="headlineKicker"><IconActivity /> State wells, early Sep</span>
-              <strong>{formatNumber(Math.round((100 * stateSummary.summary.deeperSinceMay) / stateSummary.summary.withChange))}%<small>{`of ${stateSummary.summary.withChange} mandals deeper than in May`}</small></strong>
-              <span className="headlineText">
-                {`${stateSummary.summary.deeperThanYearAgo} deeper than a year ago. AWARE feed, one reading, ${stateSummary.state.stationsTotal.toLocaleString("en-IN")} stations.`}
-              </span>
-              <EvidenceComparison label="State mean depth" value={stateSummary.state.currentM}
-                reference={stateSummary.state.yearAgoM} referenceLabel="A year ago" unit=" m" />
-            </div>
-          ) : null}
+          {/* The State network today, from its automatic sensors (fetch_apwrims_sensors.py), each against
+              itself a year ago; it replaced the one-off September data-lake reading here. */}
+          <div className="headlineCard headlineStatic" data-testid="state-network-stat">
+            <span className="headlineKicker"><IconActivity /> State sensors, today</span>
+            <strong>{formatNumber(Math.round((100 * sensors.state.deeperThanYearAgo) / Math.max(sensors.state.compared, 1)))}%<small>{`of ${sensors.state.compared.toLocaleString("en-IN")} sensors deeper than a year ago`}</small></strong>
+            <span className="headlineText">
+              {`Automatic recorders, read daily; each against itself on the same date last year. ${sensors.state.mandalsDeeperThanYearAgo} of ${sensors.state.mandalsReporting} mandals with sensors are deeper.`}
+            </span>
+            <EvidenceComparison label="Median depth" value={sensors.state.medianM}
+              reference={sensors.state.medianYearAgoM} referenceLabel="A year ago" unit=" m" />
+          </div>
           {rain ? (
             <div className="headlineCard headlineStatic">
               <span className="headlineKicker"><IconCloudRain /> Rain, {MONTHS[Number(rain.months.slice(0, 2))]} to {MONTHS[Number(rain.months.slice(3))]}</span>
