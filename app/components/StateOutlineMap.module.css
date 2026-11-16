@@ -25,3 +25,8 @@
 :global(:root[data-theme="dark"]) .districts { stroke: #0b1d33; }
 :global(:root[data-theme="dark"]) .frame path[data-mark] { stroke: color-mix(in srgb, var(--ink) 85%, transparent); }
 @media (prefers-reduced-motion: reduce) { .placeholder { animation: none; } .frame path[data-key] { transition: none; animation: none; } }
+
+/* Sensors as points of light: faint where nothing has changed, lit and glowing where it has. */
+.points { pointer-events: none; }
+.points circle { fill: rgba(214, 236, 250, .34); }
+.points [data-lit] circle { fill: #c9f6ff; filter: drop-shadow(0 0 2.5px rgba(127, 211, 234, .95)) drop-shadow(0 0 7px rgba(127, 211, 234, .45)); }

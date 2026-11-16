@@ -23,7 +23,7 @@ const SWEEP_MS = 420;
 
 const title = (value: string) => (/[a-z]/.test(value) ? value : value.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase()));
 
-export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, testId, marks }: {
+export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, testId, marks, points }: {
   /** One key per boundary index (a character or a short code), looked up in `colors`. */
   keys: string[];
   colors: Record<string, string>;
@@ -36,6 +36,8 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
   testId?: string;
   /** Boundary indices to outline in ink, drawn last so the ring sits above its neighbours. */
   marks?: number[];
+  /** Points over the map, in its projected units: [x, y, glow]. Glow 0 is a faint point; above 0 it is lit, larger with more glow (up to 1). */
+  points?: Array<[number, number, number]>;
 }) {
   const [outlines, setOutlines] = useState<Outlines | null>(null);
   const [failed, setFailed] = useState(false);
@@ -73,6 +75,10 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
         {outlines.mandals.map((_, index) => (marked?.has(index) ? null : shape(index)))}
         <path d={outlines.districts} className={styles.districts} />
         {marks?.filter(index => index < outlines.mandals.length).map(shape)}
+        {points?.length ? <g className={styles.points} aria-hidden="true">
+          <g>{points.filter(p => p[2] <= 0).map(([x, y], i) => <circle key={i} cx={x} cy={y} r={1.3} />)}</g>
+          <g data-lit="">{points.filter(p => p[2] > 0).map(([x, y, glow], i) => <circle key={i} cx={x} cy={y} r={2 + 3 * Math.min(1, glow)} />)}</g>
+        </g> : null}
       </svg> : <div className={styles.placeholder} role="img" aria-label={label}>{failed ? "The map outlines did not load; the figures beside it stand on their own." : null}</div>}
       {hover && outlines ? (() => {
         const [district, mandal] = outlines.names[hover.index] ?? ["", ""];

@@ -42,3 +42,23 @@ def test_each_sensor_is_set_only_against_its_own_baseline():
 
 def test_a_forecast_is_never_shown_as_confirmed():
     assert DATA["nameConfirmed"] == akvan.NAME_CONFIRMED and DATA["landfallConfirmed"] == akvan.LANDFALL_CONFIRMED
+
+
+def test_the_timeline_keeps_one_point_a_day_and_the_last_reading_wins(tmp_path, monkeypatch):
+    out = tmp_path / "akvan.json"
+    out.write_text(json.dumps({"timeline": [{"day": "2026-11-16", "compared": 10, "risen": 0, "medianRiseM": 0.0, "rainTmc": None},
+                                            {"day": "2026-11-17", "compared": 10, "risen": 1, "medianRiseM": 0.0, "rainTmc": None}]}))
+    monkeypatch.setattr(akvan, "OUT", str(out))
+    rises = [["a", 0, 0, 1, 0.5, "X"], ["b", 0, 0, 2, 0.0, "X"]]
+    # 17 Nov, 20:00 IST: replaces that day's morning point and keeps the 16th.
+    points = akvan.timeline("2026-11-17T14:30+00:00", rises, 12.0)
+    assert [p["day"] for p in points] == ["2026-11-16", "2026-11-17"]
+    assert points[-1] == {"day": "2026-11-17", "compared": 2, "risen": 1, "medianRiseM": 0.25, "rainTmc": 12.0}
+
+
+def test_districts_are_ranked_by_the_share_of_their_own_sensors_risen():
+    rises = [["s", 0, 0, 1, 0.4, "A"]] * 6 + [["s", 0, 0, 1, 0.0, "A"]] * 4 + [["s", 0, 0, 1, 0.3, "B"]] * 9 + [["s", 0, 0, 1, 0.0, "B"]] * 1 \
+        + [["s", 0, 0, 1, 2.0, "Small"]] * 3
+    rows = akvan.district_response(rises)
+    assert [r["district"] for r in rows] == ["B", "A"]  # too few sensors in Small to rank
+    assert rows[0] == {"district": "B", "compared": 10, "risen": 9, "medianRiseM": 0.3}

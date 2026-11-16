@@ -20,3 +20,14 @@ test("the third cyclone is shown live from Himawari beside the State at night", 
   const src = await live.locator("video").getAttribute("src");
   expect((await request.head(src!)).ok()).toBe(true);
 });
+
+test("every sensor is a point of light on the night map, lit where its water table has risen", async ({ page }) => {
+  await page.goto("/cyclones/");
+  const map = page.locator('[data-testid="akvan-map"][data-ready="true"]');
+  await expect(map).toBeVisible();
+  await expect(map.locator("svg circle")).toHaveCount(akvan.sensors.stations.length);
+  await expect(map.locator("svg [data-lit] circle")).toHaveCount(akvan.sensors.stations.filter(s => (s[4] as number) > 0.1).length);
+  const response = page.getByTestId("akvan-response");
+  if (akvan.timeline.length > 1 || akvan.sensors.risen) await expect(response).toContainText("The water table’s answer");
+  else await expect(response).toHaveCount(0);
+});
