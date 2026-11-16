@@ -15,6 +15,7 @@ import styles from "./AgricultureWorkspace.module.css";
 import { PageBriefBand } from "../PageBrief";
 import type { PageBrief } from "../../lib/pageBriefs";
 import { mapTooltipStyle } from "../../lib/mapTooltip";
+import { ChapterFold } from "../ChapterFold";
 
 const assetRoot = `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/assets`;
 function label(value: string) {
@@ -191,6 +192,8 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
   const [colorBy, setColorBy] = useState<ColorBy>("groundwater");
   function openLab(preset: LabPreset) {
     setLabPreset(preset);
+    // The lab is folded until asked for: open it, then bring it into view.
+    document.getElementById("crop-water-lab")?.closest("details")?.setAttribute("open", "");
     requestAnimationFrame(() => document.getElementById("crop-water-lab")?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" }));
   }
   const [district, setDistrict] = useState("all");
@@ -255,6 +258,10 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
         {evidence.counts.agreeAll ? <button type="button" className={styles.textButton} onClick={showAgreement}>Show them on the map</button> : null}</div>
     </div>
 
+    {/* The district brief, the lab and the advisory path are reference beside this week's crop check:
+        each folds to one line and opens from the jump menu, a link or the lab button. */}
+    <ChapterFold id="chapter-district-brief" title="District brief" sub="where the next field review should begin"
+      summary={`${evidence.counts.flagged} of ${evidence.counts.compared} compared mandals carry a seasonal shortfall flag; the brief ranks the districts where they gather and the three checks to make first.`}>
     <GovernanceBrief evidence={evidence} onInspect={(name, reviewSignal) => {
       setDistrict(name); setSignal(reviewSignal); setQuery(""); setPage(0); setView("fieldbook");
       requestAnimationFrame(() => {
@@ -263,12 +270,21 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
         heading?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
       });
     }} />
+    </ChapterFold>
+    <ChapterFold id="chapter-crop-lab" title="Crop-water lab" sub="any crop, any stage, worked through its water budget"
+      summary="Set a crop, its stage, the week's rain and the soil's reserve, and see how much of its water need is covered. A planning aid with illustrative inputs, not a field instruction.">
     <CropWaterLab preset={labPreset} onClearPreset={() => setLabPreset(null)} />
+    </ChapterFold>
 
     <section id="agriculture-watch" className={styles.section} aria-labelledby="agriculture-watch-title">
       <header className={styles.sectionHead}><div><span className={styles.eyebrow}>04 / Observed water evidence</span><h2 id="agriculture-watch-title" tabIndex={-1}>Where does the water story need a closer look?</h2></div><span className={styles.observedBadge}>Groundwater readings · {period(evidence.period)}</span></header>
-      <WaterContextStrip evidence={evidence} />
-      <FieldSignalsStrip evidence={evidence} />
+      {/* The five signals in full, each dated and labelled measured or modelled; their headline
+          figures lead the Overview and Monsoon Watch, so here they open on request. */}
+      <details className="foldMore" data-testid="agriculture-signals">
+        <summary><span>The five water signals in full</span><span>Gauge rain, soil moisture, reservoirs, crop vegetation and the groundwater assessment, each dated</span></summary>
+        <WaterContextStrip evidence={evidence} />
+        <FieldSignalsStrip evidence={evidence} />
+      </details>
       <p className={styles.contextCaption}>Context only: rainfall, soil moisture, storage, the vegetation index and the assessment do not change the groundwater flags below, and none of them is the crop-water lab&rsquo;s effective rain. Colour the map by any of the three views.</p>
       <div className={styles.filters}>
         <label className={styles.search}><IconSearch /><input aria-label="Search mandals or districts" placeholder="Search mandal or district" type="search" value={query} onChange={event => { setQuery(event.target.value); setPage(0); }} /></label>
@@ -310,6 +326,8 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
       <div className={styles.pagination}><span>{rows.length ? `${currentPage * 10 + 1}-${Math.min((currentPage + 1) * 10, rows.length)} of ${rows.length}` : "0 records"}</span><div><button type="button" className={styles.iconButton} aria-label="Previous review page" title="Previous review page" disabled={currentPage === 0} onClick={() => setPage(currentPage - 1)}><IconChevronLeft /></button><span>Page {currentPage + 1} / {pageCount}</span><button type="button" className={styles.iconButton} aria-label="Next review page" title="Next review page" disabled={currentPage + 1 >= pageCount} onClick={() => setPage(currentPage + 1)}><IconChevronRight /></button></div></div>
     </section>
 
+    <ChapterFold id="chapter-advisory" title="From evidence to an advisory" sub="what is connected, and what is not yet"
+      summary="Water evidence is connected; crop and land records, canal delivery and a verified advisory are not. Nothing on this page is a farmer-facing instruction.">
     <section id="agriculture-readiness" className={styles.section} aria-labelledby="agriculture-readiness-title">
       <header className={styles.sectionHead}><div><span className={styles.eyebrow}>05 / From evidence to an advisory</span><h2 id="agriculture-readiness-title">The missing links matter.</h2></div><span className={styles.scenarioBadge}>Operational release pending</span></header>
       <div className={styles.readinessSteps}>
@@ -328,5 +346,6 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
       </div>
       <p className={styles.privacyNote}><IconShield />Public view: no farmer identities or personal parcel records. No crop-loss, income-loss or safe-pumping claims. Illustrations are not evidence of actual field conditions.</p>
     </section>
+    </ChapterFold>
   </div>;
 }

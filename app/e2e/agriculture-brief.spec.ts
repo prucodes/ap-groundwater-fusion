@@ -1,4 +1,5 @@
 import { readFile } from "node:fs/promises";
+import { openChapters } from "./chapters";
 import { expect, test } from "@playwright/test";
 import watch from "../data/monsoon_watch.json";
 import geometry from "../data/ap_map_geometry.json";
@@ -17,6 +18,7 @@ for (const width of [1440, 390]) {
   test(`district brief reconciles counts, exports and drills down at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/agriculture/");
+    await openChapters(page);
     const brief = page.getByRole("region", { name: "Where should the next field review begin?" });
     await brief.scrollIntoViewIfNeeded();
     const district = evidence.districts[0];

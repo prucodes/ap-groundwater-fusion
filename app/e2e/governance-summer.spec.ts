@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { openChapters } from "./chapters";
 import outlookJson from "../data/summer_outlook.json";
 import priorityJson from "../data/summer_priority.json";
 
@@ -14,6 +15,7 @@ const onMap = (tier: string) => outlook.mandals.filter(r => r?.tier === tier).le
 
 test("the summer outlook states its counts, maps the same tiers and shows its record", async ({ page }) => {
   await page.goto("/summer/");
+  await openChapters(page);
   // The brief states the headline; the band beneath carries the figures.
   await expect(page.getByTestId("page-brief")).toContainText(`${outlook.summary.beyondDeep} mandals`);
   await expect(page.getByTestId("summer-summary")).toContainText(`${outlook.summary.beyond} mandals`);
@@ -30,6 +32,7 @@ test("the summer outlook states its counts, maps the same tiers and shows its re
 test("the summer outlook fits a phone", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto("/summer/");
+  await openChapters(page);
   await expect(page.getByTestId("summer-map")).toHaveAttribute("data-ready", "true");
   expect(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth)).toBe(false);
 });
@@ -37,6 +40,7 @@ test("the summer outlook fits a phone", async ({ page }) => {
 test("the drinking-water priority list leads with the first group, folds the rest and downloads whole", async ({ page }) => {
   const p = priorityJson as unknown as { summary: Record<"first" | "next" | "watch", { mandals: number }>; mandals: Array<{ band: string; mandal: string }> };
   await page.goto("/summer/");
+  await openChapters(page);
   const section = page.getByTestId("summer-priority");
   await expect(section).toContainText(`${p.summary.first.mandals} mandals`);
   const first = p.mandals.filter(r => r.band === "first");
@@ -57,6 +61,7 @@ test("the drinking-water priority list leads with the first group, folds the res
 test("the drinking-water map colours each group and filters by sign, and the Mandal Map carries it as a layer", async ({ page }) => {
   const p = priorityJson as unknown as { summary: Record<"first" | "next" | "watch", { mandals: number; signs: Record<string, number> }> };
   await page.goto("/summer/");
+  await openChapters(page);
   const map = page.getByTestId("priority-map");
   await expect(map).toHaveAttribute("data-ready", "true");
   await expect(map.locator('path[data-key="f"]')).toHaveCount(p.summary.first.mandals);
@@ -76,6 +81,7 @@ test("the drinking-water map colours each group and filters by sign, and the Man
 
 test("the groundwater clock counts the mandals past their record month by month", async ({ page }) => {
   await page.goto("/summer/");
+  await openChapters(page);
   const clock = page.getByTestId("groundwater-clock");
   await expect(clock.getByRole("heading", { level: 2 })).toHaveText(/\d+ mandals are already deeper than any May on record/);
   const readout = page.getByTestId("clock-readout");

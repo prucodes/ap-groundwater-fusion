@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { openChapters } from "./chapters";
 
 /* The crop-water lab draws a measured cross-section, not artwork: every mark
    stands for an input or a published reference, so the tests read the marks. */
@@ -7,6 +8,7 @@ for (const width of [1440, 390]) {
   test(`the field section draws the scenario to scale at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/agriculture/");
+    await openChapters(page);
     const scene = page.getByTestId("crop-field");
     await scene.scrollIntoViewIfNeeded();
     await expect(scene).toHaveAttribute("data-ready", "true");
