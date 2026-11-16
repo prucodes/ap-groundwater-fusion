@@ -195,7 +195,10 @@ def test_nothing_is_published_beyond_the_horizon_that_earned_it():
     assert rolling["everyTerrainCohortImproves"] is True
     for horizon, detail in horizons.items():
         if horizon != 3:
-            assert detail["releaseBlockers"], f"h={horizon} is unreleased and must say why"
+            # Unreleased, so it must say why: a blocker, or held by name after clearing the gate.
+            held = horizon in release.get("heldHorizons", [])
+            assert detail["releaseBlockers"] or held, f"h={horizon} is unreleased and must say why"
+            assert not held or horizon in release["horizonsClearingTheGate"]
 
 
 def test_a_forecast_never_blends_toward_an_anchor_the_model_rejects():
