@@ -10,7 +10,6 @@ import { StatusSummaryCard } from "./StatusSummaryCard";
 import { SatelliteSignalCards } from "./SatelliteSignalCards";
 import { SelectedMandalPanel } from "./SelectedMandalPanel";
 import { ReadinessSummary } from "./SourceReadinessPanel";
-import { MandalTable } from "./MandalTable";
 import { CountUp } from "./CountUp";
 import {
   IconActivity,
@@ -31,7 +30,6 @@ import { stateSummary } from "../lib/stateSummary";
 import { officialStatusLine } from "../lib/data";
 import { WATER_LAYER_META, isWaterLayer, waterLayerGradient, type WaterMandalLayer } from "../lib/waterMandals";
 import { brief } from "../lib/pageBriefs";
-import { groundwaterStressNow } from "../lib/pageNow";
 import { useIsDark } from "./useIsDark";
 
 /** Counts the server works out from the full water context, which never reaches the browser. */
@@ -112,15 +110,15 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
     <div className="pageWrap">
       <HeaderHero
         title="Andhra Pradesh water this week"
-        brief={brief("/", groundwaterStressNow())}
+        brief={brief("/", `Monthly groundwater through ${datasetManifest.periods.latestObservationPeriod}; daily sensor conditions and seasonal outlooks below.`)}
         showBanner={false}
         showChips={false}
         variant="compact"
         actions={
           <>
-            <Link className="heroAction heroActionLead" href="/districts">
-              <span className="heroActionLabel">District Review</span>
-              <span className="heroActionSub">Depth, direction and evidence coverage</span>
+            <Link className="heroAction heroActionLead" href="/changes/#field-teams">
+              <span className="heroActionLabel">Field-team register</span>
+              <span className="heroActionSub">Review the complete list and record a visit</span>
             </Link>
             <Link className="heroAction" href="/agriculture">
               <span className="heroActionLabel">Agriculture &amp; Water</span>
@@ -135,10 +133,10 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
       <section className="overviewHeadlines evidenceStrip" aria-label="This week in four lines">
         {sensors ? (
           <Link className="headlineCard" href="/changes/#sensors-today">
-            <span className="headlineKicker"><IconDroplet /> Groundwater today</span>
+            <span className="headlineKicker"><IconDroplet /> Daily groundwater snapshot</span>
             <strong>{sensors.deeperPct}%<small>of the State&rsquo;s sensors deeper than a year ago</small></strong>
             <span className="headlineText">
-              {`Median ${sensors.medianM.toFixed(1)} m below ground against ${sensors.yearAgoM.toFixed(1)} m on the same date last year, across ${sensors.active.toLocaleString("en-IN")} automatic recorders read today.`}
+              {`Median ${sensors.medianM.toFixed(1)} m below ground against ${sensors.yearAgoM.toFixed(1)} m on the same date last year, across ${sensors.active.toLocaleString("en-IN")} automatic recorders; latest reading ${sensors.latest.slice(0, 10)}.`}
             </span>
             <span className="headlineGo">Today&rsquo;s sensors <IconArrowRight /></span>
           </Link>
@@ -176,7 +174,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
             <span className="headlineKicker"><IconWaves /> Next summer</span>
             <strong>{summer.beyond}<small>mandals heading past their deepest May</small></strong>
             <span className="headlineText">
-              {summer.beyondDeep} of them more than {summer.deepM} m down{summer.peopleDeep ? `, home to about ${summer.peopleDeep}` : ""}. A projection from past winters.{proof ? ` ${proof.drinkingGroundwaterPct}% of rural drinking-water schemes draw on this groundwater.` : ""}
+              {summer.beyondDeep} of them more than {summer.deepM} m down{summer.peopleDeep ? `, home to about ${summer.peopleDeep}` : ""}. A projection from past winters.
             </span>
             <span className="headlineGo">Summer Outlook <IconArrowRight /></span>
           </Link>
@@ -278,8 +276,8 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
                 </span>
                 Status Summary
               </div>
-              <Link className="linkAction" href="/watchlist">
-                Watchlist <IconArrowRight />
+              <Link className="linkAction" href="/changes/#field-teams">
+                Field-team register <IconArrowRight />
               </Link>
             </div>
             <StatusSummaryCard />
@@ -293,6 +291,8 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
 
       {/* The season beside the groundwater: measured gauges, modelled soil and
           measured storage, each dated by its own source. Context only. */}
+      <details className="overviewMore">
+        <summary><span>All figures and model accuracy</span><strong>{formatNumber(temporalEval.model.maeM)} m average error</strong><span>Model nowcasts, coverage and accuracy by depth</span></summary>
       {season.rain || season.soil || season.reservoirs ? (
         <section className="monsoonStrip seasonStrip" aria-label="This water year so far">
           <div className="monsoonStripIntro">
@@ -375,8 +375,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
 
       {/* Every number the cockpit carries, for the reader who wants them: the
           model's own figures, its accuracy by depth, and the map's side rail. */}
-      <details className="overviewMore">
-        <summary><span>All figures and model accuracy</span><strong>{formatNumber(temporalEval.model.maeM)} m average error</strong><span>Model nowcasts, coverage and accuracy by depth</span></summary>
+
         <div className="modelValueRow stagger">
         <KpiCard
           icon={<IconDroplet />}
@@ -494,25 +493,9 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
       ) : null}
       </details>
 
+      <p className="cardNote"><Link href="/changes/#field-teams">Open the complete field-team register →</Link> · <Link href="/facts/">In Numbers →</Link> · <Link href="/digest/">Weekly digest →</Link></p>
+      <details className="foldMore"><summary><span>Satellite context and source readiness</span><span>Supporting evidence and coverage</span></summary>
       <div className="overviewSupportGrid">
-        <section className="card">
-          <div className="cardHead">
-            <div className="cardTitle">
-              <span className="titleIcon">
-                <IconActivity />
-              </span>
-              Top Mandals to Verify
-              <span className="cardSub" style={{ marginLeft: 6 }}>
-                depth / measured decline
-              </span>
-            </div>
-            <Link className="linkAction" href="/watchlist">
-              View full watchlist <IconArrowRight />
-            </Link>
-          </div>
-          <MandalTable rows={verifyMandals()} limit={30} fold={10} selectedId={selectedId} onSelect={setSelectedId} />
-        </section>
-
         <div className="contentGrid">
           <section className="card">
             <div className="cardHead">
@@ -544,6 +527,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
         </div>
       </div>
 
+      </details>
       <div className="footNote">
         <strong>Prototype View</strong>
         <span className="dotsep" />

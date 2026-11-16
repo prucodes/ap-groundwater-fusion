@@ -107,7 +107,7 @@ export default function MethodologyPage() {
         actions={
           <>
             <a className="heroAction heroActionLead" href={`${basePath}/brief/ap-water-intelligence-brief.pdf`} download="AP-Water-Intelligence-brief.pdf" data-testid="methodology-brief-pdf">
-              <span className="heroActionLabel">Download the seven-page brief</span>
+              <span className="heroActionLabel">Download the technical brief</span>
               <span className="heroActionSub">Sources, model and this week&rsquo;s maps (PDF)</span>
             </a>
             <Link className="heroAction" href="/brief/">
@@ -117,7 +117,8 @@ export default function MethodologyPage() {
           </>
         }
       />
-      <DataProvenanceDates />
+      <details className="foldMore"><summary><span>Source dates and periods</span><span>Each dataset has its own clock</span></summary><DataProvenanceDates /></details>
+      <section className="card" aria-label="How to read the evidence"><h2>Readings, estimates and planning checks</h2><p className="cardNote">Measured wells establish groundwater depth. Models carry uncertainty; satellite and weather sources provide context. Seasonal shortfall flags remain provisional while the baseline is reviewed. Crop-water checks use reference crops and stages; their validation record is weak.</p><p className="cardNote"><Link href="/readiness/">Source coverage and release gates →</Link> · Open a method below for the calculation, validation and limits.</p></section>
 
       <section className="card shellPanel">
         <div className="cardHead">
@@ -185,7 +186,7 @@ export default function MethodologyPage() {
         </div>
       </section>
 
-      <section className="card">
+      <details className="foldMore" id="method-topic-3"><summary><span>Seasonal groundwater comparisons</span><span>Baseline filters and forecast validation</span></summary><section className="card">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon">
@@ -268,12 +269,12 @@ export default function MethodologyPage() {
             2024 it rose from 1.73 m to 1.81 m, still well under assuming no change (2.22 m).
           </p>
         </div>
-      </section>
+      </section></details>
 
-      <CrossNetworkCheck />
-      <ForecastLedger />
+      <details className="foldMore"><summary><span>Independent well-network validation</span><span>How forecasts compare with CGWB observations</span></summary><CrossNetworkCheck /></details>
+      <details className="foldMore"><summary><span>Prospective forecast record</span><span>Frozen calls and measured outcomes; still too few to judge</span></summary><ForecastLedger /></details>
 
-      <section className="card">
+      <details className="foldMore" id="method-topic-4"><summary><span>Agriculture: agreement between sources</span><span>Tests, missing values and dependent signals</span></summary><section className="card">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon">
@@ -298,9 +299,9 @@ export default function MethodologyPage() {
             join is unique: a boundary two source rows claim gets no value rather than the first or the worst.
           </p>
         </div>
-      </section>
+      </section></details>
 
-      <section className="card" aria-labelledby="method-summer" data-testid="method-summer">
+      <details className="foldMore" id="method-topic-5"><summary><span>Summer outlook and groundwater clock</span><span>Historical winters, population and backtest</span></summary><section className="card" aria-labelledby="method-summer" data-testid="method-summer">
         <div className="cardHead">
           <div className="cardTitle" id="method-summer">
             <span className="titleIcon">
@@ -337,9 +338,9 @@ export default function MethodologyPage() {
             the deepest May on record; the May value is the published projection, so the clock always agrees with the outlook.
           </p>
         </div>
-      </section>
+      </section></details>
 
-      <section className="card" aria-labelledby="method-live" data-testid="method-live">
+      <details className="foldMore" id="method-topic-6"><summary><span>Daily sensors and satellite checks</span><span>Separate networks and update clocks</span></summary><section className="card" aria-labelledby="method-live" data-testid="method-live">
         <div className="cardHead">
           <div className="cardTitle" id="method-live">
             <span className="titleIcon"><IconSatellite /></span>
@@ -371,9 +372,9 @@ export default function MethodologyPage() {
             clear looks.
           </p>
         </div>
-      </section>
+      </section></details>
 
-      <section className="card" aria-labelledby="method-field-week">
+      <details className="foldMore" id="method-topic-7"><summary><span>Crop-water calculation and its track record</span><span>Reference crops, validation and field-scale limits</span></summary><section className="card" aria-labelledby="method-field-week">
         <div className="cardHead">
           <div className="cardTitle" id="method-field-week">
             <span className="titleIcon">
@@ -483,9 +484,9 @@ export default function MethodologyPage() {
             collector&rsquo;s page reads the shared messages back into a table beside what the site called that week.
           </p>
         </div>
-      </section>
+      </section></details>
 
-      <section className="card" aria-labelledby="method-drought">
+      <details className="foldMore" id="method-topic-8"><summary><span>Drought-manual indicators</span><span>Trigger matrix, missing indicators and verification</span></summary><section className="card" aria-labelledby="method-drought">
         <div className="cardHead">
           <div className="cardTitle" id="method-drought">
             <span className="titleIcon">
@@ -514,9 +515,9 @@ export default function MethodologyPage() {
           </p>
           <p><Link href="/drought">Open the Drought Watch</Link></p>
         </div>
-      </section>
+      </section></details>
 
-      <section className="card">
+      <details className="foldMore" id="method-topic-9"><summary><span>Geography and historical AWARE readings</span><span>Boundary reconstruction and September snapshot</span></summary><section className="card">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon">
@@ -555,11 +556,11 @@ export default function MethodologyPage() {
           </p>
           <p><Link href="/constituencies">Open Constituencies</Link></p>
         </div>
-      </section>
+      </section></details>
 
       <WatchEvidenceStatus />
 
-      <section className="card">
+      <details className="foldMore" id="method-topic-10"><summary><span>Caveats and limits</span><span>Coverage, uncertainty and permitted interpretation</span></summary><section className="card">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon">
@@ -576,9 +577,9 @@ export default function MethodologyPage() {
             </div>
           ))}
         </div>
-      </section>
+      </section></details>
 
-      <section className="card">
+      <details className="foldMore" id="method-topic-11"><summary><span>Visit measurement and privacy</span><span>Analytics and local preferences</span></summary><section className="card">
         <div className="cardHead">
           <div className="cardTitle">
             <span className="titleIcon">
@@ -610,10 +611,9 @@ export default function MethodologyPage() {
             address.
           </p>
         </div>
-      </section>
+      </section></details>
 
-      <Verse verse={VERSES.reflect} />
-      <section className="card" id="ownership" aria-labelledby="method-ownership" data-testid="method-ownership">
+      <details className="foldMore" id="method-topic-12"><summary><span>Ownership and reuse</span><span>Credits and source terms</span></summary><section className="card" id="ownership" aria-labelledby="method-ownership" data-testid="method-ownership">
         <div className="cardHead">
           <div className="cardTitle" id="method-ownership"><span className="titleIcon"><IconInfo /></span>Ownership and reuse</div>
         </div>
@@ -622,7 +622,7 @@ export default function MethodologyPage() {
           its providers and is used under their terms; each source is named on this page and beside the figures it
           supports. Citing this work is welcome; reusing it beyond citation needs written permission.
         </p>
-      </section>
+      </section></details>
     </div>
   );
 }

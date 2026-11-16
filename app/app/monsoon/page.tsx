@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { CanalWater } from "../../components/CanalWater";
-import { CycloneArnab } from "../../components/CycloneArnab";
-import { arnab } from "../../lib/arnab";
 import tankFill from "../../data/tank_fill.json";
 import { HeaderHero } from "../../components/HeaderHero";
 import { EvidenceComparison } from "../../components/EvidenceComparison";
@@ -103,7 +101,7 @@ export default function MonsoonPage() {
       </div>
 
       <WatchEvidenceStatus />
-      <nav className={`${styles.nav} jumpNav`} aria-label="Monsoon sections"><a href="#chapter-season">This season</a><a href="#cyclone-arnab">{arnab.together ? "Cyclones" : "Cyclone Arnab"}</a><a href="#monsoon-map">Groundwater map</a><a href="#monsoon-shortfall">Shortfall</a><a href="#monsoon-queue">Review queue</a>{w.banked ? <a href="#water-banked">What it banked</a> : null}<a href="#chapter-pacific">El Niño and the Pacific</a><a href="#enso-outlook">El Niño outlook</a><a href="#monsoon-film-title">Film brief</a><a href="#chapter-heat">Heat</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
+      <nav className={`${styles.nav} jumpNav`} aria-label="Monsoon sections"><a href="#chapter-season">This season</a><Link href="/cyclones/">Cyclones →</Link><a href="#monsoon-map">Groundwater map</a><a href="#monsoon-shortfall">Shortfall</a><a href="#monsoon-queue">Review queue</a>{w.banked ? <a href="#water-banked">What it banked</a> : null}<a href="#chapter-pacific">El Niño and the Pacific</a><a href="#enso-outlook">El Niño outlook</a><a href="#monsoon-film-title">Film brief</a><a href="#chapter-heat">Heat</a><Link href="/agriculture#agriculture-brief">Agriculture review →</Link></nav>
 
 
       <h2 className="pageChapter" id="chapter-season">This season in the ground<span>what the monsoon did to groundwater, and where to look</span></h2>
@@ -135,10 +133,10 @@ export default function MonsoonPage() {
           {/* The State network today, from its automatic sensors (fetch_apwrims_sensors.py), each against
               itself a year ago; it replaced the one-off September data-lake reading here. */}
           <div className="headlineCard headlineStatic" data-testid="state-network-stat">
-            <span className="headlineKicker"><IconActivity /> State sensors, today</span>
+            <span className="headlineKicker"><IconActivity /> State sensors · {day(sensors.latestReading)}</span>
             <strong>{formatNumber(Math.round((100 * sensors.state.deeperThanYearAgo) / Math.max(sensors.state.compared, 1)))}%<small>{`of ${sensors.state.compared.toLocaleString("en-IN")} sensors deeper than a year ago`}</small></strong>
             <span className="headlineText">
-              {`Automatic recorders, read daily; each against itself on the same date last year. ${sensors.state.mandalsDeeperThanYearAgo} of ${sensors.state.mandalsReporting} mandals with sensors are deeper.`}
+              {`Latest published daily snapshot; automatic recorders; each against itself on the same date last year. ${sensors.state.mandalsDeeperThanYearAgo} of ${sensors.state.mandalsReporting} mandals with sensors are deeper.`}
             </span>
             <EvidenceComparison label="Median depth" value={sensors.state.medianM}
               reference={sensors.state.medianYearAgoM} referenceLabel="A year ago" unit=" m" />
@@ -229,7 +227,7 @@ export default function MonsoonPage() {
         </details>
       </section>
 
-      <CycloneArnab />
+      <p className="cardNote"><Link href="/cyclones/">Cyclone rain, storage and sensor response →</Link></p>
 
       <section className="card mapCard" id="monsoon-map">
         <CountedReach event="monsoon/reached-map" title="Monsoon: reached the map of where the season failed" />

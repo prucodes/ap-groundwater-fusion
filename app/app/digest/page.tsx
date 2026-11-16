@@ -8,7 +8,7 @@ import { fieldPriority, PRIORITY_SIGNALS, standsOut } from "../../lib/fieldPrior
 import { fieldSignals } from "../../lib/fieldSignalsServer";
 import { checkRecord } from "../../lib/cropWaterRecord";
 import { rabiView } from "../../lib/rabi";
-import { stateSummary } from "../../lib/stateSummary";
+import { sensors } from "../../lib/sensors";
 import { lakhs, summerOutlook } from "../../lib/summer";
 import styles from "./Digest.module.css";
 
@@ -46,7 +46,7 @@ export default function DigestPage() {
   const counts = drought.state.counts;
   // As This Week counts them: the manual's own severe and moderate readings; the in-between ones are not added.
   const severe = counts.severe ?? 0, moderate = counts.moderate ?? 0;
-  const gw = stateSummary.state;
+  const gw = sensors.state;
   const teams = fieldPriority().rows.filter(row => row.lit >= 4).slice(0, 10);
   const mostShort = (fieldSignals.crossCheck as { mostCropsShortMid?: number } | null)?.mostCropsShortMid ?? null;
   const record = checkRecord();
@@ -75,7 +75,7 @@ export default function DigestPage() {
           {res ? <div><span>Reservoir storage</span><b>{pct(res.state.storagePct)}</b><em>{pct(res.state.lastYearPct)} a year ago · {day(rabi.asOf.reservoirs, false)}</em></div> : null}
           {rabi.rain ? <div><span>Rain since 1 June</span><b data-tone={rabi.rain.deviationPct !== null && rabi.rain.deviationPct < -19 ? "bad" : undefined}>{signed(rabi.rain.deviationPct)}</b><em>State gauges · to {day(rabi.rain.end, false)}</em></div> : null}
           <div><span>Drought manual</span><b data-tone={severe ? "bad" : undefined}>{severe}<small> severe</small></b><em>{moderate} moderate, of {drought.state.assessed} mandals assessed</em></div>
-          {gw && gw.currentM !== null && gw.vsYearAgoM !== null ? <div><span>State wells</span><b>{gw.currentM.toFixed(1)}<small> m</small></b><em>{gw.vsYearAgoM >= 0 ? `${gw.vsYearAgoM.toFixed(1)} m deeper` : `${Math.abs(gw.vsYearAgoM).toFixed(1)} m shallower`} than a year ago · {gw.stationsTotal.toLocaleString("en-IN")} wells · {day(gw.date, false)}</em></div> : null}
+          <div><span>Daily sensors</span><b>{gw.medianM.toFixed(1)}<small> m</small></b><em>median · {gw.medianYearAgoM.toFixed(1)} m a year ago · {gw.active.toLocaleString("en-IN")} reporting · {day(sensors.latestReading.slice(0, 10), false)}</em></div>
           {mostShort !== null ? <div><span>Most crops short of water</span><b data-tone={mostShort > 50 ? "bad" : undefined}>{mostShort}<small> mandals</small></b><em>4 or more of 7 crops at mid-season · forecast from {day(week, false)}</em></div> : null}
           <div><span>El Niño, Oct–Dec</span><b>{rabi.enso.ondElNinoPct !== null ? `${Math.round(rabi.enso.ondElNinoPct)}%` : "–"}</b><em>{rabi.enso.alert} · NOAA, {day(rabi.enso.issued, false)}</em></div>
         </section>
@@ -100,7 +100,7 @@ export default function DigestPage() {
 
           <aside className={styles.side}>
             <section aria-labelledby="digest-moved">
-              <h2 id="digest-moved">What moved this week</h2>
+              <h2 id="digest-moved">Changes in this briefing</h2>
               {first ? <p className={styles.sub}>The first week-on-week comparison lands with the next Monday refresh; the figures above are this week&rsquo;s.</p> : (
                 <ul className={styles.moves}>
                   {moves.slice(0, 6).map(item => <li key={item.key} data-direction={item.direction ?? undefined}><span>{item.label}</span><b>{moved(item)}</b></li>)}

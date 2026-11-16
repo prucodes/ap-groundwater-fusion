@@ -10,7 +10,7 @@ export const BRIEFS = {
     use: "Start here; open a district or mandal for its record, or This Week for what changed.",
   },
   "/changes": {
-    what: "What moved since last Monday's refresh: rain, soil, reservoirs, the drought manual, groundwater and El Niño.",
+    what: "Changes since each source’s previous published snapshot: rain, soil, reservoirs, the drought manual, groundwater and El Niño.",
     use: "Send field teams to the listed mandals and forward the one-page digest.",
   },
   "/map": {
@@ -22,8 +22,8 @@ export const BRIEFS = {
     use: "Look a mandal up before a visit or a meeting.",
   },
   "/monsoon": {
-    what: "Whether this monsoon recharged the ground: each mandal's groundwater against its own past seasons, with El Niño beside it.",
-    use: "See where recharge failed this season, and so where the summer starts short.",
+    what: "Seasonal groundwater recovery: each mandal's groundwater against its own past seasons, with El Niño beside it.",
+    use: "Review seasonal groundwater shortfalls and the starting position for summer.",
   },
   "/drought": {
     what: "Every mandal through the national drought manual's indicators and triggers, with the declaration calendar.",

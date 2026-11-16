@@ -1,6 +1,6 @@
 import changesJson from "../data/weekly_changes.json";
 import { droughtSummary } from "./droughtSummary";
-import { stateSummary } from "./stateSummary";
+import sensorState from "../data/gw_sensors_state.json";
 import { waterSummary } from "./waterSummary";
 
 /* "What it says now" for the page briefs, from the small summary files only (a few KB each),
@@ -19,10 +19,8 @@ const item = (key: string) => (changesJson as unknown as { items: Item[] }).item
 
 /** The State's wells, as the latest snapshot reads them. */
 export function wellsNow() {
-  const s = stateSummary.state;
-  if (!s || s.currentM === null) return null;
-  const change = s.vsYearAgoM;
-  return `The State's ${s.stationsTotal.toLocaleString("en-IN")} wells averaged ${metres(s.currentM)} below ground on ${day(s.date)}${change !== null ? `, ${metres(Math.abs(change))} ${change >= 0 ? "deeper" : "shallower"} than a year ago` : ""}.`;
+  const s = sensorState.state;
+  return `Daily sensor snapshot, ${day(sensorState.latestReading)}: ${s.active.toLocaleString("en-IN")} reporting automatic recorders, median depth ${metres(s.medianM)} below ground, against ${metres(s.medianYearAgoM)} for the same sensors a year ago.`;
 }
 
 export function groundwaterStressNow() {

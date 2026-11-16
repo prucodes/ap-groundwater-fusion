@@ -482,7 +482,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
         APWRIMS reading + real NASA satellite-model percentile
         <span className="dotsep" />
         {`Not official until the APWRIMS export is authorised · ${boundaryLabel(geometryForMandal(mandal.id))}`}
-        <Link className="linkAction" href="/watchlist" style={{ marginLeft: "auto" }}>
+        <Link className="linkAction" href="/changes/#field-teams" style={{ marginLeft: "auto" }}>
           Go to watchlist <IconArrowRight />
         </Link>
       </div>

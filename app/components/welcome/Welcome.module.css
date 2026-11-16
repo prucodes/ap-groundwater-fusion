@@ -173,3 +173,12 @@
 }
 @media (max-width: 390px) { .story h1 { font-size: 54px; } .content { padding-left: 6%; padding-right: 6%; } .formHeading { gap: 6px; } .formHeading label { font-size: 10px; } .inputRow button { gap: 10px; padding: 10px 12px; } .figureNote { flex-basis: 100%; padding: 0; border: 0; } }
 @media (prefers-reduced-motion: reduce) { .welcome *, .welcome *::before, .welcome *::after { animation: none !important; transition: none !important; } .rainDrop { opacity: .65; } .signal, .measurementResponse { opacity: .4; } .aquiferResponse { opacity: .08; } .rechargePulse { stroke-dasharray: 3 7; opacity: .6; } .assessmentTrace { stroke-dashoffset: 0; } }
+
+/* Read first, then give the landscape its space. Controls stay in normal flow. */
+.quoteSpace { display: grid; grid-template-rows: 1fr; opacity: 1; transition: opacity 1.2s ease, grid-template-rows 1.2s ease; }
+.quoteSpace > div { min-height: 0; overflow: hidden; }
+.quote[data-visible="false"] .quoteSpace { grid-template-rows: 0fr; opacity: 0; }
+.quoteToggle { display: block; margin: 8px auto; padding: 7px 12px; border: 0; background: transparent; color: #c4d6cc; font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.quoteToggle:focus-visible { outline: 2px solid #c4d6cc; outline-offset: 3px; }
+.quote .verse { position: static; max-width: 520px; margin: 0 auto 16px; padding: 0 7%; animation: none; }
+.quote { position: relative; z-index: 2; }

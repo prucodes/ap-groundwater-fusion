@@ -48,22 +48,20 @@ import { countEvent } from "../lib/visit-counter";
 type NavItem = { href: string; label: string; Icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactNode; desc: string };
 
 // The menu, grouped by the question an official brings to it. `desc` is the one-line explainer.
-// Review Queue, Verify / Watchlist, Executive Snapshot and Reports are no longer listed: the
+// Review Queue, Field-team register, Weekly digest and Reports are no longer listed: the
 // field-teams list on This Week and the weekly digest do their jobs. Their pages still open.
 const navGroups: Array<{ label: string; items: NavItem[] }> = [
   { label: "This week", items: [
       { href: "/", label: "Overview", Icon: IconLayers, desc: "Executive cockpit: status map, priority mandals, source readiness and selected-area evidence." },
-      { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "What moved since the last weekly refresh: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its date." },
-      { href: "/facts", label: "In Numbers", Icon: IconHash, desc: "The figures to quote, one sentence each, with source, date and link; rebuilt at every refresh." },
+      { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "Changes since each source’s previous published snapshot: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its date." },
+      { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
   ] },
-  { label: "Water now", items: [
+  { label: "Watches", items: [
       { href: "/cyclones", label: "Cyclones", Icon: IconCyclone, desc: "Akvan as it comes, live from Himawari; Arnab and Murasu: where the rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },
       { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
       { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
-      { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
-      { href: "/crystal", label: "Water Depth 3D", Icon: IconWaves, desc: "May depth since 2015, the latest month against its usual, and next May's outlook." },
   ] },
-  { label: "Season ahead", items: [
+  { label: "Outlooks", items: [
       { href: "/summer", label: "Summer Outlook", Icon: IconArrowDown, desc: "Where the water table may stand by May, mandal by mandal, against each mandal's own deepest May on record." },
       { href: "/rabi", label: "Rabi Outlook", Icon: IconClock, desc: "What the rabi season starts with: reservoir storage, rainfed soil moisture and the northeast monsoon under El Niño." },
   ] },
@@ -74,12 +72,15 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
       { href: "/districts", label: "Districts", Icon: IconGrid, desc: "District roll-ups with an auto + AI situation brief per district." },
       { href: "/constituencies", label: "Constituencies", Icon: IconTarget, desc: "Groundwater, the State's latest well readings, the drought manual and rain, by assembly and parliamentary constituency." },
       { href: "/mandals", label: "Mandal Insights", Icon: IconCompass, desc: "Per-mandal deep dive: readings, satellite context, trend and agreement." },
-      { href: "/compare", label: "Compare", Icon: IconColumns, desc: "Side-by-side comparison of any two mandals or districts." },
   ] },
 ];
 
 // Evidence and tools: how the figures are made and the specialist views. Folded unless one is open.
 const evidenceNav: NavItem[] = [
+      { href: "/facts", label: "In Numbers", Icon: IconHash, desc: "The figures to quote, one sentence each, with source, date and link; rebuilt at every refresh." },
+      { href: "/crystal", label: "Water Depth 3D", Icon: IconWaves, desc: "May depth since 2015, the latest month against its usual, and next May's outlook." },
+      { href: "/compare", label: "Compare", Icon: IconColumns, desc: "Side-by-side comparison of any two mandals or districts." },
+
       { href: "/methodology", label: "Methodology", Icon: IconFlow, desc: "How fusion works and what each signal means." },
       { href: "/readiness", label: "Data Readiness", Icon: IconDatabase, desc: "Source periods, coverage and operational release gates." },
       { href: "/estimates", label: "Modelled Levels β", Icon: IconDroplet, desc: "Calculated mandal groundwater depth in metres with model bands." },
@@ -138,6 +139,24 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     // how long ago it was built, and a missed refresh should be visible, not silent.
     setOverdue(Date.now() - Date.parse(periods.uiGenerationTimestamp) > REFRESH_OVERDUE_MS);
   }, []);
+
+  useEffect(() => {
+    const reveal = () => {
+      let id = "";
+      try { id = decodeURIComponent(window.location.hash.slice(1)); } catch { return; }
+      const target = document.getElementById(id);
+      if (!target) return;
+      let parent = target.parentElement;
+      while (parent) {
+        if (parent instanceof HTMLDetailsElement) parent.open = true;
+        parent = parent.parentElement;
+      }
+      target.scrollIntoView({ block: "start" });
+    };
+    const frame = requestAnimationFrame(reveal);
+    window.addEventListener("hashchange", reveal);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("hashchange", reveal); };
+  }, [pathname]);
 
   // On phones the sidebar is an off-canvas drawer. Navigating should dismiss it,
   // or the new page loads hidden behind the still-open menu.
@@ -259,12 +278,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
 
         <nav className="sidebarNav" aria-label="Primary">
-          {navGroups.map(group => (
-            <div className="navGroup" key={group.label}>
-              <div className="navGroupLabel"><span>{group.label}</span></div>
-              {group.items.map(item => <NavLink key={item.href} item={item} pathname={pathname} />)}
-            </div>
-          ))}
+          {navGroups.map(group => {
+            const links = group.items.map(item => <NavLink key={item.href} item={item} pathname={pathname} />);
+            return group.label === "This week" || group.label === "Farms" ? <div className="navGroup" key={group.label}><div className="navGroupLabel"><span>{group.label}</span></div>{links}</div> :
+              <details className="navGroup" key={`${group.label}-${pathname}`} open={collapsed || group.items.some(item => pathname.startsWith(item.href))}>
+                <summary className="navGroupLabel navGroupToggle"><span>{group.label}</span><IconChevronRight /></summary>{links}
+              </details>;
+          })}
 
           <button type="button" className="navGroupLabel navGroupToggle" aria-expanded={evidenceShown} onClick={toggleEvidence}>
             <span>Evidence &amp; tools</span>
