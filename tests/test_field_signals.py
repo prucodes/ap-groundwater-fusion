@@ -137,6 +137,10 @@ def test_the_committed_counts_are_what_the_code_computes(field):
     fresh = ffs.cross_check(field["weather"], field["soilCapacity"], context)
     if field["crossCheck"].get("soilAsOf") != context["soilMoisture"]["asOf"]:
         pytest.skip("the soil moisture was refreshed after the field signals")
+    # Counts frozen on an earlier reading are kept on purpose (check_for); the portal can
+    # revise a date's values, so only counts made on this very reading can be recomputed.
+    if field["crossCheck"].get("soilFingerprint") != ffs.soil_fingerprint(context):
+        pytest.skip("the counts were frozen on an earlier soil reading")
     assert fresh["counts"] == field["crossCheck"]["counts"]
     assert set(fresh["counts"]) == {f"{c}-{s}" for c in crop_water.CROPS for s in range(3)}
 
@@ -416,3 +420,10 @@ def test_sentinel_outcomes_take_out_the_states_greening_that_week(tmp_path, monk
     values = out[(2025, 30)]
     # The State's median change that week (0.12) is taken out of every mandal's change.
     assert values[0][0] == pytest.approx(0.10 - 0.12) and values[-1] is None
+
+
+def test_a_revised_reading_for_the_same_date_has_a_different_fingerprint():
+    context = {"soilMoisture": {"asOf": "2026-11-11", "mandals": [{"boundaryIndex": 0, "pct": [1, 2, 3, 4]}]}}
+    revised = {"soilMoisture": {"asOf": "2026-11-11", "mandals": [{"boundaryIndex": 0, "pct": [1, 2, 3, 5]}]}}
+    assert ffs.soil_fingerprint(context) != ffs.soil_fingerprint(revised)
+    assert ffs.soil_fingerprint(context) == ffs.soil_fingerprint(json.loads(json.dumps(context)))
