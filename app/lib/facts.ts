@@ -4,6 +4,8 @@ import { mapGeometry, monsoonWatch } from "./data";
 import { summerOutlook, lakhs } from "./summer";
 import { summerPriority } from "./summerPriority";
 import { waterContext } from "./waterContext";
+import { sensors } from "./sensors";
+import akvanJson from "../data/cyclone_akvan.json";
 
 /* Andhra Pradesh's season told in numbers, in order: what the monsoon brought,
    what reached the ground, what the cyclones changed, and what that means for
@@ -26,6 +28,7 @@ export const CHAPTERS: Array<{ title: string; lede: string }> = [
   { title: "The ground did not fill", lede: "A monsoon usually lifts the water table. This one left almost half the State lower than in May." },
   { title: "Two cyclones, mostly on the coast", lede: "Arnab and Murasu brought a lot of water in two weeks, but not where the water table had room for it." },
   { title: "So summer starts early", lede: "Some mandals are already deeper than any May on record, and the dry months have not begun." },
+  { title: "And now", lede: "The State's sensors read every few hours, and a third cyclone is on its way to the part of the State the first two missed." },
 ];
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -39,7 +42,7 @@ const mapOf = (hit: (index: number) => boolean) => mapGeometry.mandals.map((_, i
 
 export function facts(): Fact[] {
   const out: Fact[] = [];
-  const [monsoon, ground, cyclones, summer] = CHAPTERS.map(c => c.title);
+  const [monsoon, ground, cyclones, summer, now] = CHAPTERS.map(c => c.title);
 
   // 1. The monsoon fell short
   const rain = waterContext.rainfall;
@@ -139,5 +142,36 @@ export function facts(): Fact[] {
     visual: { kind: "waffle", pct: quality, tone: "warn" },
     source: "Jal Jeevan Mission water quality testing", asOf: day(summerPriority.generatedAt),
   });
+  // 5. And now
+  const st = sensors.state;
+  const deeperPct = Math.round((100 * st.deeperThanYearAgo) / Math.max(st.compared, 1));
+  out.push({
+    id: "sensors-today", chapter: now, tone: "bad", big: `${deeperPct}%`, href: "/changes/#sensors-today",
+    headline: "of the State's reporting sensors are deeper than on the same date last year",
+    text: `${st.deeperThanYearAgo.toLocaleString("en-IN")} of the ${st.compared.toLocaleString("en-IN")} automatic water-level sensors that reported in the last two days are deeper than on the same date last year; the median is ${st.medianM.toFixed(1)} m against ${st.medianYearAgoM.toFixed(1)} m.`,
+    visual: { kind: "waffle", pct: deeperPct, tone: "bad" },
+    source: "APWRIMS groundwater telemetry, each sensor against itself", asOf: day(sensors.latestReading),
+  });
+  const ak = akvanJson as unknown as { name: string; landfall: string; landfallConfirmed: boolean; near: string; state: { rainTmc: number; normalTmc: number } | null;
+    rainWindow: { from: string; to: string | null }; missedBefore: { mandals: number; reached: number; reachedMm: number }; missed: number[];
+    map: Array<[number, string, string, number, boolean]> };
+  if (ak.state && ak.rainWindow.to) {
+    out.push({
+      id: "akvan-reached", chapter: now, tone: "water", big: `${ak.missedBefore.reached} of ${ak.missedBefore.mandals}`, href: "/cyclones/#third-cyclone",
+      headline: `deep-water-table mandals the first two storms missed got ${ak.missedBefore.reachedMm} mm or more from ${ak.name}`,
+      text: `Cyclone ${ak.name} brought ${n(ak.state.rainTmc)} TMC from ${day(ak.rainWindow.from)} to ${day(ak.rainWindow.to)}; ${ak.missedBefore.reached} of the ${ak.missedBefore.mandals} deep-water-table mandals Arnab and Murasu left under ${ak.missedBefore.reachedMm} mm got ${ak.missedBefore.reachedMm} mm or more from it.`,
+      visual: { kind: "map", keys: mapOf(i => ak.map.some(r => r[0] === i && r[4] && r[3] >= ak.missedBefore.reachedMm)), tone: "water", label: `Missed mandals ${ak.name} reached: ${ak.missedBefore.reached}` },
+      source: "State rain gauges, via APWRIMS", asOf: day(ak.rainWindow.to),
+    });
+  } else {
+    const missed = new Set(ak.missed);
+    out.push({
+      id: "akvan-target", chapter: now, tone: "warn", big: `${ak.missedBefore.mandals}`, href: "/cyclones/#third-cyclone",
+      headline: `deep-water-table mandals the first two storms missed lie near where Cyclone ${ak.name} is forecast to land`,
+      text: `IMD expects Cyclone ${ak.name} ashore on ${ak.near} around ${day(ak.landfall)}; ${ak.missedBefore.mandals} of the State's deep-water-table mandals got under ${ak.missedBefore.reachedMm} mm from Arnab and Murasu together, most of them in the south and Rayalaseema.`,
+      visual: { kind: "map", keys: mapOf(i => missed.has(i)), tone: "warn", label: `Deep-water-table mandals the first two storms missed: ${ak.missedBefore.mandals}` },
+      source: "State rain gauges, via APWRIMS; IMD forecast", asOf: `the forecast for ${day(ak.landfall)}`,
+    });
+  }
   return out;
 }
