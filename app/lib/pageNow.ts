@@ -44,7 +44,8 @@ export function droughtNow() {
 }
 
 export function districtsNow() {
-  const rows = waterSummary.districts ?? [];
+  // Districts with gauge rain only: the summary also carries a Karnataka district for its reservoir, with no rain of its own.
+  const rows = (waterSummary.districts ?? []).filter(d => d.rain);
   const short = rows.filter(d => d.rain?.category === "deficient" || d.rain?.category === "scanty").length;
   const res = waterSummary.reservoirs as unknown as { storagePct?: number | null; lastYearPct?: number | null } | null;
   return `Rain since 1 June is deficient or scanty in ${short} of ${rows.length} districts${res?.storagePct !== undefined ? `; reservoirs hold ${pct(res.storagePct)} against ${pct(res.lastYearPct)} a year ago` : ""}.`;
