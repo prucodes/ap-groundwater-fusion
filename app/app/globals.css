@@ -5980,7 +5980,9 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
 /* Long tables and lists show their first rows; the rest open in place. The
    toggle is a checkbox so it needs no script, and printing shows every row. */
 .rowFoldToggle { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-.rowFoldToggle:not(:checked) ~ * [data-fold] { display: none; }
+.rowFold:not(.rowFoldPhone) > .rowFoldToggle:not(:checked) ~ * [data-fold] { display: none; }
+@media (max-width: 760px) { .rowFoldPhone > .rowFoldToggle:not(:checked) ~ * [data-fold] { display: none; } }
+@media (min-width: 761px) { .rowFoldPhone > .rowFoldLabel { display: none; } }
 .rowFoldLabel { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); font-size: 12px; font-weight: 600; color: var(--teal); cursor: pointer; user-select: none; }
 .rowFoldLabel:hover { border-color: var(--teal); }
 .rowFoldLabel::after { content: ""; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
@@ -6205,3 +6207,19 @@ button.statusLive:focus-visible { outline: 2px solid var(--cyan); outline-offset
   .appCreatorFooter button { min-height: 40px; }
   .heroBrief dt { font-size: 11px; }
 }
+/* PhoneFold: one line on a phone, invisible on a wider screen where the section stands open. */
+.phoneFold { margin-top: 14px; border-top: 1px solid var(--line); }
+.phoneFold > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; min-height: 48px; padding: 14px 2px; cursor: pointer; list-style: none; }
+.phoneFold > summary::-webkit-details-marker { display: none; }
+.phoneFold > summary > span:first-child { font-weight: 600; font-size: 14px; color: var(--ink); }
+.phoneFold > summary > span:last-child { flex-basis: 100%; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.phoneFold > summary::after { content: ""; position: absolute; right: 6px; width: 7px; height: 7px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: rotate(45deg); }
+.phoneFold > summary { position: relative; padding-right: 28px; }
+.phoneFold[open] > summary::after { transform: rotate(-135deg); }
+.phoneFold[open] > summary { padding-bottom: 8px; }
+@media (min-width: 761px) {
+  .phoneFold { margin: 0; border: 0; }
+  .phoneFold > summary { display: none; }
+  .phoneFold::details-content { content-visibility: visible; display: contents; }
+}
+@media print { .phoneFold > summary { display: none; } .phoneFold::details-content { content-visibility: visible; display: contents; } }

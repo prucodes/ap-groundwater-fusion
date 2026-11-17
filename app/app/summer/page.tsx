@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactElement } from "react";
 import Link from "next/link";
+import { RowFold, foldAt } from "../../components/RowFold";
 import { HeaderHero } from "../../components/HeaderHero";
 import { StateOutlineMap } from "../../components/StateOutlineMap";
 import { IconArrowRight, IconClock, IconCyclone, IconDroplet, IconFlask, IconMap, IconShield, IconSun, IconWaves } from "../../components/icons";
@@ -19,7 +20,7 @@ import { DownloadTextButton } from "../../components/ExportButtons";
 import { PriorityMap } from "../../components/PriorityMap";
 import { Verse } from "../../components/Verse";
 import { VERSES } from "../../lib/verses";
-import { ChapterFold } from "../../components/ChapterFold";
+import { ChapterFold, PhoneFold } from "../../components/ChapterFold";
 
 export const metadata: Metadata = {
   title: "Summer Water Outlook | AP Water Intelligence",
@@ -197,9 +198,12 @@ export default function SummerPage() {
       </section>
       </ChapterFold>
 
-      <DrinkingWater beyondPeople={people?.beyond ?? null} />
+      <PhoneFold title="Drinking water rests on these wells" summary="Nineteen in twenty rural drinking-water schemes draw on groundwater: where a summer supply plan starts">
+        <DrinkingWater beyondPeople={people?.beyond ?? null} />
+      </PhoneFold>
 
-      {bt ? <section className={shared.block} aria-labelledby="summer-record" data-testid="summer-record">
+      {bt ? <PhoneFold title="The same projection, run on every past year" summary="Each past year projected from the other winters, and set against the May that followed">
+      <section className={shared.block} aria-labelledby="summer-record" data-testid="summer-record">
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconShield /> How it has fared</span>
           <h2 id="summer-record">The same projection, run on every past year</h2>
@@ -228,7 +232,8 @@ export default function SummerPage() {
             {elNinoYear ? <p className={styles.hitNote}>May 2024 followed the 2023 El Niño monsoon and came in {elNinoYear.medianErrorM > 0 ? `${elNinoYear.medianErrorM.toFixed(1)} m deeper` : `${Math.abs(elNinoYear.medianErrorM).toFixed(1)} m shallower`} than the typical projection. This is an El Niño year too.</p> : null}
           </figure>
         </div>
-      </section> : null}
+      </section>
+      </PhoneFold> : null}
 
       <Verse verse={VERSES.yaksha} />
 
@@ -305,9 +310,10 @@ function SummerPriority() {
             {places.length > 8 ? <p>And {places.length - 8} more districts with one or two each.</p> : null}
           </div>
         </div>
+        <RowFold id="priority-first-phone" total={Math.min(SHOWN, firstRows.length)} visible={PHONE_SHOWN} noun="mandals" phoneOnly>
         <ol className={styles.pCards} data-testid="priority-first">
           {firstRows.slice(0, SHOWN).map((r, i) => (
-            <li key={r.index}>
+            <li key={r.index} {...foldAt(i, PHONE_SHOWN)}>
               <span className={styles.pRank}>{String(i + 1).padStart(2, "0")}</span>
               <div className={styles.pWho}>
                 {r.id ? <Link href={`/mandals/${r.id}`}>{r.mandal}</Link> : <span>{r.mandal}</span>}
@@ -327,6 +333,7 @@ function SummerPriority() {
             </li>
           ))}
         </ol>
+        </RowFold>
         {firstRows.length > SHOWN ? <details className="foldMore" data-testid="priority-first-rest">
           <summary><span>Show all {firstRows.length} to plan first</span><span>The other {firstRows.length - SHOWN}, in the same order</span></summary>
           <PriorityTable rows={firstRows.slice(SHOWN)} band="first" from={SHOWN} />
@@ -377,6 +384,7 @@ function SignChips({ row }: { row: PriorityRow }) {
 }
 
 const SHOWN = 10;   // the rest of the first list folds: ten names are what a meeting reads
+const PHONE_SHOWN = 4; // a phone shows the first four, the rest one tap away
 
 function PriorityTable({ rows, band, from = 0 }: { rows: PriorityRow[]; band: PriorityBand; from?: number }) {
   return (
