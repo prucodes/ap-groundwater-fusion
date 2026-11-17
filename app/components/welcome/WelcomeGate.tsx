@@ -16,11 +16,12 @@ function Arrow() {
   return <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
 
-function WelcomeQuote({ paused, reduced }: { paused: boolean; reduced: boolean }) {
+function WelcomeQuote({ paused, reduced, settled }: { paused: boolean; reduced: boolean; settled: boolean }) {
   const [visible, setVisible] = useState(true);
   const [held, setHeld] = useState(false);
   const [reading, setReading] = useState(false);
   const [pageVisible, setPageVisible] = useState(true);
+  const [ready, setReady] = useState(false);
   useEffect(() => {
     const update = () => setPageVisible(!document.hidden);
     update(); document.addEventListener("visibilitychange", update);
@@ -31,7 +32,11 @@ function WelcomeQuote({ paused, reduced }: { paused: boolean; reduced: boolean }
     const timer = setTimeout(() => setVisible(false), 20_000);
     return () => clearTimeout(timer);
   }, [paused, reduced, held, reading, pageVisible]);
-  return <div className={styles.quote} data-testid="welcome-quote" data-visible={visible} onPointerEnter={() => setReading(true)} onPointerLeave={() => setReading(false)} onFocus={() => setReading(true)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setReading(false); }}>
+  // For tests that move the clock: the exported HTML already says data-visible,
+  // but the hide timer exists only after hydration. Marked one render after the
+  // gate has read the motion setting, so the timer above already reflects it.
+  useEffect(() => { if (settled) setReady(true); }, [settled]);
+  return <div className={styles.quote} data-testid="welcome-quote" data-visible={visible} data-ready={ready} onPointerEnter={() => setReading(true)} onPointerLeave={() => setReading(false)} onFocus={() => setReading(true)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setReading(false); }}>
     <div id="welcome-quote-text" className={styles.quoteSpace} aria-hidden={!visible}><div><Verse verse={VERSES.narada} className={styles.verse} /></div></div>
     <button type="button" className={styles.quoteToggle} aria-expanded={visible} aria-controls="welcome-quote-text" onClick={() => { setHeld(true); setVisible(value => !value); }}>{visible ? "Hide the quote" : "Read the quote"}</button>
   </div>;
@@ -201,7 +206,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
             </section>
 
             <figure className={styles.landscape}>
-              <WelcomeQuote paused={paused} reduced={reduced} />
+              <WelcomeQuote paused={paused} reduced={reduced} settled={phase !== "checking"} />
               <WaterLandscape />
               <figcaption><span className={styles.figureIndex}>FIG. 01</span> BENEATH THE MONSOON <span className={styles.figureNote}>Illustrative landscape · not measured data</span></figcaption>
             </figure>
