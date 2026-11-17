@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function OverviewPage() {
   const { counts } = agricultureEvidence();
   const o = summerOutlook;
-  const summer = { beyond: o.summary.beyond, beyondDeep: o.summary.beyondDeep, deepM: o.deepM, peopleDeep: o.people ? `${lakhs(o.people.beyondDeep)} people` : null };
+  const summer = { beyond: o.summary.beyond, beyondDeep: o.summary.beyondDeep, deepM: o.deepM, peopleDeep: o.people ? `${lakhs(o.people.beyondDeep)} people` : null, dry: o.summary.dry, within: o.summary.within };
   const droughtWeek = { worse: weeklyChanges.drought.worse.length, better: weeklyChanges.drought.better.length };
   // Findings computed elsewhere on the site, carried here as a few numbers each.
   const tanksBelowPct = tankFill.wetHaUsual ? Math.round(100 * (1 - tankFill.wetHaNow / tankFill.wetHaUsual)) : null;
