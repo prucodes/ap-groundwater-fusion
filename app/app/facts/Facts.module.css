@@ -62,3 +62,11 @@
   :global(:root[data-motion="ready"]) .waffle[data-draw]:not([data-drawn]) rect[data-on] { opacity: .12; }
   .waffle[data-drawn] rect[data-on] { transition: opacity .35s ease calc(var(--i, 0) * 11ms); }
 }
+
+
+/* Phones: no text under 11px. Every selector here set a size below 11px on a phone and, across
+   a scan of every page at 390px, matched nothing larger than 11px (its own text or inherited),
+   so this only ever raises a size. e2e/governance-zz-phone-type.spec.ts keeps the floor. */
+@media screen and (max-width: 640px) {
+  .bars small { font-size: 11px !important; }
+}

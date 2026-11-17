@@ -58,3 +58,24 @@
 .commands svg { width: 15px; height: 15px; flex-shrink: 0; }
 @media (max-width: 1050px) { .layout { grid-template-columns: 1fr; } .comparison { padding-right: 0; } .dossier { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); } .heading { align-items: flex-start; flex-direction: column; gap: 10px; } }
 @media (max-width: 600px) { .insight { gap: 12px; align-items: flex-start; flex-direction: column; } .insight > strong { font-size: 34px; } .heading h2 { font-size: 22px; } .toolbar > span { display: none; } .rowLabel { flex-wrap: wrap; gap: 4px; } .rowLabel strong { font-size: 11px; } .dossierHead { grid-template-columns: 1fr; } .dossierHead > select { max-width: 100%; } }
+
+
+/* Phones: no text under 11px. Every selector here set a size below 11px on a phone and, across
+   a scan of every page at 390px, matched nothing larger than 11px (its own text or inherited),
+   so this only ever raises a size. e2e/governance-zz-phone-type.spec.ts keeps the floor. */
+@media screen and (max-width: 640px) {
+  .actions p,
+  .actions span,
+  .axis span,
+  .chartNote,
+  .eyebrow,
+  .figures small,
+  .figures span,
+  .gate,
+  .insight span,
+  .legend span,
+  .rank,
+  .records span,
+  .release,
+  .rowLabel small { font-size: 11px !important; }
+}

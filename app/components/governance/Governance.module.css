@@ -92,3 +92,16 @@
 .districtWorkspace { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 16px; align-items: stretch; }
 .districtWorkspace > * { min-width: 0; }
 @media (max-width: 1150px) { .districtWorkspace { grid-template-columns: minmax(0, 1fr); } }
+
+/* Districts page (calm pattern): the levels table's heading and the close-up's tools. */
+.levelsHead { margin: 0 0 12px; font: 600 13px var(--font-display); color: var(--ink); }
+.detailTools { display: flex; justify-content: flex-end; margin: -8px 0 10px; }
+
+
+/* Phones: no text under 11px. Every selector here set a size below 11px on a phone and, across
+   a scan of every page at 390px, matched nothing larger than 11px (its own text or inherited),
+   so this only ever raises a size. e2e/governance-zz-phone-type.spec.ts keeps the floor. */
+@media screen and (max-width: 640px) {
+  .eyebrow,
+  .pending { font-size: 11px !important; }
+}

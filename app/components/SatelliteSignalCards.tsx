@@ -65,7 +65,7 @@ export function SatelliteSignalCards() {
           <div className="signalMeter">
             <span className="signalMeterFill" style={{ width: `${Math.min(100, (rain ?? 0))}%`, background: "#3f86d6" }} />
           </div>
-          <div style={{ marginBottom: 6, fontSize: 10.5, fontWeight: 600, color: "var(--sig-surface)" }}>
+          <div className="signalSource">
             CHIRPS · {formatPeriod(s.rainfall_period) || "recent"}
           </div>
           <div className="signalRange">monthly areal average · not measured recharge</div>

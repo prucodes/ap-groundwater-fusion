@@ -49,8 +49,8 @@ export function DistrictProfile({ rows, selected, onSelect }: {
     <div className={styles.selectedReadout} aria-live="polite">
       <div><strong>{current ? titleCase(current.district_name) : "No district selected"}</strong>
         {current && <dl className={styles.profileValues}>
-          <div><dt>Modelled depth</dt><dd>{formatNumber(current.avg_estimate_mbgl, " m bgl")}</dd></div>
-          <div><dt>Measured YoY</dt><dd>{current.avg_trend_m_per_yr != null && current.avg_trend_m_per_yr > 0 ? "+" : ""}{formatNumber(current.avg_trend_m_per_yr, " m")}</dd></div>
+          <div><dt>Modelled depth</dt><dd>{current.avg_estimate_mbgl == null ? "–" : `${current.avg_estimate_mbgl.toFixed(1)} m bgl`}</dd></div>
+          <div><dt>Measured in a year</dt><dd>{current.avg_trend_m_per_yr == null ? "–" : `${current.avg_trend_m_per_yr > 0 ? "+" : current.avg_trend_m_per_yr < 0 ? "−" : ""}${Math.abs(current.avg_trend_m_per_yr).toFixed(1)} m`}</dd></div>
         </dl>}
         <span>{current ? `${current.stress_count} stress flags / ${current.mandals.length} prototype units. ${current.mandals.filter(row => row.estimate_mbgl != null).length} modelled; ${current.mandals.filter(row => row.trend_m_per_yr != null).length} with YoY comparisons.` : "No comparable data."}</span>
       </div>

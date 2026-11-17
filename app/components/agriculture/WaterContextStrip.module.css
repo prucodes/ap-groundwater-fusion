@@ -59,3 +59,25 @@
 @media (max-width: 980px) {
   .pair { grid-template-columns: 1fr; }
 }
+
+
+/* Phones: no text under 11px. Every selector here set a size below 11px on a phone and, across
+   a scan of every page at 390px, matched nothing larger than 11px (its own text or inherited),
+   so this only ever raises a size. e2e/governance-zz-phone-type.spec.ts keeps the floor. */
+@media screen and (max-width: 640px) {
+  .bandKey li,
+  .basins em,
+  .basins small,
+  .basins span,
+  .card a,
+  .card em,
+  .line,
+  .line b,
+  .note,
+  .releases b,
+  .releases p,
+  .releases span,
+  .releases summary,
+  .weeks b,
+  .weeks span { font-size: 11px !important; }
+}

@@ -526,6 +526,12 @@
     #yearBig{font-size:25px}
     #legend .cat{font-size:10px}
   }
+  /* Phone floor, as on the rest of the site: nothing a reader is meant to read drops below 11px.
+     The compass letter stays at 0, since a drawn needle stands in for it there. */
+  @media screen and (max-width:640px){
+    #legend .lgTitle,#legend .cat,#legend .ocats .cat,#legend .rimKey,#legend .lgNote,
+    #titleBlock p,#outlookBarLabels,.ticks span,#timeline .ticks span{font-size:11px}
+  }
 </style>
 </head>
 <body>
@@ -690,6 +696,7 @@ const GW = {"bbox":[76.7606,12.6241,84.74,19.1621],"years":["2015","2016","2017"
 const QP = new URLSearchParams(location.search);
 const STATIC = QP.has("static");
 const NOBLOOM = QP.has("nobloom");
+const GLOW = QP.has("glow");   /* force the wide glow on (e.g. a capture under software GL); ?glow=1.2 sets its strength */
 const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches || STATIC;
 const canvas = document.getElementById("gl");
 let renderer;
@@ -1355,7 +1362,7 @@ const quadScene=new THREE.Scene();
 const quadCam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
 const quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),null); quadScene.add(quad);
 const mk=(w,h)=>new THREE.WebGLRenderTarget(w,h,{minFilter:THREE.LinearFilter,magFilter:THREE.LinearFilter,format:THREE.RGBAFormat});
-let rtScene,rtA,rtB;
+let rtScene,rtA,rtB,rtC,rtD;
 const brightMat=new THREE.ShaderMaterial({
   uniforms:{tex:{value:null},thr:{value:0.78}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
@@ -1373,13 +1380,34 @@ const blurMat=new THREE.ShaderMaterial({
       s+=(texture2D(tex,vUv+o*3.23).rgb+texture2D(tex,vUv-o*3.23).rgb)*0.070;
       gl_FragColor=vec4(s,1.0);}`,
 });
-const compMat=new THREE.ShaderMaterial({
-  uniforms:{tex:{value:null},bloom:{value:null},uStr:{value:0.30},uTime:{value:0}},
+/* A second, wider glow at quarter resolution. The tight bloom above only takes the brightest
+   crystal edges and keeps them crisp; this one takes the lit land at a softer threshold and
+   spreads it far, so the state throws a faint halo onto the dark sea around it. Four bilinear
+   taps a texel apart average a 4x4 block of the full-size scene, so the quarter-size image
+   starts smooth instead of blocky. */
+const downMat=new THREE.ShaderMaterial({
+  uniforms:{tex:{value:null},res:{value:new THREE.Vector2(1,1)},thr:{value:0.40}},
   vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
-  fragmentShader:`uniform sampler2D tex,bloom;uniform float uStr,uTime;varying vec2 vUv;
+  fragmentShader:`uniform sampler2D tex;uniform vec2 res;uniform float thr;varying vec2 vUv;
+    void main(){vec2 o=1.0/res;
+      vec3 s=(texture2D(tex,vUv+vec2(-o.x,-o.y)).rgb+texture2D(tex,vUv+vec2(o.x,-o.y)).rgb
+             +texture2D(tex,vUv+vec2(-o.x,o.y)).rgb+texture2D(tex,vUv+vec2(o.x,o.y)).rgb)*0.25;
+      float l=dot(s,vec3(0.2126,0.7152,0.0722));
+      gl_FragColor=vec4(s*smoothstep(thr,thr+0.4,l),1.0);}`,
+});
+const wideBlurMat=blurMat.clone();
+const WIDE_STR=Number(QP.get("glow"))||0.8, WIDE_PASSES=5;
+const compMat=new THREE.ShaderMaterial({
+  uniforms:{tex:{value:null},bloom:{value:null},bloomWide:{value:null},uStr:{value:0.30},uWide:{value:0},uTime:{value:0}},
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+  fragmentShader:`uniform sampler2D tex,bloom,bloomWide;uniform float uStr,uWide,uTime;varying vec2 vUv;
     float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
     void main(){
-      vec3 c=texture2D(tex,vUv).rgb+texture2D(bloom,vUv).rgb*uStr;
+      vec3 base=texture2D(tex,vUv).rgb;
+      /* The wide glow falls where the scene is dark (the sea around the state) and fades out
+         over lit land, so it halos the coast without washing out the mandal colours. */
+      float dark=1.0-smoothstep(0.06,0.32,dot(base,vec3(0.2126,0.7152,0.0722)));
+      vec3 c=base+texture2D(bloom,vUv).rgb*uStr+texture2D(bloomWide,vUv).rgb*uWide*dark;
       c=vec3(1.0)-exp(-c*1.52);                       /* filmic-ish */
       float v=smoothstep(1.25,0.35,length(vUv-vec2(0.5,0.46)));
       c*=mix(0.72,1.0,v);
@@ -1388,9 +1416,12 @@ const compMat=new THREE.ShaderMaterial({
     }`,
 });
 function sizeTargets(w,h){
-  if(rtScene){rtScene.dispose();rtA.dispose();rtB.dispose();}
+  if(rtScene){rtScene.dispose();rtA.dispose();rtB.dispose();rtC.dispose();rtD.dispose();}
   rtScene=mk(w*DPR,h*DPR); rtA=mk(w*DPR/2,h*DPR/2); rtB=mk(w*DPR/2,h*DPR/2);
+  rtC=mk(w*DPR/4,h*DPR/4); rtD=mk(w*DPR/4,h*DPR/4);
   blurMat.uniforms.res.value.set(w*DPR/2,h*DPR/2);
+  downMat.uniforms.res.value.set(w*DPR,h*DPR);
+  wideBlurMat.uniforms.res.value.set(w*DPR/4,h*DPR/4);
 }
 
 /* ============================== camera controls ============================== */
@@ -2313,8 +2344,23 @@ function loop(t){
     blurMat.uniforms.tex.value=rtB.texture; blurMat.uniforms.dir.value.set(0,1+i);
     renderer.setRenderTarget(rtA); renderer.render(quadScene,quadCam);
   }
+  /* Wide glow: a real GPU on a laptop or desktop. Phones and software GL keep the tight bloom
+     only, since eleven more passes cost them frames for a halo few would notice on a small screen. */
+  const wide=GLOW||(!SOFTWARE_GL&&!PHONE());
+  if(wide){
+    quad.material=downMat; downMat.uniforms.tex.value=rtScene.texture;
+    renderer.setRenderTarget(rtC); renderer.render(quadScene,quadCam);
+    quad.material=wideBlurMat;
+    for(let i=0;i<WIDE_PASSES;i++){
+      wideBlurMat.uniforms.tex.value=rtC.texture; wideBlurMat.uniforms.dir.value.set(1+i,0);
+      renderer.setRenderTarget(rtD); renderer.render(quadScene,quadCam);
+      wideBlurMat.uniforms.tex.value=rtD.texture; wideBlurMat.uniforms.dir.value.set(0,1+i);
+      renderer.setRenderTarget(rtC); renderer.render(quadScene,quadCam);
+    }
+  }
   quad.material=compMat;
   compMat.uniforms.tex.value=rtScene.texture; compMat.uniforms.bloom.value=rtA.texture;
+  compMat.uniforms.bloomWide.value=rtC.texture; compMat.uniforms.uWide.value=wide?WIDE_STR:0;
   renderer.setRenderTarget(null); renderer.render(quadScene,quadCam);
 }
 requestAnimationFrame(loop);
