@@ -162,7 +162,7 @@ async function film(browser, format) {
     // JPEG frames are full range; phones and WhatsApp expect broadcast range, tagged BT.709.
     "-vf", "scale=in_range=pc:out_range=tv:in_color_matrix=bt601:out_color_matrix=bt709,format=yuv420p",
     "-color_range", "tv", "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
-    "-c:v", "libx264", "-preset", "fast", "-crf", "20", "-movflags", "+faststart", "-an", target], { stdio: ["pipe", "inherit", "inherit"] });
+    "-c:v", "libx264", "-preset", "fast", "-crf", "23", "-movflags", "+faststart", "-an", target], { stdio: ["pipe", "inherit", "inherit"] });
   let broken = null;
   encoder.stdin.on("error", error => { broken = error; });
   const closed = once(encoder, "close");

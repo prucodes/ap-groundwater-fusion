@@ -35,5 +35,7 @@
 @media (max-width: 640px) {
   .downloads ul { grid-template-columns: minmax(0, 1fr); }
   .frame { border-radius: 10px; }
+  .playOver span { width: 60px; height: 60px; }
+  .playOver svg { width: 22px; height: 22px; }
 }
 @media print { .controls, .downloads, .playOver, .pauseOver { display: none; } }

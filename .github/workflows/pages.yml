@@ -79,7 +79,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: app/.weekly-film
-          key: weekly-film-${{ hashFiles('app/data/**', 'app/lib/**', 'app/components/film/**', 'app/app/weekly-film/**', 'app/app/fonts/**', 'app/scripts/render-weekly-film.mjs') }}
+          key: weekly-film-${{ hashFiles('app/data/**', 'app/lib/**', 'app/components/film/**', 'app/app/weekly-film/**', 'app/app/fonts/**', 'app/scripts/render-film.mjs') }}
       - name: Record the weekly film
         # out/films/weekly/*.mp4 and manifest.json, which the page's download row reads. Every
         # scene is checked for overlapping or clipped text before anything is encoded. On main a
@@ -93,16 +93,36 @@ jobs:
           if [ ! -f .weekly-film/manifest.json ]; then
             sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
             npx playwright install --with-deps chromium
-            node scripts/render-weekly-film.mjs --directory out --base "$PAGES_BASE_PATH" --output .weekly-film
+            node scripts/render-film.mjs --film weekly --directory out --base "$PAGES_BASE_PATH" --output .weekly-film
           fi
           mkdir -p out/films/weekly && cp .weekly-film/* out/films/weekly/
-      - name: Keep the film's contact sheets
-        # The frames the film was judged on, one sheet per shape, for a person to look at.
+      - name: Restore the method film if nothing it shows has changed
+        # The Methodology page's film quotes the model card, the season's recharge and the gauge
+        # network, all of which change at most weekly, so most deploys reuse the last recording.
+        uses: actions/cache@v4
+        with:
+          path: app/.method-film
+          key: method-film-${{ hashFiles('app/data/model_card.json', 'app/data/monsoon_watch.json', 'app/data/water_context.json', 'app/lib/**', 'app/components/film/**', 'app/app/fonts/**', 'app/scripts/render-film.mjs') }}
+      - name: Record the method film
+        # out/films/methodology/*.mp4 and manifest.json, checked and published as the weekly film is.
+        working-directory: app
+        continue-on-error: ${{ github.event_name != 'pull_request' }}
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: |
+          if [ ! -f .method-film/manifest.json ]; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+            npx playwright install --with-deps chromium
+            node scripts/render-film.mjs --film methodology --directory out --base "$PAGES_BASE_PATH" --output .method-film
+          fi
+          mkdir -p out/films/methodology && cp .method-film/* out/films/methodology/
+      - name: Keep the films' contact sheets
+        # The frames each film was judged on, one sheet per shape, for a person to look at.
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: weekly-film-contact-sheets
-          path: app/test-results/weekly-film/*.j*
+          name: film-contact-sheets
+          path: app/test-results/*-film/*.j*
           if-no-files-found: ignore
           retention-days: 14
       - name: Disable Jekyll processing
