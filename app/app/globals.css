@@ -6197,3 +6197,11 @@ button.statusLive:focus-visible { outline: 2px solid var(--cyan); outline-offset
   .pickerGlide[data-ready][data-dir="left"] { transition-duration: .32s, .4s, .36s, .36s; }
 }
 @media print { .pickerGlide { display: none; } }
+
+/* Phones: every tap target is at least 40px tall, and labels never drop below 11px. */
+@media (max-width: 760px) {
+  .jumpNav { padding-block: 4px !important; }
+  .jumpNav a { display: inline-flex; align-items: center; min-height: 40px; }
+  .appCreatorFooter button { min-height: 40px; }
+  .heroBrief dt { font-size: 11px; }
+}
