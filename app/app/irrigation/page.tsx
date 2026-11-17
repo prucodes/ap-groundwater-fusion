@@ -5,41 +5,41 @@ export const dynamic = "force-dynamic";
 import type { CSSProperties } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
 import { DistrictChoropleth } from "../../components/DistrictChoropleth";
-import {
-  IconArrowRight,
-  IconCheck,
-  IconDatabase,
-  IconDroplet,
-  IconInfo,
-  IconLeaf,
-  IconMap,
-  IconShield,
-} from "../../components/icons";
+import { RankList } from "../../components/RankList";
+import { IconArrowRight, IconCheck, IconMap, IconShield } from "../../components/icons";
 import { formatNumber } from "../../lib/data";
 import { IrrigationExports } from "../../components/IrrigationExports";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
-import {
-  ACTION_META,
-  AWARE_FIELD_MAP,
-  awarePayload,
-  districtAdvisories,
-  type IrrigationAction,
-} from "../../lib/irrigation";
+import { ACTION_META, AWARE_FIELD_MAP, awarePayload, districtAdvisories, type IrrigationAction } from "../../lib/irrigation";
 import { brief } from "../../lib/pageBriefs";
+import shared from "../rabi/Rabi.module.css";
+
+/* A preview of the monitoring categories the State's AWARE system could take: every district
+   placed comparatively as monitor, review its history, or verify in the field, with the draft
+   export beside it. Nothing here is sent to AWARE, and none of it authorizes pumping,
+   restrictions or orders. The page leads with the count and where the field checks are. */
+
+const ORDER: IrrigationAction[] = ["Field verify", "Review", "Monitor"];
 
 export default function IrrigationPage() {
   const advisories = districtAdvisories();
   const counts: Record<IrrigationAction, number> = { Monitor: 0, Review: 0, "Field verify": 0 };
   advisories.forEach((a) => { counts[a.action]++; });
   const verifyCount = advisories.filter((a) => a.verifyFirst).length;
+  const deepening = advisories.filter(a => a.outlook === "deepening").length;
   const payload = awarePayload().slice(0, 3);
   const advisoryColors = Object.fromEntries(advisories.map((a) => [a.id, ACTION_META[a.action].color]));
   // The bar is read against the worst district, not against an absolute ceiling:
   // the whole point of the score is that it is comparative.
   const maxScore = Math.max(1, ...advisories.map((a) => a.priorityScore));
+  // Two kinds of first: districts whose readings are too few or inconsistent to rank (verify before anything
+  // else, sized by the mandals to visit), and the ranked districts furthest above the statewide norm.
+  const verifyFirst = advisories.filter(a => a.verifyFirst).sort((a, b) => b.verifyMandals - a.verifyMandals);
+  const mostVisits = Math.max(1, ...verifyFirst.map(a => a.verifyMandals));
+  const aboveNorm = advisories.filter(a => !a.verifyFirst && a.priorityScore > 0).sort((a, b) => b.priorityScore - a.priorityScore).slice(0, 5);
 
   return (
-    <div className="pageWrap">
+    <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
         title="Groundwater Monitoring & AWARE Preview"
         brief={brief("/irrigation", <>{counts["Field verify"]} districts flagged to verify in the field and {counts.Review} for review; none of it authorizes pumping, restrictions or orders.</>)}
@@ -47,75 +47,46 @@ export default function IrrigationPage() {
         variant="compact"
       />
 
+      <section className={shared.hero} aria-label="Monitoring categories in figures" data-testid="aware-summary">
+        <div className={shared.heroText}>
+          <span className={shared.kicker}>A preview for AWARE · comparative, not a clearance</span>
+          <h2><b>{counts["Field verify"]} districts</b> to verify in the field, <b>{counts.Review}</b> to review their measured history, and <b>{counts.Monitor}</b> to keep monitoring. A district below the line is not safe, only nearer the middle.</h2>
+          <p>Placed by how far each sits above the statewide figure for stressed mandals, deepening trend and this season&rsquo;s measured recharge. Rain, soil, reservoirs and GRACE are context only and never set a category. Nothing on this page is sent to AWARE.</p>
+        </div>
+        <ul className={shared.tiles}>
+          {ORDER.map(k => <li key={k}><span>{ACTION_META[k].label}</span><b data-tone={k === "Field verify" ? "bad" : undefined}>{counts[k]}<small> of {advisories.length}</small></b><em>{ACTION_META[k].gloss}</em></li>)}
+          <li><span>Deepening indicator</span><b data-tone={deepening > advisories.length / 2 ? "bad" : undefined}>{deepening}<small> of {advisories.length}</small></b><em>statewide median measured change {formatNumber(advisories[0]?.stateMedianTrend)} m a year</em></li>
+        </ul>
+      </section>
+
       <IrrigationExports />
       <WatchEvidenceStatus />
 
-      <div className="srcStrip">
-        <span className="srcLabel">Derived from</span>
-        <span className="srcChip"><span className="srcDot" style={{ background: "#12b5cb" }} /> NASA GRACE-DA · storage %ile</span>
-        <span className="srcChip"><span className="srcDot" style={{ background: "#5e9b6b" }} /> TerraClimate · water balance</span>
-        <span className="srcChip"><span className="srcDot" style={{ background: "#2789af" }} /> AP DES gauges · APWRIMS soil &amp; reservoirs · context only</span>
-        <span className="srcChip"><span className="srcDot" style={{ background: "#d79b2e" }} /> APWRIMS-format observations</span>
-        <span className="srcChip muted">Rule-based triage · prototype</span>
-      </div>
-
-      {/* Action summary */}
-      <div className="actionSummary">
-        {(["Monitor", "Review", "Field verify"] as IrrigationAction[]).map((k) => (
-          <div key={k} className="actionCard" style={{ ["--ac" as string]: ACTION_META[k].color }}>
-            <div className="actionCardTop">
-              <span className="actionDot" />
-              <span className="actionCount">{counts[k]}</span>
+      <section className={shared.block} aria-labelledby="aware-where">
+        <header className={shared.blockHead}>
+          <span className={shared.eyebrow}><IconMap /> Monitor · review · verify</span>
+          <h2 id="aware-where">Where to look first</h2>
+          <p>{verifyCount > 0 ? <><b>{verifyCount}</b> districts are flagged to verify first: too few or inconsistent readings to rank them on the record alone. </> : null}Seasonal source-series counts and their baseline remain provisional; a category is not an approved intervention tier.</p>
+        </header>
+        <div className={shared.soilGrid}>
+          <div>
+            <DistrictChoropleth layer="water_balance_mm" colorOverride={advisoryColors} overrideLabel={Object.fromEntries(advisories.map(a => [a.id, ACTION_META[a.action].label]))} testId="aware-district-map" label="Districts coloured by monitoring category: monitor, review history or field verify" />
+            <div className="mixLegend" style={{ marginTop: 12 }}>
+              {ORDER.map(k => <span key={k} className="mixKey"><span className="mixDot" style={{ background: ACTION_META[k].color }} />{ACTION_META[k].label} · <b>{counts[k]}</b></span>)}
             </div>
-            <div className="actionName">{ACTION_META[k].label}</div>
-            <div className="actionGloss">{ACTION_META[k].gloss}</div>
-            <span className="actionCardShare" aria-hidden="true">
-              <span
-                className="actionCardShareFill"
-                style={{ width: `${Math.round((counts[k] / Math.max(1, advisories.length)) * 100)}%` }}
-              />
-            </span>
-            <span className="actionCardPct">
-              {Math.round((counts[k] / Math.max(1, advisories.length)) * 100)}% of {advisories.length} districts
-            </span>
           </div>
-        ))}
-      </div>
-
-      {/* Monitoring map */}
-      <section className="card mapCard">
-        <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconMap /></span>District monitoring map</div>
-          <span className="cardSub">monitor / review / field verify</span>
-        </div>
-        <DistrictChoropleth layer="water_balance_mm" colorOverride={advisoryColors} overrideLabel={Object.fromEntries(advisories.map(a => [a.id, a.action]))} testId="aware-district-map" label="Districts coloured by monitoring category: monitor, review history or field verify" />
-        <div className="mixLegend" style={{ marginTop: 12 }}>
-          {(["Monitor", "Review", "Field verify"] as IrrigationAction[]).map((k) => (
-            <span key={k} className="mixKey">
-              <span className="mixDot" style={{ background: ACTION_META[k].color }} />
-              {ACTION_META[k].label} · <b>{counts[k]}</b>
-            </span>
-          ))}
-        </div>
-        <div className="fusionNote" style={{ marginTop: 12 }}>
-          <IconInfo />
-          <span>
-            Categories are <strong>comparative</strong>: each district is placed by how far it sits above the
-            statewide figure for stressed mandals, deepening trend and this season&rsquo;s measured recharge. A
-            district below the line is not safe, only nearer the middle. Climate and GRACE-DA signals remain
-            contextual and do not determine an operational groundwater action. {advisories.filter(a => a.outlook === "deepening").length} of {advisories.length} district groups have a deepening indicator.
-            The statewide median measured comparison is {formatNumber(advisories[0]?.stateMedianTrend)} m/yr.
-            Seasonal source-series counts and their baseline remain provisional; priority is not an approved intervention tier.
-          </span>
+          <div className={shared.soilSide}>
+            {verifyFirst.length ? <RankList title="Verify first" rows={verifyFirst.map(a => ({ name: a.district, value: a.verifyMandals ? `${a.verifyMandals} mandals` : "no readings", share: (100 * a.verifyMandals) / mostVisits, color: ACTION_META["Field verify"].color,
+              note: "too few or inconsistent readings to rank" }))} /> : null}
+            {aboveNorm.length ? <RankList title="Furthest above the statewide norm" rows={aboveNorm.map(a => ({ name: a.district, value: a.priorityScore.toFixed(1), share: (100 * a.priorityScore) / maxScore, color: ACTION_META[a.action].color,
+              note: `${ACTION_META[a.action].label}${a.outlook === "deepening" ? " · deepening" : ""}` }))}
+              foot="Priority is how far a district sits above the statewide norm, read against the district furthest above it: a ranking, not a measure of harm." /> : null}
+          </div>
         </div>
       </section>
 
-      {/* Advisory table */}
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconLeaf /></span>District monitoring categories</div>
-          <span className="cardSub">{verifyCount > 0 ? `${verifyCount} flagged for field-verify first` : "comparative research ranking"}</span>
-        </div>
+      <details className="foldMore">
+        <summary><span>All {advisories.length} districts, with the reason for each</span><span>Category, priority, direction, basis and this season</span></summary>
         <div className="tableWrap">
           <table className="dataTable">
             <thead>
@@ -176,24 +147,12 @@ export default function IrrigationPage() {
             </tbody>
           </table>
         </div>
-        <div className="fusionNote" style={{ marginTop: 14 }}>
-          <IconInfo />
-          <span>
-            Prototype monitoring classification based on available groundwater depth and measured trend. GRACE-DA and
-            climate balance are supporting context only and cannot generate a pumping recommendation. Context-only areas
-            are marked for field verification. This unreleased preview requires the official AWARE schema and official
-            APWRIMS/field verification before operational use.
-          </span>
-        </div>
-      </section>
+        <p className="cardNote">Prototype monitoring categories from groundwater depth and measured trend. GRACE-DA and climate balance are context only and cannot produce a pumping recommendation; context-only areas are marked to verify in the field. This unreleased preview needs the official AWARE schema and official APWRIMS and field verification before any operational use.</p>
+      </details>
 
-      {/* AWARE Bridge */}
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconDatabase /></span>AWARE Bridge</div>
-          <span className="awareStatus pending"><span className="awareStatusDot" /> Unreleased preview · official schema required</span>
-        </div>
-
+      <details className="foldMore">
+        <summary><span>The AWARE bridge</span><span>How the fields map, and the draft payload for the first three districts</span></summary>
+        <p className="cardNote"><span className="awareStatus pending"><span className="awareStatusDot" /> Unreleased preview · official schema required</span></p>
         <div className="awareSteps">
           <div className="awareStep done"><IconCheck /> Signals fused</div>
           <IconArrowRight />
@@ -228,15 +187,8 @@ export default function IrrigationPage() {
           </div>
         </div>
 
-        <div className="fusionNote" style={{ marginTop: 14 }}>
-          <IconDroplet />
-          <span>
-            <strong>Draft payload only.</strong> Operational integration also needs authorized feeds, an approved schema,
-            baseline validation, departmental sign-off, access controls, delivery receipts and failure handling.
-            Nothing on this page is dispatched to AWARE.
-          </span>
-        </div>
-      </section>
+        <p className="cardNote"><strong>Draft payload only.</strong> Operational integration also needs authorized feeds, an approved schema, baseline validation, departmental sign-off, access controls, delivery receipts and failure handling. Nothing on this page is sent to AWARE.</p>
+      </details>
     </div>
   );
 }

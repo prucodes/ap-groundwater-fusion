@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { readFileSync } from "node:fs";
 import { alertFor, MAX_ALERT_SCORE, severityCounts } from "../lib/alerts";
-import { mandals, observationSeries, watchlistMandals } from "../lib/data";
+import { mandals, observationSeries } from "../lib/data";
 
 test("historical medians average the central pair for even observation counts", () => {
   for (const mandal of mandals) {
@@ -32,7 +32,7 @@ test("the retired review queue and snapshot forward to the pages that replace th
   await expect(page).toHaveURL(/\/digest\/$/);
 });
 
-test("district profile selects evidence and drills into a filtered watchlist", async ({ page }) => {
+test("district profile selects evidence and drills into that district's mandals", async ({ page }) => {
   await page.goto("/districts");
   const plot = page.getByLabel("District profile: modelled depth versus measured year-on-year change");
   const levels = page.getByText("District levels / available nowcasts", { exact: true });
@@ -45,21 +45,11 @@ test("district profile selects evidence and drills into a filtered watchlist", a
   await expect(point).toHaveAttribute("aria-pressed", "true");
   const href = await page.getByRole("link", { name: "Review mandals", exact: true }).getAttribute("href");
   const district = new URL(href!, "http://localhost").searchParams.get("district")!;
+  expect(href).toMatch(/^\/agriculture\/\?district=.+#agriculture-watch$/);
   await page.getByRole("link", { name: "Review mandals", exact: true }).click();
-  await expect(page.getByLabel("District", { exact: true })).toHaveValue(district);
-  const rows = page.locator(".watchlistTableScroll tbody tr");
-  await expect(rows).toHaveCount(watchlistMandals().filter(row => row.district_name === district).length);
-});
-
-test("watchlist completeness uses current classes and removes stale details on empty results", async ({ page }) => {
-  await page.goto("/watchlist");
-  const confidence = watchlistMandals().find(row => row.confidence_label === "Limited")?.confidence_label ?? watchlistMandals()[0].confidence_label;
-  await page.getByLabel("Completeness", { exact: true }).selectOption(confidence);
-  await expect(page.locator(".watchlistTableScroll tbody tr")).toHaveCount(watchlistMandals().filter(row => row.confidence_label === confidence).length);
-  await page.getByLabel("Signal", { exact: true }).selectOption("unknown");
-  if (await page.getByText("No mandals match the current filters.").isVisible()) {
-    expect(await page.locator(".watchlistLayout > aside").count()).toBe(0);
-  }
+  // The water watch opens on that district's mandals, in the fieldbook.
+  await expect(page.getByLabel("District filter")).toHaveValue(new RegExp(`^${district}$`, "i"));
+  await expect(page.getByRole("button", { name: "District fieldbook" })).toHaveAttribute("aria-pressed", "true");
 });
 
 test("readiness reports unknown dates and pending release gates, not live percentages", async ({ page }) => {
@@ -81,7 +71,7 @@ test("Crystal is the single main 3D destination; model comparison stays under ad
 });
 
 test("report pack downloads its real manifest and retains research restrictions", async ({ page }) => {
-  await page.goto("/reports");
+  await page.goto("/readiness/#exports");
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: /Evidence & model pack/ }).click();
   const result = await download;
@@ -98,7 +88,7 @@ for (const viewport of [{ width: 1440, height: 1000 }, { width: 375, height: 812
     await page.setViewportSize(viewport);
     const errors: string[] = [];
     page.on("pageerror", e => errors.push(String(e)));
-    for (const route of ["/", "/alerts", "/districts", "/readiness", "/reports", "/settings", "/compare", "/irrigation", "/nasa", "/scenario"]) {
+    for (const route of ["/", "/alerts", "/districts", "/readiness", "/settings", "/compare", "/irrigation", "/nasa", "/scenario"]) {
       await page.goto(route); await page.waitForTimeout(450);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), route).toBe(true);
       if(route === "/") await expect(page.locator(".liveBadge")).toContainText("SNAPSHOT");

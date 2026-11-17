@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
+import { ReportDownloads } from "../../components/ReportDownloads";
 import { IconClock } from "../../components/icons";
 import { datasetManifest, formatPeriod, mapGeometry } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
@@ -40,7 +41,7 @@ export default function ReadinessPage() {
   return <div className="pageWrap">
     <HeaderHero title="Evidence & Release Readiness" brief={brief("/readiness")} showChips={false} variant="compact" />
     <section className={styles.section} aria-labelledby="coverage-title">
-      <div className={styles.heading}><div><span className={styles.eyebrow}>Published evidence / {datasetManifest.generatedAt.slice(0, 10)}</span><h2 id="coverage-title">Coverage without false certainty.</h2><p>Counts refer to this prototype geography, not a certified census of AP administrative units.</p></div><Link className="linkAction" href="/reports">Export evidence pack</Link></div>
+      <div className={styles.heading}><div><span className={styles.eyebrow}>Published evidence / {datasetManifest.generatedAt.slice(0, 10)}</span><h2 id="coverage-title">Coverage without false certainty.</h2><p>Counts refer to this prototype geography, not a certified census of AP administrative units.</p></div><a className="linkAction" href="#exports">Export evidence pack</a></div>
       <div className={styles.metrics}>
         <div className={styles.metric}><strong>{c.modelledRecordCount}</strong><span>Modelled units</span><small>Nowcast, not a field reading</small></div>
         <div className={styles.metric}><strong>{c.measuredOnlyCount}</strong><span>Measured-only units</span><small>No released nowcast</small></div>
@@ -66,6 +67,14 @@ export default function ReadinessPage() {
     <section className={styles.section} aria-labelledby="gates-title">
       <div className={styles.heading}><div><span className={styles.eyebrow}>Operational release gates</span><h2 id="gates-title">What must happen before official use.</h2><p>No completion percentage: each gate needs its own evidence and acceptance.</p></div></div>
       <div className={styles.gates}>{gates.map(([step, title, detail]) => <article key={title} className={styles.gate}><span className={styles.eyebrow}>{step}</span><h3>{title}</h3><span className={styles.pending}><IconClock /> Pending acceptance</span><p>{detail}</p></article>)}</div>
+    </section>
+    <section className={styles.section} id="exports" aria-labelledby="downloads-title">
+      <div className={styles.heading}><div><span className={styles.eyebrow}>Snapshot exports</span><h2 id="downloads-title">Take the audit trail with the numbers.</h2><p>Generated from the loaded dataset: the evidence and model pack carries the manifest, the hashes of every input and the caveats; the CSVs carry the figures. An export does not make a prototype figure official. This week&rsquo;s one-page briefing is the <Link href="/digest/">weekly digest</Link>.</p></div></div>
+      <ReportDownloads />
+      <details className="rawTable"><summary>Earlier pipeline reports: an archive, not current evidence</summary>
+        <p className={styles.note}>These early-phase reports keep their original scope and may contain seed inputs or superseded methods. Use the evidence pack above for the current data contract and evaluation.</p>
+        <ul>{["phase1c_nasa_sampling_summary", "phase1c_fusion_summary", "phase1d_public_measured_data_summary", "phase1d_public_vs_satellite_fusion_summary"].map(name => <li key={name}><a className="linkAction" href={`https://github.com/prucodes/ap-groundwater-fusion/blob/main/reports/${name}.md`} target="_blank" rel="noreferrer">{name.replace(/_/g, " ")}</a></li>)}</ul>
+      </details>
     </section>
   </div>;
 }

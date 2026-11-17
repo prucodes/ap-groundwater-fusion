@@ -20,13 +20,13 @@ test("the menu is grouped by question and leaves out the retired screens", async
   await page.goto("/changes/");
   const nav = page.getByRole("navigation", { name: "Primary" });
   for (const group of ["This week", "Watches", "Outlooks", "Farms", "Places"]) await expect(nav).toContainText(group);
-  for (const retired of ["Review Queue", "Verify / Watchlist", "Executive Snapshot", "Reports"]) {
+  for (const retired of ["Review Queue", "Verify / Watchlist", "Executive Snapshot", "Reports", "Mandal Watchlist"]) {
     await expect(nav.getByRole("link", { name: retired, exact: true })).toHaveCount(0);
   }
   // Evidence and tools stay one click away, and open by themselves on one of their pages.
   await expect(nav.getByRole("link", { name: "Methodology", exact: true })).toHaveCount(0);
   await nav.getByRole("button", { name: /Evidence/ }).click();
   await expect(nav.getByRole("link", { name: "Methodology", exact: true })).toBeVisible();
-  // The full mandal list stays as an analyst tool under Evidence and tools, not the main menu.
-  await expect(nav.getByRole("link", { name: "Mandal Watchlist", exact: true })).toBeVisible();
+  // The mandal watchlist is retired too: This Week's field-team register does its job, and its address leads there.
+  await expect(nav.getByRole("link", { name: "Mandal Watchlist", exact: true })).toHaveCount(0);
 });

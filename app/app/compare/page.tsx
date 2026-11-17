@@ -18,7 +18,7 @@ function BalanceCell({ m }: { m: MandalGroundwaterView }) {
   return (
     <span style={{ color: meta.color, fontWeight: 600 }}>
       {m.water_balance_mm > 0 ? "+" : ""}
-      {formatNumber(m.water_balance_mm)} mm · {meta.label}
+      {formatNumber(Math.round(m.water_balance_mm))} mm · {meta.label}
     </span>
   );
 }
@@ -118,8 +118,8 @@ export default function ComparePage() {
           <Row label="Wetness vs own history" a={<WetnessTag value={a.measured_wetness_percentile ?? null} />} b={<WetnessTag value={b.measured_wetness_percentile ?? null} />} />
           <Row
             label="Evapotranspiration (annual)"
-            a={a.annual_et_mm !== null ? <><b>{formatNumber(a.annual_et_mm)}</b> mm</> : "–"}
-            b={b.annual_et_mm !== null ? <><b>{formatNumber(b.annual_et_mm)}</b> mm</> : "–"}
+            a={a.annual_et_mm !== null ? <><b>{formatNumber(Math.round(a.annual_et_mm))}</b>{" "}mm</> : "–"}
+            b={b.annual_et_mm !== null ? <><b>{formatNumber(Math.round(b.annual_et_mm))}</b>{" "}mm</> : "–"}
           />
           <Row
             label="Water balance (annual)"

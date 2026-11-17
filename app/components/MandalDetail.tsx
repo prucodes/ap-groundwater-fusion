@@ -489,7 +489,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
         <span className="dotsep" />
         {`Not official until the APWRIMS export is authorised · ${boundaryLabel(geometryForMandal(mandal.id))}`}
         <Link className="linkAction" href="/changes/#field-teams" style={{ marginLeft: "auto" }}>
-          Go to watchlist <IconArrowRight />
+          Field-team register <IconArrowRight />
         </Link>
       </div>
     </div>

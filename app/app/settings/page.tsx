@@ -16,6 +16,6 @@ export default function SettingsPage() {
       <section className={styles.gate}><h3>No operational dispatch</h3><p>AWARE JSON is a draft payload. Source credentials, refresh schedules and government destinations are not configurable from this page.</p></section>
       <section className={styles.gate}><h3>Traceable exports</h3><p>Exports retain research caveats. The model pack includes input hashes, coverage counts and source periods.</p></section>
     </div>
-    <div className={styles.toolbar}><Link href="/readiness" className="linkAction">Source and release gates</Link><Link href="/reports" className="linkAction">Evidence downloads</Link></div>
+    <div className={styles.toolbar}><Link href="/readiness" className="linkAction">Source and release gates</Link><Link href="/readiness/#exports" className="linkAction">Evidence downloads</Link></div>
   </div>;
 }

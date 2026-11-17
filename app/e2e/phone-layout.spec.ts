@@ -25,11 +25,9 @@ const ROUTES = [
   "/monsoon",
   "/nasa",
   "/readiness",
-  "/reports",
   "/scenario",
   "/settings",
   "/snapshot",
-  "/watchlist",
 ];
 
 // Sub-pixel rounding can leave a fraction of a pixel of scroll that no user can

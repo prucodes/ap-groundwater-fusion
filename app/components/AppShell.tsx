@@ -81,7 +81,6 @@ const evidenceNav: NavItem[] = [
       { href: "/facts", label: "In Numbers", Icon: IconHash, desc: "The figures to quote, one sentence each, with source, date and link; rebuilt at every refresh." },
       { href: "/crystal", label: "Water Depth 3D", Icon: IconWaves, desc: "May depth since 2015, the latest month against its usual, and next May's outlook." },
       { href: "/compare", label: "Compare", Icon: IconColumns, desc: "Side-by-side comparison of any two mandals or districts." },
-      { href: "/watchlist", label: "Mandal Watchlist", Icon: IconColumns, desc: "Every mandal, filterable by district, signal and completeness: the full list behind This Week's field register." },
 
       { href: "/methodology", label: "Methodology", Icon: IconFlow, desc: "How fusion works and what each signal means." },
       { href: "/readiness", label: "Data Readiness", Icon: IconDatabase, desc: "Source periods, coverage and operational release gates." },

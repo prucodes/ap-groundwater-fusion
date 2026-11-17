@@ -29,14 +29,14 @@ test("the home page asks for the creator name and remembers entry", async ({ pag
 });
 
 test("a shared link shows the introduction once and opens its page with one tap", async ({ page }) => {
-  await page.goto("/reports/?theme=dark#exports");
+  await page.goto("/readiness/?theme=dark#exports");
   await expect(page.getByRole("heading", { name: "Every drop has a deeper story." })).toBeVisible();
   await expect(page.locator(".shell")).toHaveCount(0);
   await expect(page.getByTestId("welcome")).toContainText("Pruthvi Yannam");
   await expect(page.getByLabel("A small introduction. Your invitation in.")).toHaveCount(0);
-  await expect(page.getByTestId("welcome")).toContainText("Reports");
+  await expect(page.getByTestId("welcome")).toContainText("Data Readiness");
   await continueIn(page);
-  await expect(page).toHaveURL(/\/reports\/\?theme=dark#exports$/);
+  await expect(page).toHaveURL(/\/readiness\/\?theme=dark#exports$/);
   await expect(page.locator("main.main")).toBeFocused();
   expect(await page.evaluate(key => localStorage.getItem(key), WELCOME_STORAGE_KEY)).toBe(WELCOME_STORAGE_VALUE);
   await page.reload();
@@ -46,7 +46,7 @@ test("a shared link shows the introduction once and opens its page with one tap"
   await expect(page.getByTestId("welcome")).toBeVisible();
   await page.getByRole("button", { name: "Return to your workspace" }).click();
   await expect(page.locator(".shell")).toBeVisible();
-  await expect(page).toHaveURL(/\/reports\/\?theme=dark#exports$/);
+  await expect(page).toHaveURL(/\/readiness\/\?theme=dark#exports$/);
 });
 
 test("entry works when local storage is unavailable", async ({ page }) => {
@@ -80,7 +80,7 @@ test("entrance and export analytics never include entered text or report content
   expect(typed?.filter(row => row.name === "welcome/entered")).toHaveLength(1);
   expect(JSON.stringify(typed)).not.toMatch(/unrelated-private-text|pruthvi/i);
   await page.evaluate(key => localStorage.removeItem(key), WELCOME_STORAGE_KEY);
-  await page.goto("/reports/");
+  await page.goto("/readiness/");
   await continueIn(page);
   const download = page.waitForEvent("download");
   await page.getByRole("button", { name: /Mandal fusion table/ }).click();
@@ -97,7 +97,7 @@ test("entrance and export analytics never include entered text or report content
 
 test("privacy opt-out leaves entry usable and records no events", async ({ page }) => {
   await page.addInitScript(() => Object.defineProperty(navigator, "globalPrivacyControl", { get: () => true }));
-  await page.goto("/reports/");
+  await page.goto("/readiness/");
   await continueIn(page);
   expect(await page.evaluate(() => window.apgwCount?.pending)).toBeUndefined();
   expect(await page.locator('script[src*="gc.zgo.at"]').count()).toBe(0);

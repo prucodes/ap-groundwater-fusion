@@ -3,20 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
-import { KpiCard } from "../../components/KpiCard";
-import { CountUp } from "../../components/CountUp";
-import {
-  IconActivity,
-  IconArrowDown,
-  IconArrowUp,
-  IconDroplet,
-  IconInfo,
-  IconList,
-  IconSatellite,
-  IconShield,
-  IconTarget,
-  IconSearch,
-} from "../../components/icons";
+import { IconDroplet, IconInfo, IconSearch } from "../../components/icons";
 import {
   depthColor,
   datasetManifest,
@@ -31,6 +18,7 @@ import {
 } from "../../lib/data";
 import { brief } from "../../lib/pageBriefs";
 import { mapTooltipStyle } from "../../lib/mapTooltip";
+import shared from "../rabi/Rabi.module.css";
 
 /** Match the python norm() so map-geometry names join to estimate mkeys. */
 function norm(name: string): string {
@@ -85,70 +73,36 @@ export default function EstimatesPage() {
     return sorted;
   }, [bundle, query, sortKey]);
 
+  const test = modelCard.evaluations.temporalNowcast as unknown as { model: { maeM: number }; lastReadingBaseline: { maeM: number }; sampleCount: number; evaluationPeriod: { start: string; end: string } };
+  const coverage = modelCard.evaluations.intervalEvaluation;
+  const terrain = Object.entries(bundle.backtest.by_terrain_mae_m).sort((x, y) => x[1] - y[1]);
+
   return (
-    <div className="pageWrap">
-      <HeaderHero
-        title="Modelled Groundwater Levels (β)"
-        brief={brief("/estimates")}
-        showChips={false}
-        variant="compact"
-      />
+    <div className={`pageWrap ${shared.page}`}>
+      <HeaderHero title="Modelled Groundwater Levels (β)" brief={brief("/estimates")} showChips={false} variant="compact" />
 
-      <details className="rawTable">
-        <summary>Advanced model evidence</summary>
-        <p className="cardSub">Measured values, held-out model comparisons, uncertainty and no-data boundaries.</p>
-        <Link className="linkAction" href="/living-water-table">Open Model Evidence Lab</Link>
-      </details>
+      <section className={shared.hero} aria-label="The model in figures" data-testid="estimates-summary">
+        <div className={shared.heroText}>
+          <span className={shared.kicker}>A model&rsquo;s estimate · β · targets {datasetManifest.periods.modelTargetPeriodRange.start} to {datasetManifest.periods.modelTargetPeriodRange.end}</span>
+          <h2>Where no recent reading exists, a model estimates each mandal&rsquo;s depth. On {test.sampleCount.toLocaleString("en-IN")} readings it had not seen, it was off by <b>{test.model.maeM.toFixed(1)} m</b> on average; carrying the last reading forward misses by {test.lastReadingBaseline.maeM.toFixed(1)} m.</h2>
+          <p>Every estimate carries a P10 to P90 band, which held the true reading {Math.round(coverage.empiricalCoveragePct)}% of the time against 80% aimed for. Not a reading, and weakest in hard rock; a mandal with no history of its own is a different, harder task.</p>
+        </div>
+        <ul className={shared.tiles}>
+          <li><span>Modelled mandals</span><b>{bundle.n_mandals}</b><em>with enough history for a nowcast, through {datasetManifest.periods.latestObservationPeriod}</em></li>
+          <li><span>Typical error</span><b>{test.model.maeM.toFixed(1)}<small> m</small></b><em>held out {test.evaluationPeriod.start} to {test.evaluationPeriod.end}</em></li>
+          <li><span>Deepening</span><b data-tone={deepening > bundle.n_mandals / 2 ? "bad" : undefined}>{deepening}</b><em>more than 0.5 m deeper than a year ago</em></li>
+          <li><span>Recovering</span><b>{recovering}</b><em>more than 0.5 m shallower than a year ago</em></li>
+        </ul>
+      </section>
 
-      <div className="provRibbon">
-        <span className="provRibbonItem"><IconActivity /> APWRIMS-format history · {bundle.n_mandals} modelled mandals · through {datasetManifest.periods.latestObservationPeriod}</span>
-        <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconSatellite /> CHIRPS v3 / TerraClimate · climate context</span>
-        <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconTarget /> gradient-boosted + quantile bands</span>
-        <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconShield /> Prototype · cohort-specific evaluation</span>
-      </div>
-
-      <div className="kpiRow stagger">
-        <KpiCard
-          icon={<IconDroplet />}
-          label="Modelled Mandals"
-          value={<CountUp value={bundle.n_mandals} />}
-          foot={`targets ${datasetManifest.periods.modelTargetPeriodRange.start} to ${datasetManifest.periods.modelTargetPeriodRange.end}`}
-          accent="var(--teal)"
-        />
-        <KpiCard
-          icon={<IconTarget />}
-          label="Temporal Holdout MAE"
-          value={<>{bundle.backtest.forecast_mae_m.toFixed(1)}<span className="unit">m</span></>}
-          foot={`${modelCard.evaluations.temporalNowcast.sampleCount.toLocaleString("en-IN")} eligible mandal-months · R² ${bundle.backtest.forecast_r2.toFixed(2)}`}
-          accent="var(--green)"
-        />
-        <KpiCard
-          icon={<IconArrowDown />}
-          label="Deepening (YoY)"
-          value={<CountUp value={deepening} />}
-          foot=">0.5 m/yr water-table decline"
-          footAccent
-          accent="var(--rust)"
-        />
-        <KpiCard
-          icon={<IconArrowUp />}
-          label="Recovering (YoY)"
-          value={<CountUp value={recovering} />}
-          foot=">0.5 m/yr improvement"
-          accent="var(--cyan)"
-        />
-      </div>
-
-      <div className="estLayout">
-        {/* MAP */}
-        <section className="card estMapCard">
-          <div className="cardHead">
-            <div className="cardTitle"><span className="titleIcon"><IconDroplet /></span>Estimated depth · {bundle.n_mandals} modelled mandals</div>
-            <span className="cardSub">shallow → deep (m below ground)</span>
-          </div>
+      <section className={shared.block} aria-labelledby="estimates-map">
+        <header className={shared.blockHead}>
+          <span className={shared.eyebrow}><IconDroplet /> Estimated depth, metres below ground</span>
+          <h2 id="estimates-map">This month&rsquo;s estimate, mandal by mandal</h2>
+          <p>Median estimate <b>{median.toFixed(1)} m</b> below ground. Hover a mandal for its estimate, its band and its latest measured reading.</p>
+        </header>
+        <div className={shared.soilGrid}>
+          <div className="estMapCard">
           <div className="estMapWrap">
             <svg viewBox={`0 0 ${MAP_VIEW.width} ${MAP_VIEW.height}`} className="estMapSvg" role="img" aria-label="Estimated groundwater depth by mandal">
               {mapGeometry.mandals.map((m, i) => {
@@ -196,27 +150,11 @@ export default function EstimatesPage() {
               <div className="estHoverHint"><IconInfo /> Hover a mandal for its estimate &amp; band</div>
             )}
           </div>
-        </section>
-
-        {/* HONESTY / METHOD */}
-        <aside className="card estMethodCard">
-          <div className="cardHead">
-            <div className="cardTitle"><span className="titleIcon"><IconShield /></span>How honest is this number?</div>
           </div>
-          <div className="estMethodBody">
-            <p className="estMethodLead">
-              Current nowcasts cover <strong>{bundle.n_mandals} lag-eligible prototype units</strong>.
-              Available APWRIMS-format histories have gaps; evaluation holds out recent eligible mandal-months,
-              not a complete twelve-year panel for every unit.
-            </p>
-            <div className="estMetricGrid">
-              <div className="estMetric"><span className="estMetricVal">{bundle.backtest.forecast_mae_m.toFixed(2)} m</span><span className="estMetricLbl">rolling temporal holdout MAE</span></div>
-              <div className="estMetric"><span className="estMetricVal">{bundle.backtest.forecast_r2.toFixed(2)}</span><span className="estMetricLbl">R² explained</span></div>
-              <div className="estMetric"><span className="estMetricVal">{modelCard.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(1)} m</span><span className="estMetricLbl">whole-mandal spatial MAE</span></div>
-            </div>
+          <div className={shared.soilSide}>
             <div className="estTerrain">
-              <div className="estTerrainHead">Accuracy by terrain (MAE)</div>
-              {Object.entries(bundle.backtest.by_terrain_mae_m).map(([k, v]) => (
+              <div className="estTerrainHead">How far to trust it, by terrain (typical error)</div>
+              {terrain.map(([k, v]) => (
                 <div key={k} className="estTerrainRow">
                   <span>{AQ_LABEL[k] ?? k}</span>
                   <span className="estTerrainBar"><span style={{ width: `${Math.min(100, (v / 2) * 100)}%` }} /></span>
@@ -224,38 +162,27 @@ export default function EstimatesPage() {
                 </div>
               ))}
             </div>
-            <div className="estTerrainHead" style={{ marginTop: 16, marginBottom: 8 }}>Separate evaluation tasks</div>
-            <ul className="estCaveats" style={{ borderTop: "none", paddingTop: 0 }}>
-              <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Rolling temporal holdout ({modelCard.evaluations.temporalNowcast.evaluationPeriod.start}–{modelCard.evaluations.temporalNowcast.evaluationPeriod.end}, n={modelCard.evaluations.temporalNowcast.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.temporalNowcast.model.maeM.toFixed(2)} m MAE</strong>, R² {modelCard.evaluations.temporalNowcast.model.r2.toFixed(2)}.</span></li>
-              <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Whole-mandal spatial holdout ({modelCard.evaluations.spatialEstimation.mandalCount} mandals): <strong>{modelCard.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(1)} m MAE</strong>. This is the relevant no-history estimate task.</span></li>
-              <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Same-month CGWB/APWRIMS cross-network comparison (n={modelCard.evaluations.crossNetworkComparison.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.crossNetworkComparison.maeM.toFixed(1)} m MAE, r {modelCard.evaluations.crossNetworkComparison.correlation.toFixed(2)}</strong>; a network comparability diagnostic, not model accuracy.</span></li>
-              <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Model P10–P90 empirical coverage: <strong>{modelCard.evaluations.intervalEvaluation.empiricalCoveragePct}%</strong> over {modelCard.evaluations.intervalEvaluation.sampleCount.toLocaleString("en-IN")} eligible holdout rows.</span></li>
-            </ul>
             <ul className="estCaveats">
-              <li><IconInfo /> A <strong>modelled estimate</strong> with uncertainty, not a replacement for an official reading.</li>
-              <li><IconInfo /> Best where a mandal has some history (nowcast/gap-fill). Hard-rock Rayalaseema is the weakest.</li>
-              <li><IconInfo /> Temporal nowcast performance does not describe whole-mandal or no-history estimation.</li>
-              <li><IconInfo /> The displayed interval is a <strong>model P10–P90 quantile range</strong>, not a guaranteed 80% confidence interval.</li>
-              <li><IconInfo /> Only the three-month horizon is released; 1, 6 and 12 months did not clear the release gate. Each forecast says how forecasts made in the same month after similar rain fared.</li>
+              <li><IconInfo /><span>A <strong>modelled estimate</strong> with uncertainty, not a replacement for an official reading.</span></li>
+              <li><IconInfo /><span>A mandal with no history of its own is estimated from its neighbours, with a typical error of {modelCard.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(1)} m.</span></li>
+              <li><IconInfo /><span>The band is the model&rsquo;s P10 to P90 range, not a guaranteed 80% confidence interval.</span></li>
+              <li><IconInfo /><span>Only the three-month forecast is released; 1, 6 and 12 months did not clear the release gate.</span></li>
             </ul>
           </div>
-        </aside>
-      </div>
+        </div>
+      </section>
 
-      {/* TABLE */}
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconList /></span>Per-mandal estimates</div>
-          <div className="estTableTools">
-            <label className="estSearch">
-              <IconSearch />
-              <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search mandal or district…" />
-            </label>
-            <div className="estSortRow">
-              {([["estimate", "Depth"], ["trend", "Decline"], ["band", "Uncertainty"], ["mandal", "A–Z"]] as [SortKey, string][]).map(([k, lbl]) => (
-                <button key={k} className={`estSortBtn ${sortKey === k ? "active" : ""}`} onClick={() => setSortKey(k)}>{lbl}</button>
-              ))}
-            </div>
+      <details className="foldMore">
+        <summary><span>Every mandal&rsquo;s estimate</span><span>Search, sort by depth, decline or uncertainty</span></summary>
+        <div className="estTableTools">
+          <label className="estSearch">
+            <IconSearch />
+            <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search mandal or district…" />
+          </label>
+          <div className="estSortRow">
+            {([["estimate", "Depth"], ["trend", "Decline"], ["band", "Uncertainty"], ["mandal", "A–Z"]] as [SortKey, string][]).map(([k, lbl]) => (
+              <button key={k} className={`estSortBtn ${sortKey === k ? "active" : ""}`} onClick={() => setSortKey(k)}>{lbl}</button>
+            ))}
           </div>
         </div>
         <div className="estTableScroll">
@@ -291,7 +218,22 @@ export default function EstimatesPage() {
           </table>
           {rows.length > 120 ? <div className="estTableMore">Showing top 120 of {rows.length}. Refine with search.</div> : null}
         </div>
-      </section>
+      </details>
+
+      <details className="foldMore">
+        <summary><span>The separate evaluations</span><span>Held-out months, held-out mandals, another well network</span></summary>
+        <ul className="estCaveats" style={{ borderTop: "none" }}>
+          <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Rolling temporal holdout ({test.evaluationPeriod.start} to {test.evaluationPeriod.end}, n={test.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.temporalNowcast.model.maeM.toFixed(2)} m</strong> typical error, R² {modelCard.evaluations.temporalNowcast.model.r2.toFixed(2)}.</span></li>
+          <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Whole-mandal spatial holdout ({modelCard.evaluations.spatialEstimation.mandalCount} mandals): <strong>{modelCard.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(1)} m</strong>. This is what estimating a mandal with no history of its own costs.</span></li>
+          <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Same-month CGWB and APWRIMS comparison (n={modelCard.evaluations.crossNetworkComparison.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.crossNetworkComparison.maeM.toFixed(1)} m</strong>, correlation {modelCard.evaluations.crossNetworkComparison.correlation.toFixed(2)}: different wells, a comparability check, not the model&rsquo;s accuracy.</span></li>
+          <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>P10 to P90 coverage: <strong>{Math.round(coverage.empiricalCoveragePct)}%</strong> over {coverage.sampleCount.toLocaleString("en-IN")} held-out readings.</span></li>
+        </ul>
+      </details>
+
+      <details className="foldMore">
+        <summary><span>Advanced model evidence</span><span>Measured values, held-out comparisons, uncertainty and no-data boundaries</span></summary>
+        <p className="cardNote"><Link className="linkAction" href="/living-water-table">Open Model Evidence Lab</Link></p>
+      </details>
     </div>
   );
 }

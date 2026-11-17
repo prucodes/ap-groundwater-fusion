@@ -84,7 +84,7 @@ test("the digest, season CSV and AWARE preview carry the season as context", asy
   await page.goto("/digest/");
   await expect(page.locator("main")).toContainText("Rain since 1 June");
   await expect(page.locator("main")).toContainText("Reservoir storage");
-  await page.goto("/reports/");
+  await page.goto("/readiness/#exports");
   let download = page.waitForEvent("download");
   await page.getByRole("button", { name: /Season context by district/ }).click();
   const csv = readFileSync((await (await download).path())!, "utf8");

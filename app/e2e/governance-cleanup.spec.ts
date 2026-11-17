@@ -15,17 +15,10 @@ test("methodology keeps technical methods available with working deep links", as
   await expect(page.locator("#method-field-week")).toBeVisible();
 });
 
-for (const [from, to] of [["alerts", "/changes/#field-teams"], ["snapshot", "/digest/"]]) {
+for (const [from, to] of [["alerts", "/changes/#field-teams"], ["snapshot", "/digest/"], ["watchlist", "/changes/#field-teams"], ["reports", "/readiness/#exports"]]) {
   test(`${from} opens its current replacement`, async ({ page }) => {
     await page.goto(`/${from}/`);
     await expect(page).toHaveURL(to);
   });
 }
 
-test("the watchlist stays as the full, district-filterable mandal list", async ({ page }) => {
-  await page.goto("/watchlist/");
-  const district = await page.getByLabel("District", { exact: true }).locator("option").nth(1).getAttribute("value");
-  await page.goto(`/watchlist/?district=${encodeURIComponent(district!)}`);
-  await expect(page.getByLabel("District", { exact: true })).toHaveValue(district!);
-  await expect(page.locator(".watchlistTableScroll tbody tr").first()).toBeVisible();
-});
