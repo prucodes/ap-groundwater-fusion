@@ -33,7 +33,6 @@ import { MandalSensors } from "./MandalSensors";
 import { mandalCardFacts } from "../lib/mandalCard";
 import {
   IconArrowRight,
-  IconCalendar,
   IconCheck,
   IconCloudRain,
   IconChevronLeft,
@@ -401,8 +400,8 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
                   <IconFlask />
                 </span>
                 <div className="readyBody">
-                  <div className="readyLabel">Measured Input · APWRIMS</div>
-                  <div className="readyMeta">APWRIMS mandal reading (2014-2026)</div>
+                  <div className="readyLabel">Measured input</div>
+                  <div className="readyMeta">APWRIMS mandal readings, 2014–2026</div>
                 </div>
               </div>
               <div className="readinessItem">
@@ -462,17 +461,11 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
             </div>
           </section>
 
-          <section className="card">
-            <div className="cardHead">
-              <div className="cardTitle">
-                <span className="titleIcon">
-                  <IconCalendar />
-                </span>
-                Action Output
-              </div>
-            </div>
+          {/* The machine-readable record is for the AWARE integration, not the reader: folded to one line. */}
+          <details className="foldMore">
+            <summary><span>Machine-readable record</span><span>The JSON this mandal would send to AWARE</span></summary>
             <ActionOutputPreview payload={awarePayload} />
-          </section>
+          </details>
         </div>
       </div>
 
