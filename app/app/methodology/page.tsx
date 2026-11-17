@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
-import { MethodologyFlow } from "../../components/MethodologyFlow";
+import { MethodFilmPlayer } from "../../components/film/MethodFilm";
+import { methodFilm, methodFilmSeconds } from "../../lib/methodFilm";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { ForecastLedger } from "../../components/ForecastLedger";
@@ -97,6 +98,7 @@ export default function MethodologyPage() {
   const verdicts = tallyOf(entry => entry.rainfed.verdict), allCropland = tallyOf(entry => entry.allCropland.verdict);
   const fieldTally = tallyOf(entry => entry.sentinel?.verdict ?? "untested");
   const seasonSpan = `${record.seasons[0]}–${String(record.seasons[record.seasons.length - 1]).slice(2)}`;
+  const film = methodFilm();
   return (
     <div className="pageWrap">
       <HeaderHero
@@ -120,16 +122,27 @@ export default function MethodologyPage() {
       <details className="foldMore"><summary><span>Source dates and periods</span><span>Each dataset has its own clock</span></summary><DataProvenanceDates /></details>
       <section className="card" aria-label="How to read the evidence"><h2>Readings, estimates and planning checks</h2><p className="cardNote">Measured wells establish groundwater depth. Models carry uncertainty; satellite and weather sources provide context. Seasonal shortfall flags remain provisional while the baseline is reviewed. Crop-water checks use reference crops and stages; their validation record is weak.</p><p className="cardNote"><Link href="/readiness/">Source coverage and release gates →</Link> · Open a method below for the calculation, validation and limits.</p></section>
 
-      <section className="card shellPanel">
+      {/* How it works, as a film: one drop of rain followed from the cloud to this page. Before play the whole
+          picture is in view and reads as the method's flow chart; the same seven steps are below it in words. */}
+      <section className="card shellPanel" aria-labelledby="method-film-title" data-testid="method-film-card">
         <div className="cardHead">
-          <div className="cardTitle">
+          <div className="cardTitle" id="method-film-title">
             <span className="titleIcon">
               <IconFlow />
             </span>
-            Fusion Pipeline
+            How it works
           </div>
+          <span className="cardSub">One drop of rain, from the cloud to this page, in {Math.round(methodFilmSeconds(film))} seconds</span>
         </div>
-        <MethodologyFlow />
+        <MethodFilmPlayer film={film} />
+        <details className="foldMore" data-testid="method-steps">
+          <summary><span>The seven steps in words</span><span>What is measured, what is modelled, what comes out</span></summary>
+          <ol className="methodSteps">
+            {film.steps.map(step => (
+              <li key={step.id}><span><em>{step.kind}</em><b>{step.headline}</b> {step.line}</span><small>{step.foot}</small></li>
+            ))}
+          </ol>
+        </details>
       </section>
 
       <section className="card">

@@ -1,0 +1,112 @@
+/* The method film: a cross-section of the land the camera travels through. The stage, its
+   type sizes and the frame's furniture (top line, foot, progress) are the weekly film's
+   theme; here are the picture itself and the words beside each stop. Sizes inside the
+   picture are in its own units, 3200 across. */
+
+.stage { --water: #63cbe9; --warn: #ecb354; --bad: #ee8a63; --leaf: #86c596; }
+.world { position: absolute; inset: 0; display: block; }
+
+/* The ground */
+.crumbLight { fill: rgba(255, 236, 214, .06); }
+.crumbDark { fill: rgba(0, 0, 0, .14); }
+.subsoil { fill: #2b2a2c; }
+.bedrock { fill: #171d24; }
+.pebble { fill: rgba(255, 255, 255, .055); }
+.crack { fill: none; stroke: rgba(255, 255, 255, .07); stroke-width: 2; stroke-linecap: round; }
+.saturated { fill: rgba(99, 203, 233, .17); }
+.table { fill: none; stroke: var(--water); stroke-width: 4; }
+.surface { fill: none; stroke: #9cc3a1; stroke-width: 5; stroke-linecap: round; }
+.tuft { fill: none; stroke: #7fae88; stroke-width: 2.4; stroke-linecap: round; }
+
+/* Rain and the gauge */
+.cloudFar { fill: #7f93a8; opacity: .34; }
+.cloudShadow { fill: rgba(4, 12, 18, .32); }
+.cloudLight { fill: rgba(255, 255, 255, .5); }
+.splash { fill: none; stroke: #d9f4fb; stroke-width: 1.6; }
+.post { fill: #9fb1c0; }
+.gauge { fill: rgba(255, 255, 255, .06); stroke: #e8f1fa; stroke-width: 3; stroke-linejoin: round; }
+.gaugeTick { stroke: #e8f1fa; stroke-width: 2; opacity: .7; }
+.caught { fill: var(--water); opacity: .85; }
+
+/* Crops and soil */
+.rib { fill: none; stroke: rgba(233, 250, 224, .5); stroke-width: 1.3; stroke-linecap: round; }
+.root { fill: none; stroke: #dcc7a8; stroke-width: 2.2; stroke-linecap: round; opacity: .62; }
+.rootlet { fill: none; stroke: #dcc7a8; stroke-width: 1.2; stroke-linecap: round; opacity: .42; }
+.sip { fill: #d9f4fb; }
+.moist { fill: var(--water); }
+.probe { stroke: var(--warn); stroke-width: 3; stroke-linecap: round; }
+
+/* Recharge */
+.drip { stroke: var(--water); stroke-width: 4; stroke-linecap: round; opacity: .85; }
+
+/* The well */
+.shaft { fill: #0c1821; stroke: #b8c7d4; stroke-width: 3; }
+.wellWater { fill: var(--water); opacity: .5; }
+.screen { stroke: #b8c7d4; stroke-width: 2; opacity: .55; }
+.wellhead { fill: #e8f1fa; }
+.mast { stroke: #e8f1fa; stroke-width: 3; }
+.mastTip { fill: var(--water); }
+.wave { fill: none; stroke: var(--water); stroke-width: 3.5; stroke-linecap: round; }
+.measure { stroke: #fff; stroke-width: 3; stroke-linecap: round; }
+
+/* The satellite */
+.orbit { fill: none; stroke: rgba(255, 255, 255, .22); stroke-width: 2; stroke-dasharray: 3 12; stroke-linecap: round; }
+.beam { fill: rgba(255, 255, 255, .055); }
+.panel { fill: #3f86d6; }
+.satBody { fill: #e8f1fa; }
+.satDish { fill: none; stroke: #e8f1fa; stroke-width: 3; stroke-linejoin: round; }
+
+/* The model and what comes out */
+.wire { fill: none; stroke-width: 3; stroke-linecap: round; }
+.wire[data-kind="measured"] { stroke: rgba(99, 203, 233, .75); }
+.wire[data-kind="context"] { stroke: rgba(232, 241, 250, .4); }
+.wire[data-kind="out"] { stroke: rgba(242, 246, 249, .75); }
+.card { fill: rgba(10, 28, 41, .88); stroke: rgba(255, 255, 255, .2); stroke-width: 2; }
+.rule { stroke: rgba(255, 255, 255, .08); stroke-width: 2; }
+.band { fill: rgba(236, 179, 84, .2); }
+.estimate { fill: none; stroke: var(--warn); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.reading { fill: var(--water); stroke: #0a1c29; stroke-width: 2; }
+.gap { fill: #0a1c29; stroke: rgba(232, 241, 250, .55); stroke-width: 2; stroke-dasharray: 4 4; }
+.chip { fill: rgba(10, 28, 41, .88); stroke: rgba(255, 255, 255, .22); stroke-width: 2; }
+.chipDot[data-i="0"] { fill: var(--leaf); }
+.chipDot[data-i="1"] { fill: var(--warn); }
+.chipDot[data-i="2"] { fill: var(--bad); }
+.chipText { font: 500 27px var(--font-sans); fill: #f2f6f9; }
+.worldText { font: 500 25px var(--font-sans); fill: #c7d5e0; }
+
+/* The drop, and the overview's numbered pins */
+.drop { fill: #fff; stroke: var(--water); stroke-width: 4; }
+.dropGlow { fill: rgba(99, 203, 233, .28); }
+.pin { fill: rgba(10, 28, 41, .9); stroke: rgba(255, 255, 255, .5); stroke-width: 2; }
+.pinText { font: 600 24px var(--font-mono); fill: #f2f6f9; }
+
+/* A soft shade behind the words, on the side they stand */
+.scrim { position: absolute; inset: 0; pointer-events: none; }
+.stage[data-format="landscape"] .scrim { background: linear-gradient(90deg, rgba(6, 18, 27, .94) 0%, rgba(6, 18, 27, .84) 30%, rgba(6, 18, 27, 0) 56%); }
+.stage[data-format="square"] .scrim, .stage[data-format="portrait"] .scrim { background: linear-gradient(180deg, rgba(6, 18, 27, .95) 0%, rgba(6, 18, 27, .86) 30%, rgba(6, 18, 27, 0) 50%); }
+
+/* The words beside a stop */
+.caption { position: absolute; display: flex; flex-direction: column; align-items: flex-start; }
+.stage[data-format="landscape"] .caption { left: var(--pad-x); top: 0; bottom: 0; width: 650px; justify-content: center; }
+.stage[data-format="square"] .caption { left: var(--pad-x); right: var(--pad-x); top: 112px; }
+.stage[data-format="portrait"] .caption { left: var(--pad-x); right: var(--pad-x); top: 268px; }
+.kind { display: inline-flex; align-items: center; gap: 12px; padding: 9px 16px 9px 10px; border-radius: 999px; font: 600 var(--chrome)/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: #06121b; background: var(--ink); }
+.kind b { display: grid; place-items: center; width: 1.7em; height: 1.7em; border-radius: 50%; font-weight: 600; color: var(--ink); background: #06121b; }
+.kind[data-tone="water"] { background: var(--water); }
+.kind[data-tone="warn"] { background: var(--warn); }
+.kind[data-tone="soft"] { background: #a9bccb; }
+.caption h3 { margin: calc(var(--headline) * .55) 0 0; font: 600 calc(var(--headline) * 1.3)/1.12 var(--font-display); letter-spacing: -.015em; text-wrap: balance; }
+.caption p { margin: calc(var(--note) * .7) 0 0; max-width: 21em; font: 400 var(--note)/1.42 var(--font-sans); color: var(--soft); text-wrap: pretty; }
+.stage[data-format="square"] .caption h3 { font-size: calc(var(--headline) * 1.2); }
+
+/* The title over the whole picture, and the closing lines in the same place */
+.title { position: absolute; left: var(--pad-x); right: var(--pad-x); display: flex; flex-direction: column; align-items: flex-start; }
+.stage[data-format="landscape"] .title { top: 118px; }
+.stage[data-format="square"] .title { top: 108px; }
+.stage[data-format="portrait"] .title { top: 262px; }
+.title h2 { margin: 20px 0 0; font: 600 calc(var(--title) * .86)/1.06 var(--font-display); letter-spacing: -.02em; text-wrap: balance; }
+.title[data-close] h2 { margin-top: 0; font-size: calc(var(--title) * .68); }
+.title p { margin: 22px 0 0; max-width: 32em; font: 400 var(--note)/1.4 var(--font-sans); color: var(--soft); }
+.site { margin-top: 30px; font: 500 calc(var(--note) * 1.05)/1.3 var(--font-mono); color: var(--water); white-space: nowrap; }
+.stage[data-format="square"] .site, .stage[data-format="portrait"] .site { font-size: 30px; }
+.credit { margin-top: 16px; font: 500 var(--note)/1.3 var(--font-sans); }

@@ -1,46 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { createPortal, flushSync } from "react-dom";
+import { useEffect, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import type { FilmScene, WeeklyFilm } from "../../lib/weeklyFilm";
-import { countEvent } from "../../lib/visit-counter";
-import { IconDownload, IconExpand, IconPause, IconPlay } from "../icons";
+import { EXIT, FilmPlayer, at, easeInOut, fade, r3, rise } from "./FilmPlayer";
 import styles from "./WeeklyFilm.module.css";
 
-/* The week as a one-minute film, drawn by the page itself. Every frame is a pure function
-   of the time: nothing here runs on a CSS animation or a timer, so the frame at 12.4 s is
-   the same picture whether a reader is watching it play or the recorder is stepping
-   through it (scripts/render-weekly-film.mjs calls window.renderFilm(t) once per frame and
-   encodes the result to MP4 in three shapes). The page plays it live, sharp at any size. */
+/* The week as a one-minute film: the scenes. The clock, the stage, the controls and the
+   recorder's handles are the shell every film shares (FilmPlayer.tsx); here, each scene
+   draws its frame for a moment in time and nothing else. */
 
-export type FilmFormat = "landscape" | "square" | "portrait";
-const SIZE: Record<FilmFormat, [number, number]> = { landscape: [1920, 1080], square: [1080, 1080], portrait: [1080, 1920] };
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /** The frame a reader sees before pressing play: the title, fully arrived. */
 const POSTER_AT = 3.6;
 
 type Outlines = { view: { width: number; height: number }; mandals: string[]; districts: string };
-type Rendition = { format: FilmFormat; file: string; bytes: number; width: number; height: number };
-type Manifest = { week: string; seconds: number; files: Rendition[] };
-
-declare global {
-  interface Window {
-    filmReady?: boolean;
-    filmMeta?: { week: string; seconds: number; scenes: Array<{ id: string; start: number; seconds: number }> };
-    renderFilm?: (seconds: number) => { same: boolean; scene: string };
-  }
-}
-
-/* One timing language for the whole film: things arrive over 0.7 s easing out, a little
-   apart from each other; bars and levels move in and out gently; a scene leaves in 0.45 s. */
-const clamp = (x: number) => Math.max(0, Math.min(1, x));
-const easeOut = (p: number) => 1 - (1 - p) ** 3;
-const easeInOut = (p: number) => (p < 0.5 ? 4 * p ** 3 : 1 - (-2 * p + 2) ** 3 / 2);
-const r3 = (x: number) => Math.round(x * 1000) / 1000;
-const at = (t: number, start: number, seconds = 0.7, ease = easeOut) => r3(ease(clamp((t - start) / seconds)));
-const rise = (t: number, start: number, by = 28): CSSProperties => { const p = at(t, start); return { opacity: p, transform: `translateY(${r3((1 - p) * by)}px)` }; };
-const fade = (t: number, start: number, seconds = 0.6): CSSProperties => ({ opacity: at(t, start, seconds) });
-const EXIT = 0.45;
 
 /** The figure counting up to itself; the last frame is the figure exactly as the site prints it. */
 function counted(scene: FilmScene, t: number) {
@@ -306,171 +279,38 @@ function CloseView({ film, t }: { film: WeeklyFilm; t: number }) {
   );
 }
 
-/* ---------------- Player ---------------- */
-
-const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
-const megabytes = (bytes: number) => `${(bytes / 1e6).toFixed(1)} MB`;
-const SHAPE: Record<FilmFormat, { name: string; use: string }> = {
-  portrait: { name: "Vertical", use: "WhatsApp Status, phones" },
-  square: { name: "Square", use: "messages and groups" },
-  landscape: { name: "Widescreen", use: "meeting screens, slides" },
-};
+/* ---------------- The film ---------------- */
 
 export function WeeklyFilmPlayer({ film }: { film: WeeklyFilm }) {
-  const segments = useMemo(() => {
-    let start = 0;
-    const list = [{ id: "open", seconds: film.openSeconds }, ...film.scenes.map(scene => ({ id: scene.kind, seconds: scene.seconds })), { id: "close", seconds: film.closeSeconds }];
-    return list.map(segment => { const placed = { ...segment, start }; start += segment.seconds; return placed; });
-  }, [film]);
-  const total = segments[segments.length - 1].start + segments[segments.length - 1].seconds;
-
-  const [t, setT] = useState(POSTER_AT);
-  const [started, setStarted] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const [format, setFormat] = useState<FilmFormat>("landscape");
-  const [scale, setScale] = useState(0);
-  const [capture, setCapture] = useState(false);
+  const segments = useMemo(() => [{ id: "open", seconds: film.openSeconds }, ...film.scenes.map(scene => ({ id: scene.kind as string, seconds: scene.seconds })), { id: "close", seconds: film.closeSeconds }], [film]);
   const [outlines, setOutlines] = useState<Outlines | null>(null);
-  const [manifest, setManifest] = useState<Manifest | null>(null);
-  const frame = useRef<HTMLDivElement>(null), stage = useRef<HTMLDivElement>(null);
-
-  // The recorder asks for one shape at its own size: ?capture=portrait.
-  useEffect(() => {
-    const asked = new URLSearchParams(window.location.search).get("capture") as FilmFormat | null;
-    if (asked && asked in SIZE) { setCapture(true); setFormat(asked); setScale(1); setStarted(true); setT(0); }
-  }, []);
-
   useEffect(() => {
     let live = true;
     fetch(`${BASE}/geo/mandal-outlines.json`).then(r => (r.ok ? r.json() : null)).then(json => { if (live && json) setOutlines(json as Outlines); }).catch(() => undefined);
-    fetch(`${BASE}/films/weekly/manifest.json`).then(r => (r.ok ? r.json() : null)).then(json => { if (live && json?.files?.length) setManifest(json as Manifest); }).catch(() => undefined);
     return () => { live = false; };
   }, []);
 
-  // The stage is drawn at the video's own size and scaled to the frame, so the page and the MP4 are one layout.
-  useEffect(() => {
-    const node = frame.current;
-    // On the recorder's first pass `capture` is not set yet; the address already says so.
-    if (!node || capture || new URLSearchParams(window.location.search).has("capture")) return;
-    const fit = () => {
-      const { width, height } = node.getBoundingClientRect();
-      const full = document.fullscreenElement === node;
-      const next: FilmFormat = full ? (width / height > 1.25 ? "landscape" : width / height < 0.8 ? "portrait" : "square") : width >= 620 ? "landscape" : "square";
-      setFormat(next);
-      const [w, h] = SIZE[next];
-      setScale(full ? Math.min(width / w, height / h) : width / w);
-    };
-    fit();
-    const watcher = new ResizeObserver(fit);
-    watcher.observe(node);
-    document.addEventListener("fullscreenchange", fit);
-    return () => { watcher.disconnect(); document.removeEventListener("fullscreenchange", fit); };
-  }, [capture]);
-
-  useEffect(() => {
-    if (!playing) return;
-    let last = performance.now(), request = 0;
-    const tick = (now: number) => {
-      // Real time, however rarely the browser calls back; a gap of seconds (a tab left and returned to) is not played through.
-      const gap = (now - last) / 1000, step = gap > 1.5 ? 0 : gap;
-      last = now;
-      setT(time => { const next = Math.min(total, time + step); if (next >= total) setPlaying(false); return next; });
-      request = requestAnimationFrame(tick);
-    };
-    request = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(request);
-  }, [playing, total]);
-
-  // The recorder's handles: the frame for any moment, and whether it differs from the one before.
-  useEffect(() => {
-    if (!capture) return;
-    let previous = "";
-    window.filmMeta = { week: film.week, seconds: total, scenes: segments.map(({ id, start, seconds }) => ({ id, start, seconds })) };
-    window.renderFilm = seconds => {
-      flushSync(() => setT(seconds));
-      const html = stage.current?.innerHTML ?? "", same = html === previous;
-      previous = html;
-      return { same, scene: (segments.find(segment => seconds < segment.start + segment.seconds) ?? segments[segments.length - 1]).id };
-    };
-    return () => { delete window.renderFilm; delete window.filmMeta; };
-  }, [capture, film.week, segments, total]);
-  useEffect(() => {
-    if (!capture || !outlines) return;
-    let live = true;
-    document.fonts.ready.then(() => { if (live) window.filmReady = true; });
-    return () => { live = false; window.filmReady = false; };
-  }, [capture, outlines]);
-
-  const counted = useRef(false);
-  const play = () => {
-    if (!started || t >= total) { setT(0); setStarted(true); }
-    setPlaying(true);
-    if (!counted.current) { counted.current = true; countEvent("app/weekly-film-play", "Weekly film: played on the page"); }
-  };
-  const toggle = () => (playing ? setPlaying(false) : play());
-  const fullscreen = () => {
-    const node = frame.current;
-    if (!node) return;
-    if (document.fullscreenElement) void document.exitFullscreen(); else void node.requestFullscreen?.();
-  };
-
-  const at_ = segments.findIndex(segment => t < segment.start + segment.seconds), index = at_ < 0 ? segments.length - 1 : at_;
-  const segment = segments[index], local = t - segment.start, scene = index > 0 && index < segments.length - 1 ? film.scenes[index - 1] : null;
-  const [width, height] = SIZE[format];
-  const chrome = index === 0 ? 0 : index === 1 ? at(local, 0.1) : index === segments.length - 1 ? 1 - at(local, 0, 0.4) : 1;
-  const ended = started && !playing && t >= total;
-
-  const picture = (
-    <div ref={frame} className={styles.frame} data-format={format} style={{ aspectRatio: `${width} / ${height}` }} data-testid="weekly-film">
-      <div ref={stage} className={styles.stage} data-format={format} aria-hidden="true"
-        style={{ width, height, transform: capture ? undefined : `translate(-50%, -50%) scale(${scale})`, visibility: scale ? "visible" : "hidden" }}>
-        <div className={styles.chrome} style={{ opacity: chrome }}>
-          <span>AP Water Intelligence</span><span>{film.title}</span>
-        </div>
-        {index === 0 ? <OpenView film={film} t={local} outlines={outlines} />
-          : scene ? <SceneView key={index} scene={scene} t={local} outlines={outlines} />
-          : <CloseView film={film} t={local} />}
-        <div className={styles.progress} style={{ opacity: chrome }}>
-          {film.scenes.map((_, i) => <i key={i} data-state={i + 1 < index ? "done" : i + 1 === index ? "now" : undefined} />)}
-        </div>
-      </div>
-      {!capture && !playing ? (
-        <button type="button" className={styles.playOver} onClick={play} aria-label={ended ? "Play the film again" : started ? "Resume the film" : `Play this week's film, ${Math.round(total)} seconds`}>
-          <span><IconPlay /></span>
-        </button>
-      ) : null}
-      {!capture && playing ? <button type="button" className={styles.pauseOver} onClick={toggle} aria-label="Pause the film" /> : null}
-    </div>
-  );
-  // Recording: the frame alone, straight under <body>, so no page furniture or page transform can reach it.
-  if (capture) return createPortal(<div className={styles.player} data-capture="">{picture}</div>, document.body);
-
   return (
-    <div className={styles.player}>
-      {picture}
-      <div className={styles.controls}>
-            <button type="button" onClick={toggle} aria-label={playing ? "Pause" : "Play"}>{playing ? <IconPause /> : <IconPlay />}</button>
-            <input type="range" min={0} max={total} step={0.05} value={started ? t : 0} aria-label="Film position"
-              onChange={event => { setStarted(true); setT(Number(event.target.value)); }} />
-            <span className={styles.time}>{clock(started ? t : 0)} / {clock(total)}</span>
-            <button type="button" onClick={fullscreen} aria-label="Full screen"><IconExpand /></button>
-          </div>
-          {manifest ? (
-            <div className={styles.downloads} data-testid="film-downloads">
-              <span>Download the video</span>
-              <ul>
-                {(["portrait", "square", "landscape"] as FilmFormat[]).flatMap(shape => {
-                  const file = manifest.files.find(f => f.format === shape);
-                  return file ? [<li key={shape}>
-                    <a href={`${BASE}/films/weekly/${file.file}`} download={`AP-water-week-${manifest.week}-${shape}.mp4`}
-                      onClick={() => countEvent("app/weekly-film-download", "Weekly film: downloaded a video")}>
-                      <IconDownload /><b>{SHAPE[shape].name}</b><small>{SHAPE[shape].use} · {megabytes(file.bytes)}</small>
-                    </a>
-                  </li>] : [];
-                })}
-              </ul>
+    <FilmPlayer name="weekly" edition={film.week} segments={segments} posterAt={POSTER_AT} ready={!!outlines} stageClass={styles.stage} testId="weekly-film"
+      playLabel="this week's film" downloadName={(shape, week) => `AP-water-week-${week}-${shape}.mp4`}
+      events={{ play: ["app/weekly-film-play", "Weekly film: played on the page"], download: ["app/weekly-film-download", "Weekly film: downloaded a video"] }}>
+      {({ index, local, segments: placed }) => {
+        const last = placed.length - 1, scene = index > 0 && index < last ? film.scenes[index - 1] : null;
+        const chrome = index === 0 ? 0 : index === 1 ? at(local, 0.1) : index === last ? 1 - at(local, 0, 0.4) : 1;
+        return (
+          <>
+            <div className={styles.chrome} style={{ opacity: chrome }}>
+              <span>AP Water Intelligence</span><span>{film.title}</span>
             </div>
-      ) : null}
-    </div>
+            {index === 0 ? <OpenView film={film} t={local} outlines={outlines} />
+              : scene ? <SceneView key={index} scene={scene} t={local} outlines={outlines} />
+              : <CloseView film={film} t={local} />}
+            <div className={styles.progress} style={{ opacity: chrome }}>
+              {film.scenes.map((_, i) => <i key={i} data-state={i + 1 < index ? "done" : i + 1 === index ? "now" : undefined} />)}
+            </div>
+          </>
+        );
+      }}
+    </FilmPlayer>
   );
 }

@@ -176,7 +176,14 @@ jobs:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
         run: |
           sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
-          node scripts/render-weekly-film.mjs --directory out --base "$PAGES_BASE_PATH"
+          node scripts/render-film.mjs --film weekly --directory out --base "$PAGES_BASE_PATH"
+      - name: Record the method film
+        # The Methodology page's film, which quotes this week's model card. Never blocks the publish.
+        working-directory: app
+        continue-on-error: true
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: node scripts/render-film.mjs --film methodology --directory out --base "$PAGES_BASE_PATH"
       - name: Disable Jekyll processing
         run: touch app/out/.nojekyll
       - uses: actions/configure-pages@v5
