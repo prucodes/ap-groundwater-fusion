@@ -1,0 +1,26 @@
+{
+ "clouds": {
+  "film": "cyclones/clouds.mp4",
+  "frames": 312,
+  "height": 980,
+  "sha256": "e002ef5deeb26dfba5ae118e0b89ac3f7a4af3aaaa6398144187d0833dc6face",
+  "share": "cyclones/clouds-share.mp4",
+  "width": 1080
+ },
+ "grace": {
+  "film": "films/grace/grace.mp4",
+  "frames": 294,
+  "height": 980,
+  "sha256": "949e373e7b9dfe5910417625c20046c98e5ebdef0a1e30d7289a7b5c85aaa5b2",
+  "share": "films/grace/grace-share.mp4",
+  "width": 1080
+ },
+ "rain": {
+  "film": "films/rain/rain.mp4",
+  "frames": 163,
+  "height": 980,
+  "sha256": "7df20fa53d4910c80936b44554e9a376a9059e3eddc0c97e9b7ddeac30dc4f0d",
+  "share": "films/rain/rain-share.mp4",
+  "width": 1080
+ }
+}

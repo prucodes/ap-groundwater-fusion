@@ -10,6 +10,7 @@
 .issueDate svg, .digestLink svg { width:16px; height:16px; flex:none; }
 .digestLink { display:inline-flex; align-items:center; gap:10px; padding:11px 14px; border:1px solid var(--line-strong); border-radius:5px; font-size:12px; font-weight:600; color:var(--ink); background:var(--card); }
 .digestLink:hover { border-color:var(--week-accent); color:var(--week-accent); }
+.mastheadLinks { display:flex; flex-wrap:wrap; gap:8px; }
 .brief { padding:14px 0; }
 .brief :global(.heroBrief) { border:0; margin:0; padding:0; max-width:none; }
 .brief :global(.heroBrief dt), .brief :global(.heroBrief .heroBriefNow dt), .brief :global(.briefMoreLabel) { color:var(--week-accent); }
@@ -164,7 +165,7 @@
 @media (max-width:380px) { .issueDate { border:0; padding:0; } .masthead h1 { gap:8px 14px; } }
 @media (prefers-reduced-motion:reduce) { .card { transition:none; } }
 @media print {
- .digestLink, .registerLink { display:none; }
+ .digestLink, .registerLink, .mastheadLinks { display:none; }
  .briefingGrid { grid-template-columns:1fr 1fr; }
  .leadColumn .cards { grid-template-columns:minmax(0,1fr); }
  .moves { border-top:0; padding-top:0; }

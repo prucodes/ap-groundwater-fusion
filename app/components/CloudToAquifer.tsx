@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { basePath } from "../lib/data";
 import { countEvent } from "../lib/visit-counter";
 import type { ArnabDay } from "../lib/arnab";
+import { FilmDownload } from "./FilmDownload";
 import styles from "./CloudToAquifer.module.css";
 
 /* From cloud to aquifer: Himawari-9's hourly infrared film of both cyclones
@@ -176,6 +177,7 @@ export function CloudToAquifer({ film, days, until, deepMissed, deepTotal, still
               {film.landfalls.map(l => <i key={l.name} style={{ left: `${pctOf(Date.parse(`${l.date}T12:00:00+05:30`))}%` }} title={`${l.name} ashore`} />)}
             </div>
           </div>
+          <FilmDownload video={film.video} filename={`AP-cyclones-${film.landfalls.map(l => l.name).join("-")}-Himawari.mp4`} event="arnab/cloud-film-download" title="Cyclones: downloaded the cloud film" />
         </div>
       </div>
 

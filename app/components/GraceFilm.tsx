@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { basePath } from "../lib/data";
 import { countEvent } from "../lib/visit-counter";
 import { IconPause, IconPlay } from "./icons";
+import { FilmDownload } from "./FilmDownload";
 import styles from "./GraceFilm.module.css";
 
 /* Andhra Pradesh's water from space (phase3_levels/build_grace_film.py): a month a
@@ -135,6 +136,7 @@ export function GraceFilm({ d }: { d: GraceFilmData }) {
           <button type="button" onClick={toggle} aria-label={playing ? "Pause the film" : "Play the film"} data-testid="grace-play">{playing ? <IconPause /> : <IconPlay />}</button>
           <input type="range" min={0} max={n - 1} value={at} onChange={e => pick(Number(e.target.value))} aria-label="Month of the film"
             aria-valuetext={`${name(month)}${cm === null ? "" : `, ${signed(cm)}`}`} />
+          <FilmDownload video={d.video} filename="AP-water-from-space-GRACE.mp4" event="monsoon/grace-film-download" title="Monsoon: downloaded the water-from-space film" />
         </div>
       </div>
 

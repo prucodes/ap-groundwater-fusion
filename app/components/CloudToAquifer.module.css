@@ -26,7 +26,7 @@
 .badge { position: absolute; right: 12px; bottom: 12px; padding: 4px 9px; border-radius: 999px; font: 600 10px var(--font-mono);
   letter-spacing: .08em; text-transform: uppercase; color: rgba(232, 241, 250, .8); background: rgba(11, 29, 51, .6); }
 
-.controls { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; }
+.controls { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; }
 .controls button { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
   background: #12b5cb; border: 0; color: #06202b; transition: transform .15s, background .2s; }
 .controls button:hover { background: #3fd0e2; }
