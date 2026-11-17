@@ -19,7 +19,7 @@
 .key i { width: 10px; height: 10px; border-radius: 50%; }
 .key i[data-tone="dry"] { background: #d67048; }
 .key i[data-tone="wet"] { background: #4ac4e6; margin-left: 6px; }
-.controls { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; }
+.controls { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; }
 .controls button { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; border: 0; cursor: pointer; background: #12b5cb; color: #06202b; }
 .controls button:hover { background: #3fd0e2; }
 .controls button svg { width: 15px; height: 15px; }

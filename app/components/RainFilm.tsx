@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { basePath } from "../lib/data";
 import { countEvent } from "../lib/visit-counter";
 import { IconPause, IconPlay } from "./icons";
+import { FilmDownload } from "./FilmDownload";
 import styles from "./GraceFilm.module.css";
 import own from "./RainFilm.module.css";
 
@@ -118,6 +119,7 @@ export function RainFilm({ d }: { d: RainFilmData }) {
         <div className={styles.controls}>
           <button type="button" onClick={toggle} aria-label={playing ? "Pause the film" : "Play the film"} data-testid="rain-play">{playing ? <IconPause /> : <IconPlay />}</button>
           <input type="range" min={0} max={n - 1} value={at} onChange={e => pick(Number(e.target.value))} aria-label="Day of the film" aria-valuetext={day(d.days[at])} />
+          <FilmDownload video={d.video} filename="AP-monsoon-rain-by-day-IMERG.mp4" event="monsoon/rain-film-download" title="Monsoon: downloaded the rain film" />
         </div>
       </div>
 

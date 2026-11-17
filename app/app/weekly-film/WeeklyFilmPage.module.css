@@ -1,0 +1,15 @@
+.page { max-width: 1120px; }
+.head { padding: 8px 0 18px; }
+.kicker { font: 600 10px var(--font-mono); color: var(--teal); text-transform: uppercase; }
+.head h1 { margin: 7px 0 4px; font: 600 38px/1.2 var(--font-display); }
+.head p { margin: 0; font-size: 13px; color: var(--ink-soft); }
+.transcript { margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--card); }
+.transcript ol { margin: 0; padding: 4px 18px 6px 38px; display: grid; gap: 14px; }
+.transcript li p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--ink); }
+.transcript li small { display: block; margin-top: 3px; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.caveat { margin: 14px 18px 16px; font-size: 12px; color: var(--muted); }
+.more { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 18px 0 8px; }
+.more a { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; font-size: 13px; font-weight: 600; color: var(--ink); }
+.more a:hover { color: var(--teal); }
+.more svg { width: 14px; height: 14px; }
+@media (max-width: 640px) { .head h1 { font-size: 30px; } }

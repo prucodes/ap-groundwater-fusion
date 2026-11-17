@@ -60,3 +60,6 @@ data/raw/chirps/ap_window/
 
 # MapLibre worker, copied from node_modules at build time (app/scripts/vendor-maplibre.mjs)
 app/public/vendor/
+
+# The weekly film as CI records it: built into the site at deploy, never committed.
+app/.weekly-film/
