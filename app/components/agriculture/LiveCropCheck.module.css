@@ -24,8 +24,11 @@
 .stagePicker button small { font: 400 10px var(--font-mono); color: var(--muted); }
 .stagePicker button[aria-pressed="true"] { background: var(--card); border-color: var(--line); color: var(--lc-green); box-shadow: 0 1px 3px #0000000a; }
 
-.lede { font-size: 18px; line-height: 1.5; color: var(--ink); max-width: 860px; margin: 4px 0 16px; text-wrap: pretty; }
-.lede strong { font-weight: 650; color: var(--lc-red); font-variant-numeric: tabular-nums; }
+/* One calm sentence in body type; its numbers carry the tile colours below it. */
+.lede { font: 400 15px/1.65 var(--font-sans); letter-spacing: 0; color: var(--ink); max-width: 760px; margin: 6px 0 26px; text-wrap: pretty; }
+.lede strong { font-weight: 600; color: var(--lc-red); font-variant-numeric: tabular-nums; }
+.lede strong[data-tone="soon"] { color: #b17a17; }
+.lede strong[data-tone="note"] { color: var(--ink); }
 
 .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); background: var(--card); }
 .tile { position: relative; display: grid; align-content: start; gap: 4px; min-width: 0; padding: 13px 16px 14px; text-align: left; background: transparent; border: 0; border-right: 1px solid var(--line); color: var(--ink); cursor: pointer; transition: background .15s; }
@@ -194,7 +197,7 @@
   .tile:nth-child(2) { border-right: 0; }
   .tile:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
   .tile strong { font-size: 28px; }
-  .lede { font-size: 16px; }
+  .lede { font-size: 14.5px; }
   .stagePicker { width: 100%; }
   .stagePicker button { flex: 1; min-width: 0; }
   .facts { grid-template-columns: minmax(0, 1fr); }

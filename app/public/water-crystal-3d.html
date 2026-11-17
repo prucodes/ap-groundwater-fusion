@@ -967,11 +967,12 @@ const crystalMat=new THREE.ShaderMaterial({
                                (wsurf(q-vec2(0.0,e))-wsurf(q+vec2(0.0,e)))*amp)+wn*0.25);
         /* water body colour from the data tint: deep in troughs, luminous on slopes */
         vec3 deepC=vC*0.82;
-        vec3 shalC=vC*1.12+vec3(0.01,0.025,0.03);
+        vec3 shalC=vC*1.05+vec3(0.006,0.015,0.02);
         float f2=pow(1.0-max(dot(N2,V),0.0),3.0);
         col=mix(deepC,shalC,clamp(f2*0.65+tex*0.48,0.0,1.0));
-        col+=vec3(0.55,0.95,1.0)*caust*mix(0.12,0.08,uRelief)*(1.0-0.6*uProj);
-        col=mix(vec3(dot(col,vec3(0.299,0.587,0.114))),col,1.24);
+        /* caustics and saturation tuned so the data colour leads; cyan light only glints on it */
+        col+=vec3(0.55,0.95,1.0)*caust*mix(0.05,0.04,uRelief)*(1.0-0.6*uProj);
+        col=mix(vec3(dot(col,vec3(0.299,0.587,0.114))),col,1.7);
         /* broad glossy sheen, like light on a still pool */
         col+=vec3(0.12,0.28,0.36)*pow(max(dot(reflect(-L,N2),V),0.0),6.0)*0.20;
         /* sun glitter breaking on the ripples */
@@ -992,7 +993,7 @@ const crystalMat=new THREE.ShaderMaterial({
       }
       /* rim light */
       float fr=pow(1.0-max(dot(N,V),0.0),2.6);
-      col+=vec3(0.35,0.9,1.0)*fr*(vT>0.5?0.14:0.22);
+      col+=vec3(0.35,0.9,1.0)*fr*(vT>0.5?0.06:0.22);
       /* satellite scan sweep */
       float sp=fract(uTime/13.0), sx=mix(-7.0,7.0,sp);
       float band=smoothstep(0.5,0.0,abs(vW.x-sx))*smoothstep(0.0,0.06,sp)*smoothstep(1.0,0.94,sp);
@@ -1014,8 +1015,8 @@ const under=new THREE.Mesh(geo,underMat); under.position.y=-0.016; scene.add(und
 const eGeo=new THREE.BufferGeometry();
 const ePosArr=new Float32Array(edgePos);
 eGeo.setAttribute("position",new THREE.BufferAttribute(ePosArr,3).setUsage(THREE.DynamicDrawUsage));
-const eMat=new THREE.LineBasicMaterial({color:0xf2fdff,transparent:true,opacity:0.5,depthWrite:false});
-eMat.opacity=0.34;
+/* mandal outlines stay a whisper so the data colour is what reads */
+const eMat=new THREE.LineBasicMaterial({color:0xf2fdff,transparent:true,opacity:0.16,depthWrite:false});
 const edges=new THREE.LineSegments(eGeo,eMat); scene.add(edges);
 const cGeo=new THREE.BufferGeometry();
 const cPosArr=new Float32Array(coastPos);
@@ -2280,7 +2281,7 @@ function loop(t){
     geo.attributes.color.needsUpdate=true;
   }
   rimUni.uTime.value=REDUCED?0:time;
-  eMat.opacity=(gran==="district"?0.14:0.45-0.3*curP)+Math.sin(time*0.7)*0.03;
+  eMat.opacity=(gran==="district"?0.12:0.2-0.1*curP)+Math.sin(time*0.7)*0.02;
 
   updateCamera();
   updateDistrictLabels();

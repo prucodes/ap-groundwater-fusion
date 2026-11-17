@@ -260,8 +260,8 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
   const mostlyIrrigated = (index: number) => { const pct = irrigatedAt(index); return pct !== null && irrigation !== null && pct >= irrigation.belowPct; };
   const shortRainfed = irrigation ? results.filter((result, index) => result?.state === "stressed" && irrigatedAt(index) !== null && !mostlyIrrigated(index)).length : null;
   const lede = counts.stressed
-    ? <><strong>{counts.stressed}</strong> mandals where {profile.name.toLowerCase()} at the {CROP_STAGES[stage].toLowerCase()} stage is already short of water{counts.soon ? <>, and <strong>{counts.soon}</strong> more within seven days on the forecast</> : null}.</>
-    : counts.soon ? <>No mandal is short of water yet for {profile.name.toLowerCase()} at the {CROP_STAGES[stage].toLowerCase()} stage; <strong>{counts.soon}</strong> would be within seven days on the forecast.</>
+    ? <><strong>{counts.stressed}</strong> mandals where {profile.name.toLowerCase()} at the {CROP_STAGES[stage].toLowerCase()} stage is already short of water{counts.soon ? <>, and <strong data-tone="soon">{counts.soon}</strong> more within seven days on the forecast</> : null}.</>
+    : counts.soon ? <>No mandal is short of water yet for {profile.name.toLowerCase()} at the {CROP_STAGES[stage].toLowerCase()} stage; <strong data-tone="soon">{counts.soon}</strong> would be within seven days on the forecast.</>
       : <>{profile.name} at the {CROP_STAGES[stage].toLowerCase()} stage stays comfortable through the week in every mandal with a soil value.</>;
 
   function openLab() {
@@ -286,7 +286,7 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
     </div>
 
     <p className={styles.lede} data-testid="field-week-lede">{lede}{irrigation && counts.stressed && shortRainfed !== null
-      ? <span className={styles.ledeNote} data-testid="field-week-rainfed"> <strong>{shortRainfed}</strong> of the {counts.stressed} are mostly rainfed, where a rainfed water balance applies; mostly irrigated mandals are hatched.</span> : null}</p>
+      ? <span className={styles.ledeNote} data-testid="field-week-rainfed"> <strong data-tone="note">{shortRainfed}</strong> of the {counts.stressed} are mostly rainfed, where a rainfed water balance applies; mostly irrigated mandals are hatched.</span> : null}</p>
 
     <div className={styles.tiles} role="group" aria-label="Mandals by crop water state; select one to pick it out on the map">
       {STATE_ORDER.map(key => <button key={key} type="button" className={styles.tile} data-state={key} aria-pressed={emphasis === key} data-testid={`field-week-${key}`}

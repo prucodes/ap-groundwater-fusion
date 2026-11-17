@@ -255,36 +255,29 @@ export default function ChangesPage() {
 /** One headline: its figure now, which way it moved, what it was, and the dates of both readings. */
 function ChangeCard({ item, order }: { item: Item; order?: number }) {
   const comparable = item.before !== null && item.after !== null && Number.isFinite(item.before) && Number.isFinite(item.after) && item.direction !== "same";
-  const low = Math.min(0, item.before ?? 0, item.after ?? 0);
-  const high = Math.max(0, item.before ?? 0, item.after ?? 0);
-  const position = (value: number) => 4 + 92 * (value - low) / (high - low || 1);
+  const change = delta(item);
+  // One figure, its change beside it, and where it came from in a single quiet line; the whole card is the link.
   return (
     <Link href={item.href} className={styles.card} data-direction={item.direction ?? "new"} data-key={item.key} data-rise={order === undefined ? undefined : ""} style={order === undefined ? undefined : { "--rise": order } as React.CSSProperties}>
       <span className={styles.cardLabel}>{item.label}</span>
-      <strong className={styles.value}>{format(item.after, item.unit)}</strong>
-      <span className={styles.status}>
+      <span className={styles.valueRow}>
+        <strong className={styles.value}>{format(item.after, item.unit)}</strong>
         <span className={styles.badge}>
+          {change && item.direction !== "same" ? <b>{change}</b> : null}
           {item.direction ? DIRECTION_TEXT[item.direction] : "First reading"}
-          {delta(item) && item.direction !== "same" ? ` · ${delta(item)}` : ""}
         </span>
       </span>
-      {comparable ? <span className={styles.comparison} data-testid="weekly-comparison" role="img"
-        aria-label={`Previous ${format(item.before, item.unit)}; current ${format(item.after, item.unit)}. Two snapshots, not a trend.`}>
-        <span className={styles.comparisonLabels}><span><i className={styles.previousKey} />Previous <b>{format(item.before, item.unit)}</b></span><span><i className={styles.currentKey} />Current <b>{format(item.after, item.unit)}</b></span></span>
-        <span className={styles.comparisonTrack}>
-          <i className={styles.changeRange} style={{ left: `${Math.min(position(item.before!), position(item.after!))}%`, width: `${Math.abs(position(item.before!) - position(item.after!))}%` }} />
-          <i className={styles.beforePoint} style={{ left: `${position(item.before!)}%` }} />
-          <i className={styles.afterPoint} style={{ left: `${position(item.after!)}%` }} />
-        </span>
-        <span className={styles.comparisonAxis}><span>{format(low, item.unit)}</span><span>{format(high, item.unit)}</span></span>
-        <span className={styles.comparisonDates}><span>{asOf(item.beforeAsOf)}</span><span>{asOf(item.afterAsOf)}</span></span>
-      </span> : null}
-      {!comparable || item.refreshed === false ? <span className={styles.dates}>
-        {item.beforeAsOf && item.beforeAsOf !== item.afterAsOf ? `${asOf(item.beforeAsOf)} → ${asOf(item.afterAsOf)}` : `As of ${asOf(item.afterAsOf)}`}
-        {item.refreshed === false ? " · observation period unchanged; any value change is a revision" : ""}
-      </span> : null}
+      {comparable
+        ? <span className={styles.was} data-testid="weekly-comparison" role="img"
+            aria-label={`Previous ${format(item.before, item.unit)}; current ${format(item.after, item.unit)}. Two snapshots, not a trend.`}>
+            was {format(item.before, item.unit)} · {item.beforeAsOf && item.beforeAsOf !== item.afterAsOf ? `${asOf(item.beforeAsOf)} → ${asOf(item.afterAsOf)}` : `as of ${asOf(item.afterAsOf)}`}
+          </span>
+        : <span className={styles.was}>
+            {item.beforeAsOf && item.beforeAsOf !== item.afterAsOf ? `${asOf(item.beforeAsOf)} → ${asOf(item.afterAsOf)}` : `As of ${asOf(item.afterAsOf)}`}
+          </span>}
+      {item.refreshed === false ? <span className={styles.note}>Observation period unchanged; any value change is a revision.</span> : null}
       {item.note ? <span className={styles.note}>{item.note}</span> : null}
-      <span className={styles.cardLink}>Open evidence <IconArrowRight /></span>
+      <IconArrowRight className={styles.cardArrow} aria-hidden="true" />
     </Link>
   );
 }
