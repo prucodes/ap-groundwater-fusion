@@ -21,7 +21,7 @@ test("the drought watch leads with the manual's numbers and its deadline", async
 
 test("the light-soil rule changes the map's counts and the matrix explains a mandal", async ({ page }) => {
   await page.goto("/drought/");
-  const legend = page.getByTestId("drought-map").locator("xpath=..");
+  const legend = page.getByTestId("drought-map-card");
   await expect(legend).toContainText(`No trigger ${state.counts.noTrigger}`);
   await page.getByRole("button", { name: "3 weeks (light soils)" }).click();
   await expect(legend).toContainText(`No trigger ${state.countsLight.noTrigger}`);

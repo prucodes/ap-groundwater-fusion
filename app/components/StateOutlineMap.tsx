@@ -3,6 +3,19 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import styles from "./StateOutlineMap.module.css";
 import { mapTooltipStyle } from "../lib/mapTooltip";
+import type { Spread } from "../lib/mapSpread";
+import { SpreadTiles, SpreadToggle, SpreadWords, spreadShapes, spreadStage, type SpreadView } from "./MapSpread";
+
+/** A second arrangement of the same mandals, lined up (lib/mapSpread.ts). Tile ids are boundary indices. */
+export type OutlineSpread = {
+  layout: Spread;
+  /** The toggle's second choice, in two words. */
+  label: string;
+  event: [name: string, title: string];
+  /** Marks on the strip's line, in map units, and the words for the strip. */
+  axis: number[];
+  words: Omit<Parameters<typeof SpreadWords>[0], "spread" | "top">;
+};
 
 /* A whole-State mandal map whose outlines load after the page: the page passes
    one colour key per mandal and a sentence per mandal for the tooltip, and the
@@ -23,7 +36,7 @@ const SWEEP_MS = 420;
 
 const title = (value: string) => (/[a-z]/.test(value) ? value : value.toLowerCase().replace(/\b[a-z]/g, c => c.toUpperCase()));
 
-export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, testId, marks, points }: {
+export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, testId, marks, points, spread }: {
   /** One key per boundary index (a character or a short code), looked up in `colors`. */
   keys: string[];
   colors: Record<string, string>;
@@ -38,10 +51,12 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
   marks?: number[];
   /** Points over the map, in its projected units: [x, y, glow]. Glow 0 is a faint point; above 0 it is lit, larger with more glow (up to 1). */
   points?: Array<[number, number, number]>;
+  spread?: OutlineSpread;
 }) {
   const [outlines, setOutlines] = useState<Outlines | null>(null);
   const [failed, setFailed] = useState(false);
   const [hover, setHover] = useState<{ index: number; x: number; y: number } | null>(null);
+  const [arrange, setArrange] = useState<SpreadView>("map");
   const frame = useRef<HTMLDivElement>(null);
   const marked = marks?.length ? new Set(marks) : null;
   const colorFor = (index: number) => {
@@ -70,8 +85,10 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
   }, []);
 
   return <figure className={styles.figure} data-testid={testId} data-ready={outlines ? "true" : "false"}>
-    <div ref={frame} className={styles.frame} data-draw="sequence" style={{ aspectRatio: String(aspect) }} onPointerLeave={() => setHover(null)}>
+    <div ref={frame} className={`${styles.frame} ${spread ? spreadStage : ""}`} data-view={spread ? arrange : undefined} data-draw="sequence" style={{ aspectRatio: String(aspect) }} onPointerLeave={() => setHover(null)}>
+      {spread && outlines ? <SpreadToggle float view={arrange} onChange={next => { setArrange(next); setHover(null); }} label={spread.label} event={spread.event} /> : null}
       {outlines ? <svg viewBox={`0 0 ${outlines.view.width} ${outlines.view.height}`} role="img" aria-label={label}>
+        <g className={spread ? spreadShapes : undefined}>
         {outlines.mandals.map((_, index) => (marked?.has(index) ? null : shape(index)))}
         <path d={outlines.districts} className={styles.districts} />
         {marks?.filter(index => index < outlines.mandals.length).map(shape)}
@@ -79,8 +96,11 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
           <g>{points.filter(p => p[2] <= 0).map(([x, y], i) => <circle key={i} cx={x} cy={y} r={1.3} />)}</g>
           <g data-lit="">{points.filter(p => p[2] > 0).map(([x, y, glow], i) => <circle key={i} cx={x} cy={y} r={2 + 3 * Math.min(1, glow)} />)}</g>
         </g> : null}
+        </g>
+        {spread ? <SpreadTiles spread={spread.layout} colorOf={colorFor} marks={spread.axis} /> : null}
       </svg> : <div className={styles.placeholder} role="img" aria-label={label}>{failed ? "The map outlines did not load; the figures beside it stand on their own." : null}</div>}
-      {hover && outlines ? (() => {
+      {spread && outlines ? <SpreadWords spread={spread.layout} {...spread.words} top={48} /> : null}
+      {hover && outlines && arrange === "map" ? (() => {
         const [district, mandal] = outlines.names[hover.index] ?? ["", ""];
         const width = frame.current?.clientWidth ?? 600;
         return <div className={styles.tooltip} role="tooltip" style={{ ...mapTooltipStyle(colorFor(hover.index)), left: Math.max(4, Math.min(hover.x + 14, width - 230)), top: hover.y + 12 }}>

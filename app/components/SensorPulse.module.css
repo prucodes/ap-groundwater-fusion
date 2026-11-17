@@ -45,7 +45,7 @@
 @media screen and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .map:not([data-drawn]) .dot { opacity: 0; }
 }
-@keyframes dotIn { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: none; } }
+@keyframes dotIn { from { opacity: 0; scale: .2; } to { opacity: 1; scale: 1; } }
 /* A listed row and its dot answer each other (pairing rules are written per row in the component). */
 .dot[data-pair] { transition: r .25s ease, stroke-width .25s ease; stroke: #fff; stroke-width: calc(var(--paired, 0) * 2px); r: calc(2.6px + var(--paired, 0) * 4px); }
 .list li[data-pair] { transition: background .2s; border-radius: 6px; margin-inline: -6px; padding-inline: 6px; background: rgba(255, 255, 255, calc(var(--paired, 0) * .07)); cursor: default; }

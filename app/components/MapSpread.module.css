@@ -1,0 +1,59 @@
+/* A map's mandals lined up (MapSpread.tsx). The stage wraps the map's SVG and carries
+   data-view; in "spread" the map's own outlines step back, every square travels from its
+   mandal's place to its place in a column, and the strip's line and words come forward.
+   Coming back, the squares go home first and the outlines return under them. */
+
+.stage { position: relative; }
+
+.tile { opacity: 0; pointer-events: none; transform: translate(calc(var(--hx, 0) * 1px), calc(var(--hy, 0) * 1px)) scale(var(--hs, 0)); transform-box: fill-box; transform-origin: center; }
+.stage[data-view="spread"] .tile { opacity: 1; transform: none; pointer-events: auto; }
+.stage[data-view="spread"] .shapes { opacity: 0; pointer-events: none; }
+.axis { opacity: 0; }
+.axis line { stroke: var(--line-strong, #b9c4ce); stroke-width: 1.4; }
+.axis .divide { stroke: var(--ink-soft, #475467); stroke-width: 1.4; stroke-dasharray: 5 6; }
+.stage[data-view="spread"] .axis { opacity: 1; }
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  /* Going out: the outlines fade as the squares appear in their place, then the squares set off, the figure's mandals first. */
+  .shapes { transition: opacity .45s ease .95s; }
+  .stage[data-view="spread"] .shapes { transition: opacity .35s ease .05s; }
+  .stage[data-view="spread"] .tile { transition: opacity .25s ease, transform .9s cubic-bezier(.3, 0, .2, 1) calc(.3s + var(--o, 0) * .55s); }
+  /* Coming back: each square goes home, and fades once it is there. */
+  .tile { transition: transform .8s cubic-bezier(.3, 0, .2, 1) calc(var(--o, 0) * .3s), opacity .3s ease calc(.75s + var(--o, 0) * .3s); }
+  .axis { transition: opacity .3s ease; }
+  .stage[data-view="spread"] .axis { transition-delay: .8s; }
+}
+
+/* The words stand over the map's drawing, which is centred in its box when the box is capped in height. */
+.words { position: absolute; top: 0; left: 50%; height: 100%; max-width: 100%; aspect-ratio: var(--ratio); translate: -50% 0; pointer-events: none; opacity: 0; font-size: 12px; color: var(--muted, #667085); }
+.stage[data-view="spread"] .words { opacity: 1; }
+@media screen and (prefers-reduced-motion: no-preference) {
+  .words { transition: opacity .25s ease; }
+  .stage[data-view="spread"] .words { transition: opacity .4s ease 1.1s; }
+}
+.side { position: absolute; max-width: 46%; line-height: 1.3; }
+.side[data-end] { text-align: right; }
+.side b { display: block; font: 600 22px/1.1 var(--font-display); font-variant-numeric: tabular-nums; color: var(--ink, #101828); }
+.mark { position: absolute; transform: translateX(-50%); white-space: nowrap; font: 500 10.5px var(--font-mono); font-style: normal; color: var(--muted, #667085); }
+.mark[data-align] { transform: none; }
+.mark[data-name] { font-family: var(--font-sans); font-size: 11px; font-weight: 600; line-height: 1.15; text-align: center; white-space: normal; width: var(--w); color: var(--ink-soft, #475467); }
+.count { position: absolute; transform: translate(-50%, -100%); font: 600 15px var(--font-display); font-variant-numeric: tabular-nums; color: var(--ink, #101828); }
+
+/* The toggle: the site's small segmented control, with the gliding highlight. */
+.pick { position: relative; display: inline-flex; gap: 2px; padding: 2px; border: 1px solid var(--line); border-radius: 9px; background: var(--field);
+  --glide-bg: var(--card); --glide-border: var(--line); --glide-radius: 7px; --glide-shadow: var(--shadow-sm, 0 1px 3px rgba(7, 29, 53, .1)); }
+.pick button { position: relative; z-index: 1; min-height: 30px; padding: 0 11px; border: 0; border-radius: 7px; background: transparent; cursor: pointer; font-size: 12px; font-weight: 600; color: var(--muted); }
+.pick button[aria-pressed="true"] { color: var(--ink); background: var(--card); box-shadow: var(--shadow-sm, 0 1px 3px rgba(7, 29, 53, .1)); }
+.pick:has(> :global(.pickerGlide[data-ready])) button[aria-pressed="true"] { background: transparent; box-shadow: none; }
+.pick button:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+.float { position: absolute; top: 8px; left: 8px; z-index: 2; }
+
+@media (max-width: 640px) {
+  .pick button { min-height: 36px; }
+  .side b { font-size: 18px; }
+  .side { font-size: 11px; }
+  .count { font-size: 13px; }
+  .mark[data-align] { transform: none; }
+.mark[data-name] { font-size: 9.5px; }
+}
+@media print { .pick, .tile, .axis, .words { display: none; } .shapes { opacity: 1 !important; } }

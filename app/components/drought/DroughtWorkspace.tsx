@@ -10,6 +10,8 @@ import { DroughtDownload } from "./DroughtDownload";
 import { MandalMatrix } from "./MandalMatrix";
 import styles from "./Drought.module.css";
 import { mapTooltipStyle } from "../../lib/mapTooltip";
+import { layoutSpread, mandalHomes } from "../../lib/mapSpread";
+import { SpreadTiles, SpreadToggle, SpreadWords, spreadShapes, spreadStage, type SpreadView } from "../MapSpread";
 
 const LAYERS: DroughtLayer[] = ["outcome", "rain", "dry", "spi", "vci", "pasm", "gwdi"];
 const RANK = Object.fromEntries(CATEGORY_ORDER.map((key, index) => [key, index]));
@@ -42,8 +44,19 @@ export function DroughtWorkspace({ mandals, weeks, sowing, sowingAsOf, changes, 
     for (const row of visible) out[light ? row.categoryLight : row.category] += 1;
     return out;
   }, [visible, light]);
+  // The same mandals lined up by the manual's reading, a column for each, most severe first: the
+  // legend's counts as column heights. The squares set off in that order too.
+  const [arrange, setArrange] = useState<SpreadView>("map");
+  const readings = useMemo(() => {
+    const homes = mandalHomes(), seen = Object.fromEntries(CATEGORY_ORDER.map(key => [key, 0])) as Record<string, number>;
+    const byReading = [...visible].sort((a, b) => (RANK[light ? a.categoryLight : a.category] - RANK[light ? b.categoryLight : b.category]) || (a.rain?.dev ?? 0) - (b.rain?.dev ?? 0));
+    return layoutSpread(byReading.map(entry => {
+      const key = light ? entry.categoryLight : entry.category, k = seen[key]++;
+      return { id: entry.i, column: RANK[key], rank: k, order: (RANK[key] + k / Math.max(1, counts[key])) / CATEGORY_ORDER.length, home: homes[entry.i] ?? null };
+    }), { columns: CATEGORY_ORDER.length, gap: 16, top: 170 });
+  }, [visible, light, counts]);
   const row = byIndex.get(selected);
-  const hovered = hover === null ? undefined : byIndex.get(hover);
+  const hovered = hover === null || arrange === "spread" ? undefined : byIndex.get(hover);
   const meta = LAYER_META[layer];
 
   const choose = (index: number) => {
@@ -79,9 +92,12 @@ export function DroughtWorkspace({ mandals, weeks, sowing, sowingAsOf, changes, 
       </div>
 
       <div className={styles.workspace}>
-        <div className={styles.mapCard}>
+        <div className={styles.mapCard} data-testid="drought-map-card">
+          <div className={spreadStage} data-view={arrange}>
+          <SpreadToggle float view={arrange} onChange={next => { setArrange(next); setHover(null); }} label="By reading" event={["app/drought-regroup", "Drought: lined the mandals up by the manual's reading"]} />
           <svg className={styles.mapSvg} viewBox={`0 0 ${MAP_VIEW.width} ${MAP_VIEW.height}`} role="group"
             aria-label={`Mandals coloured by ${meta.label.toLowerCase()}`} data-testid="drought-map">
+            <g className={spreadShapes}>
             {mapGeometry.mandals.map((feature, index) => {
               const entry = byIndex.get(index);
               const dimmed = !!district && feature.d !== district;
@@ -95,7 +111,12 @@ export function DroughtWorkspace({ mandals, weeks, sowing, sowingAsOf, changes, 
                   style={{ cursor: entry ? "pointer" : "default" }} />
               );
             })}
+            </g>
+            <SpreadTiles spread={readings}
+              colorOf={index => { const entry = byIndex.get(index); return entry ? CATEGORY_META[light ? entry.categoryLight : entry.category].color : "var(--field)"; }} />
           </svg>
+          <SpreadWords spread={readings} columns={CATEGORY_ORDER.map(key => ({ count: counts[key], name: CATEGORY_META[key].short }))} />
+          </div>
           {hovered ? (
             <div className={styles.mapHover} aria-live="polite" style={mapTooltipStyle(layerColor(layer, hovered, light))}>
               <strong>{place(hovered.m)}</strong>

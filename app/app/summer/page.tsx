@@ -3,7 +3,8 @@ import type { ReactElement } from "react";
 import Link from "next/link";
 import { RowFold, foldAt } from "../../components/RowFold";
 import { HeaderHero } from "../../components/HeaderHero";
-import { StateOutlineMap } from "../../components/StateOutlineMap";
+import { StateOutlineMap, type OutlineSpread } from "../../components/StateOutlineMap";
+import { layoutSpread, mandalHomes, metreColumn, metreX } from "../../lib/mapSpread";
 import { IconArrowRight, IconClock, IconCyclone, IconDroplet, IconFlask, IconMap, IconShield, IconSun, IconWaves } from "../../components/icons";
 import { GroundwaterClock } from "../../components/GroundwaterClock";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
@@ -82,6 +83,29 @@ function ClockSection() {
   );
 }
 
+/* The record map's mandals lined up by how far each is projected to stand from its own deepest
+   May on a typical winter: inside the record to the left of the line, past it to the right, a
+   column for each metre. Right of the line is exactly the "beyond" tier, the page's headline count. */
+const INSIDE_COLUMNS = 11, PAST_COLUMNS = 9;
+function recordSpread(rows: ReturnType<typeof summerRows>, summary: typeof summerOutlook.summary): OutlineSpread {
+  const homes = mandalHomes();
+  const placed = rows.flatMap(r => (r ? [r] : []));
+  const ranked = [...placed].sort((a, b) => b.margin - a.margin), order = new Map(ranked.map((r, k) => [r.index, k / Math.max(1, ranked.length - 1)]));
+  const layout = layoutSpread(placed.map(r => ({
+    id: r.index, rank: r.margin, order: order.get(r.index) ?? 0, home: homes[r.index] ?? null,
+    column: metreColumn(r.margin, r.tier === "beyond" ? 1 : -1, INSIDE_COLUMNS, PAST_COLUMNS),
+  })), { columns: INSIDE_COLUMNS + PAST_COLUMNS, divideBefore: INSIDE_COLUMNS, top: 190 });
+  const at = (m: number) => metreX(layout, m, INSIDE_COLUMNS);
+  return {
+    layout, label: "By record", event: ["app/summer-regroup", "Summer: lined the mandals up against their record"],
+    axis: [-5, 0, 5].map(at),
+    words: {
+      sides: { left: <><b>{summary.dry + summary.within}</b>inside their deepest May on a typical winter</>, right: <><b>{summary.beyond}</b>past their deepest May on record</> },
+      marks: [{ x: layout.left, text: `${INSIDE_COLUMNS - 1} m+`, align: "start" }, { x: at(-5), text: "5 m" }, { x: at(0), text: "record" }, { x: at(5), text: "5 m" }, { x: layout.right, text: `${PAST_COLUMNS - 1} m+`, align: "end" }],
+    },
+  };
+}
+
 export default function SummerPage() {
   const o = summerOutlook, s = o.summary, bt = o.backtest, people = o.people;
   const rows = summerRows();
@@ -132,7 +156,7 @@ export default function SummerPage() {
         </header>
         <div className={shared.soilGrid}>
           <StateOutlineMap testId="summer-map" aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height}
-            keys={rows.map(r => (r ? keyOf(r) : "n"))}
+            keys={rows.map(r => (r ? keyOf(r) : "n"))} spread={recordSpread(rows, s)}
             colors={{ ...Object.fromEntries(ORDER.map(t => [SUMMER_TIERS[t].key, SUMMER_TIERS[t].color])), [SHALLOW_BEYOND.key]: SHALLOW_BEYOND.color, n: "#e3e8ec" }}
             notes={rows.map(r => r ? `${SUMMER_TIERS[r.tier].short}: ${m(r.anchor)} in ${month(r.anchorMonth)}, ${m(r.typical)} by May on a typical winter (${m(r.dry)} in a dry one); deepest May on record ${m(r.deepestMay)}.` : "No projection: too short a record, or no reading.")}
             label={`Summer outlook by mandal: ${s.beyond} beyond their record on a typical winter, ${s.dry} in a dry winter, ${s.within} within their record.`}
