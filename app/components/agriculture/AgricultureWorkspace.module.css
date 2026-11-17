@@ -403,3 +403,72 @@
 .contextFacts dd small { display: block; font-size: 10px; font-weight: 400; color: var(--muted); }
 
 @media (max-width: 760px) { .noticeMore summary { min-height: 40px; } .notice p { font-size: 12px; } .heroCredit { font-size: 11px; } }
+
+
+/* Phones: no text under 11px. Every selector here set a size below 11px on a phone and, across
+   a scan of every page at 390px, matched nothing larger than 11px (its own text or inherited),
+   so this only ever raises a size. e2e/governance-zz-phone-type.spec.ts keeps the floor. */
+@media screen and (max-width: 640px) {
+  .agreeTile em,
+  .agreeTile span,
+  .agreement b,
+  .agreement small,
+  .agreementKey,
+  .agreementKey span,
+  .available,
+  .budgetHeadline small,
+  .budgetHeadline span,
+  .budgetLegend span,
+  .colorBy span,
+  .contextCaption,
+  .depth span,
+  .districtButton small,
+  .districtButton strong,
+  .evidenceFacts dd,
+  .evidenceFacts dt,
+  .evidenceFacts small,
+  .eyebrow,
+  .fieldbookHead span,
+  .focusNote,
+  .formula small,
+  .formula span,
+  .legend span,
+  .method a,
+  .method p,
+  .method summary,
+  .metrics em,
+  .metrics span,
+  .nextReview p,
+  .nextReview small,
+  .nextReview strong,
+  .noticeMore summary,
+  .observedBadge,
+  .pagination span,
+  .partial,
+  .privacyNote,
+  .readinessSteps a,
+  .readinessSteps p,
+  .reviewHead span,
+  .reviewTable small,
+  .reviewTable td,
+  .reviewTable th,
+  .scenarioBadge,
+  .seasonChart figcaption,
+  .seasonChart span,
+  .sectionNav a,
+  .sectionNav span,
+  .segmented button,
+  .selectLabel,
+  .signalTag,
+  .sliderControl small,
+  .sourceChecklist li,
+  .sourceChecklist small,
+  .sourceNote,
+  .tableSignal,
+  .textButton,
+  .viewCaption,
+  .viewToolbar span { font-size: 11px !important; }
+}
+
+/* Phone floor for the readiness step text. */
+@media screen and (max-width: 640px) { .readinessSteps > div > span:not(.stepNumber), .readinessSteps p, .readinessSteps a { font-size: 11px; } }

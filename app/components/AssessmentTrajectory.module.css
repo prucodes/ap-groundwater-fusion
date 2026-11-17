@@ -33,3 +33,11 @@
 .note { margin: 0; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
 .note b { color: var(--ink); font-weight: 600; }
 .method { margin: 0; font-size: 12px; line-height: 1.45; color: var(--muted); }
+
+
+/* Phones: no text under 11px. Every selector here set a size below 11px on a phone and, across
+   a scan of every page at 390px, matched nothing larger than 11px (its own text or inherited),
+   so this only ever raises a size. e2e/governance-zz-phone-type.spec.ts keeps the floor. */
+@media screen and (max-width: 640px) {
+  .matrix th { font-size: 11px !important; }
+}

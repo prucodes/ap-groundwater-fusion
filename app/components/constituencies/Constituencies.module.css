@@ -102,3 +102,12 @@ th.serial { padding: 9px 10px; font: 600 11px var(--font-mono); text-transform: 
 .briefLink { display: inline-flex; margin-top: 12px; padding: 7px 13px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 12px; font-weight: 600; text-decoration: none; }
 .briefLink:hover { background: var(--deep-navy); }
 :global(:root[data-theme="dark"]) .briefLink { background: var(--teal); }
+
+
+/* Phones: no text under 11px. Every selector here set a size below 11px on a phone and, across
+   a scan of every page at 390px, matched nothing larger than 11px (its own text or inherited),
+   so this only ever raises a size. e2e/governance-zz-phone-type.spec.ts keeps the floor. */
+@media screen and (max-width: 640px) {
+  .panelKicker,
+  .tile span { font-size: 11px !important; }
+}
