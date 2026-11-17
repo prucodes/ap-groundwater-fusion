@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { districtGeometry } from "../lib/data";
 import { sensors, sensorHistory } from "../lib/sensors";
+import { SensorView } from "./SensorView";
 import styles from "./SensorPulse.module.css";
 
 /* Today, from the State's sensors: every automatic recorder that reported in the
@@ -16,12 +17,26 @@ const H = Math.round(((north - south) / ((east - west) * k)) * (W - 2 * PAD) + 2
 const x = (lng: number) => PAD + ((lng - west) * k * (W - 2 * PAD)) / ((east - west) * k);
 const y = (lat: number) => PAD + ((north - lat) * (H - 2 * PAD)) / (north - south);
 
+/** Deeper, shallower or neither, by the rule the daily count uses (fetch_apwrims_sensors.py): more than 0.1 m either way. */
+const side = (change: number) => (change > 0.1 ? 1 : change < -0.1 ? -1 : 0);
+
 /** Rust deeper than a year ago, cyan shallower, by how many metres. */
 function tone(change: number) {
   const t = Math.min(1, Math.abs(change) / 8);
-  if (Math.abs(change) < 0.1) return "#93a7b8";
+  if (!side(change)) return "#93a7b8";
   return change > 0 ? `rgba(214, 112, 72, ${0.45 + 0.55 * t})` : `rgba(74, 196, 230, ${0.45 + 0.55 * t})`;
 }
+
+/* The same dots lined up by change: a column for every metre, shallower to the left of the
+   sensors that have not moved, deeper to the right, so the share that is deeper is a shape
+   rather than a figure. The last column on each side takes everything beyond it. */
+const BIN_W = 20, COLUMNS = 4, PITCH = BIN_W / COLUMNS, SHALLOWER_BINS = 9, DEEPER_BINS = 21;
+const STRIP_X = (W - (SHALLOWER_BINS + 1 + DEEPER_BINS) * BIN_W) / 2, BASELINE = H - 46;
+const binOf = (change: number) => (side(change) > 0 ? SHALLOWER_BINS + 1 + Math.min(DEEPER_BINS - 1, Math.floor(change))
+  : side(change) < 0 ? SHALLOWER_BINS - 1 - Math.min(SHALLOWER_BINS - 1, Math.floor(-change)) : SHALLOWER_BINS);
+/** Where a whole number of metres falls on the strip: negative is shallower. */
+const metreX = (m: number) => STRIP_X + (m < 0 ? SHALLOWER_BINS + m : SHALLOWER_BINS + 1 + m) * BIN_W;
+const pct = (v: number, of: number) => `${((100 * v) / of).toFixed(2)}%`;
 
 const when = (iso: string) => new Date(iso).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit", hour12: true, timeZone: "Asia/Kolkata" });
 
@@ -41,21 +56,48 @@ export function SensorPulse() {
   // The dots arrive deepest-fallen first, so the spread of rust across the State is what the eye meets.
   const order = new Map([...live].sort((a, b) => (b[5] - (b[6] as number)) - (a[5] - (a[6] as number))).map((st, i) => [st, i / Math.max(live.length - 1, 1)]));
   const listed = new Map(biggest.map((st, i) => [st, `f${i}`]));
+  // Each dot's place on the strip: its column by the metres it moved, stacked up from the line in order of change.
+  const bins = new Map<number, typeof live>();
+  [...live].sort((a, b) => (a[5] - (a[6] as number)) - (b[5] - (b[6] as number))).forEach(st => { const bin = binOf(st[5] - (st[6] as number)); bins.set(bin, [...(bins.get(bin) ?? []), st]); });
+  const tallest = Math.max(1, ...[...bins.values()].map(list => Math.ceil(list.length / COLUMNS)));
+  // A column that would run off the top is packed tighter rather than cut.
+  const rise = Math.min(PITCH, (BASELINE - 70) / tallest);
+  const place = new Map<(typeof live)[number], [number, number]>();
+  bins.forEach((list, bin) => list.forEach((st, i) => place.set(st, [
+    Math.round((STRIP_X + bin * BIN_W + PITCH / 2 + (i % COLUMNS) * PITCH - x(st[2])) * 10) / 10,
+    Math.round((BASELINE - PITCH / 2 - Math.floor(i / COLUMNS) * rise - y(st[1])) * 10) / 10,
+  ])));
+  const moved = (st: (typeof live)[number]) => { const [dx, dy] = place.get(st) ?? [0, 0]; return { "--sx": dx, "--sy": dy }; };
+  const unmoved = live.length - s.deeperThanYearAgo - s.shallowerThanYearAgo;
   // A row and its dot answer each other on hover: the dot rings, the row lights.
   const pairing = biggest.map((_, i) => `.${styles.wrap}:has([data-pair="f${i}"]:hover) [data-pair="f${i}"]`).join(",");
   const pulsing = biggest.map((_, i) => `.${styles.wrap}:has([data-pair="f${i}"]:hover) [data-ring="f${i}"]`).join(",");
   return (
     <div className={styles.wrap} data-testid="sensor-pulse">
       {pairing ? <style>{`${pairing}{--paired:1}${pulsing}{animation-name:${styles.ringPulse}}`}</style> : null}
-      <svg className={styles.map} viewBox={`0 0 ${W} ${H}`} role="img" data-draw="sequence"
-        aria-label={`${live.length} automatic water-level sensors, each coloured by its change since the same date last year: ${s.deeperThanYearAgo} deeper, ${s.shallowerThanYearAgo} shallower.`}>
-        {outlines.map((d, i) => <path key={i} d={d} className={styles.district} />)}
-        {live.map(st => <circle key={`${st[0]}-${st[1]}`} cx={x(st[2])} cy={y(st[1])} r={2.6} fill={tone(st[5] - (st[6] as number))}
-          className={styles.dot} data-pair={listed.get(st)} style={{ "--order": order.get(st) } as CSSProperties}>
-          <title>{`${st[0]}, ${st[4]} (${st[3].replace(" (d)", "")}): ${st[5].toFixed(1)} m today, ${(st[6] as number).toFixed(1)} m a year ago`}</title>
-        </circle>)}
-        {biggest.map((st, i) => <circle key={`ring-${i}`} cx={x(st[2])} cy={y(st[1])} r={9} className={styles.ring} data-ring={`f${i}`} aria-hidden="true" />)}
-      </svg>
+      <SensorView>
+        <svg className={styles.map} viewBox={`0 0 ${W} ${H}`} role="img" data-draw="sequence"
+          aria-label={`${live.length} automatic water-level sensors, each coloured by its change since the same date last year: ${s.deeperThanYearAgo} deeper, ${s.shallowerThanYearAgo} shallower, ${unmoved} within 0.1 m.`}>
+          {outlines.map((d, i) => <path key={i} d={d} className={styles.district} />)}
+          <g className={styles.axis} aria-hidden="true">
+            <line x1={STRIP_X} x2={W - STRIP_X} y1={BASELINE + 1.5} y2={BASELINE + 1.5} />
+            {[-5, 0, 5, 10, 15].map(m => <line key={m} x1={metreX(m)} x2={metreX(m)} y1={BASELINE + 1.5} y2={BASELINE + 7} />)}
+          </g>
+          {live.map(st => <circle key={`${st[0]}-${st[1]}`} cx={x(st[2])} cy={y(st[1])} r={2.6} fill={tone(st[5] - (st[6] as number))}
+            className={styles.dot} data-pair={listed.get(st)} data-side={side(st[5] - (st[6] as number))} style={{ "--order": order.get(st), ...moved(st) } as CSSProperties}>
+            <title>{`${st[0]}, ${st[4]} (${st[3].replace(" (d)", "")}): ${st[5].toFixed(1)} m today, ${(st[6] as number).toFixed(1)} m a year ago`}</title>
+          </circle>)}
+          {biggest.map((st, i) => <circle key={`ring-${i}`} cx={x(st[2])} cy={y(st[1])} r={9} className={styles.ring} data-ring={`f${i}`} aria-hidden="true" style={moved(st) as CSSProperties} />)}
+        </svg>
+        {/* The strip's own words, in page type so they stay readable on a phone; shown only when the dots are lined up. */}
+        <div className={styles.strip} aria-hidden="true">
+          <span className={styles.stripShallower} style={{ left: pct(STRIP_X, W) }}><b>{s.shallowerThanYearAgo.toLocaleString("en-IN")}</b> shallower</span>
+          <span className={styles.stripDeeper} style={{ right: pct(STRIP_X, W) }}><b>{s.deeperThanYearAgo.toLocaleString("en-IN")}</b> deeper than a year ago</span>
+          {[[-5, "5 m"], [5, "5 m"], [10, "10 m"], [15, "15 m"]].map(([m, label]) => <i key={m} style={{ left: pct(metreX(m as number), W), top: pct(BASELINE + 9, H) }}>{label}</i>)}
+          <i style={{ left: pct(metreX(0) - BIN_W / 2, W), top: pct(BASELINE + 9, H) }}>no change</i>
+          <i data-end="" style={{ right: pct(STRIP_X, W), top: pct(BASELINE + 9, H) }}>{DEEPER_BINS - 1} m+</i>
+        </div>
+      </SensorView>
       <div className={styles.side}>
         <div className={styles.big}><b>{deeperPct}%</b><span>of the State&rsquo;s reporting sensors are deeper than on the same date last year: <strong>{s.deeperThanYearAgo.toLocaleString("en-IN")}</strong> of {s.compared.toLocaleString("en-IN")}</span></div>
         <ul className={styles.tiles}>
