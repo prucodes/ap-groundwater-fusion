@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { districtGeometry } from "../lib/data";
 import { sensors, sensorHistory } from "../lib/sensors";
 import styles from "./SensorPulse.module.css";
@@ -35,14 +36,23 @@ export function SensorPulse() {
   const biggest = [...plausible].sort((a, b) => (b[5] - (b[6] ?? 0)) - (a[5] - (a[6] ?? 0))).slice(0, 5);
   const days = sensorHistory.days;
   const deeperPct = Math.round((100 * s.deeperThanYearAgo) / Math.max(s.compared, 1));
+  // The dots arrive deepest-fallen first, so the spread of rust across the State is what the eye meets.
+  const order = new Map([...live].sort((a, b) => (b[5] - (b[6] as number)) - (a[5] - (a[6] as number))).map((st, i) => [st, i / Math.max(live.length - 1, 1)]));
+  const listed = new Map(biggest.map((st, i) => [st, `f${i}`]));
+  // A row and its dot answer each other on hover: the dot rings, the row lights.
+  const pairing = biggest.map((_, i) => `.${styles.wrap}:has([data-pair="f${i}"]:hover) [data-pair="f${i}"]`).join(",");
+  const pulsing = biggest.map((_, i) => `.${styles.wrap}:has([data-pair="f${i}"]:hover) [data-ring="f${i}"]`).join(",");
   return (
     <div className={styles.wrap} data-testid="sensor-pulse">
+      {pairing ? <style>{`${pairing}{--paired:1}${pulsing}{animation-name:${styles.ringPulse}}`}</style> : null}
       <svg className={styles.map} viewBox={`0 0 ${W} ${H}`} role="img"
         aria-label={`${live.length} automatic water-level sensors, each coloured by its change since the same date last year: ${s.deeperThanYearAgo} deeper, ${s.shallowerThanYearAgo} shallower.`}>
         {outlines.map((d, i) => <path key={i} d={d} className={styles.district} />)}
-        {live.map(st => <circle key={`${st[0]}-${st[1]}`} cx={x(st[2])} cy={y(st[1])} r={2.6} fill={tone(st[5] - (st[6] as number))}>
+        {live.map(st => <circle key={`${st[0]}-${st[1]}`} cx={x(st[2])} cy={y(st[1])} r={2.6} fill={tone(st[5] - (st[6] as number))}
+          className={styles.dot} data-pair={listed.get(st)} style={{ "--order": order.get(st) } as CSSProperties}>
           <title>{`${st[0]}, ${st[4]} (${st[3].replace(" (d)", "")}): ${st[5].toFixed(1)} m today, ${(st[6] as number).toFixed(1)} m a year ago`}</title>
         </circle>)}
+        {biggest.map((st, i) => <circle key={`ring-${i}`} cx={x(st[2])} cy={y(st[1])} r={9} className={styles.ring} data-ring={`f${i}`} aria-hidden="true" />)}
       </svg>
       <div className={styles.side}>
         <div className={styles.big}><b>{deeperPct}%</b><span>of the State&rsquo;s reporting sensors are deeper than on the same date last year: <strong>{s.deeperThanYearAgo.toLocaleString("en-IN")}</strong> of {s.compared.toLocaleString("en-IN")}</span></div>
@@ -53,7 +63,7 @@ export function SensorPulse() {
         </ul>
         <h3>Fallen furthest since a year ago</h3>
         <ol className={styles.list}>
-          {biggest.map(st => <li key={st[0]}><span>{st[4]}<small>{st[3].replace(" (d)", "")}</small></span><b>{(st[5] - (st[6] as number)).toFixed(1)} m</b><em>{(st[6] as number).toFixed(1)} → {st[5].toFixed(1)} m</em></li>)}
+          {biggest.map(st => <li key={st[0]} data-pair={listed.get(st)}><span>{st[4]}<small>{st[3].replace(" (d)", "")}</small></span><b>{(st[5] - (st[6] as number)).toFixed(1)} m</b><em>{(st[6] as number).toFixed(1)} → {st[5].toFixed(1)} m</em></li>)}
         </ol>
         <p className={styles.key} aria-hidden="true"><i className={styles.deeper} />deeper than a year ago<i className={styles.shallower} />shallower</p>
         <p className={styles.note}>

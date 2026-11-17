@@ -35,3 +35,15 @@
   .tiles { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .list li em { display: none; }
 }
+
+/* Dots arrive in order of how far each well has fallen, deepest first, over about two seconds. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  .dot { animation: dotIn .5s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(.25s + var(--order, 0) * 1.7s); transform-box: fill-box; transform-origin: center; }
+}
+@keyframes dotIn { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: none; } }
+/* A listed row and its dot answer each other (pairing rules are written per row in the component). */
+.dot[data-pair] { transition: r .25s ease, stroke-width .25s ease; stroke: #fff; stroke-width: calc(var(--paired, 0) * 2px); r: calc(2.6px + var(--paired, 0) * 4px); }
+.list li[data-pair] { transition: background .2s; border-radius: 6px; margin-inline: -6px; padding-inline: 6px; background: rgba(255, 255, 255, calc(var(--paired, 0) * .07)); cursor: default; }
+.ring { fill: none; stroke: #fff; stroke-width: 1.5px; opacity: 0; pointer-events: none; transform-box: fill-box; transform-origin: center; animation: none .9s cubic-bezier(.2, 0, .2, 1) 1 both; }
+@keyframes ringPulse { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(2.2); } }
+@media (prefers-reduced-motion: reduce) { .ring { animation: none !important; } }
