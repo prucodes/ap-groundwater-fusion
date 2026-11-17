@@ -5370,6 +5370,8 @@ table.dataTable td.good { color: var(--st-normal-ink); font-weight: 600; }
   align-items: start;
 }
 .rechargeMapFigure { position: relative; }
+.rechargeTools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.rechargeTools .rechargeToggle { margin-bottom: 0; }
 .rechargeMapSvg { width: 100%; height: auto; max-height: 620px; display: block; margin: 0 auto; }
 .rechargeCell {
   stroke: var(--card);

@@ -1,10 +1,12 @@
 "use client";
 
-import { useId, useLayoutEffect, useRef, useState } from "react";
+import { useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { MAP_VIEW, mandalToPath, mapGeometry, monsoonWatch } from "../lib/data";
 import { countEvent } from "../lib/visit-counter";
 import { Callout, ChartData } from "./chart/ChartKit";
 import { mapTooltipStyle } from "../lib/mapTooltip";
+import { districtHome, layoutSpread, mandalHomes, metreColumn, metreX } from "../lib/mapSpread";
+import { SpreadTiles, SpreadToggle, SpreadWords, spreadShapes, spreadStage, type SpreadView } from "./MapSpread";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -39,6 +41,24 @@ function shortfallFill(value: number | undefined) {
   return fillFor(SHORT_STOPS, value);
 }
 
+/* The map's mandals lined up by how far each water table has moved since May: higher than in
+   May to the left of the line, lower to the right, a column for each metre and the end ones
+   taking everything beyond. Every mandal the season count includes has a square, the few
+   without an outline of their own setting off from their district, so the squares right of
+   the line are the published count of mandals lower than in May. Colour stays the map's. */
+const ROSE_COLUMNS = 9, FELL_COLUMNS = 11;
+function seasonSpread() {
+  const rows = monsoonWatch.mandals, homes = mandalHomes();
+  const ranked = rows.map((row, i) => ({ row, i })).sort((a, b) => b.row.thisSeasonM - a.row.thisSeasonM);
+  const order = new Map(ranked.map(({ i }, k) => [i, k / Math.max(1, ranked.length - 1)]));
+  const spread = layoutSpread(rows.map((row, i) => ({
+    id: i, rank: row.thisSeasonM, order: order.get(i) ?? 0,
+    column: metreColumn(row.thisSeasonM, row.thisSeasonM > 0 ? 1 : -1, ROSE_COLUMNS, FELL_COLUMNS),
+    home: row.boundaryIndex !== null ? homes[row.boundaryIndex] : districtHome(row.district),
+  })), { columns: ROSE_COLUMNS + FELL_COLUMNS, divideBefore: ROSE_COLUMNS, top: 150 });
+  return { spread, marks: [-5, 0, 5].map(m => metreX(spread, m, ROSE_COLUMNS)) };
+}
+
 /** Andhra Pradesh by mandal, shaded by how far this season is from that mandal's own normal.
  *
  *  The map is capped in height and the legend and readout sit beside it rather
@@ -54,6 +74,9 @@ export function RechargeMap() {
   const [position, setPosition] = useState({ left: 8, top: 8 });
   const [hover, setHover] = useState<{ index: number; x: number; y: number } | null>(null);
   const [view, setView] = useState<"metres" | "volume">("metres");
+  const [arrange, setArrange] = useState<SpreadView>("map");
+  const season = useMemo(seasonSpread, []);
+  const lower = monsoonWatch.recharge.falling, higher = monsoonWatch.recharge.mandals - lower;
   const stops = view === "metres" ? SHORT_STOPS : VOLUME_STOPS;
   const byBoundary = new Map<number, (typeof monsoonWatch.mandals)[number] | null>();
   monsoonWatch.mandals.forEach((m) => {
@@ -84,6 +107,7 @@ export function RechargeMap() {
   return (
     <div className="rechargeMapLayout">
       <div className="rechargeMapFigure" ref={figure}>
+        <div className="rechargeTools">
         <div className="rechargeToggle" role="group" aria-label="Colour the map by">
           {([
             { k: "metres", label: "Metres of water table" },
@@ -105,6 +129,9 @@ export function RechargeMap() {
             </button>
           ))}
         </div>
+        <SpreadToggle view={arrange} onChange={next => { setArrange(next); setHover(null); }} label="By change" event={["monsoon/map-regroup", "Monsoon: lined the mandals up by their change since May"]} />
+        </div>
+        <div className={`rechargeMapStage ${spreadStage}`} data-view={arrange}>
         <svg
           viewBox={`0 0 ${MAP_VIEW.width} ${MAP_VIEW.height}`}
           className="rechargeMapSvg"
@@ -112,6 +139,7 @@ export function RechargeMap() {
           aria-label="Seasonal groundwater departure by prototype mandal"
           onMouseLeave={() => setHover(null)}
         >
+          <g className={spreadShapes}>
           {mapGeometry.mandals.map((feature, index) => {
             const row = byBoundary.get(index);
             return (
@@ -140,7 +168,14 @@ export function RechargeMap() {
               />
             );
           })}
+          </g>
+          <SpreadTiles spread={season.spread} marks={season.marks}
+            colorOf={i => fillFor(stops, view === "metres" ? monsoonWatch.mandals[i].shortfallM : monsoonWatch.mandals[i].shortfallMm3)} />
         </svg>
+        <SpreadWords spread={season.spread}
+          sides={{ left: <><b>{higher}</b>level or higher than in May</>, right: <><b>{lower}</b>lower than in May</> }}
+          marks={[{ x: season.spread.left, text: `${ROSE_COLUMNS - 1} m+`, align: "start" }, { x: season.marks[0], text: "5 m" }, { x: season.marks[1], text: "May level" }, { x: season.marks[2], text: "5 m" }, { x: season.spread.right, text: `${FELL_COLUMNS - 1} m+`, align: "end" }]} />
+        </div>
         {hover && activeFeature ? (
           <div
             className="rechargeTip"

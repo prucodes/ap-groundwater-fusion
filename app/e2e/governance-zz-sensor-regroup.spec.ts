@@ -30,8 +30,10 @@ for (const [name, width, height] of [["laptop", 1440, 900], ["phone", 390, 844]]
     await view.getByRole("button", { name: "By change" }).click();
     await expect(view).toHaveAttribute("data-view", "spread");
     await expect(view.getByRole("button", { name: "By change" })).toHaveAttribute("aria-pressed", "true");
-    // Every dot has travelled once the slowest (the last in the order) has finished.
-    await page.waitForTimeout(1800);
+    // Every dot has travelled once the slowest (the last in the order) has finished; a slow machine takes longer.
+    const settled = () => page.evaluate(() => Promise.all(document.getAnimations().filter(animation => animation.effect?.getComputedTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => undefined))));
+    await page.waitForTimeout(400);
+    await settled();
     const lined = await dots(view);
     const zeroLeft = 10 + 9 * 20, zeroRight = zeroLeft + 20, baseline = Math.max(...lined.map(dot => dot.y));
     expect(lined.filter(dot => dot.x > zeroRight)).toHaveLength(deeper);
@@ -54,9 +56,10 @@ for (const [name, width, height] of [["laptop", 1440, 900], ["phone", 390, 844]]
 
     // And back: every sensor returns to where it stands.
     await view.getByRole("button", { name: "On the map" }).click();
-    await page.waitForTimeout(1800);
-    const back = await dots(view);
-    expect(back.every((dot, i) => Math.abs(dot.x - onMap[i].x) < 0.6 && Math.abs(dot.y - onMap[i].y) < 0.6)).toBe(true);
+    await expect.poll(async () => {
+      const back = await dots(view);
+      return back.filter((dot, i) => Math.abs(dot.x - onMap[i].x) >= 0.6 || Math.abs(dot.y - onMap[i].y) >= 0.6).length;
+    }, { timeout: 8000 }).toBe(0);
   });
 }
 
