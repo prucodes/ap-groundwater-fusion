@@ -10,7 +10,9 @@ import { expect, test } from "@playwright/test";
 const PAGES = ["/", "/changes/", "/weekly-film/", "/map/", "/monsoon/", "/cyclones/", "/drought/", "/summer/", "/rabi/",
   "/agriculture/", "/districts/", "/constituencies/", "/facts/", "/field-report/", "/digest/", "/nasa/", "/climate/",
   "/scenario/", "/irrigation/", "/estimates/", "/readiness/", "/compare/", "/methodology/", "/settings/", "/crystal/",
-  "/living-water-table/", "/mandals/ap-temp-mandal-kurnool-alur-512/"];
+  "/living-water-table/", "/mandals/ap-temp-mandal-kurnool-alur-512/",
+  // The 3D view runs in its own frame on /crystal/, so its HUD is checked on its own page.
+  "/water-crystal-3d.html?static=1"];
 
 test.use({ viewport: { width: 390, height: 844 } });
 
@@ -30,7 +32,8 @@ test("no text on a phone page is smaller than 11px", async ({ page }) => {
         if (!el || !text || el.closest("svg, [data-film-stage], .leaflet-container, script, style")) continue;
         if (el.getClientRects().length === 0) continue;
         const size = parseFloat(getComputedStyle(el).fontSize);
-        if (size < 10.99) out.push(`${size}px "${text.slice(0, 32)}" (${el.tagName.toLowerCase()}.${String(el.className).split(" ")[0]})`);
+        // 0px is text deliberately hidden behind a drawn stand-in (the 3D compass needle).
+        if (size > 0 && size < 10.99) out.push(`${size}px "${text.slice(0, 32)}" (${el.tagName.toLowerCase()}.${String(el.className).split(" ")[0]})`);
       }
       return out;
     });
