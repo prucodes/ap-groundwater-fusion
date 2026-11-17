@@ -11,6 +11,7 @@ import { SatelliteSignalCards } from "./SatelliteSignalCards";
 import { SelectedMandalPanel } from "./SelectedMandalPanel";
 import { ReadinessSummary } from "./SourceReadinessPanel";
 import { CountUp } from "./CountUp";
+import { DepthPair, SeasonRise, ShareBar } from "./HeadlineVisual";
 import {
   IconActivity,
   IconArrowRight,
@@ -43,7 +44,7 @@ const shortDay = (iso: string | null | undefined) => {
 };
 
 /** The summer outlook's headline, worked out on the server (the outlook file stays out of the browser). */
-export type OverviewSummer = { beyond: number; beyondDeep: number; deepM: number; peopleDeep: string | null };
+export type OverviewSummer = { beyond: number; beyondDeep: number; deepM: number; peopleDeep: string | null; dry?: number; within?: number };
 
 export type OverviewProof = {
   tanksBelowPct: number | null; tanksEmptier: number; tanksScored: number; drinkingGroundwaterPct: number;
@@ -135,6 +136,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
           <Link className="headlineCard" href="/changes/#sensors-today" data-testid="state-network-cell">
             <span className="headlineKicker"><IconDroplet /> Daily groundwater snapshot</span>
             <strong>{sensors.deeperPct}%<small>of the State&rsquo;s sensors deeper than a year ago</small></strong>
+            <DepthPair yearAgo={sensors.yearAgoM} today={sensors.medianM} />
             <span className="headlineText">
               {`Median ${sensors.medianM.toFixed(1)} m below ground against ${sensors.yearAgoM.toFixed(1)} m on the same date last year, across ${sensors.active.toLocaleString("en-IN")} automatic recorders; latest reading ${sensors.latest.slice(0, 10)}.`}
             </span>
@@ -153,6 +155,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
         <Link className="headlineCard" href="/monsoon/">
           <span className="headlineKicker"><IconCloudRain /> Monsoon</span>
           <strong>{formatNumber(watch.recharge.fallingPct)}%<small>of mandal series lower than in May</small></strong>
+          {watch.trajectory?.length ? <SeasonRise trajectory={watch.trajectory} delay={140} /> : null}
           <span className="headlineText">
             {watch.rainfall ? `Rain ${formatNumber(Math.abs(watch.rainfall.anomalyPct))}% ${watch.rainfall.anomalyPct < 0 ? "below" : "above"} normal, the ${watch.rainfall.rankDriest === 1 ? "driest" : `${watch.rainfall.rankDriest}${watch.rainfall.rankDriest === 2 ? "nd" : watch.rainfall.rankDriest === 3 ? "rd" : "th"} driest`} of ${watch.rainfall.ofYears} years.` : "The season's recharge, mandal by mandal."}
             {seasonFailing ? ` More than any past season, which ranged ${formatNumber(priorFallingLow)} to ${formatNumber(priorFallingHigh)}%.` : ""}
@@ -162,6 +165,12 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
         <Link className="headlineCard" href="/drought/">
           <span className="headlineKicker"><IconShield /> Drought manual</span>
           <strong>{droughtSummary.state.trigger1}<small>mandals meet the rainfall trigger</small></strong>
+          <ShareBar delay={280} label="Mandals by the manual's impact reading" parts={[
+            { name: "severe", value: droughtSummary.state.counts.severe, tone: "now" },
+            { name: "moderate", value: droughtSummary.state.counts.moderate, tone: "warn" },
+            { name: "normal", value: droughtSummary.state.counts.normal, tone: "ok" },
+            { name: "borderline, not triggered or no data", value: (droughtSummary.state.counts["moderate|severe"] ?? 0) + (droughtSummary.state.counts["normal|moderate"] ?? 0) + (droughtSummary.state.counts.noTrigger ?? 0) + (droughtSummary.state.counts.insufficient ?? 0), tone: "none" },
+          ]} />
           <span className="headlineText">
             {droughtSummary.state.counts.severe} read severe and {droughtSummary.state.counts.moderate} moderate on impact{droughtWeek && droughtWeek.worse + droughtWeek.better > 0
               ? `; ${droughtWeek.worse} worse and ${droughtWeek.better} better than last week. Evidence, not a declaration.`
@@ -173,6 +182,11 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
           <Link className="headlineCard" href="/summer/">
             <span className="headlineKicker"><IconWaves /> Next summer</span>
             <strong>{summer.beyond}<small>mandals heading past their deepest May</small></strong>
+            {summer.dry !== undefined && summer.within !== undefined ? <ShareBar delay={420} label="Mandals by next May's outlook" parts={[
+              { name: "past record", value: summer.beyond, tone: "now" },
+              { name: "dry winter", value: summer.dry, tone: "warn" },
+              { name: "within", value: summer.within, tone: "ok" },
+            ]} /> : null}
             <span className="headlineText">
               {summer.beyondDeep} of them more than {summer.deepM} m down{summer.peopleDeep ? `, home to about ${summer.peopleDeep}` : ""}. A projection from past winters.
             </span>

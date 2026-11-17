@@ -39,6 +39,11 @@ export function ChartReveal() {
       const sequence = node.dataset.draw === "sequence";
       const box = node.getBoundingClientRect();
       const shown = Math.max(0, Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0)) / Math.max(box.height, 1);
+      // "always": hidden from first paint (no flash) and drawn in even when it opens on screen.
+      if (node.dataset.draw === "always" && shown > 0) {
+        requestAnimationFrame(() => { node.dataset.drawn = "drawing"; window.setTimeout(() => { node.dataset.drawn = "done"; }, REVEAL_MS + 2000); });
+        return;
+      }
       if (!root.dataset.motion && (sequence ? shown >= 0.5 : shown > 0)) { node.dataset.drawn = "done"; return; }
       const frame = sequence ? node : node.parentElement ?? node;
       const nodes = charts.get(frame);

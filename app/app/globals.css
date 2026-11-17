@@ -6169,8 +6169,8 @@ button.statusLive:focus-visible { outline: 2px solid var(--cyan); outline-offset
 /* Motion, one language across the site: things settle rather than snap.
    Charts draw in left to right the first time they scroll into view (ChartReveal). */
 @media screen and (prefers-reduced-motion: no-preference) {
-  :root[data-motion="ready"] [data-draw]:not([data-draw="sequence"]):not([data-drawn]) { clip-path: inset(0 100% 0 0); }
-  :root[data-motion="ready"] [data-draw]:not([data-draw="sequence"])[data-drawn="drawing"] { clip-path: inset(0 0 0 0); transition: clip-path 1.1s cubic-bezier(.3, 0, .2, 1); }
+  :root[data-motion="ready"] [data-draw]:not([data-draw="sequence"]):not([data-draw="always"]):not([data-drawn]) { clip-path: inset(0 100% 0 0); }
+  :root[data-motion="ready"] [data-draw]:not([data-draw="sequence"]):not([data-draw="always"])[data-drawn="drawing"] { clip-path: inset(0 0 0 0); transition: clip-path 1.1s cubic-bezier(.3, 0, .2, 1); }
 }
 
 /* Folds glide: the box grows first, then the words arrive once there is room; closing,
@@ -6208,6 +6208,40 @@ button.statusLive:focus-visible { outline: 2px solid var(--cyan); outline-offset
   .heroBrief dt { font-size: 11px; }
 }
 
+/* Overview headline pictures, animated once on load: past seasons' lines draw one after another,
+   then this season's line and its dot; bars grow from the left; keys fade in. Held at the start
+   from first paint where script runs, so nothing flashes; off with reduced motion and in print. */
+@media screen and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .headlineVisual .hvPast, .headlineVisual .hvNow { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .headlineVisual .hvNowDot { opacity: 0; transform: scale(0); transform-box: fill-box; transform-origin: center; }
+  .headlineVisual .hvTrack i, .headlineVisual .hvShare i { transform: scaleX(0); transform-origin: left center; }
+  .headlineVisual .hvKey { opacity: 0; transform: translateY(3px); }
+  .headlineVisual[data-drawn] .hvPast { stroke-dashoffset: 0; transition: stroke-dashoffset 1.1s cubic-bezier(.3, 0, .2, 1) calc(var(--d, 0ms) + var(--i, 0) * 70ms); }
+  .headlineVisual[data-drawn] .hvNow { stroke-dashoffset: 0; transition: stroke-dashoffset 1.3s cubic-bezier(.3, 0, .2, 1) calc(var(--d, 0ms) + .9s); }
+  .headlineVisual[data-drawn] .hvNowDot { opacity: 1; transform: none; transition: opacity .3s ease calc(var(--d, 0ms) + 2.1s), transform .5s cubic-bezier(.3, 1.6, .5, 1) calc(var(--d, 0ms) + 2.1s); }
+  .headlineVisual[data-drawn] .hvTrack i, .headlineVisual[data-drawn] .hvShare i { transform: none; transition: transform .8s cubic-bezier(.3, 0, .2, 1) calc(var(--d, 0ms) + var(--i, 0) * 180ms); }
+  .headlineVisual[data-drawn] .hvKey { opacity: 1; transform: none; transition: opacity .5s ease calc(var(--d, 0ms) + .9s), transform .5s ease calc(var(--d, 0ms) + .9s); }
+}
+.headlineVisual { display: grid; gap: 6px; margin: 4px 0 6px; }
+.headlineVisual svg { display: block; width: 100%; height: auto; max-height: 48px; overflow: visible; }
+.hvBase { stroke: var(--line-strong); stroke-width: 1; stroke-dasharray: 2 3; }
+.hvPast { fill: none; stroke: var(--muted); stroke-opacity: .35; stroke-width: 1.1; }
+.hvNow { fill: none; stroke: var(--hv-now); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.hvNowDot { fill: var(--hv-now); }
+.hvRow { display: grid; grid-template-columns: 68px minmax(0, 1fr) auto; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+.hvRow b { font: 600 11px var(--font-mono); color: var(--ink-soft); }
+.hvTrack { display: block; height: 9px; }
+.hvTrack i { display: block; height: 100%; border-radius: 2px; }
+.hvShare { display: flex; gap: 2px; height: 10px; }
+.hvShare i { display: block; border-radius: 2px; min-width: 2px; }
+.hvKey { display: flex; flex-wrap: wrap; gap: 2px 12px; font-size: 11px; color: var(--muted); }
+.hvKey > span { display: inline-flex; align-items: center; gap: 5px; }
+.hvSwatch { display: inline-block; width: 8px; height: 8px; border-radius: 2px; }
+.overviewHeadlines { --hv-now: #c65a46; }
+:root[data-theme="dark"] .overviewHeadlines { --hv-now: #f0a283; }
+.hvPart-now { background: var(--hv-now); } .hvPart-warn { background: #d9a13b; } .hvPart-ok { background: #4f9a83; }
+.hvPart-then, .hvPart-none { background: color-mix(in srgb, var(--muted) 35%, transparent); }
+.hvPart-past { background: color-mix(in srgb, var(--muted) 55%, transparent); height: 2px; }
 /* The status map: colours glide when the layer changes; the legend picks one status out. */
 @media (prefers-reduced-motion: no-preference) {
   .statusMapPath { transition: fill .5s ease, fill-opacity .35s ease, stroke-width .1s; }
