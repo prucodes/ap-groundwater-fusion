@@ -40,7 +40,7 @@
 /* The order starts when the map scrolls into view (ChartReveal marks it data-drawn), so on a phone
    it plays where the reader is, not above the fold before they arrive. Without script it is simply drawn. */
 @media screen and (prefers-reduced-motion: no-preference) {
-  .map[data-drawn] .dot { animation: dotIn .5s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(.15s + var(--order, 0) * 1.7s); transform-box: fill-box; transform-origin: center; }
+  .map[data-drawn] .dot { animation: dotIn .5s cubic-bezier(.3, 0, .2, 1) backwards; animation-delay: calc(.15s + var(--order, 0) * 1.7s); transform-box: fill-box; transform-origin: center; }
 }
 @media screen and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
   .map:not([data-drawn]) .dot { opacity: 0; }
@@ -52,3 +52,40 @@
 .ring { fill: none; stroke: #fff; stroke-width: 1.5px; opacity: 0; pointer-events: none; transform-box: fill-box; transform-origin: center; animation: none .9s cubic-bezier(.2, 0, .2, 1) 1 both; }
 @keyframes ringPulse { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(2.2); } }
 @media (prefers-reduced-motion: reduce) { .ring { animation: none !important; } }
+
+/* Two arrangements of the same dots (SensorView.tsx): where each sensor stands, or lined up by
+   how far it has moved in a year. Every dot carries its place on the strip as an offset from
+   its place on the map (--sx, --sy, in the map's own units) and travels there, deepest fallen
+   first; the State's outline steps back and the strip's line and words come forward. */
+.figure { position: relative; min-width: 0; }
+.figure[data-view="spread"] .dot, .figure[data-view="spread"] .ring { transform: translate(calc(var(--sx, 0) * 1px), calc(var(--sy, 0) * 1px)); }
+.district { transition: opacity .5s ease; }
+.figure[data-view="spread"] .district { opacity: 0; }
+.axis { opacity: 0; transition: opacity .5s ease; }
+.axis line { stroke: rgba(232, 241, 250, .34); stroke-width: 1; }
+.figure[data-view="spread"] .axis { opacity: 1; transition-delay: .5s; }
+.strip { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s ease; font-size: 11.5px; color: rgba(232, 241, 250, .7); }
+.figure[data-view="spread"] .strip { opacity: 1; transition-delay: .9s; }
+.strip span, .strip i { position: absolute; white-space: nowrap; font-style: normal; }
+.strip span { top: 46px; }
+.strip i { transform: translateX(-50%); font: 500 10.5px var(--font-mono); color: rgba(232, 241, 250, .6); }
+.strip i[data-end] { transform: none; }
+.strip b { font: 600 20px var(--font-display); font-variant-numeric: tabular-nums; margin-right: 3px; }
+.stripShallower b { color: #8fdcf2; }
+.stripDeeper { text-align: right; }
+.stripDeeper b { color: #f0a283; }
+@media screen and (prefers-reduced-motion: no-preference) {
+  /* Once the dots have arrived, they are free to travel; the first to go are the ones that fell furthest. */
+  .map[data-drawn="done"] .dot { transition: transform .9s cubic-bezier(.3, 0, .2, 1) calc(var(--order, 0) * .55s), r .25s ease, stroke-width .25s ease; }
+  .map[data-drawn="done"] .ring { transition: transform .9s cubic-bezier(.3, 0, .2, 1); }
+}
+
+.viewPick { position: absolute; top: 2px; left: 2px; display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(8, 21, 38, .6); border: 1px solid rgba(232, 241, 250, .16);
+  --glide-bg: rgba(232, 241, 250, .16); --glide-border: rgba(232, 241, 250, .2); --glide-radius: 999px; }
+.viewPick button { position: relative; z-index: 1; min-height: 30px; padding: 0 12px; border: 0; border-radius: 999px; background: transparent; cursor: pointer;
+  font: 600 11.5px var(--font-sans); color: rgba(232, 241, 250, .7); }
+.viewPick button[aria-pressed="true"] { color: #fff; background: rgba(232, 241, 250, .16); }
+.viewPick :global(.pickerGlide[data-ready]) ~ button[aria-pressed="true"] { background: transparent; }
+.viewPick button:focus-visible { outline: 2px solid #8fdcf2; outline-offset: 1px; }
+@media (max-width: 640px) { .viewPick button { min-height: 36px; } .strip span { top: 50px; } .strip b { font-size: 17px; } }
+@media print { .viewPick { display: none; } }
