@@ -9,7 +9,8 @@ import styles from "./MandalSensors.module.css";
 
 const akvan = akvanJson as unknown as { name: string; sensors: { baseline: string; stations: Array<[string, number, number, number | null, number]> } };
 const at = (iso: string) => new Date(iso).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit", hour12: true, timeZone: "Asia/Kolkata" });
-const signed = (v: number) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(1)} m`;
+// Rounded first, so a change that prints as 0.0 reads "no change", never "−0.0 m".
+const signed = (v: number) => { const r = Math.round(v * 10) / 10; return r === 0 ? "no change" : `${r > 0 ? "+" : "−"}${Math.abs(r).toFixed(1)} m`; };
 
 export function MandalSensors({ mandalId }: { mandalId: string }) {
   const index = mapGeometry.mandals.findIndex(x => mandalByMapKey(x.d, x.m)?.id === mandalId);
