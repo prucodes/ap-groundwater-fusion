@@ -22,5 +22,9 @@
 .gates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; padding: 14px 0; }
 .gates > div:nth-child(2) strong { color: #a37121; }
 @media (max-width: 900px) { .sources { grid-template-columns: repeat(2, minmax(0, 1fr)); } .gates { grid-template-columns: 1fr; gap: 10px; } }
+@media (max-width: 760px) {
+  .tag, .sources span, .receipt { font-size: 11px; }
+  .sources a { display: inline-flex; align-items: center; min-height: 40px; font-size: 12px; }
+}
 @media (max-width: 600px) { .open { margin-left: 0; } .sources { gap: 16px; } }
 @media print { .evidence details::details-content { content-visibility: visible; display: contents; } }
