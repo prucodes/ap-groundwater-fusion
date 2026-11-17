@@ -30,6 +30,7 @@ import { MandalDroughtCheck } from "./drought/MandalDroughtCheck";
 import { MandalStateReading } from "./MandalStateReading";
 import { MandalShareCard } from "./MandalShareCard";
 import { MandalSensors } from "./MandalSensors";
+import { PhoneFold } from "./ChapterFold";
 import { mandalCardFacts } from "../lib/mandalCard";
 import {
   IconArrowRight,
@@ -260,6 +261,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
 
           </div>
 
+          <PhoneFold title="How the estimate is built" summary="What the reading, the satellites and the model each contribute">
           <section className="card">
             <div className="cardHead">
               <div className="cardTitle">
@@ -271,13 +273,17 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
             </div>
             <FusionExplanationCard mandal={mandal} />
           </section>
+          </PhoneFold>
 
           <MandalSeasonContext mandalId={mandal.id} />
           <MandalStateReading mandalId={mandal.id} />
 
-          <MandalDroughtCheck mandalId={mandal.id} />
+          <PhoneFold title="Drought manual check" summary="The manual’s indicators for this mandal, step by step">
+            <MandalDroughtCheck mandalId={mandal.id} />
+          </PhoneFold>
 
           {mandal.water_balance_mm !== null && mandal.water_balance_mm !== undefined && (
+            <PhoneFold title="Aquifer water balance" summary="Rainfall minus actual evapotranspiration, TerraClimate">
             <section className="card">
               <div className="cardHead">
                 <div className="cardTitle">
@@ -293,6 +299,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
               </div>
               <WaterBalanceCard mandal={mandal} year={dashboardSummary.summary.balance_year} />
             </section>
+            </PhoneFold>
           )}
 
             <section className="card">
@@ -332,6 +339,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
                   : "No measured history is available. No history has been substituted or synthesized."}
               </div>
             </section>
+            <PhoneFold title="Monsoon recharge, year by year" summary="How far each monsoon lifted the water table">
             <section className="card">
               <div className="cardHead">
                 <div className="cardTitle">
@@ -346,7 +354,9 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
                 May and a November reading are omitted rather than interpolated.
               </div>
             </section>
+            </PhoneFold>
           <div className="contentGrid detailPair">
+            <PhoneFold title="Data quality and freshness" summary="How complete and how recent each input is">
             <section className="card">
               <div className="cardHead">
                 <div className="cardTitle">
@@ -380,11 +390,13 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
                 {mandal.data_quality_notes}
               </div>
             </section>
+            </PhoneFold>
           </div>
         </div>
 
         {/* right rail */}
         <div className="contentGrid detailRail">
+          <PhoneFold title="Data sources" summary="Every input, where it comes from and how it is used">
           <section className="card">
             <div className="cardHead">
               <div className="cardTitle">
@@ -439,6 +451,7 @@ export function MandalDetail({ mandal }: { mandal: MandalGroundwaterView }) {
               </div>
             </div>
           </section>
+          </PhoneFold>
 
           <section className="card">
             <div className="cardHead">

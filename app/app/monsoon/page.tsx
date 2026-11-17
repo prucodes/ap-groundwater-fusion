@@ -37,7 +37,7 @@ import { brief } from "../../lib/pageBriefs";
 import { currentFilmFigures } from "../../lib/filmLiveFigures";
 import { Verse } from "../../components/Verse";
 import { VERSES } from "../../lib/verses";
-import { ChapterFold } from "../../components/ChapterFold";
+import { ChapterFold, PhoneFold } from "../../components/ChapterFold";
 import ensoOutlook from "../../data/enso_outlook.json";
 
 const MONTHS = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -379,8 +379,11 @@ export default function MonsoonPage() {
         <WaterBanked />
       </section> : null}
 
+      <PhoneFold title="Canal water this season" summary="Released at the headworks, read weekly">
       <CanalWater />
+      </PhoneFold>
 
+      <PhoneFold title="The official post-monsoon window" summary="Pre-monsoon to post-monsoon, the comparison the assessment makes">
       <section className="card" id="post-monsoon" aria-label="The official window">
         <div className="cardHead">
           <div className="cardTitle">
@@ -391,7 +394,9 @@ export default function MonsoonPage() {
         </div>
         <PostMonsoonWindow />
       </section>
+      </PhoneFold>
 
+      <PhoneFold title="How deep it goes, season by season" summary="Change from May, every season against its historical range">
       <section className="card">
         <div className="cardHead">
           <div className="cardTitle">
@@ -406,8 +411,10 @@ export default function MonsoonPage() {
           A rise or fall in water level alone does not isolate recharge from pumping, geology or changes in monitoring.
         </p>
       </section>
+      </PhoneFold>
 
       <h2 className="pageChapter" id="chapter-space">From space<span>the season&rsquo;s rain as it fell, and the water it left, weighed from orbit</span></h2>
+      <PhoneFold title="The season’s rain, day by day, from space" summary="NASA IMERG, every rain satellite merged into one picture a day">
       <section className="card" id="rain-from-space" aria-labelledby="rain-from-space-title">
         <div className="cardHead">
           <div className="cardTitle" id="rain-from-space-title">
@@ -423,7 +430,9 @@ export default function MonsoonPage() {
         </p>
         <RainFilm d={rainFilm as unknown as RainFilmData} />
       </section>
+      </PhoneFold>
 
+      <PhoneFold title="Water weighed from orbit" summary="GRACE satellites and the State’s wells tell the same story">
       <section className="card" id="water-from-space" aria-labelledby="water-from-space-title">
         <CountedReach event="monsoon/reached-space" title="Monsoon: reached water from space" />
         <div className="cardHead">
@@ -446,6 +455,7 @@ export default function MonsoonPage() {
           satellite&rsquo;s scale at {graceFilm.agreement.cmPerMetre} cm of water per metre of water table.
         </p>
       </section>
+      </PhoneFold>
 
       {/* Context chapters, folded to their one line so the page stays on what the monsoon did to groundwater. */}
       <ChapterFold id="chapter-pacific" title="El Niño and the Pacific" sub="the ocean behind the rain, as context and never as a forecast"

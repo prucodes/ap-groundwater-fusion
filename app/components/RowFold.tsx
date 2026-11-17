@@ -5,17 +5,19 @@
  * checkbox shows them, so it works without a script, and a printed page shows every row.
  * Nothing leaves the page: hidden rows stay in the document for search, export and tests.
  */
-export function RowFold({ id, total, visible, noun, children }: {
+export function RowFold({ id, total, visible, noun, phoneOnly = false, children }: {
   id: string;
   total: number;
   visible: number;
   /** What a row is, plural: "districts", "mandals". */
   noun: string;
+  /** Fold only on a phone; a wider screen shows every row and no control. */
+  phoneOnly?: boolean;
   children: React.ReactNode;
 }) {
   if (total <= visible) return <>{children}</>;
   return (
-    <div className="rowFold" style={{ display: "contents" }}>
+    <div className={phoneOnly ? "rowFold rowFoldPhone" : "rowFold"} style={{ display: "contents" }}>
       <input type="checkbox" id={id} className="rowFoldToggle" />
       {children}
       <label htmlFor={id} className="rowFoldLabel">

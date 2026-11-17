@@ -15,10 +15,8 @@ export function openFold(fold: HTMLDetailsElement | null | undefined) {
   requestAnimationFrame(() => requestAnimationFrame(() => { delete fold.dataset.instant; }));
 }
 
-export function ChapterFold({ id, title, sub, summary, children }: {
-  id: string; title: string; sub: string; summary: ReactNode; children: ReactNode;
-}) {
-  const fold = useRef<HTMLDetailsElement>(null);
+/** Opens the fold when a shared link or an in-page link points at something inside it. */
+function useOpenForLinks(fold: React.RefObject<HTMLDetailsElement | null>) {
   useEffect(() => {
     const openFor = () => {
       const name = decodeURIComponent(window.location.hash.slice(1));
@@ -39,7 +37,14 @@ export function ChapterFold({ id, title, sub, summary, children }: {
     window.addEventListener("hashchange", openFor);
     document.addEventListener("click", onClick, true);
     return () => { window.removeEventListener("hashchange", openFor); document.removeEventListener("click", onClick, true); };
-  }, []);
+  }, [fold]);
+}
+
+export function ChapterFold({ id, title, sub, summary, children }: {
+  id: string; title: string; sub: string; summary: ReactNode; children: ReactNode;
+}) {
+  const fold = useRef<HTMLDetailsElement>(null);
+  useOpenForLinks(fold);
   return (
     <details ref={fold} className="chapterFold" data-testid={`fold-${id}`}>
       <summary>
@@ -47,6 +52,19 @@ export function ChapterFold({ id, title, sub, summary, children }: {
         <p>{summary}</p>
         <span className="chapterFoldCta" aria-hidden="true" />
       </summary>
+      {children}
+    </details>
+  );
+}
+
+/* A supporting section folded to one line on a phone only; on a wider screen the line is
+   hidden and the section stands open as before (globals.css). */
+export function PhoneFold({ title, summary, children }: { title: string; summary: ReactNode; children: ReactNode }) {
+  const fold = useRef<HTMLDetailsElement>(null);
+  useOpenForLinks(fold);
+  return (
+    <details ref={fold} className="phoneFold">
+      <summary><span>{title}</span><span>{summary}</span></summary>
       {children}
     </details>
   );
