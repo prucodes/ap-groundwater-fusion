@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-16T22:58:52+00:00",
+ "generatedAt": "2026-11-17T12:18:28+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -273,7 +273,7 @@
  },
  "since": {
   "from": "2026-10-26",
-  "to": "2026-11-16",
+  "to": "2026-11-17",
   "days": [
    {
     "date": "2026-10-26",
@@ -418,33 +418,41 @@
     "soilMedian30": 86.6,
     "reservoirTmc": 491.2,
     "reservoirPct": 42.3
+   },
+   {
+    "date": "2026-11-17",
+    "rainTo": "2026-11-15",
+    "rainSinceTmc": 705.5,
+    "soilMedian30": 86.6,
+    "reservoirTmc": 519.7,
+    "reservoirPct": 39.3
    }
   ],
-  "gainTmc": -8.4,
+  "gainTmc": 20.1,
   "basins": [
    {
     "basin": "OTHERS",
-    "beforePct": 52.0,
-    "nowPct": 73.5,
-    "gainTmc": 19.3
+    "beforePct": 18.5,
+    "nowPct": 38.3,
+    "gainTmc": 50.0
    },
    {
     "basin": "GODAVARI",
     "beforePct": 77.1,
-    "nowPct": 77.2,
-    "gainTmc": 0.0
+    "nowPct": 77.3,
+    "gainTmc": 0.1
    },
    {
     "basin": "PENNAR",
     "beforePct": 37.0,
-    "nowPct": 35.3,
-    "gainTmc": -4.9
+    "nowPct": 35.2,
+    "gainTmc": -5.3
    },
    {
     "basin": "KRISHNA",
     "beforePct": 43.1,
-    "nowPct": 40.1,
-    "gainTmc": -22.8
+    "nowPct": 39.8,
+    "gainTmc": -24.6
    }
   ],
   "reservoirs": [
@@ -454,10 +462,10 @@
     "district": "Kakinada",
     "capacityTmc": 24.11,
     "beforeTmc": 17.96,
-    "nowTmc": 22.48,
-    "gainTmc": 4.52,
+    "nowTmc": 22.34,
+    "gainTmc": 4.38,
     "beforePct": 74.5,
-    "nowPct": 93.2
+    "nowPct": 92.7
    },
    {
     "name": "YERRAKALVA RESERVOIR",
@@ -465,10 +473,10 @@
     "district": "Eluru",
     "capacityTmc": 4.43,
     "beforeTmc": 1.5,
-    "nowTmc": 4.11,
-    "gainTmc": 2.61,
+    "nowTmc": 4.03,
+    "gainTmc": 2.54,
     "beforePct": 33.7,
-    "nowPct": 92.7
+    "nowPct": 91.0
    },
    {
     "name": "RAIWADA RESERVOIR",
@@ -476,10 +484,10 @@
     "district": "Anakapalli",
     "capacityTmc": 3.6,
     "beforeTmc": 0.96,
-    "nowTmc": 3.52,
-    "gainTmc": 2.56,
+    "nowTmc": 3.47,
+    "gainTmc": 2.52,
     "beforePct": 26.6,
-    "nowPct": 97.6
+    "nowPct": 96.5
    },
    {
     "name": "THATIPUDI RESERVOIR",
@@ -487,10 +495,10 @@
     "district": "Vizianagaram",
     "capacityTmc": 3.325,
     "beforeTmc": 1.52,
-    "nowTmc": 3.24,
-    "gainTmc": 1.72,
+    "nowTmc": 3.21,
+    "gainTmc": 1.69,
     "beforePct": 45.7,
-    "nowPct": 97.4
+    "nowPct": 96.6
    },
    {
     "name": "HIRAMANDALAM RESERVOIR",
@@ -498,10 +506,10 @@
     "district": "Srikakulam",
     "capacityTmc": 10.0,
     "beforeTmc": 5.54,
-    "nowTmc": 7.16,
-    "gainTmc": 1.62,
+    "nowTmc": 7.15,
+    "gainTmc": 1.61,
     "beforePct": 55.4,
-    "nowPct": 71.6
+    "nowPct": 71.5
    },
    {
     "name": "TANDAVA RESERVOIR",
@@ -509,10 +517,10 @@
     "district": "Alluri Sitharama Raju",
     "capacityTmc": 4.96,
     "beforeTmc": 2.63,
-    "nowTmc": 4.07,
-    "gainTmc": 1.44,
+    "nowTmc": 4.06,
+    "gainTmc": 1.43,
     "beforePct": 53.0,
-    "nowPct": 82.1
+    "nowPct": 81.9
    },
    {
     "name": "GONELAVAGU RESERVOIR",
@@ -10889,7 +10897,7 @@
    ]
   ]
  },
- "updatedAt": "2026-11-16",
+ "updatedAt": "2026-11-17",
  "map": [
   [
    0,
