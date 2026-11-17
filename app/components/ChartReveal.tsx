@@ -12,7 +12,9 @@ const REVEAL_MS = 1100;
 
 export function ChartReveal() {
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Without an observer nothing could ever be drawn in, so everything is simply shown.
+    if (!("IntersectionObserver" in window)) { document.querySelectorAll<HTMLElement>("[data-draw]").forEach(node => { node.dataset.drawn = "done"; }); return; }
     const root = document.documentElement;
     const seen = new WeakSet<Element>();
     // A chart clipped to nothing never counts as on screen, so the observer watches its
@@ -20,23 +22,25 @@ export function ChartReveal() {
     const charts = new Map<Element, HTMLElement[]>();
     const view = new IntersectionObserver(entries => {
       for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
         const nodes = charts.get(entry.target);
-        if (!nodes) continue;
+        if (!entry.isIntersecting || !nodes || (nodes[0].dataset.draw === "sequence" && entry.intersectionRatio < 0.5)) continue;
         view.unobserve(entry.target); charts.delete(entry.target);
         for (const node of nodes) {
           node.dataset.drawn = "drawing";
           window.setTimeout(() => { node.dataset.drawn = "done"; }, REVEAL_MS + 100);
         }
       }
-    }, { threshold: 0.2 });
+    }, { threshold: [0.2, 0.5] });
     const watch = (scope: ParentNode) => scope.querySelectorAll<HTMLElement>("[data-draw]").forEach(node => {
       if (seen.has(node)) return;
       seen.add(node);
-      // Already on screen before this ran (a fast first paint): leave it drawn rather than blink it.
+      // A sequence (the sensor map's dots) is never clipped, so it is watched itself and plays once at
+      // least half of it is in view; a wiped chart already on screen at first paint stays drawn rather than blink.
+      const sequence = node.dataset.draw === "sequence";
       const box = node.getBoundingClientRect();
-      if (!root.dataset.motion && box.top < window.innerHeight && box.bottom > 0) { node.dataset.drawn = "done"; return; }
-      const frame = node.parentElement ?? node;
+      const shown = Math.max(0, Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0)) / Math.max(box.height, 1);
+      if (!root.dataset.motion && (sequence ? shown >= 0.5 : shown > 0)) { node.dataset.drawn = "done"; return; }
+      const frame = sequence ? node : node.parentElement ?? node;
       const nodes = charts.get(frame);
       if (nodes) { nodes.push(node); return; }
       charts.set(frame, [node]);

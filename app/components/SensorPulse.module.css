@@ -37,8 +37,13 @@
 }
 
 /* Dots arrive in order of how far each well has fallen, deepest first, over about two seconds. */
+/* The order starts when the map scrolls into view (ChartReveal marks it data-drawn), so on a phone
+   it plays where the reader is, not above the fold before they arrive. Without script it is simply drawn. */
 @media screen and (prefers-reduced-motion: no-preference) {
-  .dot { animation: dotIn .5s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(.25s + var(--order, 0) * 1.7s); transform-box: fill-box; transform-origin: center; }
+  .map[data-drawn] .dot { animation: dotIn .5s cubic-bezier(.3, 0, .2, 1) both; animation-delay: calc(.15s + var(--order, 0) * 1.7s); transform-box: fill-box; transform-origin: center; }
+}
+@media screen and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .map:not([data-drawn]) .dot { opacity: 0; }
 }
 @keyframes dotIn { from { opacity: 0; transform: scale(.2); } to { opacity: 1; transform: none; } }
 /* A listed row and its dot answer each other (pairing rules are written per row in the component). */
