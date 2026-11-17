@@ -24,7 +24,7 @@ export function PercentileRing({
   const reactId = useId();
   const gid = `ring-${reactId.replace(/:/g, "")}`;
   return (
-    <div className="ringFig" style={{ width: size, height: size }}>
+    <div className="ringFig" data-draw="sequence" style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         <defs>
           <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
@@ -69,7 +69,7 @@ export function StatusDonut({
   const sum = slices.reduce((acc, s) => acc + s.value, 0) || 1;
   let offset = 0;
   return (
-    <div className="donutFig" style={{ width: size, height: size }}>
+    <div className="donutFig" data-draw="sequence" style={{ width: size, height: size }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" style={{ stroke: "var(--chart-track)" }} strokeWidth={stroke} />
         {slices

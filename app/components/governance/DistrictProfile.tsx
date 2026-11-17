@@ -16,7 +16,7 @@ export function DistrictProfile({ rows, selected, onSelect }: {
   const current = rows.find(row => row.district_name === selected);
   const currentPoint = points.find(row => row.district_name === selected);
   return <div>
-    <svg className={styles.chart} viewBox="0 0 575 344" aria-label="District profile: modelled depth versus measured year-on-year change">
+    <svg className={styles.chart} viewBox="0 0 575 344" data-draw="" aria-label="District profile: modelled depth versus measured year-on-year change">
       <text x="62" y="22">MEASURED YoY CHANGE / m</text>
       {[0, 1, 2, 3, 4].map(i => {
         const depth = maxDepth * i / 4;

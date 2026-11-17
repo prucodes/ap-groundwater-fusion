@@ -59,7 +59,7 @@ export function WaterBanked() {
           <span>Every mandal, by the share of its rain it kept</span>
           <span>{banked.mandals} mandals</span>
         </div>
-        <svg className={styles.hist} viewBox={`0 0 ${W} ${H}`} role="img"
+        <svg className={styles.hist} viewBox={`0 0 ${W} ${H}`} role="img" data-draw=""
           aria-label={`Distribution of the share of rain kept: the median mandal kept ${banked.medianSharePct}%, and ${banked.aboveRain} kept more than their rain.`}>
           <line x1={PAD} x2={W - PAD} y1={floor} y2={floor} />
           {counts.map((count, index) => {

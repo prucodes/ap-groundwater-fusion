@@ -30,3 +30,9 @@
 .points { pointer-events: none; }
 .points circle { fill: rgba(214, 236, 250, .34); }
 .points [data-lit] circle { fill: #c9f6ff; filter: drop-shadow(0 0 2.5px rgba(127, 211, 234, .95)) drop-shadow(0 0 7px rgba(127, 211, 234, .45)); }
+
+/* The wash waits for the map to be reached (ChartReveal marks it drawn at half in view), so a
+   map further down the page is not spent before anyone sees it. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  :global(:root[data-motion="ready"]) .frame[data-draw]:not([data-drawn]) path[data-key] { animation: none; opacity: 0; }
+}

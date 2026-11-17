@@ -73,7 +73,7 @@ export function PostMonsoonWindow() {
         <span>Each season at {name}, and where it ended in November</span>
         <span>metres from May</span>
       </div>
-      <svg className={styles.plot} viewBox={`0 0 ${W} ${H}`} role="img"
+      <svg className={styles.plot} viewBox={`0 0 ${W} ${H}`} role="img" data-draw=""
         aria-label={`Median change from May at ${name} for each season since ${past[0].year}, and the November value where the season has closed`}>
         <line className={styles.zero} x1={x(0)} x2={x(0)} y1={20} y2={H - 26} />
         <text className={styles.tick} x={x(0)} y={14} textAnchor="middle">May level</text>
