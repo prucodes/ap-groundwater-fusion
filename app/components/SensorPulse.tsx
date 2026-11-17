@@ -33,7 +33,9 @@ export function SensorPulse() {
   // than water: kept on the map, left out of the list a reader would quote.
   const plausible = live.filter(st => st[5] <= MAX_LEVEL_M && Math.abs(st[5] - (st[6] as number)) <= MAX_CHANGE_M);
   const doubtful = live.length - plausible.length;
-  const biggest = [...plausible].sort((a, b) => (b[5] - (b[6] ?? 0)) - (a[5] - (a[6] ?? 0))).slice(0, 5);
+  // One row per village: two sensors in the same place read as a duplicate, so the larger fall stands for both.
+  const biggest = [...plausible].sort((a, b) => (b[5] - (b[6] ?? 0)) - (a[5] - (a[6] ?? 0)))
+    .filter((st, i, all) => all.findIndex(other => other[4] === st[4] && other[3] === st[3]) === i).slice(0, 5);
   const days = sensorHistory.days;
   const deeperPct = Math.round((100 * s.deeperThanYearAgo) / Math.max(s.compared, 1));
   // The dots arrive deepest-fallen first, so the spread of rust across the State is what the eye meets.
