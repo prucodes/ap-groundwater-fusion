@@ -361,3 +361,21 @@ test("Water depth opens on the latest reading, each mandal against its usual for
   await expect(frame.locator("#lgTitle")).toHaveText("Depth to water");
   expect(errors).toEqual([]);
 });
+
+test("without WebGL the atlas sends readers to the Mandal Map", async ({ page }) => {
+  // The site lives under /ap-groundwater-fusion/ on Pages, so a root-absolute link in this file
+  // 404s there while passing here. The fallback's old link to the classic 3D page did exactly that.
+  expect(html.match(/href="\/(?!\/)[^"]*"/g) ?? []).toEqual([]);
+  await page.addInitScript(() => {
+    // Only WebGL fails, as on a device without it; 2D canvases still draw.
+    const getContext = HTMLCanvasElement.prototype.getContext as (this: HTMLCanvasElement, ...args: unknown[]) => RenderingContext | null;
+    HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, ...args: unknown[]) {
+      return /webgl/.test(String(args[0])) ? null : getContext.apply(this, args);
+    } as typeof HTMLCanvasElement.prototype.getContext;
+  });
+  await page.goto("/crystal/");
+  const link = page.frameLocator(".crystalFrame").getByRole("link", { name: "Mandal Map" });
+  await expect(link).toBeVisible();
+  await link.click();
+  await expect(page).toHaveURL(/\/map\/$/);
+});
