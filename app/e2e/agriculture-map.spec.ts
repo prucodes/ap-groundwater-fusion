@@ -29,6 +29,11 @@ for (const width of [1440, 390]) {
     await page.getByRole("button", { name: "AP map", exact: true }).click();
     const map = page.getByTestId("agriculture-map");
     await map.evaluate(element => element.scrollIntoView({ block: "center", behavior: "instant" }));
+    // A section fades up as it is first reached, carrying the map a few pixels with it. A pointer
+    // placed mid-rise ends on the mandal next door, so wait for everything that ends to end.
+    await page.evaluate(() => Promise.all(document.getAnimations()
+      .filter(animation => animation.effect?.getComputedTiming().iterations !== Infinity)
+      .map(animation => animation.finished.catch(() => undefined))));
     const orvakal = map.getByRole("button", { name: /^Orvakal:/ });
     const point = await interiorPoint(orvakal);
     await page.mouse.move(point.x, point.y);
