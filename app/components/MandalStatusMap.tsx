@@ -35,12 +35,15 @@ export function MandalStatusMap({
   onSelect,
   layer = null,
   maxHeight,
+  focusBucket = null,
 }: {
   selectedId?: string;
   onSelect: (id: string) => void;
   layer?: MandalHeatLayerKey | WaterMandalLayer | FieldLayer | RechargeLayer | RainLayer | QualityLayer | PriorityLayer | null;
   /** Cap height (px); omit to fill the container width and scale by aspect. */
   maxHeight?: number;
+  /** Status view only: one status picked from the legend; every other mandal steps back. */
+  focusBucket?: string | null;
 }) {
   const dark = useIsDark();
   const [hover, setHover] = useState<HoverState | null>(null);
@@ -86,7 +89,7 @@ export function MandalStatusMap({
               aria-pressed={selected}
               d={mandalToPath(m.rings)}
               fill={fill}
-              fillOpacity={selected ? 1 : 0.9}
+              fillOpacity={selected ? 1 : !layer && focusBucket && rec?.status_bucket !== focusBucket ? 0.12 : 0.9}
               stroke={selected || active ? "var(--ink)" : "var(--hairline)"}
               strokeWidth={selected ? 1.4 : active ? 1.1 : 0.3}
               onMouseEnter={() => setHover({ d: m.d, m: m.m, id: rec?.id, i })}
@@ -104,7 +107,8 @@ export function MandalStatusMap({
                 }
               }}
               onClick={() => rec && onSelect(rec.id)}
-              style={{ cursor: rec ? "pointer" : "default", transition: "stroke-width .1s" }}
+              style={{ cursor: rec ? "pointer" : "default" }}
+              className="statusMapPath"
             />
           );
         })}
