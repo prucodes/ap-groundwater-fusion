@@ -36,30 +36,21 @@
 .groupHead { display:flex; align-items:center; justify-content:space-between; gap:10px; font:600 10px var(--font-mono); color:var(--week-accent); text-transform:uppercase; margin:0 0 12px; }
 .groupHead span { color:var(--muted); font-weight:400; text-transform:none; }
 .cards { display:grid; gap:12px; }
-.card { --signal:var(--week-accent); display:grid; gap:10px; position:relative; padding:18px; border:1px solid var(--line-strong); border-radius:6px; border-top:3px solid var(--signal); background:var(--card); color:var(--ink); text-decoration:none; transition:border-color .18s ease; }
+.card { --signal:var(--week-accent); display:grid; align-content:start; gap:8px; position:relative; padding:18px 20px 16px; border:1px solid var(--line); border-radius:10px; background:var(--card); color:var(--ink); text-decoration:none; transition:border-color .18s ease; }
 .card[data-direction="better"] { --signal:var(--week-good); }
 .card[data-direction="worse"] { --signal:var(--week-bad); }
-.leadColumn .card { background:color-mix(in srgb,var(--signal) 3%,var(--card)); }
-.card:hover { border-color:var(--signal); }
-.cardLabel { font-size:14.5px; font-weight:500; line-height:1.45; max-width:420px; }
-.value { font:500 40px/1.05 var(--font-display); font-variant-numeric:tabular-nums; }
-.status { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; }
-.badge { font-size:12px; font-weight:600; color:var(--signal); }
+.leadColumn .card { background:var(--card); }
+.card:hover { border-color:color-mix(in srgb,var(--signal) 45%,var(--line)); }
+.cardLabel { font-size:13px; font-weight:500; line-height:1.45; color:var(--ink-soft); max-width:420px; padding-right:18px; text-wrap:pretty; }
+.valueRow { display:flex; align-items:baseline; flex-wrap:wrap; gap:4px 12px; margin-top:2px; }
+.value { font:500 34px/1.05 var(--font-display); font-variant-numeric:tabular-nums; color:var(--ink); }
+.badge { display:inline-flex; align-items:baseline; gap:6px; font-size:11.5px; font-weight:500; color:var(--signal); }
+.badge b { font:600 12px var(--font-mono); }
+.was { font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.cardArrow { position:absolute; top:18px; right:16px; width:14px; height:14px; color:var(--muted); opacity:.45; transition:opacity .2s, transform .2s, color .2s; }
+.card:hover .cardArrow { opacity:1; color:var(--signal); transform:translateX(2px); }
 .was { font-size:11px; color:var(--muted); }
-.comparison { display:grid; gap:8px; padding:12px 0 4px; margin-top:3px; border-top:1px solid var(--line); }
-.comparisonLabels, .comparisonDates { display:flex; justify-content:space-between; gap:16px; font-size:10px; color:var(--muted); }
-.comparisonLabels > span:last-child, .comparisonDates > span:last-child { text-align:right; }
-.comparisonLabels b { display:block; font:500 18px var(--font-mono); color:var(--ink); }
-.previousKey, .currentKey { display:inline-block; width:7px; height:7px; border-radius:50%; border:1.5px solid var(--ink-soft); margin-right:5px; }
-.currentKey { background:var(--signal); border-color:var(--signal); }
-/* The axis ends repeat the previous and current figures printed just above, so they stay out. */
-.comparisonAxis { display:none; justify-content:space-between; padding-inline:4%; font:400 10px var(--font-mono); color:var(--muted); }
-.comparisonTrack { position:relative; display:block; height:2px; margin:7px 0; background:var(--line-strong); }
-.changeRange { position:absolute; top:-2px; height:6px; background:var(--signal); }
-.beforePoint, .afterPoint { position:absolute; top:-5px; width:12px; height:12px; transform:translateX(-50%); border-radius:50%; border:2px solid var(--ink-soft); background:var(--card); }
-.afterPoint { border-color:var(--signal); background:var(--signal); box-shadow:0 0 0 4px color-mix(in srgb,var(--signal) 12%,transparent); }
-.dates, .note { font-size:11px; color:var(--muted); line-height:1.5; }
-.cardLink { display:flex; align-items:center; justify-content:space-between; padding-top:10px; border-top:1px solid var(--line); font-size:11px; font-weight:600; color:var(--signal); }
+.note { font-size:11px; color:var(--muted); line-height:1.5; }
 .priority { display:grid; grid-template-columns:32px minmax(0,1fr) 15px; gap:12px; align-items:start; margin-top:22px; padding:18px 0; border-block:1px solid var(--line); }
 .priorityIcon { display:grid; place-items:center; width:32px; height:32px; color:var(--week-bad); background:color-mix(in srgb,var(--week-bad) 9%,var(--card)); border-radius:50%; }
 .priorityIcon svg { width:19px; height:19px; }
@@ -95,9 +86,10 @@
 .cardsSteady .card { grid-template-columns:minmax(0,1fr) auto; align-items:baseline; padding:14px 0; border:0; border-top:1px solid var(--line); border-radius:0; background:transparent; gap:6px 18px; }
 .cardsSteady .cardLabel { font-size:12px; }
 .cardsSteady .value { font-size:22px; }
-.cardsSteady .status, .cardsSteady .dates, .cardsSteady .note { grid-column:1 / -1; }
+.cardsSteady .valueRow { justify-content:flex-end; margin:0; }
+.cardsSteady .was, .cardsSteady .note { grid-column:1 / -1; }
+.cardsSteady .cardArrow { display:none; }
 .cardsSteady .badge { color:var(--muted); font-weight:400; font-size:10px; }
-.cardsSteady .cardLink { grid-column:1 / -1; border:0; padding:0; font-size:10px; }
 .list { padding:20px 0; border-block:1px solid var(--line); min-width:0; }
 .listHead h3 { margin:0; font:600 16px var(--font-display); }
 .listHead span { display:block; font-size:11px; color:var(--muted); margin-top:4px; }
@@ -162,8 +154,8 @@
  .moves { padding:22px 0 0; border:0; border-top:1px solid var(--line-strong); }
  .movesHead h2 { font-size:18px; }
  .card { padding:18px; }
- .cardLabel { font-size:16px; }
- .value { font-size:46px; }
+ .cardLabel { font-size:13.5px; }
+ .value { font-size:36px; }
  .cardsSteady, .signalKey { grid-template-columns:minmax(0,1fr); }
  .teamsHead h2 { font-size:22px; }
  .steadyRegister > summary > span:last-of-type { flex-basis:85%; }
