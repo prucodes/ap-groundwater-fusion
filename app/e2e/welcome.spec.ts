@@ -147,6 +147,8 @@ test("the welcome quote releases its space and can be restored", async ({ page }
   await page.goto("/");
   const quote = page.getByTestId("welcome-quote");
   const text = page.locator("#welcome-quote-text");
+  // The hide timer starts at hydration. Moving the clock before that skips it.
+  await expect(quote).toHaveAttribute("data-ready", "true");
   await expect(quote).toHaveAttribute("data-visible", "true");
   const before = await text.boundingBox();
   expect(before!.height).toBeGreaterThan(80);
@@ -162,8 +164,9 @@ test("reduced motion keeps the quote available until manually hidden", async ({ 
   await page.clock.install();
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
-  await page.clock.fastForward(30_000);
   const quote = page.getByTestId("welcome-quote");
+  await expect(quote).toHaveAttribute("data-ready", "true");
+  await page.clock.fastForward(30_000);
   await expect(quote).toHaveAttribute("data-visible", "true");
   await page.getByRole("button", { name: "Hide the quote", exact: true }).click();
   await expect(quote).toHaveAttribute("data-visible", "false");
