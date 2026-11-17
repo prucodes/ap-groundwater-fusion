@@ -75,6 +75,7 @@ export default function MapPage() {
   const dark = useIsDark();
   const [level, setLevel] = useState<"mandal" | "district">("mandal");
   const [layer, setLayer] = useState<DistrictLayerKey>("water_balance_mm");
+  const [focusBucket, setFocusBucket] = useState<string | null>(null);
   const [mandalView, setMandalView] = useState<MandalView>("status");
   const [selectedId, setSelectedId] = useState(mandals[0]?.id);
   const current = selectedMandal(selectedId);
@@ -194,10 +195,11 @@ export default function MapPage() {
                   selectedId={selectedId}
                   onSelect={setSelectedId}
                   layer={mandalView === "status" ? null : mandalView}
+                  focusBucket={mandalView === "status" ? focusBucket : null}
                 />
                 {mandalView === "status" ? (
                   <>
-                    <MapLegend />
+                    <MapLegend picked={focusBucket} onPick={setFocusBucket} />
                     <div className="mapHint">
                       Coverage: <strong>{mappedBoundaries}</strong> of {totalBoundaries} prototype mandal
                       boundaries have a measured or modelled depth; {totalBoundaries - mappedBoundaries} have no usable APWRIMS
