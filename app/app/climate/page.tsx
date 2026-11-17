@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
-import { DistrictMap } from "../../components/DistrictMap";
+import { DistrictChoropleth } from "../../components/DistrictChoropleth";
 import {
   IconCloudRain,
   IconDatabase,
@@ -161,7 +161,7 @@ export default function ClimatePage() {
           <div className="cardTitle"><span className="titleIcon"><IconDroplet /></span>District water balance</div>
           <span className="cardSub">rainfall − ET, mm/yr</span>
         </div>
-        <DistrictMap layer="water_balance_mm" height={440} />
+        <DistrictChoropleth layer="water_balance_mm" testId="climate-district-map" label="Districts coloured by annual water balance, rainfall minus actual evapotranspiration" />
         <div className="choroLegend">
           <div className="choroHead">
             <span>Water balance <span className="choroUnit">(mm/yr)</span></span>

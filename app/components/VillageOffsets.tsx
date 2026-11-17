@@ -39,7 +39,7 @@ export function VillageOffsets() {
           <span>error on a later reading after <strong>three readings</strong> at a dug well{base ? <>, against {base.toFixed(2)} m with the mandal figure alone</> : null} ({three?.wells ?? 0} wells)</span>
         </div>
         <div className={styles.head}>
-          <b>{temporal ? data.splitHalf.pastPredictsFutureR : "Pending"}</b>
+          <b>{temporal ? data.splitHalf.pastPredictsFutureR.toFixed(2) : "Pending"}</b>
           <span>how well a well&rsquo;s earlier gap from its mandal predicts its later gap (correlation, {data.splitHalf.wellsScored} wells)</span>
         </div>
         <div className={styles.head}>
@@ -70,8 +70,8 @@ export function VillageOffsets() {
         <div>
           <div className={styles.listHead}>Can the gap be predicted instead of measured?</div>
           <div className={styles.rows}>
-            <div className={styles.row}><div className={styles.what}>Use the mandal figure alone<span>no gap assumed, same wells</span></div><div className={styles.num}>{data.staticCovariateNull.mandalMeanMaeM} m</div></div>
-            <div className={styles.row}><div className={styles.what}>Predict the gap<span>from position, well depth and type, whole mandals held out</span></div><div className={styles.num}>{data.staticCovariateNull.predictedOffsetMaeM} m</div></div>
+            <div className={styles.row}><div className={styles.what}>Use the mandal figure alone<span>no gap assumed, same wells</span></div><div className={styles.num}>{data.staticCovariateNull.mandalMeanMaeM.toFixed(2)} m</div></div>
+            <div className={styles.row}><div className={styles.what}>Predict the gap<span>from position, well depth and type, whole mandals held out</span></div><div className={styles.num}>{data.staticCovariateNull.predictedOffsetMaeM.toFixed(2)} m</div></div>
           </div>
           <p className={styles.note} style={{ marginTop: 10 }}>{data.staticCovariateNull.predictedOffsetMaeM >= data.staticCovariateNull.mandalMeanMaeM ? <><b>Predicting does no better than ignoring the gap</b> (R&sup2; {data.staticCovariateNull.predictedOffsetR2}), so it has to be measured. That is what sets the ask.</> : <>Predicting the gap improves on ignoring it (R&sup2; {data.staticCovariateNull.predictedOffsetR2}).</>}</p>
           <p className={styles.note} style={{ marginTop: 10 }}><b>What this means for a pilot.</b> {cut !== null ? <>Three readings at a dug well cut the error there by about {cut}%. </> : null}A well speaks for its own spot rather than a whole village, and the mandal&rsquo;s other wells have to keep reading for the gap to stay useful.</p>

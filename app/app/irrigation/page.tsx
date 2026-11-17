@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 import type { CSSProperties } from "react";
 import { HeaderHero } from "../../components/HeaderHero";
-import { DistrictMap } from "../../components/DistrictMap";
+import { DistrictChoropleth } from "../../components/DistrictChoropleth";
 import {
   IconArrowRight,
   IconCheck,
@@ -88,7 +88,7 @@ export default function IrrigationPage() {
           <div className="cardTitle"><span className="titleIcon"><IconMap /></span>District monitoring map</div>
           <span className="cardSub">monitor / review / field verify</span>
         </div>
-        <DistrictMap layer="water_balance_mm" height={430} colorOverride={advisoryColors} />
+        <DistrictChoropleth layer="water_balance_mm" colorOverride={advisoryColors} overrideLabel={Object.fromEntries(advisories.map(a => [a.id, a.action]))} testId="aware-district-map" label="Districts coloured by monitoring category: monitor, review history or field verify" />
         <div className="mixLegend" style={{ marginTop: 12 }}>
           {(["Monitor", "Review", "Field verify"] as IrrigationAction[]).map((k) => (
             <span key={k} className="mixKey">

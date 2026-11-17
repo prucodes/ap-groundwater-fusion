@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { HeaderHero } from "../../components/HeaderHero";
-import { DistrictMap } from "../../components/DistrictMap";
+import { DistrictChoropleth } from "../../components/DistrictChoropleth";
 import { IconArrowRight, IconCloudRain, IconDroplet, IconInfo } from "../../components/icons";
 import { balanceMeta, balanceStatusFor, districtGeometry, formatNumber, monsoonWatch, titleCase } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
@@ -174,7 +174,7 @@ export default function ScenarioPage() {
         </div>
 
         <div className="simStage">
-          <DistrictMap layer="water_balance_mm" height={430} scenarioValues={scenarioMap} />
+          <DistrictChoropleth layer="water_balance_mm" scenarioValues={scenarioMap} testId="scenario-district-map" label={`Districts coloured by water balance with annual rainfall ${delta > 0 ? "+" : ""}${delta}%: a modelled scenario`} />
           <div className="simOverlay">
             <div className="simReadout" style={{ color: delta < 0 ? "var(--rust)" : delta > 0 ? "var(--green)" : "var(--ink)" }}>
               {delta > 0 ? "+" : ""}{delta}%

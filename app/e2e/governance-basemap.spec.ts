@@ -1,13 +1,14 @@
 import { expect, test } from "@playwright/test";
 
 // The vector basemap: the ground beneath the data and the names above it, two MapLibre
-// layers in the platform's palette. Test runners render WebGL in software, where the map
+// layers in the platform's palette, under the Overview's live mandal map (the live maps keep a
+// zoomable basemap; the pages that only need the State at a glance draw it themselves). Test runners render WebGL in software, where the map
 // skips its basemap to keep pages responsive, so `?basemap` forces it on here.
 test("the vector basemap draws the ground beneath the data and the names above it", async ({ page }) => {
   test.setTimeout(process.env.CI ? 180000 : 60000);
   const tiles: string[] = [];
   page.on("request", request => { if (request.url().includes("tiles.openfreemap.org")) tiles.push(request.url()); });
-  await page.goto("/nasa/?basemap");
+  await page.goto("/?basemap");
   const map = page.locator(".leaflet-container").first();
   await map.scrollIntoViewIfNeeded();
   await expect(map.locator(".leaflet-gl-layer")).toHaveCount(2, { timeout: 60000 });
@@ -18,7 +19,7 @@ test("the vector basemap draws the ground beneath the data and the names above i
 });
 
 test("in software WebGL the map keeps its data and skips the basemap", async ({ page }) => {
-  await page.goto("/nasa/");
+  await page.goto("/");
   const map = page.locator(".leaflet-container").first();
   await map.scrollIntoViewIfNeeded();
   await expect(map.locator(".leaflet-overlay-pane path").first()).toBeVisible();

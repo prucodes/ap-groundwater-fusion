@@ -411,7 +411,7 @@ export default function BriefPage() {
                 <div className={styles.chartcard}><h3>{t.depthBands.every(b => b.maeM < b.lastReadingMaeM) ? "Error grows with depth; the model wins in every band" : "Error grows with depth; the model against the last reading"}</h3><p>Average absolute error on held-out months</p><ErrorByDepth bands={t.depthBands} /></div>
                 <div className={styles.stack}>
                   <div className={`${styles.note} ${styles.teal}`}><b>Release rule.</b> A horizon is published only if it beats both no-change and same-month-last-year by at least 5% under rolling-origin validation, with no leakage and consistent results by terrain. Three months passes; one, six and twelve do not yet, so they are not shown.</div>
-                  <div className={styles.note}><b>Tried and rejected, on evidence.</b> The El Niño index made it worse. Rain over official outlines: no gain (1.797 vs 1.800 m). NASA near-real-time rain read twice as wet as CHIRPS and raised error 0.62 → 0.96 m. A month whose satellite rain is unpublished is estimated without it and says so (0.89 → 1.04 m). The State&rsquo;s seven carried-forward months of 2021 are treated as missing.</div>
+                  <div className={styles.note}><b>Tried and rejected, on evidence.</b> The El Niño index made it worse. Rain over official outlines: no gain (1.80 m either way). NASA near-real-time rain read twice as wet as CHIRPS and raised error 0.62 → 0.96 m. A month whose satellite rain is unpublished is estimated without it and says so (0.89 → 1.04 m). The State&rsquo;s seven carried-forward months of 2021 are treated as missing.</div>
                 </div>
               </div>
             </div>
@@ -541,7 +541,7 @@ export default function BriefPage() {
               <div className={styles.figs}>
                 <div className={styles.fig}><b>{village.spread.medianVillageSpreadM.toFixed(2)} m</b><span>the median village stands this far from its mandal&rsquo;s mean, more than the whole mandal-level error</span></div>
                 <div className={styles.fig}><b>{village.validation.persistence.persistentSharePct.toFixed(0)}%</b><span>of that gap stays with the place rather than moving season to season</span></div>
-                <div className={styles.fig}><b>{village.validation.splitHalf.pastPredictsFutureR.toFixed(3)}</b><span>a well&rsquo;s earlier gap against its later one, in date order, {village.validation.splitHalf.wellsScored} wells</span></div>
+                <div className={styles.fig}><b>{village.validation.splitHalf.pastPredictsFutureR.toFixed(2)}</b><span>a well&rsquo;s earlier gap against its later one, in date order, {village.validation.splitHalf.wellsScored} wells</span></div>
                 <div className={styles.fig}><b>{dug ? dug.forwardDoseResponse.find(d => d.readings === 3)!.residualErrorM.toFixed(2) : "–"} m</b><span>error on a later reading after three readings at a dug well{dug?.forwardBaselineM ? <>, against {dug.forwardBaselineM.toFixed(2)} m on the mandal figure alone</> : null}</span></div>
               </div>
 

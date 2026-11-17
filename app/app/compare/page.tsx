@@ -6,9 +6,9 @@ import { HeaderHero } from "../../components/HeaderHero";
 import { AgreementTag, ConfidenceBadge, StatusBadge } from "../../components/Badges";
 import { PercentileRing } from "../../components/charts";
 import { WetnessTag } from "../../components/Signals";
-import { LiveMap } from "../../components/LiveMap";
+import { MandalLocator } from "../../components/MandalLocator";
 import { IconArrowRight, IconColumns } from "../../components/icons";
-import { balanceMeta, formatNumber, mandals, titleCase, wetnessLabel } from "../../lib/data";
+import { balanceMeta, formatNumber, mandals, statusMeta, titleCase, wetnessLabel } from "../../lib/data";
 import type { MandalGroundwaterView } from "../../lib/types";
 import { brief } from "../../lib/pageBriefs";
 
@@ -67,7 +67,7 @@ function MandalColHead({ m }: { m: MandalGroundwaterView }) {
         <ConfidenceBadge label={m.confidence_label} />
       </div>
       <div style={{ marginTop: 12 }}>
-        <LiveMap mode="single" mandalId={m.id} height={190} />
+        <MandalLocator mandalId={m.id} color={statusMeta(m.status_bucket).color} />
       </div>
     </div>
   );
