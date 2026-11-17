@@ -6169,8 +6169,8 @@ button.statusLive:focus-visible { outline: 2px solid var(--cyan); outline-offset
 /* Motion, one language across the site: things settle rather than snap.
    Charts draw in left to right the first time they scroll into view (ChartReveal). */
 @media screen and (prefers-reduced-motion: no-preference) {
-  :root[data-motion="ready"] [data-draw]:not([data-drawn]) { clip-path: inset(0 100% 0 0); }
-  :root[data-motion="ready"] [data-draw][data-drawn="drawing"] { clip-path: inset(0 0 0 0); transition: clip-path 1.1s cubic-bezier(.3, 0, .2, 1); }
+  :root[data-motion="ready"] [data-draw]:not([data-draw="sequence"]):not([data-drawn]) { clip-path: inset(0 100% 0 0); }
+  :root[data-motion="ready"] [data-draw]:not([data-draw="sequence"])[data-drawn="drawing"] { clip-path: inset(0 0 0 0); transition: clip-path 1.1s cubic-bezier(.3, 0, .2, 1); }
 }
 
 /* Folds glide: the box grows first, then the words arrive once there is room; closing,

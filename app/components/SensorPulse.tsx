@@ -47,7 +47,7 @@ export function SensorPulse() {
   return (
     <div className={styles.wrap} data-testid="sensor-pulse">
       {pairing ? <style>{`${pairing}{--paired:1}${pulsing}{animation-name:${styles.ringPulse}}`}</style> : null}
-      <svg className={styles.map} viewBox={`0 0 ${W} ${H}`} role="img"
+      <svg className={styles.map} viewBox={`0 0 ${W} ${H}`} role="img" data-draw="sequence"
         aria-label={`${live.length} automatic water-level sensors, each coloured by its change since the same date last year: ${s.deeperThanYearAgo} deeper, ${s.shallowerThanYearAgo} shallower.`}>
         {outlines.map((d, i) => <path key={i} d={d} className={styles.district} />)}
         {live.map(st => <circle key={`${st[0]}-${st[1]}`} cx={x(st[2])} cy={y(st[1])} r={2.6} fill={tone(st[5] - (st[6] as number))}
