@@ -29,7 +29,11 @@ test("the film says only what the site says: its sensor figure is the digest's",
   expect(await lines.count()).toBeGreaterThanOrEqual(5);
   // Every figure carries a source and a date.
   for (const line of await lines.all()) await expect(line.locator("small")).toContainText(/ · as of /);
-  const median = (await lines.first().locator("p").innerText()).match(/reads ([\d.]+) m below ground, against ([\d.]+) m/);
+  // The fold glides open: for a moment after the click its words are not rendered and
+  // innerText reads "", so wait for the line as a reader sees it before taking its figures.
+  const first = lines.first().locator("p"), sentence = /reads ([\d.]+) m below ground, against ([\d.]+) m/;
+  await expect(first).toHaveText(sentence, { useInnerText: true });
+  const median = (await first.innerText()).match(sentence);
   expect(median).not.toBeNull();
   await page.goto("/digest/");
   await expect(page.getByTestId("digest")).toContainText(`${median![1]} m`);
