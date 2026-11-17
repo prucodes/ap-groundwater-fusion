@@ -226,6 +226,9 @@ test.describe("both monsoon charts answer the pointer", () => {
     await settle(page);
 
     const before = await page.locator(".rainHistReadout").innerText();
+    // The chart draws in when it is reached; it answers the pointer once it has.
+    await page.locator(".rainHistSvg").scrollIntoViewIfNeeded();
+    await expect(page.locator(".rainHistSvg")).toHaveAttribute("data-drawn", "done", { timeout: 5000 });
     await page.locator(".rainBar").nth(42).hover({ force: true });
     await page.waitForTimeout(200);
     const after = await page.locator(".rainHistReadout").innerText();

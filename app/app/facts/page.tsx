@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
@@ -31,9 +32,9 @@ function Visual({ v }: { v: FactVisual }) {
   if (v.kind === "waffle") {
     const filled = Math.round(v.pct);
     return (
-      <svg className={styles.waffle} viewBox="0 0 100 100" role="img" aria-label={`${v.pct}% of 100 squares`}>
+      <svg className={styles.waffle} viewBox="0 0 100 100" role="img" aria-label={`${v.pct}% of 100 squares`} data-draw="sequence">
         {Array.from({ length: 100 }, (_, i) => <rect key={i} x={(i % 10) * 10 + 1} y={Math.floor(i / 10) * 10 + 1} width="8" height="8" rx="2"
-          fill={i < filled ? TONE[v.tone] : "var(--fact-cell, #e6ecf0)"} />)}
+          fill={i < filled ? TONE[v.tone] : "var(--fact-cell, #e6ecf0)"} data-on={i < filled || undefined} style={{ "--i": i } as CSSProperties} />)}
       </svg>
     );
   }

@@ -2,13 +2,25 @@
 
 import { useEffect } from "react";
 
-/* Charts draw themselves in, left to right, the first time they scroll into view.
-   Any element marked data-draw takes part. The hidden state exists only once this
-   has run (html[data-motion="ready"]), so without script, in print or with reduced
-   motion every chart is simply there. After the reveal the clip is removed, so
-   tooltips and labels that overflow the chart are never cut. Charts that arrive
-   later (an opened fold, a new route) are picked up as they mount. */
+/* One reveal for every picture on the site, played once, the first time it is reached:
+
+   - a chart marked data-draw is wiped in left to right;
+   - data-draw="sequence" plays the element's own choreography (a map's wash, the sensor
+     dots, a ring's sweep, a hundred squares filling) once at least half of it is in view;
+   - data-draw="always" does the same even when the element opens on screen;
+   - every bar on the site (an <i> with a percentage width, by this codebase's convention,
+     and any parts stacked beside it) grows from the start of its track, without being
+     marked by hand.
+
+   The hidden state exists only once this has run (html[data-motion="ready"]), so without
+   script, in print or with reduced motion everything is simply there. Whatever is already
+   on screen when the page opens stays as it is rather than blink. After a reveal the clip
+   is removed, so tooltips and labels that overflow a chart are never cut. Pictures that
+   arrive later (an opened fold, a new route) are picked up as they mount. */
 const REVEAL_MS = 1100;
+const BARS = 'i[style*="width"]';
+/** Bars in one reveal follow each other by this much, up to a dozen; then together. */
+const BAR_STAGGER_MS = 45;
 
 export function ChartReveal() {
   useEffect(() => {
@@ -21,40 +33,65 @@ export function ChartReveal() {
     // container and draws the chart inside it.
     const charts = new Map<Element, HTMLElement[]>();
     const view = new IntersectionObserver(entries => {
+      let bars = 0;
       for (const entry of entries) {
         const nodes = charts.get(entry.target);
-        if (!entry.isIntersecting || !nodes || (nodes[0].dataset.draw === "sequence" && entry.intersectionRatio < 0.5)) continue;
+        if (!entry.isIntersecting || !nodes) continue;
+        // Enough of it to be worth playing: a share of the element, or, for one taller than
+        // the screen (which could never show that share), a fair part of the screen.
+        const tall = entry.intersectionRect.height, screen = window.innerHeight;
+        const enough = nodes[0].dataset.draw === "sequence"
+          ? entry.intersectionRatio >= 0.5 || tall >= screen * 0.45
+          : entry.intersectionRatio >= 0.2 || tall >= Math.min(160, screen * 0.25);
+        if (!enough) continue;
         view.unobserve(entry.target); charts.delete(entry.target);
+        // Where this track's bar begins: the first part's own edge (a label may sit before it).
+        const start = nodes[0].dataset.draw === "bar" ? Math.min(...nodes.map(node => node.getBoundingClientRect().left)) : 0;
         for (const node of nodes) {
+          if (node.dataset.draw === "bar") {
+            // Every part grows from where the bar begins, not from its own edge;
+            // the parts of one bar leave together, and the bars of a group one after another.
+            node.style.setProperty("--bar-origin", `${Math.round(start - node.getBoundingClientRect().left)}px`);
+            node.style.setProperty("--bar-delay", `${Math.min(bars, 12) * BAR_STAGGER_MS}ms`);
+          }
           node.dataset.drawn = "drawing";
-          window.setTimeout(() => { node.dataset.drawn = "done"; }, REVEAL_MS + 100);
+          window.setTimeout(() => { node.dataset.drawn = "done"; }, REVEAL_MS + (node.dataset.draw === "bar" ? 700 : 100));
         }
+        if (nodes[0].dataset.draw === "bar") bars++;
       }
-    }, { threshold: [0.2, 0.5] });
-    const watch = (scope: ParentNode) => scope.querySelectorAll<HTMLElement>("[data-draw]").forEach(node => {
-      if (seen.has(node)) return;
-      seen.add(node);
-      // A sequence (the sensor map's dots) is never clipped, so it is watched itself and plays once at
-      // least half of it is in view; a wiped chart already on screen at first paint stays drawn rather than blink.
-      const sequence = node.dataset.draw === "sequence";
-      const box = node.getBoundingClientRect();
-      const shown = Math.max(0, Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0)) / Math.max(box.height, 1);
-      // "always": hidden from first paint (no flash) and drawn in even when it opens on screen.
-      if (node.dataset.draw === "always" && shown > 0) {
-        requestAnimationFrame(() => { node.dataset.drawn = "drawing"; window.setTimeout(() => { node.dataset.drawn = "done"; }, REVEAL_MS + 2000); });
-        return;
-      }
-      if (!root.dataset.motion && (sequence ? shown >= 0.5 : shown > 0)) { node.dataset.drawn = "done"; return; }
-      const frame = sequence ? node : node.parentElement ?? node;
-      const nodes = charts.get(frame);
-      if (nodes) { nodes.push(node); return; }
-      charts.set(frame, [node]);
-      view.observe(frame);
-    });
+    }, { threshold: [0, 0.01, 0.03, 0.1, 0.2, 0.35, 0.5, 0.75] });
+    const watch = (scope: ParentNode) => {
+      // Bars are found, not marked: any not already part of a picture with its own reveal.
+      // A bar built of parts (a rust part, then an amber one) is marked whole, so it grows as one.
+      scope.querySelectorAll<HTMLElement>(BARS).forEach(bar => {
+        if (bar.dataset.draw || !bar.style.width.endsWith("%") || bar.closest("[data-draw], [data-no-reveal], [data-testid='weekly-film']")) return;
+        for (const part of bar.parentElement?.children ?? []) if (part instanceof HTMLElement && part.style.width.endsWith("%") && !part.dataset.draw) part.dataset.draw = "bar";
+      });
+      scope.querySelectorAll<HTMLElement>("[data-draw]").forEach(node => {
+        if (seen.has(node)) return;
+        seen.add(node);
+        // A sequence (the sensor map's dots) is never clipped, so it is watched itself and plays once at
+        // least half of it is in view; a wiped chart already on screen at first paint stays drawn rather than blink.
+        const sequence = node.dataset.draw === "sequence";
+        const box = node.getBoundingClientRect();
+        const shown = Math.max(0, Math.min(box.bottom, window.innerHeight) - Math.max(box.top, 0)) / Math.max(box.height, 1);
+        // "always": hidden from first paint (no flash) and drawn in even when it opens on screen.
+        if (node.dataset.draw === "always" && shown > 0) {
+          requestAnimationFrame(() => { node.dataset.drawn = "drawing"; window.setTimeout(() => { node.dataset.drawn = "done"; }, REVEAL_MS + 2000); });
+          return;
+        }
+        if (!root.dataset.motion && (sequence ? shown >= 0.5 : shown > 0)) { node.dataset.drawn = "done"; return; }
+        const frame = sequence ? node : node.parentElement ?? node;
+        const nodes = charts.get(frame);
+        if (nodes) { nodes.push(node); return; }
+        charts.set(frame, [node]);
+        view.observe(frame);
+      });
+    };
     watch(document);
     root.dataset.motion = "ready";
     const added = new MutationObserver(records => {
-      for (const record of records) record.addedNodes.forEach(node => { if (node instanceof Element) { if (node.matches("[data-draw]")) watch(node.parentNode ?? document); else watch(node); } });
+      for (const record of records) record.addedNodes.forEach(node => { if (node instanceof Element) { if (node.matches(`[data-draw], ${BARS}`)) watch(node.parentNode ?? document); else watch(node); } });
     });
     added.observe(document.body, { childList: true, subtree: true });
     return () => { view.disconnect(); added.disconnect(); delete root.dataset.motion; };

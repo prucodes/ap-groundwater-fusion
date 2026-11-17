@@ -56,3 +56,9 @@
   .text { display: none; }   /* the headline carries it on a phone; the copied quote keeps the full sentence */
   .chapter h2 { font-size: 20px; }
 }
+
+/* The share fills square by square the first time it is reached; the empty squares are there from the start. */
+@media screen and (prefers-reduced-motion: no-preference) {
+  :global(:root[data-motion="ready"]) .waffle[data-draw]:not([data-drawn]) rect[data-on] { opacity: .12; }
+  .waffle[data-drawn] rect[data-on] { transition: opacity .35s ease calc(var(--i, 0) * 11ms); }
+}

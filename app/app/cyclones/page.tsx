@@ -42,7 +42,7 @@ function StorageLine({ days, mark }: { days: ArnabDay[]; mark?: { date: string; 
   const ticks = [lo, Math.round((lo + hi) / 2), hi];
   const at = mark ? days.findIndex(d => d.date >= mark.date) : -1;
   return (
-    <svg className={styles.line} viewBox={`0 0 ${W} ${H}`} role="img"
+    <svg className={styles.line} viewBox={`0 0 ${W} ${H}`} role="img" data-draw=""
       aria-label={`Reservoir storage by day: ${days.map(d => `${arnabDay(d.date)} ${d.reservoirTmc} TMC`).join(", ")}.`}>
       <defs>
         <linearGradient id="arnabFill" x1="0" x2="0" y1="0" y2="1">
