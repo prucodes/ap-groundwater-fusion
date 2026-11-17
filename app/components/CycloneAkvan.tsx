@@ -77,7 +77,7 @@ function Response({ a }: { a: Akvan }) {
         </h3>
         <p>Each automatic recorder against its own reading on {at(a.sensors.baseline)} IST, before the storm reached the coast. A sensor counts once its water table is more than 10 cm nearer the surface.</p>
       </div>
-      <svg className={styles.chart} viewBox={`0 0 ${W} ${H}`} role="img"
+      <svg className={styles.chart} viewBox={`0 0 ${W} ${H}`} role="img" data-draw=""
         aria-label={`Share of sensors risen since ${day(first)}, by day, ${t.map((p, i) => `${day(p.day)} ${Math.round(pct[i])}%`).join(", ")}.`}>
         <line x1={L} x2={W - R} y1={H - B} y2={H - B} className={styles.axis} />
         <line x1={L} x2={W - R} y1={y(top)} y2={y(top)} className={styles.grid} />

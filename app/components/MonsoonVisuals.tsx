@@ -276,7 +276,7 @@ export function RechargeTrajectory() {
 
   return (
     <div className="trajectoryWrap">
-      <svg viewBox={`0 0 ${width} ${height}`} className="trajectorySvg" role="img"
+      <svg viewBox={`0 0 ${width} ${height}`} className="trajectorySvg" role="img" data-draw=""
            aria-label={`How far the water table has risen since May, this season against the ${past.length} before it`}>
         {ticks.map((value, i) => (
           <g key={i}>
@@ -348,7 +348,7 @@ export function RainfallHistory() {
 
   return (
     <div className="rainHistWrap">
-      <svg viewBox={`0 0 ${width} ${height}`} className="rainHistSvg" role="img"
+      <svg viewBox={`0 0 ${width} ${height}`} className="rainHistSvg" role="img" data-draw=""
            aria-label="June to August rainfall for every year since 1981, El Nino years marked"
            onMouseLeave={() => setHover(null)}>
         <line x1={pad.left} x2={width - pad.right} y1={meanY} y2={meanY} className="rainMean" />

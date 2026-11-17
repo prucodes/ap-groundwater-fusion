@@ -70,7 +70,7 @@ export function StateOutlineMap({ keys, colors, notes, label, aspect, legend, te
   }, []);
 
   return <figure className={styles.figure} data-testid={testId} data-ready={outlines ? "true" : "false"}>
-    <div ref={frame} className={styles.frame} style={{ aspectRatio: String(aspect) }} onPointerLeave={() => setHover(null)}>
+    <div ref={frame} className={styles.frame} data-draw="sequence" style={{ aspectRatio: String(aspect) }} onPointerLeave={() => setHover(null)}>
       {outlines ? <svg viewBox={`0 0 ${outlines.view.width} ${outlines.view.height}`} role="img" aria-label={label}>
         {outlines.mandals.map((_, index) => (marked?.has(index) ? null : shape(index)))}
         <path d={outlines.districts} className={styles.districts} />

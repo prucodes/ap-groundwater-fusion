@@ -51,7 +51,7 @@ export function VillageOffsets() {
       <div className={styles.twocol}>
         <div>
           <div className={styles.listHead}>What each reading at a well buys</div>
-          <svg viewBox={`0 0 ${W} ${H}`} className={styles.chart} role="img"
+          <svg viewBox={`0 0 ${W} ${H}`} className={styles.chart} role="img" data-draw=""
             aria-label="Error on later readings against the number of readings taken at the well, for dug wells and bore wells, with the mandal figure alone for dug wells">
             <line className={styles.gl} x1={L} x2={W - R} y1={H - B} y2={H - B} />
             <line className={styles.gl} x1={L} x2={L} y1={T} y2={H - B} />

@@ -55,7 +55,7 @@ export function DroughtFunnel({ data }: { data: Pick<DroughtWatch, "state" | "ru
 
   return (
     <div className={styles.funnelCard}>
-      <svg className={`${styles.funnel} ${styles.funnelDesktop}`} viewBox={`0 0 1000 ${height}`} role="img"
+      <svg className={`${styles.funnel} ${styles.funnelDesktop}`} viewBox={`0 0 1000 ${height}`} role="img" data-draw=""
         aria-label={`Of ${state.mandals} mandals, ${state.assessed} can be assessed; Trigger 1 is set in ${state.trigger1}; on the impact indicators ${state.counts.severe} read severe, ${state.counts["moderate|severe"]} moderate or severe, ${state.counts.moderate} moderate, ${state.counts["normal|moderate"]} normal or moderate and ${state.counts.normal} normal.`}>
         <text x={xs[0]} y={16} className={styles.stageLabel}>All</text>
         <text x={xs[1]} y={16} className={styles.stageLabel}>Data</text>

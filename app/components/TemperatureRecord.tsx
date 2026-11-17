@@ -39,7 +39,7 @@ export function TemperatureRecord() {
 
   return (
     <div className="tempWrap">
-      <svg viewBox={`0 0 ${W} ${H}`} className="tempChart" role="img"
+      <svg viewBox={`0 0 ${W} ${H}`} className="tempChart" role="img" data-draw=""
            aria-label={`Andhra Pradesh annual temperature against its ${data.baseline} average, from two records`}>
         {ticks.map((value) => (
           <g key={value}>
