@@ -631,7 +631,7 @@ export default function MonsoonPage() {
             <summary>Why the ocean index is context and never a prediction</summary>
             <p className="cardNote">
               Adding the Oceanic Niño Index to the three-month forecast was tested on rolling origin and made it{" "}
-              <strong>worse</strong>: 1.776 m to 1.850 m mean error, and worse in every aquifer. Two El Niño
+              <strong>worse</strong>: 1.78 m to 1.85 m mean error, and worse in every aquifer. Two El Niño
               events inside the training record are not enough to learn a response from, so the model does not
               use it. Groundwater changes come from the readings and rainfall estimates from CHIRPS.
               ONI is used to group historical rainfall years for comparison, not to forecast local outcomes.

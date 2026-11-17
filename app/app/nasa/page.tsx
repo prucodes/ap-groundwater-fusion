@@ -1,5 +1,5 @@
 import { HeaderHero } from "../../components/HeaderHero";
-import { DistrictMap } from "../../components/DistrictMap";
+import { DistrictChoropleth } from "../../components/DistrictChoropleth";
 import { PercentileBar, WetnessTag } from "../../components/Signals";
 import {
   IconActivity,
@@ -130,7 +130,7 @@ export default function NasaSignalsPage() {
           </div>
           <span className="cardSub">district-centroid sample / regional context</span>
         </div>
-        <DistrictMap layer="gw_percentile" height={440} />
+        <DistrictChoropleth layer="gw_percentile" testId="nasa-district-map" label="Districts coloured by NASA GRACE-DA groundwater percentile, 0 to 100" />
         <div className="choroLegend">
           <div className="choroHead">
             <span>NASA Groundwater %ile <span className="choroUnit">(0–100)</span></span>
@@ -234,8 +234,8 @@ export default function NasaSignalsPage() {
                   <td className="cellStrong">{s.station_name}</td>
                   <td>{titleCase(s.district_name)}</td>
                   <td>{titleCase(s.mandal_name)}</td>
-                  <td>{Number(s.latitude).toFixed(3)}</td>
-                  <td>{Number(s.longitude).toFixed(3)}</td>
+                  <td>{Number(s.latitude).toFixed(2)}</td>
+                  <td>{Number(s.longitude).toFixed(2)}</td>
                   <td className="cellPct">{formatNumber(s.groundwater_percentile)}</td>
                   <td className="cellPct">{formatNumber(s.rootzone_percentile)}</td>
                   <td className="cellPct">{formatNumber(s.surface_percentile)}</td>

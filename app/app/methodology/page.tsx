@@ -236,7 +236,7 @@ export default function MethodologyPage() {
           </p>
           <p>
             <strong>ONI groups rainfall-history composites; it does not generate local groundwater predictions.</strong> Adding it to the three-month forecast was tested
-            on rolling origin and made the forecast worse: 1.776 m to 1.850 m mean error, and worse in every aquifer.
+            on rolling origin and made the forecast worse: 1.78 m to 1.85 m mean error, and worse in every aquifer.
             The groundwater forecast experiment remains research-only. Historical ENSO associations do not establish a local forecast or causation.
           </p>
           <p data-sourced="phase3_levels/experiment_forecast_inputs.py phase3_levels/experiment_soil_moisture.py">
@@ -253,7 +253,7 @@ export default function MethodologyPage() {
             (Pai et al. 2014), the rainfall officials quote, agrees with the CHIRPS record the model reads: across 604 mandals from
             2014 to 2025 the June to September totals match on average (CHIRPS at 1.00 of IMD), month by month they move together
             (r&nbsp;=&nbsp;0.87), and a wet or a dry season reads the same way in 78% of mandal-seasons. As the model&rsquo;s rain,
-            IMD would cut the nowcast&rsquo;s error by about 2% (1.060 m to 1.041 m over 2024 and 2025, better in 18 of 24 months).
+            IMD would cut the nowcast&rsquo;s error by about 2% (1.06 m to 1.04 m over 2024 and 2025, better in 18 of 24 months).
             IMD publishes a year&rsquo;s grid only after the year ends, while CHIRPS posts each month in about three weeks, and the
             weekly nowcast needs this season&rsquo;s rain, so CHIRPS stays the input.
           </p>
@@ -265,7 +265,7 @@ export default function MethodologyPage() {
             says the monsoon will fail. Forecasts made from October, once the season is over, carry no such bias (between
             &minus;0.3 m and +0.6 m). Shrinking toward no change and correcting by past bias were both tested;
             neither improved every period, so the released forecast is unchanged. The model was also re-run on the State&rsquo;s
-            official mandal outlines: error moved by under 0.3% (1.797 m against 1.800 m), so its inputs are unchanged.
+            official mandal outlines: error moved by under 0.3% (1.80 m either way), so its inputs are unchanged.
           </p>
           <p>
             <strong>Each released forecast says how such forecasts have fared.</strong>{" "}The same backtest, split by the month a
@@ -276,7 +276,7 @@ export default function MethodologyPage() {
             and &ldquo;lower confidence&rdquo; where it has not beaten no change. A rule built on El Ni&ntilde;o at the forecast
             date was tested first and rejected: forecasts made while the Pacific was already warm beat no change as often as any
             others. In October 2026 the rainfall record was rebuilt from 1981 so that mandals drawn in more than one part average
-            rain over every part (seven mandals moved by 1.8&ndash;3.1%); retrained on it, the forecast&rsquo;s error was 1.794 m.
+            rain over every part (seven mandals moved by 1.8&ndash;3.1%); retrained on it, the forecast&rsquo;s error was 1.79 m.
             Later that month the months the State carried forward in 2021 were taken out as missing (see the caveats below):
             over the backtest since 2018 the released forecast&rsquo;s error fell from 2.22 m to 2.17 m; over the months since
             2024 it rose from 1.73 m to 1.81 m, still well under assuming no change (2.22 m).

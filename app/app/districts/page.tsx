@@ -9,7 +9,7 @@ import { ExportCsvButton } from "../../components/ExportButtons";
 import { IconActivity, IconCheck, IconDroplet, IconGrid, IconLayers, IconMap } from "../../components/icons";
 import { balanceMeta, districtRollups, districtSeries, formatNumber, formatPeriod, latestObservationPeriod, mandals, officialStatusLine, statusMeta, titleCase } from "../../lib/data";
 import { AiBrief } from "../../components/AiBrief";
-import { DistrictMap } from "../../components/DistrictMap";
+import { DistrictChoropleth } from "../../components/DistrictChoropleth";
 import { DistrictTrendGrid } from "../../components/DistrictTrendGrid";
 import { DistrictProfile } from "../../components/governance/DistrictProfile";
 import styles from "../../components/governance/Governance.module.css";
@@ -55,7 +55,7 @@ export default function DistrictsPage() {
               <button className={`segBtn ${view === "map" ? "active" : ""}`} aria-pressed={view === "map"} onClick={() => setView("map")}><IconMap /> Map</button>
             </div>
           </div>
-          {view === "profile" ? <DistrictProfile rows={rollups} selected={selected} onSelect={setSelected} /> : <><DistrictMap layer="gw_percentile" height={420} colorOverride={stressColors} /><p className="cardSub">Most severe review or coverage category per district, not a district drought classification.</p></>}
+          {view === "profile" ? <DistrictProfile rows={rollups} selected={selected} onSelect={setSelected} /> : <><DistrictChoropleth layer="gw_percentile" colorOverride={stressColors} overrideLabel={Object.fromEntries(rollups.map(r => [r.district_name, statusMeta(r.worst_bucket).label]))} testId="districts-status-map" label="Districts coloured by their most severe review or coverage category" /><p className="cardSub">Most severe review or coverage category per district, not a district drought classification.</p></>}
         </section>
 
         <section className="card">

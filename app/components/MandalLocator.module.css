@@ -1,0 +1,9 @@
+.figure { position: relative; margin: 0; height: 190px; border-radius: var(--radius-sm); overflow: hidden; background: linear-gradient(180deg, var(--map-sea-a), var(--map-sea-b)); }
+.figure > svg:first-child { display: block; width: 100%; height: 100%; }
+.neighbour { fill: color-mix(in srgb, var(--ink) 7%, var(--card)); stroke: color-mix(in srgb, var(--ink) 22%, transparent); }
+.district { fill: none; stroke: color-mix(in srgb, var(--ink) 45%, transparent); stroke-linejoin: round; }
+.mandal { stroke: var(--ink); stroke-linejoin: round; }
+.inset { position: absolute; right: 8px; bottom: 8px; width: 64px; height: auto; }
+.state { fill: color-mix(in srgb, var(--ink) 12%, var(--card)); stroke: none; }
+.insetDistrict { fill: var(--ink); opacity: .7; }
+.empty { display: grid; place-items: center; height: 190px; font-size: 12px; color: var(--muted); }

@@ -121,8 +121,8 @@ export default function EstimatesPage() {
         <KpiCard
           icon={<IconTarget />}
           label="Temporal Holdout MAE"
-          value={<>{bundle.backtest.forecast_mae_m}<span className="unit">m</span></>}
-          foot={`${modelCard.evaluations.temporalNowcast.sampleCount.toLocaleString("en-IN")} eligible mandal-months · R² ${bundle.backtest.forecast_r2}`}
+          value={<>{bundle.backtest.forecast_mae_m.toFixed(1)}<span className="unit">m</span></>}
+          foot={`${modelCard.evaluations.temporalNowcast.sampleCount.toLocaleString("en-IN")} eligible mandal-months · R² ${bundle.backtest.forecast_r2.toFixed(2)}`}
           accent="var(--green)"
         />
         <KpiCard
@@ -210,9 +210,9 @@ export default function EstimatesPage() {
               not a complete twelve-year panel for every unit.
             </p>
             <div className="estMetricGrid">
-              <div className="estMetric"><span className="estMetricVal">{bundle.backtest.forecast_mae_m} m</span><span className="estMetricLbl">rolling temporal holdout MAE</span></div>
-              <div className="estMetric"><span className="estMetricVal">{bundle.backtest.forecast_r2}</span><span className="estMetricLbl">R² explained</span></div>
-              <div className="estMetric"><span className="estMetricVal">{modelCard.evaluations.spatialEstimation.reportedMetric.maeM} m</span><span className="estMetricLbl">whole-mandal spatial MAE</span></div>
+              <div className="estMetric"><span className="estMetricVal">{bundle.backtest.forecast_mae_m.toFixed(2)} m</span><span className="estMetricLbl">rolling temporal holdout MAE</span></div>
+              <div className="estMetric"><span className="estMetricVal">{bundle.backtest.forecast_r2.toFixed(2)}</span><span className="estMetricLbl">R² explained</span></div>
+              <div className="estMetric"><span className="estMetricVal">{modelCard.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(1)} m</span><span className="estMetricLbl">whole-mandal spatial MAE</span></div>
             </div>
             <div className="estTerrain">
               <div className="estTerrainHead">Accuracy by terrain (MAE)</div>
@@ -220,15 +220,15 @@ export default function EstimatesPage() {
                 <div key={k} className="estTerrainRow">
                   <span>{AQ_LABEL[k] ?? k}</span>
                   <span className="estTerrainBar"><span style={{ width: `${Math.min(100, (v / 2) * 100)}%` }} /></span>
-                  <strong>{v} m</strong>
+                  <strong>{v.toFixed(2)} m</strong>
                 </div>
               ))}
             </div>
             <div className="estTerrainHead" style={{ marginTop: 16, marginBottom: 8 }}>Separate evaluation tasks</div>
             <ul className="estCaveats" style={{ borderTop: "none", paddingTop: 0 }}>
-              <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Rolling temporal holdout ({modelCard.evaluations.temporalNowcast.evaluationPeriod.start}–{modelCard.evaluations.temporalNowcast.evaluationPeriod.end}, n={modelCard.evaluations.temporalNowcast.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.temporalNowcast.model.maeM} m MAE</strong>, R² {modelCard.evaluations.temporalNowcast.model.r2}.</span></li>
-              <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Whole-mandal spatial holdout ({modelCard.evaluations.spatialEstimation.mandalCount} mandals): <strong>{modelCard.evaluations.spatialEstimation.reportedMetric.maeM} m MAE</strong>. This is the relevant no-history estimate task.</span></li>
-              <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Same-month CGWB/APWRIMS cross-network comparison (n={modelCard.evaluations.crossNetworkComparison.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.crossNetworkComparison.maeM} m MAE, r {modelCard.evaluations.crossNetworkComparison.correlation}</strong>; a network comparability diagnostic, not model accuracy.</span></li>
+              <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Rolling temporal holdout ({modelCard.evaluations.temporalNowcast.evaluationPeriod.start}–{modelCard.evaluations.temporalNowcast.evaluationPeriod.end}, n={modelCard.evaluations.temporalNowcast.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.temporalNowcast.model.maeM.toFixed(2)} m MAE</strong>, R² {modelCard.evaluations.temporalNowcast.model.r2.toFixed(2)}.</span></li>
+              <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Whole-mandal spatial holdout ({modelCard.evaluations.spatialEstimation.mandalCount} mandals): <strong>{modelCard.evaluations.spatialEstimation.reportedMetric.maeM.toFixed(1)} m MAE</strong>. This is the relevant no-history estimate task.</span></li>
+              <li><span style={{ color: "var(--amber)", fontWeight: 700, width: 14, flexShrink: 0 }}>±</span> <span>Same-month CGWB/APWRIMS cross-network comparison (n={modelCard.evaluations.crossNetworkComparison.sampleCount.toLocaleString("en-IN")}): <strong>{modelCard.evaluations.crossNetworkComparison.maeM.toFixed(1)} m MAE, r {modelCard.evaluations.crossNetworkComparison.correlation.toFixed(2)}</strong>; a network comparability diagnostic, not model accuracy.</span></li>
               <li><span style={{ color: "var(--green)", fontWeight: 700, width: 14, flexShrink: 0 }}>✓</span> <span>Model P10–P90 empirical coverage: <strong>{modelCard.evaluations.intervalEvaluation.empiricalCoveragePct}%</strong> over {modelCard.evaluations.intervalEvaluation.sampleCount.toLocaleString("en-IN")} eligible holdout rows.</span></li>
             </ul>
             <ul className="estCaveats">
