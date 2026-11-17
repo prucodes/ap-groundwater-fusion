@@ -3527,51 +3527,14 @@ pre.jsonBody {
    Methodology
    ============================================================ */
 
-.methodFlow {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  flex-wrap: wrap;
-}
-
-.methodNode {
-  flex: 1;
-  min-width: 150px;
-  padding: 18px 16px;
-  border-radius: 14px;
-  text-align: center;
-  color: #fff;
-  position: relative;
-}
-
-.methodNode .mIcon {
-  width: 42px;
-  height: 42px;
-  margin: 0 auto 10px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.16);
-}
-
-.methodNode .mIcon svg { width: 22px; height: 22px; }
-.methodNode h4 { color: #fff; font-size: 14px; }
-.methodNode p { margin: 6px 0 0; font-size: 11px; opacity: 0.85; line-height: 1.4; }
-
-.methodArrow {
-  display: grid;
-  place-items: center;
-  padding: 0 6px;
-  color: var(--muted-2);
-  flex: none;
-}
-
-.methodArrow svg { width: 26px; height: 26px; animation: arrowPulse 2.4s ease-in-out infinite; }
-
-@keyframes arrowPulse {
-  0%, 100% { opacity: 0.45; transform: translateX(0); }
-  50% { opacity: 1; transform: translateX(3px); }
-}
+/* The method's seven steps in words, under the film that shows them (methodology/page.tsx).
+   Each line carries what kind of knowledge it is: measured, modelled, worked out, or context. */
+.methodSteps { list-style: none; margin: 0; padding: 4px 18px 16px; display: grid; gap: 12px; counter-reset: step; }
+.methodSteps li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 2px 12px; counter-increment: step; font-size: 14px; line-height: 1.55; color: var(--ink-soft); }
+.methodSteps li::before { content: counter(step); grid-row: span 2; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; font: 600 12px var(--font-mono); color: var(--ink); border: 1px solid var(--line-strong); }
+.methodSteps b { color: var(--ink); font-weight: 600; }
+.methodSteps em { font-style: normal; font: 600 10px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--teal); margin-right: 8px; }
+.methodSteps small { grid-column: 2; font-size: 12px; color: var(--muted); }
 
 .reportCard, .summaryCard {
   transition: transform 0.22s var(--ease), box-shadow 0.22s var(--ease), border-color 0.22s var(--ease);

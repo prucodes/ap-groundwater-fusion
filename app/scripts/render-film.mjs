@@ -1,27 +1,29 @@
 #!/usr/bin/env node
 /**
- * Record the weekly film (/weekly-film/) to MP4 in three shapes, inside the built site:
+ * Record one of the site's films to MP4 in three shapes, inside the built site:
  *
- *   out/films/weekly/ap-water-week-landscape.mp4   1920x1080  meeting screens, slides
- *   out/films/weekly/ap-water-week-square.mp4      1080x1080  messages and groups
- *   out/films/weekly/ap-water-week-portrait.mp4    1080x1920  WhatsApp Status, phones
- *   out/films/weekly/manifest.json                 what the page's download row reads
+ *   --film weekly        /weekly-film/   ->  out/films/weekly/ap-water-week-<shape>.mp4
+ *   --film methodology   /methodology/   ->  out/films/methodology/ap-water-method-<shape>.mp4
  *
- * Run after `npm run build:static`:
+ *   landscape 1920x1080  meeting screens, slides
+ *   square    1080x1080  messages and groups
+ *   portrait  1080x1920  WhatsApp Status, phones
  *
- *   node scripts/render-weekly-film.mjs --directory out --base /ap-groundwater-fusion
+ * and a manifest.json beside them, which the page's download row reads. Run after
+ * `npm run build:static`:
  *
- * The page draws the frame for any moment (window.renderFilm(seconds)), so this steps
- * through the film 30 frames a second, screenshots each frame and pipes it to ffmpeg.
+ *   node scripts/render-film.mjs --film weekly --directory out --base /ap-groundwater-fusion
+ *
+ * A film draws the frame for any moment (window.renderFilm(seconds), FilmPlayer.tsx), so
+ * this steps through it 30 frames a second, screenshots each frame and pipes it to ffmpeg.
  * Nothing is recorded in real time, so a slow machine drops no frames. A frame identical
- * to the one before (the film holds still while a figure is read) is not photographed
- * again.
+ * to the one before (a film holds still while a figure is read) is not photographed again.
  *
  * Before anything is encoded, every scene of every shape is checked at the moment it is
  * fully on screen: no text outside the safe area, none running out of its column, no two
  * pieces of text overlapping, none too small to read on a phone. A film that fails is
  * not published; the frames it was judged on are kept as a contact sheet per shape
- * (--evidence, default test-results/weekly-film) for a person to look at.
+ * (--evidence, default test-results/<film>-film) for a person to look at.
  *
  *   --qa-only       check and write the contact sheets, encode nothing
  *   --formats a,b   a subset of landscape,square,portrait
@@ -41,8 +43,12 @@ const flag = (name, fallback) => {
 const directory = resolve(APP_DIR, flag("directory", "out"));
 const base = flag("base", process.env.PAGES_BASE_PATH ?? "").replace(/\/$/, "");
 const port = Number(flag("port", 3293));
-const output = resolve(APP_DIR, flag("output", join(directory, "films", "weekly")));
-const evidence = resolve(APP_DIR, flag("evidence", "test-results/weekly-film"));
+const FILMS = { weekly: { route: "/weekly-film/", file: "ap-water-week" }, methodology: { route: "/methodology/", file: "ap-water-method" } };
+const filmName = flag("film", "weekly");
+if (!(filmName in FILMS)) { console.error(`unknown film "${filmName}": choose from ${Object.keys(FILMS).join(", ")}`); process.exit(2); }
+const { route, file: filePrefix } = FILMS[filmName];
+const output = resolve(APP_DIR, flag("output", join(directory, "films", filmName)));
+const evidence = resolve(APP_DIR, flag("evidence", `test-results/${filmName}-film`));
 const qaOnly = process.argv.includes("--qa-only");
 const FPS = 30;
 const SIZE = { landscape: [1920, 1080], square: [1080, 1080], portrait: [1080, 1920] };
@@ -71,7 +77,7 @@ const run = (command, args) => new Promise((done, fail) => {
 
 /** Runs in the page: every piece of visible text in the frame, judged where it stands. */
 function inspect({ safe, minPx }) {
-  const stage = document.querySelector('[data-testid="weekly-film"] > div');
+  const stage = document.querySelector("[data-film-stage]");
   const width = window.innerWidth, height = window.innerHeight;
   const shown = el => {
     for (let node = el; node && node !== stage.parentElement; node = node.parentElement) {
@@ -121,7 +127,7 @@ async function film(browser, format) {
   const page = await context.newPage();
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
-  await page.goto(`http://127.0.0.1:${port}${base}/weekly-film/?capture=${format}`, { waitUntil: "networkidle" });
+  await page.goto(`http://127.0.0.1:${port}${base}${route}?capture=${format}`, { waitUntil: "networkidle" });
   await page.waitForFunction(() => window.filmReady === true, null, { timeout: 60000 });
   const meta = await page.evaluate(() => window.filmMeta);
   const frame = seconds => page.evaluate(time => window.renderFilm(time), seconds);
@@ -151,7 +157,7 @@ async function film(browser, format) {
   if (problems.length || qaOnly) { await context.close(); return { format, problems, meta }; }
 
   mkdirSync(output, { recursive: true });
-  const name = `ap-water-week-${format}.mp4`, target = join(output, name), started = Date.now();
+  const name = `${filePrefix}-${format}.mp4`, target = join(output, name), started = Date.now();
   const encoder = spawn("ffmpeg", ["-hide_banner", "-loglevel", "error", "-y", "-f", "image2pipe", "-framerate", String(FPS), "-c:v", "mjpeg", "-i", "pipe:0",
     // JPEG frames are full range; phones and WhatsApp expect broadcast range, tagged BT.709.
     "-vf", "scale=in_range=pc:out_range=tv:in_color_matrix=bt601:out_color_matrix=bt709,format=yuv420p",
@@ -180,7 +186,7 @@ async function film(browser, format) {
 
 let browser, failed = false;
 try {
-  await ready(`http://127.0.0.1:${port}${base}/weekly-film/`);
+  await ready(`http://127.0.0.1:${port}${base}${route}`);
   mkdirSync(evidence, { recursive: true });
   browser = await chromium.launch();
   const results = await Promise.all(formats.map(format => film(browser, format)));
@@ -188,13 +194,13 @@ try {
   writeFileSync(join(evidence, "checks.json"), JSON.stringify({ checkedAt: new Date().toISOString(), formats, problems }, null, 2));
   if (problems.length) {
     failed = true;
-    console.error(`The weekly film was not recorded: ${problems.length} layout problem${problems.length === 1 ? "" : "s"}.\n  ${problems.join("\n  ")}\nContact sheets: ${evidence}`);
+    console.error(`The ${filmName} film was not recorded: ${problems.length} layout problem${problems.length === 1 ? "" : "s"}.\n  ${problems.join("\n  ")}\nContact sheets: ${evidence}`);
   } else if (qaOnly) {
-    console.log(`Weekly film checked in ${formats.length} shape${formats.length === 1 ? "" : "s"}: no layout problems. Contact sheets: ${evidence}`);
+    console.log(`The ${filmName} film checked in ${formats.length} shape${formats.length === 1 ? "" : "s"}: no layout problems. Contact sheets: ${evidence}`);
   } else {
     const { meta } = results[0];
     writeFileSync(join(output, "manifest.json"), JSON.stringify({ week: meta.week, seconds: meta.seconds, renderedAt: new Date().toISOString(), files: results.map(result => result.file) }, null, 2));
-    console.log(`Recorded the film for the week of ${meta.week} to ${output}`);
+    console.log(`Recorded the ${filmName} film (${meta.week}) to ${output}`);
   }
 } finally {
   await browser?.close();

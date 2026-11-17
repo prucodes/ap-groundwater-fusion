@@ -1,26 +1,16 @@
-/* The weekly film. The stage is laid out at the video's own pixel size (1920x1080,
-   1080x1080 or 1080x1920) and scaled to fit the page, so what a reader watches and what
-   the recorder encodes are the same layout. Nothing here animates by itself: every moving
+/* The weekly film's look and scenes. The frame, the stage's size and the page's controls
+   are the shell's (FilmPlayer.module.css). Nothing here animates by itself: every moving
    value is set inline from the film's clock (WeeklyFilmPlayer.tsx). */
-
-.player { display: grid; gap: 12px; }
-.frame { position: relative; width: 100%; overflow: hidden; border-radius: 14px; background: #06121b; box-shadow: 0 18px 50px -28px rgba(6, 18, 27, .55); }
-.frame:fullscreen { border-radius: 0; aspect-ratio: auto !important; width: 100vw; height: 100vh; }
 
 .stage {
   --ink: #f2f6f9; --soft: #a9bccb; --dim: #71889a; --hair: rgba(255, 255, 255, .13);
   --bad: #ee8a63; --warn: #ecb354; --water: #63cbe9; --then: #7f97a9;
-  position: absolute; top: 50%; left: 50%; transform-origin: center; overflow: hidden;
   color: var(--ink); font-family: var(--font-sans); font-variant-numeric: tabular-nums; text-align: left;
   background: radial-gradient(110% 90% at 80% 12%, #12303f 0%, #0a1c29 46%, #06121b 100%);
 }
 .stage[data-format="landscape"] { --pad-x: 112px; --pad-top: 168px; --pad-bottom: 164px; --gap: 96px; --eyebrow: 25px; --big: 184px; --headline: 44px; --note: 30px; --foot: 22px; --chrome: 23px; --edge-top: 62px; --edge-bottom: 62px; --row-label: 27px; --row-value: 40px; --title: 104px; }
 .stage[data-format="square"] { --pad-x: 72px; --pad-top: 122px; --pad-bottom: 128px; --gap: 30px; --eyebrow: 23px; --big: 122px; --headline: 34px; --note: 26px; --foot: 22px; --chrome: 22px; --edge-top: 48px; --edge-bottom: 48px; --row-label: 25px; --row-value: 35px; --title: 84px; }
 .stage[data-format="portrait"] { --pad-x: 80px; --pad-top: 280px; --pad-bottom: 330px; --gap: 56px; --eyebrow: 29px; --big: 204px; --headline: 50px; --note: 34px; --foot: 26px; --chrome: 26px; --edge-top: 176px; --edge-bottom: 216px; --row-label: 31px; --row-value: 46px; --title: 112px; }
-
-/* Capture: the stage is the whole viewport, at its own size, above everything. */
-.player[data-capture] .frame { position: fixed; inset: 0; z-index: 2147483000; border-radius: 0; aspect-ratio: auto !important; width: 100vw; height: 100vh; }
-.player[data-capture] .stage { top: 0; left: 0; }
 
 .chrome { position: absolute; top: var(--edge-top); left: var(--pad-x); right: var(--pad-x); display: flex; justify-content: space-between; gap: 24px; font: 500 var(--chrome)/1.2 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
 .chrome span:first-child { color: var(--soft); }
@@ -120,29 +110,3 @@
 .bar[data-tone="now"] .track i { background: var(--warn); }
 .bar b { font: 600 var(--row-value)/1 var(--font-display); color: var(--ink); text-align: right; }
 .bar[data-tone="now"] b { color: var(--warn); }
-
-/* ---------------- The page's own controls (never in the video) ---------------- */
-.playOver, .pauseOver { position: absolute; inset: 0; display: grid; place-items: center; border: 0; padding: 0; background: transparent; cursor: pointer; }
-.playOver span { display: grid; place-items: center; width: 76px; height: 76px; border-radius: 50%; color: #06121b; background: rgba(255, 255, 255, .94); box-shadow: 0 10px 34px rgba(0, 0, 0, .38); transition: transform .2s ease; }
-.playOver:hover span, .playOver:focus-visible span { transform: scale(1.06); }
-.playOver svg { width: 28px; height: 28px; margin-left: 4px; }
-.playOver:focus-visible, .pauseOver:focus-visible { outline: 2px solid var(--teal, #12b5cb); outline-offset: -4px; }
-.controls { display: flex; align-items: center; gap: 12px; }
-.controls button { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border: 1px solid var(--line-strong, #cfd8e0); border-radius: 8px; color: var(--ink); background: var(--card, #fff); cursor: pointer; }
-.controls button:hover { border-color: var(--teal, #12b5cb); color: var(--teal, #12b5cb); }
-.controls svg { width: 16px; height: 16px; }
-.controls input { flex: 1; min-width: 0; height: 40px; accent-color: var(--teal, #12b5cb); }
-.time { flex: none; font: 500 12px var(--font-mono); color: var(--muted); }
-.downloads { display: grid; gap: 10px; margin-top: 10px; padding-top: 16px; border-top: 1px solid var(--line); }
-.downloads > span { font: 600 10px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
-.downloads ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-.downloads a { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 2px 10px; min-height: 44px; padding: 11px 14px; border: 1px solid var(--line-strong, #cfd8e0); border-radius: 8px; color: var(--ink); background: var(--card, #fff); text-decoration: none; }
-.downloads a:hover { border-color: var(--teal, #12b5cb); }
-.downloads svg { width: 16px; height: 16px; grid-row: span 2; color: var(--muted); }
-.downloads b { font-size: 13px; font-weight: 600; }
-.downloads small { font-size: 12px; color: var(--muted); }
-@media (max-width: 640px) {
-  .downloads ul { grid-template-columns: minmax(0, 1fr); }
-  .frame { border-radius: 10px; }
-}
-@media print { .controls, .downloads, .playOver, .pauseOver { display: none; } }
