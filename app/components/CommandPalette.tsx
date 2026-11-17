@@ -46,7 +46,6 @@ const PAGES: Item[] = [
   { label: "Climate & Balance", sub: "Rainfall vs ET: the water budget", href: "/climate", kind: "page" },
   { label: "Data Readiness", sub: "Which sources are live vs pending", href: "/readiness", kind: "page" },
   { label: "Methodology", sub: "How fusion works and what not to claim", href: "/methodology", kind: "page" },
-  { label: "Reports", sub: "Older exports: the weekly digest is the summary", href: "/reports", kind: "page" },
   { label: "Weekly digest", sub: "Current weekly printable summary", href: "/digest/", kind: "page" },
   { label: "This week in a minute", sub: "The week's figures as a short film, with video downloads", href: "/weekly-film/", kind: "page" },
   { label: "Compare", sub: "Side-by-side of two areas", href: "/compare", kind: "page" },
@@ -65,7 +64,6 @@ const PAGE_ICON: Record<string, React.ReactNode> = {
   "/living-water-table": <IconDroplet />,
   "/crystal": <IconWaves />,
   "/mandals": <IconCompass />,
-  "/watchlist": <IconActivity />,
   "/alerts": <IconActivity />,
   "/districts": <IconGrid />,
   "/scenario": <IconCloudRain />,
@@ -74,7 +72,6 @@ const PAGE_ICON: Record<string, React.ReactNode> = {
   "/compare": <IconColumns />,
   "/snapshot": <IconFile />,
   "/readiness": <IconDatabase />,
-  "/reports": <IconFile />,
   "/methodology": <IconFlow />,
 };
 

@@ -1,15 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { motion } from "motion/react";
 import { HeaderHero } from "../../components/HeaderHero";
 import { DistrictChoropleth } from "../../components/DistrictChoropleth";
-import { IconArrowRight, IconCloudRain, IconDroplet, IconInfo } from "../../components/icons";
+import { PickerGlide } from "../../components/PickerGlide";
+import { IconCloudRain, IconPause, IconPlay } from "../../components/icons";
 import { balanceMeta, balanceStatusFor, districtGeometry, formatNumber, monsoonWatch, titleCase } from "../../lib/data";
 import { waterSummary } from "../../lib/waterSummary";
 import { monthSpan } from "../../components/agriculture/waterContextFormat";
 import { brief } from "../../lib/pageBriefs";
 import { rainNow } from "../../lib/pageNow";
+import shared from "../rabi/Rabi.module.css";
+import styles from "./Scenario.module.css";
 
 type Row = {
   d: string;
@@ -104,232 +107,116 @@ export default function ScenarioPage() {
     rows.forEach((r) => { m[r.d] = r.scenarioBalance; });
     return m;
   }, [rows]);
-  const sweepPct = ((20 - delta) / 70) * 100; // position along +20%…−50% sweep
+  const average = Math.round(rows.reduce((a, r) => a + r.scenarioBalance, 0) / (total || 1));
+  const tone = delta < 0 ? "dry" : delta > 0 ? "wet" : "even";
+  const signedPct = `${delta > 0 ? "+" : delta < 0 ? "−" : ""}${Math.abs(delta)}%`;
+  const mm = (v: number) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${formatNumber(Math.abs(Math.round(v)))}`;
+  const widest = Math.max(1, ...rows.map(r => Math.abs(r.scenarioBalance)));
+  const SHOWN = 10;
 
   return (
-    <div className="pageWrap">
-      <HeaderHero
-        title="Scenario Planner"
-        brief={brief("/scenario", <>Starts from this season: {rainNow()}</>)}
-        showChips={false}
-        variant="compact"
-      />
+    <div className={`pageWrap ${shared.page}`}>
+      <HeaderHero title="Scenario Planner" brief={brief("/scenario", <>Starts from this season: {rainNow()}</>)} showChips={false} variant="compact" />
 
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconCloudRain /></span>Scenario presets</div>
-          <span className="cardSub">annual rainfall sensitivity / not a forecast</span>
+      <section className={shared.hero} aria-label="The scenario and what it does" data-testid="scenario-summary">
+        <div className={shared.heroText}>
+          <span className={shared.kicker}>A what-if over {districtGeometry.balance_year}, not a forecast</span>
+          <h2 aria-live="polite">With {label}, <b>{deficitScenario} of {total}</b> districts sit in the low-balance band{tipped > 0 ? <>; <b>{tipped}</b> of them cross into it</> : null}.</h2>
+          <div className={styles.controls}>
+            <div className={styles.presets} role="group" aria-label="Scenario presets">
+              <PickerGlide />
+              {PRESETS.map(p => (
+                <button key={p.key} type="button" aria-pressed={delta === p.delta} title={p.sub} onClick={() => { setPlaying(false); setDelta(p.delta); }}>
+                  {p.label}<small>{p.delta > 0 ? "+" : p.delta < 0 ? "−" : ""}{Math.abs(p.delta)}%</small>
+                </button>
+              ))}
+            </div>
+            <div className={styles.dial} data-tone={tone}>
+              <button type="button" className={styles.play} onClick={() => setPlaying(on => !on)} aria-label={playing ? "Pause the sweep" : "Play the sweep from wet to dry and back"}>
+                {playing ? <IconPause /> : <IconPlay />}
+              </button>
+              <input type="range" min={-50} max={20} step={5} value={delta} onChange={event => { setPlaying(false); setDelta(Number(event.target.value)); }} aria-label="Monsoon anomaly percent" />
+              <output className={styles.value}>{signedPct}</output>
+            </div>
+          </div>
         </div>
-        <div className="presetRow">
-          {PRESETS.map((p, i) => {
-            const active = delta === p.delta;
-            return (
-              <motion.button
-                key={p.key}
-                type="button"
-                onClick={() => { setPlaying(false); setDelta(p.delta); }}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.05, duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.97 }}
-                className={`presetCard ${p.flagship ? "flagship" : ""} ${active ? "active" : ""}`}
-                style={{ ["--pt" as string]: p.tone }}
-              >
-                {p.flagship && <span className="presetPulse" />}
-                <span className="presetVal">{p.delta > 0 ? "+" : ""}{p.delta}%</span>
-                <span className="presetLabel">{p.label}</span>
-                <span className="presetSub">{p.sub}</span>
-                {active && <motion.span layoutId="presetActive" className="presetActiveBar" />}
-              </motion.button>
-            );
-          })}
-        </div>
-        <div className="fusionNote" style={{ marginTop: 12 }}>
-          <IconInfo />
-          <span>
-            {monsoonWatch.enso?.state === "el_nino" && monsoonWatch.rainfall ? (
-              <>
-                The published ONI indicates {monsoonWatch.enso.strength} El Niño conditions. {monsoonWatch.rainfall.product.split(" monthly")[0]} rainfall for {monthSpan(monsoonWatch.rainfall.months)} was{" "}
-                <strong>{Math.abs(monsoonWatch.rainfall.anomalyPct)}% {monsoonWatch.rainfall.anomalyPct < 0 ? "below" : "above"}</strong> its historical mean
-                {waterSummary.rain?.deviationPct !== null && waterSummary.rain?.deviationPct !== undefined ? <>; the state&rsquo;s rain gauges read {Math.abs(waterSummary.rain.deviationPct)}% {waterSummary.rain.deviationPct < 0 ? "below" : "above"} normal from 1 June to {waterSummary.rain.end}</> : null}.
-                Reusing that seasonal anomaly to scale a whole reference year is an illustrative assumption, not an ENSO forecast.{" "}
-              </>
-            ) : null}
-            Tap a preset to model its effect on the statewide water balance: a modelled scenario over real
-            TerraClimate data, not a prediction.
-          </span>
+        <ul className={shared.tiles}>
+          <li><span>In the low band</span><b data-tone={deficitScenario > deficitNow ? "bad" : undefined}>{deficitScenario}<small> of {total}</small></b><em>{deficitNow} in the reference year</em></li>
+          <li><span>Crossing into it</span><b data-tone={tipped > 0 ? "bad" : undefined}>{tipped}</b><em>districts not in the band at reference rainfall</em></li>
+          <li><span>Average balance</span><b data-tone={average < 50 ? "bad" : undefined}>{mm(average)}<small> mm</small></b><em>a year, under this scenario</em></li>
+          <li><span>Rain change</span><b>{signedPct}</b><em>on the {districtGeometry.balance_year} reference year</em></li>
+        </ul>
+      </section>
+
+      <section className={shared.block} aria-labelledby="scenario-where">
+        <header className={shared.blockHead}>
+          <span className={shared.eyebrow}><IconCloudRain /> Rain minus evaporation, rescaled</span>
+          <h2 id="scenario-where">Where it tips first</h2>
+          <p>Each district&rsquo;s year of rain is scaled by the dial while evaporation is held where it was. Press play to sweep from {"+20%"} to {"−50%"} and back; the districts reorder as they go.</p>
+        </header>
+        <div className={shared.soilGrid}>
+          <div className={styles.mapStage}>
+            <DistrictChoropleth layer="water_balance_mm" scenarioValues={scenarioMap} testId="scenario-district-map" label={`Districts coloured by water balance with annual rainfall ${signedPct}: a modelled scenario`} />
+            <div className="choroLegend">
+              <div className="choroHead"><span>Water balance under the scenario <span className="choroUnit">(mm a year)</span></span><span className="choroPeriod">{playing ? "Sweeping" : "Modelled"}</span></div>
+              <div className="choroBar" style={{ background: "linear-gradient(90deg,#c65a46,#e7cf86,#4f9268)" }} />
+              <div className="choroScale"><span>Thin</span><span>Ample</span></div>
+            </div>
+          </div>
+          <div className={styles.thinnest}>
+            <h3>The {SHOWN} thinnest under this scenario</h3>
+            <ol>
+              {rows.slice(0, SHOWN).map(r => {
+                const sm = balanceMeta(r.scenarioStatus);
+                return (
+                  <motion.li layout transition={{ type: "spring", stiffness: 500, damping: 42 }} key={r.d} data-tipped={r.tipped || undefined}>
+                    <span className={styles.name}>{titleCase(r.d)}{r.tipped ? <small>crosses in</small> : null}</span>
+                    <span className={styles.track} aria-hidden="true"><i style={{ width: `${Math.max(2, (100 * Math.abs(r.scenarioBalance)) / widest)}%`, "--tone": sm.color } as CSSProperties} data-no-reveal="" /></span>
+                    <b style={{ color: sm.color }}>{mm(r.scenarioBalance)}</b>
+                  </motion.li>
+                );
+              })}
+            </ol>
+          </div>
         </div>
       </section>
 
-      <section className="card mapCard">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconCloudRain /></span>
-            Rainfall sensitivity / climate balance
-          </div>
-          <div className={`simBadge ${playing ? "live" : ""}`}>
-            <span className="simBadgeDot" /> {playing ? "SIMULATING" : "MODELED SCENARIO"}
-          </div>
+      <details className="foldMore">
+        <summary><span>All {total} districts under this scenario</span><span>From the reference year to the scenario, thinnest first</span></summary>
+        <div className="tableWrap">
+          <table className="dataTable">
+            <thead><tr><th>District</th><th>Reference year</th><th>Under the scenario</th><th>Balance</th></tr></thead>
+            <tbody>
+              {rows.map(r => {
+                const sm = balanceMeta(r.scenarioStatus), bm = balanceMeta(r.baseStatus);
+                return (
+                  <tr key={r.d}>
+                    <td className="cellStrong">{titleCase(r.d)}{r.tipped ? <span className="verifyPill">crosses in</span> : null}</td>
+                    <td><span className="wetTag toneText" style={{ "--tone": bm.color, background: `${bm.color}1f` } as CSSProperties}>{bm.label}</span></td>
+                    <td><span className="wetTag toneText" style={{ "--tone": sm.color, background: `${sm.color}1f` } as CSSProperties}>{sm.label}</span></td>
+                    <td className="cellPct toneText" style={{ "--tone": sm.color } as CSSProperties}>{mm(r.scenarioBalance)} mm</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
+      </details>
 
-        <div className="simStage">
-          <DistrictChoropleth layer="water_balance_mm" scenarioValues={scenarioMap} testId="scenario-district-map" label={`Districts coloured by water balance with annual rainfall ${delta > 0 ? "+" : ""}${delta}%: a modelled scenario`} />
-          <div className="simOverlay">
-            <div className="simReadout" style={{ color: delta < 0 ? "var(--rust)" : delta > 0 ? "var(--green)" : "var(--ink)" }}>
-              {delta > 0 ? "+" : ""}{delta}%
-              <span className="simReadoutLbl">annual rainfall</span>
-            </div>
-            <div className="simCounters">
-              <span className="simCount">
-                <motion.b
-                  key={deficitScenario}
-                  initial={{ scale: 0.55, opacity: 0.4 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ type: "spring", stiffness: 600, damping: 24 }}
-                  style={{ color: "var(--rust)", display: "inline-block" }}
-                >
-                  {deficitScenario}
-                </motion.b>
-                /{total} in deficit
-              </span>
-              {tipped > 0 && <span className="simCount tip"><b>{tipped}</b> newly tipped</span>}
-            </div>
-          </div>
-        </div>
-
-        <div className="simControls">
-          <button type="button" className={`simPlayBtn ${playing ? "on" : ""}`} onClick={() => setPlaying((p) => !p)}>
-            {playing ? (
-              <><span className="simIcoPause" /> Pause</>
-            ) : (
-              <><span className="simIcoPlay" /> Run simulation</>
-            )}
-          </button>
-          <div className="simTrack">
-            <span className="simTrackFill" style={{ width: `${sweepPct}%` }} />
-            <span className="simTrackHead" style={{ left: `${sweepPct}%` }} />
-            <span className="simTrackLabels"><span>+20% wet</span><span>normal</span><span>−50% drought</span></span>
-          </div>
-        </div>
-
-        <div className="fusionNote" style={{ marginTop: 4 }}>
-          <IconInfo />
-          <span>
-            Press play to sweep the monsoon dial and watch districts shift toward deficit (deeper rust) and back. This is
-            a <strong>modeled what-if</strong> over real TerraClimate {districtGeometry.balance_year} balance, a planning
-            aid, not a forecast.
-          </span>
-        </div>
-      </section>
-
-      <section className="card">
-        <div className="scenarioHead">
-          <div className="scenarioDial">
-            <span className="eyebrow">Monsoon scenario</span>
-            <div className="scenarioValue" style={{ color: delta < 0 ? "var(--rust)" : delta > 0 ? "var(--green)" : "var(--ink)" }}>
-              {delta > 0 ? "+" : ""}
-              {delta}%
-            </div>
-            <span className="scenarioSub">{titleCase(label)}</span>
-          </div>
-          <div className="scenarioSliderWrap">
-            <input
-              type="range"
-              className="scrubber scenarioSlider"
-              min={-50}
-              max={20}
-              step={5}
-              value={delta}
-              onChange={(e) => setDelta(Number(e.target.value))}
-              aria-label="Monsoon anomaly percent"
-            />
-            <div className="scenarioTicks">
-              <span>−50%</span>
-              <span>−25%</span>
-              <span>normal</span>
-              <span>+20%</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="scenarioKpis">
-          <div className="scenarioKpi">
-            <span className="skNum">{deficitScenario}<span className="skOf">/{total}</span></span>
-            <span className="skLbl">districts in deficit</span>
-            <span className="skMeta">{deficitNow} in reference year</span>
-          </div>
-          <div className="scenarioKpi">
-            <span className="skNum" style={{ color: tipped > 0 ? "var(--rust)" : "var(--green)" }}>{tipped}</span>
-            <span className="skLbl">newly tip into deficit</span>
-            <span className="skMeta">vs reference rainfall</span>
-          </div>
-          <div className="scenarioKpi">
-            <span className="skNum">{formatNumber(Math.round(rows.reduce((a, r) => a + r.scenarioBalance, 0) / (total || 1)))}</span>
-            <span className="skLbl">avg balance (mm/yr)</span>
-            <span className="skMeta">under scenario</span>
-          </div>
-        </div>
-
-        <div className="scenarioHeadline">
-          <IconCloudRain />
-          <span>
-            Under <strong>{label}</strong>, <strong style={{ color: "var(--rust)" }}>{deficitScenario} of {total}</strong> AP
-            district groups enter the prototype low-balance category{tipped > 0 ? <>; <strong>{tipped} newly cross</strong> its threshold.</> : "."}
-          </span>
-        </div>
-
-        <div className="scenarioList">
-          {rows.map((r) => {
-            const sm = balanceMeta(r.scenarioStatus);
-            const bm = balanceMeta(r.baseStatus);
-            return (
-              <motion.div
-                layout
-                transition={{ type: "spring", stiffness: 500, damping: 42 }}
-                className={`scenarioRow ${r.tipped ? "tipped" : ""}`}
-                key={r.d}
-              >
-                <div className="srName">
-                  {titleCase(r.d)}
-                  {r.tipped && <span className="srTip">tips into deficit</span>}
-                </div>
-                <div className="srFlow">
-                  <span className="srStatus" style={{ color: bm.color, background: `${bm.color}1f` }}>{bm.label}</span>
-                  <IconArrowRight />
-                  <span className="srStatus" style={{ color: sm.color, background: `${sm.color}1f` }}>{sm.label}</span>
-                </div>
-                <div className="srBar">
-                  <span className="srBarMid" />
-                  <span
-                    className="srBarFill"
-                    style={{
-                      background: sm.color,
-                      left: r.scenarioBalance >= 0 ? "50%" : undefined,
-                      right: r.scenarioBalance < 0 ? "50%" : undefined,
-                      width: `${Math.min(50, (Math.abs(r.scenarioBalance) / 900) * 50)}%`,
-                    }}
-                  />
-                </div>
-                <div className="srVal" style={{ color: sm.color }}>
-                  {r.scenarioBalance > 0 ? "+" : ""}
-                  {formatNumber(r.scenarioBalance)} mm
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        <div className="fusionNote" style={{ marginTop: 16 }}>
-          <IconInfo />
-          <span>
-            <strong>Simplified scenario:</strong>{" "}annual rainfall is scaled by the monsoon dial and actual ET is held
-            constant; balance = scaled rainfall − ET, re-tiered (Surplus ≥ 250, Balanced ≥ 50, Deficit &lt; 50 mm/yr). A
-            sensitivity test over TerraClimate data, not a calibrated forecast. The legacy "Deficit" label means below 50 mm,
-            including some positive balances; it does not necessarily mean ET exceeds rainfall or establish groundwater depletion.
-          </span>
-        </div>
-      </section>
+      <details className="foldMore">
+        <summary><span>How the scenario is worked out</span><span>What is scaled, what is held, and what it cannot say</span></summary>
+        <p className="cardNote">
+          Annual rainfall is scaled by the dial and actual evapotranspiration is held where it was; the balance is the scaled rain minus that evaporation, sorted into the
+          prototype&rsquo;s bands (ample at 250 mm or more, balanced at 50 mm or more, low under 50 mm). A sensitivity test over TerraClimate {districtGeometry.balance_year}, not
+          a calibrated forecast. The low band means under 50 mm, which includes some positive balances; it does not mean evaporation exceeds rain or that groundwater is being depleted.
+        </p>
+        {monsoonWatch.enso?.state === "el_nino" && monsoonWatch.rainfall ? (
+          <p className="cardNote">
+            The published ONI indicates {monsoonWatch.enso.strength} El Niño conditions. {monsoonWatch.rainfall.product.split(" monthly")[0]} rainfall for {monthSpan(monsoonWatch.rainfall.months)} was {Math.abs(monsoonWatch.rainfall.anomalyPct)}% {monsoonWatch.rainfall.anomalyPct < 0 ? "below" : "above"} its historical mean{waterSummary.rain?.deviationPct !== null && waterSummary.rain?.deviationPct !== undefined ? <>, and the State&rsquo;s rain gauges read {Math.abs(waterSummary.rain.deviationPct)}% {waterSummary.rain.deviationPct < 0 ? "below" : "above"} normal from 1 June</> : null}.
+            The &ldquo;{PRESETS.find(p => p.flagship)?.label}&rdquo; preset reuses that seasonal anomaly to scale a whole year: an illustration, not an ENSO forecast.
+          </p>
+        ) : null}
+      </details>
     </div>
   );
 }

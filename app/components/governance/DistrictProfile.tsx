@@ -54,7 +54,7 @@ export function DistrictProfile({ rows, selected, onSelect }: {
         </dl>}
         <span>{current ? `${current.stress_count} stress flags / ${current.mandals.length} prototype units. ${current.mandals.filter(row => row.estimate_mbgl != null).length} modelled; ${current.mandals.filter(row => row.trend_m_per_yr != null).length} with YoY comparisons.` : "No comparable data."}</span>
       </div>
-      {current && <Link href={`/watchlist?district=${encodeURIComponent(current.district_name)}`}>Review mandals</Link>}
+      {current && <Link href={`/agriculture/?district=${encodeURIComponent(current.district_name)}#agriculture-watch`}>Review mandals</Link>}
     </div>
     <p className={styles.note}>Equal-weight mandal means; available periods may differ. Positive YoY means deeper water. Dot position is not a drought declaration or an area-weighted district estimate.</p>
   </div>;

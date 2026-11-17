@@ -184,7 +184,7 @@ export default function ChangesPage() {
                   : "No mandal changed its groundwater status."}
               </p>
             )}
-            {changes.groundwater.truncated ? <p className={styles.empty}>Showing the first {changes.groundwater.moved.length}; the full list is on the watchlist.</p> : null}
+            {changes.groundwater.truncated ? <p className={styles.empty}>Showing the first {changes.groundwater.moved.length}; every mandal&rsquo;s status is on the <Link href="/map/">Mandal Map</Link>.</p> : null}
             <Link href="/changes/#field-teams" className={styles.more}>Open the field-team register →</Link>
           </section>
         </div>

@@ -57,7 +57,6 @@ const DESKTOP_ROUTES = [
   "/map",
   "/mandals",
   "/monsoon",
-  "/watchlist",
 ];
 
 test.describe("no desktop route scrolls sideways", () => {
@@ -199,7 +198,6 @@ const HYDRATION_ROUTES = [
   "/mandals",
   "/estimates",
   "/districts",
-  "/watchlist",
   "/alerts",
   "/monsoon",
   "/climate",

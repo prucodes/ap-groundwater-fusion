@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { agricultureCsv, AGREEMENT_RULES, GEC_CATEGORIES, outlineLabel, VCI_CLASSES, WATER_SIGNALS, type Agreement, type AgricultureEvidence, type AgricultureMandal, type WaterSignal } from "../../lib/agriculture";
 import type { CheckRecord, LiveField } from "../../lib/cropWater";
 import { IconArrowRight, IconChevronLeft, IconChevronRight, IconDownload, IconGrid, IconInfo, IconLeaf, IconMap, IconSearch, IconShield } from "../icons";
@@ -202,6 +202,13 @@ export function AgricultureWorkspace({ evidence, mapView, sourceStatus, live = n
   const [view, setView] = useState<"fieldbook" | "map">("fieldbook");
   const [selected, setSelected] = useState(() => [...evidence.mandals].filter(isFlagged).sort((a, b) => (b.shortfallM ?? 0) - (a.shortfallM ?? 0))[0]?.index ?? 0);
   const [page, setPage] = useState(0);
+  // A link can open the water watch on one district's mandals (?district=, from the Districts page).
+  useEffect(() => {
+    const asked = new URLSearchParams(window.location.search).get("district")?.trim().toUpperCase();
+    const match = asked ? evidence.districts.find(d => d.name.trim().toUpperCase() === asked) : undefined;
+    if (!match) return;
+    setDistrict(match.name); setSignal("all"); setView("fieldbook"); setPage(0);
+  }, [evidence.districts]);
   const matchesSignal = (row: AgricultureMandal) => signal === "all" ? true
     : signal === "flagged" ? isFlagged(row)
       : signal === "agree3" ? row.agreement.stressed === 3

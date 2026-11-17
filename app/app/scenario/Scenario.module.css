@@ -1,0 +1,29 @@
+/* Scenario Lab's controls, on the navy summary band (Rabi.module.css .hero), and its live list. */
+.controls { position: relative; z-index: 1; display: grid; gap: 14px; margin-top: 16px; }
+.presets { position: relative; display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 4px; width: fit-content; border-radius: 12px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12);
+  --glide-bg: rgba(255, 255, 255, .16); --glide-border: rgba(255, 255, 255, .22); --glide-radius: 9px; }
+.presets button { position: relative; z-index: 1; display: inline-flex; align-items: baseline; gap: 7px; min-height: 36px; padding: 0 13px; border: 0; border-radius: 9px; background: transparent; cursor: pointer;
+  font: 600 12.5px var(--font-sans); color: #b9cadb; }
+.presets button small { font: 500 11px var(--font-mono); color: #8aa3b9; }
+.presets button[aria-pressed="true"] { color: #fff; background: rgba(255, 255, 255, .16); }
+.presets:has(> :global(.pickerGlide[data-ready])) button[aria-pressed="true"] { background: transparent; }
+.presets button:focus-visible, .play:focus-visible { outline: 2px solid #8fdcf2; outline-offset: 2px; }
+.dial { display: grid; grid-template-columns: auto minmax(0, 1fr) 4.2em; align-items: center; gap: 14px; max-width: 640px; }
+.play { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; border: 0; cursor: pointer; color: #06202b; background: #f2c46d; }
+.play svg { width: 15px; height: 15px; }
+.dial input { width: 100%; accent-color: #f2c46d; cursor: pointer; }
+.value { font: 600 22px var(--font-display); font-variant-numeric: tabular-nums; text-align: right; color: #fff; }
+.dial[data-tone="dry"] .value { color: #ffab94; }
+.dial[data-tone="wet"] .value { color: #8fdcf2; }
+
+.mapStage { min-width: 0; }
+.thinnest h3 { margin: 0 0 10px; font: 600 13px var(--font-display); color: var(--ink); }
+.thinnest ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.thinnest li { display: grid; grid-template-columns: minmax(0, 9.5em) minmax(0, 1fr) 4.4em; align-items: center; gap: 12px; font-size: 13px; }
+.name { display: grid; color: var(--ink); font-weight: 500; }
+.name small { font-size: 11px; font-weight: 600; color: var(--rust, #c65a46); }
+.track { height: 8px; border-radius: 4px; background: var(--field); overflow: hidden; }
+.track i { display: block; height: 100%; border-radius: 4px; background: var(--tone); transition: width .5s var(--ease), background .5s var(--ease); }
+.thinnest b { font: 600 13px var(--font-mono); text-align: right; font-variant-numeric: tabular-nums; }
+@media (max-width: 640px) { .presets button { padding: 0 10px; } .value { font-size: 18px; } }
+@media (prefers-reduced-motion: reduce) { .track i { transition: none; } }

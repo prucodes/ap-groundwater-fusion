@@ -1,204 +1,83 @@
 import { HeaderHero } from "../../components/HeaderHero";
 import { DistrictChoropleth } from "../../components/DistrictChoropleth";
+import { RankList } from "../../components/RankList";
 import { PercentileBar, WetnessTag } from "../../components/Signals";
-import {
-  IconActivity,
-  IconDatabase,
-  IconDroplet,
-  IconInfo,
-  IconLeaf,
-  IconPin,
-  IconSatellite,
-  IconShield,
-  IconWaves,
-} from "../../components/icons";
-import {
-  districtGeometry,
-  datasetManifest,
-  formatNumber,
-  nasaProvenance,
-  satelliteSamples,
-  titleCase,
-  wetnessLabel,
-  wetnessTier,
-} from "../../lib/data";
-import type { NasaRaster } from "../../lib/data";
+import { IconSatellite } from "../../components/icons";
+import { datasetManifest, districtGeometry, districtLayerColor, formatNumber, nasaProvenance, satelliteSamples, titleCase, wetnessLabel, wetnessTier } from "../../lib/data";
+import { day } from "../../components/agriculture/waterContextFormat";
 import { brief } from "../../lib/pageBriefs";
+import shared from "../rabi/Rabi.module.css";
 
-const SIGNAL_ICON: Record<string, React.ReactNode> = {
-  GW: <IconDroplet />,
-  "Root-Zone": <IconLeaf />,
-  Surface: <IconWaves />,
-};
+/* NASA's GRACE-DA, as fetched: groundwater, root-zone and surface wetness as percentiles of
+   the product's own record, sampled at each district's centre. The page leads with what the
+   three signals say this period and where the groundwater signal lands; the source files,
+   checksums and raw extraction are a fold away. Context beside the wells, never a depth. */
 
-function SignalGauge({ r }: { r: NasaRaster }) {
-  const tier = wetnessTier(r.mean);
-  return (
-    <div className="sigGauge" style={{ ["--sig" as string]: tier.color }}>
-      <div className="sigGaugeHead">
-        <span className="sigGaugeIcon">{SIGNAL_ICON[r.signal] ?? <IconSatellite />}</span>
-        <div className="sigGaugeTitle">
-          <strong>{r.signal === "GW" ? "Groundwater" : r.signal}</strong>
-          <span>{r.label} · percentile</span>
-        </div>
-      </div>
-      <div className="sigGaugeValue">
-        {formatNumber(r.mean)}
-        <span className="sigGaugeUnit">mean %ile</span>
-      </div>
-      <div className="sigGaugeTrack">
-        <span className="sigGaugeSpan" style={{ left: `${r.min}%`, right: `${100 - r.max}%` }} />
-        <span className="sigGaugeMean" style={{ left: `${r.mean}%` }} />
-      </div>
-      <div className="sigGaugeScale">
-        <span>min {formatNumber(r.min)}</span>
-        <span>max {formatNumber(r.max)}</span>
-      </div>
-      <div className="sigGaugeFoot">
-        <WetnessTag value={r.mean} />
-        <span className="sigGaugeN">{r.count} district samples</span>
-      </div>
-    </div>
-  );
-}
+const NAME: Record<string, string> = { GW: "Groundwater storage", "Root-Zone": "Root-zone soil", Surface: "Surface soil" };
+const ordinal = (n: number) => `${n}${n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] ?? "th"}`;
 
 export default function NasaSignalsPage() {
-  const districts = [...districtGeometry.districts].sort(
-    (a, b) => (b.gw_percentile ?? 0) - (a.gw_percentile ?? 0),
-  );
-  const sampleDate = nasaProvenance.fetch_date || satelliteSamples[0]?.satellite_sample_date_or_fetch_date || "–";
-  const gwRange = districtGeometry.layers.gw_percentile;
-  // Describe what the rasters read on this fetch; the signal swings with the season.
-  const means = nasaProvenance.rasters.map((r) => r.mean).filter((m): m is number => m !== null);
-  const signalRead =
-    means.length && means.every((m) => m >= 70)
-      ? "All three signals read high this period: wetter than most years on record for this date."
-      : means.length && means.every((m) => m < 30)
-        ? "All three signals read low this period: drier than most years on record for this date."
-        : `Signals are mixed this period: ${nasaProvenance.rasters
-            .map((r) => `${r.label.toLowerCase()} ${wetnessLabel(r.mean).toLowerCase()}`)
-            .join(", ")}.`;
+  const fetched = nasaProvenance.fetch_date || satelliteSamples[0]?.satellite_sample_date_or_fetch_date || null;
+  const byName = Object.fromEntries(nasaProvenance.rasters.map(r => [r.signal, r]));
+  const gw = byName.GW, root = byName["Root-Zone"], surface = byName.Surface;
+  const known = districtGeometry.districts.filter(d => d.gw_percentile !== null);
+  const ranked = [...known].sort((a, b) => (a.gw_percentile as number) - (b.gw_percentile as number));
+  const driestFifth = known.filter(d => (d.gw_percentile as number) < 20).length;
+  const gwMean = gw?.mean !== null && gw?.mean !== undefined ? Math.round(gw.mean) : null;
+  const drierThan = gwMean !== null ? 100 - gwMean : null;
+  const soil = [root, surface].filter(r => r?.mean !== null && r?.mean !== undefined).map(r => wetnessLabel(r!.mean).toLowerCase());
+  const range = districtGeometry.layers.gw_percentile;
 
   return (
-    <div className="pageWrap">
-      <HeaderHero
-        title="NASA GRACE-DA · Raw Signal & Provenance"
-        brief={brief("/nasa", <>Values as fetched on {datasetManifest.periods.graceFetchDate ?? "the last refresh"}; a fetch date is not the period the values describe.</>)}
-        showChips={false}
-        variant="compact"
-      />
+    <div className={`pageWrap ${shared.page}`}>
+      <HeaderHero title="NASA Signals" brief={brief("/nasa", <>Values as fetched on {datasetManifest.periods.graceFetchDate ?? "the last refresh"}; a fetch date is not the period the values describe.</>)} showChips={false} variant="compact" />
 
-      {/* Trust ribbon — provenance at a glance */}
-      <div className="provRibbon">
-        <span className="provRibbonItem"><IconSatellite /> {nasaProvenance.source}</span>
-        <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconDatabase /> {nasaProvenance.rasters.length} rasters · ~25 km</span>
-        <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconPin /> {nasaProvenance.station_points_sampled} district points</span>
-        <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconShield /> {nasaProvenance.total_null_or_nodata_samples} null / nodata</span>
-        <span className="provRibbonDot" />
-        <span className="provRibbonItem"><IconInfo /> fetched {sampleDate}</span>
-      </div>
-
-      {/* Signal-strength centerpiece */}
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconActivity /></span>Signal Strength / {satelliteSamples.length} district-centroid samples</div>
-          <span className="cardSub">mean with min–max range · GRACE-DA</span>
+      <section className={shared.hero} aria-label="The three signals this period" data-testid="nasa-summary">
+        <div className={shared.heroText}>
+          <span className={shared.kicker}>GRACE-DA from orbit{fetched ? ` · fetched ${day(fetched)}` : ""}</span>
+          {gwMean !== null ? (
+            <h2>Groundwater storage across the State reads at the <b>{ordinal(gwMean)} percentile</b> for the time of year{drierThan !== null && drierThan >= 55 ? <>: drier than about {Math.round(drierThan / 10) * 10}% of past years</> : null}. {soil.length ? <>The soil above reads <b>{[...new Set(soil)].join(" to ")}</b>.</> : null}</h2>
+          ) : <h2>No groundwater signal in this fetch.</h2>}
+          <p>A percentile is wetness against the product&rsquo;s own history, not a depth or a trend. GRACE sees regions hundreds of kilometres across, so it is shown by district only, beside the wells, never in place of them.</p>
         </div>
-        <div className="sigGaugeRow">
-          {nasaProvenance.rasters.map((r) => (
-            <SignalGauge key={r.raster_name} r={r} />
-          ))}
-        </div>
-        <div className="fusionNote" style={{ marginTop: 16 }}>
-          <IconInfo />
-          <span>
-            {signalRead} A <strong>percentile</strong>{" "}describes relative wetness against the product&apos;s reference history,
-            not a water-table depth or a trend from a single sample. Valid period: {datasetManifest.periods.graceValidPeriod || "not supplied in the published manifest"}.
-          </span>
-        </div>
+        <ul className={shared.tiles}>
+          {[gw, root, surface].map(r => r ? (
+            <li key={r.raster_name}><span>{NAME[r.signal] ?? r.signal}</span><b data-tone={r.mean !== null && r.mean < 30 ? "bad" : undefined}>{r.mean === null ? "–" : Math.round(r.mean)}<small> %ile</small></b><em>{wetnessLabel(r.mean)} · districts range {Math.round(r.min ?? 0)} to {Math.round(r.max ?? 0)}</em></li>
+          ) : null)}
+          <li><span>Districts in the driest fifth</span><b data-tone={driestFifth > known.length / 3 ? "bad" : undefined}>{driestFifth}<small> of {known.length}</small></b><em>groundwater percentile under 20</em></li>
+        </ul>
       </section>
 
-      {/* Map — where the signal lands */}
-      <section className="card mapCard">
-        <div className="cardHead">
-          <div className="cardTitle">
-            <span className="titleIcon"><IconDroplet /></span>
-            District Groundwater Percentile: where the signal lands
-          </div>
-          <span className="cardSub">district-centroid sample / regional context</span>
-        </div>
-        <DistrictChoropleth layer="gw_percentile" testId="nasa-district-map" label="Districts coloured by NASA GRACE-DA groundwater percentile, 0 to 100" />
-        <div className="choroLegend">
-          <div className="choroHead">
-            <span>NASA Groundwater %ile <span className="choroUnit">(0–100)</span></span>
-            <span className="choroPeriod">Fetched {sampleDate}</span>
-          </div>
-          <div className="choroBar seqRamp" />
-          <div className="choroScale">
-            <span>Lower · {formatNumber(gwRange.min)}</span>
-            <span>Higher · {formatNumber(gwRange.max)}</span>
-          </div>
-          <div className="mapHint">
-            <IconInfo style={{ width: 13, height: 13 }} /> GRACE works well at district/basin scale; at mandal scale it
-            is a regional proxy (sub-pixel), so it is shown only at district level.
-          </div>
-        </div>
-      </section>
-
-      {/* Raster provenance — the unique "is this real?" layer */}
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconDatabase /></span>Source rasters: provenance &amp; integrity</div>
-          <span className="cardSub">downloaded GeoTIFFs · verifiable</span>
-        </div>
-        <div className="provGrid">
-          {nasaProvenance.rasters.map((r) => (
-            <div key={r.raster_name} className="provCard">
-              <div className="provCardHead">
-                <span className="provCardIcon">{SIGNAL_ICON[r.signal] ?? <IconSatellite />}</span>
-                <div>
-                  <strong>{r.signal === "GW" ? "Groundwater" : r.signal}</strong>
-                  <code className="provFile">{r.raster_name}</code>
-                </div>
-              </div>
-              <dl className="provMeta">
-                <div><dt>Resolution</dt><dd>{r.resolution_km} <span className="provDim">({r.resolution_deg}°)</span></dd></div>
-                <div><dt>Grid</dt><dd>{r.width} × {r.height} · {r.crs}</dd></div>
-                <div><dt>Type</dt><dd>{r.dtype} · nodata {r.nodata}</dd></div>
-                <div><dt>Size</dt><dd>{r.file_size_kb} KB</dd></div>
-                <div><dt>Fetched</dt><dd>{r.fetch_date}</dd></div>
-                <div><dt>SHA-256</dt><dd><code className="provHash">{r.sha256_short}…</code></dd></div>
-              </dl>
-              <a className="provLink" href={r.source_url} target="_blank" rel="noreferrer">
-                <IconSatellite /> {r.source_url.replace(/^https?:\/\//, "")}
-              </a>
+      <section className={shared.block} aria-labelledby="nasa-where">
+        <header className={shared.blockHead}>
+          <span className={shared.eyebrow}><IconSatellite /> Groundwater storage, by district</span>
+          <h2 id="nasa-where">Where the signal lands</h2>
+          {ranked.length ? <p>Driest in <b>{titleCase(ranked[0].d)}</b> ({Math.round(ranked[0].gw_percentile as number)}), wettest in <b>{titleCase(ranked[ranked.length - 1].d)}</b> ({Math.round(ranked[ranked.length - 1].gw_percentile as number)}). Each district is the raster read at its centre: a regional reading, not a mandal&rsquo;s.</p> : null}
+        </header>
+        <div className={shared.soilGrid}>
+          <div>
+            <DistrictChoropleth layer="gw_percentile" testId="nasa-district-map" label="Districts coloured by NASA GRACE-DA groundwater percentile, 0 to 100" />
+            <div className="choroLegend">
+              <div className="choroHead"><span>Groundwater percentile <span className="choroUnit">(0 to 100)</span></span>{fetched ? <span className="choroPeriod">Fetched {day(fetched, false)}</span> : null}</div>
+              <div className="choroBar seqRamp" />
+              <div className="choroScale"><span>Drier · {Math.round(range.min)}</span><span>Wetter · {Math.round(range.max)}</span></div>
             </div>
-          ))}
-        </div>
-        <div className="fusionNote" style={{ marginTop: 14 }}>
-          <IconShield />
-          <span>
-            Every value on this page traces to one of these open NASA files, with its source URL, resolution and a
-            SHA-256 checksum to identify the retained input. Current-file URLs may later serve a different raster, so
-            reproducibility requires retaining the original bytes. {nasaProvenance.data_label}.
-          </span>
+          </div>
+          <div className={shared.soilSide}>
+            <RankList title="Driest five" rows={ranked.slice(0, 5).map(d => ({ name: titleCase(d.d), value: Math.round(d.gw_percentile as number), share: d.gw_percentile as number, color: districtLayerColor("gw_percentile", d.gw_percentile, false), note: wetnessLabel(d.gw_percentile) }))} />
+            <RankList title="Wettest three" rows={ranked.slice(-3).reverse().map(d => ({ name: titleCase(d.d), value: Math.round(d.gw_percentile as number), share: d.gw_percentile as number, color: districtLayerColor("gw_percentile", d.gw_percentile, false), note: wetnessLabel(d.gw_percentile) }))}
+              foot={<>Valid period: {datasetManifest.periods.graceValidPeriod || "not supplied in the published manifest"}. {nasaProvenance.total_null_or_nodata_samples} empty samples in this fetch.</>} />
+          </div>
         </div>
       </section>
 
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconSatellite /></span>District GRACE-DA percentiles</div>
-        </div>
+      <details className="foldMore">
+        <summary><span>All {known.length} districts</span><span>Groundwater, root zone and surface, driest first</span></summary>
         <div className="tableWrap">
           <table className="dataTable">
-            <thead>
-              <tr><th>District</th><th>Groundwater</th><th>Root-Zone</th><th>Surface</th><th>Assessment</th><th>Mandals</th></tr>
-            </thead>
+            <thead><tr><th>District</th><th>Groundwater</th><th>Root zone</th><th>Surface</th><th>Reads</th><th>Mandals</th></tr></thead>
             <tbody>
-              {districts.map((d) => (
+              {ranked.map(d => (
                 <tr key={d.d}>
                   <td className="cellStrong">{titleCase(d.d)}</td>
                   <td><PercentileBar value={d.gw_percentile} /></td>
@@ -211,25 +90,36 @@ export default function NasaSignalsPage() {
             </tbody>
           </table>
         </div>
-      </section>
+      </details>
 
-      <section className="card">
-        <div className="cardHead">
-          <div className="cardTitle"><span className="titleIcon"><IconPin /></span>District-centroid samples (raw extraction)</div>
-          <span className="cardSub">GRACE-DA raster sampled at each of the 28 district centroids</span>
+      <details className="foldMore">
+        <summary><span>The source files</span><span>{nasaProvenance.rasters.length} rasters, each with its address and checksum</span></summary>
+        <div className="provGrid">
+          {nasaProvenance.rasters.map(r => (
+            <div key={r.raster_name} className="provCard" style={{ borderTopColor: wetnessTier(r.mean).color }}>
+              <div className="provCardHead"><div><strong>{NAME[r.signal] ?? r.signal}</strong><code className="provFile">{r.raster_name}</code></div></div>
+              <dl className="provMeta">
+                <div><dt>Resolution</dt><dd>{r.resolution_km} <span className="provDim">({r.resolution_deg}°)</span></dd></div>
+                <div><dt>Grid</dt><dd>{r.width} × {r.height} · {r.crs}</dd></div>
+                <div><dt>Type</dt><dd>{r.dtype} · nodata {r.nodata}</dd></div>
+                <div><dt>Size</dt><dd>{r.file_size_kb} KB</dd></div>
+                <div><dt>Fetched</dt><dd>{r.fetch_date}</dd></div>
+                <div><dt>SHA-256</dt><dd><code className="provHash">{r.sha256_short}…</code></dd></div>
+              </dl>
+              <a className="provLink" href={r.source_url} target="_blank" rel="noreferrer">{r.source_url.replace(/^https?:\/\//, "")}</a>
+            </div>
+          ))}
         </div>
-        {/* The percentiles here repeat the table above; what is unique is the
-            raster sample point and its coordinates. Collapsed so the provenance
-            stays available without spending ~1,700px repeating numbers. */}
-        <details className="rawTable">
-          <summary>Show the raw extraction: coordinates and sample points for all 28 districts</summary>
+        <p className="cardNote">Every value on this page traces to one of these open NASA files. Current-file addresses may later serve a different raster, so reproducing a value needs the original bytes, identified by the checksum. {nasaProvenance.data_label}.</p>
+      </details>
+
+      <details className="foldMore">
+        <summary><span>The raw extraction</span><span>The raster read at each district&rsquo;s centre, with coordinates</span></summary>
         <div className="tableWrap">
           <table className="dataTable">
-            <thead>
-              <tr><th>Sample point</th><th>District</th><th>Mandal</th><th>Lat</th><th>Lon</th><th>GW %ile</th><th>Root-Zone</th><th>Surface</th><th>Sampled</th></tr>
-            </thead>
+            <thead><tr><th>Sample point</th><th>District</th><th>Mandal</th><th>Lat</th><th>Lon</th><th>Groundwater</th><th>Root zone</th><th>Surface</th><th>Sampled</th></tr></thead>
             <tbody>
-              {satelliteSamples.map((s) => (
+              {satelliteSamples.map(s => (
                 <tr key={s.station_id}>
                   <td className="cellStrong">{s.station_name}</td>
                   <td>{titleCase(s.district_name)}</td>
@@ -245,8 +135,7 @@ export default function NasaSignalsPage() {
             </tbody>
           </table>
         </div>
-        </details>
-      </section>
+      </details>
     </div>
   );
 }

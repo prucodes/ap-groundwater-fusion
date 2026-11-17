@@ -1,30 +1,9 @@
-import Link from "next/link";
-import { HeaderHero } from "../../components/HeaderHero";
-import { DataProvenanceDates } from "../../components/DataProvenanceDates";
-import { IconArrowRight } from "../../components/icons";
-import { ReportDownloads } from "../../components/ReportDownloads";
-import styles from "../../components/governance/Governance.module.css";
-import { brief } from "../../lib/pageBriefs";
+import { MovedTo } from "../../components/MovedTo";
+import { prototypeNotice } from "../../lib/data";
 
-export default function ReportsPage() {
-  return <div className="pageWrap">
-    <HeaderHero title="Briefings & Evidence Packs" brief={brief("/reports", <Link href="/digest/">Open this week&rsquo;s digest →</Link>)} showChips={false} variant="compact" />
-    <DataProvenanceDates />
-    <section className={styles.section}>
-      <div className={styles.heading}><div><span className={styles.eyebrow}>Choose the decision</span><h2>From a question to its evidence.</h2></div></div>
-      <div className={styles.links}>
-        <Link className={styles.link} href="/digest/"><IconArrowRight /><strong>State review</strong><p>Current weekly figures, priority visits and seasonal outlook. The complete mandal CSV is available below.</p></Link>
-        <Link className={styles.link} href="/agriculture#agriculture-brief"><IconArrowRight /><strong>Agriculture review</strong><p>District evidence, unresolved coverage and proposed verification steps. Crop and supply feeds remain pending.</p></Link>
-        <Link className={styles.link} href="/monsoon"><IconArrowRight /><strong>Seasonal review</strong><p>Satellite and gauge rainfall, reservoir storage, observed groundwater change and ENSO context. Seasonal flags remain provisional.</p></Link>
-      </div>
-    </section>
-    <section className={styles.section} aria-labelledby="downloads-title">
-      <div className={styles.heading}><div><span className={styles.eyebrow}>Snapshot exports</span><h2 id="downloads-title">Take the audit trail with the numbers.</h2><p>Generated from the loaded dataset. An export does not refresh the underlying sources.</p></div></div>
-      <ReportDownloads />
-    </section>
-    <details className="rawTable"><summary>Earlier pipeline reports / archive, not current evidence</summary>
-      <p className={styles.note}>These early-phase reports retain their original scope and may contain seed inputs or superseded methods. Use the evidence pack above for the current data contract and evaluation.</p>
-      <ul>{["phase1c_nasa_sampling_summary", "phase1c_fusion_summary", "phase1d_public_measured_data_summary", "phase1d_public_vs_satellite_fusion_summary"].map(name => <li key={name}><a className="linkAction" href={`https://github.com/prucodes/ap-groundwater-fusion/blob/main/reports/${name}.md`} target="_blank" rel="noreferrer">{name.replaceAll("_", " ")}</a></li>)}</ul>
-    </details>
-  </div>;
+/* Briefings and evidence packs: the weekly digest became the briefing, and the downloads (the
+   evidence and model pack, the mandal CSV, the archive) moved to Data Readiness beside the
+   sources and release gates they document, so the address now leads there. */
+export default function MovedPage() {
+  return <MovedTo href="/readiness/#exports" label="Data Readiness: downloads and evidence pack" notice={prototypeNotice} />;
 }
