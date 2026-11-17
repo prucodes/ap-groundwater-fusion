@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageBriefList } from "../../components/PageBrief";
-import { IconArrowRight, IconCalendar, IconFile, IconTarget } from "../../components/icons";
-import changesJson from "../../data/weekly_changes.json";
+import { IconArrowRight, IconCalendar, IconFile, IconPlay, IconTarget } from "../../components/icons";
+import { asOf, changes, delta, format, sortedItems, type Item, type Mover } from "../../lib/weeklyChanges";
 import { CATEGORY_CODE, CATEGORY_META, place, shortDate } from "../../lib/drought";
 import { droughtWatch } from "../../lib/droughtWatch";
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
@@ -19,46 +19,6 @@ export const metadata: Metadata = {
   title: "This Week | AP Water Intelligence",
   description: "Changes since each source’s previous published snapshot: gauge rain, soil moisture, reservoirs, drought-manual triggers, groundwater status and NOAA's El Niño outlook, each with its own date.",
 };
-
-type Item = {
-  key: string; label: string; unit: string; better: "higher" | "lower" | "context"; href: string;
-  before: number | null; after: number | null; beforeAsOf: string | null; afterAsOf: string | null;
-  change: number | null; direction: "better" | "worse" | "same" | "moved" | null; refreshed: boolean | null; note?: string;
-};
-type Mover = { i?: number; id?: string; d?: string; m?: string; mandal?: string; district?: string; from: string; to: string; worse?: boolean };
-type Changes = {
-  generatedAt: string;
-  comparedWith: { label: string; commit?: string; committedAt?: string };
-  items: Item[];
-  groundwater: { worse: number; better: number; moved: Mover[]; truncated: boolean; latestMonth: { before: string | null; after: string | null } };
-  drought: { worse: Mover[]; better: Mover[]; basis: string };
-  counts: { better: number; worse: number; same: number; unknown: number; revised?: number };
-};
-
-const changes = changesJson as unknown as Changes;
-
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-
-function asOf(value: string | null) {
-  if (!value) return "–";
-  if (/^\d{4}-\d{2}$/.test(value)) return `${MONTHS[Number(value.slice(5, 7)) - 1]} ${value.slice(0, 4)}`;
-  return shortDate(value, true);
-}
-
-function format(value: number | null, unit: string) {
-  if (value === null) return "–";
-  if (unit === "%") return `${value < 0 ? "−" : ""}${Math.abs(value).toFixed(1)}%`;
-  if (unit === "°C") return `${value > 0 ? "+" : ""}${value.toFixed(2)} °C`;
-  return String(value);
-}
-
-function delta(item: Item) {
-  if (item.change === null) return null;
-  const sign = item.change > 0 ? "+" : item.change < 0 ? "−" : "±";
-  const size = Math.abs(item.change);
-  const unit = item.unit === "%" ? " pts" : item.unit === "°C" ? " °C" : "";
-  return `${sign}${item.unit === "°C" ? size.toFixed(2) : item.unit === "%" ? size.toFixed(1) : size}${unit}`;
-}
 
 const DIRECTION_TEXT: Record<string, string> = { better: "Better", worse: "Worse", same: "No change", moved: "Moved", revised: "Revised, same reading period" };
 const STATUS_TEXT: Record<string, string> = { stable: "Stable", watch: "Watch", stress: "Stress" };
@@ -110,9 +70,7 @@ export default function ChangesPage() {
   const first = items.every(item => item.before === null);
   const priorityCount = fieldPriority().rows.filter(r => r.lit >= 4).length;
   // Moved figures lead, worse first; the ones that held steady follow as a slim row.
-  const ORDER: Record<string, number> = { worse: 0, better: 1, moved: 2, revised: 3, new: 4, same: 5 };
-  const rank = (item: Item) => ORDER[item.direction ?? "new"];
-  const sorted = items.map((item, index) => ({ item, index })).sort((a, b) => rank(a.item) - rank(b.item) || a.index - b.index).map(({ item }) => item);
+  const sorted = sortedItems();
   const moved = sorted.filter(item => item.direction !== "same");
   const steady = sorted.filter(item => item.direction === "same");
   const droughtMoves = [...changes.drought.worse.map(m => ({ ...m, worse: true })), ...changes.drought.better.map(m => ({ ...m, worse: false }))];
@@ -125,7 +83,10 @@ export default function ChangesPage() {
           <h1>This Week<span className={styles.issueDate}><IconCalendar />{shortDate(changes.generatedAt, true)}</span></h1>
           <p>The changes. The places. The next field check.</p>
         </div>
-        <Link href="/digest/" className={styles.digestLink} data-testid="digest-link"><IconFile />One-page digest<IconArrowRight /></Link>
+        <div className={styles.mastheadLinks}>
+          <Link href="/weekly-film/" className={styles.digestLink} data-testid="film-link"><IconPlay />Watch in a minute<IconArrowRight /></Link>
+          <Link href="/digest/" className={styles.digestLink} data-testid="digest-link"><IconFile />One-page digest<IconArrowRight /></Link>
+        </div>
       </header>
       <div className={styles.brief}>
         <PageBriefList brief={brief("/changes", first ? <>No earlier headline snapshot to compare yet; <b>{priorityCount} mandals</b> have four or more stress signals.</> : <>{changes.counts.worse} headlines worse and {changes.counts.better} better since the previous weekly refresh; <b>{priorityCount} mandals</b> have four or more stress signals.</>)} />

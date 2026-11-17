@@ -48,6 +48,7 @@ const PAGES: Item[] = [
   { label: "Methodology", sub: "How fusion works and what not to claim", href: "/methodology", kind: "page" },
   { label: "Reports", sub: "Older exports: the weekly digest is the summary", href: "/reports", kind: "page" },
   { label: "Weekly digest", sub: "Current weekly printable summary", href: "/digest/", kind: "page" },
+  { label: "This week in a minute", sub: "The week's figures as a short film, with video downloads", href: "/weekly-film/", kind: "page" },
   { label: "Compare", sub: "Side-by-side of two areas", href: "/compare", kind: "page" },
   { label: "Scenario Lab", sub: "Monsoon what-if + drought sim", href: "/scenario", kind: "page" },
   { label: "AWARE Preview", sub: "Monitor, review and field-verify + AWARE bridge", href: "/irrigation", kind: "page" },

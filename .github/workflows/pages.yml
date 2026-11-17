@@ -73,6 +73,38 @@ jobs:
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
         run: node scripts/print-brief.mjs --directory out --base "$PAGES_BASE_PATH"
+      - name: Restore the weekly film if nothing it shows has changed
+        # /weekly-film/ recorded to MP4 in three shapes takes a few minutes, so a deploy that
+        # changes neither the data nor the film's own code reuses the last recording.
+        uses: actions/cache@v4
+        with:
+          path: app/.weekly-film
+          key: weekly-film-${{ hashFiles('app/data/**', 'app/lib/**', 'app/components/film/**', 'app/app/weekly-film/**', 'app/app/fonts/**', 'app/scripts/render-weekly-film.mjs') }}
+      - name: Record the weekly film
+        # out/films/weekly/*.mp4 and manifest.json, which the page's download row reads. Every
+        # scene is checked for overlapping or clipped text before anything is encoded. On main a
+        # failure never blocks the site: the page still plays the film live, without downloads.
+        # On a pull request it fails the build, so a change that breaks the film is seen there.
+        working-directory: app
+        continue-on-error: ${{ github.event_name != 'pull_request' }}
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: |
+          if [ ! -f .weekly-film/manifest.json ]; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+            npx playwright install --with-deps chromium
+            node scripts/render-weekly-film.mjs --directory out --base "$PAGES_BASE_PATH" --output .weekly-film
+          fi
+          mkdir -p out/films/weekly && cp .weekly-film/* out/films/weekly/
+      - name: Keep the film's contact sheets
+        # The frames the film was judged on, one sheet per shape, for a person to look at.
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-film-contact-sheets
+          path: app/test-results/weekly-film/*.j*
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Disable Jekyll processing
         # Without this, Pages' Jekyll step ignores files/dirs beginning with "_",
         # which would drop Next's _next/ asset directory and break every page.
