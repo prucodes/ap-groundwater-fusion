@@ -1,6 +1,6 @@
 {
   "source": "https://apwrims.ap.gov.in",
-  "checkedAt": "2026-11-17T12:18:27+00:00",
+  "checkedAt": "2026-11-18T12:04:11+00:00",
   "status": "refreshed",
   "sections": {
     "soilMoisture": {
@@ -14,8 +14,8 @@
     }
   },
   "soilMoistureAsOf": "2026-11-11",
-  "rainfallThrough": "2026-11-15",
-  "reservoirsAsOf": "2026-11-17T15:32+05:30",
-  "outputSha256": "fd1e72d234cd1080e866f7cdb3a76de8bf3c1318233e0cdd7b4f7ba709454f89",
+  "rainfallThrough": "2026-11-16",
+  "reservoirsAsOf": "2026-11-18T12:05+05:30",
+  "outputSha256": "f1d36db7335685d3f1248790bc8d1d0fc8dd31bea99448e1a3e7fc0962a23122",
   "authorizationStatus": "research_pending"
 }
