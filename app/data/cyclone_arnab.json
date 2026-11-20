@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-19T12:03:13+00:00",
+ "generatedAt": "2026-11-20T12:04:22+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -273,7 +273,7 @@
  },
  "since": {
   "from": "2026-10-26",
-  "to": "2026-11-19",
+  "to": "2026-11-20",
   "days": [
    {
     "date": "2026-10-26",
@@ -442,33 +442,41 @@
     "soilMedian30": 86.6,
     "reservoirTmc": 622.8,
     "reservoirPct": 47.0
+   },
+   {
+    "date": "2026-11-20",
+    "rainTo": "2026-11-18",
+    "rainSinceTmc": 705.6,
+    "soilMedian30": 86.6,
+    "reservoirTmc": 619.2,
+    "reservoirPct": 46.8
    }
   ],
-  "gainTmc": 123.2,
+  "gainTmc": 119.6,
   "basins": [
    {
     "basin": "OTHERS",
     "beforePct": 18.5,
     "nowPct": 80.4,
-    "gainTmc": 156.3
+    "gainTmc": 156.1
    },
    {
     "basin": "GODAVARI",
     "beforePct": 77.1,
-    "nowPct": 79.0,
-    "gainTmc": 0.5
+    "nowPct": 74.6,
+    "gainTmc": -0.7
    },
    {
     "basin": "PENNAR",
     "beforePct": 37.0,
-    "nowPct": 35.0,
-    "gainTmc": -6.0
+    "nowPct": 34.8,
+    "gainTmc": -6.4
    },
    {
     "basin": "KRISHNA",
     "beforePct": 43.1,
-    "nowPct": 39.4,
-    "gainTmc": -27.6
+    "nowPct": 39.2,
+    "gainTmc": -29.4
    }
   ],
   "reservoirs": [
@@ -478,10 +486,10 @@
     "district": "Kakinada",
     "capacityTmc": 24.11,
     "beforeTmc": 17.96,
-    "nowTmc": 22.24,
-    "gainTmc": 4.28,
+    "nowTmc": 22.28,
+    "gainTmc": 4.32,
     "beforePct": 74.5,
-    "nowPct": 92.2
+    "nowPct": 92.4
    },
    {
     "name": "RAIWADA RESERVOIR",
@@ -489,10 +497,10 @@
     "district": "Anakapalli",
     "capacityTmc": 3.6,
     "beforeTmc": 0.96,
-    "nowTmc": 3.34,
-    "gainTmc": 2.39,
+    "nowTmc": 3.26,
+    "gainTmc": 2.3,
     "beforePct": 26.6,
-    "nowPct": 92.8
+    "nowPct": 90.6
    },
    {
     "name": "YERRAKALVA RESERVOIR",
@@ -10913,7 +10921,7 @@
    ]
   ]
  },
- "updatedAt": "2026-11-19",
+ "updatedAt": "2026-11-20",
  "map": [
   [
    0,
