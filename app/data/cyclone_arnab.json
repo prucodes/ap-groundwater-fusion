@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-23T11:18:02+00:00",
+ "generatedAt": "2026-11-23T13:31:51+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -472,11 +472,11 @@
     "rainTo": "2026-11-21",
     "rainSinceTmc": 712.5,
     "soilMedian30": 86.6,
-    "reservoirTmc": 614.7,
+    "reservoirTmc": 614.6,
     "reservoirPct": 46.4
    }
   ],
-  "gainTmc": 115.1,
+  "gainTmc": 114.9,
   "basins": [
    {
     "basin": "OTHERS",
@@ -500,7 +500,7 @@
     "basin": "KRISHNA",
     "beforePct": 43.1,
     "nowPct": 38.6,
-    "gainTmc": -33.5
+    "gainTmc": -33.6
    }
   ],
   "reservoirs": [

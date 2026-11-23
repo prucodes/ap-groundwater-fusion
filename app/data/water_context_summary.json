@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-23T11:12:53+00:00",
+ "generatedAt": "2026-11-23T13:31:51+00:00",
  "authorizationStatus": "research_pending",
  "rain": {
   "start": "2026-06-01",
@@ -238,12 +238,12 @@
   "driestOnRecord": 14
  },
  "reservoirs": {
-  "asOf": "2026-11-23T11:56+05:30",
+  "asOf": "2026-11-23T18:01+05:30",
   "staleCount": 2,
   "url": "https://apwrims.ap.gov.in/mis/reservoir",
   "count": 120,
   "capacityTmc": 1323.99,
-  "storageTmc": 614.698,
+  "storageTmc": 614.582,
   "storagePct": 46.4,
   "lastYearPct": 73.6,
   "byBasin": [
@@ -656,7 +656,7 @@
    "reservoirs": {
     "count": 3,
     "capacityTmc": 361.28,
-    "storageTmc": 205.599,
+    "storageTmc": 205.483,
     "storagePct": 56.9,
     "lastYearPct": 94.1
    }

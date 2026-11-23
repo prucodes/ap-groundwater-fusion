@@ -3818,11 +3818,11 @@
    "soilAsOf": null,
    "soilMedian30": 86.6,
    "soilDriest": 14,
-   "reservoirsAsOf": "2026-11-23T11:56+05:30",
-   "reservoirTmc": 614.698,
+   "reservoirsAsOf": "2026-11-23T18:01+05:30",
+   "reservoirTmc": 614.582,
    "capacityTmc": 1323.99,
    "basins": {
-    "KRISHNA": 289.468,
+    "KRISHNA": 289.352,
     "PENNAR": 102.126,
     "OTHERS": 203.124,
     "GODAVARI": 19.98
@@ -3835,7 +3835,7 @@
     "Somasila Reservoir": 19.654,
     "KANDALERU RESERVOIR": 16.54,
     "PULA SUBBAIAH VELIGONDA PROJECT": 6.88,
-    "PULICHINTHALA PROJECT": 26.836,
+    "PULICHINTHALA PROJECT": 26.72,
     "Jalaput": 29.7,
     "GANDIKOTA RESERVOIR": 16.56,
     "YELERU RESERVOIR": 22.38,
