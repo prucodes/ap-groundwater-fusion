@@ -1,43 +1,43 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-16T22:58:51+00:00",
+ "generatedAt": "2026-11-23T11:18:01+00:00",
  "source": "APWRIMS reservoir dashboard (Water Resources Department), weekly snapshots of releases into each canal",
  "url": "https://apwrims.ap.gov.in/mis/reservoir",
  "method": "Releases into each canal at the headworks, read every seventh day from 1 June and added up between readings. This season to the latest reading, against last season to the same date.",
  "caveat": "Measured where water leaves the reservoir or barrage, not where it reaches a field; which mandals a canal serves is not public. Many outlets feed the next reservoir in a chain, so canals are not added into one State figure. Weekly readings miss changes in between, so these are estimates.",
  "seasonStart": "2026-06-01",
- "asOf": "2026-11-16",
- "lastSeasonTo": "2025-11-16",
- "snapshotsThisSeason": 25,
- "snapshotsLastSeason": 25,
+ "asOf": "2026-11-23",
+ "lastSeasonTo": "2025-11-23",
+ "snapshotsThisSeason": 26,
+ "snapshotsLastSeason": 26,
  "deltas": [
   {
    "system": "Godavari delta",
    "headworks": "SIR AURTHUR COTTON BARRAGE",
-   "thisSeasonMm3": 4251.4,
-   "lastSeasonMm3": 3847.4,
-   "thisSeasonTmc": 150.1,
-   "lastSeasonTmc": 135.9
+   "thisSeasonMm3": 4295.9,
+   "lastSeasonMm3": 3889.3,
+   "thisSeasonTmc": 151.7,
+   "lastSeasonTmc": 137.4
   },
   {
    "system": "Krishna delta",
    "headworks": "PRAKASAM BARRAGE",
-   "thisSeasonMm3": 2229.6,
-   "lastSeasonMm3": 3995.1,
-   "thisSeasonTmc": 78.7,
-   "lastSeasonTmc": 141.1
+   "thisSeasonMm3": 2264.2,
+   "lastSeasonMm3": 4146.5,
+   "thisSeasonTmc": 80.0,
+   "lastSeasonTmc": 146.4
   }
  ],
- "canalsBothSeasons": 122,
- "canalsWithLess": 88,
+ "canalsBothSeasons": 126,
+ "canalsWithLess": 90,
  "canals": [
   {
    "reservoir": "SIR AURTHUR COTTON BARRAGE",
    "outlet": "Western Delta",
    "basin": "GODAVARI",
    "district": "Konaseema",
-   "thisSeasonMm3": 2130.5,
-   "lastSeasonMm3": 1887.3
+   "thisSeasonMm3": 2173.3,
+   "lastSeasonMm3": 1921.5
   },
   {
    "reservoir": "SIR AURTHUR COTTON BARRAGE",
@@ -45,15 +45,15 @@
    "basin": "GODAVARI",
    "district": "Konaseema",
    "thisSeasonMm3": 1411.6,
-   "lastSeasonMm3": 1299.9
+   "lastSeasonMm3": 1301.6
   },
   {
    "reservoir": "PRAKASAM BARRAGE",
    "outlet": "KE MAIN DOWNSTREAM",
    "basin": "KRISHNA",
    "district": "NTR",
-   "thisSeasonMm3": 1361.2,
-   "lastSeasonMm3": 2375.3
+   "thisSeasonMm3": 1374.2,
+   "lastSeasonMm3": 2439.8
   },
   {
    "reservoir": "SRISAILAM R",
@@ -61,23 +61,23 @@
    "basin": "KRISHNA",
    "district": "Nandyal",
    "thisSeasonMm3": 971.0,
-   "lastSeasonMm3": 5112.1
+   "lastSeasonMm3": 5146.4
   },
   {
    "reservoir": "PRAKASAM BARRAGE",
    "outlet": "KW Main Downstream",
    "basin": "KRISHNA",
    "district": "NTR",
-   "thisSeasonMm3": 824.0,
-   "lastSeasonMm3": 1596.4
+   "thisSeasonMm3": 845.7,
+   "lastSeasonMm3": 1679.0
   },
   {
    "reservoir": "SIR AURTHUR COTTON BARRAGE",
    "outlet": "Central Delta",
    "basin": "GODAVARI",
    "district": "Konaseema",
-   "thisSeasonMm3": 709.3,
-   "lastSeasonMm3": 660.2
+   "thisSeasonMm3": 711.0,
+   "lastSeasonMm3": 666.2
   },
   {
    "reservoir": "NAGARJUNA SAGAR",
@@ -85,15 +85,23 @@
    "basin": "KRISHNA",
    "district": "Palnadu",
    "thisSeasonMm3": 647.6,
-   "lastSeasonMm3": 1621.4
+   "lastSeasonMm3": 1684.8
   },
   {
    "reservoir": "SRISAILAM R",
    "outlet": "MGK LIS",
    "basin": "KRISHNA",
    "district": "Nandyal",
-   "thisSeasonMm3": 596.0,
-   "lastSeasonMm3": 246.6
+   "thisSeasonMm3": 637.1,
+   "lastSeasonMm3": 274.0
+  },
+  {
+   "reservoir": "NAGARJUNA SAGAR",
+   "outlet": "AMRP",
+   "basin": "KRISHNA",
+   "district": "Palnadu",
+   "thisSeasonMm3": 579.7,
+   "lastSeasonMm3": 629.6
   },
   {
    "reservoir": "SRISAILAM R",
@@ -101,23 +109,15 @@
    "basin": "KRISHNA",
    "district": "Nandyal",
    "thisSeasonMm3": 575.8,
-   "lastSeasonMm3": 698.4
-  },
-  {
-   "reservoir": "NAGARJUNA SAGAR",
-   "outlet": "AMRP",
-   "basin": "KRISHNA",
-   "district": "Palnadu",
-   "thisSeasonMm3": 545.5,
-   "lastSeasonMm3": 609.1
+   "lastSeasonMm3": 747.0
   },
   {
    "reservoir": "KANDALERU RESERVOIR",
    "outlet": "Head Sluice Canal",
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
-   "thisSeasonMm3": 534.6,
-   "lastSeasonMm3": 680.6
+   "thisSeasonMm3": 536.1,
+   "lastSeasonMm3": 694.7
   },
   {
    "reservoir": "BUGGAVAGU",
@@ -125,7 +125,7 @@
    "basin": "KRISHNA",
    "district": "Palnadu",
    "thisSeasonMm3": 484.0,
-   "lastSeasonMm3": 2023.5
+   "lastSeasonMm3": 2186.4
   },
   {
    "reservoir": "NAGARJUNA SAGAR",
@@ -133,15 +133,15 @@
    "basin": "KRISHNA",
    "district": "Palnadu",
    "thisSeasonMm3": 458.9,
-   "lastSeasonMm3": 2223.7
+   "lastSeasonMm3": 2390.7
   },
   {
    "reservoir": "GOTTA BARRAGE",
    "outlet": "LMC",
    "basin": "OTHERS",
    "district": "Srikakulam",
-   "thisSeasonMm3": 406.8,
-   "lastSeasonMm3": 418.0
+   "thisSeasonMm3": 418.1,
+   "lastSeasonMm3": 424.0
   },
   {
    "reservoir": "GORAKKALU BALANCING RESERVIOR",
@@ -156,7 +156,7 @@
    "outlet": "GNSS",
    "basin": "PENNAR",
    "district": "Nandyal",
-   "thisSeasonMm3": 248.2,
+   "thisSeasonMm3": 250.7,
    "lastSeasonMm3": 1317.9
   },
   {
@@ -164,8 +164,8 @@
    "outlet": "HNSS phase 2 canal",
    "basin": "PENNAR",
    "district": "Ananthapuramu",
-   "thisSeasonMm3": 205.4,
-   "lastSeasonMm3": 373.7
+   "thisSeasonMm3": 206.9,
+   "lastSeasonMm3": 404.9
   },
   {
    "reservoir": "MUNIYERU PROJECT",
@@ -173,7 +173,7 @@
    "basin": "KRISHNA",
    "district": "NTR",
    "thisSeasonMm3": 188.4,
-   "lastSeasonMm3": 1330.0
+   "lastSeasonMm3": 1364.2
   },
   {
    "reservoir": "THOTAPALLI REGULATOR / BARRAGE",
@@ -181,95 +181,95 @@
    "basin": "OTHERS",
    "district": "Parvathipuram Manyam",
    "thisSeasonMm3": 186.7,
-   "lastSeasonMm3": 201.7
+   "lastSeasonMm3": 206.8
   },
   {
    "reservoir": "MADDUVALASA PROJECT",
    "outlet": "RMC",
    "basin": "OTHERS",
    "district": "Vizianagaram",
-   "thisSeasonMm3": 150.7,
+   "thisSeasonMm3": 155.8,
    "lastSeasonMm3": 167.8
-  },
-  {
-   "reservoir": "GOTTA BARRAGE",
-   "outlet": "RMC",
-   "basin": "OTHERS",
-   "district": "Srikakulam",
-   "thisSeasonMm3": 134.1,
-   "lastSeasonMm3": 86.8
-  },
-  {
-   "reservoir": "THOTAPALLI REGULATOR / BARRAGE",
-   "outlet": "LMC",
-   "basin": "OTHERS",
-   "district": "Parvathipuram Manyam",
-   "thisSeasonMm3": 127.2,
-   "lastSeasonMm3": 96.3
   },
   {
    "reservoir": "SRISAILAM R",
    "outlet": "Muchumarri LIS",
    "basin": "KRISHNA",
    "district": "Nandyal",
-   "thisSeasonMm3": 124.2,
+   "thisSeasonMm3": 149.1,
    "lastSeasonMm3": 0.0
+  },
+  {
+   "reservoir": "GOTTA BARRAGE",
+   "outlet": "RMC",
+   "basin": "OTHERS",
+   "district": "Srikakulam",
+   "thisSeasonMm3": 138.3,
+   "lastSeasonMm3": 89.5
+  },
+  {
+   "reservoir": "THOTAPALLI REGULATOR / BARRAGE",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Parvathipuram Manyam",
+   "thisSeasonMm3": 129.8,
+   "lastSeasonMm3": 99.7
   },
   {
    "reservoir": "KANIGIRI RESERVOIR",
    "outlet": "Pyderu Escape Channel",
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
-   "thisSeasonMm3": 123.1,
-   "lastSeasonMm3": 135.9
+   "thisSeasonMm3": 123.2,
+   "lastSeasonMm3": 141.5
   },
   {
    "reservoir": "KANIGIRI RESERVOIR",
    "outlet": "Eastern Channel",
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
-   "thisSeasonMm3": 108.8,
-   "lastSeasonMm3": 94.9
+   "thisSeasonMm3": 109.0,
+   "lastSeasonMm3": 98.9
   },
   {
    "reservoir": "NARAYANAPURAM ANICUT",
    "outlet": "LMC",
    "basin": "OTHERS",
    "district": "Srikakulam",
-   "thisSeasonMm3": 105.8,
-   "lastSeasonMm3": 97.2
+   "thisSeasonMm3": 107.9,
+   "lastSeasonMm3": 100.2
   },
   {
    "reservoir": "NARAYANAPURAM ANICUT",
    "outlet": "RMC",
    "basin": "OTHERS",
    "district": "Srikakulam",
-   "thisSeasonMm3": 98.5,
-   "lastSeasonMm3": 62.9
-  },
-  {
-   "reservoir": "BRAHMAMSAGAR RESERVOIR",
-   "outlet": "Left Canal",
-   "basin": "PENNAR",
-   "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 90.5,
-   "lastSeasonMm3": 102.1
-  },
-  {
-   "reservoir": "VELOGODU BALANCING RESERVOIR",
-   "outlet": "Main Canal",
-   "basin": "PENNAR",
-   "district": "Nandyal",
-   "thisSeasonMm3": 87.2,
-   "lastSeasonMm3": 1351.2
+   "thisSeasonMm3": 101.5,
+   "lastSeasonMm3": 65.9
   },
   {
    "reservoir": "YELERU RESERVOIR",
    "outlet": "DCR",
    "basin": "OTHERS",
    "district": "Kakinada",
-   "thisSeasonMm3": 84.8,
-   "lastSeasonMm3": 179.8
+   "thisSeasonMm3": 92.5,
+   "lastSeasonMm3": 188.4
+  },
+  {
+   "reservoir": "BRAHMAMSAGAR RESERVOIR",
+   "outlet": "Left Canal",
+   "basin": "PENNAR",
+   "district": "Y.S.R Kadapa",
+   "thisSeasonMm3": 92.0,
+   "lastSeasonMm3": 106.9
+  },
+  {
+   "reservoir": "VELOGODU BALANCING RESERVOIR",
+   "outlet": "Main Canal",
+   "basin": "PENNAR",
+   "district": "Nandyal",
+   "thisSeasonMm3": 90.6,
+   "lastSeasonMm3": 1382.0
   },
   {
    "reservoir": "NAGARJUNA SAGAR",
@@ -277,31 +277,39 @@
    "basin": "KRISHNA",
    "district": "Palnadu",
    "thisSeasonMm3": 82.2,
-   "lastSeasonMm3": 59.1
+   "lastSeasonMm3": 64.2
   },
   {
    "reservoir": "YELERU RESERVOIR",
    "outlet": "YLMC",
    "basin": "OTHERS",
    "district": "Kakinada",
-   "thisSeasonMm3": 78.4,
+   "thisSeasonMm3": 81.8,
    "lastSeasonMm3": 1.7
-  },
-  {
-   "reservoir": "SUNKESULA BARRAGE",
-   "outlet": "KC CANAL",
-   "basin": "KRISHNA",
-   "district": "Kurnool",
-   "thisSeasonMm3": 74.0,
-   "lastSeasonMm3": 674.6
   },
   {
    "reservoir": "TANDAVA RESERVOIR",
    "outlet": "LMC",
    "basin": "OTHERS",
    "district": "Alluri Sitharama Raju",
-   "thisSeasonMm3": 70.9,
-   "lastSeasonMm3": 73.3
+   "thisSeasonMm3": 78.6,
+   "lastSeasonMm3": 82.0
+  },
+  {
+   "reservoir": "SUNKESULA BARRAGE",
+   "outlet": "KC CANAL",
+   "basin": "KRISHNA",
+   "district": "Kurnool",
+   "thisSeasonMm3": 76.7,
+   "lastSeasonMm3": 716.5
+  },
+  {
+   "reservoir": "GORAKKALU BALANCING RESERVIOR",
+   "outlet": "SRBC Bypass",
+   "basin": "PENNAR",
+   "district": "Nandyal",
+   "thisSeasonMm3": 74.8,
+   "lastSeasonMm3": 134.7
   },
   {
    "reservoir": "ADAVIPALLI RESERVOIR",
@@ -316,8 +324,8 @@
    "outlet": "LMC",
    "basin": "GODAVARI",
    "district": "Polavaram",
-   "thisSeasonMm3": 61.0,
-   "lastSeasonMm3": 36.9
+   "thisSeasonMm3": 64.4,
+   "lastSeasonMm3": 39.1
   },
   {
    "reservoir": "THIMMAPURAM SR1",
@@ -328,28 +336,20 @@
    "lastSeasonMm3": 235.0
   },
   {
-   "reservoir": "GORAKKALU BALANCING RESERVIOR",
-   "outlet": "SRBC Bypass",
-   "basin": "PENNAR",
-   "district": "Nandyal",
-   "thisSeasonMm3": 59.4,
-   "lastSeasonMm3": 128.1
-  },
-  {
    "reservoir": "Somasila Reservoir",
    "outlet": "SFC",
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
    "thisSeasonMm3": 57.8,
-   "lastSeasonMm3": 99.8
+   "lastSeasonMm3": 103.6
   },
   {
    "reservoir": "BRAHMAMSAGAR RESERVOIR",
    "outlet": "Right Canal",
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 53.4,
-   "lastSeasonMm3": 34.9
+   "thisSeasonMm3": 55.6,
+   "lastSeasonMm3": 36.8
   },
   {
    "reservoir": "YELLANUR SR2",
@@ -365,7 +365,15 @@
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
    "thisSeasonMm3": 47.5,
-   "lastSeasonMm3": 57.0
+   "lastSeasonMm3": 57.4
+  },
+  {
+   "reservoir": "GANDIKOTA RESERVOIR",
+   "outlet": "Mylavaram Reservoir",
+   "basin": "PENNAR",
+   "district": "Y.S.R Kadapa",
+   "thisSeasonMm3": 47.1,
+   "lastSeasonMm3": 802.4
   },
   {
    "reservoir": "GANDIKOTA RESERVOIR",
@@ -380,8 +388,8 @@
    "outlet": "Southern Channel",
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
-   "thisSeasonMm3": 44.9,
-   "lastSeasonMm3": 54.5
+   "thisSeasonMm3": 45.0,
+   "lastSeasonMm3": 57.9
   },
   {
    "reservoir": "PRAKASAM BARRAGE",
@@ -389,7 +397,15 @@
    "basin": "KRISHNA",
    "district": "NTR",
    "thisSeasonMm3": 44.3,
-   "lastSeasonMm3": 23.4
+   "lastSeasonMm3": 27.7
+  },
+  {
+   "reservoir": "MID PENNAR RESERVOIR",
+   "outlet": "South Canal",
+   "basin": "PENNAR",
+   "district": "Ananthapuramu",
+   "thisSeasonMm3": 43.1,
+   "lastSeasonMm3": 123.9
   },
   {
    "reservoir": "GANDIKOTA RESERVOIR",
@@ -400,6 +416,22 @@
    "lastSeasonMm3": 166.1
   },
   {
+   "reservoir": "THATIPUDI RESERVOIR",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Vizianagaram",
+   "thisSeasonMm3": 42.0,
+   "lastSeasonMm3": 16.1
+  },
+  {
+   "reservoir": "MYLAVARAM(PENNAR) RESERVOIR",
+   "outlet": "South Canal",
+   "basin": "PENNAR",
+   "district": "Y.S.R Kadapa",
+   "thisSeasonMm3": 42.0,
+   "lastSeasonMm3": 43.9
+  },
+  {
    "reservoir": "GANDIKOTA RESERVOIR",
    "outlet": "GNSS Main Canal",
    "basin": "PENNAR",
@@ -408,20 +440,12 @@
    "lastSeasonMm3": 55.2
   },
   {
-   "reservoir": "THATIPUDI RESERVOIR",
-   "outlet": "LMC",
-   "basin": "OTHERS",
-   "district": "Vizianagaram",
-   "thisSeasonMm3": 41.2,
-   "lastSeasonMm3": 16.1
-  },
-  {
-   "reservoir": "MYLAVARAM(PENNAR) RESERVOIR",
-   "outlet": "South Canal",
+   "reservoir": "PAIDIPALEM BALANCING RESERVOIR",
+   "outlet": "Head Sluice",
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 40.9,
-   "lastSeasonMm3": 41.9
+   "thisSeasonMm3": 38.4,
+   "lastSeasonMm3": 7.5
   },
   {
    "reservoir": "Cherlopalli Reservoir",
@@ -429,7 +453,7 @@
    "basin": "PENNAR",
    "district": "Sri Sathya Sai",
    "thisSeasonMm3": 38.0,
-   "lastSeasonMm3": 83.2
+   "lastSeasonMm3": 91.3
   },
   {
    "reservoir": "VENGALRAYA SAGARAM",
@@ -445,15 +469,15 @@
    "basin": "OTHERS",
    "district": "Prakasam",
    "thisSeasonMm3": 36.9,
-   "lastSeasonMm3": 96.8
+   "lastSeasonMm3": 101.5
   },
   {
-   "reservoir": "PAIDIPALEM BALANCING RESERVOIR",
-   "outlet": "Head Sluice",
-   "basin": "PENNAR",
-   "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 34.9,
-   "lastSeasonMm3": 7.5
+   "reservoir": "DAMODARAM SAGARAM",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Srikakulam",
+   "thisSeasonMm3": 33.7,
+   "lastSeasonMm3": 9.8
   },
   {
    "reservoir": "SARVEPALLI RESERVOIR",
@@ -461,7 +485,7 @@
    "basin": "OTHERS",
    "district": "Sri Potti Sriramulu Nellore",
    "thisSeasonMm3": 33.6,
-   "lastSeasonMm3": 43.2
+   "lastSeasonMm3": 44.0
   },
   {
    "reservoir": "GODDAMVARIPALLI SR3",
@@ -472,68 +496,60 @@
    "lastSeasonMm3": 241.6
   },
   {
-   "reservoir": "DAMODARAM SAGARAM",
-   "outlet": "LMC",
-   "basin": "OTHERS",
-   "district": "Srikakulam",
-   "thisSeasonMm3": 32.8,
-   "lastSeasonMm3": 8.1
-  },
-  {
-   "reservoir": "MID PENNAR RESERVOIR",
-   "outlet": "South Canal",
-   "basin": "PENNAR",
-   "district": "Ananthapuramu",
-   "thisSeasonMm3": 32.5,
-   "lastSeasonMm3": 111.9
-  },
-  {
    "reservoir": "OWK RESERVOIR",
    "outlet": "SRBC",
    "basin": "PENNAR",
    "district": "Nandyal",
-   "thisSeasonMm3": 29.5,
-   "lastSeasonMm3": 99.8
+   "thisSeasonMm3": 31.2,
+   "lastSeasonMm3": 104.5
   },
   {
    "reservoir": "VATTIGEDDA RESERVOIR",
    "outlet": "RMC",
    "basin": "OTHERS",
    "district": "Parvathipuram Manyam",
-   "thisSeasonMm3": 28.9,
-   "lastSeasonMm3": 41.4
+   "thisSeasonMm3": 30.2,
+   "lastSeasonMm3": 41.8
   },
   {
    "reservoir": "TANDAVA RESERVOIR",
    "outlet": "RMC",
    "basin": "OTHERS",
    "district": "Alluri Sitharama Raju",
-   "thisSeasonMm3": 27.1,
-   "lastSeasonMm3": 28.0
+   "thisSeasonMm3": 29.9,
+   "lastSeasonMm3": 30.9
   },
   {
    "reservoir": "RAIWADA RESERVOIR",
    "outlet": "Left Head Sluice Irrigation",
    "basin": "OTHERS",
    "district": "Anakapalli",
-   "thisSeasonMm3": 26.2,
-   "lastSeasonMm3": 30.4
+   "thisSeasonMm3": 26.9,
+   "lastSeasonMm3": 32.1
   },
   {
    "reservoir": "THOTAPALLI REGULATOR / BARRAGE",
    "outlet": "Old RMC",
    "basin": "OTHERS",
    "district": "Parvathipuram Manyam",
-   "thisSeasonMm3": 26.0,
-   "lastSeasonMm3": 24.4
+   "thisSeasonMm3": 26.5,
+   "lastSeasonMm3": 25.4
   },
   {
    "reservoir": "RAIWADA RESERVOIR",
    "outlet": "Right Head Sluice Irrigation",
    "basin": "OTHERS",
    "district": "Anakapalli",
-   "thisSeasonMm3": 24.4,
-   "lastSeasonMm3": 49.2
+   "thisSeasonMm3": 24.8,
+   "lastSeasonMm3": 51.7
+  },
+  {
+   "reservoir": "BHUPATIPALEM RESERVOIR",
+   "outlet": "Head Sluice",
+   "basin": "GODAVARI",
+   "district": "Polavaram",
+   "thisSeasonMm3": 24.1,
+   "lastSeasonMm3": 31.7
   },
   {
    "reservoir": "Somasila Reservoir",
@@ -541,22 +557,14 @@
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
    "thisSeasonMm3": 23.5,
-   "lastSeasonMm3": 1497.4
-  },
-  {
-   "reservoir": "BHUPATIPALEM RESERVOIR",
-   "outlet": "Head Sluice",
-   "basin": "GODAVARI",
-   "district": "Polavaram",
-   "thisSeasonMm3": 22.4,
-   "lastSeasonMm3": 30.0
+   "lastSeasonMm3": 1510.8
   },
   {
    "reservoir": "ARANIAR RESERVOIR",
    "outlet": "Left Canal",
    "basin": "OTHERS",
    "district": "Tirupati",
-   "thisSeasonMm3": 19.7,
+   "thisSeasonMm3": 20.6,
    "lastSeasonMm3": 6.7
   },
   {
@@ -565,7 +573,7 @@
    "basin": "OTHERS",
    "district": "Anakapalli",
    "thisSeasonMm3": 18.4,
-   "lastSeasonMm3": 20.6
+   "lastSeasonMm3": 21.4
   },
   {
    "reservoir": "GAJULADINNE PROJECT",
@@ -576,20 +584,28 @@
    "lastSeasonMm3": 2.6
   },
   {
-   "reservoir": "KANDALERU RESERVOIR",
-   "outlet": "Low Level sluice",
-   "basin": "PENNAR",
-   "district": "Sri Potti Sriramulu Nellore",
-   "thisSeasonMm3": 15.0,
-   "lastSeasonMm3": 23.5
-  },
-  {
    "reservoir": "PEDDAGEDDA RESERVOIR",
    "outlet": "RMC",
    "basin": "OTHERS",
    "district": "Parvathipuram Manyam",
-   "thisSeasonMm3": 14.7,
-   "lastSeasonMm3": 16.4
+   "thisSeasonMm3": 15.8,
+   "lastSeasonMm3": 17.6
+  },
+  {
+   "reservoir": "KANDALERU RESERVOIR",
+   "outlet": "Low Level sluice",
+   "basin": "PENNAR",
+   "district": "Sri Potti Sriramulu Nellore",
+   "thisSeasonMm3": 15.2,
+   "lastSeasonMm3": 24.1
+  },
+  {
+   "reservoir": "OWK RESERVOIR",
+   "outlet": "Paleru",
+   "basin": "PENNAR",
+   "district": "Nandyal",
+   "thisSeasonMm3": 14.4,
+   "lastSeasonMm3": 14.2
   },
   {
    "reservoir": "YERRAKALVA RESERVOIR",
@@ -608,20 +624,12 @@
    "lastSeasonMm3": 2.9
   },
   {
-   "reservoir": "OWK RESERVOIR",
-   "outlet": "Paleru",
-   "basin": "PENNAR",
-   "district": "Nandyal",
-   "thisSeasonMm3": 13.9,
-   "lastSeasonMm3": 13.7
-  },
-  {
    "reservoir": "GUNDLAKAMMA RESERVOIR",
    "outlet": "LMC",
    "basin": "OTHERS",
    "district": "Prakasam",
    "thisSeasonMm3": 12.8,
-   "lastSeasonMm3": 7.7
+   "lastSeasonMm3": 10.4
   },
   {
    "reservoir": "Somasila Reservoir",
@@ -629,7 +637,7 @@
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
    "thisSeasonMm3": 12.4,
-   "lastSeasonMm3": 114.5
+   "lastSeasonMm3": 119.6
   },
   {
    "reservoir": "ADINIMMAYAPALLI ANICUT",
@@ -637,7 +645,23 @@
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
    "thisSeasonMm3": 12.1,
-   "lastSeasonMm3": 44.0
+   "lastSeasonMm3": 46.0
+  },
+  {
+   "reservoir": "JEEDIPALLI RESERVOIR",
+   "outlet": "TABrR o t sluices",
+   "basin": "PENNAR",
+   "district": "Ananthapuramu",
+   "thisSeasonMm3": 12.0,
+   "lastSeasonMm3": 30.1
+  },
+  {
+   "reservoir": "MYLAVARAM(PENNAR) RESERVOIR",
+   "outlet": "North Canal",
+   "basin": "PENNAR",
+   "district": "Y.S.R Kadapa",
+   "thisSeasonMm3": 12.0,
+   "lastSeasonMm3": 18.8
   },
   {
    "reservoir": "LOWER SAGILERU ANI CUT",
@@ -645,7 +669,7 @@
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
    "thisSeasonMm3": 11.8,
-   "lastSeasonMm3": 39.1
+   "lastSeasonMm3": 43.4
   },
   {
    "reservoir": "VENGALRAYA SAGARAM",
@@ -656,20 +680,36 @@
    "lastSeasonMm3": 17.5
   },
   {
-   "reservoir": "JEEDIPALLI RESERVOIR",
-   "outlet": "TABrR o t sluices",
-   "basin": "PENNAR",
-   "district": "Ananthapuramu",
+   "reservoir": "CUM BUM TANK",
+   "outlet": "Chinna Cumbum Channel",
+   "basin": "OTHERS",
+   "district": "Markapuram",
    "thisSeasonMm3": 11.2,
-   "lastSeasonMm3": 28.4
+   "lastSeasonMm3": 3.7
   },
   {
    "reservoir": "ARANIAR RESERVOIR",
    "outlet": "Middle Canal",
    "basin": "OTHERS",
    "district": "Tirupati",
-   "thisSeasonMm3": 11.0,
+   "thisSeasonMm3": 11.1,
    "lastSeasonMm3": 1.8
+  },
+  {
+   "reservoir": "ANDRA RESERVOIR",
+   "outlet": "RMC",
+   "basin": "OTHERS",
+   "district": "Vizianagaram",
+   "thisSeasonMm3": 11.1,
+   "lastSeasonMm3": 7.5
+  },
+  {
+   "reservoir": "ANDRA RESERVOIR",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Vizianagaram",
+   "thisSeasonMm3": 10.9,
+   "lastSeasonMm3": 6.0
   },
   {
    "reservoir": "GAJULADINNE PROJECT",
@@ -677,39 +717,15 @@
    "basin": "KRISHNA",
    "district": "Kurnool",
    "thisSeasonMm3": 10.8,
-   "lastSeasonMm3": 1.7
+   "lastSeasonMm3": 2.8
   },
   {
-   "reservoir": "CUM BUM TANK",
-   "outlet": "Chinna Cumbum Channel",
+   "reservoir": "PAMPA RESERVOIR",
+   "outlet": "Head Sluice",
    "basin": "OTHERS",
-   "district": "Markapuram",
-   "thisSeasonMm3": 10.7,
-   "lastSeasonMm3": 3.3
-  },
-  {
-   "reservoir": "ANDRA RESERVOIR",
-   "outlet": "RMC",
-   "basin": "OTHERS",
-   "district": "Vizianagaram",
-   "thisSeasonMm3": 10.6,
-   "lastSeasonMm3": 6.9
-  },
-  {
-   "reservoir": "ANDRA RESERVOIR",
-   "outlet": "LMC",
-   "basin": "OTHERS",
-   "district": "Vizianagaram",
-   "thisSeasonMm3": 10.3,
-   "lastSeasonMm3": 6.0
-  },
-  {
-   "reservoir": "MYLAVARAM(PENNAR) RESERVOIR",
-   "outlet": "North Canal",
-   "basin": "PENNAR",
-   "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 9.8,
-   "lastSeasonMm3": 17.3
+   "district": "Kakinada",
+   "thisSeasonMm3": 9.5,
+   "lastSeasonMm3": 33.4
   },
   {
    "reservoir": "MUNIYERU PROJECT",
@@ -720,20 +736,20 @@
    "lastSeasonMm3": 0.0
   },
   {
-   "reservoir": "PAMPA RESERVOIR",
-   "outlet": "Head Sluice",
-   "basin": "OTHERS",
-   "district": "Kakinada",
-   "thisSeasonMm3": 8.3,
-   "lastSeasonMm3": 31.9
-  },
-  {
    "reservoir": "PENNA AHOBILAM BALANCING RESERVOIR",
    "outlet": "Right Canal",
    "basin": "PENNAR",
    "district": "Ananthapuramu",
-   "thisSeasonMm3": 7.8,
-   "lastSeasonMm3": 12.6
+   "thisSeasonMm3": 8.0,
+   "lastSeasonMm3": 13.2
+  },
+  {
+   "reservoir": "SUBSIDIARY RESERVOIR -II",
+   "outlet": "Irrigation",
+   "basin": "PENNAR",
+   "district": "Y.S.R Kadapa",
+   "thisSeasonMm3": 7.6,
+   "lastSeasonMm3": 10.6
   },
   {
    "reservoir": "SARVARAJA SAGAR",
@@ -741,15 +757,39 @@
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
    "thisSeasonMm3": 7.5,
-   "lastSeasonMm3": 5.9
+   "lastSeasonMm3": 6.0
+  },
+  {
+   "reservoir": "PAIDIPALEM BALANCING RESERVOIR",
+   "outlet": "MCS",
+   "basin": "PENNAR",
+   "district": "Y.S.R Kadapa",
+   "thisSeasonMm3": 7.1,
+   "lastSeasonMm3": 2.4
   },
   {
    "reservoir": "SUBSIDIARY RESERVOIR -I",
    "outlet": "CMP",
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 7.0,
-   "lastSeasonMm3": 21.7
+   "thisSeasonMm3": 7.1,
+   "lastSeasonMm3": 22.4
+  },
+  {
+   "reservoir": "SWARNAMUKHI BARRAGE CUM BRIDGE",
+   "outlet": "Head Regulator",
+   "basin": "OTHERS",
+   "district": "Tirupati",
+   "thisSeasonMm3": 6.8,
+   "lastSeasonMm3": 4.1
+  },
+  {
+   "reservoir": "VARAHA RESERVOIR",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Anakapalli",
+   "thisSeasonMm3": 6.8,
+   "lastSeasonMm3": 18.3
   },
   {
    "reservoir": "YERRAKALVA RESERVOIR",
@@ -760,60 +800,28 @@
    "lastSeasonMm3": 12.0
   },
   {
-   "reservoir": "SUBSIDIARY RESERVOIR -II",
-   "outlet": "Irrigation",
-   "basin": "PENNAR",
-   "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 6.6,
-   "lastSeasonMm3": 10.5
-  },
-  {
-   "reservoir": "VARAHA RESERVOIR",
-   "outlet": "LMC",
-   "basin": "OTHERS",
-   "district": "Anakapalli",
-   "thisSeasonMm3": 6.3,
-   "lastSeasonMm3": 16.6
-  },
-  {
-   "reservoir": "PAIDIPALEM BALANCING RESERVOIR",
-   "outlet": "MCS",
-   "basin": "PENNAR",
-   "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 6.3,
-   "lastSeasonMm3": 2.4
-  },
-  {
    "reservoir": "CUM BUM TANK",
    "outlet": "Pedda Cumbum Channel",
    "basin": "OTHERS",
    "district": "Markapuram",
-   "thisSeasonMm3": 6.2,
-   "lastSeasonMm3": 0.9
-  },
-  {
-   "reservoir": "SWARNAMUKHI BARRAGE CUM BRIDGE",
-   "outlet": "Head Regulator",
-   "basin": "OTHERS",
-   "district": "Tirupati",
-   "thisSeasonMm3": 6.0,
-   "lastSeasonMm3": 4.1
+   "thisSeasonMm3": 6.4,
+   "lastSeasonMm3": 1.1
   },
   {
    "reservoir": "CUM BUM TANK",
    "outlet": "Nakala Gandi Channel",
    "basin": "OTHERS",
    "district": "Markapuram",
-   "thisSeasonMm3": 6.0,
-   "lastSeasonMm3": 1.1
+   "thisSeasonMm3": 6.2,
+   "lastSeasonMm3": 1.5
   },
   {
    "reservoir": "VAMIKONDA SAGAR RESERVOIR",
    "outlet": "LMC",
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 5.9,
-   "lastSeasonMm3": 6.2
+   "thisSeasonMm3": 6.0,
+   "lastSeasonMm3": 6.4
   },
   {
    "reservoir": "KANDALERU RESERVOIR",
@@ -821,15 +829,39 @@
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
    "thisSeasonMm3": 5.8,
-   "lastSeasonMm3": 22.1
+   "lastSeasonMm3": 22.9
   },
   {
    "reservoir": "Marala Reservoir",
    "outlet": "OT Sluices",
    "basin": "PENNAR",
    "district": "Sri Sathya Sai",
-   "thisSeasonMm3": 5.2,
-   "lastSeasonMm3": 0.3
+   "thisSeasonMm3": 5.4,
+   "lastSeasonMm3": 0.4
+  },
+  {
+   "reservoir": "MID PENNAR RESERVOIR",
+   "outlet": "North Canal",
+   "basin": "PENNAR",
+   "district": "Ananthapuramu",
+   "thisSeasonMm3": 5.3,
+   "lastSeasonMm3": 40.5
+  },
+  {
+   "reservoir": "ARANIAR RESERVOIR",
+   "outlet": "Right Canal",
+   "basin": "OTHERS",
+   "district": "Tirupati",
+   "thisSeasonMm3": 5.3,
+   "lastSeasonMm3": 5.4
+  },
+  {
+   "reservoir": "PEDDERU RESERVOIR",
+   "outlet": "Rachacattu Channel",
+   "basin": "OTHERS",
+   "district": "Anakapalli",
+   "thisSeasonMm3": 4.9,
+   "lastSeasonMm3": 13.6
   },
   {
    "reservoir": "NELLORE TANK",
@@ -840,20 +872,12 @@
    "lastSeasonMm3": 0.2
   },
   {
-   "reservoir": "ARANIAR RESERVOIR",
-   "outlet": "Right Canal",
-   "basin": "OTHERS",
-   "district": "Tirupati",
-   "thisSeasonMm3": 4.8,
-   "lastSeasonMm3": 5.4
-  },
-  {
    "reservoir": "PEDDERU RESERVOIR",
-   "outlet": "Rachacattu Channel",
+   "outlet": "RMC",
    "basin": "OTHERS",
    "district": "Anakapalli",
-   "thisSeasonMm3": 4.6,
-   "lastSeasonMm3": 13.3
+   "thisSeasonMm3": 4.7,
+   "lastSeasonMm3": 15.8
   },
   {
    "reservoir": "NTR RESERVOIR",
@@ -869,55 +893,63 @@
    "basin": "OTHERS",
    "district": "Anakapalli",
    "thisSeasonMm3": 4.5,
-   "lastSeasonMm3": 21.6
-  },
-  {
-   "reservoir": "PEDDERU RESERVOIR",
-   "outlet": "RMC",
-   "basin": "OTHERS",
-   "district": "Anakapalli",
-   "thisSeasonMm3": 4.4,
-   "lastSeasonMm3": 15.0
-  },
-  {
-   "reservoir": "PATHIKONDA RESERVOIR",
-   "outlet": "LBC",
-   "basin": "KRISHNA",
-   "district": "Kurnool",
-   "thisSeasonMm3": 4.1,
-   "lastSeasonMm3": 0.2
+   "lastSeasonMm3": 22.7
   },
   {
    "reservoir": "KONAM RESERVOIR",
    "outlet": "High Level Canal",
    "basin": "OTHERS",
    "district": "Anakapalli",
-   "thisSeasonMm3": 3.9,
-   "lastSeasonMm3": 9.8
+   "thisSeasonMm3": 4.4,
+   "lastSeasonMm3": 10.3
   },
   {
-   "reservoir": "MID PENNAR RESERVOIR",
-   "outlet": "North Canal",
-   "basin": "PENNAR",
-   "district": "Ananthapuramu",
-   "thisSeasonMm3": 3.6,
-   "lastSeasonMm3": 36.1
+   "reservoir": "PATHIKONDA RESERVOIR",
+   "outlet": "LBC",
+   "basin": "KRISHNA",
+   "district": "Kurnool",
+   "thisSeasonMm3": 4.2,
+   "lastSeasonMm3": 0.2
   },
   {
    "reservoir": "PAMPA RESERVOIR",
    "outlet": "YLMC",
    "basin": "OTHERS",
    "district": "Kakinada",
-   "thisSeasonMm3": 3.3,
+   "thisSeasonMm3": 3.6,
    "lastSeasonMm3": 0.0
+  },
+  {
+   "reservoir": "VELOGODU BALANCING RESERVOIR",
+   "outlet": "1R Sluice",
+   "basin": "PENNAR",
+   "district": "Nandyal",
+   "thisSeasonMm3": 3.4,
+   "lastSeasonMm3": 11.0
   },
   {
    "reservoir": "PAIDIPALEM BALANCING RESERVOIR",
    "outlet": "LS",
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 2.8,
-   "lastSeasonMm3": 5.1
+   "thisSeasonMm3": 3.1,
+   "lastSeasonMm3": 5.4
+  },
+  {
+   "reservoir": "DAMODARAM SAGARAM",
+   "outlet": "RMC",
+   "basin": "OTHERS",
+   "district": "Srikakulam",
+   "thisSeasonMm3": 3.0,
+   "lastSeasonMm3": 3.0
+  },
+  {
+   "reservoir": "KALINGADAL PROJECT",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Srikakulam",
+   "thisSeasonMm3": 3.0,
+   "lastSeasonMm3": 15.6
   },
   {
    "reservoir": "KANIGIRI RESERVOIR",
@@ -925,47 +957,31 @@
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
    "thisSeasonMm3": 2.7,
-   "lastSeasonMm3": 1.4
+   "lastSeasonMm3": 1.5
+  },
+  {
+   "reservoir": "KALINGADAL PROJECT",
+   "outlet": "RMC",
+   "basin": "OTHERS",
+   "district": "Srikakulam",
+   "thisSeasonMm3": 2.4,
+   "lastSeasonMm3": 7.6
   },
   {
    "reservoir": "MADDUVALASA PROJECT",
    "outlet": "LMC",
    "basin": "OTHERS",
    "district": "Vizianagaram",
-   "thisSeasonMm3": 2.3,
+   "thisSeasonMm3": 2.4,
    "lastSeasonMm3": 2.6
   },
   {
-   "reservoir": "VELOGODU BALANCING RESERVOIR",
-   "outlet": "1R Sluice",
-   "basin": "PENNAR",
-   "district": "Nandyal",
-   "thisSeasonMm3": 2.2,
-   "lastSeasonMm3": 11.0
-  },
-  {
-   "reservoir": "GANDIKOTA RESERVOIR",
-   "outlet": "Mylavaram Reservoir",
-   "basin": "PENNAR",
-   "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 2.1,
-   "lastSeasonMm3": 802.4
-  },
-  {
-   "reservoir": "KALINGADAL PROJECT",
-   "outlet": "LMC",
-   "basin": "OTHERS",
-   "district": "Srikakulam",
-   "thisSeasonMm3": 2.1,
-   "lastSeasonMm3": 13.9
-  },
-  {
-   "reservoir": "DAMODARAM SAGARAM",
+   "reservoir": "KOVVADAKALVA RESERVOIR",
    "outlet": "RMC",
-   "basin": "OTHERS",
-   "district": "Srikakulam",
-   "thisSeasonMm3": 2.1,
-   "lastSeasonMm3": 3.0
+   "basin": "GODAVARI",
+   "district": "East Godavari",
+   "thisSeasonMm3": 2.2,
+   "lastSeasonMm3": 3.9
   },
   {
    "reservoir": "VAMIKONDA SAGAR RESERVOIR",
@@ -973,7 +989,15 @@
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
    "thisSeasonMm3": 2.1,
-   "lastSeasonMm3": 3.5
+   "lastSeasonMm3": 3.6
+  },
+  {
+   "reservoir": "VELOGODU BALANCING RESERVOIR",
+   "outlet": "1L Sluice",
+   "basin": "PENNAR",
+   "district": "Nandyal",
+   "thisSeasonMm3": 2.1,
+   "lastSeasonMm3": 5.5
   },
   {
    "reservoir": "GUNDLAKAMMA RESERVOIR",
@@ -984,12 +1008,12 @@
    "lastSeasonMm3": 2.2
   },
   {
-   "reservoir": "KOVVADAKALVA RESERVOIR",
-   "outlet": "RMC",
+   "reservoir": "SUREMPALEM RESERVOIR",
+   "outlet": "Head sluice",
    "basin": "GODAVARI",
-   "district": "East Godavari",
-   "thisSeasonMm3": 1.8,
-   "lastSeasonMm3": 3.6
+   "district": "Polavaram",
+   "thisSeasonMm3": 1.9,
+   "lastSeasonMm3": 21.5
   },
   {
    "reservoir": "BHAIRAVANITHIPPA PROJECT",
@@ -997,31 +1021,23 @@
    "basin": "KRISHNA",
    "district": "Ananthapuramu",
    "thisSeasonMm3": 1.8,
-   "lastSeasonMm3": 0.4
-  },
-  {
-   "reservoir": "KALINGADAL PROJECT",
-   "outlet": "RMC",
-   "basin": "OTHERS",
-   "district": "Srikakulam",
-   "thisSeasonMm3": 1.7,
-   "lastSeasonMm3": 6.2
+   "lastSeasonMm3": 1.2
   },
   {
    "reservoir": "BHAIRAVANITHIPPA PROJECT",
    "outlet": "LMC",
    "basin": "KRISHNA",
    "district": "Ananthapuramu",
-   "thisSeasonMm3": 1.6,
-   "lastSeasonMm3": 5.7
+   "thisSeasonMm3": 1.7,
+   "lastSeasonMm3": 7.5
   },
   {
-   "reservoir": "KRISHNAGIRI RESERVOIR",
-   "outlet": "R F canal",
-   "basin": "KRISHNA",
-   "district": "Kurnool",
-   "thisSeasonMm3": 1.5,
-   "lastSeasonMm3": 3.3
+   "reservoir": "MADDIGEDDA PROJECT",
+   "outlet": "Head Sluice",
+   "basin": "OTHERS",
+   "district": "Polavaram",
+   "thisSeasonMm3": 1.7,
+   "lastSeasonMm3": 4.2
   },
   {
    "reservoir": "KONAM RESERVOIR",
@@ -1032,36 +1048,28 @@
    "lastSeasonMm3": 0.2
   },
   {
+   "reservoir": "KRISHNAGIRI RESERVOIR",
+   "outlet": "R F canal",
+   "basin": "KRISHNA",
+   "district": "Kurnool",
+   "thisSeasonMm3": 1.5,
+   "lastSeasonMm3": 3.4
+  },
+  {
    "reservoir": "KANIGIRI RESERVOIR",
    "outlet": "Yalamanchi Padu Channel",
    "basin": "PENNAR",
    "district": "Sri Potti Sriramulu Nellore",
    "thisSeasonMm3": 1.5,
-   "lastSeasonMm3": 1.4
+   "lastSeasonMm3": 1.5
   },
   {
-   "reservoir": "SUREMPALEM RESERVOIR",
-   "outlet": "Head sluice",
-   "basin": "GODAVARI",
-   "district": "Polavaram",
-   "thisSeasonMm3": 1.5,
-   "lastSeasonMm3": 19.5
-  },
-  {
-   "reservoir": "VELOGODU BALANCING RESERVOIR",
-   "outlet": "1L Sluice",
-   "basin": "PENNAR",
-   "district": "Nandyal",
-   "thisSeasonMm3": 1.5,
-   "lastSeasonMm3": 5.5
-  },
-  {
-   "reservoir": "MADDIGEDDA PROJECT",
-   "outlet": "Head Sluice",
-   "basin": "OTHERS",
-   "district": "Polavaram",
-   "thisSeasonMm3": 1.4,
-   "lastSeasonMm3": 3.8
+   "reservoir": "PATHIKONDA RESERVOIR",
+   "outlet": "RBC",
+   "basin": "KRISHNA",
+   "district": "Kurnool",
+   "thisSeasonMm3": 1.3,
+   "lastSeasonMm3": 37.8
   },
   {
    "reservoir": "PINCHA PROJECT",
@@ -1069,39 +1077,55 @@
    "basin": "PENNAR",
    "district": "Annamayya",
    "thisSeasonMm3": 1.3,
-   "lastSeasonMm3": 6.9
+   "lastSeasonMm3": 7.4
   },
   {
    "reservoir": "SUBBAREDDY SAGAR",
    "outlet": "LMC",
    "basin": "OTHERS",
    "district": "Kakinada",
-   "thisSeasonMm3": 1.1,
-   "lastSeasonMm3": 2.5
-  },
-  {
-   "reservoir": "PATHIKONDA RESERVOIR",
-   "outlet": "RBC",
-   "basin": "KRISHNA",
-   "district": "Kurnool",
-   "thisSeasonMm3": 1.1,
-   "lastSeasonMm3": 34.8
+   "thisSeasonMm3": 1.2,
+   "lastSeasonMm3": 3.2
   },
   {
    "reservoir": "KOVVADAKALVA RESERVOIR",
    "outlet": "LMC",
    "basin": "GODAVARI",
    "district": "East Godavari",
-   "thisSeasonMm3": 1.0,
-   "lastSeasonMm3": 1.6
+   "thisSeasonMm3": 1.1,
+   "lastSeasonMm3": 1.7
   },
   {
    "reservoir": "OWK RESERVOIR",
    "outlet": "Thimmaraju",
    "basin": "PENNAR",
    "district": "Nandyal",
-   "thisSeasonMm3": 0.9,
-   "lastSeasonMm3": 10.8
+   "thisSeasonMm3": 1.1,
+   "lastSeasonMm3": 11.1
+  },
+  {
+   "reservoir": "JALLERU RESERVOIR",
+   "outlet": "Main Canal",
+   "basin": "OTHERS",
+   "district": "Eluru",
+   "thisSeasonMm3": 1.0,
+   "lastSeasonMm3": 1.1
+  },
+  {
+   "reservoir": "JEEDIPALLI RESERVOIR",
+   "outlet": "Peruru branch canal",
+   "basin": "PENNAR",
+   "district": "Ananthapuramu",
+   "thisSeasonMm3": 1.0,
+   "lastSeasonMm3": 1.4
+  },
+  {
+   "reservoir": "CHAGALLU BALANCING RESERVOIR",
+   "outlet": "RMC",
+   "basin": "PENNAR",
+   "district": "Ananthapuramu",
+   "thisSeasonMm3": 0.8,
+   "lastSeasonMm3": 1.2
   },
   {
    "reservoir": "BUGGAVANKA RESERVOIR",
@@ -1109,7 +1133,7 @@
    "basin": "PENNAR",
    "district": "Y.S.R Kadapa",
    "thisSeasonMm3": 0.7,
-   "lastSeasonMm3": 2.3
+   "lastSeasonMm3": 2.5
   },
   {
    "reservoir": "PAMPA RESERVOIR",
@@ -1124,8 +1148,8 @@
    "outlet": "Sluice",
    "basin": "OTHERS",
    "district": "Srikakulam",
-   "thisSeasonMm3": 0.5,
-   "lastSeasonMm3": 1.9
+   "thisSeasonMm3": 0.7,
+   "lastSeasonMm3": 2.0
   },
   {
    "reservoir": "KRISHNAGIRI RESERVOIR",
@@ -1133,15 +1157,7 @@
    "basin": "KRISHNA",
    "district": "Kurnool",
    "thisSeasonMm3": 0.5,
-   "lastSeasonMm3": 1.4
-  },
-  {
-   "reservoir": "SUBSIDIARY RESERVOIR -I",
-   "outlet": "Bund -B",
-   "basin": "PENNAR",
-   "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 0.3,
-   "lastSeasonMm3": 376.5
+   "lastSeasonMm3": 1.5
   },
   {
    "reservoir": "SUBBAREDDY SAGAR",
@@ -1149,7 +1165,15 @@
    "basin": "OTHERS",
    "district": "Kakinada",
    "thisSeasonMm3": 0.3,
-   "lastSeasonMm3": 2.6
+   "lastSeasonMm3": 2.9
+  },
+  {
+   "reservoir": "SUBSIDIARY RESERVOIR -I",
+   "outlet": "Bund -B",
+   "basin": "PENNAR",
+   "district": "Y.S.R Kadapa",
+   "thisSeasonMm3": 0.3,
+   "lastSeasonMm3": 377.0
   },
   {
    "reservoir": "VARADARAJASWAMY GUDI PROJECT",
@@ -1176,126 +1200,6 @@
    "lastSeasonMm3": 12.0
   },
   {
-   "reservoir": "GONELAVAGU RESERVOIR",
-   "outlet": "RMC",
-   "basin": "OTHERS",
-   "district": "Eluru",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 5.9
-  },
-  {
-   "reservoir": "GANDIPALEM RESERVOIR PROJECT",
-   "outlet": "RMC",
-   "basin": "OTHERS",
-   "district": "Sri Potti Sriramulu Nellore",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 2.1
-  },
-  {
-   "reservoir": "CHAGALLU BALANCING RESERVOIR",
-   "outlet": "LMC",
-   "basin": "PENNAR",
-   "district": "Ananthapuramu",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 15.2
-  },
-  {
-   "reservoir": "GONELAVAGU RESERVOIR",
-   "outlet": "LMC",
-   "basin": "OTHERS",
-   "district": "Eluru",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 5.7
-  },
-  {
-   "reservoir": "SUBSIDIARY RESERVOIR -II",
-   "outlet": "SPBVR",
-   "basin": "PENNAR",
-   "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 461.1
-  },
-  {
-   "reservoir": "SUBSIDIARY RESERVOIR -II",
-   "outlet": "Bund -D",
-   "basin": "PENNAR",
-   "district": "Y.S.R Kadapa",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 2.6
-  },
-  {
-   "reservoir": "PENDEKALLU RESERVOIR",
-   "outlet": "Chagallu Link Channel",
-   "basin": "PENNAR",
-   "district": "Ananthapuramu",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 10.8
-  },
-  {
-   "reservoir": "VEERA RAGHAVANI KOTA ANICUT",
-   "outlet": "LMC-1",
-   "basin": "OTHERS",
-   "district": "Prakasam",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 5.0
-  },
-  {
-   "reservoir": "VATTIGEDDA RESERVOIR",
-   "outlet": "LMC",
-   "basin": "OTHERS",
-   "district": "Parvathipuram Manyam",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 19.4
-  },
-  {
-   "reservoir": "VELIGALLU RESERVOIR",
-   "outlet": "RMC",
-   "basin": "PENNAR",
-   "district": "Annamayya",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 20.1
-  },
-  {
-   "reservoir": "GOLLAPALLI RESERVOIR",
-   "outlet": "Madakasira Branch Canal out flow",
-   "basin": "PENNAR",
-   "district": "Sri Sathya Sai",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 25.9
-  },
-  {
-   "reservoir": "NELLORE TANK",
-   "outlet": "Weir Sluice",
-   "basin": "PENNAR",
-   "district": "Sri Potti Sriramulu Nellore",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 7.3
-  },
-  {
-   "reservoir": "GONELAVAGU RESERVOIR",
-   "outlet": "Mankollu Main Canal",
-   "basin": "OTHERS",
-   "district": "Eluru",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 1.6
-  },
-  {
-   "reservoir": "MEHADRIGADD RESERVOIR",
-   "outlet": "Intake well",
-   "basin": "OTHERS",
-   "district": "Visakhapatnam",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 1.8
-  },
-  {
-   "reservoir": "MALLIMADUGU",
-   "outlet": "Surplus to swarnamuki Barrage",
-   "basin": "OTHERS",
-   "district": "Tirupati",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 3.3
-  },
-  {
    "reservoir": "PINCHA PROJECT",
    "outlet": "Left Canal",
    "basin": "PENNAR",
@@ -1304,44 +1208,12 @@
    "lastSeasonMm3": 2.9
   },
   {
-   "reservoir": "MUNIYERU PROJECT",
-   "outlet": "Canal Discharge",
-   "basin": "KRISHNA",
-   "district": "NTR",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 71.1
-  },
-  {
-   "reservoir": "PALERU BITRAGUNTA ANICUT",
-   "outlet": "Low level canal",
-   "basin": "OTHERS",
-   "district": "Srikakulam",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 6.0
-  },
-  {
-   "reservoir": "KANIGIRI RESERVOIR",
-   "outlet": "Maledevi High Level Escape",
-   "basin": "PENNAR",
-   "district": "Sri Potti Sriramulu Nellore",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 2.1
-  },
-  {
-   "reservoir": "CHENNARAYA SWAMI GUDI PROJECT",
+   "reservoir": "YOGI VEMANA (MADDILERU) RESERVOIR",
    "outlet": "RMC",
    "basin": "PENNAR",
    "district": "Sri Sathya Sai",
    "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 14.6
-  },
-  {
-   "reservoir": "CHENNARAYA SWAMI GUDI PROJECT",
-   "outlet": "LMC",
-   "basin": "PENNAR",
-   "district": "Sri Sathya Sai",
-   "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 14.6
+   "lastSeasonMm3": 1.5
   },
   {
    "reservoir": "PENDEKALLU RESERVOIR",
@@ -1352,12 +1224,12 @@
    "lastSeasonMm3": 1.3
   },
   {
-   "reservoir": "TAMMILERU RESERVOIR",
+   "reservoir": "CHAGALLU BALANCING RESERVOIR",
    "outlet": "LMC",
-   "basin": "OTHERS",
-   "district": "Eluru",
+   "basin": "PENNAR",
+   "district": "Ananthapuramu",
    "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 5.7
+   "lastSeasonMm3": 17.8
   },
   {
    "reservoir": "KRISHNAPURAM PROJECT",
@@ -1368,6 +1240,30 @@
    "lastSeasonMm3": 1.8
   },
   {
+   "reservoir": "TAMMILERU RESERVOIR",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Eluru",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 6.0
+  },
+  {
+   "reservoir": "SUBSIDIARY RESERVOIR -II",
+   "outlet": "SPBVR",
+   "basin": "PENNAR",
+   "district": "Y.S.R Kadapa",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 461.1
+  },
+  {
+   "reservoir": "PENDEKALLU RESERVOIR",
+   "outlet": "Chagallu Link Channel",
+   "basin": "PENNAR",
+   "district": "Ananthapuramu",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 12.3
+  },
+  {
    "reservoir": "GANDIPALEM RESERVOIR PROJECT",
    "outlet": "LMC",
    "basin": "OTHERS",
@@ -1376,12 +1272,36 @@
    "lastSeasonMm3": 2.1
   },
   {
-   "reservoir": "JEEDIPALLI RESERVOIR",
-   "outlet": "Peruru branch canal",
-   "basin": "PENNAR",
-   "district": "Ananthapuramu",
+   "reservoir": "VEERA RAGHAVANI KOTA ANICUT",
+   "outlet": "LMC-1",
+   "basin": "OTHERS",
+   "district": "Prakasam",
    "thisSeasonMm3": 0.0,
-   "lastSeasonMm3": 1.4
+   "lastSeasonMm3": 6.3
+  },
+  {
+   "reservoir": "KANIGIRI RESERVOIR",
+   "outlet": "Maledevi High Level Escape",
+   "basin": "PENNAR",
+   "district": "Sri Potti Sriramulu Nellore",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 2.1
+  },
+  {
+   "reservoir": "GOLLAPALLI RESERVOIR",
+   "outlet": "Madakasira Branch Canal out flow",
+   "basin": "PENNAR",
+   "district": "Sri Sathya Sai",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 29.8
+  },
+  {
+   "reservoir": "GONELAVAGU RESERVOIR",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Eluru",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 6.0
   },
   {
    "reservoir": "ZURRERU RESERVOIR",
@@ -1390,6 +1310,134 @@
    "district": "Nandyal",
    "thisSeasonMm3": 0.0,
    "lastSeasonMm3": 1.5
+  },
+  {
+   "reservoir": "MALLIMADUGU",
+   "outlet": "Sluices -3",
+   "basin": "OTHERS",
+   "district": "Tirupati",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 1.4
+  },
+  {
+   "reservoir": "GONELAVAGU RESERVOIR",
+   "outlet": "RMC",
+   "basin": "OTHERS",
+   "district": "Eluru",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 6.1
+  },
+  {
+   "reservoir": "MALLIMADUGU",
+   "outlet": "Surplus to swarnamuki Barrage",
+   "basin": "OTHERS",
+   "district": "Tirupati",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 3.3
+  },
+  {
+   "reservoir": "KALANGI RESERVOIR",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Tirupati",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 1.1
+  },
+  {
+   "reservoir": "CHENNARAYA SWAMI GUDI PROJECT",
+   "outlet": "LMC",
+   "basin": "PENNAR",
+   "district": "Sri Sathya Sai",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 14.6
+  },
+  {
+   "reservoir": "VATTIGEDDA RESERVOIR",
+   "outlet": "LMC",
+   "basin": "OTHERS",
+   "district": "Parvathipuram Manyam",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 21.8
+  },
+  {
+   "reservoir": "GANDIPALEM RESERVOIR PROJECT",
+   "outlet": "RMC",
+   "basin": "OTHERS",
+   "district": "Sri Potti Sriramulu Nellore",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 2.1
+  },
+  {
+   "reservoir": "VELIGALLU RESERVOIR",
+   "outlet": "RMC",
+   "basin": "PENNAR",
+   "district": "Annamayya",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 22.0
+  },
+  {
+   "reservoir": "GONELAVAGU RESERVOIR",
+   "outlet": "Mankollu Main Canal",
+   "basin": "OTHERS",
+   "district": "Eluru",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 1.7
+  },
+  {
+   "reservoir": "MUNIYERU PROJECT",
+   "outlet": "Canal Discharge",
+   "basin": "KRISHNA",
+   "district": "NTR",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 73.9
+  },
+  {
+   "reservoir": "SUBSIDIARY RESERVOIR -II",
+   "outlet": "Bund -D",
+   "basin": "PENNAR",
+   "district": "Y.S.R Kadapa",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 2.6
+  },
+  {
+   "reservoir": "CHENNARAYA SWAMI GUDI PROJECT",
+   "outlet": "RMC",
+   "basin": "PENNAR",
+   "district": "Sri Sathya Sai",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 14.6
+  },
+  {
+   "reservoir": "PALERU BITRAGUNTA ANICUT",
+   "outlet": "Low level canal",
+   "basin": "OTHERS",
+   "district": "Srikakulam",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 7.0
+  },
+  {
+   "reservoir": "NELLORE TANK",
+   "outlet": "Weir Sluice",
+   "basin": "PENNAR",
+   "district": "Sri Potti Sriramulu Nellore",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 9.8
+  },
+  {
+   "reservoir": "RALLAPADU RESERVOIR",
+   "outlet": "RMC",
+   "basin": "OTHERS",
+   "district": "Prakasam",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 1.4
+  },
+  {
+   "reservoir": "MEHADRIGADD RESERVOIR",
+   "outlet": "Intake well",
+   "basin": "OTHERS",
+   "district": "Visakhapatnam",
+   "thisSeasonMm3": 0.0,
+   "lastSeasonMm3": 1.8
   }
  ]
 }

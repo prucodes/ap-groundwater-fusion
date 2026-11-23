@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-11-16T22:52:50+00:00",
+  "generatedAt": "2026-11-23T11:13:33+00:00",
   "modelVersion": "phase0-nowcast-3.0.0",
   "temporalNowcast": {
     "task": "rolling_temporal_holdout_nowcast",
@@ -15,9 +15,9 @@
     },
     "sampleCount": 23113,
     "model": {
-      "maeM": 1.0174,
-      "rmseM": 2.2142,
-      "r2": 0.9279
+      "maeM": 1.0147,
+      "rmseM": 2.2119,
+      "r2": 0.928
     },
     "baseline": {
       "name": "same_month_previous_year",
@@ -26,37 +26,37 @@
     "lastReadingBaseline": {
       "name": "carry_last_reading_forward",
       "maeM": 1.1422,
-      "skillPct": 10.92
+      "skillPct": 11.16
     },
     "depthBands": [
       {
         "band": "0-5m",
         "sampleCount": 9170,
-        "maeM": 0.5813,
+        "maeM": 0.5779,
         "lastReadingMaeM": 0.6699
       },
       {
         "band": "5-10m",
         "sampleCount": 7476,
-        "maeM": 0.8143,
+        "maeM": 0.8123,
         "lastReadingMaeM": 0.9478
       },
       {
         "band": "10-20m",
         "sampleCount": 4644,
-        "maeM": 1.4052,
+        "maeM": 1.4043,
         "lastReadingMaeM": 1.5742
       },
       {
         "band": "20-30m",
         "sampleCount": 1073,
-        "maeM": 2.5249,
+        "maeM": 2.5206,
         "lastReadingMaeM": 2.7103
       },
       {
         "band": "30m+",
         "sampleCount": 750,
-        "maeM": 3.8155,
+        "maeM": 3.8065,
         "lastReadingMaeM": 3.935
       }
     ],
@@ -93,25 +93,25 @@
     "terrainCohorts": {
       "alluvial": {
         "sampleCount": 6763,
-        "maeM": 0.8362,
-        "empiricalCoveragePct": 80.07
+        "maeM": 0.8347,
+        "empiricalCoveragePct": 80.23
       },
       "coastal": {
         "sampleCount": 7930,
-        "maeM": 0.7922,
-        "empiricalCoveragePct": 82.95
+        "maeM": 0.786,
+        "empiricalCoveragePct": 83.13
       },
       "hard_rock": {
         "sampleCount": 8420,
-        "maeM": 1.375,
-        "empiricalCoveragePct": 79.25
+        "maeM": 1.3747,
+        "empiricalCoveragePct": 79.26
       }
     },
     "intervalEvaluation": {
       "intervalType": "conformalised_quantile_p10_p90",
       "nominalCoveragePct": 80,
-      "empiricalCoveragePct": 80.76,
-      "meanWidthM": 3.0622,
+      "empiricalCoveragePct": 80.87,
+      "meanWidthM": 3.0691,
       "sampleCount": 23113
     }
   },
@@ -124,20 +124,20 @@
       "end": "2026-10"
     },
     "sampleCount": 16311,
-    "maeM": 0.8964,
+    "maeM": 0.8906,
     "lastReadingMaeM": 1.0209,
-    "skillVsLastReadingPct": 12.2
+    "skillVsLastReadingPct": 12.76
   },
   "intervalEvaluation": {
     "intervalType": "conformalised_quantile_p10_p90",
     "nominalCoveragePct": 80,
-    "empiricalCoveragePct": 80.76,
-    "meanWidthM": 3.0622,
+    "empiricalCoveragePct": 80.87,
+    "meanWidthM": 3.0691,
     "sampleCount": 23113
   },
   "spatialEstimation": {
     "task": "whole_mandal_spatial_estimation",
-    "generatedAt": "2026-11-16T22:57:06+00:00",
+    "generatedAt": "2026-11-23T11:16:31+00:00",
     "validation": "5-fold GroupKFold with whole mandals held out",
     "rowCount": 82971,
     "mandalCount": 651,
@@ -199,7 +199,7 @@
   },
   "directForecast": {
     "task": "direct_multi_horizon_forecast",
-    "generatedAt": "2026-11-16T22:58:24+00:00",
+    "generatedAt": "2026-11-23T11:17:25+00:00",
     "featureTiming": "features available at forecast origin; no future rainfall",
     "baselineDefinitions": {
       "noChange": "the level at the forecast origin",
@@ -547,7 +547,7 @@
   },
   "crossNetworkComparison": {
     "task": "cross_network_comparison",
-    "generatedAt": "2026-11-16T22:58:25+00:00",
+    "generatedAt": "2026-11-23T11:17:26+00:00",
     "comparison": "CGWB well versus nearest APWRIMS mandal aggregate in the same month",
     "overlapPeriod": {
       "start": "2014-06",

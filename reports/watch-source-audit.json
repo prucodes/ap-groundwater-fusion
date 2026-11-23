@@ -1,8 +1,8 @@
 {
-  "checkedAt": "2026-11-16T22:59:15+00:00",
-  "onlineCheckedAt": null,
+  "checkedAt": "2026-11-23T11:42:04+00:00",
+  "onlineCheckedAt": "2026-11-23T11:42:04+00:00",
   "snapshotPeriod": "2026-10",
-  "snapshotHash": "e21d0e7513ec2ea5168ce4c3c101239ec6a5a14257f947a8e5c33c7e80a32140",
+  "snapshotHash": "d57c92e6e5a1cef3a2a8e0b8492a507b77dd7a659f8d59d361e0109098fd9f57",
   "historyHash": "37b5666aea23f65ff7564432ac3cae6a42a9d1d90a41ab5ef642813696e7b649",
   "localReconciliation": {
     "checkedSeries": 614,
@@ -12,7 +12,65 @@
     "checkedSeries": 614,
     "mismatches": []
   },
-  "online": null,
+  "online": {
+    "enso": {
+      "status": "checked",
+      "source": "https://psl.noaa.gov/data/correlation/oni.data",
+      "sha256": "27af499bc406f8e5f5e9655013d2299a97d6a1cc92f27db30990b04dbc872f60",
+      "latest": {
+        "date": "2026-09",
+        "season": "ASO",
+        "oni_c": 2.46
+      },
+      "snapshotMatches": true
+    },
+    "rainfall": {
+      "status": "availability_checked",
+      "source": "https://data.chc.ucsb.edu/products/CHIRPS/v3.0/monthly/global/tifs/",
+      "latest": "2026.10",
+      "snapshotMonthAvailable": true,
+      "scope": "Publisher file listing checked; historical raster pixel values not re-downloaded in this audit."
+    },
+    "groundwater": {
+      "source": "https://apwrims.ap.gov.in/api/v2/gwlevels/chart",
+      "scope": "Three public portal probes only; not all-mandal verification or authorization.",
+      "probes": [
+        {
+          "mandal": "Mulakalacheruvu",
+          "district": "Annamayya",
+          "sourceSeriesId": "42e698a9-2d5a-492a-bcc8-ef6166e30785",
+          "status": "checked",
+          "latestPeriod": "2026-10",
+          "portalDepthM": 46.9,
+          "snapshotDepthM": 46.9,
+          "snapshotMatches": true,
+          "responseSha256": "248fe7c2e81d738723d33373a62c904ae7df8e082ed470e78d8f3e71609d59a9"
+        },
+        {
+          "mandal": "Rentachintala",
+          "district": "Palnadu",
+          "sourceSeriesId": "0766db38-2384-4607-954c-1dfbc6c8637b",
+          "status": "checked",
+          "latestPeriod": "2026-10",
+          "portalDepthM": 8.5,
+          "snapshotDepthM": 8.5,
+          "snapshotMatches": true,
+          "responseSha256": "e4eca0690e89b9e9ab22df337daba927524709b3162619d975d39334aaafdd80"
+        },
+        {
+          "mandal": "Vuyyuru",
+          "district": "Krishna",
+          "sourceSeriesId": "25d27c15-7a29-4919-946b-42a99cdc3e7c",
+          "status": "checked",
+          "latestPeriod": "2026-10",
+          "portalDepthM": 17.177,
+          "snapshotDepthM": 17.18,
+          "snapshotMatches": true,
+          "responseSha256": "27bf85ee695090536a2b58b490415250369477bf33b5f6be6105e0dd2464b39e"
+        }
+      ]
+    }
+  },
   "baselineVersion": "all-readings-2026-11-16",
   "baselineCaveat": "Since 16 Nov 2026 the seasonal baseline reads every genuine source reading (months the State carried forward excluded), not only the rows the forecast model can use; the earlier version dropped readings that lacked a reading a month or a year before. The unfiltered comparison recomputes it from the raw source file alone. It remains this project's baseline, not an independently approved hydrological one.",
   "limitations": [

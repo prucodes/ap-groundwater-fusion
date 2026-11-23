@@ -1,6 +1,6 @@
 {
   "contractVersion": "1.0.0",
-  "generatedAt": "2026-11-16T22:59:07Z",
+  "generatedAt": "2026-11-23T11:18:13Z",
   "method": "Screening proxy: mandal mean terrain elevation minus mandal mean measured depth; not a surveyed well head or a verified level relative to sea level",
   "observationPeriod": "2026-10",
   "elevationSource": "Terrarium terrain tiles (AWS open data), zonal mean over each mandal, about 150 m a pixel",

@@ -1,27 +1,27 @@
 {
-  "checkedAt": "2026-11-16T09:54:31+00:00",
+  "checkedAt": "2026-11-23T11:30:08+00:00",
   "status": "partial",
   "sections": {
     "weather": {
       "status": "refreshed",
-      "seconds": 85.6
+      "seconds": 87.4
     },
     "vegetation": {
       "status": "refreshed",
-      "seconds": 1.8
+      "seconds": 5.3
     },
     "assessment": {
       "status": "retained",
       "error": "<urlopen error [Errno -2] Name or service not known>"
     }
   },
-  "weatherIssued": "2026-11-16",
+  "weatherIssued": "2026-11-23",
   "vegetationWeeks": [
-    "2026-10-15",
     "2026-10-22",
     "2026-10-29",
-    "2026-11-05"
+    "2026-11-05",
+    "2026-11-12"
   ],
   "assessmentYear": "2025-2026",
-  "outputSha256": "13513aa52883638621c6c6ddcb4b7797063297b6e8a27aab32475312ee491843"
+  "outputSha256": "ab9e6e666b0b212ae1d62d924fa2e33e2641ee675d9bb514d2bc880c94d1c0ab"
 }
