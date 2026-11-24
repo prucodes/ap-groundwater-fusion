@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-23T13:31:51+00:00",
+ "generatedAt": "2026-11-24T14:08:34+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -273,7 +273,7 @@
  },
  "since": {
   "from": "2026-10-26",
-  "to": "2026-11-23",
+  "to": "2026-11-24",
   "days": [
    {
     "date": "2026-10-26",
@@ -474,33 +474,41 @@
     "soilMedian30": 86.6,
     "reservoirTmc": 614.6,
     "reservoirPct": 46.4
+   },
+   {
+    "date": "2026-11-24",
+    "rainTo": "2026-11-22",
+    "rainSinceTmc": 712.5,
+    "soilMedian30": 86.6,
+    "reservoirTmc": 612.4,
+    "reservoirPct": 46.3
    }
   ],
-  "gainTmc": 114.9,
+  "gainTmc": 112.7,
   "basins": [
    {
     "basin": "OTHERS",
     "beforePct": 18.5,
-    "nowPct": 80.5,
-    "gainTmc": 156.4
+    "nowPct": 80.4,
+    "gainTmc": 156.2
    },
    {
     "basin": "GODAVARI",
     "beforePct": 77.1,
-    "nowPct": 74.7,
+    "nowPct": 74.8,
     "gainTmc": -0.6
    },
    {
     "basin": "PENNAR",
     "beforePct": 37.0,
-    "nowPct": 34.6,
-    "gainTmc": -7.2
+    "nowPct": 34.5,
+    "gainTmc": -7.5
    },
    {
     "basin": "KRISHNA",
     "beforePct": 43.1,
-    "nowPct": 38.6,
-    "gainTmc": -33.6
+    "nowPct": 38.4,
+    "gainTmc": -35.4
    }
   ],
   "reservoirs": [
@@ -543,10 +551,10 @@
     "district": "Vizianagaram",
     "capacityTmc": 3.325,
     "beforeTmc": 1.52,
-    "nowTmc": 3.19,
-    "gainTmc": 1.67,
+    "nowTmc": 3.2,
+    "gainTmc": 1.68,
     "beforePct": 45.7,
-    "nowPct": 95.9
+    "nowPct": 96.2
    },
    {
     "name": "HIRAMANDALAM RESERVOIR",
@@ -560,26 +568,26 @@
     "nowPct": 71.5
    },
    {
-    "name": "TANDAVA RESERVOIR",
-    "basin": "OTHERS",
-    "district": "Alluri Sitharama Raju",
-    "capacityTmc": 4.96,
-    "beforeTmc": 2.63,
-    "nowTmc": 3.93,
-    "gainTmc": 1.3,
-    "beforePct": 53.0,
-    "nowPct": 79.2
-   },
-   {
     "name": "MYLAVARAM(PENNAR) RESERVOIR",
     "basin": "PENNAR",
     "district": "Y.S.R Kadapa",
     "capacityTmc": 6.5,
     "beforeTmc": 1.15,
-    "nowTmc": 2.35,
-    "gainTmc": 1.2,
+    "nowTmc": 2.69,
+    "gainTmc": 1.54,
     "beforePct": 17.7,
-    "nowPct": 36.2
+    "nowPct": 41.4
+   },
+   {
+    "name": "TANDAVA RESERVOIR",
+    "basin": "OTHERS",
+    "district": "Alluri Sitharama Raju",
+    "capacityTmc": 4.96,
+    "beforeTmc": 2.63,
+    "nowTmc": 3.92,
+    "gainTmc": 1.29,
+    "beforePct": 53.0,
+    "nowPct": 79.0
    },
    {
     "name": "GONELAVAGU RESERVOIR",
@@ -10945,7 +10953,7 @@
    ]
   ]
  },
- "updatedAt": "2026-11-23",
+ "updatedAt": "2026-11-24",
  "map": [
   [
    0,
