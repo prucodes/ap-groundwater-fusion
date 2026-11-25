@@ -8,7 +8,7 @@ import { expect, test } from "@playwright/test";
    and the laptop sizes are not touched by any of this. */
 
 const PAGES = ["/", "/changes/", "/weekly-film/", "/map/", "/monsoon/", "/cyclones/", "/drought/", "/summer/", "/rabi/",
-  "/agriculture/", "/districts/", "/constituencies/", "/facts/", "/field-report/", "/digest/", "/nasa/", "/climate/",
+  "/agriculture/", "/districts/", "/constituencies/", "/facts/", "/field-report/", "/field-check/", "/digest/", "/nasa/", "/climate/",
   "/scenario/", "/irrigation/", "/estimates/", "/readiness/", "/compare/", "/methodology/", "/settings/", "/crystal/",
   "/living-water-table/", "/mandals/ap-temp-mandal-kurnool-alur-512/",
   // The 3D view runs in its own frame on /crystal/, so its HUD is checked on its own page.

@@ -1,0 +1,24 @@
+/* The field check's one A4 sheet: protocol, predictions and the ten mandals. Shares the
+   summer brief's sheet styles (../../summer/brief/SummerBrief.module.css). */
+.cols { display: grid; grid-template-columns: 1.15fr 1fr; gap: 6mm; }
+.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; display: grid; gap: 1.6mm; }
+.steps li { counter-increment: s; position: relative; padding-left: 7mm; font-size: 8pt; line-height: 1.4; color: #24364d; }
+.steps li::before { content: counter(s); position: absolute; left: 0; top: .2mm; width: 4.6mm; height: 4.6mm; border-radius: 50%; display: grid; place-items: center;
+  font: 600 7pt var(--font-mono); color: #1f8a8a; background: rgba(31,138,138,.12); }
+.steps b { color: #0d2138; }
+.claims { list-style: none; margin: 0; padding: 0; display: grid; gap: 2mm; }
+.claims li { background: #fff; border: 1px solid #e4e9f0; border-radius: 7px; padding: 2.2mm 3mm; }
+.claims span { display: block; font-size: 7pt; text-transform: uppercase; letter-spacing: .06em; color: #667085; font-weight: 600; }
+.claims b { display: block; font-family: var(--font-display); font-size: 12pt; color: #0d2138; margin-top: .6mm; }
+.claims em { display: block; font-style: normal; font-size: 7.4pt; color: #33455c; margin-top: .6mm; line-height: 1.35; }
+.table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 7.5pt; background: #fff; border: 1px solid #e4e9f0; border-radius: 8px; overflow: hidden; margin-top: 1mm; }
+.table th { text-align: left; font-size: 6.8pt; text-transform: uppercase; letter-spacing: .05em; color: #667085; background: #f1f4f8; padding: 1.4mm 2mm; border-bottom: 1px solid #e4e9f0; }
+.table td { padding: 1.1mm 2mm; border-bottom: 1px solid #eef2f6; vertical-align: top; color: #24364d; }
+.table tr:last-child td { border-bottom: 0; }
+.table td b { color: #0d2138; }
+.table td { white-space: nowrap; }
+.table td:last-child { white-space: normal; }
+.group td { background: #f6f8fb; font-size: 7pt; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: #1f6f8a; padding-top: 1.4mm; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.small { font-size: 7.4pt; color: #4a5b70; line-height: 1.45; margin-top: 2.4mm !important; }
+.small b { color: #0d2138; }

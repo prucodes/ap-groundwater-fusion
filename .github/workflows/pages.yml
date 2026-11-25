@@ -72,6 +72,14 @@ jobs:
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
         run: node scripts/print-digest.mjs --directory out --base "$PAGES_BASE_PATH" --route summer/brief --file ap-summer-water-brief.pdf
+      - name: Print the field check protocol to PDF
+        # /field-check/sheet/ printed to out/field-check/sheet/ap-field-check-protocol.pdf,
+        # the one page for the Groundwater Department. Never blocks the site.
+        working-directory: app
+        continue-on-error: true
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: node scripts/print-digest.mjs --directory out --base "$PAGES_BASE_PATH" --route field-check/sheet --file ap-field-check-protocol.pdf
       - name: Print the project brief to PDF
         # /brief/ printed to out/brief/ap-water-intelligence-brief.pdf with this
         # week's maps, 3D renders and site screenshots, linked from Methodology.
