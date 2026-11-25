@@ -172,7 +172,7 @@ export function CycloneAkvan() {
       </div>
 
       <ul className={styles.tiles}>
-        <li><span>Rain so far</span><b>{counting ? `${Math.round(a.state!.rainTmc)}` : "–"}<small> TMC</small></b><em>{counting ? `normal for the days ${Math.round(a.state!.normalTmc)} TMC · ${a.state!.heavyMandals} mandals got 100 mm or more` : `counted from ${day(a.rainWindow.from)} once the gauges post the storm's days`}</em></li>
+        <li><span>{counting && !a.rainWindow.open ? "Rain, counted" : "Rain so far"}</span><b>{counting ? `${Math.round(a.state!.rainTmc)}` : "–"}<small> TMC</small></b><em>{counting ? `normal for the days ${Math.round(a.state!.normalTmc)} TMC · ${a.state!.heavyMandals} mandals got 100 mm or more` : `counted from ${day(a.rainWindow.from)} once the gauges post the storm's days`}</em></li>
         <li data-key=""><span>Missed mandals reached</span><b>{counting ? a.missedBefore.reached : "–"}<small> of {a.missedBefore.mandals}</small></b><em>deep water tables the first two missed that got {a.missedBefore.reachedMm} mm or more from this one</em></li>
         <li><span>Sensors risen since {day(s.baseline)}</span><b>{s.risen.toLocaleString("en-IN")}<small> of {s.compared.toLocaleString("en-IN")}</small></b><em>{s.risenInMissed} of the {s.inMissed} in the missed mandals · latest {at(s.reading)} IST</em></li>
       </ul>

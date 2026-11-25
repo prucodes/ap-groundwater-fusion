@@ -29,7 +29,7 @@ export default function OverviewPage() {
     tanksBelowPct, tanksEmptier: tankFill.emptier, tanksScored: tankFill.scoredMandals,
     drinkingGroundwaterPct: Math.round(100 * drinking.state.groundwaterShare),
     crossForecastPct: Math.round(100 * usual.forecast), crossMeasuredPct: Math.round(100 * usual.measured),
-    ledgerTracked: ledger.forecastsTracked,
+    ledgerTracked: ledger.forecastsTracked, ledgerScored: ledger.scored?.forecasts ?? 0,
   };
   const tg = arnab.together;
   const cyclones = tg ? { from: tg.rainWindow.from, to: tg.rainWindow.to, rainTmc: tg.state.rainTmc, deepStillDry: tg.state.deepStillDry, deepMandals: tg.state.deepMandals, stillDryMm: tg.stillDryMm } : null;

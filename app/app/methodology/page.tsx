@@ -4,7 +4,7 @@ import { MethodFilmPlayer } from "../../components/film/MethodFilm";
 import { methodFilm, methodFilmSeconds } from "../../lib/methodFilm";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
-import { ForecastLedger } from "../../components/ForecastLedger";
+import { ForecastLedger, ledgerFoldNote } from "../../components/ForecastLedger";
 import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconLeaf, IconSatellite } from "../../components/icons";
 import { basePath, mapGeometry, modelCard } from "../../lib/data";
 import { stateSummary } from "../../lib/stateSummary";
@@ -285,7 +285,7 @@ export default function MethodologyPage() {
       </section></details>
 
       <details className="foldMore"><summary><span>Independent well-network validation</span><span>How forecasts compare with CGWB observations</span></summary><CrossNetworkCheck /></details>
-      <details className="foldMore"><summary><span>Prospective forecast record</span><span>Frozen calls and measured outcomes; still too few to judge</span></summary><ForecastLedger /></details>
+      <details className="foldMore"><summary><span>Prospective forecast record</span><span>{ledgerFoldNote()}</span></summary><ForecastLedger /></details>
 
       <details className="foldMore" id="method-topic-4"><summary><span>Agriculture: agreement between sources</span><span>Tests, missing values and dependent signals</span></summary><section className="card">
         <div className="cardHead">

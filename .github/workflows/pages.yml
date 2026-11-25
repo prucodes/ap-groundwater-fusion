@@ -64,6 +64,14 @@ jobs:
         run: |
           npx playwright install --with-deps chromium
           node scripts/print-digest.mjs --directory out --base "$PAGES_BASE_PATH"
+      - name: Print the summer brief to PDF
+        # /summer/brief/ printed to out/summer/brief/ap-summer-water-brief.pdf, one A4
+        # sheet for officials planning summer drinking water. Never blocks the site.
+        working-directory: app
+        continue-on-error: true
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: node scripts/print-digest.mjs --directory out --base "$PAGES_BASE_PATH" --route summer/brief --file ap-summer-water-brief.pdf
       - name: Print the project brief to PDF
         # /brief/ printed to out/brief/ap-water-intelligence-brief.pdf with this
         # week's maps, 3D renders and site screenshots, linked from Methodology.

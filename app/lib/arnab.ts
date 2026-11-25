@@ -29,7 +29,7 @@ export type Together = {
   map: Arnab["map"];
 };
 export type Arnab = {
-  landfall: string; updatedAt: string | null; rainWindow: { from: string; to: string; days: number }; groundwaterLatest: string;
+  landfall: string; updatedAt: string | null; generatedAt: string; rainWindow: { from: string; to: string; days: number }; groundwaterLatest: string;
   state: {
     rainTmc: number; normalTmc: number; seasonDeviationBefore: number; seasonDeviationAfter: number;
     soilMedianBefore: number; soilMedianAfter: number; soilDriestBefore: number; soilDriestAfter: number;
@@ -51,6 +51,11 @@ export type Arnab = {
 };
 
 export const arnab = cyclone as unknown as Arnab;
+
+/** The storms' daily record ends on this day (build_cyclone_arnab.py SEASON_CLOSES; arnab_daily.yml). */
+export const SEASON_CLOSES = "2026-11-30";
+/** Closed once the log has reached that day, or a later weekly rebuild has run (if that day's own run failed). */
+export const seasonClosed = (d: Arnab = arnab) => (d.updatedAt ?? "") >= SEASON_CLOSES || d.generatedAt.slice(0, 10) > SEASON_CLOSES;
 
 export const arnabDay = (iso: string) => new Date(`${iso.slice(0, 10)}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 export const arnabMonth = (ym: string) => new Date(`${ym}-01T00:00:00Z`).toLocaleDateString("en-GB", { month: "long", timeZone: "UTC" });

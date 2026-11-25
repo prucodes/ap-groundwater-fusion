@@ -117,6 +117,7 @@
 .pHero h2 { margin: 10px 0 8px; font: 500 24px/1.35 var(--font-display); color: #fff; text-wrap: balance; }
 .pHero h2 b { font-weight: 650; color: #ffb39f; }
 .pHero p { margin: 0; max-width: 760px; font-size: 13px; line-height: 1.55; color: #9fb6cc; }
+.pHero p a { color: #7fe4ff; font-weight: 600; text-underline-offset: 3px; white-space: nowrap; }
 
 .pBands { display: grid; gap: 10px; }
 .pBar { display: flex; gap: 3px; height: 10px; }

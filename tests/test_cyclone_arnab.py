@@ -93,3 +93,19 @@ def test_together_is_each_mandals_two_storms_added_on_the_depth_before_either():
         assert mm >= first.get(i, 0) - 1, "an outline's rain from both storms is at least Arnab's"
     assert both["drought"]["flagged"] == DATA["drought"]["flagged"]
     assert both["drought"]["flaggedHeavy"] >= DATA["drought"]["flaggedHeavy"]
+
+
+def test_the_daily_log_closes_with_the_season(tmp_path, monkeypatch):
+    import sys
+    sys.path.insert(0, os.path.join(ROOT, "phase3_levels"))
+    import build_cyclone_arnab as b
+    log = tmp_path / "log.json"
+    monkeypatch.setattr(b, "LOG", str(log))
+    context = json.load(open(os.path.join(ROOT, "app", "data", "water_context.json")))
+    paths = []
+    for day in ("2026-11-29", b.SEASON_CLOSES, "2026-12-07"):
+        path = tmp_path / f"{day}.json"
+        path.write_text(json.dumps({**context, "generatedAt": f"{day}T06:00:00+00:00"}))
+        paths.append(str(path))
+    days = [d["date"] for d in b.update_log(paths)["days"]]
+    assert days == ["2026-11-29", b.SEASON_CLOSES], "a weekly run after the season adds no day to the storms' log"

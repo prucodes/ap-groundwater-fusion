@@ -65,6 +65,10 @@ MURASU_LANDFALL = "2026-11-03"
 # bands in. Gauges post two days late, so the count closes on the 8 November run.
 MURASU_CLOSES = "2026-11-06"
 AFTER_MONTHS = ["2026-10", "2026-11"]
+# The daily record ends here: arnab_daily.yml stops its cyclone steps after this day.
+# The weekly refresh still rebuilds the page (November's readings answer "did the
+# water table follow?") but adds no more days to the storms' log.
+SEASON_CLOSES = "2026-11-30"
 
 RAIN_BASE_TMC = None
 # The drought manual's outcome: moderate or worse counts as flagged. "normal|moderate"
@@ -201,13 +205,16 @@ def log_entry(context):
 
 
 def update_log(paths):
-    """Add each water context read to the log, one entry per day; a later read of the same day replaces it."""
+    """Add each water context read to the log, one entry per day; a later read of the same day replaces it.
+    Nothing after SEASON_CLOSES: the record of the storms is closed then."""
     log = json.load(open(LOG)) if os.path.exists(LOG) else {"meta": {}, "days": []}
     days = {d["date"]: d for d in log["days"]}
     for path in paths:
         if not os.path.exists(path):
             continue
         entry = log_entry(json.load(open(path)))
+        if entry["date"] > SEASON_CLOSES:
+            continue
         log["meta"].update(entry.pop("meta"))
         days[entry["date"]] = entry
     log["days"] = [days[k] for k in sorted(days)]
