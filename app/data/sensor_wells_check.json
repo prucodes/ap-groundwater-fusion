@@ -1,12 +1,12 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-25T17:39:38+00:00",
+ "generatedAt": "2026-11-25T22:56:56+00:00",
  "question": "Can the State's daily sensors stand in for its monthly hand-read wells?",
  "rule": "Each estimate made without the month's own hand reading, scored against it. The sensors stand in once an estimate beats carrying last month's reading forward by 5% on mean error in 2 same-month tests. Early looks read a later month's sensors and never count.",
  "sensorDays": {
   "first": "2026-11-11",
-  "last": "2026-11-24",
-  "count": 13
+  "last": "2026-11-25",
+  "count": 14
  },
  "lastHandMonth": "2026-10",
  "nextTest": "2026-11",
@@ -14,15 +14,15 @@
   {
    "month": "2026-10",
    "sameMonth": false,
-   "sensorDays": 13,
+   "sensorDays": 14,
    "sensorYear": {
     "mandals": 616,
     "maeM": 2.14,
-    "medianErrorM": 1.14,
-    "biasM": -1.17,
-    "withinOneMetrePct": 46.9,
+    "medianErrorM": 1.15,
+    "biasM": -1.15,
+    "withinOneMetrePct": 47.2,
     "carryMaeM": 1.16,
-    "gainPct": -84.7
+    "gainPct": -84.4
    }
   }
  ],
