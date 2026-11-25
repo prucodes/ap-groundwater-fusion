@@ -140,7 +140,7 @@ export default function SummerPage() {
             ? `typical winter · ${s.beyondDeep} more than ${o.deepM} m down${people ? `, home to ${lakhs(people.beyondDeep)}` : ""}`
             : tier === "dry" ? `only in a winter as dry as their driest · ${s.dryDeep} more than ${o.deepM} m down${people ? `, home to ${lakhs(people.dryDeep)}` : ""}`
               : `either way · of ${s.mandals} mandals on the map`}</em></li>)}
-          {bt ? <li><span>Track record</span><b>1 in {Math.round(100 / (bt.pastRecordPct.beyond ?? 100))}</b><em>&ldquo;Beyond&rdquo; calls that set a new record, against 1 in {Math.round(100 / bt.baseRatePct)} overall ({bt.years[0]}–{String(bt.years[bt.years.length - 1]).slice(2)})</em></li> : null}
+          {bt ? <li><span>Track record</span><b>1 in {Math.round(100 / (bt.pastRecordPct.beyond ?? 100))}</b><em>&ldquo;Beyond&rdquo; calls that set a new record, against 1 in {Math.round(100 / bt.baseRatePct)} overall{bt.recordsFlaggedPct != null ? `; ${Math.round(bt.recordsFlaggedPct)}% of the records that did break had been flagged` : ""} ({bt.years[0]}–{String(bt.years[bt.years.length - 1]).slice(2)})</em></li> : null}
         </ul>
       </section>
 

@@ -1,380 +1,380 @@
 {
- "generatedAt": "2026-10-03T18:22:14+00:00",
+ "generatedAt": "2026-11-25T17:47:10+00:00",
  "method": "corrections learned per cut from earlier cuts only; key = target season (Jul-Nov or not) x three-month rain deficit at the origin; bias shrunk by n/(n+200)",
  "scopes": {
   "long": {
    "all": {
-    "rows": 58381,
+    "rows": 45630,
     "noChange": {
-     "maeM": 2.3605,
-     "biasM": 0.005
+     "maeM": 2.3879,
+     "biasM": 0.0277
     },
     "model": {
-     "maeM": 2.2233,
-     "biasM": 0.3039
-    },
-    "blend": {
-     "maeM": 2.219,
-     "biasM": 0.307
-    },
-    "model_E_bias": {
-     "maeM": 2.2604,
-     "biasM": 0.2909
-    },
-    "model_D_shrink": {
-     "maeM": 2.1103,
+     "maeM": 2.1355,
      "biasM": 0.1511
     },
+    "blend": {
+     "maeM": 2.1248,
+     "biasM": 0.1137
+    },
+    "model_E_bias": {
+     "maeM": 2.189,
+     "biasM": 0.158
+    },
+    "model_D_shrink": {
+     "maeM": 2.0483,
+     "biasM": 0.1021
+    },
     "blend_E_bias": {
-     "maeM": 2.2592,
-     "biasM": 0.3094
+     "maeM": 2.1822,
+     "biasM": 0.1706
     },
     "blend_D_shrink": {
-     "maeM": 2.0986,
-     "biasM": 0.1519
+     "maeM": 2.0453,
+     "biasM": 0.0939
     }
    },
    "dry": {
-    "rows": 17467,
+    "rows": 13555,
     "noChange": {
-     "maeM": 2.3254,
-     "biasM": -1.1452
+     "maeM": 2.2622,
+     "biasM": -1.2923
     },
     "model": {
-     "maeM": 2.1818,
-     "biasM": -0.4084
+     "maeM": 2.0911,
+     "biasM": -0.6412
     },
     "blend": {
-     "maeM": 2.2014,
-     "biasM": -0.3786
+     "maeM": 2.1337,
+     "biasM": -0.6597
     },
     "model_E_bias": {
-     "maeM": 2.2042,
-     "biasM": -0.516
+     "maeM": 2.1392,
+     "biasM": -0.7185
     },
     "model_D_shrink": {
-     "maeM": 2.0445,
-     "biasM": -0.7247
+     "maeM": 1.961,
+     "biasM": -0.8629
     },
     "blend_E_bias": {
-     "maeM": 2.213,
-     "biasM": -0.4795
+     "maeM": 2.169,
+     "biasM": -0.6961
     },
     "blend_D_shrink": {
-     "maeM": 2.0425,
-     "biasM": -0.7128
+     "maeM": 1.9923,
+     "biasM": -0.874
     }
    },
    "normal": {
-    "rows": 27103,
+    "rows": 20970,
     "noChange": {
-     "maeM": 2.3606,
-     "biasM": 0.4889
+     "maeM": 2.373,
+     "biasM": 0.5112
     },
     "model": {
-     "maeM": 2.105,
-     "biasM": 0.3079
+     "maeM": 2.04,
+     "biasM": 0.0977
     },
     "blend": {
-     "maeM": 2.0866,
-     "biasM": 0.3035
+     "maeM": 2.0279,
+     "biasM": 0.0721
     },
     "model_E_bias": {
-     "maeM": 2.1431,
-     "biasM": 0.3476
+     "maeM": 2.0933,
+     "biasM": 0.1476
     },
     "model_D_shrink": {
-     "maeM": 2.0705,
-     "biasM": 0.3535
+     "maeM": 1.9987,
+     "biasM": 0.2369
     },
     "blend_E_bias": {
-     "maeM": 2.1365,
-     "biasM": 0.3655
+     "maeM": 2.0949,
+     "biasM": 0.1779
     },
     "blend_D_shrink": {
-     "maeM": 2.0568,
-     "biasM": 0.3542
+     "maeM": 1.9943,
+     "biasM": 0.2395
     }
    },
    "wet": {
-    "rows": 13811,
+    "rows": 11105,
     "noChange": {
-     "maeM": 2.4046,
-     "biasM": 0.5103
+     "maeM": 2.5694,
+     "biasM": 0.7258
     },
     "model": {
-     "maeM": 2.5081,
-     "biasM": 1.1971
+     "maeM": 2.3701,
+     "biasM": 1.2192
     },
     "blend": {
-     "maeM": 2.5011,
-     "biasM": 1.181
+     "maeM": 2.2968,
+     "biasM": 1.1364
     },
     "model_E_bias": {
-     "maeM": 2.5619,
-     "biasM": 1.2002
+     "maeM": 2.4306,
+     "biasM": 1.2474
     },
     "model_D_shrink": {
-     "maeM": 2.2717,
-     "biasM": 0.8617
+     "maeM": 2.2484,
+     "biasM": 1.0255
     },
     "blend_E_bias": {
-     "maeM": 2.5583,
-     "biasM": 1.1972
+     "maeM": 2.363,
+     "biasM": 1.2146
     },
     "blend_D_shrink": {
-     "maeM": 2.2515,
-     "biasM": 0.8486
+     "maeM": 2.2062,
+     "biasM": 1.0005
     }
    },
    "monsoonDry": {
-    "rows": 4658,
+    "rows": 3713,
     "noChange": {
-     "maeM": 1.7848,
-     "biasM": -0.331
+     "maeM": 1.9154,
+     "biasM": -0.7461
     },
     "model": {
-     "maeM": 2.0647,
-     "biasM": -1.0172
+     "maeM": 2.353,
+     "biasM": -1.6263
     },
     "blend": {
-     "maeM": 2.152,
-     "biasM": -1.0819
+     "maeM": 2.4923,
+     "biasM": -1.7054
     },
     "model_E_bias": {
-     "maeM": 2.0501,
-     "biasM": -0.9324
+     "maeM": 2.3277,
+     "biasM": -1.5067
     },
     "model_D_shrink": {
-     "maeM": 1.8148,
-     "biasM": -0.6871
+     "maeM": 2.0618,
+     "biasM": -1.2818
     },
     "blend_E_bias": {
-     "maeM": 2.1112,
-     "biasM": -0.9691
+     "maeM": 2.4117,
+     "biasM": -1.5268
     },
     "blend_D_shrink": {
-     "maeM": 1.8422,
-     "biasM": -0.6995
+     "maeM": 2.15,
+     "biasM": -1.3347
     }
    },
    "deficitKnownAtOrigin": {
-    "rows": 6968,
+    "rows": 6594,
     "noChange": {
-     "maeM": 2.4824,
-     "biasM": 0.9188
+     "maeM": 2.3997,
+     "biasM": 0.8776
     },
     "model": {
-     "maeM": 2.1961,
-     "biasM": -0.1239
+     "maeM": 2.1502,
+     "biasM": -0.4408
     },
     "blend": {
-     "maeM": 2.1756,
-     "biasM": -0.2165
+     "maeM": 2.1552,
+     "biasM": -0.6085
     },
     "model_E_bias": {
-     "maeM": 2.3083,
-     "biasM": 0.3724
+     "maeM": 2.2563,
+     "biasM": 0.014
     },
     "model_D_shrink": {
-     "maeM": 2.2587,
-     "biasM": 0.4432
+     "maeM": 2.1687,
+     "biasM": 0.18
     },
     "blend_E_bias": {
-     "maeM": 2.3081,
-     "biasM": 0.3822
+     "maeM": 2.2577,
+     "biasM": -0.0162
     },
     "blend_D_shrink": {
-     "maeM": 2.2375,
-     "biasM": 0.4239
+     "maeM": 2.1666,
+     "biasM": 0.116
     }
    }
   },
   "gate2024on": {
    "all": {
-    "rows": 20298,
+    "rows": 21619,
     "noChange": {
-     "maeM": 2.218,
-     "biasM": -0.1211
+     "maeM": 2.2095,
+     "biasM": -0.1447
     },
     "model": {
-     "maeM": 1.7969,
-     "biasM": 0.3228
+     "maeM": 1.7901,
+     "biasM": -0.0311
     },
     "blend": {
-     "maeM": 1.7317,
-     "biasM": 0.3583
+     "maeM": 1.7403,
+     "biasM": -0.1009
     },
     "model_E_bias": {
-     "maeM": 1.8307,
-     "biasM": 0.0793
+     "maeM": 1.8389,
+     "biasM": -0.2708
     },
     "model_D_shrink": {
-     "maeM": 1.8509,
-     "biasM": 0.0275
+     "maeM": 1.7998,
+     "biasM": -0.1466
     },
     "blend_E_bias": {
-     "maeM": 1.7599,
-     "biasM": 0.1366
+     "maeM": 1.7873,
+     "biasM": -0.2574
     },
     "blend_D_shrink": {
-     "maeM": 1.7942,
-     "biasM": 0.0288
+     "maeM": 1.7722,
+     "biasM": -0.1783
     }
    },
    "dry": {
-    "rows": 6916,
+    "rows": 6966,
     "noChange": {
-     "maeM": 2.1127,
-     "biasM": -1.4932
+     "maeM": 2.1486,
+     "biasM": -1.552
     },
     "model": {
-     "maeM": 1.6106,
-     "biasM": -0.514
+     "maeM": 1.8065,
+     "biasM": -0.9402
     },
     "blend": {
-     "maeM": 1.5802,
-     "biasM": -0.3417
+     "maeM": 1.8148,
+     "biasM": -0.8879
     },
     "model_E_bias": {
-     "maeM": 1.6958,
-     "biasM": -0.8363
+     "maeM": 1.9166,
+     "biasM": -1.2527
     },
     "model_D_shrink": {
-     "maeM": 1.696,
-     "biasM": -1.0784
+     "maeM": 1.8143,
+     "biasM": -1.2805
     },
     "blend_E_bias": {
-     "maeM": 1.6448,
-     "biasM": -0.647
+     "maeM": 1.9059,
+     "biasM": -1.1247
     },
     "blend_D_shrink": {
-     "maeM": 1.6584,
-     "biasM": -1.0096
+     "maeM": 1.8287,
+     "biasM": -1.2531
     }
    },
    "normal": {
-    "rows": 9291,
+    "rows": 9929,
     "noChange": {
-     "maeM": 2.2568,
-     "biasM": 0.6657
+     "maeM": 2.1508,
+     "biasM": 0.5585
     },
     "model": {
-     "maeM": 1.7813,
-     "biasM": 0.5637
+     "maeM": 1.6263,
+     "biasM": 0.1438
     },
     "blend": {
-     "maeM": 1.7068,
-     "biasM": 0.5134
+     "maeM": 1.5992,
+     "biasM": 0.0577
     },
     "model_E_bias": {
-     "maeM": 1.7895,
-     "biasM": 0.3506
+     "maeM": 1.6434,
+     "biasM": -0.0783
     },
     "model_D_shrink": {
-     "maeM": 1.8734,
-     "biasM": 0.5397
+     "maeM": 1.6733,
+     "biasM": 0.2639
     },
     "blend_E_bias": {
-     "maeM": 1.7223,
-     "biasM": 0.3244
+     "maeM": 1.6262,
+     "biasM": -0.0807
     },
     "blend_D_shrink": {
-     "maeM": 1.8251,
-     "biasM": 0.5059
+     "maeM": 1.6565,
+     "biasM": 0.2167
     }
    },
    "wet": {
-    "rows": 4091,
+    "rows": 4724,
     "noChange": {
-     "maeM": 2.3081,
-     "biasM": 0.4117
+     "maeM": 2.4228,
+     "biasM": 0.4523
     },
     "model": {
-     "maeM": 2.147,
-     "biasM": 1.1904
+     "maeM": 2.1102,
+     "biasM": 0.9416
     },
     "blend": {
-     "maeM": 2.0443,
-     "biasM": 1.1897
+     "maeM": 1.9273,
+     "biasM": 0.7263
     },
     "model_E_bias": {
-     "maeM": 2.1524,
-     "biasM": 1.0111
+     "maeM": 2.1354,
+     "biasM": 0.7725
     },
     "model_D_shrink": {
-     "maeM": 2.0617,
-     "biasM": 0.7339
+     "maeM": 2.0443,
+     "biasM": 0.6628
     },
     "blend_E_bias": {
-     "maeM": 2.0397,
-     "biasM": 1.0348
+     "maeM": 1.951,
+     "biasM": 0.65
     },
     "blend_D_shrink": {
-     "maeM": 1.9537,
-     "biasM": 0.7006
+     "maeM": 1.9319,
+     "biasM": 0.5763
     }
    },
    "monsoonDry": {
-    "rows": 1707,
+    "rows": 2217,
     "noChange": {
-     "maeM": 1.6645,
-     "biasM": -0.3357
+     "maeM": 1.9087,
+     "biasM": -0.948
     },
     "model": {
-     "maeM": 1.7244,
-     "biasM": -1.0039
+     "maeM": 2.2328,
+     "biasM": -1.8247
     },
     "blend": {
-     "maeM": 1.7564,
-     "biasM": -0.9337
+     "maeM": 2.2775,
+     "biasM": -1.7955
     },
     "model_E_bias": {
-     "maeM": 1.8081,
-     "biasM": -1.2493
+     "maeM": 2.2958,
+     "biasM": -1.9651
     },
     "model_D_shrink": {
-     "maeM": 1.6227,
-     "biasM": -0.7704
+     "maeM": 2.0666,
+     "biasM": -1.5524
     },
     "blend_E_bias": {
-     "maeM": 1.7936,
-     "biasM": -1.1143
+     "maeM": 2.2556,
+     "biasM": -1.822
     },
     "blend_D_shrink": {
-     "maeM": 1.6238,
-     "biasM": -0.7253
+     "maeM": 2.1039,
+     "biasM": -1.5566
     }
    },
    "deficitKnownAtOrigin": {
-    "rows": 2747,
+    "rows": 3752,
     "noChange": {
-     "maeM": 2.1537,
-     "biasM": 0.7572
+     "maeM": 2.132,
+     "biasM": 0.4149
     },
     "model": {
-     "maeM": 1.9756,
-     "biasM": 0.3137
+     "maeM": 1.9733,
+     "biasM": -0.4561
     },
     "blend": {
-     "maeM": 1.8748,
-     "biasM": 0.2033
+     "maeM": 1.9206,
+     "biasM": -0.6687
     },
     "model_E_bias": {
-     "maeM": 2.0676,
-     "biasM": 0.4858
+     "maeM": 2.0178,
+     "biasM": -0.2961
     },
     "model_D_shrink": {
-     "maeM": 1.9567,
-     "biasM": 0.4139
+     "maeM": 1.9101,
+     "biasM": -0.2076
     },
     "blend_E_bias": {
-     "maeM": 1.9671,
-     "biasM": 0.4786
+     "maeM": 1.9234,
+     "biasM": -0.3421
     },
     "blend_D_shrink": {
-     "maeM": 1.8697,
-     "biasM": 0.3325
+     "maeM": 1.8565,
+     "biasM": -0.3335
     }
    }
   }

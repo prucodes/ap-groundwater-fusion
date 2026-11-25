@@ -21,8 +21,9 @@ is the hand-read network, long and checked; this is the sensors' reading today.
 Use only where access is permitted; this is an authorization-pending research
 sample, not official data. Verified TLS only.
 
-Output: app/data/gw_sensors.json, and one line a day appended to
-app/data/gw_sensors_history.json so the State's line builds up. Daily.
+Output: app/data/gw_sensors.json, one line a day appended to
+app/data/gw_sensors_history.json so the State's line builds up, and every station's
+reading for the day in phase3_levels/data/sensor_station_daily.json. Daily.
 """
 import datetime
 import json
@@ -46,6 +47,17 @@ SERVICE = "https://apwrims2.0.vassarlabs.com/iot/api/groundwater/lastknown/aggre
 ACTIVE_HOURS = 48          # a station counts as reporting if its latest reading is this recent
 MIN_ACTIVE = 800           # fewer than this and the service is having a bad day: keep yesterday's file
 WINDOW_DAYS = 30           # how far back the service looks for each station's latest reading
+MOVED_CM = 10              # deeper or shallower than a year ago means by more than this
+
+
+def moved(level, year_ago):
+    """+1 deeper than a year ago, -1 shallower, 0 within 0.1 m.
+
+    Decided in whole centimetres on the two-decimal figures the file publishes, so the page that
+    recounts the stations it draws reaches the same count, and 1.23 against 1.13 (a float
+    difference of 0.10000000000000009) is never counted as more than 0.1 m."""
+    cm = round((round(level, 2) - round(year_ago, 2)) * 100)
+    return 1 if cm > MOVED_CM else -1 if cm < -MOVED_CM else 0
 
 
 def request(now_ms):
@@ -98,7 +110,7 @@ def main():
         level = statistics.median(s["averageLevel"] for s in mine)
         year = [s["lastYearLevel"] for s in mine if isinstance(s.get("lastYearLevel"), (int, float))]
         mandals.append([index, len(mine), round(level, 2), round(statistics.median(year), 2) if year else None])
-    changes = [s["averageLevel"] - s["lastYearLevel"] for s in active if isinstance(s.get("lastYearLevel"), (int, float))]
+    sides = [moved(s["averageLevel"], s["lastYearLevel"]) for s in active if isinstance(s.get("lastYearLevel"), (int, float))]
     latest = max(s["egt"] for s in active)
     payload = {
         "contractVersion": "1.0.0",
@@ -112,10 +124,10 @@ def main():
             "stations": len(stations), "active": len(active),
             "medianM": round(statistics.median(s["averageLevel"] for s in active), 2),
             "medianYearAgoM": round(statistics.median(s["lastYearLevel"] for s in active if isinstance(s.get("lastYearLevel"), (int, float))), 2),
-            "deeperThanYearAgo": sum(1 for c in changes if c > 0.1), "shallowerThanYearAgo": sum(1 for c in changes if c < -0.1),
-            "compared": len(changes),
+            "deeperThanYearAgo": sides.count(1), "shallowerThanYearAgo": sides.count(-1),
+            "compared": len(sides),
             "mandalsReporting": len(mandals),
-            "mandalsDeeperThanYearAgo": sum(1 for m in mandals if m[3] is not None and m[2] - m[3] > 0.1),
+            "mandalsDeeperThanYearAgo": sum(1 for m in mandals if m[3] is not None and moved(m[2], m[3]) > 0),
         },
         # [boundary index, stations reporting, median level m, median a year ago m]
         "mandals": mandals,
@@ -140,6 +152,12 @@ def main():
     with open(HISTORY, "w") as handle:
         json.dump(history, handle, separators=(",", ":"))
         handle.write("\n")
+    # Each station's own reading, kept a day at a time: the service gives no history, and the
+    # test of whether the sensors can stand in for the monthly wells needs one (sensor_archive.py).
+    import sensor_archive  # noqa: E402
+    archive = sensor_archive.load()
+    sensor_archive.add_day(archive, payload)
+    sensor_archive.save(archive)
     print(f"{len(active)} of {len(stations)} stations reporting; State median {st['medianM']} m against {st['medianYearAgoM']} m a year ago; "
           f"{st['deeperThanYearAgo']} of {st['compared']} deeper; {st['mandalsDeeperThanYearAgo']} of {st['mandalsReporting']} mandals deeper than a year ago")
     return 0

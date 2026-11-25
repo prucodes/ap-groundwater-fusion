@@ -70,7 +70,8 @@ const Legend = ({ items, style }: { items: Array<{ label: string; colors: string
 
 /** Two wells from the ground down: last year's water level settles, then today's keeps falling. */
 function DepthVisual({ scene, t }: { scene: Extract<FilmScene, { kind: "depth" }>; t: number }) {
-  const W = 600, H = 540, ground = 96, floor = 452;
+  // Today's level is written right of the second shaft, at x 520: 640 wide leaves room for "12.3 m".
+  const W = 640, H = 540, ground = 96, floor = 452;
   const max = Math.max(2, Math.ceil(Math.max(scene.todayM, scene.yearAgoM) * 1.2));
   const y = (m: number) => r3(ground + (m / max) * (floor - ground));
   const first = at(t, 0.9, 1.2, easeInOut), second = at(t, 2.3, 1.4, easeInOut);

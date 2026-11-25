@@ -27,7 +27,7 @@ export function FieldQueue() {
     <div className={styles.wrap}>
       <div className={styles.heads}>
         <div className={styles.head} data-tone="go">
-          <b>{(totals.peopleInTopTwenty / 1e6).toFixed(1)}m</b>
+          <b>{Math.round(totals.peopleInTopTwenty / 1e5)} lakh</b>
           <span>people live in the first twenty mandals on this list, across {totals.irrigatedKm2InTopTwenty.toLocaleString("en-IN")} km&sup2; of irrigated land</span>
         </div>
         <div className={styles.head}>

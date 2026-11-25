@@ -164,7 +164,7 @@ export default function SummerBriefPage() {
             <div className={styles.pair}>
               <div>
                 <div className={styles.sec}>How far to trust it</div>
-                {bt ? <p>Each past year was projected from the other years&rsquo; winters alone ({bt.years[0]}–{bt.years[bt.years.length - 1]}, {count(bt.comparisons)} mandal-years). The typical projection was off by <b>{bt.typicalErrorM.toFixed(1)} m</b> in the median mandal, against {bt.persistenceErrorM.toFixed(1)} m for assuming no change. A mandal named past its record went deeper than its earlier deepest May <b>{Math.round(bt.pastRecordPct.beyond ?? 0)}%</b> of the time, against {Math.round(bt.baseRatePct)}% for all mandals.</p> : null}
+                {bt ? <p>Each past year was projected from the other years&rsquo; winters alone ({bt.years[0]}–{bt.years[bt.years.length - 1]}, {count(bt.comparisons)} mandal-years). The typical projection was off by <b>{bt.typicalErrorM.toFixed(1)} m</b> in the median mandal, against {bt.persistenceErrorM.toFixed(1)} m for assuming no change. A mandal named past its record went deeper than its earlier deepest May <b>{Math.round(bt.pastRecordPct.beyond ?? 0)}%</b> of the time, against {Math.round(bt.baseRatePct)}% for all mandals{bt.recordsFlaggedPct != null ? <>; of the Mays that did set a record, <b>{Math.round(bt.recordsFlaggedPct)}%</b> had been flagged</> : null}.</p> : null}
               </div>
               <div>
                 <div className={styles.sec}>What it cannot say</div>

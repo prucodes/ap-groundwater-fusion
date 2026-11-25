@@ -97,6 +97,10 @@ export const BRIEFS = {
     what: "Andhra Pradesh groundwater, one sentence at a time: each figure with its source, its date and the page that explains it.",
     use: "Quote a figure in a note or a meeting; copy it with its source, or send it on WhatsApp.",
   },
+  "/field-check": {
+    what: "A pilot proposed to the Groundwater Department: 100 wells in two districts read every fortnight, scored against what the site wrote down before the first reading.",
+    use: "Take the well list and the one-page protocol to the department; once readings are filed, the score shows here.",
+  },
   "/field-report": {
     what: "For teams sent to the listed mandals: record what the fields and wells show, beside what the site called.",
     use: "Write one report per mandal visited and share it; a collector reads them back in one table.",

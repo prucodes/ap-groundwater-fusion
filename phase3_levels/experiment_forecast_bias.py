@@ -222,6 +222,7 @@ def main():
         weights.append({"cut": cut, **{k: {str(b): v for b, v in w[k].items()} for k in w}})
         print(f"  cut {cut}: {len(test)} rows, model MAE {np.mean(np.abs(predictions.model - predictions.actual)):.3f}")
     rows = pd.concat(collected, ignore_index=True)
+    os.makedirs(os.path.dirname(ROWS_OUT), exist_ok=True)
     rows.to_csv(ROWS_OUT, index=False)
     variants = ["noChange", "seasonal", "model", "blend", "A_anomaly", "B_gatedBlend", "C_shiftedAnchor", "C_blend"]
     gate_rows = rows[rows.target_date >= "2024-01"]

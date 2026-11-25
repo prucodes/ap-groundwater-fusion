@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
 import { FieldReport, type SiteCall } from "../../components/FieldReport";
 import { titleCase } from "../../lib/data";
@@ -30,6 +31,7 @@ function FieldCheck() {
         and the {queue}{" "}where the model is least sure and the most people and irrigated land depend on it. Each row gives what the
         State&rsquo;s network last read and the forecast for {monthOf(month)} with its band: a sounding taken in {monthOf(month)} tests the
         forecast directly, and inside the band counts as a pass. The sheet has empty columns for the reading; send it back as it is.
+        {" "}For the fortnightly pilot proposed to the department, with its wells, protocol and scoring, see the <Link href="/field-check/">field check pilot</Link>.
       </p>
       <div style={{ margin: "10px 0 14px" }}>
         <DownloadTextButton filename="ap-groundwater-field-check.csv" content={fieldCheckCsv(rows)} label="Download the field sheet (CSV)"

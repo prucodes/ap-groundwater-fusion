@@ -17,8 +17,9 @@ const H = Math.round(((north - south) / ((east - west) * k)) * (W - 2 * PAD) + 2
 const x = (lng: number) => PAD + ((lng - west) * k * (W - 2 * PAD)) / ((east - west) * k);
 const y = (lat: number) => PAD + ((north - lat) * (H - 2 * PAD)) / (north - south);
 
-/** Deeper, shallower or neither, by the rule the daily count uses (fetch_apwrims_sensors.py): more than 0.1 m either way. */
-const side = (change: number) => (change > 0.1 ? 1 : change < -0.1 ? -1 : 0);
+/** Deeper, shallower or neither, by the rule the daily count uses (moved() in fetch_apwrims_sensors.py): more than
+   0.1 m either way, in whole centimetres, so 1.23 against 1.13 m (0.10000000000000009 in floating point) is neither. */
+const side = (change: number) => { const cm = Math.round(change * 100); return cm > 10 ? 1 : cm < -10 ? -1 : 0; };
 
 /** Rust deeper than a year ago, cyan shallower, by how many metres. */
 function tone(change: number) {

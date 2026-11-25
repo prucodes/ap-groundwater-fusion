@@ -1,0 +1,139 @@
+{
+ "learnedAt": "2026-11-25T17:49:42+00:00",
+ "rule": "For targets in July to November only: published = weight x forecast + (1 - weight) x level at the origin; the band moves with it.",
+ "monsoonMonths": [
+  7,
+  8,
+  9,
+  10,
+  11
+ ],
+ "weight": 0.65,
+ "learnedFrom": {
+  "forecasts": 19553,
+  "cuts": 26,
+  "firstTarget": "2018-01",
+  "lastTarget": "2026-10",
+  "rowsSha256": "6f78853f8174dcbd288985992c2c8ab1bc87acd36a271a24bea0282170e9759e"
+ },
+ "weightByCut": [
+  {
+   "cut": "2018-10",
+   "weight": 0.65
+  },
+  {
+   "cut": "2019-01",
+   "weight": 0.35
+  },
+  {
+   "cut": "2019-04",
+   "weight": 0.35
+  },
+  {
+   "cut": "2019-07",
+   "weight": 0.35
+  },
+  {
+   "cut": "2019-10",
+   "weight": 0.45
+  },
+  {
+   "cut": "2020-01",
+   "weight": 0.65
+  },
+  {
+   "cut": "2020-04",
+   "weight": 0.65
+  },
+  {
+   "cut": "2020-07",
+   "weight": 0.65
+  },
+  {
+   "cut": "2020-10",
+   "weight": 0.6
+  },
+  {
+   "cut": "2021-01",
+   "weight": 0.55
+  },
+  {
+   "cut": "2023-05",
+   "weight": 0.55
+  },
+  {
+   "cut": "2024-01",
+   "weight": 0.55
+  },
+  {
+   "cut": "2024-04",
+   "weight": 0.55
+  },
+  {
+   "cut": "2024-07",
+   "weight": 0.55
+  },
+  {
+   "cut": "2024-10",
+   "weight": 0.6
+  },
+  {
+   "cut": "2025-01",
+   "weight": 0.65
+  },
+  {
+   "cut": "2025-04",
+   "weight": 0.65
+  },
+  {
+   "cut": "2025-07",
+   "weight": 0.65
+  },
+  {
+   "cut": "2025-10",
+   "weight": 0.65
+  },
+  {
+   "cut": "2026-01",
+   "weight": 0.7
+  },
+  {
+   "cut": "2026-04",
+   "weight": 0.7
+  },
+  {
+   "cut": "2026-07",
+   "weight": 0.7
+  },
+  {
+   "cut": "2026-10",
+   "weight": 0.65
+  }
+ ],
+ "outOfSample": {
+  "all": {
+   "forecasts": 45630,
+   "releasedMaeM": 2.125,
+   "correctedMaeM": 2.102,
+   "noChangeMaeM": 2.388
+  },
+  "since2024": {
+   "forecasts": 21619,
+   "releasedMaeM": 1.74,
+   "correctedMaeM": 1.748,
+   "noChangeMaeM": 2.209
+  },
+  "monsoonDry": {
+   "forecasts": 3713,
+   "releasedMaeM": 2.492,
+   "correctedMaeM": 2.149,
+   "noChangeMaeM": 1.915
+  },
+  "monsoonNotDry": {
+   "forecasts": 15840,
+   "releasedMaeM": 2.144,
+   "correctedMaeM": 2.159,
+   "noChangeMaeM": 2.6
+  }
+ }
+}

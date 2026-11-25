@@ -135,6 +135,11 @@ STEPS = [
     ("add up canal releases", [PY, os.path.join(HERE, "build_canal_releases.py")], False, 600),
     # Freeze this week's published forecasts and score any whose month has been measured.
     ("keep the forecast ledger", [PY, os.path.join(HERE, "build_forecast_ledger.py")], False),
+    # Whether the State's daily sensors could stand in for the monthly wells: scored each
+    # month the wells publish, before any daily figure is shown. Optional: a standalone check.
+    ("test the sensors against the wells", [PY, os.path.join(HERE, "build_sensor_wells_check.py")], False),
+    # The field check with the Groundwater Department: its plan, and any readings filed, scored.
+    ("score the field check", [PY, os.path.join(HERE, "build_field_check.py")], False),
     # Cyclone Arnab: this week's water context into its log, and the groundwater check
     # once October and November are published. Daily until 30 Nov 2026 (arnab_daily.yml).
     ("follow Cyclone Arnab", [PY, os.path.join(HERE, "build_cyclone_arnab.py")], False, 300),

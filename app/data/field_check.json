@@ -1,0 +1,529 @@
+{
+ "contractVersion": "1.0.0",
+ "generatedAt": "2026-11-25T17:45:14+00:00",
+ "status": "proposed",
+ "plannedAt": "2026-11-25",
+ "planSha256": "c512cb8465fc6c9029d158806c12197d012f2e6ef19b308928d64eb12851129c",
+ "districts": [
+  {
+   "district": "SRI SATHYA SAI",
+   "why": "Hard rock in the dry south: the northeast monsoon there is running about 60% short, and hard rock is where a well's own readings help most."
+  },
+  {
+   "district": "EAST GODAVARI",
+   "why": "Alluvial delta in the wet north: the contrast case, where the mandal figure is already closest to the villages."
+  }
+ ],
+ "wellsPerMandal": 10,
+ "rounds": [
+  "2026-12-01",
+  "2026-12-15",
+  "2026-12-29",
+  "2027-01-12",
+  "2027-01-26",
+  "2027-02-09",
+  "2027-02-23",
+  "2027-03-09",
+  "2027-03-23",
+  "2027-04-06",
+  "2027-04-20",
+  "2027-05-04",
+  "2027-05-18"
+ ],
+ "roundDays": 14,
+ "readingFields": [
+  "round_date",
+  "district",
+  "mandal",
+  "village",
+  "well_id",
+  "well_type",
+  "owner",
+  "latitude",
+  "longitude",
+  "mp_height_m",
+  "water_below_mp_m",
+  "hours_since_pumping",
+  "well_depth_m",
+  "observer",
+  "note"
+ ],
+ "mandals": [
+  {
+   "district": "SRI SATHYA SAI",
+   "mandal": "Amarapuram",
+   "index": 588,
+   "aquifer": "hard_rock",
+   "tier": "beyond",
+   "band": "first",
+   "nowM": 47.91,
+   "mayTypicalM": 54.3,
+   "mayDryM": 74.06,
+   "deepestMayM": 45.49,
+   "observationWells": 7,
+   "privateWellsToAdd": 3,
+   "villages": [
+    {
+     "village": "Aladahalli-pz",
+     "wellType": "Bore well",
+     "wells": 1,
+     "offsetM": -8.56,
+     "readings": 20,
+     "lastRead": "Jan-23"
+    },
+    {
+     "village": "Amarapuram",
+     "wellType": "Bore well",
+     "wells": 1,
+     "offsetM": 2.74,
+     "readings": 21,
+     "lastRead": "Aug-23"
+    },
+    {
+     "village": "Gorantla",
+     "wellType": "Bore well",
+     "wells": 1,
+     "offsetM": 1.82,
+     "readings": 18,
+     "lastRead": "Aug-23"
+    },
+    {
+     "village": "Gorantla",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 3.67,
+     "readings": 44,
+     "lastRead": "Nov-13"
+    },
+    {
+     "village": "Govinavaripalli",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 2.27,
+     "readings": 44,
+     "lastRead": "Nov-13"
+    },
+    {
+     "village": "Palasamudram",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -5.94,
+     "readings": 44,
+     "lastRead": "Nov-13"
+    },
+    {
+     "village": "Valasa agraharam-pz",
+     "wellType": "Bore well",
+     "wells": 1,
+     "offsetM": 3.85,
+     "readings": 21,
+     "lastRead": "Aug-23"
+    }
+   ]
+  },
+  {
+   "district": "SRI SATHYA SAI",
+   "mandal": "Gudibanda",
+   "index": 589,
+   "aquifer": "hard_rock",
+   "tier": "beyond",
+   "band": "next",
+   "nowM": 55.09,
+   "mayTypicalM": 61.84,
+   "mayDryM": 78.93,
+   "deepestMayM": 52.35,
+   "observationWells": 3,
+   "privateWellsToAdd": 7,
+   "villages": [
+    {
+     "village": "Budipalli",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 1.34,
+     "readings": 15,
+     "lastRead": "May-23"
+    },
+    {
+     "village": "Gorantla",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 1.58,
+     "readings": 15,
+     "lastRead": "May-23"
+    },
+    {
+     "village": "Palaram",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -2.93,
+     "readings": 15,
+     "lastRead": "May-23"
+    }
+   ]
+  },
+  {
+   "district": "SRI SATHYA SAI",
+   "mandal": "Madakasira",
+   "index": 587,
+   "aquifer": "hard_rock",
+   "tier": "within",
+   "band": null,
+   "nowM": 19.02,
+   "mayTypicalM": 22.1,
+   "mayDryM": 34.05,
+   "deepestMayM": 41.69,
+   "observationWells": 6,
+   "privateWellsToAdd": 4,
+   "villages": [
+    {
+     "village": "Bullasamudram-pz",
+     "wellType": "Bore well",
+     "wells": 1,
+     "offsetM": -4.14,
+     "readings": 14,
+     "lastRead": "Jan-22"
+    },
+    {
+     "village": "Kallumarri-pz",
+     "wellType": "Bore well",
+     "wells": 1,
+     "offsetM": -9.83,
+     "readings": 14,
+     "lastRead": "Jan-22"
+    },
+    {
+     "village": "Kothalagutta-dw",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 3.52,
+     "readings": 13,
+     "lastRead": "Nov-19"
+    },
+    {
+     "village": "Madakasira",
+     "wellType": "Bore well",
+     "wells": 1,
+     "offsetM": 13.97,
+     "readings": 14,
+     "lastRead": "Jan-22"
+    },
+    {
+     "village": "Madakasira",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -5.21,
+     "readings": 13,
+     "lastRead": "Nov-19"
+    },
+    {
+     "village": "Nilakanthapuram",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 1.69,
+     "readings": 13,
+     "lastRead": "Nov-19"
+    }
+   ]
+  },
+  {
+   "district": "SRI SATHYA SAI",
+   "mandal": "Mudigubba",
+   "index": 576,
+   "aquifer": "hard_rock",
+   "tier": "within",
+   "band": null,
+   "nowM": 5.06,
+   "mayTypicalM": 6.98,
+   "mayDryM": 11.89,
+   "deepestMayM": 17.12,
+   "observationWells": 4,
+   "privateWellsToAdd": 6,
+   "villages": [
+    {
+     "village": "Adivi brahmanapalli",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -4.1,
+     "readings": 1,
+     "lastRead": "May-23"
+    },
+    {
+     "village": "Malakavemula-rs",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -3.35,
+     "readings": 1,
+     "lastRead": "May-23"
+    },
+    {
+     "village": "Mudigubba",
+     "wellType": "Bore well",
+     "wells": 1,
+     "offsetM": 2.25,
+     "readings": 2,
+     "lastRead": "Nov-22"
+    },
+    {
+     "village": "Mudigubba",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 7.45,
+     "readings": 1,
+     "lastRead": "May-23"
+    }
+   ]
+  },
+  {
+   "district": "SRI SATHYA SAI",
+   "mandal": "Rolla",
+   "index": 590,
+   "aquifer": "hard_rock",
+   "tier": "within",
+   "band": null,
+   "nowM": 18.7,
+   "mayTypicalM": 22.07,
+   "mayDryM": 31.98,
+   "deepestMayM": 34.61,
+   "observationWells": 3,
+   "privateWellsToAdd": 7,
+   "villages": [
+    {
+     "village": "Hottebetta-pz",
+     "wellType": "Bore well",
+     "wells": 1,
+     "offsetM": -8.89,
+     "readings": 14,
+     "lastRead": "May-22"
+    },
+    {
+     "village": "Rolla",
+     "wellType": "Bore well",
+     "wells": 2,
+     "offsetM": 4.44,
+     "readings": 28,
+     "lastRead": "May-22"
+    }
+   ]
+  },
+  {
+   "district": "EAST GODAVARI",
+   "mandal": "Nidadavole",
+   "index": 197,
+   "aquifer": "alluvial",
+   "tier": "beyond",
+   "band": "first",
+   "nowM": 19.62,
+   "mayTypicalM": 20.31,
+   "mayDryM": 23.33,
+   "deepestMayM": 17.88,
+   "observationWells": 4,
+   "privateWellsToAdd": 6,
+   "villages": [
+    {
+     "village": "Goparam",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 1.58,
+     "readings": 36,
+     "lastRead": "Aug-23"
+    },
+    {
+     "village": "Munipalli",
+     "wellType": "Dug well",
+     "wells": 2,
+     "offsetM": -0.64,
+     "readings": 70,
+     "lastRead": "Aug-23"
+    },
+    {
+     "village": "Nidadavolu",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -0.36,
+     "readings": 34,
+     "lastRead": "Aug-23"
+    }
+   ]
+  },
+  {
+   "district": "EAST GODAVARI",
+   "mandal": "Gopalapuram",
+   "index": 188,
+   "aquifer": "alluvial",
+   "tier": "dry",
+   "band": null,
+   "nowM": 13.4,
+   "mayTypicalM": 14.72,
+   "mayDryM": 17.69,
+   "deepestMayM": 15.27,
+   "observationWells": 5,
+   "privateWellsToAdd": 5,
+   "villages": [
+    {
+     "village": "Chityala",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -3.2,
+     "readings": 30,
+     "lastRead": "Aug-23"
+    },
+    {
+     "village": "Gopalpuram",
+     "wellType": "Dug well",
+     "wells": 2,
+     "offsetM": 1.13,
+     "readings": 62,
+     "lastRead": "Aug-23"
+    },
+    {
+     "village": "Gudigudem",
+     "wellType": "Dug well",
+     "wells": 2,
+     "offsetM": 1.87,
+     "readings": 14,
+     "lastRead": "Jan-17"
+    }
+   ]
+  },
+  {
+   "district": "EAST GODAVARI",
+   "mandal": "Rajanagaram",
+   "index": 143,
+   "aquifer": "alluvial",
+   "tier": "dry",
+   "band": null,
+   "nowM": 47.53,
+   "mayTypicalM": 49.51,
+   "mayDryM": 58.37,
+   "deepestMayM": 50.76,
+   "observationWells": 4,
+   "privateWellsToAdd": 6,
+   "villages": [
+    {
+     "village": "Anaparthy",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 0.23,
+     "readings": 37,
+     "lastRead": "Aug-23"
+    },
+    {
+     "village": "Kolamuru",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 0.45,
+     "readings": 37,
+     "lastRead": "Aug-23"
+    },
+    {
+     "village": "Rajanagaram",
+     "wellType": "Dug well",
+     "wells": 2,
+     "offsetM": -0.67,
+     "readings": 37,
+     "lastRead": "Aug-23"
+    }
+   ]
+  },
+  {
+   "district": "EAST GODAVARI",
+   "mandal": "Mandapeta",
+   "index": 155,
+   "aquifer": "alluvial",
+   "tier": "within",
+   "band": null,
+   "nowM": 2.65,
+   "mayTypicalM": 4.21,
+   "mayDryM": 5.8,
+   "deepestMayM": 22.8,
+   "observationWells": 3,
+   "privateWellsToAdd": 7,
+   "villages": [
+    {
+     "village": "Dwarapudi",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -0.08,
+     "readings": 15,
+     "lastRead": "May-18"
+    },
+    {
+     "village": "Eppanapadu",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -0.91,
+     "readings": 15,
+     "lastRead": "May-18"
+    },
+    {
+     "village": "Kesavaram",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 1.0,
+     "readings": 15,
+     "lastRead": "May-18"
+    }
+   ]
+  },
+  {
+   "district": "EAST GODAVARI",
+   "mandal": "Seethanagaram",
+   "index": 131,
+   "aquifer": "alluvial",
+   "tier": "dry",
+   "band": null,
+   "nowM": 5.49,
+   "mayTypicalM": 9.18,
+   "mayDryM": 11.24,
+   "deepestMayM": 9.43,
+   "observationWells": 3,
+   "privateWellsToAdd": 7,
+   "villages": [
+    {
+     "village": "Appayyapet",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -0.58,
+     "readings": 5,
+     "lastRead": "Aug-17"
+    },
+    {
+     "village": "Maripivalasa",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": 1.76,
+     "readings": 5,
+     "lastRead": "Aug-17"
+    },
+    {
+     "village": "Sitanagaram",
+     "wellType": "Dug well",
+     "wells": 1,
+     "offsetM": -1.18,
+     "readings": 5,
+     "lastRead": "Aug-17"
+    }
+   ]
+  }
+ ],
+ "predictions": {
+  "dugMandalOnlyM": 3.7,
+  "dugAfterThreeM": 2.0,
+  "boreMandalOnlyM": 6.2,
+  "boreAfterThreeM": 5.0,
+  "byAquifer": {
+   "alluvial": {
+    "mandalOnlyM": 1.8,
+    "withOffsetM": 0.6
+   },
+   "hard_rock": {
+    "mandalOnlyM": 5.5,
+    "withOffsetM": 2.4
+   }
+  },
+  "mayDropListedM": 6.39,
+  "mayDropOthersM": 1.98,
+  "source": "village_offsets.json forward test (each well's later readings, never the ones its offset was learned from) and summer_outlook.json"
+ },
+ "results": null
+}
