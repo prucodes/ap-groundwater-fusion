@@ -17,7 +17,7 @@ import { IconCloudRain, IconCyclone, IconDroplet, IconTarget, IconWaves } from "
 import { STATIC_MAP_VIEW } from "../../lib/staticMap";
 import { formatNumber, titleCase } from "../../lib/data";
 import { brief } from "../../lib/pageBriefs";
-import { arnab, arnabDay, arnabMonth, BASIN_NAMES, listOf, soakedDistricts, titleName, type ArnabDay } from "../../lib/arnab";
+import { arnab, arnabDay, arnabMonth, BASIN_NAMES, listOf, SEASON_CLOSES, seasonClosed, soakedDistricts, titleName, type ArnabDay } from "../../lib/arnab";
 import shared from "../rabi/Rabi.module.css";
 import styles from "./Arnab.module.css";
 
@@ -112,6 +112,8 @@ function TanksSection() {
 export default function ArnabPage() {
   const d = arnab, s = d.state, since = d.since, dr = d.drought, mu = d.murasu, tg = d.together, ts = tg?.state;
   const seen = arnabMonth(d.groundwaterLatest);
+  // After 30 November the page is the season's record: the daily log has stopped and only the November readings are still to come.
+  const closed = seasonClosed(d);
   const soaked = soakedDistricts();
   const precedent = new Map(d.precedent.bands.map(b => [b.band, b]));
   const mostHeavy = Math.max(...d.byDepth.map(b => b.heavy), 1);
@@ -135,7 +137,7 @@ export default function ArnabPage() {
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
         title={mu ? "Cyclones Arnab, Murasu and Akvan" : "Cyclone Arnab"}
-        brief={brief("/cyclones", tg && ts ? <>Arnab and Murasu brought <b>{formatNumber(Math.round(ts.rainTmc))} TMC</b> in {tg.rainWindow.days} days{tg.rainWindow.open ? " so far" : ""}, but it fell on the coast: <b>{ts.deepStillDry} of {ts.deepMandals}</b> deep-table source records got under {tg.stillDryMm} mm from both, most in {listOf(tg.stillDry.slice(0, 3).map(x => x.district))}.{akvanAshore ? <> Akvan turned north to Odisha and added <b>{formatNumber(Math.round(akvanAshore.rainTmc))} TMC</b>; {akvanAshore.reached === 0 ? "none" : <b>{akvanAshore.reached}</b>} of the {akvanAshore.missed} deep-table mandals the first two missed got {akvanAshore.reachedMm} mm.</> : null}</> : <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
+        brief={brief("/cyclones", tg && ts ? <>Arnab and Murasu brought <b>{formatNumber(Math.round(ts.rainTmc))} TMC</b> in {tg.rainWindow.days} days{tg.rainWindow.open ? " so far" : ""}, but it fell on the coast: <b>{ts.deepStillDry} of {ts.deepMandals}</b> deep-table source records got under {tg.stillDryMm} mm from both, most in {listOf(tg.stillDry.slice(0, 3).map(x => x.district))}.{akvanAshore ? <> Akvan turned north to Odisha and added <b>{formatNumber(Math.round(akvanAshore.rainTmc))} TMC</b>; {akvanAshore.reached === 0 ? "none" : <b>{akvanAshore.reached}</b>} of the {akvanAshore.missed} deep-table mandals the first two missed got {akvanAshore.reachedMm} mm.</> : null}{closed ? <> The daily record closed on {arnabDay(SEASON_CLOSES)}; {novOut ? "November's readings, below, show whether the water table followed." : "November's readings, due in early December, will show whether the water table followed."}</> : null}</> : <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
         showChips={false}
         variant="compact"
       />
@@ -147,7 +149,7 @@ export default function ArnabPage() {
       <details className="foldMore" id="completed-cyclones"><summary><span>Arnab and Murasu: completed-event analysis</span><span>Rain, tanks, reservoirs and groundwater response</span></summary>
       <section className={styles.hero} aria-label="Cyclone Arnab in figures" data-testid="arnab-hero">
         <div className={styles.heroText}>
-          <span className={styles.kicker}>Arnab · came ashore {arnabDay(d.landfall)} 2026 · updated {d.updatedAt ? arnabDay(d.updatedAt) : "daily"}</span>
+          <span className={styles.kicker}>Arnab · came ashore {arnabDay(d.landfall)} 2026 · {closed ? `record closed ${arnabDay(SEASON_CLOSES)}` : `updated ${d.updatedAt ? arnabDay(d.updatedAt) : "daily"}`}</span>
           <h2>The rain fell where the water table was already high</h2>
           <p>The heaviest fell along the coast, on {listOf(soaked)}, and most of it landed where tables sat within {d.deepM} m of the surface. The deep, dry interior, which had the most room to take it, got little.</p>
         </div>
@@ -285,9 +287,9 @@ export default function ArnabPage() {
         <section className={shared.block} id="arnab-water" aria-labelledby="arnab-water-title">
           <CountedReach event="arnab/reached-water" title="Arnab: reached where the water went" />
           <header className={shared.blockHead}>
-            <span className={shared.eyebrow}><IconWaves /> Reservoirs, read daily</span>
+            <span className={shared.eyebrow}><IconWaves /> Reservoirs, read daily{closed ? ` to ${arnabDay(since.to)}` : ""}</span>
             <h2 id="arnab-water-title">Where the water went</h2>
-            <p>The State&apos;s {formatNumber(Math.round(since.days[0].reservoirTmc))} TMC of reservoir storage on {arnabDay(since.from)}, read every morning since. The smaller north-coast reservoirs filled first; water reaches the large Krishna and Godavari reservoirs later, if at all.{mu && since.to >= mu.landfall ? <> From {arnabDay(mu.landfall)} the readings carry Murasu&apos;s water too.</> : null}</p>
+            <p>The State&apos;s {formatNumber(Math.round(since.days[0].reservoirTmc))} TMC of reservoir storage on {arnabDay(since.from)}, read every morning {closed ? `to ${arnabDay(since.to)}` : "since"}. The smaller north-coast reservoirs filled first; water reaches the large Krishna and Godavari reservoirs later, if at all.{mu && since.to >= mu.landfall ? <> From {arnabDay(mu.landfall)} the readings carry Murasu&apos;s water too.</> : null}</p>
           </header>
           <div className={styles.split}>
             <div className={styles.side}>
@@ -402,7 +404,7 @@ export default function ArnabPage() {
       <details className={`${shared.block} ${styles.notes}`}>
         <summary><IconCyclone /> Sources and limits</summary>
         <p>{d.caveat}</p>
-        <p>Rain: AP Directorate of Economics and Statistics gauges. Soil moisture: NRSC model. Reservoirs: State telemetry. All via APWRIMS, as a research sample pending authorisation. Updated every morning until 30 November, then weekly. <Link href="/monsoon/">Monsoon Watch →</Link></p>
+        <p>Rain: AP Directorate of Economics and Statistics gauges. Soil moisture: NRSC model. Reservoirs: State telemetry. All via APWRIMS, as a research sample pending authorisation. {closed ? `Read every morning until ${arnabDay(SEASON_CLOSES)}; the weekly refresh now keeps the page and adds November's groundwater readings when they arrive.` : `Updated every morning until ${arnabDay(SEASON_CLOSES)}, then weekly.`} <Link href="/monsoon/">Monsoon Watch →</Link></p>
       </details>
       </details>
     </div>
