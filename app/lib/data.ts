@@ -441,6 +441,8 @@ export type WaterContext = {
     measure: string;
     asOf: string | null;
     asOfNote: string | null;
+    /** Days from the model run to the fetch; a week or more means the portal has paused. Absent in files before 25 Nov 2026. */
+    ageDays?: number | null;
     weekAgo: string;
     depthsCm: number[];
     headlineDepthCm: number;
@@ -524,7 +526,7 @@ export type WaterSummary = {
   authorizationStatus: string;
   rain: { start: string; end: string; deviationPct: number | null; gauges: number; mandals: number; categories: Record<RainCategory, number>; url: string;
     neMonsoon?: NeMonsoonSoFar | null } | null;
-  soil: { asOf: string | null; weekAgo: string; depthCm: number; firstYear: number | null; lastYear: number | null; url: string;
+  soil: { asOf: string | null; ageDays?: number | null; weekAgo: string; depthCm: number; firstYear: number | null; lastYear: number | null; url: string;
     mandals: number; medianPct: number | null; belowOwnMedian: number; withBaseline: number; driestOnRecord: number } | null;
   reservoirs: { asOf: string | null; staleCount: number; url: string; count: number; capacityTmc: number; storageTmc: number;
     storagePct: number | null; lastYearPct: number | null; byBasin: Array<{ basin: string; capacityTmc: number; storagePct: number | null; lastYearPct: number | null }> } | null;

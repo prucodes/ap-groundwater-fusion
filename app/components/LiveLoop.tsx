@@ -7,7 +7,9 @@ import styles from "./CycloneAkvan.module.css";
 /* The last two days over the Bay from Himawari-9 (phase3_levels/build_live_clouds.py),
    looping, with the State's outline and the hour each frame was taken. */
 
-export type LiveClouds = { width: number; height: number; fps: number; frames: string[]; outline: string; video: string; posterImage: string };
+export type LiveClouds = { width: number; height: number; fps: number; frames: string[]; outline: string; video: string; posterImage: string;
+  /** False once the storm has gone and the loop is fixed on its landfall; absent in files before 25 Nov 2026. */
+  live?: boolean; label?: string };
 
 const ist = (iso: string) => new Date(iso).toLocaleString("en-GB", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit", hour12: true, timeZone: "Asia/Kolkata" });
 
@@ -30,9 +32,9 @@ export function LiveLoop({ d }: { d: LiveClouds }) {
         aria-label={`Infrared satellite loop of the Bay of Bengal, the 48 hours to ${ist(d.frames[d.frames.length - 1])} IST.`} />
       <svg viewBox={`0 0 ${d.width} ${d.height}`} aria-hidden="true"><path d={d.outline} /></svg>
       <figcaption>
-        <span className={styles.liveDot} aria-hidden="true" />
+        {d.live === false ? null : <span className={styles.liveDot} aria-hidden="true" />}
         <b>{ist(d.frames[at])} IST</b>
-        <em>Himawari-9 infrared · last 48 hours</em>
+        <em>{d.label ?? "Himawari-9 infrared · last 48 hours"}</em>
       </figcaption>
     </figure>
   );

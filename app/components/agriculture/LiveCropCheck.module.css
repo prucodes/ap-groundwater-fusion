@@ -215,6 +215,9 @@
 }
 
 .ledeNote { color: var(--ink-soft); }
+/* The soil-moisture model has paused: the reading behind the check is more than a week old. */
+.liveBadge[data-stale] i { background: var(--lc-amber); box-shadow: 0 0 0 3px color-mix(in srgb, var(--lc-amber) 22%, transparent); animation: none; }
+.staleNote { max-width: 760px; margin: -14px 0 24px; padding: 9px 12px; border-left: 3px solid var(--lc-amber); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; background: color-mix(in srgb, var(--lc-amber) 8%, var(--card)); font-size: 13px; line-height: 1.55; color: var(--ink-soft); text-wrap: pretty; }
 .irrigatedLayer { pointer-events: none; }
 .hatchSwatch { background: repeating-linear-gradient(45deg, #9aa7b0 0 1.5px, #e9edf0 1.5px 4px) !important; }
 .irrigatedNote { margin: 0; padding: 9px 12px; border-radius: var(--radius-sm); background: var(--field); font-size: 12px; line-height: 1.5; color: var(--ink-soft); }

@@ -37,7 +37,7 @@ from PIL import Image
 from build_enso_pacific import tls_context
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CACHE = os.path.join("/tmp", "ap-gw-video-assets", "himawari_b13")
+CACHE = os.path.join(os.environ.get("AP_GW_VIDEO_CACHE", os.path.join("/tmp", "ap-gw-video-assets")), "himawari_b13")
 PUBLIC = os.path.join(ROOT, "app", "public", "cyclones")
 OUT_JSON = os.path.join(ROOT, "app", "data", "cyclone_clouds.json")
 
@@ -134,6 +134,9 @@ def colour_to_celsius():
     The scale draws -80 to -70 C as a grey ramp, the same greys it uses for warm
     ground, so those entries are kept apart: (warm table, cold greys)."""
     path = os.path.join(CACHE, "colormap.xml")
+    # The live loop asks for the scale before any frame, so the folder may not exist yet:
+    # on a fresh runner that failed every day from 16 November 2026 and the loop never moved.
+    os.makedirs(CACHE, exist_ok=True)
     if not os.path.exists(path):
         with open(path, "wb") as f:
             f.write(get(COLORMAP))

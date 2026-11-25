@@ -4,6 +4,7 @@ import droughtJson from "../../data/drought_watch_summary.json";
 import { DigestActions } from "../../components/DigestActions";
 import { day } from "../../components/agriculture/waterContextFormat";
 import { basePath, titleCase } from "../../lib/data";
+import { mondayOf } from "../../lib/week";
 import { fieldPriority, PRIORITY_SIGNALS, standsOut } from "../../lib/fieldPriority";
 import { fieldSignals } from "../../lib/fieldSignalsServer";
 import { checkRecord } from "../../lib/cropWaterRecord";
@@ -42,7 +43,9 @@ function moved(item: Item) {
 export default function DigestPage() {
   const rabi = rabiView();
   const res = rabi.reservoirs, soil = rabi.soil;
-  const week = fieldSignals.crossCheck?.issued ?? changes.generatedAt.slice(0, 10);
+  // The forecast's own issue date, and the week it belongs to (named by its Monday).
+  const issued = fieldSignals.crossCheck?.issued ?? changes.generatedAt.slice(0, 10);
+  const week = mondayOf(issued);
   const counts = drought.state.counts;
   // As This Week counts them: the manual's own severe and moderate readings; the in-between ones are not added.
   const severe = counts.severe ?? 0, moderate = counts.moderate ?? 0;
@@ -76,7 +79,7 @@ export default function DigestPage() {
           {rabi.rain ? <div><span>Rain since 1 June</span><b data-tone={rabi.rain.deviationPct !== null && rabi.rain.deviationPct < -19 ? "bad" : undefined}>{signed(rabi.rain.deviationPct)}</b><em>State gauges · to {day(rabi.rain.end, false)}</em></div> : null}
           <div><span>Drought manual</span><b data-tone={severe ? "bad" : undefined}>{severe}<small> severe</small></b><em>{moderate} moderate, of {drought.state.assessed} mandals assessed</em></div>
           <div><span>Daily sensors</span><b>{gw.medianM.toFixed(1)}<small> m</small></b><em>median · {gw.medianYearAgoM.toFixed(1)} m a year ago · {gw.active.toLocaleString("en-IN")} reporting · {day(sensors.latestReading.slice(0, 10), false)}</em></div>
-          {mostShort !== null ? <div><span>Most crops short of water</span><b data-tone={mostShort > 50 ? "bad" : undefined}>{mostShort}<small> mandals</small></b><em>4 or more of 7 crops at mid-season · forecast from {day(week, false)}</em></div> : null}
+          {mostShort !== null ? <div><span>Most crops short of water</span><b data-tone={mostShort > 50 ? "bad" : undefined}>{mostShort}<small> mandals</small></b><em>4 or more of 7 crops at mid-season · forecast from {day(issued, false)}</em></div> : null}
           <div><span>El Niño, Oct–Dec</span><b>{rabi.enso.ondElNinoPct !== null ? `${Math.round(rabi.enso.ondElNinoPct)}%` : "–"}</b><em>{rabi.enso.alert} · NOAA, {day(rabi.enso.issued, false)}</em></div>
         </section>
 

@@ -1,9 +1,12 @@
-"""The third cyclone of the season (provisionally Akvan), measured as it comes.
+"""The third cyclone of the season, Akvan, measured as it came.
 
-IMD expects a very severe cyclonic storm to reach the south Andhra Pradesh coast
-around the night of 19 November 2026. Arnab and Murasu, the two before it, put
+IMD first expected a very severe cyclonic storm on the south Andhra Pradesh coast
+around the night of 19 November 2026. On 18 November it moved the crossing north to
+Narsapur-Puri, and on the morning of 20 November Akvan crossed south coastal Odisha
+and north Andhra Pradesh close to Gopalpur, weakened to a cyclonic storm (70-80 km/h
+gusting 90; IMD bulletin of 11:20 IST). Arnab and Murasu, the two before it, put
 676 TMC on the State but left 175 of its deep water tables with under 50 mm, most
-of them in the south and in Rayalaseema, near where this one is forecast to come
+of them in the south and in Rayalaseema, near where this one was first forecast to come
 ashore. So the question this page answers is not only how much fell but whether it
 reached the mandals the first two missed.
 
@@ -40,9 +43,12 @@ OUT = os.path.join(APP, "cyclone_akvan.json")
 
 NAME = "Akvan"                      # the next name on the north Indian Ocean list; IMD confirms it
 NAME_CONFIRMED = True              # the name on the list; set on 16 Nov as the depression became a cyclone
-LANDFALL = "2026-11-19"             # IMD's expected date (night of 19 November)
-LANDFALL_CONFIRMED = False
-NEAR = "the south Andhra Pradesh coast"
+LANDFALL = "2026-11-20"             # IMD: crossed between 07:30 and 08:30 IST on 20 November
+LANDFALL_CONFIRMED = True           # IMD's 11:20 IST bulletin, 20 November: "The landfall process has completed."
+NEAR = "the south Odisha coast close to Gopalpur, north of Srikakulam district"
+LANDFALL_INTENSITY = "cyclonic storm"           # weakened from a severe cyclonic storm overnight
+FORECAST_NEAR = "the south Andhra Pradesh coast"  # IMD's first forecast, 15-17 November
+FORECAST_INTENSITY = "very severe cyclonic storm"
 BASELINE_RAIN_TO = "2026-11-14"     # the last gauge day before the storm's rain
 CLOSES = "2026-11-24"               # move later if rain is still falling then
 HEAVY_MM = 100
@@ -160,6 +166,7 @@ def main():
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
         "event": f"Cyclone {NAME}", "name": NAME, "nameConfirmed": NAME_CONFIRMED,
         "landfall": LANDFALL, "landfallConfirmed": LANDFALL_CONFIRMED, "near": NEAR,
+        "landfallIntensity": LANDFALL_INTENSITY, "forecastNear": FORECAST_NEAR, "forecastIntensity": FORECAST_INTENSITY,
         "source": "APWRIMS water context (State rain gauges) and telemetry (automatic water-level recorders), against frozen pre-storm baselines",
         "authorizationStatus": "research_pending",
         "rainWindow": {"from": started, "to": counted_to if counting else None, "gaugesTo": gauges_to, "closes": CLOSES,

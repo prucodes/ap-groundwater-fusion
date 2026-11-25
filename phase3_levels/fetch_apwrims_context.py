@@ -62,8 +62,11 @@ HEADLINE_DEPTH_CM = 30
 SOIL_FIRST_YEAR = 2014
 MIN_BASELINE_YEARS = 5
 # The portal answers a date after its latest model run with that run's values,
-# so the real date is found by stepping back until the values change.
-AS_OF_LOOKBACK_DAYS = 10
+# so the real date is found by stepping back until the values change. The model
+# can pause for weeks: its 11 November 2026 run was still the latest on the 24th,
+# and a ten-day look-back then lost the date, so the week-ago change and the
+# same-day baseline were taken from the request date instead of the run's.
+AS_OF_LOOKBACK_DAYS = 30
 # Gauges report late; the newest days are left to settle before they count.
 RAIN_SETTLE_DAYS = 2
 # Every mandal section hangs on the location tree. post() rides out a dropped
@@ -263,6 +266,8 @@ def build_soil(today, tree, boundaries, fetch=soil_table):
         "measure": "Available soil moisture: plant-available water held to each depth, as % of what that soil can hold",
         "asOf": as_of.isoformat() if as_of else None,
         "asOfNote": None if as_of else f"Values unchanged since at least {(today - datetime.timedelta(days=AS_OF_LOOKBACK_DAYS)).isoformat()}; run date unconfirmed.",
+        # Days between the model run and this fetch: a week or more means the portal has paused.
+        "ageDays": (today - as_of).days if as_of else None,
         "weekAgo": (reference - datetime.timedelta(days=7)).isoformat(),
         "depthsCm": list(SOIL_DEPTHS_CM),
         "headlineDepthCm": HEADLINE_DEPTH_CM,
@@ -702,7 +707,7 @@ def summarize(payload):
             "url": rain["url"], "neMonsoon": rain.get("neMonsoon"),
         } if rain else None,
         "soil": {
-            "asOf": soil["asOf"], "weekAgo": soil["weekAgo"], "depthCm": soil["headlineDepthCm"],
+            "asOf": soil["asOf"], "ageDays": soil.get("ageDays"), "weekAgo": soil["weekAgo"], "depthCm": soil["headlineDepthCm"],
             "firstYear": soil["baseline"]["firstYear"], "lastYear": soil["baseline"]["lastYear"], "url": soil["url"],
             **{key: soil["summary"][key] for key in ("mandals", "medianPct", "belowOwnMedian", "withBaseline", "driestOnRecord")},
         } if soil else None,
