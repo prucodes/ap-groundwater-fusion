@@ -21,8 +21,9 @@ is the hand-read network, long and checked; this is the sensors' reading today.
 Use only where access is permitted; this is an authorization-pending research
 sample, not official data. Verified TLS only.
 
-Output: app/data/gw_sensors.json, and one line a day appended to
-app/data/gw_sensors_history.json so the State's line builds up. Daily.
+Output: app/data/gw_sensors.json, one line a day appended to
+app/data/gw_sensors_history.json so the State's line builds up, and every station's
+reading for the day in phase3_levels/data/sensor_station_daily.json. Daily.
 """
 import datetime
 import json
@@ -140,6 +141,12 @@ def main():
     with open(HISTORY, "w") as handle:
         json.dump(history, handle, separators=(",", ":"))
         handle.write("\n")
+    # Each station's own reading, kept a day at a time: the service gives no history, and the
+    # test of whether the sensors can stand in for the monthly wells needs one (sensor_archive.py).
+    import sensor_archive  # noqa: E402
+    archive = sensor_archive.load()
+    sensor_archive.add_day(archive, payload)
+    sensor_archive.save(archive)
     print(f"{len(active)} of {len(stations)} stations reporting; State median {st['medianM']} m against {st['medianYearAgoM']} m a year ago; "
           f"{st['deeperThanYearAgo']} of {st['compared']} deeper; {st['mandalsDeeperThanYearAgo']} of {st['mandalsReporting']} mandals deeper than a year ago")
     return 0

@@ -50,7 +50,7 @@ jobs:
         run: |
           git config user.name "phase3-bot"
           git config user.email "bot@local"
-          git add app/data/gw_sensors.json app/data/gw_sensors_history.json app/data/gw_sensors_state.json app/data/cyclone_akvan.json app/data/live_clouds.json app/public/cyclones/live.mp4 app/public/cyclones/live-poster.jpg
+          git add app/data/gw_sensors.json app/data/gw_sensors_history.json app/data/gw_sensors_state.json phase3_levels/data/sensor_station_daily.json app/data/cyclone_akvan.json app/data/live_clouds.json app/public/cyclones/live.mp4 app/public/cyclones/live-poster.jpg
           if git diff --cached --quiet; then
             echo "nothing new today"
             exit 0
