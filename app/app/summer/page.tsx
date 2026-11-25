@@ -286,7 +286,7 @@ function SummerPriority() {
           <h2 id="summer-priority">
             Start with <b>{first.mandals} mandals</b>: heading past their deepest May on record, and the season&rsquo;s other signs agree.
           </h2>
-          <p>Home to about {lakhs(first.people)} people and {count(first.sources)} drinking-water sources. Four sources the outlook does not use each had to agree, at least {p.rules.firstSigns} of them.</p>
+          <p>Home to about {lakhs(first.people)} people and {count(first.sources)} drinking-water sources. Four sources the outlook does not use each had to agree, at least {p.rules.firstSigns} of them. <Link href="/summer/brief/" data-testid="summer-brief-link">The one-page brief, to print or send →</Link></p>
         </div>
         <div className={styles.pBands} role="img" aria-label={`${first.mandals} to plan first, ${next.mandals} next, ${watch.mandals} to watch`}>
           <div className={styles.pBar}>

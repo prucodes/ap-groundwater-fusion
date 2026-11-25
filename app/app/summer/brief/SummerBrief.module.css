@@ -1,0 +1,83 @@
+/* One A4 sheet: the summer drinking-water brief. Same type and colour as the project brief
+   (app/brief/Brief.module.css), printed by scripts/print-digest.mjs --route summer/brief. */
+.viewer { font-family: var(--font-sans); color: #0d2138; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.viewer * { box-sizing: border-box; }
+.viewer h1, .viewer h2, .viewer h3 { font-family: var(--font-display); margin: 0; letter-spacing: -0.01em; }
+.viewer p { margin: 0; }
+.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 210mm; margin: 0 auto 14px; font-size: 13px; color: var(--ink-soft, #4a5b70); }
+.toolbar a { font-weight: 600; color: var(--teal, #1f8a8a); }
+.download { flex: none; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line-strong, #c9d3df); background: var(--card, #fff); text-decoration: none; }
+.page { width: 210mm; height: 297mm; position: relative; overflow: hidden; background: #f6f8fb; margin: 0 auto 18px; box-shadow: 0 6px 24px rgba(13,33,56,.16); border-radius: 4px; }
+
+/* the band: one insight, and the three groups */
+.band { background: radial-gradient(120% 90% at 90% 0%, #17406b 0%, rgba(23,64,107,0) 60%), linear-gradient(160deg, #061a30 0%, #0a2542 60%, #0d2f52 100%); color: #eaf1f9; padding: 9mm 14mm 6mm; position: relative; overflow: hidden; }
+.band::after { content: ""; position: absolute; right: -34mm; top: -50mm; width: 110mm; height: 110mm; border-radius: 50%; border: 1px solid rgba(127,228,255,.12); }
+.eyebrow { font-family: var(--font-mono); font-size: 8pt; letter-spacing: .16em; text-transform: uppercase; color: #7fd3e0; display: flex; align-items: center; gap: 8px; }
+.eyebrow::before { content: ""; width: 20px; height: 1px; background: #7fd3e0; }
+.band h1 { font-size: 23pt; font-weight: 600; line-height: 1.08; margin-top: 3.5mm; color: #fff; max-width: 165mm; }
+.band h1 b { color: #ffb3a3; font-weight: 600; }
+.sub { font-size: 9.8pt; color: #c9dbec; margin-top: 2.4mm; line-height: 1.45; max-width: 170mm; }
+.sub b { color: #fff; font-weight: 600; }
+.groups { margin-top: 4mm; }
+.bar { display: flex; height: 3.2mm; border-radius: 99px; overflow: hidden; gap: 2px; }
+.bar i { display: block; }
+.key { list-style: none; margin: 2.6mm 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; }
+.key li { font-size: 8pt; color: #a9c4da; line-height: 1.35; padding-left: 4mm; position: relative; }
+.key li::before { content: ""; position: absolute; left: 0; top: 1.1mm; width: 2.4mm; height: 2.4mm; border-radius: 2px; background: var(--c); }
+.key b { display: block; font-family: var(--font-display); font-size: 15pt; color: #fff; font-weight: 600; line-height: 1.05; }
+.key b small { font-size: 8.5pt; color: #c9dbec; font-weight: 500; margin-left: 1mm; }
+
+.body { padding: 4.5mm 14mm 0; }
+.sec { font-family: var(--font-mono); font-size: 7.4pt; letter-spacing: .14em; text-transform: uppercase; color: #1f8a8a; margin: 0 0 2.4mm; display: flex; align-items: center; gap: 6px; }
+.sec::after { content: ""; flex: 1; height: 1px; background: #e0e6ee; }
+
+/* why this summer starts lower */
+.tiles { list-style: none; margin: 0 0 4mm; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; }
+.tiles li { background: #fff; border: 1px solid #e4e9f0; border-radius: 9px; padding: 2.6mm 3mm; }
+.tiles span { display: block; font-size: 7.4pt; color: #667085; text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.tiles b { display: block; font-family: var(--font-display); font-size: 18pt; font-weight: 600; color: #0d2138; margin-top: 1.4mm; line-height: 1; }
+.tiles b small { font-size: 9pt; color: #4a5b70; font-weight: 500; margin-left: .6mm; }
+.tiles b[data-tone="bad"] { color: #a33b2c; }
+.tiles em { display: block; font-style: normal; font-size: 7.6pt; color: #33455c; margin-top: 1.6mm; line-height: 1.38; }
+
+/* where and when */
+.split { display: grid; grid-template-columns: 90mm 1fr; gap: 6mm; align-items: start; }
+.map { display: block; width: 100%; height: auto; }
+.mapKey { display: flex; flex-wrap: wrap; gap: 1.5mm 4mm; font-size: 7.4pt; color: #4a5b70; margin-top: 1.4mm; }
+.mapKey i { display: inline-block; width: 2.6mm; height: 2.6mm; border-radius: 2px; margin-right: 1.2mm; vertical-align: -0.3mm; }
+.side h3 { font-size: 10pt; font-weight: 600; margin: 0 0 1.8mm; }
+.places { list-style: none; margin: 0 0 3.4mm; padding: 0; }
+.places li { display: grid; grid-template-columns: 1fr 22mm 7mm; align-items: center; gap: 2mm; padding: .8mm 0; border-bottom: 1px solid #eef2f6; font-size: 8pt; }
+.places li:last-child { border-bottom: 0; }
+.places span b { display: block; color: #0d2138; font-weight: 600; }
+.places span small { display: block; font-size: 7pt; color: #667085; margin-top: .2mm; }
+.places i { display: block; height: 2mm; border-radius: 99px; background: #a33b2c; }
+.places strong { font-family: var(--font-mono); font-size: 9pt; text-align: right; color: #a33b2c; }
+.clock { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 1.6mm; align-items: end; margin-top: 1mm; }
+.clock div { display: flex; flex-direction: column; justify-content: flex-end; align-items: center; }
+.clock b { font-family: var(--font-mono); font-size: 7.4pt; color: #0d2138; margin-bottom: .8mm; }
+.clock i { flex: none; display: block; width: 100%; border-radius: 3px 3px 0 0; background: #a33b2c; min-height: 1px; }
+.clock i[data-now] { background: #d9826f; }
+.clock span { font-size: 7pt; color: #667085; margin-top: 1mm; }
+.clockNote { font-size: 7.6pt; color: #4a5b70; margin-top: 1.6mm; line-height: 1.4; }
+
+/* trust and limits */
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 4mm; }
+.pair p { font-size: 8pt; line-height: 1.45; color: #24364d; }
+.pair p b { color: #0d2138; }
+
+.foot { position: absolute; left: 14mm; right: 14mm; bottom: 6mm; display: flex; justify-content: space-between; gap: 6mm; font-size: 7pt; color: #8a97a8; border-top: 1px solid #e4e9f0; padding-top: 2mm; line-height: 1.4; }
+.foot b { color: #1f8a8a; font-weight: 600; }
+.foot span:last-child { flex: none; text-align: right; }
+
+/* The sheet stays A4 on screen and is zoomed to fit narrow windows, as the project brief is. */
+@media screen and (max-width: 860px) { .page { zoom: 0.84; } }
+@media screen and (max-width: 720px) { .page { zoom: 0.66; } .toolbar { flex-direction: column; align-items: flex-start; padding: 0 16px; } }
+@media screen and (max-width: 560px) { .page { zoom: 0.52; } }
+@media screen and (max-width: 400px) { .page { zoom: 0.45; } }
+
+@page { size: A4; margin: 0; }
+@media print {
+  .toolbar { display: none !important; }
+  .page { margin: 0; box-shadow: none; border-radius: 0; }
+}

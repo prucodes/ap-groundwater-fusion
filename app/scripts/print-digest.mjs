@@ -1,15 +1,17 @@
 #!/usr/bin/env node
 /**
- * Print the weekly digest (/digest/) to a one-page A4 PDF inside the built site,
- * at out/digest/ap-water-weekly-digest.pdf, so every deploy publishes this week's
- * sheet beside the page. Run after `npm run build:static`:
+ * Print a one-sheet page to a one-page A4 PDF inside the built site, beside the page,
+ * so every deploy publishes this week's sheet. By default the weekly digest (/digest/)
+ * to out/digest/ap-water-weekly-digest.pdf; --route and --file print another, such as
+ * the summer brief. Run after `npm run build:static`:
  *
  *   node scripts/print-digest.mjs --directory out --base /ap-groundwater-fusion
+ *   node scripts/print-digest.mjs --directory out --base /ap-groundwater-fusion --route summer/brief --file ap-summer-water-brief.pdf
  *
  * --base is the PAGES_BASE_PATH the site was built with ("" for a local build).
  * It serves the build with scripts/serve-static.mjs on a loopback port, prints
- * with Playwright's Chromium, and checks the result is a single page: a digest
- * that spills onto a second sheet is reported, never silently shipped as one.
+ * with Playwright's Chromium, and checks the result is a single page: a sheet
+ * that spills onto a second page is reported, never silently shipped as one.
  */
 import { spawn } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -25,7 +27,8 @@ const flag = (name, fallback) => {
 const directory = resolve(APP_DIR, flag("directory", "out"));
 const base = flag("base", process.env.PAGES_BASE_PATH ?? "").replace(/\/$/, "");
 const port = Number(flag("port", 3291));
-const output = join(directory, "digest", "ap-water-weekly-digest.pdf");
+const route = flag("route", "digest").replace(/^\/|\/$/g, "");
+const output = join(directory, ...route.split("/"), flag("file", "ap-water-weekly-digest.pdf"));
 
 const server = spawn(process.execPath, [join(APP_DIR, "scripts/serve-static.mjs"), "--port", String(port), "--bind", "127.0.0.1", "--directory", directory, "--base", base || "/"], { stdio: "inherit" });
 const stop = () => { if (!server.killed) server.kill(); };
@@ -42,7 +45,7 @@ async function ready(url, tries = 50) {
   throw new Error(`static server did not answer at ${url}`);
 }
 
-const url = `http://127.0.0.1:${port}${base}/digest/`;
+const url = `http://127.0.0.1:${port}${base}/${route}/`;
 let browser;
 try {
   await ready(url);
@@ -58,7 +61,7 @@ try {
   const pages = (readFileSync(output, "latin1").match(/\/Type\s*\/Page[^s]/g) ?? []).length;
   console.log(`Printed ${url} to ${output}: ${pages} page${pages === 1 ? "" : "s"}`);
   if (pages !== 1) {
-    console.error("The digest no longer fits one A4 sheet; shorten it before the next deploy.");
+    console.error(`/${route}/ no longer fits one A4 sheet; shorten it before the next deploy.`);
     process.exitCode = 1;
   }
 } finally {
