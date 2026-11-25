@@ -1,5 +1,8 @@
 """The last two days over the Bay of Bengal from Himawari-9, refreshed while a storm is near.
 
+Once the storm has gone, FROZEN_END fixes the window on its landfall instead: the loop
+then shows the 48 hours to that hour, says so, and later runs leave it alone.
+
 The same infrared redraw as the cyclone cloud film (build_cyclone_clouds.py), over
 the same frame, but a rolling window: the 48 hours before the newest frame NASA
 GIBS can serve, one an hour. Run each morning and evening by the cyclone page's
@@ -28,6 +31,10 @@ OUT = os.path.join(ROOT, "app", "data", "live_clouds.json")
 HOURS = 48
 FPS = 8
 LAG_H = 2           # GIBS posts a frame about an hour after it is taken
+# Akvan crossed near Gopalpur between 02:00 and 06:30 UTC on 20 November 2026 (IMD), and was a
+# low over Odisha by evening. The loop keeps its last two days at sea and the landfall.
+FROZEN_END = datetime.datetime(2026, 11, 20, 12, tzinfo=datetime.timezone.utc)
+FROZEN_LABEL = "Himawari-9 infrared · Akvan's last 48 hours at sea, to landfall"
 
 
 def frame(t, table):
@@ -49,6 +56,16 @@ def frame(t, table):
 
 def main():
     newest = datetime.datetime.now(datetime.timezone.utc).replace(minute=0, second=0, microsecond=0) - datetime.timedelta(hours=LAG_H)
+    if FROZEN_END:
+        newest = FROZEN_END
+        try:
+            with open(OUT) as handle:
+                published = json.load(handle)
+        except (OSError, ValueError):
+            published = {}
+        if published.get("frames") and published["frames"][-1] == clouds.stamp(newest) and published.get("live") is False:
+            print(f"  live loop frozen on the 48 hours to {published['frames'][-1]}; nothing to rebuild")
+            return 0
     hours = [newest - datetime.timedelta(hours=h) for h in range(HOURS - 1, -1, -1)]
     table = clouds.colour_to_celsius()
     stamps, held, last = [], [], None
@@ -76,6 +93,7 @@ def main():
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
         "source": "Himawari-9 AHI band 13 (clean infrared), Japan Meteorological Agency, via NASA GIBS",
         "width": width, "height": height, "fps": FPS, "frames": stamps, "held": held,
+        "live": not FROZEN_END, "label": FROZEN_LABEL if FROZEN_END else "Himawari-9 infrared · last 48 hours",
         "outline": clouds.state_outline(),
         "video": "cyclones/live.mp4", "posterImage": "cyclones/live-poster.jpg",
     }

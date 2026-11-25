@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import akvan from "../data/cyclone_akvan.json";
+import liveClouds from "../data/live_clouds.json";
 
 test("the third cyclone leads the cyclone page and says what is forecast and what is counted", async ({ page }) => {
   await page.goto("/cyclones/");
@@ -7,6 +8,12 @@ test("the third cyclone leads the cyclone page and says what is forecast and wha
   await expect(card).toContainText("The third cyclone");
   if (!akvan.nameConfirmed) await expect(card).toContainText("name to be confirmed by IMD");
   if (!akvan.landfallConfirmed) await expect(card).toContainText("expected ashore");
+  // Once ashore, the lede names where it was forecast and where it went, not the forecast alone.
+  if (akvan.landfallConfirmed && akvan.state) {
+    await expect(card.getByTestId("akvan-ashore")).toContainText("came ashore");
+    await expect(card.getByTestId("akvan-ashore")).toContainText(akvan.near);
+    await expect(card).not.toContainText("forecast to land");
+  }
   await expect(card).toContainText(`of ${akvan.missedBefore.mandals}`);
   await expect(card).toContainText(`of ${akvan.sensors.compared.toLocaleString("en-IN")}`);
   await expect(page.getByTestId("akvan-map")).toBeVisible();
@@ -15,7 +22,7 @@ test("the third cyclone leads the cyclone page and says what is forecast and wha
 test("the third cyclone is shown live from Himawari beside the State at night", async ({ page, request }) => {
   await page.goto("/cyclones/");
   const live = page.getByTestId("akvan-live");
-  await expect(live).toContainText("Himawari-9 infrared · last 48 hours");
+  await expect(live).toContainText((liveClouds as { label?: string }).label ?? "Himawari-9 infrared · last 48 hours");
   await expect(live.locator("figcaption b")).toContainText("IST");
   const src = await live.locator("video").getAttribute("src");
   expect((await request.head(src!)).ok()).toBe(true);

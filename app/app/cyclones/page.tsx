@@ -10,6 +10,7 @@ import { CloudToAquifer, type CloudFilm } from "../../components/CloudToAquifer"
 import { CycloneAkvan } from "../../components/CycloneAkvan";
 import cloudFilm from "../../data/cyclone_clouds.json";
 import cycloneTanks from "../../data/cyclone_tanks.json";
+import akvanJson from "../../data/cyclone_akvan.json";
 import { TankSwipe } from "../../components/TankSwipe";
 import { mapGeometry } from "../../lib/data";
 import { IconCloudRain, IconCyclone, IconDroplet, IconTarget, IconWaves } from "../../components/icons";
@@ -22,7 +23,7 @@ import styles from "./Arnab.module.css";
 
 export const metadata: Metadata = {
   title: "Cyclones Arnab, Murasu and Akvan | AP Water Intelligence",
-  description: "Cyclone Akvan as it comes, and where the rain of Cyclones Arnab and Murasu fell across Andhra Pradesh, where the water went, and whether the water table rose where it had room. Updated daily.",
+  description: "Cyclone Akvan's landfall from orbit, and where the rain of Cyclones Arnab, Murasu and Akvan fell across Andhra Pradesh, where the water went, and whether the water table rose where it had room.",
 };
 
 const signed = (v: number, unit: string) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(1)} ${unit}`;
@@ -127,11 +128,14 @@ export default function ArnabPage() {
         : <>Counted from {arnabDay(mw.from)} to {arnabDay(mw.to)}: <b>{ms.heavyMandals} mandals</b> got {d.heavyMm} mm or more.</>
   ) : null;
 
+  // Akvan, once ashore and counted: what it added to the first two storms' story.
+  const ak = akvanJson as unknown as { landfallConfirmed: boolean; state: { rainTmc: number } | null; missedBefore: { mandals: number; reached: number; reachedMm: number } };
+  const akvanAshore = ak.landfallConfirmed && ak.state ? { rainTmc: ak.state.rainTmc, reached: ak.missedBefore.reached, missed: ak.missedBefore.mandals, reachedMm: ak.missedBefore.reachedMm } : null;
   return (
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero
         title={mu ? "Cyclones Arnab, Murasu and Akvan" : "Cyclone Arnab"}
-        brief={brief("/cyclones", tg && ts ? <>Arnab and Murasu brought <b>{formatNumber(Math.round(ts.rainTmc))} TMC</b> in {tg.rainWindow.days} days{tg.rainWindow.open ? " so far" : ""}, but it fell on the coast: <b>{ts.deepStillDry} of {ts.deepMandals}</b> deep-table source records got under {tg.stillDryMm} mm from both, most in {listOf(tg.stillDry.slice(0, 3).map(x => x.district))}.</> : <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
+        brief={brief("/cyclones", tg && ts ? <>Arnab and Murasu brought <b>{formatNumber(Math.round(ts.rainTmc))} TMC</b> in {tg.rainWindow.days} days{tg.rainWindow.open ? " so far" : ""}, but it fell on the coast: <b>{ts.deepStillDry} of {ts.deepMandals}</b> deep-table source records got under {tg.stillDryMm} mm from both, most in {listOf(tg.stillDry.slice(0, 3).map(x => x.district))}.{akvanAshore ? <> Akvan turned north to Odisha and added <b>{formatNumber(Math.round(akvanAshore.rainTmc))} TMC</b>; {akvanAshore.reached === 0 ? "none" : <b>{akvanAshore.reached}</b>} of the {akvanAshore.missed} deep-table mandals the first two missed got {akvanAshore.reachedMm} mm.</> : null}</> : <>Arnab: <b>{s.rainTmc.toFixed(0)} TMC</b> of rain in {d.rainWindow.days} days, and only <b>{s.deepHeavyMandals} of {s.deepMandals}</b> deep-table mandals got 100 mm or more.{mu && mw && ms ? <> Murasu came ashore near {mu.landfallNear} on {arnabDay(mu.landfall)}; {mw.to < mu.landfall ? "its rain is still being counted" : <><b>{ms.rainTmc.toFixed(0)} TMC</b> {mw.open ? "so far" : `in ${mw.days} days`}, and <b>{ms.deepHeavyMandals} of {ms.deepMandals}</b> deep-table mandals got 100 mm or more</>}.</> : null}</>)}
         showChips={false}
         variant="compact"
       />
@@ -398,7 +402,7 @@ export default function ArnabPage() {
       <details className={`${shared.block} ${styles.notes}`}>
         <summary><IconCyclone /> Sources and limits</summary>
         <p>{d.caveat}</p>
-        <p>Rain: AP Directorate of Economics and Statistics gauges. Soil moisture: NRSC model. Reservoirs: State telemetry. All via APWRIMS, as a research sample pending authorisation. Updated every morning until 15 November, then weekly. <Link href="/monsoon/">Monsoon Watch →</Link></p>
+        <p>Rain: AP Directorate of Economics and Statistics gauges. Soil moisture: NRSC model. Reservoirs: State telemetry. All via APWRIMS, as a research sample pending authorisation. Updated every morning until 30 November, then weekly. <Link href="/monsoon/">Monsoon Watch →</Link></p>
       </details>
       </details>
     </div>

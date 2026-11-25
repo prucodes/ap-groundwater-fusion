@@ -6,7 +6,7 @@ import { StateOutlineMap } from "./StateOutlineMap";
 import { LiveLoop, type LiveClouds } from "./LiveLoop";
 import styles from "./CycloneAkvan.module.css";
 
-/* The third cyclone, as it comes (phase3_levels/build_cyclone_akvan.py), on the same
+/* The third cyclone, as it came (phase3_levels/build_cyclone_akvan.py), on the same
    night-sky band as the satellite films: the storm itself from Himawari on the left,
    and on the right the State at night with the mandals it matters to most lit up.
    Before the rain is counted those are the deep water tables the first two storms
@@ -16,6 +16,7 @@ import styles from "./CycloneAkvan.module.css";
 
 type Akvan = {
   event: string; name: string; nameConfirmed: boolean; landfall: string; landfallConfirmed: boolean; near: string;
+  landfallIntensity?: string; forecastNear?: string; forecastIntensity?: string;
   rainWindow: { from: string; to: string | null; gaugesTo: string; closes: string; open: boolean; baselineTo: string };
   state: { rainTmc: number; normalTmc: number; seasonDeviationBefore: number; seasonDeviationAfter: number; mandals: number; heavyMandals: number } | null;
   missedBefore: { mandals: number; reached: number; reachedMm: number; medianMm: number | null };
@@ -66,13 +67,14 @@ function Response({ a }: { a: Akvan }) {
   const ticks = Array.from({ length: span + 1 }, (_, i) => addDays(first, i));
   const now = pct[pct.length - 1] ?? 0, lastPoint = t[t.length - 1];
   const answered = a.sensors.districts.filter(d => d.risen > 0).slice(0, 5);
+  const median = a.sensors.medianRiseM ?? 0;
   return (
     <section className={styles.response} aria-labelledby="akvan-response-title" data-testid="akvan-response">
       <div className={styles.responseHead}>
         <span className={styles.kicker}>The water table&rsquo;s answer</span>
         <h3 id="akvan-response-title">
           {a.sensors.risen
-            ? `${Math.round(now)}% of the State’s sensors have risen since ${day(a.sensors.baseline)}${a.sensors.medianRiseM ? `, by ${a.sensors.medianRiseM.toFixed(2)} m in the middle sensor` : ""}`
+            ? `${Math.round(now)}% of the State’s sensors have risen since ${day(a.sensors.baseline)}${median > 0 ? `, the middle sensor ${median.toFixed(2)} m nearer the surface` : median < 0 ? `; the middle sensor is ${Math.abs(median).toFixed(2)} m deeper` : ""}`
             : `${a.sensors.compared.toLocaleString("en-IN")} sensors are watching. None has risen yet.`}
         </h3>
         <p>Each automatic recorder against its own reading on {at(a.sensors.baseline)} IST, before the storm reached the coast. A sensor counts once its water table is more than 10 cm nearer the surface.</p>
@@ -139,16 +141,22 @@ export function CycloneAkvan() {
     return [Math.round(px * 10) / 10, Math.round(py * 10) / 10, rise > RISE_M ? Math.min(1, rise / FULL_GLOW_M) : 0] as [number, number, number];
   });
   const landfall = `${a.landfallConfirmed ? "came ashore" : "expected ashore"} on ${a.near}, ${a.landfallConfirmed ? day(a.landfall) : `around the night of ${day(a.landfall)}`}`;
+  // Once ashore, the lede says where it was forecast and where it went, and answers the page's question.
+  const reachedText = a.missedBefore.reached === 0 ? "none of them" : `${a.missedBefore.reached} of them`;
   return (
     <div className={styles.wrap} data-testid="cyclone-akvan">
       <div className={styles.head}>
-        <span className={styles.kicker}><span className={styles.liveDot} aria-hidden="true" />The third cyclone · {a.name}{a.nameConfirmed ? "" : " (name to be confirmed by IMD)"}</span>
+        <span className={styles.kicker}>{a.rainWindow.open ? <span className={styles.liveDot} aria-hidden="true" /> : null}The third cyclone · {a.name}{a.nameConfirmed ? "" : " (name to be confirmed by IMD)"}</span>
         <h2>{counting ? `What ${a.name} brought, and whether it reached the mandals the first two missed` : `${a.name} is heading for the part of the State the first two storms missed`}</h2>
-        <p>
+        {a.landfallConfirmed && counting ? <p data-testid="akvan-ashore">
+          {`Forecast for ${a.forecastNear ?? "the Andhra Pradesh coast"}${a.forecastIntensity ? ` as a ${a.forecastIntensity}` : ""}, ${a.name} turned north and came ashore on ${day(a.landfall)} on ${a.near}${a.landfallIntensity ? `, weakened to a ${a.landfallIntensity}` : ""}. Arnab and Murasu had left `}
+          <b>{`${a.missedBefore.mandals} of the State’s deep water tables`}</b>
+          {` with under ${a.missedBefore.reachedMm} mm, most of them in the south and in Rayalaseema; ${reachedText} got ${a.missedBefore.reachedMm} mm or more from this one.`}
+        </p> : <p>
           {`IMD’s forecast: a very severe cyclonic storm, ${landfall}. Arnab and Murasu left `}
           <b>{`${a.missedBefore.mandals} of the State’s deep water tables`}</b>
           {` with under ${a.missedBefore.reachedMm} mm, most of them in the south and in Rayalaseema, near where this one is forecast to land.`}
-        </p>
+        </p>}
       </div>
 
       <div className={styles.panels}>
