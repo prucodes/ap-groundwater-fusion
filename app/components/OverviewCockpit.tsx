@@ -48,7 +48,7 @@ export type OverviewSummer = { beyond: number; beyondDeep: number; deepM: number
 
 export type OverviewProof = {
   tanksBelowPct: number | null; tanksEmptier: number; tanksScored: number; drinkingGroundwaterPct: number;
-  crossForecastPct: number; crossMeasuredPct: number; ledgerTracked: number;
+  crossForecastPct: number; crossMeasuredPct: number; ledgerTracked: number; ledgerScored?: number;
 };
 
 /** The two cyclones on one count, worked out on the server (the cyclone file carries three maps). */
@@ -486,7 +486,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
           <b>Checked on wells it never saw.</b>{" "}In usual seasons the forecast called the direction of CGWB&rsquo;s own
           wells right {proof.crossForecastPct}% of the time, as often as the two measured networks agree with each
           other ({proof.crossMeasuredPct}%). <b>And on the record:</b>{" "}{proof.ledgerTracked.toLocaleString("en-IN")} published
-          forecasts are frozen and will be scored as their months are measured.{" "}
+          forecasts are frozen{(proof.ledgerScored ?? 0) >= 100 ? `, and ${proof.ledgerScored!.toLocaleString("en-IN")} have been scored against the readings for their month` : " and will be scored as their months are measured"}.{" "}
           <Link href="/methodology/#forecast-ledger">How both are kept</Link>.
         </p>
       ) : null}

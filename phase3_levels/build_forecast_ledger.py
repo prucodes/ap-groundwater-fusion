@@ -24,10 +24,12 @@ each snapshot is frozen under its own issue date with the commit that published
 it, so the earliest entries are exactly what the site showed at the time.
 """
 import argparse
+import collections
 import datetime
 import hashlib
 import json
 import os
+import statistics
 import subprocess
 import sys
 
@@ -39,6 +41,18 @@ SERIES = os.path.join(APP, "mandal_observation_series_v2.json")
 LEDGER = os.path.join(HERE, "data", "forecast_ledger")
 OUT = os.path.join(APP, "forecast_ledger.json")
 RECORDS_IN_GIT = "app/data/mandal_groundwater_records_v2.json"
+# The fewest scored forecasts the site states a verdict on (components/ForecastLedger.tsx).
+MIN_TO_JUDGE = 100
+
+
+def month_add(ym, n):
+    year, month = divmod(int(ym[:4]) * 12 + int(ym[5:7]) - 1 + n, 12)
+    return f"{year:04d}-{month + 1:02d}"
+
+
+def median_or_none(values):
+    values = [v for v in values if v is not None]
+    return round(statistics.median(values), 2) if values else None
 
 
 def freeze_payload(records, issued, source):
@@ -114,17 +128,32 @@ def summarise(weeks, observed):
             if key not in first or week["issued"] < first[key]["issued"]:
                 first[key] = {"issued": week["issued"], "origin": origin, "value": value,
                               "lower": lower, "upper": upper}
-    scored, pending = [], {}
+    scored, pending, waiting = [], {}, collections.defaultdict(list)
     for (mid, target), f in first.items():
-        actual = observed.get(mid, {}).get(target)
+        seen = observed.get(mid, {})
+        actual = seen.get(target)
+        start = seen.get(f["origin"])
+        year_ago = seen.get(month_add(target, -12))
         if actual is None:
             pending[target] = pending.get(target, 0) + 1
+            # What the month's test can already be read against: the latest reading since the origin.
+            since = [p for p in seen if f["origin"] < p < target]
+            latest = max(since) if since else None
+            waiting[target].append({
+                "issued": f["issued"], "origin": f["origin"], "latest": latest,
+                "expected": None if start is None else f["value"] - start,
+                "soFar": None if start is None or latest is None else seen[latest] - start,
+                "yearAgoGap": None if year_ago is None or latest is None else year_ago - seen[latest]})
             continue
-        start = observed.get(mid, {}).get(f["origin"])
-        scored.append({"target": target, "error": f["value"] - actual,
+        scored.append({"target": target, "origin": f["origin"], "error": f["value"] - actual,
                        "noChange": None if start is None else start - actual,
                        "inBand": None if f["lower"] is None or f["upper"] is None
-                       else f["lower"] <= actual <= f["upper"]})
+                       else f["lower"] <= actual <= f["upper"],
+                       # Metres below ground, so negative is the water table rising: what the forecast
+                       # expected from its origin, what came, and where the same month stood a year before.
+                       "expected": None if start is None else f["value"] - start,
+                       "measured": None if start is None else actual - start,
+                       "yearAgoGap": None if year_ago is None else year_ago - actual})
 
     def block(rows):
         if not rows:
@@ -140,8 +169,26 @@ def summarise(weeks, observed):
             base = sum(abs(r["noChange"]) for r in paired) / len(paired)
             out.update({"pairedForecasts": len(paired), "pairedMaeM": round(model, 3),
                         "noChangeMaeM": round(base, 3),
-                        "gainPct": round(100 * (1 - model / base), 1) if base else None})
+                        "gainPct": round(100 * (1 - model / base), 1) if base else None,
+                        "origin": collections.Counter(r["origin"] for r in paired).most_common(1)[0][0],
+                        "expectedChangeM": median_or_none(r["expected"] for r in paired),
+                        "measuredChangeM": median_or_none(r["measured"] for r in paired),
+                        "yearAgoMinusMeasuredM": median_or_none(r["yearAgoGap"] for r in rows)})
         return out
+
+    def next_test():
+        """The next month with enough forecasts to judge, and how far the water has moved since their origin."""
+        due = sorted(t for t, rows in waiting.items() if len(rows) >= MIN_TO_JUDGE)
+        if not due:
+            return None
+        target, rows = due[0], waiting[due[0]]
+        common = lambda key: collections.Counter(r[key] for r in rows if r[key]).most_common(1)[0][0] \
+            if any(r[key] for r in rows) else None
+        return {"target": target, "forecasts": len(rows), "issued": common("issued"), "origin": common("origin"),
+                "latestMonth": common("latest"),
+                "expectedChangeM": median_or_none(r["expected"] for r in rows),
+                "soFarChangeM": median_or_none(r["soFar"] for r in rows),
+                "yearAgoMinusLatestM": median_or_none(r["yearAgoGap"] for r in rows)}
 
     by_target = {t: block([r for r in scored if r["target"] == t]) for t in sorted({r["target"] for r in scored})}
     return {
@@ -159,6 +206,7 @@ def summarise(weeks, observed):
         "scored": block(scored),
         "byTarget": by_target,
         "pendingByTarget": dict(sorted(pending.items())),
+        "nextTest": next_test(),
         "weeks": [{"issued": w["issued"], "forecasts": len(w["forecasts"]), "source": w["source"], "sha256": h}
                   for w, h in weeks],
     }

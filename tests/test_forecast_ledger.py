@@ -69,3 +69,24 @@ def test_the_weekly_refresh_keeps_and_commits_the_ledger():
     workflow = open(WORKFLOW).read()
     assert "app/data/forecast_ledger.json" in workflow
     assert "phase3_levels/data \\" in workflow  # the frozen weeks live under phase3_levels/data
+
+
+def test_the_next_test_says_what_the_forecasts_expected_and_how_far_the_water_has_moved(monkeypatch):
+    b = builder()
+    monkeypatch.setattr(b, "MIN_TO_JUDGE", 2)
+    # Two mandals forecast in September from August for November; October is measured, November is not.
+    forecasts = {"a": ["2026-08", "2026-11", 4.0, 3.0, 5.0], "b": ["2026-08", "2026-11", 8.0, 7.0, 9.0]}
+    observed = {"a": {"2026-08": 5.0, "2026-10": 4.8, "2025-11": 2.0},
+                "b": {"2026-08": 9.0, "2026-10": 8.8, "2025-11": 6.0}}
+    s = b.summarise([week("2026-09-28", forecasts)], observed)
+    t = s["nextTest"]
+    assert (t["target"], t["origin"], t["issued"], t["latestMonth"], t["forecasts"]) == ("2026-11", "2026-08", "2026-09-28", "2026-10", 2)
+    assert t["expectedChangeM"] == -1.0, "negative is nearer the surface: a 1 m rise expected"
+    assert t["soFarChangeM"] == -0.2
+    assert t["yearAgoMinusLatestM"] == -2.8, "last November stood nearer the surface than October now"
+    # Once November is measured, the same figures move into the month's score.
+    observed["a"]["2026-11"], observed["b"]["2026-11"] = 4.7, 8.7
+    scored = b.summarise([week("2026-09-28", forecasts)], observed)
+    assert scored["nextTest"] is None
+    month = scored["byTarget"]["2026-11"]
+    assert (month["origin"], month["expectedChangeM"], month["measuredChangeM"], month["yearAgoMinusMeasuredM"]) == ("2026-08", -1.0, -0.3, -2.7)

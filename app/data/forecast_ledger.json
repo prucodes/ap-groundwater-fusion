@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-23T11:18:02+00:00",
+ "generatedAt": "2026-11-25T16:20:17+00:00",
  "kind": "prospective_track_record",
  "rule": "Each mandal's earliest-issued 3-month forecast for a target month, frozen the week it was published and never changed, against the reading later measured for that month. The no-change rule repeats the reading at the forecast's origin. Bias is forecast minus measured, metres below ground: negative means more water was forecast than came.",
  "weeksFrozen": 16,
@@ -15,7 +15,11 @@
   "pairedForecasts": 4,
   "pairedMaeM": 8.753,
   "noChangeMaeM": 1.867,
-  "gainPct": -368.9
+  "gainPct": -368.9,
+  "origin": "2026-06",
+  "expectedChangeM": -2.01,
+  "measuredChangeM": -1.38,
+  "yearAgoMinusMeasuredM": -4.45
  },
  "byTarget": {
   "2026-09": {
@@ -26,7 +30,11 @@
    "pairedForecasts": 3,
    "pairedMaeM": 2.657,
    "noChangeMaeM": 1.406,
-   "gainPct": -89.0
+   "gainPct": -89.0,
+   "origin": "2026-06",
+   "expectedChangeM": -0.88,
+   "measuredChangeM": -0.06,
+   "yearAgoMinusMeasuredM": -2.94
   },
   "2026-10": {
    "forecasts": 1,
@@ -36,7 +44,11 @@
    "pairedForecasts": 1,
    "pairedMaeM": 27.04,
    "noChangeMaeM": 3.25,
-   "gainPct": -732.0
+   "gainPct": -732.0,
+   "origin": "2026-07",
+   "expectedChangeM": -30.29,
+   "measuredChangeM": -3.25,
+   "yearAgoMinusMeasuredM": -25.39
   }
  },
  "pendingByTarget": {
@@ -44,6 +56,16 @@
   "2026-11": 642,
   "2026-12": 650,
   "2027-01": 672
+ },
+ "nextTest": {
+  "target": "2026-11",
+  "forecasts": 642,
+  "issued": "2026-09-28",
+  "origin": "2026-08",
+  "latestMonth": "2026-10",
+  "expectedChangeM": -1.31,
+  "soFarChangeM": -0.41,
+  "yearAgoMinusLatestM": -2.47
  },
  "weeks": [
   {

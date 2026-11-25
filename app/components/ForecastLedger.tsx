@@ -8,14 +8,36 @@ import { IconActivity } from "./icons";
  * only stated once enough forecasts have been scored to mean something. */
 
 type Block = { forecasts: number; maeM: number; biasM: number; bandCoveragePct: number | null;
-  pairedForecasts?: number; noChangeMaeM?: number; gainPct?: number | null } | null;
+  pairedForecasts?: number; noChangeMaeM?: number; gainPct?: number | null;
+  origin?: string; expectedChangeM?: number | null; measuredChangeM?: number | null; yearAgoMinusMeasuredM?: number | null } | null;
+/** The next month with enough forecasts to judge, read against the latest reading since their origin. */
+type NextTest = { target: string; forecasts: number; issued: string | null; origin: string | null; latestMonth: string | null;
+  expectedChangeM: number | null; soFarChangeM: number | null; yearAgoMinusLatestM: number | null } | null;
 type Ledger = { weeksFrozen: number; firstIssued: string | null; lastIssued: string | null; forecastsTracked: number;
-  scored: Block; pendingByTarget: Record<string, number> };
+  scored: Block; byTarget: Record<string, NonNullable<Block>>; pendingByTarget: Record<string, number>; nextTest?: NextTest };
 
 const MIN_TO_JUDGE = 100;
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const monthName = (period: string) => `${MONTHS[Number(period.slice(5, 7)) - 1]} ${period.slice(0, 4)}`;
+const month = (period: string) => MONTHS[Number(period.slice(5, 7)) - 1];
+/** Metres below ground, so negative is the water table rising. */
+const moved = (m: number) => Math.abs(m) < 0.05 ? "about where it was" : `${Math.abs(m).toFixed(1)} m ${m < 0 ? "nearer the surface" : "deeper"}`;
+/* Each forecast leans partly on the same month a year earlier (build_forecast.py). Where
+   that month stood a metre or more away from this year's reading, the lean is worth saying. */
+const LEAN_M = 1;
+function Lean({ target, gapM, against }: { target: string; gapM: number | null | undefined; against: string }) {
+  if (gapM == null || Math.abs(gapM) < LEAN_M) return null;
+  return <> Each forecast also leans partly on the same month a year earlier, and last {month(target)} the water table stood {moved(gapM)} than {against}: {gapM < 0 ? "in a drier year that lean pulls a forecast too shallow" : "in a wetter year that lean pulls a forecast too deep"}.</>;
+}
 const day = (iso: string | null) => iso ? new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }) : "";
+
+/** The fold's one-line summary on Methodology: a verdict only once there is one to give. */
+export function ledgerFoldNote() {
+  const scored = (ledger as unknown as Ledger).scored?.forecasts ?? 0;
+  return scored >= MIN_TO_JUDGE
+    ? `Frozen calls against measured months: ${scored.toLocaleString("en-IN")} scored`
+    : "Frozen calls and measured outcomes; still too few to judge";
+}
 
 export function ForecastLedger() {
   const data = ledger as unknown as Ledger;
@@ -26,6 +48,9 @@ export function ForecastLedger() {
   // reading for an older month should not stand in for the next real test.
   const pending = Object.entries(data.pendingByTarget).sort((a, b) => a[0].localeCompare(b[0]));
   const next = pending.find(([, n]) => n >= MIN_TO_JUDGE) ?? pending.sort((a, b) => b[1] - a[1])[0];
+  // The latest month judged on its own, for what its forecasts expected against what came.
+  const lastJudged = Object.entries(data.byTarget ?? {}).filter(([, b]) => b.forecasts >= MIN_TO_JUDGE).sort((a, b) => b[0].localeCompare(a[0]))[0];
+  const test = data.nextTest;
   return (
     <section className="card" id="forecast-ledger" aria-labelledby="forecast-ledger-title" data-testid="forecast-ledger">
       <div className="cardHead">
@@ -51,6 +76,20 @@ export function ForecastLedger() {
         )}
         {next ? <div className="monsoonStat"><span>Next to be scored</span><strong>{next[1].toLocaleString("en-IN")}</strong><em>forecasts for {monthName(next[0])}, when that month&rsquo;s readings arrive</em></div> : null}
       </div>
+      {judged && lastJudged && lastJudged[1].origin && lastJudged[1].expectedChangeM != null && lastJudged[1].measuredChangeM != null ? (
+        <p className="cardNote" data-testid="forecast-ledger-expected">
+          The forecasts for {monthName(lastJudged[0])} expected the median mandal&rsquo;s water table {moved(lastJudged[1].expectedChangeM)} than
+          in {month(lastJudged[1].origin)}; it came {moved(lastJudged[1].measuredChangeM)}.
+          <Lean target={lastJudged[0]} gapM={lastJudged[1].yearAgoMinusMeasuredM} against={`this ${month(lastJudged[0])}`} />
+        </p>
+      ) : !judged && test && test.origin && test.issued && test.expectedChangeM != null ? (
+        <p className="cardNote" data-testid="forecast-ledger-next">
+          The {test.forecasts.toLocaleString("en-IN")} forecasts for {monthName(test.target)} were frozen on {day(test.issued)} from {month(test.origin)}&rsquo;s
+          readings. They expect the median mandal&rsquo;s water table {moved(test.expectedChangeM)} than in {month(test.origin)}
+          {test.latestMonth && test.soFarChangeM != null ? <>; {month(test.latestMonth)}&rsquo;s readings had it {moved(test.soFarChangeM)}</> : null}.
+          {test.latestMonth ? <Lean target={test.target} gapM={test.yearAgoMinusLatestM} against={`in ${month(test.latestMonth)} this year`} /> : null}
+        </p>
+      ) : null}
       <p className="cardNote">
         Each mandal is scored on its earliest forecast for a month, the longest lead and the hardest test. Each
         frozen week carries a SHA-256 fingerprint, and the weekly commit dates it, so the record cannot be
