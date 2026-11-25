@@ -269,7 +269,7 @@ function TankSection() {
             <p className="cardNote">
               Tank beds are the water that came and went with the seasons both before and after 2000 in the JRC Global Surface Water
               record (1984 to 2021): {t.tankBodies.toLocaleString("en-IN")} water bodies of 2 to 5,000 ha with little permanent water,
-              {" "}{km2(t.tankHa)} km² in {t.tankMandals} mandals. Permanent lakes and lagoons, reservoir drawdown rings and water that
+              {" "}{km2(t.tankHa)} km² in {t.tankMandals}{" "}mandals. Permanent lakes and lagoons, reservoir drawdown rings and water that
               became permanent after 2000, largely aquaculture, are left out. Water is Sentinel-2&rsquo;s own scene classification
               at 80 m, each pixel&rsquo;s share of clear looks that saw water from 15 September to 15 October, against the median of
               the same weeks in {t.usualYears[0]} to {t.usualYears[1]}. A mandal is read where at least half its tank bed was seen

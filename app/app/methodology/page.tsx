@@ -5,6 +5,7 @@ import { methodFilm, methodFilmSeconds } from "../../lib/methodFilm";
 import { DataProvenanceDates } from "../../components/DataProvenanceDates";
 import { WatchEvidenceStatus } from "../../components/WatchEvidenceStatus";
 import { ForecastLedger, ledgerFoldNote } from "../../components/ForecastLedger";
+import { TrackRecord } from "../../components/TrackRecord";
 import { IconAlert, IconCloudRain, IconDroplet, IconFlow, IconInfo, IconLeaf, IconSatellite } from "../../components/icons";
 import { basePath, mapGeometry, modelCard } from "../../lib/data";
 import { stateSummary } from "../../lib/stateSummary";
@@ -121,6 +122,7 @@ export default function MethodologyPage() {
       />
       <details className="foldMore"><summary><span>Source dates and periods</span><span>Each dataset has its own clock</span></summary><DataProvenanceDates /></details>
       <section className="card" aria-label="How to read the evidence"><h2>Readings, estimates and planning checks</h2><p className="cardNote">Measured wells establish groundwater depth. Models carry uncertainty; satellite and weather sources provide context. Seasonal shortfall flags remain provisional while the baseline is reviewed. Crop-water checks use reference crops and stages; their validation record is weak.</p><p className="cardNote"><Link href="/readiness/">Source coverage and release gates →</Link> · Open a method below for the calculation, validation and limits.</p></section>
+      <TrackRecord />
 
       {/* How it works, as a film: one drop of rain followed from the cloud to this page. Before play the whole
           picture is in view and reads as the method's flow chart; the same seven steps are below it in words. */}
@@ -326,21 +328,21 @@ export default function MethodologyPage() {
         </div>
         <div className="methodSteps">
           <p>
-            <strong>The projection.</strong>{" "}For each mandal with at least four past winters in the APWRIMS monthly series ({summer.firstYear} on),
+            <strong>The projection.</strong>{" "}For each mandal with at least four past winters in the APWRIMS monthly series ({summer.firstYear}{" "}on),
             the May depth is its latest reading plus its own drawdown from the same month to May: the median of its past winters for a
             typical winter, and the largest for a dry one. Set against the deepest May the same series has recorded, a mandal is
             &ldquo;beyond its record&rdquo; when the typical projection is deeper, &ldquo;in a dry winter&rdquo; when only the dry one is.
             Against its own record, because the depth at which a well fails depends on how deep it was drilled, which no public record
-            gives; beside it, whether the May depth would be more than {summer.deepM} m down, a class boundary on CGWB&rsquo;s
+            gives; beside it, whether the May depth would be more than {summer.deepM}{" "}m down, a class boundary on CGWB&rsquo;s
             depth-to-water maps, since a delta mandal can break its own record with water three metres down.
-            {summer.people ? <>{" "}How many people live in those mandals comes from WorldPop&rsquo;s {summer.people.year} population grid (1 km,
+            {summer.people ? <>{" "}How many people live in those mandals comes from WorldPop&rsquo;s {summer.people.year}{" "}population grid (1 km,
             UN-adjusted, CC BY 4.0), summed over each outline: a modelled estimate that counts everyone in the mandal, towns with piped
             supply included, not a census and not a count of people on wells.</> : null}
           </p>
           {summer.backtest ? <p>
             <strong>How it has fared.</strong>{" "}Each past year was projected from the other years&rsquo; winters alone, from its{" "}
-            {summer.backtest.anchorMonth} reading ({summer.backtest.comparisons.toLocaleString("en-IN")} mandal-years). The typical projection was
-            off by a median {summer.backtest.typicalErrorM.toFixed(1)} m, against {summer.backtest.persistenceErrorM.toFixed(1)} m for assuming no
+            {summer.backtest.anchorMonth} reading ({summer.backtest.comparisons.toLocaleString("en-IN")}{" "}mandal-years). The typical projection was
+            off by a median {summer.backtest.typicalErrorM.toFixed(1)} m, against {summer.backtest.persistenceErrorM.toFixed(1)}{" "}m for assuming no
             change. Mandals called beyond their record went past it in {summer.backtest.pastRecordPct.beyond?.toFixed(0)}% of years, against{" "}
             {summer.backtest.baseRatePct.toFixed(0)}% of all mandal-years and {summer.backtest.pastRecordPct.within?.toFixed(0)}% of those called
             within it. A ranking of where to look first, not a forecast of this winter&rsquo;s rain.
@@ -363,7 +365,7 @@ export default function MethodologyPage() {
         </div>
         <div className="methodSteps">
           <p>
-            <strong>The State&rsquo;s sensors, daily.</strong>{" "}About {sensors.state.stations.toLocaleString("en-IN")} automatic water-level recorders report
+            <strong>The State&rsquo;s sensors, daily.</strong>{" "}About {sensors.state.stations.toLocaleString("en-IN")}{" "}automatic water-level recorders report
             every few hours; the site reads each one&rsquo;s latest level once a day, as the public APWRIMS dashboard does, and sets each sensor
             only against its own reading on the same date last year. The sensors stand in different wells from the monthly hand readings the
             model and the outlooks use: across mandals the two agree in pattern (r 0.9) but differ by about 1.4 m in the typical mandal, so a
@@ -374,12 +376,12 @@ export default function MethodologyPage() {
           <p>
             <strong>Water from space.</strong>{" "}GRACE and GRACE-FO weigh the water a region holds through its pull on two satellites; CSR&rsquo;s
             RL06.3 mascons give it as centimetres of water against 2004&ndash;09, monthly since 2002. Averaged over the State, it moves with the
-            median mandal&rsquo;s water table at r {graceFilm.agreement.r} over {graceFilm.agreement.months} months ({graceFilm.agreement.rSwings} with
+            median mandal&rsquo;s water table at r {graceFilm.agreement.r} over {graceFilm.agreement.months} months ({graceFilm.agreement.rSwings}{" "}with
             the seasons removed): an independent check on the well record. It sees a region a few hundred kilometres across, not a mandal.
           </p>
           <p>
             <strong>Rain from space, checked.</strong>{" "}NASA&rsquo;s IMERG merges every rain satellite into a daily picture. Over the 2026 season it
-            put {rainFilm.satelliteSeasonMm} mm on the State against {rainFilm.gauges.mm} mm from the State&rsquo;s {rainFilm.gauges.gauges.toLocaleString("en-IN")} gauges;
+            put {rainFilm.satelliteSeasonMm} mm on the State against {rainFilm.gauges.mm} mm from the State&rsquo;s {rainFilm.gauges.gauges.toLocaleString("en-IN")}{" "}gauges;
             the films are shown only because the two agree. Cloud pictures come from Himawari-9&rsquo;s infrared band, its colour scale turned
             back into cloud-top temperature; village tank water from Sentinel-2&rsquo;s scene classification over the JRC tank beds, counting only
             clear looks.
@@ -444,21 +446,21 @@ export default function MethodologyPage() {
             &ldquo;short&rdquo; call against after a &ldquo;comfortable&rdquo; one. And because the check is a rainfed water balance, it
             is read over rainfed fields: the {record.rainfed.mandals} mandals where less than {record.rainfed.belowPct}% of the cropland
             was mapped irrigated (ESA WorldCereal), with the vegetation index weighted to rainfed cropland only. &ldquo;Backed by its
-            record&rdquo; needs it at least {record.rules.backedPoints} index points lower, overall and in every season;
+            record&rdquo; needs it at least {record.rules.backedPoints}{" "}index points lower, overall and in every season;
             &ldquo;weak&rdquo; at least {record.rules.notedPoints} point lower; &ldquo;not borne out&rdquo; otherwise. On {seasonSpan},
             of {Object.keys(record.record).length} crop-stage pairs, {verdicts.backed ?? 0} {(verdicts.backed ?? 0) === 1 ? "is" : "are"}{" "}
-            backed, {verdicts.weak ?? 0} weak, {verdicts["not borne out"] ?? 0} not borne out and {verdicts.untested ?? 0} untested over
+            backed, {verdicts.weak ?? 0} weak, {verdicts["not borne out"] ?? 0} not borne out and {verdicts.untested ?? 0}{" "}untested over
             rainfed fields (over all cropland, irrigated fields included: {allCropland.backed ?? 0} backed, {allCropland.weak ?? 0} weak,{" "}
-            {allCropland["not borne out"] ?? 0} not borne out, {allCropland.untested ?? 0} untested). The index covers whatever is
+            {allCropland["not borne out"] ?? 0} not borne out, {allCropland.untested ?? 0}{" "}untested). The index covers whatever is
             growing, not the chosen crop, so this tests whether the check finds real water shortage, not whether a particular crop
             suffered.
           </p>
           {record.sentinel ? <p data-testid="method-sentinel">
             <strong>At field scale.</strong>{" "}The 4 km index is one value for some 1,600 hectares, irrigated and rainfed, crop and
-            scrub. Sentinel-2 (ESA) sees the same ground at 10 m every two to three days; the record reads it at {record.sentinel.resolutionM} m
+            scrub. Sentinel-2 (ESA) sees the same ground at 10 m every two to three days; the record reads it at {record.sentinel.resolutionM}{" "}m
             over rainfed cropland pixels only (WorldCover cropland that WorldCereal does not map as irrigated), takes the greenest clear
             view of each week, and compares the three-week change in NDVI, less the State&rsquo;s change that week, inside the same
-            mandal and season. The bars were set before the outcomes were read: &ldquo;backed&rdquo; at {record.sentinel.rules.backedNdvi} less NDVI
+            mandal and season. The bars were set before the outcomes were read: &ldquo;backed&rdquo; at {record.sentinel.rules.backedNdvi}{" "}less NDVI
             change after &ldquo;short&rdquo;, in every season of at least two; &ldquo;weak&rdquo; at {record.sentinel.rules.notedNdvi}. Kharif is
             cloudy: {record.sentinel.coverage.readPct}% of rainfed mandal-weeks had a clear view in both weeks. A greenest-view composite can
             read a little lower in a week with fewer clear passes; taking out the State&rsquo;s change that week removes most of that, not
@@ -563,7 +565,7 @@ export default function MethodologyPage() {
           <p>
             <strong>The State network&rsquo;s latest reading.</strong> One recent reading per location (early September), with the
             pre-monsoon, post-monsoon and year-ago levels. Its pre-monsoon value equals our APWRIMS May reading for{" "}
-            {`${stateSummary.summary.preMonsoonSameAsOurMay} of ${stateSummary.summary.preMonsoonComparable}`} mandals, so it is the
+            {`${stateSummary.summary.preMonsoonSameAsOurMay} of ${stateSummary.summary.preMonsoonComparable}`}{" "}mandals, so it is the
             same department series, a month ahead. It is shown beside our monthly series, never merged into it, and the model
             does not use it.
           </p>
@@ -660,7 +662,7 @@ function CrossNetworkCheck() {
       <p className="crossLead">
         On CGWB&rsquo;s own wells, which the model never trained on, the three-month forecast called whether the water table
         would rise or fall in <b>{pct(o.direction.forecast)}</b>{" "}of mandal-seasons; the State&rsquo;s own wells agree with
-        CGWB&rsquo;s {pct(o.direction.measured)} of the time. It keeps pace in an ordinary season and misses most turns when
+        CGWB&rsquo;s {pct(o.direction.measured)}{" "}of the time. It keeps pace in an ordinary season and misses most turns when
         the monsoon breaks the pattern.
       </p>
       <div className="overviewHeadlines headlines3">
@@ -691,7 +693,7 @@ function CrossNetworkCheck() {
         </p>
         <p className="cardNote">
           Depths are not compared. CGWB&rsquo;s wells are mostly shallow dug wells and the State&rsquo;s are piezometers: in
-          metres of change even the State&rsquo;s wells sit {o.errorM.measured.toFixed(1)} m from CGWB&rsquo;s on average, more
+          metres of change even the State&rsquo;s wells sit {o.errorM.measured.toFixed(1)}{" "}m from CGWB&rsquo;s on average, more
           than assuming no change ({o.errorM.noChange.toFixed(1)} m). The direction of the change is what the two networks share.
         </p>
         <div className="tableWrap">

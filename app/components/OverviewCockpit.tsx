@@ -487,7 +487,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
           wells right {proof.crossForecastPct}% of the time, as often as the two measured networks agree with each
           other ({proof.crossMeasuredPct}%). <b>And on the record:</b>{" "}{proof.ledgerTracked.toLocaleString("en-IN")} published
           forecasts are frozen{(proof.ledgerScored ?? 0) >= 100 ? `, and ${proof.ledgerScored!.toLocaleString("en-IN")} have been scored against the readings for their month` : " and will be scored as their months are measured"}.{" "}
-          <Link href="/methodology/#forecast-ledger">How both are kept</Link>.
+          <Link href="/methodology/#forecast-ledger">How both are kept</Link> · <Link href="/methodology/#track-record">Every part&rsquo;s track record</Link>.
         </p>
       ) : null}
       </details>
