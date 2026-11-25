@@ -11,6 +11,13 @@ target, at a weight fitted per depth band on a held-out year -- at this range
 the seasonal cycle carries information the model alone misses, and the blend is
 worth about 3%. The band is a p10-p90 quantile range widened per aquifer by
 split conformal calibration, exactly as the nowcast's is.
+
+Forecasts for July to November then lean part of the way back to the level at the
+origin (learn_forecast_shrink.py, outputs/forecast_shrink.json). In a monsoon that
+fails, the year-ago blend promised recharge that never came: July-October 2026 missed by
+2.2 m and July-November 2023 by 2.6 m, worse than assuming no change. Learned from earlier
+forecasts only, the lean-back cuts those to 1.9 and 2.1 m, costs 5% in a wet monsoon and
+leaves dry-season targets untouched. Model version 1.1.0.
 """
 import datetime
 import json
@@ -29,10 +36,11 @@ from build_levels_engine import (  # noqa: E402
 from train_multihorizon import CAT, NUM, add_soil, climatology_at_origin, est, make_horizon  # noqa: E402
 
 HORIZON_MONTHS = 3
-MODEL_VERSION = "phase0-forecast-3m-1.0.0"
+MODEL_VERSION = "phase0-forecast-3m-1.1.0"
 SCHEMA_VERSION = "1.0.0"
 CALIBRATION_MONTHS = 12
 OUTD = os.path.join(HERE, "outputs")
+SHRINK = os.path.join(OUTD, "forecast_shrink.json")
 APP = os.path.join(HERE, "..", "app", "data")
 
 
@@ -111,6 +119,26 @@ def calibrate(frame):
     return weights, offsets, {"start": str(window.target_date.min()), "end": str(window.target_date.max())}
 
 
+def load_shrink(path=SHRINK):
+    """The monsoon lean-back, or None where it has not been learned: the forecast then stands as blended."""
+    if not os.path.exists(path):
+        return None
+    shrink = json.load(open(path))
+    return shrink if 0 < shrink.get("weight", 0) <= 1 and shrink.get("monsoonMonths") else None
+
+
+def apply_shrink(shrink, target_dates, origin_levels, lower, point, upper):
+    """Targets in the monsoon months move part of the way back to the origin's level, the band with them."""
+    if not shrink:
+        return lower, point, upper, np.zeros(len(point), bool)
+    months = pd.PeriodIndex(pd.Series(target_dates).astype(str), freq="M").month
+    hit = np.isin(np.asarray(months), shrink["monsoonMonths"])
+    w = shrink["weight"]
+    moved = np.where(hit, w * point + (1 - w) * origin_levels, point)
+    delta = moved - point
+    return lower + delta, moved, upper + delta, hit
+
+
 def origin_rows(df):
     """Each mandal's latest month, with the target-season and year-ago anchor.
 
@@ -150,6 +178,8 @@ def main():
         weights, anchor, lower, point, upper, latest.cur.to_numpy(), usable
     )
     lower, upper = apply_conformal(offsets, lower, upper, latest.aquifer_type.to_numpy())
+    shrink = load_shrink()
+    lower, point, upper, leaned = apply_shrink(shrink, latest.target_date.to_numpy(), latest.cur.to_numpy(), lower, point, upper)
 
     evaluation = json.load(open(os.path.join(OUTD, "phase0_evaluations.json")))
     horizon = next(h for h in evaluation["directForecast"]["horizons"]
@@ -172,6 +202,7 @@ def main():
             "lower": round(float(lower[position]), 2),
             "upper": round(float(upper[position]), 2),
             "anchoredToYearAgo": bool(usable[position]),
+            "leanedBackToOrigin": bool(leaned[position]),
         })
 
     payload = {
@@ -190,6 +221,10 @@ def main():
             "conformalWidenM": {name: round(value, 4) for name, value in sorted(offsets.items())},
             "calibrationPeriod": calibration_period,
             "nominalCoveragePct": round(NOMINAL_COVERAGE * 100),
+            "monsoonLeanBack": None if not shrink else {
+                "months": shrink["monsoonMonths"], "weightOnForecast": shrink["weight"], "learnedAt": shrink["learnedAt"],
+                "outOfSample": shrink["outOfSample"],
+            },
         },
         "validation": {
             "task": rolling.get("task", "rolling_origin"),
