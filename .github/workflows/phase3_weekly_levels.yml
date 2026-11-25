@@ -24,7 +24,7 @@ permissions:
 jobs:
   weekly:
     runs-on: ubuntu-latest
-    # Shared with the daily cyclone job (arnab_daily.yml), which also commits the water
+    # Shared with the daily water-context job (arnab_daily.yml), which also commits the water
     # context: this job's plain push would be refused if that one moved main mid-run.
     concurrency:
       group: apwrims-water-data

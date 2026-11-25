@@ -1,15 +1,14 @@
-name: Cyclone Arnab — daily
+name: Water context — daily
 
-# Every morning until 30 November 2026 (extended on 16 November for the third cyclone):
-# reads the State's water context (about twenty
-# requests to the public APWRIMS dashboards), adds the day to Cyclone Arnab's log,
-# rebuilds the /arnab/ page's data and redeploys. After that the weekly refresh keeps
-# the page, which runs the same builder.
+# Every morning: reads the State's water context (about thirty requests to the public
+# APWRIMS dashboards), commits it and redeploys, so soil moisture, gauge rain, reservoirs
+# and canal outlets are current across the site through the rabi season. It began as the
+# Cyclone Arnab job; kept daily past the cyclones on 25 November 2026, at the user's call.
 #
-# Until then the water context itself is committed too, so soil moisture, gauge rain,
-# reservoirs and canal outlets are current across the site, not only on this page.
-# What the weekly refresh builds from it (drought watch, constituencies, field signals,
-# summer outlook) still moves weekly, and each of those carries its own date.
+# Until 30 November it also adds the day to the cyclones' logs (Arnab, Murasu, Akvan) and
+# the Himawari loop; after that the weekly refresh keeps the cyclone page, which runs the
+# same builders. What the weekly refresh builds from the water context (drought watch,
+# constituencies, field signals, summer outlook) still moves weekly, each with its own date.
 #
 # 03:30 UTC is 09:00 IST, after the portal's morning reservoir readings. On a Monday
 # the weekly refresh may push while this runs, so the push rebases first.
@@ -33,14 +32,16 @@ jobs:
   daily:
     runs-on: ubuntu-latest
     steps:
-      - name: Stop after 30 November
+      - name: The cyclone steps stop after 30 November
         id: window
+        # The water context runs every day; only the cyclones' own steps have an end date.
         run: |
+          echo "run=true" >> "$GITHUB_OUTPUT"
           if [ "$(date -u +%Y%m%d)" -gt 20261130 ] && [ "${{ github.event_name }}" = "schedule" ]; then
-            echo "Past 30 November; the weekly refresh keeps the page from here."
-            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Past 30 November: the water context only; the weekly refresh keeps the cyclone page."
+            echo "cyclones=false" >> "$GITHUB_OUTPUT"
           else
-            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "cyclones=true" >> "$GITHUB_OUTPUT"
           fi
       - uses: actions/checkout@v4
         if: steps.window.outputs.run == 'true'
@@ -57,20 +58,25 @@ jobs:
         if: steps.window.outputs.run == 'true'
         run: python phase3_levels/fetch_apwrims_context.py
       - name: Add the day to Arnab's log
-        if: steps.window.outputs.run == 'true'
+        if: steps.window.outputs.cyclones == 'true'
         run: python phase3_levels/build_cyclone_arnab.py
       - name: Count the third cyclone
-        if: steps.window.outputs.run == 'true'
+        if: steps.window.outputs.cyclones == 'true'
         run: python phase3_levels/build_cyclone_akvan.py
       - name: Draw the last 48 hours from Himawari
         # ffmpeg encodes the loop; a bad night at GIBS keeps the last loop (the step does not fail the day).
-        if: steps.window.outputs.run == 'true'
+        if: steps.window.outputs.cyclones == 'true'
         run: |
           sudo apt-get install -y -qq ffmpeg > /dev/null
           python phase3_levels/build_live_clouds.py || echo "live loop not rebuilt"
-      - name: Check the page still says what it is allowed to say
+      - name: Check the pages still say what they are allowed to say
         if: steps.window.outputs.run == 'true'
-        run: python -m pytest -q tests/test_cyclone_arnab.py tests/test_water_context.py tests/test_cyclone_akvan.py
+        run: |
+          if [ "${{ steps.window.outputs.cyclones }}" = "true" ]; then
+            python -m pytest -q tests/test_cyclone_arnab.py tests/test_water_context.py tests/test_cyclone_akvan.py
+          else
+            python -m pytest -q tests/test_water_context.py
+          fi
       - name: Commit the day
         if: steps.window.outputs.run == 'true'
         id: publish
@@ -83,7 +89,7 @@ jobs:
             echo "nothing new today"
             exit 0
           fi
-          git commit -m "chore(arnab): daily water context $(date -u +%Y-%m-%d)"
+          git commit -m "chore(water): daily water context $(date -u +%Y-%m-%d)"
           git stash --include-untracked || true
           git pull --rebase origin main
           # main may have moved while this ran (a merged pull request, another bot): replay this
