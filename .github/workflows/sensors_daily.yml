@@ -36,9 +36,12 @@ jobs:
         # Each sensor against its own reading before the storm; the rain half moves with the morning job.
         run: python phase3_levels/build_cyclone_akvan.py
       - name: Draw the last 48 hours from Himawari
+        continue-on-error: true
         # ffmpeg encodes the loop; a bad night at GIBS keeps the last loop (the step does not fail the day).
         run: |
-          sudo apt-get install -y -qq ffmpeg > /dev/null
+          # Refresh the package list first: a stale one 404s on Ubuntu's mirror (25 Nov 2026), and with
+          # bash -e that failed the whole day before the data was committed. Nothing here may stop the day.
+          (sudo apt-get update -qq > /dev/null && sudo apt-get install -y -qq ffmpeg > /dev/null) || echo "ffmpeg not installed"
           python phase3_levels/build_live_clouds.py || echo "live loop not rebuilt"
       - name: Check what the page may say
         run: python -m pytest -q tests/test_sensors.py tests/test_cyclone_akvan.py
