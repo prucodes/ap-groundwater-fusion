@@ -709,6 +709,8 @@ h4 {
 }
 
 .statusFeed .feedDot { flex: none; }
+/* A feed whose source has paused: amber and still, not the live cyan pulse. */
+.statusFeed[data-stale] .feedDot { background: #d9a13b; box-shadow: 0 0 6px rgba(217, 161, 59, 0.6); animation: none; }
 
 /* 3D Earth + GRACE-FO satellite (three.js) */
 .orbitGlobe3d {

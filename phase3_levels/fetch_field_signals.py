@@ -67,17 +67,22 @@ LINE_LISTS = ("eto", "rain", "mandals", "values", "byWeek")
 
 OPEN_METEO = "https://api.open-meteo.com/v1/forecast"
 WEATHER_MODEL = "ecmwf_ifs"
-PAST_DAYS = 7
+# The crop water check starts from the soil-moisture run's own date and steps forward
+# on these days. Seven were enough while the portal's model ran daily; it paused from
+# 11 November 2026, the reading fell outside the window and the check went dark on
+# 21 November. Three weeks back keeps a paused reading in reach; the page says how old it is.
+PAST_DAYS = 21
 FORECAST_DAYS = 7
-# Open-Meteo counts each location as a call, 600 a minute at most: 50 locations
-# every 6 seconds stays at 500.
+# Open-Meteo counts each location as a call, 600 a minute at most, and a location
+# asking for more than two weeks of days as two: 28 days, 50 locations every 12 seconds,
+# stays at 500.
 BATCH = 50
-BATCH_PAUSE_S = 6
+BATCH_PAUSE_S = 12
 RATE_LIMIT_WAIT_S = 65
-# The whole forecast gets six minutes of the step's twenty. On 12 October 2026 a runner whose
+# The whole forecast gets eight minutes of the step's twenty (about four at the pace above). On 12 October 2026 a runner whose
 # shared address had spent Open-Meteo's quota waited out 429s batch after batch until the
 # step was killed at twenty minutes, losing the vegetation and assessment sections with it.
-WEATHER_BUDGET_S = 360
+WEATHER_BUDGET_S = 480
 WEATHER_TIMEOUT_S = 45
 
 VEG_WEEKS = 16           # the trend: about four months

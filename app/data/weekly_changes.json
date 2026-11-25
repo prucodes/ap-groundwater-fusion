@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-23T11:41:40+00:00",
+ "generatedAt": "2026-11-25T06:19:49+00:00",
  "comparedWith": {
   "label": "the previous weekly refresh",
   "commit": "a7f7e6c",
@@ -14,10 +14,10 @@
    "better": "higher",
    "href": "/climate/",
    "before": -28.0,
-   "after": -30.2,
+   "after": -30.6,
    "beforeAsOf": "2026-11-14",
-   "afterAsOf": "2026-11-21",
-   "change": -2.2,
+   "afterAsOf": "2026-11-23",
+   "change": -2.6,
    "direction": "worse",
    "refreshed": true
   },
@@ -28,12 +28,12 @@
    "better": "lower",
    "href": "/agriculture/",
    "before": 268,
-   "after": 285,
+   "after": 268,
    "beforeAsOf": "2026-11-11",
-   "afterAsOf": null,
-   "change": 17,
-   "direction": "worse",
-   "refreshed": null
+   "afterAsOf": "2026-11-11",
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "soilDriest",
@@ -42,12 +42,12 @@
    "better": "lower",
    "href": "/agriculture/",
    "before": 15,
-   "after": 14,
+   "after": 15,
    "beforeAsOf": "2026-11-11",
-   "afterAsOf": null,
-   "change": -1,
-   "direction": "better",
-   "refreshed": null
+   "afterAsOf": "2026-11-11",
+   "change": 0,
+   "direction": "same",
+   "refreshed": false
   },
   {
    "key": "reservoirs",
@@ -56,10 +56,10 @@
    "better": "higher",
    "href": "/agriculture/",
    "before": 42.3,
-   "after": 46.4,
+   "after": 46.1,
    "beforeAsOf": "2026-11-16T12:02+05:30",
-   "afterAsOf": "2026-11-23T11:56+05:30",
-   "change": 4.1,
+   "afterAsOf": "2026-11-25T10:21+05:30",
+   "change": 3.8,
    "direction": "better",
    "refreshed": true
   },
@@ -140,12 +140,12 @@
    "better": "lower",
    "href": "/agriculture/#field-week",
    "before": 137,
-   "after": null,
+   "after": 189,
    "beforeAsOf": "2026-11-16",
-   "afterAsOf": null,
-   "change": null,
-   "direction": null,
-   "refreshed": null
+   "afterAsOf": "2026-11-25",
+   "change": 52,
+   "direction": "worse",
+   "refreshed": true
   },
   {
    "key": "ensoPeak",
@@ -438,10 +438,10 @@
   "basis": "each mandal's manual reading now against the same reading one week of rain earlier"
  },
  "counts": {
-  "better": 3,
+  "better": 2,
   "worse": 4,
-  "same": 2,
+  "same": 4,
   "revised": 1,
-  "unknown": 1
+  "unknown": 0
  }
 }

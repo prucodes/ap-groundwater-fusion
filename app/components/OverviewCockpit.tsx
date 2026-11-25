@@ -23,7 +23,7 @@ import {
   IconShield,
   IconWaves,
 } from "./icons";
-import { dashboardSummary, datasetManifest, districts, formatNumber, mandalHeat, mandals, modelCard, monsoonWatch, selectedMandal, seqGradient, titleCase, verifyMandals, wetnessLabel } from "../lib/data";
+import { dashboardSummary, datasetManifest, districts, formatNumber, formatPeriod, mandalHeat, mandals, modelCard, monsoonWatch, selectedMandal, seqGradient, titleCase, verifyMandals, wetnessLabel } from "../lib/data";
 import type { MandalHeatLayerKey } from "../lib/types";
 import { waterSummary } from "../lib/waterSummary";
 import { droughtSummary } from "../lib/droughtSummary";
@@ -111,7 +111,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
     <div className="pageWrap">
       <HeaderHero
         title="Andhra Pradesh water this week"
-        brief={brief("/", `Monthly groundwater through ${datasetManifest.periods.latestObservationPeriod}; daily sensor conditions and seasonal outlooks below.`)}
+        brief={brief("/", `Monthly groundwater through ${formatPeriod(datasetManifest.periods.latestObservationPeriod)}; daily sensor conditions and seasonal outlooks below.`)}
         showBanner={false}
         showChips={false}
         variant="compact"
@@ -138,7 +138,7 @@ export function OverviewCockpit({ agreement, summer, droughtWeek = null, proof =
             <strong>{sensors.deeperPct}%<small>of the State&rsquo;s sensors deeper than a year ago</small></strong>
             <DepthPair yearAgo={sensors.yearAgoM} today={sensors.medianM} />
             <span className="headlineText">
-              {`Median ${sensors.medianM.toFixed(1)} m below ground against ${sensors.yearAgoM.toFixed(1)} m on the same date last year, across ${sensors.active.toLocaleString("en-IN")} automatic recorders; latest reading ${sensors.latest.slice(0, 10)}.`}
+              {`Median ${sensors.medianM.toFixed(1)} m below ground against ${sensors.yearAgoM.toFixed(1)} m on the same date last year, across ${sensors.active.toLocaleString("en-IN")} automatic recorders; latest reading ${new Date(sensors.latest).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Kolkata" })}.`}
             </span>
             <span className="headlineGo">Today&rsquo;s sensors <IconArrowRight /></span>
           </Link>

@@ -40,7 +40,7 @@ export function WaterContextStrip({ evidence }: { evidence: AgricultureEvidence 
       {soil ? <>
         <strong className={styles.figure} data-tone={soil.belowOwnMedian > soil.withBaseline / 2 ? "short" : "ok"}>{soil.belowOwnMedian}<small>of {soil.withBaseline} mandals below their usual {day(soil.asOf, false)} level</small></strong>
         <p className={styles.line}><b>{soil.driestOnRecord}</b> at their driest for the date since {soil.baselineYears?.[0] ?? "the record began"} · median mandal {soil.medianPct}% of capacity</p>
-        <p className={styles.note}>NRSC VIC land-surface model, as published on APWRIMS for {day(soil.asOf)}{soil.asOfNote ? ` (${soil.asOfNote})` : ""}. Plant-available water as a share of what the soil holds: modelled, not measured in a field.</p>
+        <p className={styles.note}>NRSC VIC land-surface model, as published on APWRIMS for {day(soil.asOf)}{soil.asOfNote ? ` (${soil.asOfNote})` : ""}{soil.ageDays !== null && soil.ageDays > 7 ? `: ${soil.ageDays} days old, the portal has published no newer run since` : ""}. Plant-available water as a share of what the soil holds: modelled, not measured in a field.</p>
         <a href={soil.url} target="_blank" rel="noreferrer">NRSC model via APWRIMS <IconArrowRight /></a>
       </> : <p className={styles.missing}>Soil moisture is not available in this build.</p>}
     </article>

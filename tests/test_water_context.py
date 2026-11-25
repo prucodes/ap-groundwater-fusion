@@ -64,6 +64,14 @@ def test_the_as_of_date_is_the_model_run_not_the_request_date():
     assert latest["m0"]["pct"][1] == 41.0
 
 
+def test_a_model_paused_for_two_weeks_is_still_dated():
+    # 24 November 2026: the portal was still answering with its 11 November run.
+    run = datetime.date(2026, 11, 11)
+    fetch = lambda day: snapshot(40.0 if day >= run else 40.0 + (run - day).days)
+    _, as_of = context.soil_as_of(datetime.date(2026, 11, 24), fetch)
+    assert as_of == run
+
+
 def test_an_answer_unchanged_for_the_whole_lookback_has_no_date():
     _, as_of = context.soil_as_of(datetime.date(2026, 10, 4), lambda day: snapshot(40.0))
     assert as_of is None

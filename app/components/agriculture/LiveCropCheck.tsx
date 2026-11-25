@@ -251,6 +251,10 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
   const profile = CROP_REFERENCE[crop];
   const lastDay = live.dates[live.dates.length - 1];
   const windowText = `${day(live.issued, false)} to ${day(lastDay, false)}`;
+  // Days from the soil-moisture run to the forecast's issue. The portal's model normally runs
+  // daily; past a week it has paused, and the reading is carried further than usual.
+  const soilLag = live.today;
+  const soilPaused = soilLag > 7;
   const active = results[selected] ?? null;
   const activeRow = evidence.mandals[selected];
   const place = activeRow ? placeName(activeRow.mandal) : "this mandal";
@@ -273,7 +277,7 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
   return <section id="field-week" className={styles.section} aria-labelledby="field-week-title" data-testid="field-week">
     <header className={styles.head}>
       <div><span className={styles.eyebrow}>01 / This week in the fields</span><h2 id="field-week-title">Which crops will run short of water this week?</h2></div>
-      <span className={styles.liveBadge}><i aria-hidden="true" />Soil {day(live.soilAsOf, false)} · forecast {windowText}</span>
+      <span className={styles.liveBadge} data-stale={soilPaused || undefined}><i aria-hidden="true" />Soil {day(live.soilAsOf, false)}{soilPaused ? `, ${soilLag} days old` : ""} · forecast {windowText}</span>
     </header>
 
     <div className={styles.controls}>
@@ -287,6 +291,7 @@ export function LiveCropCheck({ live, evidence, mapView, onOpenLab, record = nul
 
     <p className={styles.lede} data-testid="field-week-lede">{lede}{irrigation && counts.stressed && shortRainfed !== null
       ? <span className={styles.ledeNote} data-testid="field-week-rainfed"> <strong data-tone="note">{shortRainfed}</strong> of the {counts.stressed} are mostly rainfed, where a rainfed water balance applies; mostly irrigated mandals are hatched.</span> : null}</p>
+    {soilPaused ? <p className={styles.staleNote} data-testid="field-week-soil-paused">APWRIMS has published no newer soil-moisture run since {day(live.soilAsOf)}. The check starts from that reading and carries it forward {soilLag} days on ECMWF&rsquo;s daily rain and evaporation, so each mandal&rsquo;s call is less certain than when the reading is a day or two old.</p> : null}
 
     <div className={styles.tiles} role="group" aria-label="Mandals by crop water state; select one to pick it out on the map">
       {STATE_ORDER.map(key => <button key={key} type="button" className={styles.tile} data-state={key} aria-pressed={emphasis === key} data-testid={`field-week-${key}`}

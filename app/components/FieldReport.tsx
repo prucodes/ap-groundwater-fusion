@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { IconCopy, IconDownload, IconFile, IconPin } from "./icons";
 import styles from "./FieldReport.module.css";
+import { mondayOf } from "../lib/week";
 
 /* A field report with no server: written on the phone, kept there as a draft,
    and shared as plain text that ends in one machine-readable line (#APWR1:...).
@@ -53,7 +54,7 @@ function message(report: Report) {
   for (const crop of report.crops) lines.push(`${crop.c} (${crop.s.toLowerCase()}, ${crop.w.toLowerCase()}): ${crop.k.toLowerCase()}`);
   lines.push(`Drinking water: bore wells ${report.bores.toLowerCase()}; ${report.tankers ? "tankers running" : "no tankers"}`);
   if (report.villages) lines.push(`Villages visited: ${report.villages}`);
-  if (report.site) lines.push(`Site said${report.site.week ? ` (week of ${human(report.site.week)})` : ""}: ${report.site.lit} of ${report.site.known} signals lit${report.site.short !== null ? `; ${report.site.short} of ${report.site.of} crops short of water` : ""}`);
+  if (report.site) lines.push(`Site said${report.site.week ? ` (week of ${human(mondayOf(report.site.week))})` : ""}: ${report.site.lit} of ${report.site.known} signals lit${report.site.short !== null ? `; ${report.site.short} of ${report.site.of} crops short of water` : ""}`);
   if (report.note.trim()) lines.push(`Note: ${report.note.trim()}`);
   lines.push(`${TAG}${encode(report)}`);
   return lines.join("\n");
@@ -202,7 +203,7 @@ export function FieldReport({ calls, week }: { calls: SiteCall[]; week: string |
 
       <aside className={styles.side}>
         {call ? <div className={styles.called} data-testid="field-report-site">
-          <span className={styles.kicker}>What the site called{week ? `, week of ${human(week)}` : ""}</span>
+          <span className={styles.kicker}>What the site called{week ? `, week of ${human(mondayOf(week))}` : ""}</span>
           <h3>{call.m}<small>{call.d}</small></h3>
           <dl>
             <div><dt>Stress signals lit</dt><dd><b>{call.lit}</b> of {call.known}</dd></div>

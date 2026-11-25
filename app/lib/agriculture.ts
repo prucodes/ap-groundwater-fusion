@@ -86,7 +86,7 @@ function agreementOf(signal: WaterSignal, soil: AgricultureMandal["soil"], rain:
 
 export type AgricultureWater = {
   soil: {
-    asOf: string | null; asOfNote: string | null; weekAgo: string; depthCm: number; medianPct: number | null;
+    asOf: string | null; asOfNote: string | null; ageDays: number | null; weekAgo: string; depthCm: number; medianPct: number | null;
     driestOnRecord: number; belowOwnMedian: number; withBaseline: number; mandals: number;
     baselineYears: [number, number] | null; source: string; url: string;
   } | null;
@@ -169,7 +169,7 @@ function summarizeWater(water: WaterContext | null | undefined): AgricultureWate
   const canal = (store?.reservoirs ?? []).flatMap(r => r.releases.filter(o => o.kind === "canal" && o.cusecs > 0).map(o => ({ reservoir: r.name, outlet: o.outlet, cusecs: o.cusecs })));
   return {
     soil: soil ? {
-      asOf: soil.asOf, asOfNote: soil.asOfNote, weekAgo: soil.weekAgo, depthCm: soil.headlineDepthCm, medianPct: soil.summary.medianPct,
+      asOf: soil.asOf, asOfNote: soil.asOfNote, ageDays: soil.ageDays ?? null, weekAgo: soil.weekAgo, depthCm: soil.headlineDepthCm, medianPct: soil.summary.medianPct,
       driestOnRecord: soil.summary.driestOnRecord, belowOwnMedian: soil.summary.belowOwnMedian, withBaseline: soil.summary.withBaseline,
       mandals: soil.summary.mandals, baselineYears: soil.baseline.firstYear !== null && soil.baseline.lastYear !== null ? [soil.baseline.firstYear, soil.baseline.lastYear] : null,
       source: soil.source, url: soil.url,
