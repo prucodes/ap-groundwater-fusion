@@ -1,4 +1,4 @@
-import { seawaterWatch, titleCase } from "../lib/data";
+import { formatPeriod, seawaterWatch, titleCase } from "../lib/data";
 import styles from "./SeawaterWatch.module.css";
 
 /* Where the water table stands below sea level, set against the official map.
@@ -33,7 +33,7 @@ export function SeawaterWatch() {
         </div>
         <div className={styles.head}>
           <b>{data.belowSeaLevel}</b>
-          <span>of {data.scored} mandals stand at or below sea level on {data.observationPeriod}&rsquo;s measured depth</span>
+          <span>of {data.scored} mandals stand at or below sea level on {formatPeriod(data.observationPeriod)}&rsquo;s measured depth</span>
         </div>
       </div>
 

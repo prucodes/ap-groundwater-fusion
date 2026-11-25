@@ -21,7 +21,8 @@ export function WaterBanked() {
   if (!banked || banked.sharePct === null) return null;
 
   const readTo = Number(monsoonWatch.season.latestMonth.slice(5, 7));
-  const toCome = readTo < 10 ? "October and November" : readTo < 11 ? "November" : null;
+  // The months whose readings are not in yet: the month itself may be nearly over.
+  const toCome = readTo < 10 ? "the October and November readings" : readTo < 11 ? "November’s reading" : null;
 
   const counts = new Array(BINS + 1).fill(0);
   for (const row of monsoonWatch.mandals) {

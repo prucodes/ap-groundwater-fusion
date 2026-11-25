@@ -1,5 +1,6 @@
 import { CREATOR_CREDIT } from "./creator";
 import { MAP_VIEW, monsoonWatch } from "./data";
+import { mondayOf } from "./week";
 import { CATEGORY_META, shortDate } from "./drought";
 import { droughtSummary } from "./droughtSummary";
 import { facts, type Fact } from "./facts";
@@ -65,7 +66,8 @@ const fromFact = (f: Fact, eyebrow: string, foot: string, tone: FilmTone = f.ton
   words({ eyebrow, big: f.big, tone, headline: f.headline, foot, text: f.text, source: f.source, asOf: f.asOf });
 
 export function weeklyFilm(): WeeklyFilm {
-  const week = changes.generatedAt.slice(0, 10);
+  // Named by the Monday of its week, so a mid-week rebuild does not relabel the week.
+  const week = mondayOf(changes.generatedAt);
   const all = facts(), fact = (id: string) => all.find(f => f.id === id);
   const scenes: FilmScene[] = [];
 

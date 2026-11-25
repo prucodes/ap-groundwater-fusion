@@ -112,7 +112,7 @@ export function SensorPulse() {
         <p className={styles.key} aria-hidden="true"><i className={styles.deeper} />deeper than a year ago<i className={styles.shallower} />shallower</p>
         <p className={styles.note}>
           {doubtful ? `${doubtful} readings past ${MAX_LEVEL_M} m or ${MAX_CHANGE_M} m from a year ago are left out of the list, as more likely a dry well or a faulty sensor. ` : ""}
-          Latest reading {when(sensors.latestReading)} IST{days.length > 1 ? `; read daily since ${days[0][0]}` : "; read daily from today"}. Each sensor is set against itself a
+          Latest reading {when(sensors.latestReading)} IST{days.length > 1 ? `; read daily since ${new Date(`${days[0][0]}T12:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" })}` : "; read daily from today"}. Each sensor is set against itself a
           year ago: the sensors stand in different wells from the monthly hand readings the rest of the site uses, so the two are not mixed.
           APWRIMS telemetry, as its public dashboard shows it; a research sample pending authorisation, not official data.
         </p>
