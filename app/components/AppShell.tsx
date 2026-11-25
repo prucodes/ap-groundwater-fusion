@@ -58,7 +58,7 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
       { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
   ] },
   { label: "Watches", items: [
-      { href: "/cyclones", label: "Cyclones", Icon: IconCyclone, desc: "Akvan as it comes, live from Himawari; Arnab and Murasu: where the rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },
+      { href: "/cyclones", label: "Cyclones", Icon: IconCyclone, desc: "Akvan's landfall from Himawari; Arnab, Murasu and Akvan: where the rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },
       { href: "/monsoon", label: "Monsoon Watch", Icon: IconCloudRain, desc: "Is this season recharging? Measured per mandal against its own past seasons, with the ENSO state beside it." },
       { href: "/drought", label: "Drought Watch", Icon: IconSun, desc: "Every mandal through the national drought manual's triggers, with the declaration calendar. Not a declaration." },
   ] },
@@ -324,8 +324,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </div>
           ) : null}
           {waterSummary.soil ? (
-            <div className="statusFeed">
-              <span className="feedDot" /> Soil moisture · {formatDay(waterSummary.soil.asOf)}
+            <div className="statusFeed" data-stale={(waterSummary.soil.ageDays ?? 0) > 7 || undefined}
+              title={(waterSummary.soil.ageDays ?? 0) > 7 ? `The portal's soil model has not published a newer run for ${waterSummary.soil.ageDays} days` : undefined}>
+              <span className="feedDot" /> Soil moisture · {formatDay(waterSummary.soil.asOf)}{(waterSummary.soil.ageDays ?? 0) > 7 ? ", paused" : ""}
             </div>
           ) : null}
           {waterSummary.reservoirs ? (
