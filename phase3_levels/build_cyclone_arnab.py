@@ -31,7 +31,7 @@ overlap: each run reads the season total again and keeps it in
 phase3_levels/data/cyclone_murasu_rain.json, until the gauges reach MURASU_CLOSES.
 The November groundwater reading carries both storms; it cannot tell them apart.
 
-Run daily by .github/workflows/arnab_daily.yml until 15 November 2026, and by
+Run daily by .github/workflows/arnab_daily.yml until 30 November 2026, and by
 the weekly refresh after that.
 
 Output: app/data/cyclone_arnab.json
