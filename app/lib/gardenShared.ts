@@ -49,6 +49,19 @@ export type Garden = {
   /** The normal it is set against, and where it comes from. */
   rainNormalMm: number;
   rainSource: string;
+  /** The Summer Outlook, mandal by mandal, for the borewells' countdown to May. */
+  summer: GardenSummer | null;
+};
+
+/** One mandal's summer: its deepest May on record, its typical and dry-winter paths (one depth a
+    month after the anchor, null where too few winters say), and the month each passes the record. */
+export type SummerPath = [deepestMay: number, typical: Array<number | null>, dry: Array<number | null>, passTypical: string | null, passDry: string | null];
+export type GardenSummer = {
+  /** The month the outlook projects from (the latest reading), the months after it to May, and May. */
+  anchor: string; months: string[]; target: string;
+  /** The outlook's tested error at the median mandal (m), against carrying the reading forward. */
+  errorM: number | null; persistenceM: number | null;
+  plants: Array<SummerPath | null>;
 };
 
 export type GardenRain = { year: number; mm: number; anomalyPct: number; enso: "el_nino" | "la_nina" | "neutral" };

@@ -100,3 +100,42 @@ def test_the_published_clock_agrees_with_the_tiers():
         assert (passes["typical"] is not None) == (row["tier"] == "beyond"), row["mandal"]
         assert (passes["dry"] is not None) == (row["tier"] != "within"), row["mandal"]
         assert passes["typical"] is None or (passes["dry"] <= passes["typical"] <= outlook["targetMay"])
+
+
+def test_each_monthly_path_is_the_one_the_crossing_month_was_found_on():
+    # The Water Garden's summer countdown plays these paths, so a pump must fail in the month
+    # the outlook publishes: the first month a path goes past the deepest May, and May itself
+    # the published typical or dry-winter depth.
+    import json as _json
+    out = _json.load(open(os.path.join(ROOT, "app", "data", "summer_outlook.json")))
+
+    def month_add(ym, n):
+        y, m = int(ym[:4]), int(ym[5:7]) - 1 + n
+        return f"{y + m // 12}-{m % 12 + 1:02d}"
+
+    checked = 0
+    for m in out["mandals"]:
+        if not m:
+            continue
+        for name in ("typical", "dry"):
+            path = m["path"][name]
+            months = [month_add(m["anchorMonth"], k) for k in range(1, len(path) + 1)]
+            assert months[-1] == out["targetMay"] and path[-1] == m[name]
+            if m[name] <= m["deepestMay"]:
+                continue
+            # The month is found on unrounded depths, and a path rounded to the centimetre can sit level
+            # with the record: so in the published month the path is at or past the record, and in no
+            # earlier month clearly past it.
+            published = m["passes"][name]
+            if published == m["anchorMonth"]:
+                assert m["anchor"] > m["deepestMay"]
+            else:
+                at = dict(zip(months, path))
+                if at.get(published) is not None and published != out["targetMay"]:
+                    assert at[published] >= m["deepestMay"] - 0.005
+                earlier = [d for mo, d in zip(months, path) if mo < published and d is not None]
+                # The dry winter is never later than the typical one, so its month may come earlier than its own path says.
+                if not (name == "dry" and m["passes"]["typical"] == published):
+                    assert all(d <= m["deepestMay"] + 0.005 for d in earlier)
+            checked += 1
+    assert checked > 100
