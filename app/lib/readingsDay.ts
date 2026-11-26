@@ -1,7 +1,7 @@
 import seriesJson from "../data/mandal_observation_series_v2.json";
 import ledgerJson from "../data/forecast_ledger.json";
 import sensorJson from "../data/sensor_wells_check.json";
-import { sideOf } from "./gardenShared";
+import { MOVED_CM, sideOf } from "./gardenShared";
 import { summerOutlook } from "./summer";
 import { gardenSummary, waterGarden } from "./waterGarden";
 
@@ -15,11 +15,13 @@ import { gardenSummary, waterGarden } from "./waterGarden";
 type Obs = { period: string; value: number | null };
 const series = (seriesJson as unknown as { series: Record<string, { observations: Obs[] }> }).series;
 
-type Block = { forecasts: number; maeM: number; biasM: number; bandCoveragePct: number; noChangeMaeM: number; gainPct: number; origin: string; expectedChangeM: number; measuredChangeM: number; yearAgoMinusMeasuredM: number };
+/** The median mandal's move since a forecast's origin, month by month, among that month's forecasts (negative is nearer the surface). */
+export type PathPoint = { month: string; changeM: number; mandals: number };
+type Block = { forecasts: number; maeM: number; biasM: number; bandCoveragePct: number; noChangeMaeM: number; gainPct: number; origin: string; expectedChangeM: number; measuredChangeM: number; yearAgoMinusMeasuredM: number; path?: PathPoint[] };
 type Ledger = {
   firstIssued: string; weeksFrozen: number; forecastsTracked: number;
   byTarget: Record<string, Block>; pendingByTarget: Record<string, number>;
-  nextTest: { target: string; forecasts: number; issued: string; origin: string; latestMonth: string; expectedChangeM: number; soFarChangeM: number; yearAgoMinusLatestM: number } | null;
+  nextTest: { target: string; forecasts: number; issued: string; origin: string; latestMonth: string; expectedChangeM: number; soFarChangeM: number; yearAgoMinusLatestM: number; path?: PathPoint[] } | null;
   weeks: Array<{ issued: string; forecasts: number; sha256: string }>;
 };
 type SensorTest = { month: string; sameMonth: boolean; sensorDays: number; sensorYear?: { mandals: number; maeM: number; carryMaeM: number; gainPct: number; biasM: number }; sensorMonth?: { mandals: number; maeM: number; carryMaeM: number; gainPct: number } };
@@ -43,10 +45,26 @@ export const nextMonth = (ym: string, by = 1) => {
 };
 
 export type Mover = { id: string; name: string; district: string; changeM: number; nowM: number; doubted?: boolean };
+
+/** The map's classes for a month-to-month move, metres below ground (positive is deeper): past 1 m, past 0.1 m, or within it. */
+export const MOVE_BINS = [
+  { key: "D", label: "More than 1 m deeper", color: "#b4493a" },
+  { key: "d", label: "0.1 to 1 m deeper", color: "#e6a593" },
+  { key: "s", label: "Within 0.1 m", color: "#d3dbe1" },
+  { key: "u", label: "0.1 to 1 m nearer the surface", color: "#8fcac6" },
+  { key: "U", label: "More than 1 m nearer the surface", color: "#1f7f86" },
+] as const;
+export type MoveKey = (typeof MOVE_BINS)[number]["key"];
+/** Same threshold as the counts (sideOf: more than 10 cm), so the map's colours add up to them. */
+export const moveKey = (changeM: number): MoveKey => {
+  const cm = Math.round(changeM * 100);
+  return cm > 100 ? "D" : cm > MOVED_CM ? "d" : cm < -100 ? "U" : cm < -MOVED_CM ? "u" : "s";
+};
 export type ReadingsDay = {
   month: string; previous: string; read: number; total: number;
-  /** Since the month before: mandals read in both, by side (more than 0.1 m), the median change and the usual one. */
-  change: { compared: number; deeper: number; shallower: number; steady: number; medianChangeM: number | null; usualChangeM: number | null; medianNowM: number | null; deeper5: Mover[]; shallower5: Mover[]; doubted: Mover[] };
+  /** Since the month before: mandals read in both, by side (more than 0.1 m), the median change and the usual one.
+      Likely misreadings (doubted) are left out of every count and the median, and listed on their own. */
+  change: { compared: number; deeper: number; shallower: number; steady: number; medianChangeM: number | null; usualChangeM: number | null; medianNowM: number | null; deeper5: Mover[]; shallower5: Mover[]; doubted: Mover[]; all: Mover[]; bins: Record<MoveKey, number> };
   /** Against each mandal's usual for this month, as the Water Garden counts it (when the garden shows this month). */
   usual: { deeper: number; compared: number; shallower: number; worstSince: number | null } | null;
   forecast: { judged: boolean; target: string; block: Block | null; forecasts: number; issued: string | null; began: string; next: Ledger["nextTest"] };
@@ -83,8 +101,11 @@ export function readingsDay(): ReadingsDay {
       changes.push({ id, ...(who.get(id) ?? { name: id, district: "" }), changeM, nowM: now, doubted });
     }
   }
-  const sides = changes.map(c => sideOf(c.nowM, c.nowM - c.changeM));
-  const byChange = changes.filter(c => !c.doubted).sort((a, b) => b.changeM - a.changeM);
+  const trusted = changes.filter(c => !c.doubted);
+  const sides = trusted.map(c => sideOf(c.nowM, c.nowM - c.changeM));
+  const byChange = [...trusted].sort((a, b) => b.changeM - a.changeM);
+  const bins = Object.fromEntries(MOVE_BINS.map(b => [b.key, 0])) as Record<MoveKey, number>;
+  trusted.forEach(c => { bins[moveKey(c.changeM)] += 1; });
 
   const latest = garden.steps[garden.steps.length - 1];
   const gardenMonth = `${latest.year}-${String(garden.month).padStart(2, "0")}`;
@@ -101,11 +122,12 @@ export function readingsDay(): ReadingsDay {
   return {
     month, previous, read: counts.get(month) ?? 0, total,
     change: {
-      compared: changes.length,
+      compared: trusted.length,
       deeper: sides.filter(s => s === 1).length, shallower: sides.filter(s => s === -1).length, steady: sides.filter(s => s === 0).length,
-      medianChangeM: median(changes.map(c => c.changeM)), usualChangeM: median(usualChanges), medianNowM: median(changes.map(c => c.nowM)),
+      medianChangeM: median(trusted.map(c => c.changeM)), usualChangeM: median(usualChanges), medianNowM: median(trusted.map(c => c.nowM)),
       deeper5: byChange.slice(0, 5).filter(c => c.changeM > 0.1), shallower5: byChange.slice(-5).reverse().filter(c => c.changeM < -0.1),
       doubted: changes.filter(c => c.doubted).sort((a, b) => Math.abs(b.changeM) - Math.abs(a.changeM)),
+      all: changes, bins,
     },
     usual: g ? { deeper: g.counts.deeper, compared: g.counts.compared, shallower: g.counts.shallower, worstSince: g.worstSince } : null,
     forecast: { judged: Boolean(block && block.forecasts >= MIN_TO_JUDGE), target: month, block, forecasts: block?.forecasts ?? 0, issued: issuedFor(month), began: ledger.firstIssued, next: ledger.nextTest },
