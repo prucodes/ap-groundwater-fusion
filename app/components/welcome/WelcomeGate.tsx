@@ -207,7 +207,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
 
             <figure className={styles.landscape}>
               <WelcomeQuote paused={paused} reduced={reduced} settled={phase !== "checking"} />
-              <WaterLandscape />
+              <WaterLandscape paused={paused} />
               <figcaption><span className={styles.figureIndex}>FIG. 01</span> BENEATH THE MONSOON <span className={styles.figureNote}>Illustrative landscape · not measured data</span></figcaption>
             </figure>
           </div>
