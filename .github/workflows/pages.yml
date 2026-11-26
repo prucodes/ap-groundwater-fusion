@@ -80,6 +80,14 @@ jobs:
         env:
           PAGES_BASE_PATH: /${{ github.event.repository.name }}
         run: node scripts/print-digest.mjs --directory out --base "$PAGES_BASE_PATH" --route field-check/sheet --file ap-field-check-protocol.pdf
+      - name: Print each district's sheet to PDF
+        # /districts/<slug>/sheet/ printed to out/districts/<slug>/sheet/ap-<slug>-district-sheet.pdf,
+        # one A4 page for each Collector, listed in out/districts/sheets.json. Never blocks the site.
+        working-directory: app
+        continue-on-error: true
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: node scripts/print-digest.mjs --directory out --base "$PAGES_BASE_PATH" --manifest districts/sheets.json
       - name: Print the project brief to PDF
         # /brief/ printed to out/brief/ap-water-intelligence-brief.pdf with this
         # week's maps, 3D renders and site screenshots, linked from Methodology.

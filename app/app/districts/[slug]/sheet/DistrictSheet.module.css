@@ -1,0 +1,27 @@
+/* A district's A4 sheet: the summer brief's page, band, tiles and foot
+   (summer/brief/SummerBrief.module.css), and the pieces only this sheet has. */
+.split { display: grid; grid-template-columns: 78mm 1fr; gap: 6mm; align-items: start; margin-bottom: 4mm; }
+.mapWrap { margin: 0; }
+.map { display: block; width: 100%; height: 66mm; }
+.key { display: flex; flex-wrap: wrap; gap: 1.2mm 3.4mm; font-size: 7.2pt; color: #4a5b70; margin-top: 1.4mm; }
+.key i { display: inline-block; width: 2.6mm; height: 2.6mm; border-radius: 2px; margin-right: 1.2mm; vertical-align: -0.3mm; }
+.key i.ring { background: transparent; border: 1.4px solid #0d2138; border-radius: 2px; }
+.side h3 { font-size: 10pt; font-weight: 600; margin: 0 0 1.6mm; }
+.first { list-style: none; margin: 0 0 2mm; padding: 0; }
+.first li { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 3mm; padding: 1mm 0; border-bottom: 1px solid #eef2f6; font-size: 8pt; }
+.first li:last-child { border-bottom: 0; }
+.first span b { display: block; color: #0d2138; font-weight: 600; }
+.first span small { display: block; font-size: 7pt; color: #667085; margin-top: .2mm; }
+.first strong { font-family: var(--font-mono); font-size: 9pt; color: #a33b2c; }
+.none { font-size: 8pt; color: #4a5b70; margin: 0 0 2mm; }
+.note { font-size: 7.6pt; line-height: 1.42; color: #33455c; margin: 0 0 1.6mm; }
+.note b { color: #0d2138; }
+.note a { color: #1f8a8a; font-weight: 600; text-decoration: none; }
+.table { width: 100%; border-collapse: collapse; font-size: 7.8pt; }
+.table th { text-align: left; font-size: 6.8pt; font-weight: 600; color: #667085; text-transform: uppercase; letter-spacing: .05em; padding: 0 1.6mm 1mm 0; border-bottom: 1px solid #e0e6ee; }
+.table td { padding: .75mm 1.6mm .75mm 0; border-bottom: 1px solid #eef2f6; color: #24364d; }
+.table td b { color: #0d2138; font-weight: 600; }
+.table td small { color: #8a97a8; font-size: 6.8pt; }
+.table .num { text-align: right; font-family: var(--font-mono); white-space: nowrap; }
+.table .bad { color: #a33b2c; font-weight: 600; }
+.more { font-size: 7.4pt; line-height: 1.4; color: #4a5b70; margin: 1.6mm 0 0; }
