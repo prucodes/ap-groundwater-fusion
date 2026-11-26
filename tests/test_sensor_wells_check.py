@@ -55,8 +55,15 @@ def test_the_sensors_stand_in_only_after_two_same_month_wins():
 
 
 def test_the_published_check_reads_the_recorded_days():
+    # The check is rebuilt weekly (fetch_weekly.py) and the archive gains a day every evening
+    # (sensors_daily.yml), so between Mondays the archive runs ahead of the check. The check
+    # must have read exactly the archive's days up to its own last one. A Monday that could
+    # not rebuild it is reported by refresh_health.py, and must not fail the suite: a stale
+    # check still names the days it read.
     check = json.load(open(os.path.join(ROOT, "app", "data", "sensor_wells_check.json")))
     archive = json.load(open(os.path.join(ROOT, "phase3_levels", "data", "sensor_station_daily.json")))
-    assert check["sensorDays"]["count"] == len(archive["days"])
+    read, days = check["sensorDays"], sorted(archive["days"])
+    assert read["first"] == days[0] and read["last"] in archive["days"]
+    assert read["count"] == sum(1 for day in days if day <= read["last"])
     assert check["verdict"] in {"awaiting", "not better", "stands in"}
-    assert all(t["sameMonth"] or t["month"] < (check["sensorDays"]["first"] or "")[:7] for t in check["tests"])
+    assert all(t["sameMonth"] or t["month"] < (read["first"] or "")[:7] for t in check["tests"])
