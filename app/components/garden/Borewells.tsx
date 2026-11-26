@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, MouseEvent as ReactMouseEvent, ReactNode } from "react";
 import { AQUIFER_NAMES, seedOf, type GardenAquifer } from "../../lib/gardenShared";
 import styles from "./Borewells.module.css";
 
@@ -46,7 +46,7 @@ function strata(aquifer: GardenAquifer, scaleM: number): Array<[number, string, 
   return [[0, "#4d3a28", null], [4, "#6b5a3a", "dots"], [11, "#3e3127", "lines"], [19, "#665537", "dots"], [30, "#3b2f25", "lines"], [42, "#5e4e34", "dots"]];
 }
 
-export function Borewells({ bores, scaleM, aquifer, animated = false, play = true, label, width = 1000, soil = 300, nameSize = 11, nameMax = 24, light = false, selected = null, uid }: {
+export function Borewells({ bores, scaleM, aquifer, animated = false, play = true, label, width = 1000, soil = 300, nameSize = 11, nameMax = 24, light = false, selected = null, uid, hrefOf, onOpen }: {
   bores: Bore[];
   scaleM: number;
   aquifer: GardenAquifer;
@@ -64,6 +64,9 @@ export function Borewells({ bores, scaleM, aquifer, animated = false, play = tru
   light?: boolean;
   selected?: number | null;
   uid: string;
+  /** Each bore a link (to its mandal's page), opened by `onOpen` when that is given. */
+  hrefOf?: (bore: Bore) => string | null;
+  onOpen?: (bore: Bore, name: Element | null) => void;
 }) {
   const PAD_L = 52, PAD_R = 14, SKY = 62;
   const shortName = (name: string) => (name.length > nameMax ? `${name.slice(0, nameMax - 1).trimEnd()}…` : name);
@@ -147,6 +150,7 @@ export function Borewells({ bores, scaleM, aquifer, animated = false, play = tru
         const bw = Math.min(7.5, sp * 0.3), stream = STREAM[state];
         return (
           <g key={b.id ?? `${b.name}${i}`} className={styles.bore} data-state={state} data-selected={selected === i ? "" : undefined} style={{ "--i": i } as CSSProperties} opacity={reading ? 1 : 0.35}>
+            <Link href={hrefOf?.(b) ?? null} label={`${b.name}: open the mandal`} onOpen={event => { if (!onOpen) return; event.preventDefault(); onOpen(b, event.currentTarget.querySelector("text")); }}>
             {/* Below ground: the hole, its casing, the water in it, the rising main and the pump */}
             <g className={styles.drill} style={{ transformOrigin: `${r1(x)}px ${SKY}px` } as CSSProperties}>
               <rect x={r1(x - bw / 2)} y={SKY} width={r1(bw)} height={r1(boreY - SKY)} fill="#0b0d10" rx={1} />
@@ -202,9 +206,16 @@ export function Borewells({ bores, scaleM, aquifer, animated = false, play = tru
 
             <text className={styles.name} x={r1(x)} y={r1(SKY + soil + nameSize * (flat ? 1.4 : 0.9))} fontSize={nameSize} textAnchor={flat ? "middle" : "end"}
               transform={flat ? undefined : `rotate(-52 ${r1(x)} ${r1(SKY + soil + nameSize * 0.9)})`} fill={light ? "#33455c" : "#a9bccb"}>{shortName(b.name)}</text>
+            </Link>
           </g>
         );
       })}
     </svg>
   );
+}
+
+/** A bore as a link when it has somewhere to go; otherwise just its drawing. */
+function Link({ href, label, onOpen, children }: { href: string | null; label: string; onOpen: (event: ReactMouseEvent<Element>) => void; children: ReactNode }) {
+  if (!href) return <>{children}</>;
+  return <a href={href} className={styles.link} aria-label={label} onClick={onOpen}>{children}</a>;
 }

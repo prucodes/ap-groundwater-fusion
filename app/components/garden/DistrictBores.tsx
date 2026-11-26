@@ -1,10 +1,17 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { monthYear, sideOf, type Garden, type GardenAquifer } from "../../lib/gardenShared";
 import { IconPause, IconPlay } from "../icons";
 import { Borewells, pumpState, PUMP_BELOW_USUAL_M, type Bore, type PumpState } from "./Borewells";
+import { able, navigate, transition } from "../../lib/viewTransition";
 import styles from "./WaterGarden.module.css";
+
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+/** Where the field hands over to the close-up: picking a plant zooms into its district here. */
+export type BoresFocus = { district: string; id: string; n: number };
 
 /* The close-up under the State's field: one district's mandals as borewells, in two modes.
    The years: the bores in the October the field shows, following its playback.
@@ -21,13 +28,21 @@ const NEAR_RECORD_M = 1;
 /** Seconds per month while the countdown plays: the move is the bores' own 0.6 s glide. */
 const MONTH_S = 1.2;
 
-export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoCountdown = false }: {
+/** The presenter's control: the years, the countdown played on a typical winter, or the same May on a dry one. */
+export type BoresStage = "years" | "summer" | "dry";
+
+export function DistrictBores({ garden, stepIndex, initialDistrict = null, stage, bare = false, focus = null }: {
   garden: Garden; stepIndex: number;
   /** Open on this district instead of the one with the largest share below its usual. */
   initialDistrict?: string | null;
-  /** Start in the countdown and play it once seen (the presenter's step). */
-  autoCountdown?: boolean;
+  /** Driven by the presenter instead of its own buttons. */
+  stage?: BoresStage;
+  /** Without the buttons and the long key: the presenter says it in its own words. */
+  bare?: boolean;
+  /** A plant picked in the field: open on its district with its bore marked. */
+  focus?: BoresFocus | null;
 }) {
+  const router = useRouter();
   const latest = garden.steps[garden.steps.length - 1];
   const districts = useMemo(() => {
     const by = new Map<string, number[]>();
@@ -40,16 +55,23 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoC
   }, [garden, latest.index]);
   const worst = useMemo(() => [...districts].sort((a, b) => b.share - a.share)[0]?.name ?? districts[0]?.name, [districts]);
   const [chosen, setChosen] = useState<string | null>(initialDistrict);
+  const [picked, setPicked] = useState<string | null>(null);
   const district = districts.find(d => d.name === (chosen ?? worst)) ?? districts[0];
   const summer = garden.summer;
-  const [mode, setMode] = useState<"years" | "summer">(autoCountdown && summer ? "summer" : "years");
+  const [mode, setMode] = useState<"years" | "summer">(stage && stage !== "years" && summer ? "summer" : "years");
   const [winter, setWinter] = useState<"typical" | "dry">("typical");
   /** The countdown's month: 0 is the latest October, then one a month to May. */
   const [month, setMonth] = useState(0);
   const [playing, setPlaying] = useState(false);
+  // A plant picked in the field takes the close-up to its district, in the year the field shows
+  // (set while rendering, so the view transition's new picture already has it).
+  const [focusSeen, setFocusSeen] = useState(0);
+  if (focus && focus.n !== focusSeen) {
+    setFocusSeen(focus.n); setChosen(focus.district); setPicked(focus.id); setMode("years"); setPlaying(false);
+  }
 
   // The bores drill in when the close-up comes into view, not while it is off screen.
-  const [seen, setSeen] = useState(false), box = useRef<HTMLElement>(null);
+  const [seen, setSeen] = useState(false), box = useRef<HTMLElement>(null), strip = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const node = box.current;
     if (!node || seen) return;
@@ -80,12 +102,19 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoC
     }), MONTH_S * 1000);
     return () => window.clearInterval(timer);
   }, [playing, last]);
-  // The presenter's step: play once the bores have drilled in.
+  // The presenter's steps. The countdown plays from October once the bores have drilled in;
+  // the dry winter keeps the month reached and lets the extra lamps go red.
+  const seenAt = useRef(0);
   useEffect(() => {
-    if (!autoCountdown || !seen || !summer) return;
-    const start = window.setTimeout(() => { setMonth(0); setPlaying(true); }, 2600);
+    if (!stage || !seen) return;
+    seenAt.current ||= performance.now();
+    if (stage === "years" || !summer) { setPlaying(false); setMode("years"); return; }
+    setMode("summer");
+    if (stage === "dry") { setWinter("dry"); setPlaying(false); setMonth(last); return; }
+    setWinter("typical"); setPlaying(false); setMonth(0);
+    const start = window.setTimeout(() => setPlaying(true), Math.max(700, 2600 - (performance.now() - seenAt.current)));
     return () => window.clearTimeout(start);
-  }, [autoCountdown, seen, summer]);
+  }, [stage, seen, summer, last]);
 
   const plants = useMemo(() => district.members.map(i => ({ plant: garden.plants[i], path: summer?.plants[i] ?? null })), [district, garden, summer]);
   const scaleM = useMemo(() => {
@@ -125,8 +154,29 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoC
   const when = mode === "summer" && summer ? monthName(months[month]) : monthYear(garden, step.year);
   const width = narrow ? Math.max(360, bores.length * 46 + 70) : 1000;
 
+  // Another district: the strip changes as one view transition, the bores drilling in anew.
+  const pick = (name: string) => {
+    const node = strip.current;
+    if (node) node.style.viewTransitionName = "district-zoom";
+    void transition(() => flushSync(() => { setChosen(name); setPicked(null); })).then(() => { if (node) node.style.viewTransitionName = ""; });
+  };
+  // A bore opens its mandal's page; its name carries over into the page's title.
+  // (SVG text cannot carry a view-transition name, so a small label stands in for it while leaving.)
+  const open = (bore: Bore, name: Element | null) => {
+    if (!bore.id) return;
+    let tag: HTMLElement | null = null;
+    if (name && able()) {
+      const r = name.getBoundingClientRect();
+      tag = document.createElement("div");
+      tag.textContent = bore.name;
+      Object.assign(tag.style, { position: "fixed", left: `${r.left + r.width / 2}px`, top: `${r.top + r.height / 2}px`, transform: "translate(-50%, -50%)", font: "650 14px var(--font-display)", color: "#fff", whiteSpace: "nowrap", pointerEvents: "none", zIndex: "50", viewTransitionName: "mandal-name" });
+      document.body.appendChild(tag);
+    }
+    void navigate(() => router.push(`/mandals/${bore.id}/`), () => tag?.remove());
+  };
+
   return (
-    <section ref={box} className={styles.bores} aria-labelledby="bores-title" data-testid="district-bores" data-district={district.name} data-mode={mode}
+    <section ref={box} className={styles.bores} data-bare={bare ? "" : undefined} aria-labelledby="bores-title" data-testid="district-bores" data-winter={winter} data-district={district.name} data-mode={mode}
       data-month={mode === "summer" ? months[month] : undefined} data-dry={count("dry")} data-trickle={count("trickle")} data-running={count("full") + count("steady")}>
       <header className={styles.boresHead}>
         <div>
@@ -144,7 +194,7 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoC
           ) : null}
           <label className={styles.pick}>
             <span>District</span>
-            <select value={district.name} onChange={e => setChosen(e.target.value)} data-testid="district-bores-pick">
+            <select value={district.name} onChange={e => pick(e.target.value)} data-testid="district-bores-pick">
               {districts.map(d => <option key={d.name} value={d.name}>{d.name}</option>)}
             </select>
           </label>
@@ -165,10 +215,12 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoC
         </div>
       ) : null}
 
-      <div className={styles.boresFigure} data-scroll={narrow ? "" : undefined}>
+      <div ref={strip} className={styles.boresFigure} data-scroll={narrow ? "" : undefined} data-zoom="">
         {narrow ? <span className={styles.swipe} aria-hidden="true">Swipe to see all {bores.length} →</span> : null}
         <div style={narrow ? { width } : undefined}>
           <Borewells key={district.name} uid="db" bores={bores} scaleM={scaleM} aquifer={aquifer} animated play={seen}
+            selected={picked ? bores.findIndex(b => b.id === picked) : null}
+            hrefOf={bare ? undefined : b => (b.id ? `${BASE}/mandals/${b.id}/` : null)} onOpen={bare ? undefined : open}
             width={width} soil={narrow ? 260 : 300} nameSize={narrow ? 11 : bores.length > 30 ? 10 : 11.5}
             label={mode === "summer"
               ? `${district.name}'s ${bores.length} mandals as borewells in ${when}, projected on a ${winter} winter: ${count("dry")} past their deepest May on record, ${count("trickle")} within ${NEAR_RECORD_M} m of it.`

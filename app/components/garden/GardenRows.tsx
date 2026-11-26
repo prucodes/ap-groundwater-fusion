@@ -447,3 +447,24 @@ export function GardenMark({ garden, row, geometry, look, i }: { garden: Garden;
     </svg>
   );
 }
+
+/** A district picked in the field: the rest of the row dims and the district's plants light up,
+    each a shaft of light down to its water, before the field zooms into its borewells. */
+export function GardenDistrictMark({ row, geometry, members, name, className }: { row: RowLayout; geometry: RowGeometry; members: Set<number>; name: string; className?: string }) {
+  const height = heightOf(geometry), r1 = (x: number) => Math.round(x * 10) / 10;
+  const xs = row.plants.filter(p => members.has(p.i)).map(p => p.x);
+  if (!xs.length) return null;
+  const w = Math.max(1.6, (row.plants[1]?.x ?? 2) - (row.plants[0]?.x ?? 0)), mid = xs.reduce((a, b) => a + b, 0) / xs.length;
+  const id = `gdm${Math.round(mid)}`;
+  return (
+    <svg viewBox={`0 0 ${r1(row.width)} ${r1(height)}`} aria-hidden="true" className={className} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
+      <defs>
+        <mask id={`${id}m`}><rect width={r1(row.width)} height={r1(height)} fill="#fff" />{xs.map(x => <rect key={x} x={r1(x - w / 2)} y={0} width={r1(w)} height={r1(height)} fill="#000" />)}</mask>
+        <linearGradient id={`${id}g`} x1={0} y1={0} x2={0} y2={1}><stop offset={0} stopColor="#d9f6ff" stopOpacity={0} /><stop offset={0.4} stopColor="#bfefff" stopOpacity={0.4} /><stop offset={1} stopColor="#5fd0f6" stopOpacity={0.12} /></linearGradient>
+      </defs>
+      <rect width={r1(row.width)} height={r1(height)} fill="rgba(3, 10, 16, .62)" mask={`url(#${id}m)`} />
+      {xs.map(x => <rect key={x} x={r1(x - w / 2)} y={0} width={r1(w)} height={r1(height)} fill={`url(#${id}g)`} />)}
+      <text x={r1(Math.min(row.width - 60, Math.max(60, mid)))} y={14} textAnchor="middle" fontSize={12} fontWeight={650} fill="#eaf3fb" style={{ fontFamily: "var(--font-sans)" }}>{name} · {xs.length} mandals</text>
+    </svg>
+  );
+}

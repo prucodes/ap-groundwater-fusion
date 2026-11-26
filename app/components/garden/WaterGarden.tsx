@@ -2,11 +2,13 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { flushSync } from "react-dom";
 import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { gardenRows, monthYear, rainLine, stepCounts, type Garden } from "../../lib/gardenShared";
 import { IconPause, IconPlay } from "../icons";
-import { DistrictBores } from "./DistrictBores";
-import { GardenMark, GardenRow, type Painter, type RainMoment, type RowGeometry } from "./GardenRows";
+import { transition } from "../../lib/viewTransition";
+import { DistrictBores, type BoresFocus } from "./DistrictBores";
+import { GardenDistrictMark, GardenMark, GardenRow, type Painter, type RainMoment, type RowGeometry } from "./GardenRows";
 import { easeStep, lookAt } from "./gardenLook";
 import styles from "./WaterGarden.module.css";
 
@@ -26,8 +28,18 @@ const GROW_S = 3.4, RAIN_S = 0.9, MOVE_S = 0.6, REST_S = 0.6;
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-export function WaterGarden() {
-  const [garden, setGarden] = useState<Garden | null>(null);
+/** The presenter's control: rest on the latest year, play every year from the first, or hold where it is. */
+export type GardenStage = "rest" | "play" | "hold";
+
+export function WaterGarden({ data = null, stage, bare = false }: {
+  /** The garden already fetched (the presenter shares one copy); otherwise it is fetched here. */
+  data?: Garden | null;
+  /** Driven by the presenter instead of the play button. */
+  stage?: GardenStage;
+  /** Without the controls, the close-up and the key: the presenter shows its own. */
+  bare?: boolean;
+} = {}) {
+  const [garden, setGarden] = useState<Garden | null>(data);
   const [narrow, setNarrow] = useState(false);
   /** Where the garden rests: how grown, and which year (an index into garden.steps). */
   const [grown, setGrown] = useState(0);
@@ -41,13 +53,19 @@ export function WaterGarden() {
   const figure = useRef<HTMLDivElement>(null), tapped = useRef<number | null>(null);
   const painters = useRef(new Map<number, Painter>());
   const moving = useRef<number | null>(null);
+  /** Set when the presenter asks for the latest year: a paused playback settles there, not part way. */
+  const settleLast = useRef(false);
   const router = useRouter();
+  /** A plant picked: its district lights up, then the field zooms into its borewells below. */
+  const [marked, setMarked] = useState<string | null>(null);
+  const [focus, setFocus] = useState<BoresFocus | null>(null);
 
   useEffect(() => {
+    if (data) { setGarden(data); return; }
     let live = true;
     fetch(`${BASE}/garden/data.json`).then(r => (r.ok ? r.json() : null)).then(json => { if (live && json) setGarden(json as Garden); }).catch(() => undefined);
     return () => { live = false; };
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     const node = figure.current;
@@ -113,6 +131,7 @@ export function WaterGarden() {
   // and the crops move to the October after it, a rest, and on; stop on the latest.
   useEffect(() => {
     if (!playing || !garden) return;
+    settleLast.current = false;
     const reduced = reducedMotion();
     const from = resting < last ? Math.round(resting) : 0;
     let request = 0, began = 0, shownYear = -1, shownRain = -1;
@@ -144,11 +163,25 @@ export function WaterGarden() {
       cancelAnimationFrame(request);
       // Paused part way: settle on the year being shown.
       setRaining(null);
-      if (moving.current !== null) { const year = Math.round(moving.current); paintAll(GROW_S, year); setPosition(year); moving.current = null; setPassing(null); }
+      if (moving.current !== null) {
+        const year = settleLast.current ? last : Math.round(moving.current);
+        paintAll(GROW_S, year); setPosition(settleLast.current ? null : year); moving.current = null; setPassing(null);
+      }
+      settleLast.current = false;
     };
     // Starts only when play is pressed; the year it starts from is read then.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing, garden, last, paintAll]);
+
+  // The presenter's steps: play once grown; rest on the latest year, repainted there.
+  useEffect(() => {
+    if (!garden || !stage || grown < GROW_S) return;
+    if (stage === "play") { setPosition(null); setPlaying(true); }
+    else if (stage === "rest") {
+      settleLast.current = true;
+      setPlaying(false); setPosition(null); paintAll(GROW_S, last);
+    }
+  }, [stage, garden, grown, last, paintAll]);
 
   const shownIndex = passing ?? Math.round(resting);
   const step = garden ? garden.steps[shownIndex] : null;
@@ -174,16 +207,38 @@ export function WaterGarden() {
     const i = point(event, rowIndex);
     if (i === null || !garden) return;
     const touch = (event.nativeEvent as PointerEvent).pointerType === "touch";
-    if (!touch || tapped.current === i) router.push(`/mandals/${garden.plants[i][0]}/`);
+    if (!touch || tapped.current === i) zoomTo(i);
     tapped.current = i;
-  }, [point, garden, router]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [point, garden]);
+
+  /** From the State to a district: light the district's plants, then let the field glide down into
+      its close-up (one view transition), its borewells in the year shown and this mandal's marked.
+      Bare (in the presenter) there is no close-up: the plant opens its mandal. */
+  const zoomTo = (i: number) => {
+    if (!garden) return;
+    const [id, , district] = garden.plants[i];
+    if (bare) { router.push(`/mandals/${id}/`); return; }
+    setLit(null); setMarked(district);
+    window.setTimeout(() => {
+      const field = figure.current, closeUp = () => document.querySelector<HTMLElement>('[data-testid="district-bores"] [data-zoom]');
+      if (field) field.style.viewTransitionName = "district-zoom";
+      void transition(() => {
+        flushSync(() => setFocus(was => ({ district, id, n: (was?.n ?? 0) + 1 })));
+        if (field) field.style.viewTransitionName = "";
+        const strip = closeUp();
+        if (strip) { strip.style.viewTransitionName = "district-zoom"; strip.closest("section")?.scrollIntoView({ block: "center" }); }
+      }).then(() => { const strip = closeUp(); if (strip) strip.style.viewTransitionName = ""; setMarked(null); });
+    }, reducedMotion() ? 0 : 520);
+  };
+  const markedMembers = useMemo(() => new Set(garden && marked ? garden.plants.flatMap((p, k) => (p[2] === marked ? [k] : [])) : []), [garden, marked]);
 
   const plant = garden && lit ? garden.plants[lit.i] : null;
   const now = plant && step ? plant[4][step.index] : null, usual = plant ? plant[5] : null;
   const moved = now !== null && usual !== null ? Math.round((now - usual) * 100) : null;
 
   return (
-    <div className={styles.garden} data-testid="water-garden" data-ready={garden && grown >= GROW_S ? "done" : "growing"} data-year={step?.year ?? ""}>
+    <div className={styles.garden} data-bare={bare ? "" : undefined} data-zooming={marked ? "" : undefined} data-testid="water-garden" data-ready={garden && grown >= GROW_S ? "done" : "growing"} data-year={step?.year ?? ""}>
       <div ref={figure} className={styles.figure} data-mode={narrow ? "regions" : "one"} onPointerLeave={() => setLit(null)}>
         {garden && step ? (
           <div className={styles.when} data-raining={raining !== null ? "" : undefined}>
@@ -204,6 +259,7 @@ export function WaterGarden() {
               <GardenRow garden={garden} row={row} rowIndex={r} geometry={layout.geometry} look={look} waterIn={Math.min(1, grown / 0.8)}
                 ticks tickFont={narrow ? 13 : 10.5} className={styles.svg} register={register} onPointerMove={point} onClick={open}
                 label={`${row.region !== null ? `${garden.regions[row.region]}: ` : ""}${row.plants.length} mandals as sorghum plants: roots reach each one's water table; the head full where it stands above its usual ${garden.monthName}, drooping where it stands below.`} />
+              {marked ? <GardenDistrictMark row={row} geometry={layout.geometry} members={markedMembers} name={marked} className={styles.districtMark} /> : null}
               {lit && lit.row === r && playing === false ? <GardenMark garden={garden} row={row} geometry={layout.geometry} look={look} i={lit.i} /> : null}
             </div>
             {!narrow ? (
@@ -220,17 +276,18 @@ export function WaterGarden() {
             {moved !== null && usual !== null ? <em data-tone={moved > 10 ? "deeper" : moved < -10 ? "shallower" : undefined}>
               {Math.abs(moved) <= 10 ? `Within 0.1 m of its usual ${garden!.monthName}, ${usual.toFixed(1)} m` : `${(Math.abs(moved) / 100).toFixed(1)} m ${moved > 0 ? "deeper" : "shallower"} than its usual ${garden!.monthName}, ${usual.toFixed(1)} m`}
             </em> : plant[5] === null ? <em>Too few {garden!.monthName}s read to know its usual</em> : null}
+            {bare ? null : <small className={styles.tipHint}>Click for {plant[2]}&rsquo;s borewells</small>}
           </div>
         ) : null}
       </div>
 
       {garden && counts && step ? (
         <div className={styles.controls}>
-          <button type="button" className={styles.play} onClick={() => setPlaying(p => !p)} data-testid="garden-play" aria-pressed={playing}>
+          {bare ? null : <><button type="button" className={styles.play} onClick={() => setPlaying(p => !p)} data-testid="garden-play" aria-pressed={playing}>
             {playing ? <IconPause /> : <IconPlay />}<span>{playing ? "Pause" : `Play every ${garden.monthName} since ${garden.steps[0].year}`}</span>
           </button>
           <input type="range" className={styles.years} min={0} max={last} step={1} value={shownIndex} aria-label={`${garden.monthName} of which year`}
-            aria-valuetext={monthYear(garden, step.year)} onChange={e => { setPlaying(false); setPosition(Number(e.target.value)); }} data-testid="garden-years" />
+            aria-valuetext={monthYear(garden, step.year)} onChange={e => { setPlaying(false); setPosition(Number(e.target.value)); }} data-testid="garden-years" /></>}
           <p className={styles.counts} data-testid="garden-counts" data-deeper={counts.deeper} data-shallower={counts.shallower} data-steady={counts.steady}>
             <span data-tone="deeper"><b>{counts.deeper}</b> deeper than usual</span>
             <span data-tone="shallower"><b>{counts.shallower}</b> shallower</span>
@@ -239,14 +296,14 @@ export function WaterGarden() {
           </p>
         </div>
       ) : null}
-      <p className={styles.key}>
+      {bare ? null : <p className={styles.key}>
         <span><i data-kind="open" />Full, golden head: water above its usual {garden?.monthName ?? "level"}</span>
         <span><i data-kind="bud" />Green head: within 0.1 m of usual</span>
         <span><i data-kind="droop" />Drooping, browned: deeper than usual</span>
         <span>Roots reach the water table, to scale: as deep as a borewell must go. Plants stand taller where it is near.</span>
         <span>Paddy where most of a mandal&rsquo;s farmland is irrigated, sorghum elsewhere.</span>
-      </p>
-      {garden && step ? <DistrictBores garden={garden} stepIndex={shownIndex} /> : null}
+      </p>}
+      {garden && step && !bare ? <DistrictBores garden={garden} stepIndex={shownIndex} focus={focus} /> : null}
       {plant ? <p className={styles.srOnly}><Link href={`/mandals/${plant[0]}/`}>Open {plant[1]}</Link></p> : null}
     </div>
   );
