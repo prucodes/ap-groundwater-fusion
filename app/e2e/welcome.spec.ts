@@ -69,6 +69,22 @@ test("motion can be paused and reduced-motion visitors get a still entrance", as
   await enter(page);
 });
 
+test("the picture lands once it is on screen, and is drawn landed and still with reduced motion", async ({ page }) => {
+  await page.goto("/");
+  const picture = page.getByTestId("welcome-landscape");
+  await expect(picture).toHaveAttribute("data-landing", "done", { timeout: 12_000 });
+  // Everything has landed: the layers at their depths, nothing still faded or clipped.
+  await expect(picture.locator('[data-layer="57"]')).toHaveAttribute("transform", "translate(0 57)");
+  await expect(picture.locator('[data-layer="170"]')).toHaveAttribute("transform", "translate(0 170)");
+  expect(await picture.locator("[data-fade]").evaluateAll(els => els.filter(el => (el as SVGElement).style.opacity !== "").length)).toBe(0);
+  await expect(picture.locator("[data-reveal-group][clip-path]")).toHaveCount(0);
+  await expect(picture.getByRole("img", { name: "Beneath the monsoon" })).toBeVisible();
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+  await expect(picture).toHaveAttribute("data-landing", "done");
+  await expect(picture.locator('[data-layer="57"]')).toHaveAttribute("transform", "translate(0 57)");
+});
+
 test("entrance and export analytics never include entered text or report contents", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByTestId("welcome")).toHaveAttribute("data-phase", "welcome");
