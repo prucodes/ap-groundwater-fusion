@@ -64,3 +64,4 @@ app/public/vendor/
 # The films as CI records them: built into the site at deploy, never committed.
 app/.weekly-film/
 app/.method-film/
+app/.garden-film/

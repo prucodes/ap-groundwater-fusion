@@ -7,7 +7,7 @@ import { expect, test } from "@playwright/test";
    have their own frame, so both are left out. The Brief is laid out as an A4 sheet to print,
    and the laptop sizes are not touched by any of this. */
 
-const PAGES = ["/", "/changes/", "/weekly-film/", "/map/", "/monsoon/", "/cyclones/", "/drought/", "/summer/", "/rabi/",
+const PAGES = ["/", "/changes/", "/weekly-film/", "/garden/", "/map/", "/monsoon/", "/cyclones/", "/drought/", "/summer/", "/rabi/",
   "/agriculture/", "/districts/", "/constituencies/", "/facts/", "/field-report/", "/field-check/", "/digest/", "/nasa/", "/climate/",
   "/scenario/", "/irrigation/", "/estimates/", "/readiness/", "/compare/", "/methodology/", "/settings/", "/crystal/",
   "/living-water-table/", "/mandals/ap-temp-mandal-kurnool-alur-512/",
