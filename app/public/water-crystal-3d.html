@@ -919,11 +919,85 @@ const geo=new THREE.BufferGeometry();
 geo.setAttribute("position",new THREE.BufferAttribute(positions,3).setUsage(THREE.DynamicDrawUsage));
 geo.setAttribute("color",new THREE.BufferAttribute(colors,3).setUsage(THREE.DynamicDrawUsage));
 geo.setAttribute("aTop",new THREE.BufferAttribute(new Float32Array(vTop),1));
+/* ============================== rings on the water ============================== */
+/* The site's water language (the welcome lands the same way): a drop lands and rings out.
+   A ring is a centre on the water (x, z), when it began (s) and how bright it is; then how far
+   it travels, how long it lasts, how wide its band is and how much it bends the surface.
+   The State's water and the sea draw the same rings, so they run on past the coast. */
+const RIPPLES=8;
+const ripA=Array.from({length:RIPPLES},()=>new THREE.Vector4(0,0,-1e4,0));
+const ripB=Array.from({length:RIPPLES},()=>new THREE.Vector4(1,1,0.1,0));
+let ripNext=0;
+function addRipple(x,z,start,reach,life,width,lit,bend){
+  if(REDUCED) return;
+  ripA[ripNext].set(x,z,start,lit); ripB[ripNext].set(reach,life,width,bend);
+  ripNext=(ripNext+1)%RIPPLES;
+}
+const RINGS_GLSL=`
+    uniform vec4 uRipA[${RIPPLES}]; uniform vec4 uRipB[${RIPPLES}];
+    /* x: light on the rings, brighter on the side facing the north-west; yz: how the surface tilts across them */
+    vec3 rings(vec2 q,float sea){
+      vec3 acc=vec3(0.0);
+      for(int i=0;i<${RIPPLES};i++){
+        vec4 a=uRipA[i], b=uRipB[i];
+        float age=uTime-a.z;
+        if(age<0.0||age>b.y) continue;
+        /* a drop on the open sea (its brightness passed negative) rings on the sea alone */
+        float lit=a.w;
+        if(lit<0.0){ if(sea<0.5) continue; lit=-lit; }
+        float p=age/b.y;
+        vec2 d=q-a.xy; float r=length(d)+1e-4;
+        float x=(r-b.x*(1.0-pow(1.0-p,3.0)))/b.z;
+        float band=exp(-x*x), fade=pow(1.0-p,1.5);
+        acc.x+=band*fade*lit*(0.55+0.45*dot(d/r,vec2(-0.6,-0.8)));
+        acc.yz+=(d/r)*(-2.0*x*band)*fade*b.w;
+      }
+      return acc;
+    }`;
+/* A change of year travels across the State from the south-west to the north-east, the way the
+   water fills on the welcome: where each mandal lies along that axis, from 0 to 1. */
+const AXIS=new THREE.Vector2(0.78,-0.62);
+const alongW=M.map(m=>m._cx*AXIS.x+m._cz*AXIS.y);
+const alongMin=Math.min(...alongW), alongMax=Math.max(...alongW);
+const along=Float32Array.from(alongW,v=>(v-alongMin)/Math.max(1e-6,alongMax-alongMin));
+/* The opening: a drop lands in the middle of the State and its rings travel out; each mandal's
+   water rises to its own level as the first ring reaches it. Only the drawing waits: the
+   readings (curH, curC) are in place from the first frame. */
+const DROP_MS=700, RING_S=1.9, RISE_MS=450, FLOOR_H=0.02, DRY=[0.03,0.085,0.12];
+const _mid=M.reduce((acc,m)=>{acc.x+=m._cx/NM;acc.z+=m._cz/NM;return acc;},{x:0,z:0});
+let impactF=0;{let best=Infinity;M.forEach((m,f)=>{const d=Math.hypot(m._cx-_mid.x,m._cz-_mid.z);if(d<best){best=d;impactF=f;}});}
+const IMPACT={x:M[impactF]._cx,z:M[impactF]._cz};
+const RING_REACH=Math.max(...M.map(m=>Math.hypot(m._cx-IMPACT.x,m._cz-IMPACT.z)))+0.35;
+/* When the first ring reaches each mandal, in ms after the drop lands: it slows as it spreads. */
+const arrive=Float32Array.from(M,m=>1000*RING_S*(1-Math.cbrt(1-Math.min(1,Math.hypot(m._cx-IMPACT.x,m._cz-IMPACT.z)/RING_REACH))));
+const lift=new Float32Array(NM).fill(REDUCED?1:0), dispH=new Float32Array(NM), dispC=new Float32Array(NM*3);
+let openT0=null, opening=!REDUCED, ringsCast=false;
+const riseEase=t=>1-Math.pow(1-t,3);
+/* Where the opening is now: true while it still changes how the water is drawn. */
+function openingNow(){
+  if(!opening) return false;
+  const el=openT0===null?0:nowMs-openT0;
+  if(!ringsCast&&openT0!==null&&el>=DROP_MS){
+    ringsCast=true;
+    const s=(openT0+DROP_MS)*0.001;
+    addRipple(IMPACT.x,IMPACT.z,s,0.55,0.55,0.22,1.6,0.2);                    /* the splash */
+    addRipple(IMPACT.x,IMPACT.z,s,RING_REACH,RING_S,0.09,1.0,0.55);
+    addRipple(IMPACT.x,IMPACT.z,s+0.23,RING_REACH*0.97,RING_S,0.07,0.6,0.4);
+    addRipple(IMPACT.x,IMPACT.z,s+0.46,RING_REACH*0.94,RING_S,0.06,0.45,0.3);
+  }
+  let up=true;
+  for(let f=0;f<NM;f++){const k=riseEase(Math.min(1,Math.max(0,(el-DROP_MS-arrive[f])/RISE_MS)));lift[f]=k;if(k<1)up=false;}
+  if(up){opening=false;lift.fill(1);return false;}
+  for(let f=0;f<NM;f++){const k=lift[f];
+    dispH[f]=FLOOR_H+(curH[f]-FLOOR_H)*k;
+    dispC[f*3]=DRY[0]+(curC[f*3]-DRY[0])*k; dispC[f*3+1]=DRY[1]+(curC[f*3+1]-DRY[1])*k; dispC[f*3+2]=DRY[2]+(curC[f*3+2]-DRY[2])*k;}
+  return true;
+}
 /* liquid glass: fresnel rim, internal caustic shimmer, roaming glints, breathing surface */
 const crystalMat=new THREE.ShaderMaterial({
   transparent:true, vertexColors:true, side:THREE.DoubleSide,
   extensions:{derivatives:true},
-  uniforms:{uTime:{value:0},uFogScale:{value:1},uRelief:{value:0},uProj:{value:0}},
+  uniforms:{uTime:{value:0},uFogScale:{value:1},uRelief:{value:0},uProj:{value:0},uRipA:{value:ripA},uRipB:{value:ripB},uWave:{value:new THREE.Vector4(AXIS.x,AXIS.y,0,0)}},
   vertexShader:`
     attribute float aTop;
     uniform float uTime;
@@ -949,6 +1023,8 @@ const crystalMat=new THREE.ShaderMaterial({
             +vn(q*3.4+vec2(-uTime*0.16,uTime*0.30))*0.30
             +vn(q*7.5+vec2(uTime*0.42,-uTime*0.25))*0.15;
     }
+    ${RINGS_GLSL}
+    uniform vec4 uWave;
     void main(){
       vec3 N=normalize(cross(dFdx(vW),dFdy(vW)));
       vec3 V=normalize(cameraPosition-vW);
@@ -972,6 +1048,9 @@ const crystalMat=new THREE.ShaderMaterial({
               +cos(q.x*12.0-q.y*13.0+uTime*2.8)*0.18)*amp;
         vec3 N2=normalize(vec3((wsurf(q-vec2(e,0.0))-wsurf(q+vec2(e,0.0)))*amp,e*2.0,
                                (wsurf(q-vec2(0.0,e))-wsurf(q+vec2(0.0,e)))*amp)+wn*0.25);
+        /* rings from a drop or a tap bend the surface as they pass */
+        vec3 rg=rings(q,0.0);
+        N2=normalize(N2+vec3(rg.y,0.0,rg.z)*0.8);
         /* water body colour from the data tint: deep in troughs, luminous on slopes */
         vec3 deepC=vC*0.82;
         vec3 shalC=vC*1.05+vec3(0.006,0.015,0.02);
@@ -986,6 +1065,10 @@ const crystalMat=new THREE.ShaderMaterial({
         col+=vec3(0.9,1.0,1.0)*pow(max(dot(reflect(-L,N2),V),0.0),120.0)*mix(0.16,0.10,uRelief);
         /* soft sky sheen */
         col+=vec3(0.10,0.25,0.32)*pow(max(dot(reflect(vec3(0.3,-0.8,0.5),N2),V),0.0),8.0)*0.15;
+        /* the rings' own light, and the lit front of a change of year travelling across */
+        col+=vec3(0.62,0.96,1.0)*rg.x*0.32;
+        float ws=dot(vW.xz,uWave.xy);
+        col+=vec3(0.55,0.95,1.0)*exp(-pow((ws-uWave.z)/0.25,2.0))*uWave.w*0.22;
         /* a projection, not a reading: fine diagonal hatching over calmer water */
         float hs=abs(fract((vW.x-vW.z)*8.0)-0.5);
         col=mix(col,col*0.5+vec3(0.012,0.016,0.022),smoothstep(0.36,0.46,hs)*0.5*uProj);
@@ -1097,10 +1180,10 @@ function updateRims(){
   if(!any) return;
   const recH=new Float32Array(NM);
   for(let f=0;f<NM;f++) if(M[f].o) recH[f]=hOut(M[f].o.r)+0.012;
-  for(let i=0;i<rimFeat.length;i++){const f=rimFeat[i]; rimArr[i*3+1]=recH[f]; rimAlpha[i]=curR[f];}
-  for(let i=0;i<plateFeat.length;i++){const f=plateFeat[i]; plateArr[i*3+1]=recH[f]-0.004; plateAlpha[i]=curR[f];}
+  for(let i=0;i<rimFeat.length;i++){const f=rimFeat[i]; rimArr[i*3+1]=recH[f]; rimAlpha[i]=curR[f]*lift[f];}
+  for(let i=0;i<plateFeat.length;i++){const f=plateFeat[i]; plateArr[i*3+1]=recH[f]-0.004; plateAlpha[i]=curR[f]*lift[f];}
   for(let i=0;i<sleeveFeat.length;i++){const f=sleeveFeat[i];
-    sleeveArr[i*3+1]=sleeveTop[i]?recH[f]:Math.min(recH[f],curH[f]); sleeveAlpha[i]=curR[f];}
+    sleeveArr[i*3+1]=sleeveTop[i]?recH[f]:Math.min(recH[f],curH[f]); sleeveAlpha[i]=curR[f]*lift[f];}
   sleeveGeo.attributes.position.needsUpdate=true; sleeveGeo.attributes.aA.needsUpdate=true;
   rimGeo.attributes.position.needsUpdate=true; rimGeo.attributes.aA.needsUpdate=true;
   plateGeo.attributes.position.needsUpdate=true; plateGeo.attributes.aA.needsUpdate=true;
@@ -1194,10 +1277,11 @@ function targetsFor(y,md){
   }
   toP=projFrame?1:0;
 }
-let tw0=0, twDur=0, nowMs=0;
-function beginTween(dur){
+let tw0=0, twDur=0, nowMs=0, waveMs=0;
+/* wave: how long the change takes to travel the State, south-west to north-east (a change of year) */
+function beginTween(dur,wave=0){
   fromH.set(curH); fromC.set(curC); fromR.set(curR); fromP=curP;
-  tw0=nowMs; twDur=REDUCED?0:dur;
+  tw0=nowMs; twDur=REDUCED?0:dur; waveMs=REDUCED||!dur?0:wave;
 }
 const easeIO=t=>t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 
@@ -1205,21 +1289,27 @@ function applyFrame(){
   const t=twDur? Math.min(1,(nowMs-tw0)/twDur):1;
   const e=easeIO(t);
   for(let f=0;f<NM;f++){
-    curH[f]=fromH[f]+(toH[f]-fromH[f])*e;
-    curC[f*3]  =fromC[f*3]  +(toC[f*3]  -fromC[f*3])*e;
-    curC[f*3+1]=fromC[f*3+1]+(toC[f*3+1]-fromC[f*3+1])*e;
-    curC[f*3+2]=fromC[f*3+2]+(toC[f*3+2]-fromC[f*3+2])*e;
-    curR[f]=fromR[f]+(toR[f]-fromR[f])*e;
+    const ef=waveMs?easeIO(Math.min(1,Math.max(0,(nowMs-tw0-waveMs*along[f])/twDur))):e;
+    curH[f]=fromH[f]+(toH[f]-fromH[f])*ef;
+    curC[f*3]  =fromC[f*3]  +(toC[f*3]  -fromC[f*3])*ef;
+    curC[f*3+1]=fromC[f*3+1]+(toC[f*3+1]-fromC[f*3+1])*ef;
+    curC[f*3+2]=fromC[f*3+2]+(toC[f*3+2]-fromC[f*3+2])*ef;
+    curR[f]=fromR[f]+(toR[f]-fromR[f])*ef;
   }
   curP=fromP+(toP-fromP)*e;
   crystalMat.uniforms.uProj.value=curP;
+  /* the change's lit front: where the mandals are half way through it */
+  const wv=crystalMat.uniforms.uWave.value, el=nowMs-tw0;
+  if(waveMs&&el<twDur+waveMs){wv.z=alongMin+((el-twDur*0.5)/waveMs)*(alongMax-alongMin);wv.w=Math.sin(Math.PI*Math.min(1,el/(twDur+waveMs)));}
+  else wv.w=0;
+  const opened=openingNow(), Hs=opened?dispH:curH, Cs=opened?dispC:curC;
   updateRims();
   const hl=hovered>=0?hovered:pinned;
   for(let i=0;i<NV;i++){
     let h=0,r=0,g=0,b=0;
     for(let j=BL.off[i];j<BL.off[i+1];j++){
       const f=BL.idx[j],w=BL.w[j];
-      h+=w*curH[f]; r+=w*curC[f*3]; g+=w*curC[f*3+1]; b+=w*curC[f*3+2];
+      h+=w*Hs[f]; r+=w*Cs[f*3]; g+=w*Cs[f*3+1]; b+=w*Cs[f*3+2];
     }
     positions[i*3+1]=vTop[i]?h+(vFeat[i]&15)*0.00015:0;
     let s=vShade[i];
@@ -1229,23 +1319,56 @@ function applyFrame(){
   geo.attributes.position.needsUpdate=true;
   geo.attributes.color.needsUpdate=true;
   for(let i=0;i<edgeFeat.length;i++){
-    let h=0; for(let j=EBL.off[i];j<EBL.off[i+1];j++)h+=EBL.w[j]*curH[EBL.idx[j]];
+    let h=0; for(let j=EBL.off[i];j<EBL.off[i+1];j++)h+=EBL.w[j]*Hs[EBL.idx[j]];
     ePosArr[i*3+1]=h+0.02;
   }
   eGeo.attributes.position.needsUpdate=true;
   for(let i=0;i<coastFeat.length;i++){
-    let h=0; for(let j=CBL.off[i];j<CBL.off[i+1];j++)h+=CBL.w[j]*curH[CBL.idx[j]];
+    let h=0; for(let j=CBL.off[i];j<CBL.off[i+1];j++)h+=CBL.w[j]*Hs[CBL.idx[j]];
     cPosArr[i*3+1]=h+0.015;
   }
   cGeo.attributes.position.needsUpdate=true;
-  return t<1;
+  return waveMs?el<twDur+waveMs:t<1;
 }
 targetsFor(year,mode); curH.set(toH); curC.set(toC); curR.set(toR); curP=toP; beginTween(0); applyFrame();
+
+/* ============================== the coast, for the sea ============================== */
+/* How far each point of the sea lies from the land: for the lit shallows along the coast, and
+   for where a drop on the open sea may land. A distance field on a 512 grid, worked out once. */
+const COAST={n:512,x0:-7,z0:-7,size:14,max:2};
+const coastField=(()=>{
+  const N=COAST.n, k=N/COAST.size, c=document.createElement("canvas"); c.width=c.height=N;
+  const g=c.getContext("2d",{willReadFrequently:true});
+  g.fillStyle="#fff";
+  for(const m of M){ if(!m._ring) continue; g.beginPath();
+    m._ring.forEach((pt,i)=>{const u=(pt.x-COAST.x0)*k, v=(pt.y-COAST.z0)*k; if(i) g.lineTo(u,v); else g.moveTo(u,v);});
+    g.closePath(); g.fill(); }
+  const img=g.getImageData(0,0,N,N).data, d=new Float32Array(N*N), D=Math.SQRT2;
+  for(let i=0;i<N*N;i++) d[i]=img[i*4+3]>127?0:1e9;
+  for(let y=0;y<N;y++) for(let x=0;x<N;x++){const i=y*N+x;let v=d[i];
+    if(x>0)v=Math.min(v,d[i-1]+1);
+    if(y>0){v=Math.min(v,d[i-N]+1);if(x>0)v=Math.min(v,d[i-N-1]+D);if(x<N-1)v=Math.min(v,d[i-N+1]+D);}
+    d[i]=v;}
+  for(let y=N-1;y>=0;y--) for(let x=N-1;x>=0;x--){const i=y*N+x;let v=d[i];
+    if(x<N-1)v=Math.min(v,d[i+1]+1);
+    if(y<N-1){v=Math.min(v,d[i+N]+1);if(x<N-1)v=Math.min(v,d[i+N+1]+D);if(x>0)v=Math.min(v,d[i+N-1]+D);}
+    d[i]=v;}
+  for(let i=0;i<N*N;i++) d[i]/=k;
+  return d;
+})();
+const coastAt=(x,z)=>{const N=COAST.n,k=N/COAST.size,u=Math.floor((x-COAST.x0)*k),v=Math.floor((z-COAST.z0)*k);
+  return u<0||v<0||u>=N||v>=N?COAST.max:Math.min(COAST.max,coastField[v*N+u]);};
+const coastTex=(()=>{const N=COAST.n, px=new Uint8Array(N*N*4);
+  for(let i=0;i<N*N;i++){const v=Math.round(Math.min(1,coastField[i]/COAST.max)*255);px[i*4]=px[i*4+1]=px[i*4+2]=v;px[i*4+3]=255;}
+  const t=new THREE.DataTexture(px,N,N,THREE.RGBAFormat);
+  t.magFilter=t.minFilter=THREE.LinearFilter; t.wrapS=t.wrapT=THREE.ClampToEdgeWrapping; t.needsUpdate=true; return t;})();
 
 /* ============================== ocean ============================== */
 const waterUni={
   uTime:{value:0},
   uGlow:{value:new THREE.Vector2(landRx*1.22,landRz*1.22)},
+  uRipA:{value:ripA},uRipB:{value:ripB},
+  uCoast:{value:coastTex},uMoon:{value:new THREE.Vector3(0,0.6,-0.8)},
 };
 const water=new THREE.Mesh(
   new THREE.PlaneGeometry(90,90,240,240),
@@ -1280,6 +1403,7 @@ const water=new THREE.Mesh(
       }`,
     fragmentShader:`
       uniform float uTime; uniform vec2 uGlow;
+      uniform sampler2D uCoast; uniform vec3 uMoon;
       varying vec3 vW; varying float vCrest; varying vec3 vN; varying float vSlope;
       float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
       float vn(vec2 p){vec2 i=floor(p),fr=fract(p);fr=fr*fr*(3.0-2.0*fr);
@@ -1290,6 +1414,7 @@ const water=new THREE.Mesh(
               +vn(q*8.5+vec2(uTime*0.30,-uTime*0.18))*0.17
               +vn(q*18.0+vec2(uTime*0.45,uTime*0.33))*0.08;
       }
+      ${RINGS_GLSL}
       void main(){
         vec2 q=vW.xz;
         vec3 N=normalize(vN);
@@ -1301,6 +1426,8 @@ const water=new THREE.Mesh(
         vec3 Nd=normalize(vec3((osurf(q-vec2(e,0.0))-osurf(q+vec2(e,0.0)))*rAmp,e*2.0,
                                (osurf(q-vec2(0.0,e))-osurf(q+vec2(0.0,e)))*rAmp));
         N=normalize(N+Nd*0.5);
+        vec3 rg=rings(q,1.0);
+        N=normalize(N+vec3(rg.y,0.0,rg.z)*0.8);
         float fres=pow(1.0-max(dot(N,V),0.0),3.0);
         vec3 col=mix(vec3(0.012,0.065,0.110),vec3(0.034,0.150,0.220),fres);
         /* broad slow swell of light */
@@ -1314,11 +1441,83 @@ const water=new THREE.Mesh(
         /* settle far field, keep the swell readable */
         float d=smoothstep(8.0,22.0,length(q));
         col=mix(col,vec3(0.007,0.045,0.082),d*0.65);
+        /* lit shallows along the coast: lighter, glassier water with pool light moving in it */
+        float dc=texture2D(uCoast,(q-vec2(${COAST.x0.toFixed(1)},${COAST.z0.toFixed(1)}))/${COAST.size.toFixed(1)}).r*${COAST.max.toFixed(1)};
+        float shallow=exp(-dc/0.30);
+        float cw=vn(q*3.2+vec2(uTime*0.10,-uTime*0.07))+vn(q*5.6+vec2(-uTime*0.09,uTime*0.12));
+        float caust=pow(0.5+0.5*sin(cw*6.0-uTime*0.8),6.0);
+        col=mix(col,vec3(0.040,0.175,0.220)*(0.9+0.2*sw),shallow*0.72);
+        col+=vec3(0.35,0.82,0.95)*caust*shallow*0.12;
+        col+=vec3(0.22,0.60,0.70)*pow(shallow,4.0)*0.12;
+        /* the moon's path: a soft lane where a calm sea would mirror the moon, coming down the open
+           sea toward you, and the moon's light breaking on the ripples only inside it */
+        float lane=pow(max(dot(reflect(-V,vec3(0.0,1.0,0.0)),uMoon),0.0),28.0)*(1.0-shallow);
+        float mp=max(dot(reflect(-V,N),uMoon),0.0);
+        col+=vec3(0.20,0.40,0.52)*lane*0.10;
+        col+=vec3(0.30,0.55,0.68)*pow(mp,24.0)*lane*0.22;
+        /* never brighter than the land: the State's colours are the readings */
+        float lum=dot(col,vec3(0.299,0.587,0.114));
+        col*=min(1.0,0.30/max(lum,1e-4));
+        col+=vec3(0.80,0.94,1.0)*pow(mp,600.0)*lane*0.32*dfade;
+        col+=vec3(0.55,0.92,1.0)*rg.x*0.22;
         gl_FragColor=vec4(col,1.0);
       }`,
   })
 );
 water.rotation.x=-Math.PI/2; water.position.y=-0.02; scene.add(water);
+
+/* ============================== the open sea: its moon and its drops ============================== */
+/* The moon stands ahead of the viewer, off to one side and high enough that its path comes down
+   the open sea beside the State rather than behind it; it turns with the view. */
+const MOON_AZ=-0.62, MOON_EL=0.70, _mf=new THREE.Vector3(), _sd=new THREE.Vector3();
+function updateMoon(){
+  _mf.copy(target).sub(camera.position); _mf.y=0;
+  if(_mf.lengthSq()<1e-6) return; _mf.normalize();
+  const az=Math.atan2(_mf.x,_mf.z)+MOON_AZ;
+  waterUni.uMoon.value.set(Math.sin(az)*Math.cos(MOON_EL),Math.sin(MOON_EL),Math.cos(az)*Math.cos(MOON_EL));
+}
+/* Now and then a drop lands on the open sea, well away from the land and where it can be seen,
+   and rings out on the sea alone. */
+let nextSeaDrop=0;
+function seaDrops(){
+  if(REDUCED||opening) return;
+  if(!nextSeaDrop){nextSeaDrop=nowMs+2200;return;}
+  if(nowMs<nextSeaDrop) return;
+  nextSeaDrop=nowMs+6000+Math.random()*2200;
+  for(let tries=0;tries<40;tries++){
+    const a=Math.random()*Math.PI*2, r=2.4+Math.random()*4.2, x=IMPACT.x+Math.cos(a)*r, z=IMPACT.z+Math.sin(a)*r;
+    if(coastAt(x,z)<1.6) continue;
+    _sd.set(x,0,z).project(camera);
+    if(Math.abs(_sd.x)>0.82||_sd.y<-0.5||_sd.y>0.7||_sd.z>1) continue;
+    const s=nowMs*0.001;
+    addRipple(x,z,s,1.35,3.2,0.07,-0.7,0.45);
+    addRipple(x,z,s+0.26,1.05,3.0,0.06,-0.4,0.3);
+    return;
+  }
+}
+
+/* ============================== the opening drop ============================== */
+const dropGroup=new THREE.Group(); dropGroup.visible=false; scene.add(dropGroup);
+const dropBody=new THREE.Mesh(new THREE.SphereGeometry(0.075,18,12),new THREE.MeshBasicMaterial({color:0xe6fdff,fog:false}));
+dropBody.scale.set(1,1.8,1); dropGroup.add(dropBody);
+const dropHalo=(()=>{const c=document.createElement("canvas");c.width=c.height=64;const g=c.getContext("2d");
+  const r=g.createRadialGradient(32,32,0,32,32,32);r.addColorStop(0,"rgba(170,245,255,0.9)");r.addColorStop(1,"rgba(170,245,255,0)");
+  g.fillStyle=r;g.fillRect(0,0,64,64);
+  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));
+  sp.scale.set(0.7,0.7,1);return sp;})();
+dropGroup.add(dropHalo);
+const dropTrail=new THREE.Mesh(new THREE.CylinderGeometry(0.004,0.03,1,8,1,true),
+  new THREE.MeshBasicMaterial({color:0xa8f2ff,transparent:true,opacity:0.35,depthWrite:false,blending:THREE.AdditiveBlending,fog:false}));
+dropGroup.add(dropTrail);
+/* It falls onto the empty State while the camera comes in; its rings do the rest (openingNow). */
+function updateDrop(){
+  const el=openT0===null?-1:nowMs-openT0, falling=opening&&el>=0&&el<DROP_MS;
+  dropGroup.visible=falling;
+  if(!falling) return;
+  const p=el/DROP_MS, e=p*p*p;
+  dropGroup.position.set(IMPACT.x,3.4+(FLOOR_H+0.06-3.4)*e,IMPACT.z);
+  dropTrail.scale.y=0.15+0.85*e; dropTrail.position.y=dropTrail.scale.y/2+0.08;
+}
 
 /* ============================== particles ============================== */
 const PN=0;
@@ -1945,10 +2144,17 @@ const lgMore=document.getElementById("lgMore");
 lgMore.onclick=()=>{const open=legend.classList.toggle("lgOpen");lgMore.setAttribute("aria-expanded",String(open));fitPhone();};
 function hideCard(){mCard.style.display="none";document.body.classList.remove("cardOpen");document.getElementById("mandalPick").value="";showStateDistribution();}
 document.getElementById("mcClose").onclick=()=>{pinned=-1;hideCard();};
+/* Picking a mandal rings out from it, like a drop landing there. */
+function tapRing(f){
+  const m=M[f]; if(!m) return;
+  const s=nowMs*0.001;
+  addRipple(m._cx,m._cz,s,1.5,1.5,0.06,1.0,0.5);
+  addRipple(m._cx,m._cz,s+0.16,1.15,1.4,0.05,0.55,0.35);
+}
 function handleClick(idx){
   if(idx>=0){
     if(pinned===idx){pinned=-1;hideCard();}
-    else{pinned=idx;document.getElementById("mandalPick").value=idx;updateMandalCard(idx);}
+    else{pinned=idx;document.getElementById("mandalPick").value=idx;updateMandalCard(idx);tapRing(idx);}
   } else if(pinned>=0){pinned=-1;hideCard();}
 }
 
@@ -1979,7 +2185,7 @@ const nStress=M.filter(m=>m.cat&&m.cat!=="safe").length;
 const nAssessed=M.filter(m=>m.cat).length;
 const mandalPick=document.getElementById("mandalPick");
 M.map((m,i)=>({m,i})).sort((a,b)=>a.m.n.localeCompare(b.m.n)).forEach(({m,i})=>{const option=document.createElement("option");option.value=i;option.textContent=`${m.n} / ${m.d}`;mandalPick.appendChild(option);});
-mandalPick.addEventListener("change",()=>{pinned=mandalPick.value===""?-1:Number(mandalPick.value);if(pinned>=0)updateMandalCard(pinned);else hideCard();});
+mandalPick.addEventListener("change",()=>{pinned=mandalPick.value===""?-1:Number(mandalPick.value);if(pinned>=0){updateMandalCard(pinned);tapRing(pinned);}else hideCard();});
 document.getElementById("depthMax").textContent=`${fmt1(maxLvl)} m / deepest`;
 /* Labels that follow the embedded dataset, so the weekly rebuild needs no HTML edits. */
 const yearSpan=YEARS[0]+"\u2013"+YEARS[NY-1];
@@ -2085,15 +2291,15 @@ function updateOutlookKpis(){
   $("oTrackD").textContent=`'beyond' came true \u00B7 ${oneIn(OL.baseRatePct)} overall`;
 }
 let dropTimer=0;
-function setYear(y,dur=650){
+function setYear(y,dur=650,wave=600){
   clearTimeout(dropTimer);
   if(mode==="outlook"&&y>=NY){proj=true;onNow=false;year=NY-1;}
   else if(mode==="level"&&NOW&&y>=NY){onNow=true;proj=false;year=NY-1;}
   else{proj=false;onNow=false;year=Math.max(0,Math.min(NY-1,y));}
-  targetsFor(year,mode); beginTween(dur); refreshHUD();
+  targetsFor(year,mode); beginTween(dur,wave); refreshHUD();
   if(pinned>=0) updateMandalCard(pinned);
 }
-slider.addEventListener("input",()=>{stopPlay();const v=+slider.value;setYear(v,mode==="outlook"&&v>=NY?1400:420);});
+slider.addEventListener("input",()=>{stopPlay();const v=+slider.value;setYear(v,mode==="outlook"&&v>=NY?1400:420,380);});
 function setMode(md){
   if(md==="outlook"&&!OL) return;
   if(mode==="level") levelNow=onNow;   /* back to Water depth returns to the frame it left */
@@ -2280,6 +2486,8 @@ let last=0;
 function loop(t){
   requestAnimationFrame(loop);
   nowMs=t;
+  if(openT0===null) openT0=t;
+  updateDrop();
   const time=t*0.001;
   waterUni.uTime.value=REDUCED?0:time;
   crystalMat.uniforms.uTime.value=REDUCED?0:time;
@@ -2315,6 +2523,7 @@ function loop(t){
   eMat.opacity=(gran==="district"?0.12:0.2-0.1*curP)+Math.sin(time*0.7)*0.02;
 
   updateCamera();
+  updateMoon(); seaDrops();
   updateDistrictLabels();
   updateDepthProbe();
   if(PHONE()){
