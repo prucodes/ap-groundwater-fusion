@@ -64,6 +64,29 @@ test("each October names the monsoon before it, and the rain falls between years
   await page.getByTestId("garden-play").click();
 });
 
+test("a district close up as borewells: one per mandal, the dry and trickling ones its mandals below usual", async ({ page }) => {
+  await page.goto("/garden/");
+  await page.getByTestId("water-garden").scrollIntoViewIfNeeded();
+  await grown(page);
+  const data = await page.evaluate(async () => (await fetch(`${location.pathname.replace(/garden\/$/, "")}garden/data.json`)).json());
+  const bores = page.getByTestId("district-bores");
+  const below = (district: string, index: number) => data.plants.filter((p: any[]) => p[2] === district && p[4][index] !== null && p[5] !== null && Math.round((p[4][index] - p[5]) * 100) > 10).length;
+  const check = async (index: number) => {
+    const district = (await bores.getAttribute("data-district"))!;
+    await expect(bores.locator("svg[data-borewells]")).toHaveAttribute("data-borewells", String(data.plants.filter((p: any[]) => p[2] === district).length));
+    expect(Number(await bores.getAttribute("data-dry")) + Number(await bores.getAttribute("data-trickle"))).toBe(below(district, index));
+  };
+  const last = data.steps[data.steps.length - 1];
+  await check(last.index);
+  await page.getByTestId("district-bores-pick").selectOption("Sri Sathya Sai");
+  await expect(bores).toHaveAttribute("data-district", "Sri Sathya Sai");
+  await check(last.index);
+  // The borewells follow the field's year.
+  await page.getByTestId("garden-years").fill("8");
+  await expect(page.getByTestId("garden-year")).toHaveText(`${data.monthName} ${data.steps[8].year}`);
+  await check(data.steps[8].index);
+});
+
 test("a plant answers to the pointer and opens its mandal", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/garden/");

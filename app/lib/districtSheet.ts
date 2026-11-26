@@ -1,7 +1,7 @@
 import fieldQueueJson from "../data/field_queue.json";
 import { MAP_VIEW, mandalByMapKey, mapGeometry, monsoonWatch, titleCase } from "./data";
 import { droughtSummary } from "./droughtSummary";
-import { sideOf } from "./gardenShared";
+import { sideOf, type GardenAquifer } from "./gardenShared";
 import { summerOutlook, type SummerTier } from "./summer";
 import { summerPriority, type PriorityRow } from "./summerPriority";
 import { waterGarden } from "./waterGarden";
@@ -25,6 +25,8 @@ export const pdfName = (slug: string) => `ap-${slug}-district-sheet.pdf`;
 
 export type SheetMandal = {
   id: string; name: string; nowM: number | null; usualM: number | null;
+  /** The deepest October on record, for how deep its borewell is drawn. */
+  deepestM: number | null;
   /** Depth now less the usual, m: positive is deeper than usual. */
   vsUsualM: number | null; side: -1 | 0 | 1 | null;
   summer: SummerTier | null; priority: PriorityRow["band"] | null;
@@ -33,6 +35,9 @@ export type SheetMandal = {
 export type DistrictSheet = {
   name: string; slug: string; key: string;
   month: string;
+  /** The ground most of the district's mandals sit on, and the depth its borewells are drawn to scale against. */
+  aquifer: GardenAquifer;
+  scaleM: number;
   mandals: SheetMandal[];
   counts: { deeper: number; shallower: number; steady: number; compared: number; total: number };
   medianNowM: number | null; medianUsualM: number | null;
@@ -86,13 +91,17 @@ export function districtSheets(): DistrictSheet[] {
       if (!plant || !f.record) return [];
       const now = plant[4][last.index], usual = plant[5];
       const outlook = summerOutlook.mandals[f.index];
+      const read = plant[4].filter((v): v is number => v !== null);
       return [{
-        id: plant[0], name: plant[1], nowM: now, usualM: usual,
+        id: plant[0], name: plant[1], nowM: now, usualM: usual, deepestM: read.length ? Math.max(...read) : null,
         vsUsualM: now !== null && usual !== null ? Math.round((now - usual) * 100) / 100 : null,
         side: sideOf(now, usual), summer: outlook?.tier ?? null, priority: priorityByIndex.get(f.index)?.band ?? null,
       }];
     });
     const sides = mandals.map(m => m.side);
+    const kinds = mine.flatMap(f => { const p = f.record ? plantById.get(f.record.id) : undefined; return p && p[7] !== null ? [p[7]] : []; });
+    const aquifer = ([0, 1, 2] as GardenAquifer[]).sort((a, b) => kinds.filter(k => k === b).length - kinds.filter(k => k === a).length)[0];
+    const deepest = Math.max(10, ...mandals.map(m => m.deepestM ?? 0));
     const compared = mandals.filter(m => m.nowM !== null && m.usualM !== null);
 
     // The map: the district's own outlines, framed with a margin.
@@ -109,7 +118,7 @@ export function districtSheets(): DistrictSheet[] {
     const drought = droughtSummary.districts.find(x => districtKey(x.district) === key);
     const c = drought?.counts;
     return {
-      name, slug: districtSlug(name), key, month, mandals,
+      name, slug: districtSlug(name), key, month, mandals, aquifer: kinds.length ? aquifer : 0, scaleM: Math.ceil((deepest + 6) / 10) * 10,
       counts: { deeper: sides.filter(s => s === 1).length, shallower: sides.filter(s => s === -1).length, steady: sides.filter(s => s === 0).length, compared: compared.length, total: mandals.length },
       medianNowM: median(compared.map(m => m.nowM as number)),
       medianUsualM: median(compared.map(m => m.usualM as number)),

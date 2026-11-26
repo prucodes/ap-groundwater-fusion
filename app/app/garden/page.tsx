@@ -112,6 +112,17 @@ export default function GardenPage() {
             wet monsoon after dry years can leave it deep, and a dry one after wet years can leave it high.
           </p>
           <p>
+            <b>Crop.</b> {garden.cropSource}. It sets only which plant is drawn: paddy where most fields are watered, the dryland
+            sorghum elsewhere. It is not a crop census, and it does not change the rule.
+          </p>
+          <p>
+            <b>Borewells.</b> The close-up under the field draws one district&rsquo;s mandals as borewells in the ground the Monsoon
+            page classes them in: each bore reaches the measured water table, to scale, and is drilled past the deepest {month} on
+            record; each pump is set 2 m below the mandal&rsquo;s usual {month}, as for a normal year. A pump runs where the water is
+            above its usual or within 0.1 m, trickles where it is below its usual but still over the pump, and runs dry where it has
+            fallen past it. A picture of the mandal&rsquo;s readings, not of any one well.
+          </p>
+          <p>
             <b>Order.</b> {garden.regions.join(", ")}, each from north to south by where the mandal lies. A mandal not read in a year
             stands faint, with no roots.
           </p>

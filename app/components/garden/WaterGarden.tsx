@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { gardenRows, monthYear, rainLine, stepCounts, type Garden } from "../../lib/gardenShared";
 import { IconPause, IconPlay } from "../icons";
+import { DistrictBores } from "./DistrictBores";
 import { GardenMark, GardenRow, type Painter, type RainMoment, type RowGeometry } from "./GardenRows";
 import { easeStep, lookAt } from "./gardenLook";
 import styles from "./WaterGarden.module.css";
@@ -243,7 +244,9 @@ export function WaterGarden() {
         <span><i data-kind="bud" />Green head: within 0.1 m of usual</span>
         <span><i data-kind="droop" />Drooping, browned: deeper than usual</span>
         <span>Roots reach the water table, to scale: as deep as a borewell must go. Plants stand taller where it is near.</span>
+        <span>Paddy where most of a mandal&rsquo;s farmland is irrigated, sorghum elsewhere.</span>
       </p>
+      {garden && step ? <DistrictBores garden={garden} stepIndex={shownIndex} /> : null}
       {plant ? <p className={styles.srOnly}><Link href={`/mandals/${plant[0]}/`}>Open {plant[1]}</Link></p> : null}
     </div>
   );
