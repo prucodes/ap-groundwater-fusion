@@ -1,8 +1,8 @@
 /* The water garden's rules, shared by the page, its film and the build (lib/waterGarden.ts
    writes the data; this file never imports it, so the browser can use it without carrying
    the State's whole record). Every mandal is one plant: its roots reach down to the water
-   table measured in the chosen month, to scale; it opens where the water stands shallower
-   than its usual for that month (the median of its own readings in that month, every year
+   table measured in the chosen month, to scale; its grain head stands full where the water
+   is shallower than its usual for that month (the median of its own readings in that month, every year
    on record) and droops where it stands deeper. A drooping plant is a place worse off than
    is normal for it, not merely worse than last year. */
 

@@ -114,13 +114,13 @@ function GardenFrame({ garden, index, local, format, scenes }: { garden: Garden;
       <div className={styles.words} data-film-box="" data-kind={index === 3 ? "close" : undefined} style={{ opacity: leaving }} key={index}>
         {index === 0 ? <>
           <span className={styles.eyebrow} style={rise(local, 0.2)}>Andhra Pradesh · water garden</span>
-          <h2 className={styles.title} style={rise(local, 0.5)}>Every mandal is a flower</h2>
-          <p className={styles.headline} style={rise(local, 1.8)}>Its roots reach down to the water table in {monthYear(garden, latest.year)}, to scale.</p>
+          <h2 className={styles.title} style={rise(local, 0.5)}>Every mandal is a sorghum plant</h2>
+          <p className={styles.headline} style={rise(local, 1.8)}>Its roots reach the water table in {monthYear(garden, latest.year)}, to scale: as deep as a borewell must go.</p>
         </> : index === 1 ? <>
           <span className={styles.eyebrow} style={rise(local, 0.1)}>{monthYear(garden, latest.year)} against each mandal&rsquo;s usual</span>
           <b className={styles.big} style={rise(local, 0.3)}>{Math.round(latestCounts.deeper * at(local, 0.4, 1.3))}</b>
           <p className={styles.headline} style={rise(local, 0.6)}>of {latestCounts.compared} mandals droop: their water stands deeper than their usual {garden.monthName}.</p>
-          <p className={styles.note} style={rise(local, 3.0)}>{worstSince ? `The most since ${garden.monthName} ${worstSince}. ` : `The most of any ${garden.monthName} on record. `}{latestCounts.shallower} stand open, above their usual.</p>
+          <p className={styles.note} style={rise(local, 3.0)}>{worstSince ? `The most since ${garden.monthName} ${worstSince}. ` : `The most of any ${garden.monthName} on record. `}{latestCounts.shallower} stand full, above their usual.</p>
         </> : index === 2 ? <>
           <span className={styles.eyebrow} style={rise(local, 0.1)}>Every {garden.monthName} since {first.year}</span>
           <b className={styles.big} data-tone="year" style={rise(local, 0.3)}>{shown.year}</b>

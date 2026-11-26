@@ -183,7 +183,7 @@ export function WaterGarden() {
             <div className={styles.plot}>
               <GardenRow garden={garden} row={row} rowIndex={r} geometry={layout.geometry} look={look} waterIn={Math.min(1, grown / 0.8)}
                 ticks tickFont={narrow ? 13 : 10.5} className={styles.svg} register={register} onPointerMove={point} onClick={open}
-                label={`${row.region !== null ? `${garden.regions[row.region]}: ` : ""}${row.plants.length} mandals as plants: roots reach each one's water table; open where it stands above its usual ${garden.monthName}, drooping where it stands below.`} />
+                label={`${row.region !== null ? `${garden.regions[row.region]}: ` : ""}${row.plants.length} mandals as sorghum plants: roots reach each one's water table; the head full where it stands above its usual ${garden.monthName}, drooping where it stands below.`} />
               {lit && lit.row === r && playing === false ? <GardenMark garden={garden} row={row} geometry={layout.geometry} look={look} i={lit.i} /> : null}
             </div>
             {!narrow ? (
@@ -220,10 +220,10 @@ export function WaterGarden() {
         </div>
       ) : null}
       <p className={styles.key}>
-        <span><i data-kind="open" />Open: water above its usual {garden?.monthName ?? "level"}</span>
-        <span><i data-kind="bud" />Bud: within 0.1 m of usual</span>
-        <span><i data-kind="droop" />Drooping: deeper than usual</span>
-        <span>Roots reach the water table, to scale; plants stand taller where it is near.</span>
+        <span><i data-kind="open" />Full, golden head: water above its usual {garden?.monthName ?? "level"}</span>
+        <span><i data-kind="bud" />Green head: within 0.1 m of usual</span>
+        <span><i data-kind="droop" />Drooping, browned: deeper than usual</span>
+        <span>Roots reach the water table, to scale: as deep as a borewell must go. Plants stand taller where it is near.</span>
       </p>
       {plant ? <p className={styles.srOnly}><Link href={`/mandals/${plant[0]}/`}>Open {plant[1]}</Link></p> : null}
     </div>

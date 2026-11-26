@@ -1,5 +1,5 @@
 /* The water garden. The garden itself is always night, as the films are: a dark sky the
-   flowers glow against and soil the roots and water show through. Its controls and key
+   plants stand against and soil the roots and water show through. Its controls and key
    sit on the page and follow the page's theme. */
 
 .garden { display: grid; gap: 12px; }
@@ -56,10 +56,11 @@
 .gap { margin: -4px 0 0; font-size: 12.5px; color: var(--ink-soft); }
 .key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
 .key span { display: inline-flex; align-items: center; gap: 7px; }
-.key i { width: 11px; height: 11px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
-.key i[data-kind="open"] { background: #4fc3ea; }
-.key i[data-kind="bud"] { background: #94a6b4; border-radius: 50% 50% 50% 50%; transform: scale(.75, 1); }
-.key i[data-kind="droop"] { background: #e07a55; transform: rotate(135deg); }
+/* The key's grain heads, drawn as the field draws them: upright gold, upright green, bowed rust. */
+.key i { width: 7px; height: 13px; border-radius: 50% 50% 46% 46% / 62% 62% 38% 38%; }
+.key i[data-kind="open"] { background: #ecc670; box-shadow: 0 0 6px rgba(143, 224, 255, .55); }
+.key i[data-kind="bud"] { background: #8eb668; width: 6px; }
+.key i[data-kind="droop"] { background: #b25c36; width: 6px; transform: rotate(125deg); }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; }
 
 @media (max-width: 640px) {

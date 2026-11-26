@@ -87,5 +87,5 @@ test("the garden's film plays", async ({ page }) => {
   const position = page.getByLabel("Film position");
   await page.getByRole("button", { name: /Play the water garden film/ }).click();
   await expect.poll(async () => Number(await position.inputValue())).toBeGreaterThan(0.5);
-  await expect(film).toContainText("Every mandal is a flower");
+  await expect(film).toContainText("Every mandal is a sorghum plant");
 });
