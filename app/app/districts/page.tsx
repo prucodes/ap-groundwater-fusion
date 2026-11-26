@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { HeaderHero } from "../../components/HeaderHero";
 import { StatusBadge } from "../../components/Badges";
@@ -56,7 +57,7 @@ export default function DistrictsPage() {
         <div className={shared.heroText}>
           <span className={shared.kicker}>{rollups.length} districts · measured readings and the model&rsquo;s nowcasts</span>
           <h2><b>{withStress} of {rollups.length}</b> districts have mandals in stress, <b>{stressMandals}</b> mandals in all; <b>{deeper}</b> districts are deeper than a year ago on average{deepest?.avg_estimate_mbgl != null ? <>, and the deepest is <b>{titleCase(deepest.district_name)}</b> at {deepest.avg_estimate_mbgl.toFixed(1)} m</> : null}.</h2>
-          <p>District figures are equal-weight averages of their mandals, whose reading periods can differ. Pick a district below; the close-up, the decade and the briefing follow it.</p>
+          <p>District figures are equal-weight averages of their mandals, whose reading periods can differ. Pick a district below; the close-up, the decade and the briefing follow it. For a Collector&rsquo;s meeting: <Link href="/districts/sheets/" data-testid="district-sheets-link">one A4 sheet for each district</Link>.</p>
         </div>
         <ul className={shared.tiles}>
           <li><span>Districts with stress</span><b data-tone={withStress > rollups.length / 2 ? "bad" : undefined}>{withStress}<small> of {rollups.length}</small></b><em>at least one mandal in the stress status</em></li>

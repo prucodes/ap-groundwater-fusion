@@ -18,6 +18,7 @@
 .hero h2 { margin: 8px 0 8px; font: 500 22px/1.38 var(--font-display); color: #fff; text-wrap: balance; }
 .hero h2 b { font-weight: 650; color: #ffd38a; }
 .hero p { margin: 0; font-size: 13px; color: #9fb6cc; }
+.hero p a { color: #8fdcf0; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
 .tiles { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; list-style: none; margin: 0; padding: 0; }
 .tiles li { display: grid; gap: 4px; align-content: start; padding: 14px 16px; border-radius: var(--radius-sm); background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.1); }
 .tiles span { font: 600 10px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: #9fb6cc; }
