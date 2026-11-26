@@ -28,6 +28,7 @@ export default function DistrictSheetsPage() {
           <p>
             Each is one A4 page: where the water table stands against each mandal&rsquo;s usual {month.split(" ")[0]}, this season&rsquo;s
             recharge, rain and reservoirs, the mandals to plan summer drinking water for first, and the drought manual&rsquo;s reading.
+            Each also comes in Telugu, as a page and a PDF.
             Furthest below their usual: {worst.map((s, i) => <span key={s.slug}>{i ? ", " : ""}<b>{s.name}</b> ({s.counts.deeper} of {s.counts.compared})</span>)}.
           </p>
         </header>
@@ -37,7 +38,10 @@ export default function DistrictSheetsPage() {
               <Link href={`/districts/${s.slug}/sheet/`} className={styles.name}>{s.name}</Link>
               <span className={styles.fig}><b>{s.counts.deeper}</b> of {s.counts.compared} deeper than usual{s.priority.first ? <> · <b>{s.priority.first}</b> to plan first</> : null}</span>
               <span className={styles.bar} aria-hidden="true"><i style={{ width: `${Math.round(100 * share(s))}%` }} /></span>
-              <a className={styles.pdf} href={`${basePath}/districts/${s.slug}/sheet/${pdfName(s.slug)}`} download={`AP-${s.slug}-district-sheet.pdf`}>PDF</a>
+              <span className={styles.pdfs}>
+                <a className={styles.pdf} href={`${basePath}/districts/${s.slug}/sheet/${pdfName(s.slug)}`} download={`AP-${s.slug}-district-sheet.pdf`}>PDF</a>
+                <a className={styles.pdf} href={`${basePath}/districts/${s.slug}/sheet/te/${pdfName(s.slug, "te")}`} download={`AP-${s.slug}-district-sheet-te.pdf`} lang="te" data-testid="district-sheet-te-pdf">తెలుగు PDF</a>
+              </span>
             </li>
           ))}
         </ul>

@@ -27,4 +27,14 @@ test("the presenter steps with the keys, and its countdown lands on the counts i
   await page.keyboard.press("ArrowLeft");
   await expect(deck).toHaveAttribute("data-step", "7");
   await expect(page).toHaveURL(/#7$/);
+
+  // In Telugu (T, or ?lang=te): the same step, its words and the visuals' words in Telugu.
+  await page.keyboard.press("t");
+  await expect(deck).toHaveAttribute("data-lang", "te");
+  await expect(deck).toHaveAttribute("data-step", "7");
+  await expect(title).toContainText(/[\u0C00-\u0C7F]/);
+  await expect(page).toHaveURL(/\?lang=te#7$/);
+  await page.keyboard.press("4");
+  await expect(bores).toHaveAttribute("data-month", /-05$/, { timeout: 20000 });
+  await expect(title).toContainText(String(typical));
 });

@@ -45,11 +45,17 @@
 @font-face { font-family: "Space Grotesk Fallback"; src: local(Arial); ascent-override: 89.71%; descent-override: 26.62%; line-gap-override: 0.0%; size-adjust: 109.69%; }
 
 :root {
-  --font-inter: "Inter", "Inter Fallback";
-  --font-space: "Space Grotesk", "Space Grotesk Fallback";
-  --font-jetbrains: "JetBrains Mono", "JetBrains Mono Fallback";
+  --font-inter: "Inter", "Site Telugu", "Inter Fallback";
+  --font-space: "Space Grotesk", "Site Telugu", "Space Grotesk Fallback";
+  --font-jetbrains: "JetBrains Mono", "Site Telugu", "JetBrains Mono Fallback";
 }
 
 /* Noto Serif Telugu (SIL OFL 1.1), regular weight, cut down to the letters of the verses in
    lib/verses.ts so it costs a few kilobytes. Change a verse and rerun scripts/subset_verse_font.py. */
 @font-face { font-family: "Verse Telugu"; font-style: normal; font-weight: 400; font-display: swap; src: url("./fonts/noto-serif-telugu-verses.woff2") format("woff2"); unicode-range: U+0C00-0C7F, U+0964-0965, U+200C-200D, U+25CC; }
+
+/* Noto Sans Telugu (SIL OFL 1.1; fonts/noto-sans-telugu-LICENSE.txt), regular and bold, for the
+   Telugu presenter and district sheets. Its unicode-range is Telugu only, so a page fetches it
+   only when Telugu is on it, and the CI's printed PDFs never fall back to boxes. */
+@font-face { font-family: "Site Telugu"; font-style: normal; font-weight: 400; font-display: swap; src: url("./fonts/noto-sans-telugu-400.woff2") format("woff2"); unicode-range: U+0951-0952, U+0964-0965, U+0C00-0C7F, U+1CDA, U+1CF2, U+200C-200D, U+25CC; }
+@font-face { font-family: "Site Telugu"; font-style: normal; font-weight: 500 800; font-display: swap; src: url("./fonts/noto-sans-telugu-700.woff2") format("woff2"); unicode-range: U+0951-0952, U+0964-0965, U+0C00-0C7F, U+1CDA, U+1CF2, U+200C-200D, U+25CC; }

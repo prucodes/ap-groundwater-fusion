@@ -122,7 +122,7 @@
   .pilot { grid-template-columns: 1fr; }
   .priority li { grid-template-columns: 1.6em minmax(0, 1fr) auto; gap: 10px; padding: 10px 12px; }
   .priority .signs { display: none; }
-  .hint, .signKey, .top .tool { display: none; }
+  .hint, .signKey, .top .fullTool { display: none; }
   .bottom { flex-wrap: wrap; row-gap: 8px; }
   .caveat { order: 9; flex: 1 0 100%; margin-left: 0; text-align: left; }
   .dots button { width: 18px; }
@@ -134,3 +134,8 @@
   .layer, .priority li, .places li, .asks li, .track i, .dots button { transition: none !important; }
   .layer[data-place] { transform: none; filter: none; }
 }
+
+/* In Telugu: no capitals or letter-spacing, and a little more room between lines for the vowel signs. */
+.deck[data-lang="te"] .eyebrow, .deck[data-lang="te"] .top { letter-spacing: 0; text-transform: none; font-family: var(--font-sans); }
+.deck[data-lang="te"] .title { line-height: 1.32; font-size: clamp(22px, min(2.4vw, 4.2vh), 42px); }
+.deck[data-lang="te"] .text { line-height: 1.7; }

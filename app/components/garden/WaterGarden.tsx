@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { flushSync } from "react-dom";
 import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from "react";
-import { gardenRows, monthYear, rainLine, stepCounts, type Garden } from "../../lib/gardenShared";
+import { gardenRows, monthYear, rainLine, rainLineTe, REGION_TE, stepCounts, type Garden } from "../../lib/gardenShared";
+import { monthIn, type Lang } from "../../lib/telugu";
 import { IconPause, IconPlay } from "../icons";
 import { transition } from "../../lib/viewTransition";
 import { DistrictBores, type BoresFocus } from "./DistrictBores";
@@ -31,14 +32,17 @@ const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)"
 /** The presenter's control: rest on the latest year, play every year from the first, or hold where it is. */
 export type GardenStage = "rest" | "play" | "hold";
 
-export function WaterGarden({ data = null, stage, bare = false }: {
+export function WaterGarden({ data = null, stage, bare = false, lang = "en" }: {
   /** The garden already fetched (the presenter shares one copy); otherwise it is fetched here. */
   data?: Garden | null;
   /** Driven by the presenter instead of the play button. */
   stage?: GardenStage;
   /** Without the controls, the close-up and the key: the presenter shows its own. */
   bare?: boolean;
+  /** The words the presenter shows over the garden, in English or Telugu. */
+  lang?: Lang;
 } = {}) {
+  const te = lang === "te";
   const [garden, setGarden] = useState<Garden | null>(data);
   const [narrow, setNarrow] = useState(false);
   /** Where the garden rests: how grown, and which year (an index into garden.steps). */
@@ -188,7 +192,9 @@ export function WaterGarden({ data = null, stage, bare = false }: {
   const counts = garden && step ? stepCounts(garden, step) : null;
   /** The monsoon the words name: the one falling, or the one before the October shown. */
   const rainStep = garden ? garden.steps[raining ?? shownIndex] : null;
-  const season = garden && rainStep ? garden.rain[rainStep.index] : null, monsoon = rainLine(season);
+  const season = garden && rainStep ? garden.rain[rainStep.index] : null, monsoon = te ? rainLineTe(season) : rainLine(season);
+  const when = (year: number) => (te && garden ? `${monthIn("te", garden.month)} ${year}` : garden ? monthYear(garden, year) : "");
+  const region = (name: string) => (te ? REGION_TE[name] ?? name : name);
 
   const point = useCallback((event: ReactPointerEvent<HTMLCanvasElement> | ReactMouseEvent<HTMLCanvasElement>, rowIndex: number) => {
     const rect = event.currentTarget.getBoundingClientRect(), box = figure.current?.getBoundingClientRect();
@@ -242,8 +248,8 @@ export function WaterGarden({ data = null, stage, bare = false }: {
       <div ref={figure} className={styles.figure} data-mode={narrow ? "regions" : "one"} onPointerLeave={() => setLit(null)}>
         {garden && step ? (
           <div className={styles.when} data-raining={raining !== null ? "" : undefined}>
-            <b data-testid="garden-year">{raining !== null && monsoon ? monsoon.title : monthYear(garden, step.year)}</b>
-            <span>{raining !== null ? "the rain before the October" : <>against each mandal&rsquo;s usual {garden.monthName}</>}</span>
+            <b data-testid="garden-year">{raining !== null && monsoon ? monsoon.title : when(step.year)}</b>
+            <span>{te ? (raining !== null ? "అక్టోబర్ ముందు కురిసిన వర్షం" : "ప్రతి మండలపు సాధారణ అక్టోబర్‌తో పోలిస్తే") : raining !== null ? "the rain before the October" : <>against each mandal&rsquo;s usual {garden.monthName}</>}</span>
             {monsoon && season ? (
               <span className={styles.monsoon} data-testid="garden-monsoon">
                 <i className={styles.gauge} aria-hidden="true"><i style={{ width: `${Math.round(Math.min(1, season.mm / garden.rainNormalMm / 1.5) * 100)}%` }} /><s /></i>
@@ -254,7 +260,7 @@ export function WaterGarden({ data = null, stage, bare = false }: {
         ) : null}
         {garden ? rows.map((row, r) => (
           <div key={`${narrow ? "n" : "w"}${r}`} className={styles.row}>
-            {narrow && row.region !== null ? <span className={styles.rowLabel}>{garden.regions[row.region]}</span> : null}
+            {narrow && row.region !== null ? <span className={styles.rowLabel}>{region(garden.regions[row.region])}</span> : null}
             <div className={styles.plot}>
               <GardenRow garden={garden} row={row} rowIndex={r} geometry={layout.geometry} look={look} waterIn={Math.min(1, grown / 0.8)}
                 ticks tickFont={narrow ? 13 : 10.5} className={styles.svg} register={register} onPointerMove={point} onClick={open}
@@ -264,7 +270,7 @@ export function WaterGarden({ data = null, stage, bare = false }: {
             </div>
             {!narrow ? (
               <div className={styles.regions} aria-hidden="true">
-                {row.spans.map(span => <span key={span.region} style={{ left: `${(span.from / row.width) * 100}%`, width: `${((span.to - span.from) / row.width) * 100}%` }}>{garden.regions[span.region]}</span>)}
+                {row.spans.map(span => <span key={span.region} style={{ left: `${(span.from / row.width) * 100}%`, width: `${((span.to - span.from) / row.width) * 100}%` }}>{region(garden.regions[span.region])}</span>)}
               </div>
             ) : null}
           </div>
@@ -272,10 +278,12 @@ export function WaterGarden({ data = null, stage, bare = false }: {
         {plant && lit && step ? (
           <div className={styles.tip} style={{ left: lit.x, top: lit.y }} data-testid="garden-tip" data-flip={lit.x > (figure.current?.clientWidth ?? 0) * 0.6 ? "left" : undefined}>
             <b>{plant[1]}</b><small>{plant[2]}</small>
-            {now !== null ? <span>{now.toFixed(1)} m below ground, {monthYear(garden!, step.year)}</span> : <span>Not read in {monthYear(garden!, step.year)}</span>}
+            {now !== null ? <span>{te ? `భూమి నుండి ${now.toFixed(1)} మీ. లోతు, ${when(step.year)}` : `${now.toFixed(1)} m below ground, ${monthYear(garden!, step.year)}`}</span> : <span>{te ? `${when(step.year)}లో రీడింగ్ లేదు` : `Not read in ${monthYear(garden!, step.year)}`}</span>}
             {moved !== null && usual !== null ? <em data-tone={moved > 10 ? "deeper" : moved < -10 ? "shallower" : undefined}>
-              {Math.abs(moved) <= 10 ? `Within 0.1 m of its usual ${garden!.monthName}, ${usual.toFixed(1)} m` : `${(Math.abs(moved) / 100).toFixed(1)} m ${moved > 0 ? "deeper" : "shallower"} than its usual ${garden!.monthName}, ${usual.toFixed(1)} m`}
-            </em> : plant[5] === null ? <em>Too few {garden!.monthName}s read to know its usual</em> : null}
+              {te
+                ? Math.abs(moved) <= 10 ? `సాధారణ అక్టోబర్ (${usual.toFixed(1)} మీ.) నుండి 0.1 మీ. లోపు` : `సాధారణ అక్టోబర్ (${usual.toFixed(1)} మీ.) కంటే ${(Math.abs(moved) / 100).toFixed(1)} మీ. ${moved > 0 ? "లోతు" : "పైన"}`
+                : Math.abs(moved) <= 10 ? `Within 0.1 m of its usual ${garden!.monthName}, ${usual.toFixed(1)} m` : `${(Math.abs(moved) / 100).toFixed(1)} m ${moved > 0 ? "deeper" : "shallower"} than its usual ${garden!.monthName}, ${usual.toFixed(1)} m`}
+            </em> : plant[5] === null ? <em>{te ? "సాధారణ మట్టం తెలియడానికి తగినన్ని రీడింగులు లేవు" : `Too few ${garden!.monthName}s read to know its usual`}</em> : null}
             {bare ? null : <small className={styles.tipHint}>Click for {plant[2]}&rsquo;s borewells</small>}
           </div>
         ) : null}
@@ -289,10 +297,10 @@ export function WaterGarden({ data = null, stage, bare = false }: {
           <input type="range" className={styles.years} min={0} max={last} step={1} value={shownIndex} aria-label={`${garden.monthName} of which year`}
             aria-valuetext={monthYear(garden, step.year)} onChange={e => { setPlaying(false); setPosition(Number(e.target.value)); }} data-testid="garden-years" /></>}
           <p className={styles.counts} data-testid="garden-counts" data-deeper={counts.deeper} data-shallower={counts.shallower} data-steady={counts.steady}>
-            <span data-tone="deeper"><b>{counts.deeper}</b> deeper than usual</span>
-            <span data-tone="shallower"><b>{counts.shallower}</b> shallower</span>
-            <span><b>{counts.steady}</b> within 0.1 m</span>
-            {counts.noReading ? <span><b>{counts.noReading}</b> not read</span> : null}
+            <span data-tone="deeper"><b>{counts.deeper}</b> {te ? "సాధారణం కంటే లోతు" : "deeper than usual"}</span>
+            <span data-tone="shallower"><b>{counts.shallower}</b> {te ? "పైన" : "shallower"}</span>
+            <span><b>{counts.steady}</b> {te ? "0.1 మీ. లోపు" : "within 0.1 m"}</span>
+            {counts.noReading ? <span><b>{counts.noReading}</b> {te ? "రీడింగ్ లేదు" : "not read"}</span> : null}
           </p>
         </div>
       ) : null}

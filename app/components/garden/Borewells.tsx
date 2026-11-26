@@ -46,7 +46,7 @@ function strata(aquifer: GardenAquifer, scaleM: number): Array<[number, string, 
   return [[0, "#4d3a28", null], [4, "#6b5a3a", "dots"], [11, "#3e3127", "lines"], [19, "#665537", "dots"], [30, "#3b2f25", "lines"], [42, "#5e4e34", "dots"]];
 }
 
-export function Borewells({ bores, scaleM, aquifer, animated = false, play = true, label, width = 1000, soil = 300, nameSize = 11, nameMax = 24, light = false, selected = null, uid, hrefOf, onOpen }: {
+export function Borewells({ bores, scaleM, aquifer, animated = false, play = true, label, width = 1000, soil = 300, nameSize = 11, nameMax = 24, light = false, selected = null, uid, hrefOf, onOpen, unit = "m", groundLabel }: {
   bores: Bore[];
   scaleM: number;
   aquifer: GardenAquifer;
@@ -67,6 +67,9 @@ export function Borewells({ bores, scaleM, aquifer, animated = false, play = tru
   /** Each bore a link (to its mandal's page), opened by `onOpen` when that is given. */
   hrefOf?: (bore: Bore) => string | null;
   onOpen?: (bore: Bore, name: Element | null) => void;
+  /** The depth scale's unit and the ground's name, for a page in another language. */
+  unit?: string;
+  groundLabel?: string;
 }) {
   const PAD_L = 52, PAD_R = 14, SKY = 62;
   const shortName = (name: string) => (name.length > nameMax ? `${name.slice(0, nameMax - 1).trimEnd()}…` : name);
@@ -118,10 +121,10 @@ export function Borewells({ bores, scaleM, aquifer, animated = false, play = tru
       {Array.from({ length: Math.floor(scaleM / 10) + 1 }, (_, j) => j * 10).map(m => (
         <g key={m}>
           <line x1={PAD_L - 6} x2={width - PAD_R} y1={r1(y(m))} y2={r1(y(m))} stroke="rgba(255,255,255,.07)" strokeDasharray="3 4" />
-          <text x={PAD_L - 12} y={r1(y(m) + 4)} textAnchor="end" className={styles.tick} fontSize={nameSize}>{m} m</text>
+          <text x={PAD_L - 12} y={r1(y(m) + 4)} textAnchor="end" className={styles.tick} fontSize={nameSize}>{m} {unit}</text>
         </g>
       ))}
-      <text x={width - PAD_R} y={r1(SKY + soil - 6)} textAnchor="end" className={styles.ground} fontSize={nameSize * 0.9}>{AQUIFER_NAMES[aquifer]}</text>
+      <text x={width - PAD_R} y={r1(SKY + soil - 6)} textAnchor="end" className={styles.ground} fontSize={nameSize * 0.9}>{groundLabel ?? AQUIFER_NAMES[aquifer]}</text>
 
       {/* The water table across the district: a glowing line that steps from mandal to mandal */}
       <g className={styles.table}>

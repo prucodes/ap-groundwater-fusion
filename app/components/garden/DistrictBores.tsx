@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { flushSync } from "react-dom";
+import { monthIn, type Lang } from "../../lib/telugu";
 import { monthYear, sideOf, type Garden, type GardenAquifer } from "../../lib/gardenShared";
 import { IconPause, IconPlay } from "../icons";
 import { Borewells, pumpState, PUMP_BELOW_USUAL_M, type Bore, type PumpState } from "./Borewells";
@@ -31,7 +32,7 @@ const MONTH_S = 1.2;
 /** The presenter's control: the years, the countdown played on a typical winter, or the same May on a dry one. */
 export type BoresStage = "years" | "summer" | "dry";
 
-export function DistrictBores({ garden, stepIndex, initialDistrict = null, stage, bare = false, focus = null }: {
+export function DistrictBores({ garden, stepIndex, initialDistrict = null, stage, bare = false, focus = null, lang = "en" }: {
   garden: Garden; stepIndex: number;
   /** Open on this district instead of the one with the largest share below its usual. */
   initialDistrict?: string | null;
@@ -41,7 +42,10 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, stage
   bare?: boolean;
   /** A plant picked in the field: open on its district with its bore marked. */
   focus?: BoresFocus | null;
+  /** The words the presenter shows, in English or Telugu. */
+  lang?: Lang;
 }) {
+  const te = lang === "te";
   const router = useRouter();
   const latest = garden.steps[garden.steps.length - 1];
   const districts = useMemo(() => {
@@ -152,6 +156,7 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, stage
   const below = count("trickle") + count("dry");
   const projected = plants.filter(p => p.path).length;
   const when = mode === "summer" && summer ? monthName(months[month]) : monthYear(garden, step.year);
+  const whenShown = te ? (mode === "summer" && summer ? `${monthIn("te", Number(months[month].slice(5, 7)))} ${months[month].slice(0, 4)}` : `${monthIn("te", garden.month)} ${step.year}`) : when;
   const width = narrow ? Math.max(360, bores.length * 46 + 70) : 1000;
 
   // Another district: the strip changes as one view transition, the bores drilling in anew.
@@ -180,7 +185,7 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, stage
       data-month={mode === "summer" ? months[month] : undefined} data-dry={count("dry")} data-trickle={count("trickle")} data-running={count("full") + count("steady")}>
       <header className={styles.boresHead}>
         <div>
-          <span className={styles.boresEyebrow}>A district, close up · {when}{mode === "summer" && month > 0 ? " · projected" : ""}</span>
+          <span className={styles.boresEyebrow}>{te ? "జిల్లా, దగ్గరగా" : "A district, close up"} · {whenShown}{mode === "summer" && month > 0 ? (te ? " · అంచనా" : " · projected") : ""}</span>
           <h3 id="bores-title">{mode === "summer" && summer
             ? <>{district.name}: {count("dry")} of {projected} borewells past their deepest May on record by {monthName(months[month])}</>
             : <>{district.name}: {below} of {bores.length} borewells below their usual {garden.monthName}</>}</h3>
@@ -216,11 +221,12 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, stage
       ) : null}
 
       <div ref={strip} className={styles.boresFigure} data-scroll={narrow ? "" : undefined} data-zoom="">
-        {narrow ? <span className={styles.swipe} aria-hidden="true">Swipe to see all {bores.length} →</span> : null}
+        {narrow ? <span className={styles.swipe} aria-hidden="true">{te ? `మొత్తం ${bores.length} చూడటానికి జరపండి →` : `Swipe to see all ${bores.length} →`}</span> : null}
         <div style={narrow ? { width } : undefined}>
           <Borewells key={district.name} uid="db" bores={bores} scaleM={scaleM} aquifer={aquifer} animated play={seen}
             selected={picked ? bores.findIndex(b => b.id === picked) : null}
             hrefOf={bare ? undefined : b => (b.id ? `${BASE}/mandals/${b.id}/` : null)} onOpen={bare ? undefined : open}
+            unit={te ? "మీ." : "m"} groundLabel={te ? ["గట్టి శిల", "ఒండ్రు నేల", "తీర ఇసుక నేల"][aquifer] : undefined}
             width={width} soil={narrow ? 260 : 300} nameSize={narrow ? 11 : bores.length > 30 ? 10 : 11.5}
             label={mode === "summer"
               ? `${district.name}'s ${bores.length} mandals as borewells in ${when}, projected on a ${winter} winter: ${count("dry")} past their deepest May on record, ${count("trickle")} within ${NEAR_RECORD_M} m of it.`
@@ -230,18 +236,18 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, stage
 
       {mode === "summer" && summer ? (
         <p className={styles.boresKey}>
-          <span><i style={{ background: "#5be38a" }} />Running: more than {NEAR_RECORD_M} m above its deepest May ({count("full")})</span>
-          <span><i style={{ background: "#f2b442" }} />Nearing it: within {NEAR_RECORD_M} m ({count("trickle")})</span>
-          <span><i style={{ background: "#ff5a3c" }} />Dry: past its deepest May on record ({count("dry")})</span>
+          <span><i style={{ background: "#5be38a" }} />{te ? `నడుస్తోంది: అత్యంత లోతైన మే కంటే ${NEAR_RECORD_M} మీ. పైగా పైన` : `Running: more than ${NEAR_RECORD_M} m above its deepest May`} ({count("full")})</span>
+          <span><i style={{ background: "#f2b442" }} />{te ? `దగ్గరవుతోంది: ${NEAR_RECORD_M} మీ. లోపు` : `Nearing it: within ${NEAR_RECORD_M} m`} ({count("trickle")})</span>
+          <span><i style={{ background: "#ff5a3c" }} />{te ? "ఎండిపోయింది: రికార్డులోని అత్యంత లోతైన మే మట్టాన్ని దాటింది" : "Dry: past its deepest May on record"} ({count("dry")})</span>
           <span>
             {`The Summer Outlook’s monthly paths from each mandal’s own past winters, ${winter === "dry" ? "the driest on record" : "the median"}; pumps here are set at the deepest May on record. Tested on past years, the outlook’s May is off by ${summer.errorM?.toFixed(1) ?? "–"} m at the median mandal${summer.persistenceM ? `, against ${summer.persistenceM.toFixed(1)} m for carrying the reading forward` : ""}. A projection, not a forecast of any one well.`}
           </span>
         </p>
       ) : (
         <p className={styles.boresKey}>
-          <span><i style={{ background: "#5be38a" }} />Running: water above its usual, or within 0.1 m ({count("full") + count("steady")})</span>
-          <span><i style={{ background: "#f2b442" }} />A trickle: below its usual, still over the pump ({count("trickle")})</span>
-          <span><i style={{ background: "#ff5a3c" }} />Dry: the water has fallen past the pump ({count("dry")})</span>
+          <span><i style={{ background: "#5be38a" }} />{te ? "నడుస్తోంది: సాధారణం కంటే పైన, లేదా 0.1 మీ. లోపు" : "Running: water above its usual, or within 0.1 m"} ({count("full") + count("steady")})</span>
+          <span><i style={{ background: "#f2b442" }} />{te ? "సన్నగా: సాధారణం కంటే దిగువ, ఇంకా పంపు పైన" : "A trickle: below its usual, still over the pump"} ({count("trickle")})</span>
+          <span><i style={{ background: "#ff5a3c" }} />{te ? "ఎండిపోయింది: నీరు పంపు కంటే దిగువకు పడిపోయింది" : "Dry: the water has fallen past the pump"} ({count("dry")})</span>
           <span>Each bore reaches its mandal&rsquo;s measured water table, to scale; its pump is set {PUMP_BELOW_USUAL_M} m below the usual {garden.monthName} level, as for a normal year. A picture of the readings, not of any one well.</span>
         </p>
       )}

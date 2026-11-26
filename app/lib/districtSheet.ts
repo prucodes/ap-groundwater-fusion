@@ -21,7 +21,7 @@ export const districtKey = (name: string) => name.toUpperCase().replace(/[^A-Z]/
 export const districtSlug = (name: string) => name.toLowerCase().replace(/^y\.s\.r\s*/, "ysr ").replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
 
 /** Where the deploy prints a district's sheet, beside its page. */
-export const pdfName = (slug: string) => `ap-${slug}-district-sheet.pdf`;
+export const pdfName = (slug: string, lang: "en" | "te" = "en") => `ap-${slug}-district-sheet${lang === "te" ? "-te" : ""}.pdf`;
 
 export type SheetMandal = {
   id: string; name: string; nowM: number | null; usualM: number | null;
