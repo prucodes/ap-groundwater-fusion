@@ -1,0 +1,5 @@
+/* The Water Garden page: the shared calm shape (rabi/Rabi.module.css) and two small pieces. */
+.fallen { max-width: 620px; margin-top: 20px; }
+.method { display: grid; gap: 10px; max-width: 900px; padding: 4px 2px 8px; }
+.method p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
+.method b { color: var(--ink); }

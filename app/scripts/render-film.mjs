@@ -4,6 +4,7 @@
  *
  *   --film weekly        /weekly-film/   ->  out/films/weekly/ap-water-week-<shape>.mp4
  *   --film methodology   /methodology/   ->  out/films/methodology/ap-water-method-<shape>.mp4
+ *   --film garden        /garden/        ->  out/films/garden/ap-water-garden-<shape>.mp4
  *
  *   landscape 1920x1080  meeting screens, slides
  *   square    1080x1080  messages and groups
@@ -43,7 +44,7 @@ const flag = (name, fallback) => {
 const directory = resolve(APP_DIR, flag("directory", "out"));
 const base = flag("base", process.env.PAGES_BASE_PATH ?? "").replace(/\/$/, "");
 const port = Number(flag("port", 3293));
-const FILMS = { weekly: { route: "/weekly-film/", file: "ap-water-week" }, methodology: { route: "/methodology/", file: "ap-water-method" } };
+const FILMS = { weekly: { route: "/weekly-film/", file: "ap-water-week" }, methodology: { route: "/methodology/", file: "ap-water-method" }, garden: { route: "/garden/", file: "ap-water-garden" } };
 const filmName = flag("film", "weekly");
 if (!(filmName in FILMS)) { console.error(`unknown film "${filmName}": choose from ${Object.keys(FILMS).join(", ")}`); process.exit(2); }
 const { route, file: filePrefix } = FILMS[filmName];

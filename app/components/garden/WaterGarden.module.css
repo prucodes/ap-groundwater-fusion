@@ -1,0 +1,69 @@
+/* The water garden. The garden itself is always night, as the films are: a dark sky the
+   flowers glow against and soil the roots and water show through. Its controls and key
+   sit on the page and follow the page's theme. */
+
+.garden { display: grid; gap: 12px; }
+
+.figure {
+  position: relative; overflow: hidden; padding: 64px 14px 10px; border-radius: var(--radius);
+  background: radial-gradient(70% 60% at 62% 4%, rgba(60, 150, 190, .2), transparent 70%),
+              radial-gradient(110% 90% at 80% 12%, #12303f 0%, #0a1c29 46%, #06121b 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
+  touch-action: pan-y;
+}
+.figure[data-mode="regions"] { padding: 64px 8px 8px; display: grid; gap: 10px; }
+.when { position: absolute; top: 16px; left: 20px; z-index: 1; display: grid; gap: 2px; color: #eaf3fb; pointer-events: none; }
+.when b { font: 600 26px/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
+.when span { font: 500 12px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: #9fb6cc; }
+.row { position: relative; }
+.plot { position: relative; }
+.svg { display: block; width: 100%; height: auto; cursor: pointer; }
+.rowLabel { display: block; padding: 0 6px 2px; font: 600 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: #9fb6cc; }
+.regions { position: relative; height: 24px; margin-top: 4px; }
+.regions span {
+  position: absolute; top: 0; padding-top: 6px; border-top: 1px solid rgba(255, 255, 255, .14);
+  text-align: center; font: 600 11px var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: #8fa6b8;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.waiting { aspect-ratio: 1211 / 380; }
+
+.tip {
+  position: absolute; z-index: 2; display: grid; gap: 2px; min-width: 170px; max-width: 240px; padding: 9px 12px;
+  transform: translate(14px, calc(-100% - 10px)); pointer-events: none;
+  border-radius: 10px; background: rgba(8, 20, 30, .94); border: 1px solid rgba(255, 255, 255, .14); box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  color: #eaf3fb; font-size: 13px; line-height: 1.4;
+}
+.tip[data-flip="left"] { transform: translate(calc(-100% - 14px), calc(-100% - 10px)); }
+.tip b { font-weight: 650; }
+.tip small { font-size: 12px; color: #9fb6cc; }
+.tip span { color: #cfdbe6; }
+.tip em { font-style: normal; font-weight: 600; color: #cfdbe6; }
+.tip em[data-tone="deeper"] { color: #ffab94; }
+.tip em[data-tone="shallower"] { color: #8fe0ff; }
+
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.play {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 16px 0 12px; border-radius: 999px;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink); font: 600 13px var(--font-sans); cursor: pointer;
+}
+.play svg { width: 15px; height: 15px; }
+.play:hover { border-color: var(--teal); }
+.years { flex: 1 1 180px; min-width: 140px; accent-color: var(--teal); }
+.counts { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; font-size: 13px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.counts b { font: 650 16px var(--font-display); color: var(--ink); }
+.counts [data-tone="deeper"] b { color: var(--bad-ink, #b04a38); }
+.counts [data-tone="shallower"] b { color: var(--cyan-ink); }
+.gap { margin: -4px 0 0; font-size: 12.5px; color: var(--ink-soft); }
+.key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+.key span { display: inline-flex; align-items: center; gap: 7px; }
+.key i { width: 11px; height: 11px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
+.key i[data-kind="open"] { background: #4fc3ea; }
+.key i[data-kind="bud"] { background: #94a6b4; border-radius: 50% 50% 50% 50%; transform: scale(.75, 1); }
+.key i[data-kind="droop"] { background: #e07a55; transform: rotate(135deg); }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; }
+
+@media (max-width: 640px) {
+  .when b { font-size: 21px; }
+  .when span { font-size: 11px; }
+  .counts, .key, .gap { font-size: 12px; }
+}

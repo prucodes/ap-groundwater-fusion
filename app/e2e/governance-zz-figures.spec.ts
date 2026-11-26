@@ -6,7 +6,7 @@ import { expect, test } from "@playwright/test";
    three or more decimals. Smaller numbers keep theirs (a p-value of 0.055, a change in NDVI
    of 0.003, a grid of 0.0417°), and code blocks (the AWARE export preview) are data, not prose. */
 
-const PAGES = ["/", "/changes/", "/weekly-film/", "/monsoon/", "/cyclones/", "/drought/", "/map/", "/summer/", "/rabi/", "/agriculture/",
+const PAGES = ["/", "/changes/", "/weekly-film/", "/garden/", "/monsoon/", "/cyclones/", "/drought/", "/map/", "/summer/", "/rabi/", "/agriculture/",
   "/districts/", "/constituencies/", "/facts/", "/field-report/", "/digest/", "/estimates/", "/nasa/", "/climate/", "/scenario/",
   "/irrigation/", "/readiness/", "/compare/", "/methodology/", "/brief/", "/settings/"];
 

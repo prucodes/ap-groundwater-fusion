@@ -132,6 +132,26 @@ jobs:
             node scripts/render-film.mjs --film methodology --directory out --base "$PAGES_BASE_PATH" --output .method-film
           fi
           mkdir -p out/films/methodology && cp .method-film/* out/films/methodology/
+      - name: Restore the garden film if nothing it shows has changed
+        # The Water Garden film draws the monthly well readings, which change once a month, so
+        # most deploys reuse the last recording.
+        uses: actions/cache@v4
+        with:
+          path: app/.garden-film
+          key: garden-film-${{ hashFiles('app/data/mandal_observation_series_v2.json', 'app/data/mandal_groundwater_records_v2.json', 'app/lib/gardenShared.ts', 'app/lib/waterGarden.ts', 'app/lib/creator.ts', 'app/components/garden/**', 'app/components/film/FilmPlayer.tsx', 'app/components/film/FilmPlayer.module.css', 'app/app/fonts/**', 'app/scripts/render-film.mjs') }}
+      - name: Record the garden film
+        # out/films/garden/*.mp4 and manifest.json, checked and published as the weekly film is.
+        working-directory: app
+        continue-on-error: ${{ github.event_name != 'pull_request' }}
+        env:
+          PAGES_BASE_PATH: /${{ github.event.repository.name }}
+        run: |
+          if [ ! -f .garden-film/manifest.json ]; then
+            sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg > /dev/null
+            npx playwright install --with-deps chromium
+            node scripts/render-film.mjs --film garden --directory out --base "$PAGES_BASE_PATH" --output .garden-film
+          fi
+          mkdir -p out/films/garden && cp .garden-film/* out/films/garden/
       - name: Keep the films' contact sheets
         # The frames each film was judged on, one sheet per shape, for a person to look at.
         if: always()

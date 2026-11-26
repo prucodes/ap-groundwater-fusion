@@ -56,6 +56,7 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
       { href: "/", label: "Overview", Icon: IconLayers, desc: "Executive cockpit: status map, priority mandals, source readiness and selected-area evidence." },
       { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "What moved since the previous weekly refresh: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its own reading dates." },
       { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
+      { href: "/garden", label: "Water Garden", Icon: IconLeaf, desc: "Every mandal as a plant whose roots reach its water table: open where the water stands above its usual for the month, drooping where it stands below. Every year on record, and a film." },
   ] },
   { label: "Watches", items: [
       { href: "/cyclones", label: "Cyclones", Icon: IconCyclone, desc: "Akvan's landfall from Himawari; Arnab, Murasu and Akvan: where the rain fell, where the water went, and whether the water table rose where it had room. Updated daily." },
