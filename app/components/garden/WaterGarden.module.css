@@ -106,3 +106,9 @@
 .countPlay { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 14px 0 11px; border-radius: 999px; border: 1px solid rgba(242, 180, 66, .5); background: rgba(242, 180, 66, .12); color: #ffe2a8; font: 600 13px var(--font-sans); cursor: pointer; }
 .countPlay svg { width: 14px; height: 14px; }
 @media (max-width: 640px) { .modes button { padding: 0 10px; font-size: 12px; } }
+
+/* Driven by the presenter: its own words replace the buttons and the long key. */
+.bores[data-bare] .boresTools, .bores[data-bare] .countdown { display: none; }
+.bores[data-bare] .boresKey > span:last-child { display: none; }
+.bores[data-bare] { margin-top: 0; }
+.bores[data-bare] .boresHead h3 { display: none; }

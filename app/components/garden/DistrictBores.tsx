@@ -21,12 +21,17 @@ const NEAR_RECORD_M = 1;
 /** Seconds per month while the countdown plays: the move is the bores' own 0.6 s glide. */
 const MONTH_S = 1.2;
 
-export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoCountdown = false }: {
+/** The presenter's control: the years, the countdown played on a typical winter, or the same May on a dry one. */
+export type BoresStage = "years" | "summer" | "dry";
+
+export function DistrictBores({ garden, stepIndex, initialDistrict = null, stage, bare = false }: {
   garden: Garden; stepIndex: number;
   /** Open on this district instead of the one with the largest share below its usual. */
   initialDistrict?: string | null;
-  /** Start in the countdown and play it once seen (the presenter's step). */
-  autoCountdown?: boolean;
+  /** Driven by the presenter instead of its own buttons. */
+  stage?: BoresStage;
+  /** Without the buttons and the long key: the presenter says it in its own words. */
+  bare?: boolean;
 }) {
   const latest = garden.steps[garden.steps.length - 1];
   const districts = useMemo(() => {
@@ -42,7 +47,7 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoC
   const [chosen, setChosen] = useState<string | null>(initialDistrict);
   const district = districts.find(d => d.name === (chosen ?? worst)) ?? districts[0];
   const summer = garden.summer;
-  const [mode, setMode] = useState<"years" | "summer">(autoCountdown && summer ? "summer" : "years");
+  const [mode, setMode] = useState<"years" | "summer">(stage && stage !== "years" && summer ? "summer" : "years");
   const [winter, setWinter] = useState<"typical" | "dry">("typical");
   /** The countdown's month: 0 is the latest October, then one a month to May. */
   const [month, setMonth] = useState(0);
@@ -80,12 +85,19 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoC
     }), MONTH_S * 1000);
     return () => window.clearInterval(timer);
   }, [playing, last]);
-  // The presenter's step: play once the bores have drilled in.
+  // The presenter's steps. The countdown plays from October once the bores have drilled in;
+  // the dry winter keeps the month reached and lets the extra lamps go red.
+  const seenAt = useRef(0);
   useEffect(() => {
-    if (!autoCountdown || !seen || !summer) return;
-    const start = window.setTimeout(() => { setMonth(0); setPlaying(true); }, 2600);
+    if (!stage || !seen) return;
+    seenAt.current ||= performance.now();
+    if (stage === "years" || !summer) { setPlaying(false); setMode("years"); return; }
+    setMode("summer");
+    if (stage === "dry") { setWinter("dry"); setPlaying(false); setMonth(last); return; }
+    setWinter("typical"); setPlaying(false); setMonth(0);
+    const start = window.setTimeout(() => setPlaying(true), Math.max(700, 2600 - (performance.now() - seenAt.current)));
     return () => window.clearTimeout(start);
-  }, [autoCountdown, seen, summer]);
+  }, [stage, seen, summer, last]);
 
   const plants = useMemo(() => district.members.map(i => ({ plant: garden.plants[i], path: summer?.plants[i] ?? null })), [district, garden, summer]);
   const scaleM = useMemo(() => {
@@ -126,7 +138,7 @@ export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoC
   const width = narrow ? Math.max(360, bores.length * 46 + 70) : 1000;
 
   return (
-    <section ref={box} className={styles.bores} aria-labelledby="bores-title" data-testid="district-bores" data-district={district.name} data-mode={mode}
+    <section ref={box} className={styles.bores} data-bare={bare ? "" : undefined} aria-labelledby="bores-title" data-testid="district-bores" data-winter={winter} data-district={district.name} data-mode={mode}
       data-month={mode === "summer" ? months[month] : undefined} data-dry={count("dry")} data-trickle={count("trickle")} data-running={count("full") + count("steady")}>
       <header className={styles.boresHead}>
         <div>

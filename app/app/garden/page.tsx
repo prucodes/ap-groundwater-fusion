@@ -76,7 +76,7 @@ export default function GardenPage() {
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconPlay /> The garden as a film</span>
           <h2 id="garden-film">Under forty seconds to forward</h2>
-          <p>The same field growing in, drooping where the water stands below its usual, then every {month} since {first}, each after its monsoon. Each deploy records it in three shapes, for WhatsApp Status, for groups and for a meeting screen.</p>
+          <p>The same field growing in, drooping where the water stands below its usual, then every {month} since {first}, each after its monsoon. Each deploy records it in three shapes, for WhatsApp Status, for groups and for a meeting screen. To talk a meeting through it live, step by step, <Link href="/present/" data-testid="garden-present">open the presenter</Link>.</p>
         </header>
         <GardenFilm />
       </section>
