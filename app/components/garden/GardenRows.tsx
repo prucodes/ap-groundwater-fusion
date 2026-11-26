@@ -188,8 +188,14 @@ function drawBatch(c: CanvasRenderingContext2D, b: Batch, alpha: number) {
   c.fillStyle = "rgba(255,244,214,.38)"; c.fill(b.grain);
 }
 
-/** Paints a moment onto a row: each plant and the water. */
-export type Painter = (look: (i: number) => PlantLook, waterIn: number) => void;
+/** A monsoon falling between two Octobers: how far through it is (0 to 1), and its rain against normal (1 is a normal season). */
+export type RainMoment = { p: number; amount: number };
+
+/** Paints a moment onto a row: each plant and the water, and the rain while a monsoon falls. */
+export type Painter = (look: (i: number) => PlantLook, waterIn: number, rain?: RainMoment | null) => void;
+
+/** Rain streaks per 1,000 units of row in a normal season; a season's count is in proportion to its rain. */
+const STREAKS_PER_K = 520;
 
 type RowProps = {
   garden: Garden;
@@ -217,7 +223,7 @@ export const GardenRow = memo(function GardenRow({ garden, row, rowIndex, geomet
   const from = (row.spans[0]?.from ?? PAD_LEFT) - 4, to = (row.spans[row.spans.length - 1]?.to ?? row.width) + 4;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ground = useRef<{ size: string; layer: HTMLCanvasElement } | null>(null);
-  const latest = useRef<{ look: (i: number) => PlantLook; waterIn: number }>({ look, waterIn });
+  const latest = useRef<{ look: (i: number) => PlantLook; waterIn: number; rain?: RainMoment | null }>({ look, waterIn });
 
   /** The soil, the depth scale, the ground line and the grass: the same on every frame. */
   const groundLayer = useCallback((w: number, hgt: number, scale: number) => {
@@ -255,8 +261,8 @@ export const GardenRow = memo(function GardenRow({ garden, row, rowIndex, geomet
     return layer;
   }, [garden.scaleM, sky, height, k, from, to, geometry.soil, ticks, tickFont]);
 
-  const paint = useCallback<Painter>((lookAtMoment, water) => {
-    latest.current = { look: lookAtMoment, waterIn: water };
+  const paint = useCallback<Painter>((lookAtMoment, water, rain) => {
+    latest.current = { look: lookAtMoment, waterIn: water, rain };
     const canvas = canvasRef.current;
     if (!canvas || !canvas.offsetWidth) return;
     const ratio = pixelRatio ?? Math.min(2, window.devicePixelRatio || 1);
@@ -332,6 +338,31 @@ export const GardenRow = memo(function GardenRow({ garden, row, rowIndex, geomet
     }
     c.globalAlpha = 1;
 
+    // The monsoon: streaks across the sky, as many as the season's rain against normal,
+    // gathering and easing over the beat it falls in.
+    if (rain && rain.p > 0 && rain.p < 1) {
+      const span = to - from, count = Math.round((STREAKS_PER_K * span / 1000) * rain.amount);
+      const envelope = Math.sin(Math.PI * rain.p) ** 0.6;
+      // The cloud's veil over the sky: deeper in a wet season.
+      const veil = c.createLinearGradient(0, 0, 0, sky), depth = (0.2 * Math.min(1.5, rain.amount) * envelope).toFixed(3);
+      veil.addColorStop(0, "rgba(150,180,200,0)");
+      veil.addColorStop(0.22, `rgba(150,180,200,${depth})`);
+      veil.addColorStop(1, "rgba(150,180,200,0)");
+      c.fillStyle = veil; c.fillRect(0, 0, row.width, sky);
+      const near = new Path2D(), far = new Path2D();
+      for (let j = 0; j < count; j++) {
+        const len = 12 + 10 * seedOf(j, 24), fall = (sky + len) * (0.9 + 0.5 * seedOf(j, 22));
+        const y = ((rain.p * fall * 2.4 + seedOf(j, 23) * (sky + len)) % (sky + len)) - len;
+        const x = from + seedOf(j, 21) * span + y * 0.14, path = seedOf(j, 25) > 0.35 ? near : far;
+        path.moveTo(x, y); path.lineTo(x + len * 0.14, y + len);
+      }
+      c.lineCap = "round"; c.strokeStyle = "rgb(190,228,248)";
+      c.lineWidth = 0.55; c.globalAlpha = 0.45 * envelope; c.stroke(far);
+      c.lineWidth = 0.9; c.globalAlpha = 0.8 * envelope; c.stroke(near);
+      c.globalAlpha = 1;
+      signature += rain.p * 13 + rain.amount;
+    }
+
     const marks: Array<[string, string]> = [["data-deeper", String(deeper)], ["data-shallower", String(shallower)], ["data-steady", String(steady)], ["data-none", String(none)], ["data-moment", signature.toFixed(3)]];
     for (const [name, value] of marks) if (canvas.getAttribute(name) !== value) canvas.setAttribute(name, value);
   }, [garden, row, geometry, sky, height, k, spacing, pixelRatio, groundLayer]);
@@ -345,7 +376,7 @@ export const GardenRow = memo(function GardenRow({ garden, row, rowIndex, geomet
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const watcher = new ResizeObserver(() => paint(latest.current.look, latest.current.waterIn));
+    const watcher = new ResizeObserver(() => paint(latest.current.look, latest.current.waterIn, latest.current.rain));
     watcher.observe(canvas);
     return () => watcher.disconnect();
   }, [paint]);

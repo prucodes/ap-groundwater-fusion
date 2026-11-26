@@ -57,8 +57,9 @@ export default function GardenPage() {
           <p>
             The roots of each plant reach down to that mandal&rsquo;s water table in {now}, drawn to scale; the deeper the water,
             the longer the roots (as deep as a borewell must go) and the shorter the plant. Full, golden heads are mandals whose water
-            stands above their usual {month}; drooping, browned ones are below it. Play the years since {first} to see the dry ones
-            wilt and the wet ones fill. Point at a plant for its mandal; click it to open the mandal&rsquo;s page.
+            stands above their usual {month}; drooping, browned ones are below it. Play the years since {first}: each monsoon falls
+            first, in proportion to its measured rain, then the water and the field answer. Watch how little one season moves them.
+            Point at a plant for its mandal; click it to open the mandal&rsquo;s page.
           </p>
         </header>
         <WaterGarden />
@@ -74,8 +75,8 @@ export default function GardenPage() {
       <section className={shared.block} aria-labelledby="garden-film">
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconPlay /> The garden as a film</span>
-          <h2 id="garden-film">Half a minute to forward</h2>
-          <p>The same garden growing in, drooping where the water stands below its usual, then every {month} since {first}. Each deploy records it in three shapes, for WhatsApp Status, for groups and for a meeting screen.</p>
+          <h2 id="garden-film">Under forty seconds to forward</h2>
+          <p>The same field growing in, drooping where the water stands below its usual, then every {month} since {first}, each after its monsoon. Each deploy records it in three shapes, for WhatsApp Status, for groups and for a meeting screen.</p>
         </header>
         <GardenFilm />
       </section>
@@ -103,6 +104,12 @@ export default function GardenPage() {
             where a borewell would have to reach. The glowing line is the water table, mandal by mandal. A plant&rsquo;s height is not
             a measurement: it stands taller where the water is nearer the surface, and leans by a fixed amount of its own so the
             field reads as a field. The plant is sorghum, the dryland staple, drawn as the Methodology film draws it.
+          </p>
+          <p>
+            <b>Rain.</b> Between Octobers the playback lets each year&rsquo;s monsoon fall: the State&rsquo;s June to September rain,
+            {" "}{garden.rainSource}, the series the Monsoon page uses. The streaks are in proportion to it, and the gauge marks normal.
+            Rain is only part of a year&rsquo;s change: the water table carries the years before it, and pumping draws it down, so a
+            wet monsoon after dry years can leave it deep, and a dry one after wet years can leave it high.
           </p>
           <p>
             <b>Order.</b> {garden.regions.join(", ")}, each from north to south by where the mandal lies. A mandal not read in a year

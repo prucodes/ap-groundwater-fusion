@@ -32,7 +32,23 @@ export type Garden = {
   /** The depth the roots are drawn to scale against: the deepest reading shown, rounded up to 10 m. */
   scaleM: number;
   plants: GardenPlant[];
+  /** Each year's monsoon (June to September) over the State, aligned with `years`: what falls between one October and the next. */
+  rain: Array<GardenRain | null>;
+  /** The normal it is set against, and where it comes from. */
+  rainNormalMm: number;
+  rainSource: string;
 };
+
+export type GardenRain = { year: number; mm: number; anomalyPct: number; enso: "el_nino" | "la_nina" | "neutral" };
+
+/** "Monsoon 2020: 27% above normal · La Niña", as the Monsoon page words a season. */
+export function rainLine(rain: GardenRain | null) {
+  if (!rain) return null;
+  const pct = Math.round(Math.abs(rain.anomalyPct));
+  const amount = pct < 3 ? "about normal" : `${pct}% ${rain.anomalyPct < 0 ? "below" : "above"} normal`;
+  const enso = rain.enso === "el_nino" ? " · El Niño" : rain.enso === "la_nina" ? " · La Niña" : "";
+  return { title: `Monsoon ${rain.year}`, amount, enso, text: `Monsoon ${rain.year}: ${amount}${enso}` };
+}
 
 /** Deeper or shallower than the year before means by more than this. */
 export const MOVED_CM = 10;

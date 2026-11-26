@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from "react";
-import { gardenRows, monthYear, stepCounts, type Garden } from "../../lib/gardenShared";
+import { gardenRows, monthYear, rainLine, stepCounts, type Garden } from "../../lib/gardenShared";
 import { IconPause, IconPlay } from "../icons";
-import { GardenMark, GardenRow, type Painter, type RowGeometry } from "./GardenRows";
+import { GardenMark, GardenRow, type Painter, type RainMoment, type RowGeometry } from "./GardenRows";
 import { easeStep, lookAt } from "./gardenLook";
 import styles from "./WaterGarden.module.css";
 
@@ -20,8 +20,8 @@ import styles from "./WaterGarden.module.css";
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const WIDE: { spacing: number; geometry: RowGeometry } = { spacing: 1.7, geometry: { stemMax: 150, soil: 200, headScale: 1 } };
 const NARROW: { spacing: number; geometry: RowGeometry } = { spacing: 1.32, geometry: { stemMax: 92, soil: 150, headScale: 1.15 } };
-/** Seconds to grow in, to move between two years, and to rest on each year while playing. */
-const GROW_S = 3.4, MOVE_S = 0.6, REST_S = 0.7;
+/** Seconds to grow in; and, playing the years, for each monsoon to fall, the water and crops to move, and a rest on the October. */
+const GROW_S = 3.4, RAIN_S = 0.9, MOVE_S = 0.6, REST_S = 0.6;
 
 const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -33,6 +33,8 @@ export function WaterGarden() {
   const [position, setPosition] = useState<number | null>(null);
   /** The year the words show while the garden moves; the drawing is painted, not rendered. */
   const [passing, setPassing] = useState<number | null>(null);
+  /** The year whose monsoon is falling, while it falls. */
+  const [raining, setRaining] = useState<number | null>(null);
   const [playing, setPlaying] = useState(false);
   const [lit, setLit] = useState<{ i: number; row: number; x: number; y: number } | null>(null);
   const figure = useRef<HTMLDivElement>(null), tapped = useRef<number | null>(null);
@@ -77,9 +79,9 @@ export function WaterGarden() {
     });
   }, [garden, along]);
   const look = useMemo(() => (garden ? lookFor(grown, resting) : () => { throw new Error("no garden"); }), [garden, lookFor, grown, resting]);
-  const paintAll = useCallback((t: number, at: number) => {
+  const paintAll = useCallback((t: number, at: number, rain: RainMoment | null = null) => {
     const moment = lookFor(t, at);
-    painters.current.forEach(paint => paint(moment, Math.min(1, t / 0.8)));
+    painters.current.forEach(paint => paint(moment, Math.min(1, t / 0.8), rain));
   }, [lookFor]);
   const register = useCallback((row: number, paint: Painter | null) => {
     if (paint) painters.current.set(row, paint); else painters.current.delete(row);
@@ -106,33 +108,41 @@ export function WaterGarden() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [garden, paintAll]);
 
-  // Play every year from the first (or on from the one shown): move, rest, move on; stop on the latest.
+  // Play every year from the first (or on from the one shown): the monsoon falls, then the water
+  // and the crops move to the October after it, a rest, and on; stop on the latest.
   useEffect(() => {
     if (!playing || !garden) return;
     const reduced = reducedMotion();
     const from = resting < last ? Math.round(resting) : 0;
-    let request = 0, began = 0, shownYear = -1;
-    const show = (at: number) => {
+    let request = 0, began = 0, shownYear = -1, shownRain = -1;
+    const show = (at: number, rain: { index: number; p: number } | null = null) => {
       moving.current = at;
-      paintAll(GROW_S, at);
+      const season = rain ? garden.rain[garden.steps[rain.index].index] : null;
+      paintAll(GROW_S, at, season && !reduced ? { p: rain!.p, amount: season.mm / garden.rainNormalMm } : null);
       const year = Math.round(at);
       if (year !== shownYear) { shownYear = year; setPassing(year); }
+      const falling = rain ? rain.index : -1;
+      if (falling !== shownRain) { shownRain = falling; setRaining(rain ? rain.index : null); }
     };
     if (from !== resting) show(from);
     const tick = (now: number) => {
       began ||= now;
-      const t = (now - began) / 1000 - (from !== resting ? REST_S : 0), per = MOVE_S + REST_S;
+      const t = (now - began) / 1000 - (from !== resting ? REST_S : 0), per = RAIN_S + MOVE_S + REST_S;
       if (t < 0) { request = requestAnimationFrame(tick); return; }
-      const k = Math.floor(t / per), target = from + k + 1;
-      if (target > last) { moving.current = null; setPassing(null); setPosition(last); setPlaying(false); return; }
-      const p = Math.min(1, (t - k * per) / MOVE_S);
-      show(target - 1 + (reduced ? (p >= 1 ? 1 : 0) : easeStep(p)));
+      const k = Math.floor(t / per), target = from + k + 1, inStep = t - k * per;
+      if (target > last) { moving.current = null; setPassing(null); setRaining(null); setPosition(last); setPlaying(false); return; }
+      if (inStep < RAIN_S) show(target - 1, { index: target, p: inStep / RAIN_S });
+      else {
+        const p = Math.min(1, (inStep - RAIN_S) / MOVE_S);
+        show(target - 1 + (reduced ? (p >= 1 ? 1 : 0) : easeStep(p)));
+      }
       request = requestAnimationFrame(tick);
     };
     request = requestAnimationFrame(tick);
     return () => {
       cancelAnimationFrame(request);
       // Paused part way: settle on the year being shown.
+      setRaining(null);
       if (moving.current !== null) { const year = Math.round(moving.current); paintAll(GROW_S, year); setPosition(year); moving.current = null; setPassing(null); }
     };
     // Starts only when play is pressed; the year it starts from is read then.
@@ -142,6 +152,9 @@ export function WaterGarden() {
   const shownIndex = passing ?? Math.round(resting);
   const step = garden ? garden.steps[shownIndex] : null;
   const counts = garden && step ? stepCounts(garden, step) : null;
+  /** The monsoon the words name: the one falling, or the one before the October shown. */
+  const rainStep = garden ? garden.steps[raining ?? shownIndex] : null;
+  const season = garden && rainStep ? garden.rain[rainStep.index] : null, monsoon = rainLine(season);
 
   const point = useCallback((event: ReactPointerEvent<HTMLCanvasElement> | ReactMouseEvent<HTMLCanvasElement>, rowIndex: number) => {
     const rect = event.currentTarget.getBoundingClientRect(), box = figure.current?.getBoundingClientRect();
@@ -172,9 +185,15 @@ export function WaterGarden() {
     <div className={styles.garden} data-testid="water-garden" data-ready={garden && grown >= GROW_S ? "done" : "growing"} data-year={step?.year ?? ""}>
       <div ref={figure} className={styles.figure} data-mode={narrow ? "regions" : "one"} onPointerLeave={() => setLit(null)}>
         {garden && step ? (
-          <div className={styles.when}>
-            <b data-testid="garden-year">{monthYear(garden, step.year)}</b>
-            <span>against each mandal&rsquo;s usual {garden.monthName}</span>
+          <div className={styles.when} data-raining={raining !== null ? "" : undefined}>
+            <b data-testid="garden-year">{raining !== null && monsoon ? monsoon.title : monthYear(garden, step.year)}</b>
+            <span>{raining !== null ? "the rain before the October" : <>against each mandal&rsquo;s usual {garden.monthName}</>}</span>
+            {monsoon && season ? (
+              <span className={styles.monsoon} data-testid="garden-monsoon">
+                <i className={styles.gauge} aria-hidden="true"><i style={{ width: `${Math.round(Math.min(1, season.mm / garden.rainNormalMm / 1.5) * 100)}%` }} /><s /></i>
+                {raining !== null ? `${monsoon.amount}${monsoon.enso}` : monsoon.text}
+              </span>
+            ) : null}
           </div>
         ) : null}
         {garden ? rows.map((row, r) => (

@@ -44,10 +44,24 @@ test("playing runs through every year and comes to rest on the latest", async ({
   const year = page.getByTestId("garden-year"), latest = await year.innerText();
   await page.getByTestId("garden-play").click();
   await expect(year).not.toHaveText(latest);
-  await expect(page.getByTestId("garden-play")).toHaveAttribute("aria-pressed", "false", { timeout: 30000 });
+  await expect(page.getByTestId("garden-play")).toHaveAttribute("aria-pressed", "false", { timeout: 45000 });
   await expect(year).toHaveText(latest);
   const plants = await drawn(page);
   expect(plants.deeper).toBe(Number(await page.getByTestId("garden-deeper").innerText()));
+});
+
+test("each October names the monsoon before it, and the rain falls between years", async ({ page }) => {
+  await page.goto("/garden/");
+  await page.getByTestId("water-garden").scrollIntoViewIfNeeded();
+  await grown(page);
+  const data = await page.evaluate(async () => (await fetch(`${location.pathname.replace(/garden\/$/, "")}garden/data.json`)).json());
+  const last = data.steps[data.steps.length - 1], season = data.rain[last.index];
+  expect(data.rain).toHaveLength(data.years.length);
+  await expect(page.getByTestId("garden-monsoon")).toContainText(`Monsoon ${season.year}`);
+  // Playing, each year's monsoon falls before its October arrives.
+  await page.getByTestId("garden-play").click();
+  await expect(page.getByTestId("garden-year")).toHaveText(/^Monsoon \d{4}$/, { timeout: 5000 });
+  await page.getByTestId("garden-play").click();
 });
 
 test("a plant answers to the pointer and opens its mandal", async ({ page }) => {

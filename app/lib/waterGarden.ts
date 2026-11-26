@@ -1,4 +1,4 @@
-import { mandalByMapKey, mandals, mapGeometry, observationSeries, titleCase } from "./data";
+import { mandalByMapKey, mandals, mapGeometry, monsoonWatch, observationSeries, titleCase } from "./data";
 import { districtHome, mandalHomes } from "./mapSpread";
 import { MIN_YEARS, sideOf, stepCounts, type Garden, type GardenPlant, type GardenStep, type StepCounts } from "./gardenShared";
 
@@ -70,7 +70,14 @@ export function waterGarden(): Garden {
     .map(row => row.plant);
 
   const deepest = Math.max(...plants.flatMap(p => p[4].filter((v): v is number => v !== null)));
-  built = { month, monthName: MONTHS[month - 1], years, steps, missingYears, regions: GARDEN_REGIONS, scaleM: Math.ceil(deepest / 10) * 10, plants };
+  // The monsoon before each October: the Monsoon page's State rainfall, June to September.
+  const history = monsoonWatch.rainfallHistory, seasons = history?.years ?? [];
+  const rain = years.map(year => {
+    const season = seasons.find(y => y.year === year);
+    return season ? { year, mm: season.mm, anomalyPct: season.anomalyPct, enso: season.state ?? "neutral" } : null;
+  });
+  const rainSource = `${monsoonWatch.rainfall?.product ?? "CHIRPS"}, June to September${seasons.length ? `, against the ${seasons[0].year}-${seasons[seasons.length - 1].year} mean` : ""}`;
+  built = { month, monthName: MONTHS[month - 1], years, steps, missingYears, regions: GARDEN_REGIONS, scaleM: Math.ceil(deepest / 10) * 10, plants, rain, rainNormalMm: history?.meanMm ?? 0, rainSource };
   return built;
 }
 

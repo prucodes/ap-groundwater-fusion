@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { CREATOR_CREDIT } from "../../lib/creator";
-import { gardenRows, monthYear, stepCounts, type Garden } from "../../lib/gardenShared";
+import { gardenRows, monthYear, rainLine, stepCounts, type Garden } from "../../lib/gardenShared";
 import { EXIT, FilmPlayer, at, easeInOut, fade, rise, type FilmFormat } from "../film/FilmPlayer";
 import { GardenRow, heightOf, type Painter, type RowGeometry } from "./GardenRows";
 import { easeStep, lookAt } from "./gardenLook";
@@ -19,7 +19,8 @@ const SITE = "prucodes.github.io/ap-groundwater-fusion";
 const CAVEAT = "Prototype built from public sources. A screening view for where to look, not a declaration or an order.";
 const OPEN_S = 6.2, NOW_S = 7.2, CLOSE_S = 4.8;
 /** The years scene: a rewind to the first year, then each year in turn, then a rest on the latest. */
-const REWIND_END = 1.7, PER_YEAR = 0.8, MOVE = 0.45, REST_END = 1.7;
+/** Each year: its monsoon falls, then the water and crops move to the October after it, then a short rest. */
+const REWIND_END = 1.7, RAIN = 0.6, MOVE = 0.45, PER_YEAR = 1.4, REST_END = 2.4;
 const yearsSeconds = (garden: Garden) => REWIND_END + (garden.steps.length - 1) * PER_YEAR + REST_END;
 
 /** How each shape lays the garden out, in the stage's own pixels. */
@@ -37,8 +38,9 @@ function moment(garden: Garden, index: number, local: number) {
   if (index === 1) return { ...full, position: last, heads: at(local, 1.0, 1.8, easeInOut), dim: 1 };
   if (index === 2) {
     if (local < REWIND_END) return { ...full, position: last * (1 - at(local, 0.4, 1.1, easeInOut)), heads: 1, dim: 1 };
-    const k = Math.min(last, Math.floor((local - REWIND_END) / PER_YEAR) + 1), from = REWIND_END + (k - 1) * PER_YEAR;
-    return { ...full, position: k - 1 + easeStep(Math.max(0, Math.min(1, (local - from) / MOVE))), heads: 1, dim: 1 };
+    const k = Math.min(last, Math.floor((local - REWIND_END) / PER_YEAR) + 1), from = REWIND_END + (k - 1) * PER_YEAR, inStep = local - from;
+    if (inStep < RAIN) return { ...full, position: k - 1, heads: 1, dim: 1, rain: { index: k, p: inStep / RAIN } };
+    return { ...full, position: k - 1 + easeStep(Math.max(0, Math.min(1, (inStep - RAIN) / MOVE))), heads: 1, dim: 1 };
   }
   return { ...full, position: last, heads: 1, dim: 1 - at(local, 0, 0.7) };
 }
@@ -88,7 +90,8 @@ function GardenFrame({ garden, index, local, format, scenes }: { garden: Garden;
       const u = along.get(i) ?? 0;
       return lookAt(garden, i, now.position, { grow: now.growAt(u), roots: now.rootsAt(u), heads: now.heads });
     };
-    painters.current.forEach(paint => paint(look, now.waterIn));
+    const falling = "rain" in now && now.rain ? now.rain : null, season = falling ? garden.rain[garden.steps[falling.index].index] : null;
+    painters.current.forEach(paint => paint(look, now.waterIn, season && falling ? { p: falling.p, amount: season.mm / garden.rainNormalMm } : null));
   });
   const last = garden.steps.length - 1, latest = garden.steps[last], first = garden.steps[0];
   const shown = garden.steps[Math.round(now.position)], counts = stepCounts(garden, shown), latestCounts = stepCounts(garden, latest);
@@ -99,6 +102,9 @@ function GardenFrame({ garden, index, local, format, scenes }: { garden: Garden;
   const worse = garden.steps.slice(0, -1).filter(s => share(s) >= share(latest)).map(s => s.year);
   const worstSince = worse.length ? worse[worse.length - 1] : null;
   const labelsIn = index === 0 ? fade(local, 2.4) : undefined;
+  // While a monsoon falls between two Octobers, the words name it; the October follows.
+  const falling = index === 2 && "rain" in now && now.rain ? now.rain : null;
+  const fallingLine = falling ? rainLine(garden.rain[garden.steps[falling.index].index]) : null;
 
   // The garden's rows, each no wider than the box's height allows.
   const [boxW, boxH] = shape.box, H = heightOf(shape.geometry);
@@ -122,16 +128,20 @@ function GardenFrame({ garden, index, local, format, scenes }: { garden: Garden;
           <p className={styles.headline} style={rise(local, 0.6)}>of {latestCounts.compared} mandals droop: their water stands deeper than their usual {garden.monthName}.</p>
           <p className={styles.note} style={rise(local, 3.0)}>{worstSince ? `The most since ${garden.monthName} ${worstSince}. ` : `The most of any ${garden.monthName} on record. `}{latestCounts.shallower} stand full, above their usual.</p>
         </> : index === 2 ? <>
-          <span className={styles.eyebrow} style={rise(local, 0.1)}>Every {garden.monthName} since {first.year}</span>
-          <b className={styles.big} data-tone="year" style={rise(local, 0.3)}>{shown.year}</b>
-          <p className={styles.headline} style={fade(local, 0.6)}>{counts.deeper} of {counts.compared} deeper than usual</p>
-          {garden.missingYears.length ? <p className={styles.note} style={fade(local, 1.2)}>No {garden.monthName} readings were published in {garden.missingYears.join(", ")}.</p> : null}
+          <span className={styles.eyebrow} style={rise(local, 0.1)}>Every {garden.monthName} since {first.year}, after its monsoon</span>
+          <b className={styles.big} data-tone="year" style={rise(local, 0.3)}>{falling ? garden.steps[falling.index].year : shown.year}</b>
+          <p className={styles.headline} style={fade(local, 0.6)}>{falling
+            ? `Its monsoon: ${fallingLine?.amount ?? "not measured"}${fallingLine?.enso ?? ""}`
+            : `${counts.deeper} of ${counts.compared} deeper than usual`}</p>
+          <p className={styles.note} style={fade(local, 1.2)}>{local > yearsSeconds(garden) - REST_END + 0.5
+            ? "One monsoon does not set the water table: it remembers the years before."
+            : falling ? "" : rainLine(garden.rain[shown.index])?.text ?? ""}</p>
         </> : <div className={styles.close}>
           <p className={styles.closeLine} style={rise(local, 0.3)}>Every figure is on the site, with its source and its date.</p>
           <span className={styles.site} style={rise(local, 0.9)}>{SITE}/garden</span>
           <span className={styles.credit} style={rise(local, 1.5)}>AP Water Intelligence · {CREATOR_CREDIT}</span>
           <span className={styles.caveat} style={rise(local, 1.9)}>{CAVEAT}</span>
-          <span className={styles.sources} style={rise(local, 2.3)}>Source: APWRIMS monthly well readings, the median of each mandal&rsquo;s wells, {garden.monthName} {first.year} to {latest.year}. A mandal&rsquo;s usual is its median {garden.monthName}.</span>
+          <span className={styles.sources} style={rise(local, 2.3)}>Source: APWRIMS monthly well readings, the median of each mandal&rsquo;s wells, {garden.monthName} {first.year} to {latest.year}. A mandal&rsquo;s usual is its median {garden.monthName}{garden.missingYears.length ? `; ${garden.monthName} ${garden.missingYears.join(", ")} was not published` : ""}. Rain: {garden.rainSource}.</span>
         </div>}
       </div>
 
