@@ -3,15 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./WaterIntro.module.css";
 
-/* Water fills the State, the way water fills a jug. A drop lands and its rings find the State,
-   an empty glass of its own shape. Then a stream pours in from above: it lands in the southern
-   tip, throws spray that falls back in, drives bubbles down that rise and burst into foam, and
-   the water climbs at the speed a steady pour gives a vessel this shape (quick through the
-   narrow south, slower through the wide middle, quick again up the north coast), the stream
-   following the water so it always lands in it. The surface is a row of springs, so every
-   splash runs along it and back. Each mandal glints as the water reaches it, counted as it
-   goes. Once full, the State stays water: pool light moves over its floor, and now and then a
-   drop lands and rings out, bending the mandal lines beneath it.
+/* Water fills the State from beneath, the way groundwater rises. A drop lands and its rings
+   find the State, an empty glass of its own shape. Then water wells up in the southern tip and
+   climbs at the speed a steady inflow gives a vessel this shape (quick through the narrow south,
+   slower through the wide middle, quick again up the north coast). Springs open across the State
+   as the water reaches them: bubbles stream up from the floor and the surface above them boils,
+   sending waves along a surface that is a row of springs itself. Each mandal glints as the water
+   reaches it, counted as it goes. Once full, the State stays water: pool light moves over its
+   floor, and now and then a drop lands and rings out, bending the mandal lines beneath it.
 
    One canvas, drawn from the site's own mandal outlines (/geo/mandal-outlines.json); no video
    and no images. The simulation steps 60 times a second whatever the screen, rests while the tab
@@ -25,12 +24,12 @@ type Ripple = { x: number; y: number; at: number };
 
 const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
-/** The first drop lands, its rings find the State, then the stream starts. The fill is timed from when it lands. */
-const DROP_MS = 700, REVEAL_MS = 1500, STREAM_AT = 1150, FILL_MS = 4600, TAP_CLOSES = 0.94;
+/** The first drop lands and its rings find the State; then the water starts to well up, and rises for FILL_MS. */
+const DROP_MS = 700, REVEAL_MS = 1500, WELL_AT = 1900, FILL_MS = 4300;
 /** The simulation's step: 60 a second, whatever the screen's refresh. */
 const STEP = 1000 / 60;
-/** The stream falls under this gravity (px per ms²), the spray under this one (px per step²). */
-const G_STREAM = 0.0045, G_SPRAY = 0.2;
+/** The spray thrown up where a spring boils falls back under this gravity (px per step²). */
+const G_SPRAY = 0.2;
 /** The surface as a row of springs: how many, how stiff, how quickly they calm, how far a push spreads. */
 const COLUMNS = 180, SPRING = 0.02, DAMPING = 0.012, SPREAD = 0.25;
 const GLINT_MS = 800, RAIN_EVERY = 1700, RING_MS = 3200;
@@ -120,14 +119,19 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
     const centre = { x: xs.reduce((a, b) => a + b, 0) / total, y: ys.reduce((a, b) => a + b, 0) / total };
     const rand = seeded(11);
     const rainAt = Array.from({ length: 64 }, () => mandals[Math.floor(rand() * total)]);
+    // Where the water wells up: springs spread from the south to the north, each opening once the water reaches it.
+    const byHeight = mandals.map((_, i) => i).sort((a, b) => mandals[b].cy - mandals[a].cy);
+    const springs = [0.04, 0.17, 0.3, 0.44, 0.58, 0.72, 0.86].map(q => ({
+      index: byHeight[clamp(Math.floor(q * (total - 1) + (rand() - 0.5) * 40), 0, total - 1)], next: 0,
+    }));
     const caustic = ctx.createPattern(causticTile(), "repeat");
 
     // ---- Layout: where the State sits, its true rows, and the layers drawn once per size.
     let W = 1, H = 1, dpr = 1, scale = 1, ox = 0, oy = 0, top = 0, bottom = 0, left = 0, right = 0;
+    let rowWidths = new Float32Array(0);
     let glow: HTMLCanvasElement | null = null, inner: HTMLCanvasElement | null = null;
     let mesh: HTMLCanvasElement | null = null, base: HTMLCanvasElement | null = null;
     const ROW = 0.5; // the State's rows are read at half resolution
-    let mids = new Float32Array(0);
     const levelLUT = new Float32Array(513);
     const offscreen = (mapped = true) => {
       const c = document.createElement("canvas"); c.width = Math.max(1, Math.round(W * dpr)); c.height = Math.max(1, Math.round(H * dpr));
@@ -145,22 +149,18 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
       ox = area.x + (area.w - ew * scale) / 2 - ext.x0 * scale;
       oy = area.y + (area.h - eh * scale) / 2 - ext.y0 * scale;
 
-      // The State's own rows: how wide it is at each height, and the middle of its widest stretch.
+      // The State's own rows: how wide it is at each height.
       const mc = document.createElement("canvas"); mc.width = Math.ceil(W * ROW); mc.height = Math.ceil(H * ROW);
       const mg = mc.getContext("2d", { willReadFrequently: true })!;
       mg.setTransform(scale * ROW, 0, 0, scale * ROW, ox * ROW, oy * ROW); mg.fillStyle = "#fff"; mg.fill(state);
       const img = mg.getImageData(0, 0, mc.width, mc.height).data;
       const widths = new Float32Array(mc.height);
-      mids = new Float32Array(mc.height).fill(NaN);
+      rowWidths = widths;
       let first = -1, last = -1, minX = Infinity, maxX = -Infinity;
       for (let r = 0; r < mc.height; r++) {
-        let n = 0, best = 0, bestMid = NaN, run = 0, start = 0;
-        for (let x = 0; x <= mc.width; x++) {
-          const on = x < mc.width && img[(r * mc.width + x) * 4 + 3] > 127;
-          if (on) { if (!run) start = x; run += 1; n += 1; if (x < minX) minX = x; if (x > maxX) maxX = x; }
-          else if (run) { if (run > best) { best = run; bestMid = (start + x - 1) / 2; } run = 0; }
-        }
-        widths[r] = n / ROW; mids[r] = bestMid / ROW;
+        let n = 0;
+        for (let x = 0; x < mc.width; x++) if (img[(r * mc.width + x) * 4 + 3] > 127) { n += 1; if (x < minX) minX = x; if (x > maxX) maxX = x; }
+        widths[r] = n / ROW;
         if (n) { if (first < 0) first = r; last = r; }
       }
       top = first / ROW; bottom = (last + 1) / ROW; left = minX / ROW; right = (maxX + 1) / ROW;
@@ -204,19 +204,14 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
       base = bc;
     };
     layout();
-    const rowMid = (y: number) => {
-      for (let r = Math.floor(y * ROW); r < mids.length && r >= 0; r++) if (!Number.isNaN(mids[r])) return mids[r];
-      return NaN;
-    };
     const levelAt = (f: number) => { const u = clamp(f) * 512, i = Math.min(511, Math.floor(u)); return levelLUT[i] + (levelLUT[i + 1] - levelLUT[i]) * (u - i); };
 
     // ---- The water and everything in it.
     const h = new Float32Array(COLUMNS), v = new Float32Array(COLUMNS), lD = new Float32Array(COLUMNS), rD = new Float32Array(COLUMNS);
     const px = new Float32Array(COLUMNS), py = new Float32Array(COLUMNS);
     const spray: Bit[] = [], bubbles: Bit[] = [], foam: Foam[] = [], ripples: Ripple[] = [];
-    const history: number[] = []; // time, x, time, x … where the stream has been aimed
     const reached = new Float64Array(total).fill(-1);
-    let t = 0, fill = 0, landed = -1, closed = -1, full = -1, pourX = NaN, nextRain = Infinity, rainIndex = 0, n = 0;
+    let t = 0, fill = 0, started = -1, full = -1, nextRain = Infinity, rainIndex = 0, n = 0;
     /** The whole surface rocking from side to side, as water does in a tank once something lands in it. */
     let slosh = 0;
     let lastCount = -1, lastPhase = "";
@@ -224,58 +219,62 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
 
     const colX0 = () => left - 14, colDX = () => (right - left + 28) / (COLUMNS - 1);
     const colAt = (x: number) => clamp(Math.round((x - colX0()) / colDX()), 0, COLUMNS - 1);
-    const level = () => (landed < 0 ? bottom + 30 : levelAt(fill));
-    const swell = (x: number) => Math.sin(x * 0.009 + t * 0.0016) * 4.6 + Math.sin(x * 0.024 - t * 0.0024) * 2.2
-      + slosh * Math.cos((Math.PI * (x - left)) / Math.max(1, right - left)) * Math.cos(t * 0.0043);
+    const level = () => (started < 0 ? bottom + 30 : levelAt(fill));
+    /** How wide the water is at its surface now, as a share of a wide stretch: waves stay small in the narrow tip. */
+    let breadth = 0;
+    const swell = (x: number) => {
+      const u = (x - left) / Math.max(1, right - left), k = 0.45 + 0.55 * breadth;
+      return k * (Math.sin(x * 0.0125 - t * 0.0021) * 8 + Math.sin(x * 0.029 + t * 0.0033 + 1.3) * 4.2 + Math.sin(x * 0.071 - t * 0.0062 + 0.4) * 1.8)
+        + slosh * (Math.cos(Math.PI * u) * Math.cos(t * 0.0024) + 0.45 * Math.cos(2 * Math.PI * u) * Math.sin(t * 0.0037));
+    };
     const surfaceAt = (x: number) => {
       const f = (x - colX0()) / colDX(), i = clamp(Math.floor(f), 0, COLUMNS - 2), u = clamp(f - i);
       return level() - (h[i] * (1 - u) + h[i + 1] * u) + swell(x);
-    };
-    const historyX = (when: number) => {
-      for (let i = history.length - 2; i >= 0; i -= 2) if (history[i] <= when) return history[i + 1];
-      return history.length ? history[1] : pourX;
     };
     const reach = (cx: number, cy: number) => Math.hypot(Math.max(cx - left, right - cx), Math.max(cy - top, bottom - cy)) * 1.05;
 
     const step = () => {
       t += STEP;
-      // Where the stream is aimed: the middle of the State's widest stretch just under the water.
-      const aim = rowMid(landed < 0 ? bottom - 2 : Math.max(top + 2, level() + 3));
-      if (Number.isNaN(pourX)) pourX = aim; else if (!Number.isNaN(aim)) pourX += (aim - pourX) * 0.04;
-      history.push(t, pourX);
-      while (history.length > 4 && history[0] < t - 900) history.splice(0, 2);
-      // The stream lands in the southern tip.
-      if (landed < 0 && t >= STREAM_AT && 0.5 * G_STREAM * (t - STREAM_AT) ** 2 >= bottom - 4) {
-        landed = t;
-        const c = colAt(pourX);
-        for (let j = -4; j <= 4; j++) { const i = c + j; if (i >= 0 && i < COLUMNS) v[i] -= 5 * (1 - Math.abs(j) / 5); }
-        slosh = 11;
-        for (let k = 0; k < 60; k++) spray.push({ x: pourX + (rand() - 0.5) * 10, y: bottom - 6, vx: (rand() - 0.5) * 6, vy: -(3 + rand() * 6.5), r: 0.7 + rand() * 1.9, seed: rand() });
+      // The water starts to well up in the southern tip.
+      if (started < 0 && t >= WELL_AT) { started = t; slosh = 6; }
+      if (started >= 0) {
+        const row = Math.floor(level() * ROW);
+        breadth = clamp((row >= 0 && row < rowWidths.length ? rowWidths[row] : 0) / 420);
       }
-      if (landed >= 0 && full < 0) {
-        const p = clamp((t - landed) / FILL_MS);
-        fill = p * 1.25 - 0.25 * p ** 5; // a steady pour that eases off as the tap closes
-        if (closed < 0 && fill >= TAP_CLOSES) closed = t;
+      if (started >= 0 && full < 0) {
+        const p = clamp((t - started) / FILL_MS);
+        const q = p + 0.025 * Math.sin(2 * Math.PI * 3.5 * p) * Math.sin(Math.PI * p); // pulses in the inflow
+        fill = q * 1.25 - 0.25 * q ** 5; // a rise that eases off at the brim
         if (p >= 1) { fill = 1; full = t; nextRain = t + 900; }
       }
-      // While water is still arriving it stirs the surface, throws spray and drives bubbles down.
-      const arriving = landed >= 0 && (closed < 0 || 0.5 * G_STREAM * (t - closed) ** 2 < surfaceAt(pourX));
-      if (arriving) {
-        const c = colAt(pourX), sy = surfaceAt(pourX);
-        v[c] -= 2 + rand() * 2.4;
-        for (const [j, k] of [[1, 1.2], [2, 0.6]] as const) { if (c - j >= 0) v[c - j] -= rand() * k; if (c + j < COLUMNS) v[c + j] -= rand() * k; }
-        // Now and then a heavier gush, and the water around it heaves.
-        if (rand() < 0.06) { slosh = Math.min(12, slosh + 1.6); for (let j = -3; j <= 3; j++) { const i = c + j; if (i >= 0 && i < COLUMNS) v[i] -= 2.5 * (1 - Math.abs(j) / 4); } }
-        if (rand() < 0.3) { const i = clamp(c + Math.round((rand() - 0.5) * 12), 0, COLUMNS - 1); v[i] += (rand() - 0.5) * 1.8; }
-        for (let k = 0; k < 3; k++) if (spray.length < 220 && rand() < 0.85) spray.push({ x: pourX + (rand() - 0.5) * 8, y: sy - 2, vx: (rand() - 0.5) * 4.8, vy: -(1.5 + rand() * 4.6), r: 0.6 + rand() * 1.7, seed: rand() });
-        for (let k = 0; k < 2; k++) if (bubbles.length < 160 && rand() < 0.75) bubbles.push({ x: pourX + (rand() - 0.5) * 14, y: sy + 6 + rand() * 40, vx: (rand() - 0.5) * 2.4, vy: 1.5 + rand() * 3, r: 0.7 + rand() * 2.8, seed: rand() });
-        // The water churns white where the stream lands.
-        if (foam.length < 140 && rand() < 0.7) foam.push({ x: pourX + (rand() - 0.5) * 26, life: 0.9, r: 1.5 + rand() * 2.5, drift: (rand() - 0.5) * 0.9 });
+      // Springs open as the water reaches them: bubbles stream up from the floor, and now and
+      // then the surface above them boils, throwing a little spray and sending out waves.
+      if (started >= 0 && full < 0) {
+        const lv = level();
+        for (const spring of springs) {
+          const m = mandals[spring.index], x = ox + m.cx * scale, y = oy + m.cy * scale;
+          if (y < lv + 24) continue;
+          if (bubbles.length < 170 && rand() < 0.4) bubbles.push({ x: x + (rand() - 0.5) * 26, y: y + (rand() - 0.5) * 14, vx: (rand() - 0.5) * 1.4, vy: -(0.3 + rand() * 0.9), r: 0.5 + rand() * 2.4, seed: rand() });
+          if (t >= spring.next) {
+            spring.next = t + 900 + rand() * 900;
+            const c = colAt(x), sy = surfaceAt(x);
+            for (let j = -4; j <= 4; j++) { const i = c + j; if (i >= 0 && i < COLUMNS) v[i] += 2.6 * (1 - Math.abs(j) / 5); }
+            slosh = Math.min(17, slosh + 2.2);
+            for (let k = 0; k < 6; k++) if (spray.length < 120) spray.push({ x: x + (rand() - 0.5) * 10, y: sy - 1, vx: (rand() - 0.5) * 2.2, vy: -(1 + rand() * 2.4), r: 0.5 + rand() * 1.2, seed: rand() });
+            for (let k = 0; k < 4; k++) if (foam.length < 140) foam.push({ x: x + (rand() - 0.5) * 20, life: 0.9, r: 1.2 + rand() * 2.2, drift: (rand() - 0.5) * 0.8 });
+          }
+        }
+        // Everywhere under water, a few bubbles rise from the floor.
+        if (bubbles.length < 170 && rand() < 0.9) {
+          const m = mandals[Math.floor(rand() * total)], y = oy + m.cy * scale;
+          if (y > lv + 30) bubbles.push({ x: ox + m.cx * scale + (rand() - 0.5) * 12, y, vx: 0, vy: -(0.3 + rand() * 0.6), r: 0.5 + rand() * 1.6, seed: rand() });
+        }
       }
-      if (landed >= 0) {
+      if (started >= 0) {
         if (rand() < 0.15) v[Math.floor(rand() * COLUMNS)] += (rand() - 0.5) * 0.6; // a little wind everywhere
         const damping = full >= 0 ? DAMPING * 2.5 : DAMPING;
-        slosh *= full >= 0 ? 0.985 : 0.9975;
+        // The rocking keeps going while the water comes in, and settles once it is full.
+        if (full >= 0) slosh *= 0.985; else slosh += (10 * (0.4 + 0.6 * breadth) - slosh) * 0.012;
         for (let i = 0; i < COLUMNS; i++) { v[i] += -SPRING * h[i] - damping * v[i]; h[i] += v[i]; }
         for (let pass = 0; pass < 4; pass++) {
           for (let i = 0; i < COLUMNS; i++) {
@@ -285,22 +284,22 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
           for (let i = 0; i < COLUMNS; i++) { if (i > 0) h[i - 1] += lD[i]; if (i < COLUMNS - 1) h[i + 1] += rD[i]; }
         }
       }
-      // Spray falls back in and rings out; bubbles rise and burst into foam.
+      // Spray falls back in and rings out; bubbles rise and burst into foam, lifting the surface where they break.
       for (let i = spray.length - 1; i >= 0; i--) {
         const s = spray[i]; s.vy += G_SPRAY; s.x += s.vx; s.y += s.vy;
-        if (s.vy > 0 && landed >= 0 && s.y > surfaceAt(s.x)) {
+        if (s.vy > 0 && started >= 0 && s.y > surfaceAt(s.x)) {
           v[colAt(s.x)] -= 0.3 * s.r;
           if (foam.length < 140 && rand() < 0.4) foam.push({ x: s.x, life: 0.8, r: 0.8 + s.r, drift: (rand() - 0.5) * 0.4 });
           spray.splice(i, 1);
         } else if (s.y > H + 20) spray.splice(i, 1);
       }
       for (let i = bubbles.length - 1; i >= 0; i--) {
-        const b = bubbles[i]; b.vy = Math.max(-2.3, b.vy - 0.09); b.vx *= 0.96; b.x += b.vx + Math.sin(t * 0.011 + b.seed * 20) * 0.35; b.y += b.vy;
-        if (b.y < surfaceAt(b.x) + 1.5) { if (foam.length < 140) foam.push({ x: b.x, life: 1, r: 1 + b.r * 0.9, drift: (rand() - 0.5) * 0.5 }); bubbles.splice(i, 1); }
+        const b = bubbles[i]; b.vy = Math.max(-2.3, b.vy - 0.09); b.vx *= 0.96; b.x += b.vx + Math.sin(t * (0.006 + b.seed * 0.01) + b.seed * 20) * (0.3 + b.seed * 0.5); b.y += b.vy;
+        if (b.y < surfaceAt(b.x) + 1.5) { v[colAt(b.x)] += 0.12 * b.r; if (foam.length < 140) foam.push({ x: b.x, life: 1, r: 1 + b.r * 0.9, drift: (rand() - 0.5) * 0.5 }); bubbles.splice(i, 1); }
       }
       for (let i = foam.length - 1; i >= 0; i--) { const f = foam[i]; f.life -= 0.011; f.x += f.drift; if (f.life <= 0) foam.splice(i, 1); }
       // A mandal is reached when the water rises past its middle.
-      if (landed >= 0) {
+      if (started >= 0) {
         const lv = level();
         for (let i = 0; i < total; i++) if (reached[i] < 0 && oy + mandals[i].cy * scale > lv) { reached[i] = t; n += 1; }
       }
@@ -311,8 +310,7 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
 
     const skipNow = () => {
       if (t < DROP_MS + REVEAL_MS + 600) t = DROP_MS + REVEAL_MS + 600;
-      if (landed < 0) landed = t - FILL_MS;
-      if (closed < 0) closed = t - 3000;
+      if (started < 0) started = t - FILL_MS;
       fill = 1;
       if (full < 0) { full = t - 1000; nextRain = t + 600; }
       for (let i = 0; i < total; i++) if (reached[i] < 0) { reached[i] = t - GLINT_MS; n += 1; }
@@ -402,7 +400,7 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
 
       // 3. The water, seen from the side as it fills.
       const living = full >= 0 ? clamp((t - full - 250) / 700) : 0;
-      if (landed >= 0 && living < 1) {
+      if (started >= 0 && living < 1) {
         const lv = level(), x0 = colX0(), dx = colDX(), fade = 1 - living;
         for (let i = 0; i < COLUMNS; i++) { px[i] = x0 + i * dx; py[i] = lv - h[i] + swell(px[i]); }
         ctx.save(); ctx.globalAlpha = fade;
@@ -446,7 +444,13 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
         // The surface: a dark edge under a bright line.
         const line = new Path2D(); line.moveTo(px[0], py[0]); curve(line);
         ctx.strokeStyle = "rgba(2, 22, 38, 0.5)"; ctx.lineWidth = 4; ctx.stroke(line);
-        ctx.shadowColor = "rgba(110, 236, 255, 0.95)"; ctx.shadowBlur = 14; ctx.strokeStyle = "#d4fcff"; ctx.lineWidth = 1.9; ctx.stroke(line); ctx.shadowBlur = 0;
+        const shine = ctx.createLinearGradient(left, 0, right, 0), stops: Array<[number, string]> = [[0, "rgba(190, 246, 255, 0.78)"], [1, "rgba(190, 246, 255, 0.78)"]];
+        for (let k = 0; k < 6; k++) {
+          const c = (k / 6 + t * 0.00006 * (k % 2 ? 1.3 : -1) + 10) % 1;
+          stops.push([Math.max(0, c - 0.035), "rgba(190, 246, 255, 0.78)"], [c, "rgba(255, 255, 255, 1)"], [Math.min(1, c + 0.035), "rgba(190, 246, 255, 0.78)"]);
+        }
+        stops.sort((a, b) => a[0] - b[0]).forEach(([o, c]) => shine.addColorStop(o, c));
+        ctx.shadowColor = "rgba(110, 236, 255, 0.95)"; ctx.shadowBlur = 14; ctx.strokeStyle = shine; ctx.lineWidth = 2; ctx.stroke(line); ctx.shadowBlur = 0;
         // Foam riding the surface.
         for (const f of foam) {
           ctx.fillStyle = `rgba(236, 253, 255, ${0.6 * f.life})`;
@@ -504,52 +508,18 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
         ctx.restore();
       }
 
-      // 5. Spray in the air.
+      // 5. Spray in the air, inside the State's glass.
+      ctx.save(); mapped(); ctx.clip(state); css();
       ctx.fillStyle = "rgba(214, 250, 255, 0.92)";
       for (const s of spray) {
         const speed = Math.hypot(s.vx, s.vy);
         ctx.save(); ctx.translate(s.x, s.y); ctx.rotate(Math.atan2(s.vy, s.vx));
         ctx.beginPath(); ctx.ellipse(0, 0, s.r * (1 + Math.min(2, speed * 0.25)), s.r * 0.85, 0, 0, Math.PI * 2); ctx.fill(); ctx.restore();
       }
-
-      // 6. The stream, in front of everything: narrowing as it falls, bending when it moves.
-      if (t >= STREAM_AT) {
-        const front = 0.5 * G_STREAM * (t - STREAM_AT) ** 2, tail = closed < 0 ? 0 : 0.5 * G_STREAM * (t - closed) ** 2;
-        const xAt = (y: number) => historyX(t - Math.sqrt(2 * Math.max(0, y) / G_STREAM)) + Math.sin(y * 0.045 - t * 0.025) * 0.7;
-        const end = Math.min(front, landed < 0 ? bottom - 4 : surfaceAt(xAt(level())));
-        if (tail < end - 2) {
-          const steps = 26, ys: number[] = [], ls: number[] = [], rs: number[] = [];
-          for (let s = 0; s <= steps; s++) {
-            const y = tail + (end - tail) * (s / steps), x = xAt(y), w = 11 - 4 * clamp(y / Math.max(1, bottom));
-            ys.push(y); ls.push(x - w / 2); rs.push(x + w / 2);
-          }
-          ctx.save();
-          const pour = (spread: number) => {
-            ctx.beginPath();
-            for (let s = 0; s <= steps; s++) { const m = (ls[s] + rs[s]) / 2, x = m - (m - ls[s]) * spread; if (s) ctx.lineTo(x, ys[s]); else ctx.moveTo(x, ys[s]); }
-            for (let s = steps; s >= 0; s--) { const m = (ls[s] + rs[s]) / 2; ctx.lineTo(m + (rs[s] - m) * spread, ys[s]); }
-            ctx.closePath();
-          };
-          pour(1.45); ctx.shadowColor = "rgba(110, 236, 255, 0.7)"; ctx.shadowBlur = 16; ctx.fillStyle = "rgba(120, 220, 242, 0.28)"; ctx.fill(); ctx.shadowBlur = 0;
-          pour(1);
-          const core = ctx.createLinearGradient(0, ys[0], 0, ys[steps]);
-          core.addColorStop(0, "rgba(170, 238, 250, 0.7)"); core.addColorStop(1, "rgba(200, 248, 255, 0.92)");
-          ctx.fillStyle = core; ctx.fill();
-          ctx.beginPath();
-          for (let s = 0; s <= steps; s++) { const x = ls[s] + (rs[s] - ls[s]) * 0.28; if (s) ctx.lineTo(x, ys[s]); else ctx.moveTo(x, ys[s]); }
-          ctx.strokeStyle = "rgba(245, 254, 255, 0.75)"; ctx.lineWidth = 1.1; ctx.stroke();
-          ctx.strokeStyle = "rgba(255, 255, 255, 0.85)"; ctx.lineWidth = 1.6;
-          const length = Math.max(1, end - tail);
-          for (let k = 0; k < 7; k++) {
-            const y = tail + ((t * 0.9 + k * 113) % length), x = xAt(y) + 0.6;
-            ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, Math.min(end, y + 12)); ctx.stroke();
-          }
-          ctx.restore();
-        }
-      }
+      ctx.restore();
 
       if (count.current && n !== lastCount) { count.current.textContent = String(n); lastCount = n; }
-      const now = full >= 0 ? "full" : landed >= 0 ? "fill" : "drop";
+      const now = full >= 0 ? "full" : started >= 0 ? "fill" : "drop";
       if (now !== lastPhase) { lastPhase = now; setPhase(now); if (now === "full") done.current?.(); }
     };
 
