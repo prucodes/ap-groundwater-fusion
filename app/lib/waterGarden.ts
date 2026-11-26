@@ -1,6 +1,7 @@
 import { mandalByMapKey, mandals, mapGeometry, monsoonWatch, observationSeries, titleCase } from "./data";
 import { districtHome, mandalHomes } from "./mapSpread";
-import { MIN_YEARS, sideOf, stepCounts, type Garden, type GardenPlant, type GardenStep, type StepCounts } from "./gardenShared";
+import fieldSignalsJson from "../data/field_signals_mandals.json";
+import { MIN_YEARS, PADDY_IRRIGATED_PCT, sideOf, stepCounts, type Garden, type GardenAquifer, type GardenPlant, type GardenStep, type StepCounts } from "./gardenShared";
 
 /* The water garden's data, built once at deploy from the State's monthly hand-read wells
    (mandal_observation_series_v2.json, the mandal median of the APWRIMS readings): every
@@ -53,6 +54,13 @@ export function waterGarden(): Garden {
     const record = mandalByMapKey(feature.d, feature.m);
     if (record && !homeById.has(record.id)) homeById.set(record.id, i);
   });
+  // Each mandal's ground (the Monsoon page's aquifer class) and its irrigated share (satellite).
+  const AQUIFER: Record<string, GardenAquifer> = { hard_rock: 0, alluvial: 1, coastal: 2 };
+  const aquiferAt = new Map(monsoonWatch.mandals.flatMap(m => (m.boundaryIndex !== null && m.aquifer in AQUIFER ? [[m.boundaryIndex, AQUIFER[m.aquifer]] as const] : [])));
+  const letters = (s: string) => s.toUpperCase().replace(/[^A-Z]/g, "");
+  const signals = fieldSignalsJson as unknown as { fields: string[]; values: Record<string, Array<number | null>>; irrigation?: { source?: string } };
+  const irrigatedField = signals.fields.indexOf("irrigatedPct");
+  const irrigatedOf = new Map(Object.entries(signals.values).map(([key, v]) => { const [d, m] = key.split("|"); return [`${letters(d)}|${letters(m)}`, v[irrigatedField]] as const; }));
   const placeOf = (id: string, district: string) => {
     const i = homeById.get(id);
     return i !== undefined ? homes[i] : districtHome(district) ?? [0, 0, 0];
@@ -64,7 +72,9 @@ export function waterGarden(): Garden {
       const depths = years.map(year => { const v = series.get(`${year}-${mm}`); return v === undefined ? null : Math.round(v * 100) / 100; });
       const read = depths.filter((v): v is number => v !== null);
       const usual = read.length >= MIN_YEARS ? Math.round((median(read) as number) * 100) / 100 : null;
-      return { home, plant: [m.id, titleCase(m.mandal_name), titleCase(m.district_name), regionOf(m.district_name), depths, usual] as GardenPlant };
+      const irrigated = irrigatedOf.get(`${letters(m.district_name)}|${letters(m.mandal_name)}`) ?? null;
+      const at = homeById.get(m.id), aquifer = at !== undefined ? aquiferAt.get(at) ?? null : null;
+      return { home, plant: [m.id, titleCase(m.mandal_name), titleCase(m.district_name), regionOf(m.district_name), depths, usual, irrigated !== null && irrigated >= PADDY_IRRIGATED_PCT ? 1 : 0, aquifer] as GardenPlant };
     })
     .sort((a, b) => a.plant[3] - b.plant[3] || a.home[1] - b.home[1] || a.home[0] - b.home[0])
     .map(row => row.plant);
@@ -77,7 +87,8 @@ export function waterGarden(): Garden {
     return season ? { year, mm: season.mm, anomalyPct: season.anomalyPct, enso: season.state ?? "neutral" } : null;
   });
   const rainSource = `${monsoonWatch.rainfall?.product ?? "CHIRPS"}, June to September${seasons.length ? `, against the ${seasons[0].year}-${seasons[seasons.length - 1].year} mean` : ""}`;
-  built = { month, monthName: MONTHS[month - 1], years, steps, missingYears, regions: GARDEN_REGIONS, scaleM: Math.ceil(deepest / 10) * 10, plants, rain, rainNormalMm: history?.meanMm ?? 0, rainSource };
+  built = { month, monthName: MONTHS[month - 1], years, steps, missingYears, regions: GARDEN_REGIONS, scaleM: Math.ceil(deepest / 10) * 10, plants, rain, rainNormalMm: history?.meanMm ?? 0, rainSource,
+    cropSource: `Paddy where ${PADDY_IRRIGATED_PCT}% or more of a mandal's farmland is irrigated, sorghum elsewhere: ${signals.irrigation?.source ?? "the satellite irrigation map"}` };
   return built;
 }
 

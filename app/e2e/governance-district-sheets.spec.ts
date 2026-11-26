@@ -28,6 +28,9 @@ test("the sheets add up to the State, and each fits its page", async ({ page }) 
     await page.goto(`/${route}/`);
     const sheet = page.getByTestId("district-sheet");
     deeper += Number(await sheet.getAttribute("data-deeper"));
+    // Every mandal stands as a borewell in the strip.
+    const drawn = Number(await page.getByTestId("district-sheet-bores").locator("svg").getAttribute("data-borewells"));
+    expect(drawn, `${route} draws a borewell for each mandal`).toBeGreaterThanOrEqual(Number(await sheet.getAttribute("data-compared")));
     compared += Number(await sheet.getAttribute("data-compared"));
     const room = await sheet.evaluate(node => {
       const foot = node.lastElementChild!.getBoundingClientRect().top;

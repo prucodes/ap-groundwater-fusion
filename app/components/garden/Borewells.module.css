@@ -1,0 +1,38 @@
+/* The borewells (Borewells.tsx). Drawn still for print; on the page (.animated) they drill in,
+   fill and run, and every moving part answers to the year shown. Sizes are drawing units. */
+.svg { display: block; width: 100%; height: auto; overflow: visible; }
+.tick { fill: #8197a8; font-family: var(--font-mono); }
+.ground { fill: rgba(255, 255, 255, .42); font-family: var(--font-mono); text-transform: uppercase; letter-spacing: .12em; }
+.name { font-family: var(--font-sans); }
+.bore[data-selected] .name { fill: #fff; font-weight: 650; }
+
+/* On the page: levels glide to a new year; lamps and channels change colour softly. */
+.animated .level { transition: transform .6s cubic-bezier(.65, 0, .35, 1); }
+.animated .lamp, .animated .halo, .animated .channel { transition: fill .45s ease, opacity .45s ease; }
+
+/* Arriving: each bore is drilled, one after the next; the water rises into it; the head goes up. */
+.animated .drill { animation: drill .9s cubic-bezier(.3, .7, .3, 1) both; animation-delay: calc(var(--i) * 35ms); }
+.animated .fill { animation: rise .9s cubic-bezier(.2, .7, .3, 1) both; animation-delay: calc(var(--i) * 35ms + .75s); }
+.animated .head { animation: appear .5s ease-out both; animation-delay: calc(var(--i) * 35ms + .35s); }
+.animated .stream { animation: appear .5s ease-out both; animation-delay: calc(var(--i) * 35ms + 1.4s); }
+
+/* Waiting to be seen: every animation holds at its start (bores undrilled, water not yet in). */
+.paused, .paused * { animation-play-state: paused !important; }
+
+/* Running: the water in the stream moves, drops splash, a running lamp breathes, a dry one blinks. */
+.animated .flow { animation: flow .6s linear infinite; }
+.animated .drop { animation: drop .9s ease-in infinite; animation-delay: calc(var(--q) * .3s); }
+.animated .bore[data-state="full"] .halo, .animated .bore[data-state="steady"] .halo { animation: breathe 2.4s ease-in-out infinite; }
+.animated .bore[data-state="dry"] .lamp { animation: blink 1.6s ease-in-out infinite; }
+
+@keyframes drill { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes rise { from { opacity: 0; transform: translateY(46px); } to { opacity: 1; transform: none; } }
+@keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+@keyframes flow { to { stroke-dashoffset: -9; } }
+@keyframes drop { 0% { transform: translateY(-1px); opacity: 0; } 25% { opacity: 1; } 100% { transform: translateY(3px); opacity: 0; } }
+@keyframes breathe { 50% { opacity: .08; } }
+@keyframes blink { 50% { opacity: .35; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .animated *, .animated { animation: none !important; transition: none !important; }
+}

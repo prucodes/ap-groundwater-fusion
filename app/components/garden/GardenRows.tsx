@@ -73,7 +73,7 @@ export function plantGeometry(i: number, look: PlantLook, garden: Garden, g: Row
   const tilt = Math.atan2(dx, Math.max(h, 1)) + dir * droop * 2.35;
   const leafGrow = clamp((look.grow - 0.3) / 0.35), leafLen = (8 + 4 * s[5]) * g.headScale * leafGrow * (1 - 0.22 * droop);
   const R = look.depth === null ? 0 : look.roots * look.depth * ((g.soil - 12) / garden.scaleM);
-  return { s, h, dx, tx, ty, droop, full, dir, L, tilt, leafLen, R, tall: h > 0.62 * g.stemMax, head: { x: tx, y: ty, L } };
+  return { s, h, dx, tx, ty, droop, full, dir, L, tilt, leafLen, R, tall: h > 0.62 * g.stemMax, paddy: garden.plants[i][6] === 1, head: { x: tx, y: ty, L } };
 }
 
 /** The colour buckets heads are drawn in: one fill per bucket a frame. */
@@ -130,6 +130,7 @@ function trace(x: number, y0: number, g: ReturnType<typeof plantGeometry>, lk: P
     }
   }
   if (h < 0.3) return;
+  if (g.paddy) { tracePaddy(x, y0, g, lk, b); return; }
   // The stalk, bending over at the top as the head bows.
   const stalk = b.stalks[Math.round(dryness(droop) * 4)];
   stalk.moveTo(x, y0);
@@ -168,6 +169,48 @@ function trace(x: number, y0: number, g: ReturnType<typeof plantGeometry>, lk: P
   if (droop < 0.3) for (const [u, side] of [[0.22, -1], [0.38, 1], [0.54, -1], [0.7, 1], [0.84, -0.4]] as const) {
     const gx = px(side * W * 0.38, -L * u), gy = py(side * W * 0.38, -L * u);
     b.grain.moveTo(gx + r, gy); b.grain.arc(gx, gy, r, 0, Math.PI * 2);
+  }
+}
+
+/** Paddy, where most of a mandal's farmland is irrigated: a clump of thin blades with grain
+    panicles arching over from the top. Full and golden above the usual, green within 0.1 m,
+    thin, rust and limp below it, the blades gone to straw. */
+function tracePaddy(x: number, y0: number, g: ReturnType<typeof plantGeometry>, lk: PlantLook, b: Batch) {
+  const { s, h, dx, droop, full, dir, L, leafLen } = g, dry = dryness(droop);
+  // Blades: four slim ones from the base, fanning out and arching, hanging more as the plant dries.
+  if (leafLen > 0.6) {
+    const path = b.leaves[Math.round(dry * 8)];
+    for (let j = 0; j < 4; j++) {
+      const spread = (j - 1.5) / 1.5, bx = x + spread * 0.7, len = h * (0.36 + 0.18 * seedOf(j, 40 + Math.round(s[0] * 9))) * (1 - 0.15 * dry);
+      const tipX = bx + spread * len * 0.38 + dx * 0.3 + spread * len * dry * 0.3, tipY = y0 - len * (1 - 0.4 * dry * Math.abs(spread));
+      const w = 0.28 + 0.12 * (1 - dry);
+      path.moveTo(bx - w, y0);
+      path.quadraticCurveTo(bx + spread * len * 0.05, y0 - len * 0.6, tipX, tipY);
+      path.quadraticCurveTo(bx + spread * len * 0.08 + w, y0 - len * 0.55, bx + w, y0);
+    }
+  }
+  if (L < 0.3) return;
+  // Panicles: two or three culms ending in an arch of grain, heavier and lower when full.
+  const count = g.tall ? 3 : 2, { key, tone } = toneOf(lk.side, lk.mag, Math.round(s[4] * (LIFT_STEPS - 1)));
+  let bucket = b.heads.get(key);
+  if (!bucket) { bucket = { tone, path: new Path2D() }; b.heads.set(key, bucket); }
+  const stalk = b.stalks[Math.round(dry * 4)];
+  for (let j = 0; j < count; j++) {
+    const off = (j - (count - 1) / 2) * 1.3, side = j % 2 ? -dir : dir;
+    const topX = x + off + dx * 0.8, topY = y0 - h * (0.94 + 0.06 * seedOf(j, 44 + Math.round(s[1] * 9)));
+    stalk.moveTo(x + off * 0.4, y0); stalk.quadraticCurveTo(x + off * 0.7, y0 - h * 0.5, topX, topY);
+    // The arch: a full panicle bends well over; a thin one hangs limp; an unripe one stands up.
+    const len = L * (1.05 + 0.25 * full - 0.2 * droop), bend = 0.35 + 1.25 * full + 0.9 * droop;
+    const endX = topX + side * len * Math.sin(bend), endY = topY - len * Math.cos(bend);
+    const cx = topX + side * len * 0.15, cy = topY - len * 0.75;
+    stalk.moveTo(topX, topY); stalk.quadraticCurveTo(cx, cy, endX, endY);
+    const grains = droop > 0.3 ? 4 : 7, r = L * (0.1 + 0.03 * full - 0.025 * droop);
+    for (let q = 1; q <= grains; q++) {
+      const t = q / (grains + 0.5), u = 1 - t;
+      const gx = u * u * topX + 2 * u * t * cx + t * t * endX, gy = u * u * topY + 2 * u * t * cy + t * t * endY;
+      bucket.path.moveTo(gx + r * 1.4, gy); bucket.path.ellipse(gx, gy, r * 1.4, r, Math.atan2(endY - topY, endX - topX), 0, Math.PI * 2);
+    }
+    if (full > 0.08 && L > 1 && j === 0) b.halos.push([(topX + endX) / 2, (topY + endY) / 2, L * 0.9, full * 0.22]);
   }
 }
 

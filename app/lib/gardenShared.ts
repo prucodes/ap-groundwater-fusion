@@ -7,8 +7,18 @@
    is normal for it, not merely worse than last year. */
 
 /** One mandal: id, name, district, region, its depth (m below ground) in each year of `years`,
-    and its usual depth in that month (null with fewer than MIN_YEARS readings to judge by). */
-export type GardenPlant = [id: string, name: string, district: string, region: number, depths: Array<number | null>, usual: number | null];
+    its usual depth in that month (null with fewer than MIN_YEARS readings to judge by), the crop
+    it is drawn as, and the ground its water sits in. */
+export type GardenPlant = [id: string, name: string, district: string, region: number, depths: Array<number | null>, usual: number | null, crop: GardenCrop, aquifer: GardenAquifer | null];
+
+/** 0 sorghum, the dryland staple; 1 paddy, where satellites see most of the mandal's farmland irrigated. */
+export type GardenCrop = 0 | 1;
+export const CROP_NAMES = ["sorghum", "paddy"] as const;
+/** A mandal is drawn as paddy at or above this share of its farmland irrigated. */
+export const PADDY_IRRIGATED_PCT = 50;
+/** The ground the water sits in, as the Monsoon page classes each mandal: 0 hard rock, 1 alluvial, 2 coastal. */
+export type GardenAquifer = 0 | 1 | 2;
+export const AQUIFER_NAMES = ["hard rock", "alluvial", "coastal sands"] as const;
 
 export type GardenStep = {
   year: number;
@@ -34,6 +44,8 @@ export type Garden = {
   plants: GardenPlant[];
   /** Each year's monsoon (June to September) over the State, aligned with `years`: what falls between one October and the next. */
   rain: Array<GardenRain | null>;
+  /** Where the crop drawn for each mandal comes from. */
+  cropSource: string;
   /** The normal it is set against, and where it comes from. */
   rainNormalMm: number;
   rainSource: string;

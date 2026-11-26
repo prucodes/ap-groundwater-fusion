@@ -5,6 +5,7 @@ import { basePath } from "../../../../lib/data";
 import { districtSheet, districtSheets, pdfName, sheetDates, type SheetMandal } from "../../../../lib/districtSheet";
 import { lakhs } from "../../../../lib/summer";
 import { BAND_LABEL } from "../../../../lib/summerPriority";
+import { Borewells, pumpState } from "../../../../components/garden/Borewells";
 import brief from "../../../summer/brief/SummerBrief.module.css";
 import styles from "./DistrictSheet.module.css";
 
@@ -32,8 +33,8 @@ const m1 = (v: number) => `${Math.abs(v).toFixed(1)} m`;
 const TONE = { deeper: "#c4563a", shallower: "#2a9fd6", steady: "#9aa8b5", none: "#dfe5ec" } as const;
 const toneOf = (side: -1 | 0 | 1 | null) => (side === 1 ? TONE.deeper : side === -1 ? TONE.shallower : side === 0 ? TONE.steady : TONE.none);
 const SUMMER_WORD = { beyond: "Past its record", dry: "Past it if dry", within: "Within its record" } as const;
-/** Rows the table has room for under the rest of the sheet. */
-const TABLE_ROWS = 12;
+/** Rows the table has room for under the rest of the sheet; every mandal is in the borewell strip. */
+const TABLE_ROWS = 4;
 
 
 export default async function DistrictSheetPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -43,7 +44,7 @@ export default async function DistrictSheetPage({ params }: { params: Promise<{ 
   const dates = sheetDates(), c = s.counts, month = s.month.split(" ")[0], target = dates.summer.slice(0, 4);
   const below = s.mandals.filter(m => m.side === 1).sort((a, b) => (b.vsUsualM ?? 0) - (a.vsUsualM ?? 0));
   const shown = below.slice(0, TABLE_ROWS), rest = below.length - shown.length;
-  const firstRows = s.priority.rows.filter(r => r.band !== "watch").slice(0, 5);
+  const planned = s.priority.rows.filter(r => r.band !== "watch"), firstRows = planned.slice(0, 3);
   const w = s.water, mon = s.monsoon, sum = s.summer, dr = s.drought;
   const rose = mon ? mon.thisSeasonM < 0 : false;
 
@@ -94,7 +95,7 @@ export default async function DistrictSheetPage({ params }: { params: Promise<{ 
               </figure>
 
               <div className={styles.side}>
-                <h3>Summer drinking water: plan first</h3>
+                <h3>Summer drinking water: plan first{firstRows.length ? <small> · right: May depth, typical winter</small> : null}</h3>
                 {firstRows.length ? (
                   <ul className={styles.first} data-testid="district-sheet-first">
                     {firstRows.map(r => (
@@ -106,7 +107,7 @@ export default async function DistrictSheetPage({ params }: { params: Promise<{ 
                   </ul>
                 ) : <p className={styles.none}>No mandal here is on the summer list to plan first or next.</p>}
                 <p className={styles.note}>
-                  {firstRows.length ? <>Right: the May depth projected on a typical winter. </> : null}
+                  {planned.length > firstRows.length ? `${planned.length - firstRows.length} more to plan for. ` : ""}
                   {s.priority.watch ? `${s.priority.watch} more to watch: past their record only in a dry winter. ` : ""}
                   <Link href="/summer/">The full list, with reasons</Link>.
                 </p>
@@ -115,6 +116,17 @@ export default async function DistrictSheetPage({ params }: { params: Promise<{ 
                 ) : null}
                 {s.fieldTeams.length ? <p className={styles.note}><b>On the field-teams list:</b> {s.fieldTeams.join(", ")}.</p> : null}
               </div>
+            </div>
+
+            <div className={brief.sec}>Every mandal as a borewell, {s.month}</div>
+            <div className={styles.bores} data-testid="district-sheet-bores">
+              <Borewells uid={`sb-${s.slug}`} bores={s.mandals.map(m => ({ id: m.id, name: m.name, nowM: m.nowM, usualM: m.usualM, side: m.side, deepestM: m.deepestM }))}
+                scaleM={s.scaleM} aquifer={s.aquifer} soil={86} nameSize={s.mandals.length > 30 ? 11.5 : 12.5} nameMax={14}
+                label={`${s.name}'s ${s.mandals.length} mandals as borewells in ${s.month}`} />
+              <p className={styles.boresKey}>{(() => {
+                const st = s.mandals.map(pumpState), n = (k: string) => st.filter(x => x === k).length;
+                return <><span><i style={{ background: "#5be38a" }} />Running {n("full") + n("steady")}</span><span><i style={{ background: "#f2b442" }} />Below usual, a trickle {n("trickle")}</span><span><i style={{ background: "#ff5a3c" }} />Below the pump, dry {n("dry")}</span><span>To scale; pumps 2 m below the usual {month}.</span></>;
+              })()}</p>
             </div>
 
             <div className={brief.sec}>Furthest below their usual {month}</div>
@@ -134,7 +146,7 @@ export default async function DistrictSheetPage({ params }: { params: Promise<{ 
                 </tbody>
               </table>
             ) : <p className={styles.none}>No mandal stands more than 0.1 m below its usual {month}.</p>}
-            {rest > 0 ? <p className={styles.more}>And {rest} more deeper than usual: {below.slice(TABLE_ROWS).map(m => m.name).join(", ")}.</p> : null}
+            {rest > 0 ? <p className={styles.more}>And {rest} more deeper than usual, each named in the borewells above.</p> : null}
           </div>
 
           <div className={brief.foot}>
