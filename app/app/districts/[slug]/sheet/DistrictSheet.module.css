@@ -2,7 +2,7 @@
    (summer/brief/SummerBrief.module.css), and the pieces only this sheet has. */
 .split { display: grid; grid-template-columns: 78mm 1fr; gap: 6mm; align-items: start; margin-bottom: 4mm; }
 .mapWrap { margin: 0; }
-.map { display: block; width: 100%; height: 54mm; }
+.map { display: block; width: 100%; height: 50mm; }
 .key { display: flex; flex-wrap: wrap; gap: 1.2mm 3.4mm; font-size: 7.2pt; color: #4a5b70; margin-top: 1.4mm; }
 .key i { display: inline-block; width: 2.6mm; height: 2.6mm; border-radius: 2px; margin-right: 1.2mm; vertical-align: -0.3mm; }
 .key i.ring { background: transparent; border: 1.4px solid #0d2138; border-radius: 2px; }
