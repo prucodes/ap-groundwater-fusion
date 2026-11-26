@@ -3,10 +3,10 @@ import type { PlantLook } from "./GardenRows";
 
 /* What a plant looks like at a point in the garden's years. `position` runs along
    garden.steps: 3 is the fourth year, 3.4 is part way from it to the next, so the water
-   rises and falls and the flowers open and nod smoothly between years. Every year is set
+   rises and falls and the grain heads fill and bow smoothly between years. Every year is set
    against the same yardstick, the mandal's usual depth in the month. */
 
-/** Water this many metres from its usual opens or bows a flower all the way. */
+/** Water this many metres from its usual fills or bows a head all the way. */
 const FULL_MOVE_M = 3;
 
 function at(garden: Garden, i: number, step: number) {

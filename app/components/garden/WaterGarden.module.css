@@ -1,20 +1,26 @@
 /* The water garden. The garden itself is always night, as the films are: a dark sky the
-   flowers glow against and soil the roots and water show through. Its controls and key
+   plants stand against and soil the roots and water show through. Its controls and key
    sit on the page and follow the page's theme. */
 
 .garden { display: grid; gap: 12px; }
 
 .figure {
-  position: relative; overflow: hidden; padding: 64px 14px 10px; border-radius: var(--radius);
+  position: relative; overflow: hidden; padding: 88px 14px 10px; border-radius: var(--radius);
   background: radial-gradient(70% 60% at 62% 4%, rgba(60, 150, 190, .2), transparent 70%),
               radial-gradient(110% 90% at 80% 12%, #12303f 0%, #0a1c29 46%, #06121b 100%);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06);
   touch-action: pan-y;
 }
-.figure[data-mode="regions"] { padding: 64px 8px 8px; display: grid; gap: 10px; }
+.figure[data-mode="regions"] { padding: 84px 8px 8px; display: grid; gap: 10px; }
 .when { position: absolute; top: 16px; left: 20px; z-index: 1; display: grid; gap: 2px; color: #eaf3fb; pointer-events: none; }
 .when b { font: 600 26px/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
 .when span { font: 500 12px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: #9fb6cc; }
+/* The monsoon before the October shown: a gauge against normal (the tick), and its words. */
+.when .monsoon { display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; text-transform: none; letter-spacing: 0; font: 500 12.5px var(--font-sans); color: #b8d6e6; }
+.gauge { position: relative; display: inline-block; width: 72px; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .12); }
+.gauge i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: #7fcbe8; }
+.gauge s { position: absolute; left: 66.7%; top: -3px; bottom: -3px; width: 1.5px; background: #eaf3fb; text-decoration: none; }
+.when[data-raining] b { color: #b8e4f6; }
 .row { position: relative; }
 .plot { position: relative; }
 .svg { display: block; width: 100%; height: auto; cursor: pointer; }
@@ -56,10 +62,11 @@
 .gap { margin: -4px 0 0; font-size: 12.5px; color: var(--ink-soft); }
 .key { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
 .key span { display: inline-flex; align-items: center; gap: 7px; }
-.key i { width: 11px; height: 11px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
-.key i[data-kind="open"] { background: #4fc3ea; }
-.key i[data-kind="bud"] { background: #94a6b4; border-radius: 50% 50% 50% 50%; transform: scale(.75, 1); }
-.key i[data-kind="droop"] { background: #e07a55; transform: rotate(135deg); }
+/* The key's grain heads, drawn as the field draws them: upright gold, upright green, bowed rust. */
+.key i { width: 7px; height: 13px; border-radius: 50% 50% 46% 46% / 62% 62% 38% 38%; }
+.key i[data-kind="open"] { background: #ecc670; box-shadow: 0 0 6px rgba(143, 224, 255, .55); }
+.key i[data-kind="bud"] { background: #8eb668; width: 6px; }
+.key i[data-kind="droop"] { background: #b25c36; width: 6px; transform: rotate(125deg); }
 .srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; }
 
 @media (max-width: 640px) {

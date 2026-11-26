@@ -13,7 +13,7 @@ import styles from "./Garden.module.css";
 
 export const metadata: Metadata = {
   title: "Water Garden | AP Water Intelligence",
-  description: "Every mandal in Andhra Pradesh as a plant: its roots reach down to the measured water table, it opens where the water stands above its usual level for the month and droops where it stands below. Every year on record, and a short film to forward.",
+  description: "Every mandal in Andhra Pradesh as a sorghum plant: its roots reach down to the measured water table, its grain head stands full where the water is above its usual level for the month and droops where it is below. Every year on record, and a short film to forward.",
 };
 
 export default function GardenPage() {
@@ -52,13 +52,14 @@ export default function GardenPage() {
 
       <section className={shared.block} aria-labelledby="garden-title">
         <header className={shared.blockHead}>
-          <span className={shared.eyebrow}><IconLeaf /> Every mandal a plant, north to south</span>
+          <span className={shared.eyebrow}><IconLeaf /> Every mandal a sorghum plant, north to south</span>
           <h2 id="garden-title">Where the water stands below its usual {month}, the garden droops</h2>
           <p>
             The roots of each plant reach down to that mandal&rsquo;s water table in {now}, drawn to scale; the deeper the water,
-            the longer the roots and the shorter the plant. Open blue flowers are mandals whose water stands above their usual
-            {" "}{month}, rust ones nodding over are below it. Play the years since {first} to see the dry ones wilt and the wet ones
-            bloom. Point at a plant for its mandal; click it to open the mandal&rsquo;s page.
+            the longer the roots (as deep as a borewell must go) and the shorter the plant. Full, golden heads are mandals whose water
+            stands above their usual {month}; drooping, browned ones are below it. Play the years since {first}: each monsoon falls
+            first, in proportion to its measured rain, then the water and the field answer. Watch how little one season moves them.
+            Point at a plant for its mandal; click it to open the mandal&rsquo;s page.
           </p>
         </header>
         <WaterGarden />
@@ -74,8 +75,8 @@ export default function GardenPage() {
       <section className={shared.block} aria-labelledby="garden-film">
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconPlay /> The garden as a film</span>
-          <h2 id="garden-film">Half a minute to forward</h2>
-          <p>The same garden growing in, drooping where the water stands below its usual, then every {month} since {first}. Each deploy records it in three shapes, for WhatsApp Status, for groups and for a meeting screen.</p>
+          <h2 id="garden-film">Under forty seconds to forward</h2>
+          <p>The same field growing in, drooping where the water stands below its usual, then every {month} since {first}, each after its monsoon. Each deploy records it in three shapes, for WhatsApp Status, for groups and for a meeting screen.</p>
         </header>
         <GardenFilm />
       </section>
@@ -91,15 +92,24 @@ export default function GardenPage() {
           <p>
             <b>Open, bud or drooping.</b> A mandal&rsquo;s water in {month} against its usual {month}: the median of its own {month}
             {" "}readings in every year on record, so each place is judged against what is normal for it, not against one wet or dry
-            year. More than 0.1 m shallower than usual opens the flower, more than 0.1 m deeper bows it, anything between is a bud.
+            year. More than 0.1 m shallower than usual fills and lifts the grain head, more than 0.1 m deeper bows and browns it,
+            anything between stays green.
             The change is taken in whole centimetres on the two-decimal figures, so the count above and the plants drawn always
-            agree. Water 3 m or more from its usual opens or bows a flower all the way. A mandal with fewer than {MIN_YEARS}{" "}
-            {month}s read has no usual and stands as a bud, uncounted.
+            agree. Water 3 m or more from its usual fills or bows a head all the way. A mandal with fewer than {MIN_YEARS}{" "}
+            {month}s read has no usual and stands green, uncounted. The usual leans on the record&rsquo;s wet run of 2020 to 2025,
+            so earlier years look worse against it partly because the recent ones were wet.
           </p>
           <p>
-            <b>Scale.</b> Roots are to scale: the soil is {garden.scaleM} m deep, the deepest reading shown rounded up. The glowing line
-            is the water table, mandal by mandal. A plant&rsquo;s height is not a measurement: it stands taller where the water is
-            nearer the surface, and leans by a fixed amount of its own so the garden reads as a garden.
+            <b>Scale.</b> Roots are to scale: the soil is {garden.scaleM} m deep, the deepest reading shown rounded up, and a root ends
+            where a borewell would have to reach. The glowing line is the water table, mandal by mandal. A plant&rsquo;s height is not
+            a measurement: it stands taller where the water is nearer the surface, and leans by a fixed amount of its own so the
+            field reads as a field. The plant is sorghum, the dryland staple, drawn as the Methodology film draws it.
+          </p>
+          <p>
+            <b>Rain.</b> Between Octobers the playback lets each year&rsquo;s monsoon fall: the State&rsquo;s June to September rain,
+            {" "}{garden.rainSource}, the series the Monsoon page uses. The streaks are in proportion to it, and the gauge marks normal.
+            Rain is only part of a year&rsquo;s change: the water table carries the years before it, and pumping draws it down, so a
+            wet monsoon after dry years can leave it deep, and a dry one after wet years can leave it high.
           </p>
           <p>
             <b>Order.</b> {garden.regions.join(", ")}, each from north to south by where the mandal lies. A mandal not read in a year

@@ -1,13 +1,15 @@
 import { memo, useCallback, useEffect, useLayoutEffect, useRef, type MouseEvent as ReactMouseEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { PAD_LEFT, seedOf, type Garden, type GardenRow as RowLayout } from "../../lib/gardenShared";
 
-/* The water garden, drawn: every mandal a plant. Below the ground its roots reach down to
-   the water table, to scale, and the water stands beneath them, its surface a glowing line;
-   above the ground the plant stands taller where the water is near, opens blue where the
-   water stands shallower than its usual for the month, stays a bud within 0.1 m of it, and
-   nods over in rust where it stands deeper. This draws one moment and nothing else: the
-   page (WaterGarden.tsx) and the film (GardenFilm.tsx) say what the moment is, so a frame
-   of the film and the page show one picture.
+/* The water garden, drawn: every mandal a sorghum plant, the dryland staple, drawn as the
+   Methodology film draws it. Below the ground its roots reach down to the water table, to
+   scale (how deep a borewell must go), and the water stands beneath them, its surface a
+   glowing line. Above the ground the plant stands taller where the water is near; its grain
+   head stands full and golden where the water is above its usual for the month, stays green
+   within 0.1 m of it, and bows over, browned, where the water stands below it, its leaves
+   curling. This draws one moment and nothing else: the page (WaterGarden.tsx) and the film
+   (GardenFilm.tsx) say what the moment is, so a frame of the film and the page show one
+   picture.
 
    A row is a canvas. The soil, scale and grass are drawn once per size; every moment after
    that redraws the water and the plants, with everything of one colour drawn in one go, so
@@ -18,13 +20,13 @@ import { PAD_LEFT, seedOf, type Garden, type GardenRow as RowLayout } from "../.
 export type PlantLook = {
   /** Depth to water in metres at this moment, or null where there is no reading. */
   depth: number | null;
-  /** -1 shallower than usual (open) through 0 (bud) to +1 deeper (drooping), continuous while it changes. */
+  /** -1 shallower than usual (a full head) through 0 (green) to +1 deeper (bowed), continuous while it changes. */
   side: number;
-  /** How far the water stands from its usual, 0 to 1, for how wide a flower opens or how far it nods. */
+  /** How far the water stands from its usual, 0 to 1, for how full a head is or how far it bows. */
   mag: number;
   /** Faint where the year has no reading. */
   present: number;
-  /** 0 to 1: the stem and head growing in, and the roots reaching down. */
+  /** 0 to 1: the stalk and head growing in, and the roots reaching down. */
   grow: number;
   roots: number;
   /** The year's side as counted; null where the plant is not compared. */
@@ -32,7 +34,7 @@ export type PlantLook = {
 };
 
 export type RowGeometry = {
-  /** Tallest stem, and the height of the soil the roots are drawn to scale in. */
+  /** Tallest stalk, and the height of the soil the roots are drawn to scale in. */
   stemMax: number;
   soil: number;
   /** Heads and leaves at this multiple of their usual size. */
@@ -42,10 +44,12 @@ export type RowGeometry = {
 const clamp = (x: number) => Math.max(0, Math.min(1, x));
 type RGB = [number, number, number];
 const mix = (a: RGB, b: RGB, p: number): RGB => [a[0] + (b[0] - a[0]) * p, a[1] + (b[1] - a[1]) * p, a[2] + (b[2] - a[2]) * p];
-const rgb = ([r, g, b]: RGB, lift = 0) => `rgb(${Math.round(Math.min(255, r + lift))},${Math.round(Math.min(255, g + lift))},${Math.round(Math.min(255, b + lift))})`;
+const rgb = ([r, g, b]: RGB, lift = 0) => `rgb(${Math.round(Math.max(0, Math.min(255, r + lift)))},${Math.round(Math.max(0, Math.min(255, g + lift)))},${Math.round(Math.max(0, Math.min(255, b + lift)))})`;
 
-const BLOOM: RGB = [86, 198, 236], BUD: RGB = [148, 166, 180], DROOP: RGB = [236, 124, 82], WILT: RGB = [196, 86, 52];
-const LEAF: RGB = [66, 146, 96], LEAF_DRY: RGB = [146, 124, 66], GOLD: RGB = [244, 200, 112], SEED: RGB = [92, 62, 42];
+/** The grain head: unripe green, full gold (the Methodology film's grain), bowed rust-brown. */
+const UNRIPE: RGB = [142, 182, 104], GRAIN: RGB = [236, 198, 112], BOWED: RGB = [226, 112, 66], PARCHED: RGB = [184, 78, 46];
+/** The leaves: the film's green, drying to straw as the plant bows. */
+const LEAF: RGB = [98, 176, 102], STRAW: RGB = [196, 164, 98];
 
 export const skyOf = (g: RowGeometry) => g.stemMax + 30 * g.headScale;
 export const heightOf = (g: RowGeometry) => skyOf(g) + g.soil;
@@ -59,17 +63,17 @@ export function plantGeometry(i: number, look: PlantLook, garden: Garden, g: Row
   const near = 1 - Math.min(look.depth ?? 15, 30) / 30;
   const h = look.grow * g.stemMax * (0.3 + 0.7 * near) * (0.92 + 0.16 * s[0]);
   const droop = Math.max(0, look.side) * (0.45 + 0.55 * look.mag);
-  const bloom = Math.max(0, -look.side) * (0.62 + 0.38 * look.mag);
+  const full = Math.max(0, -look.side) * (0.62 + 0.38 * look.mag);
   const dir = s[2] > 0.5 ? 1 : -1;
   const dx = (s[1] - 0.5) * 0.22 * h;
-  const tx = dx + dir * droop * h * 0.17, ty = -h + droop * h * 0.11;
-  // Open and drooping heads are the same size and nearly as wide, so the garden's colour weighs what its count says.
-  const headGrow = clamp((look.grow - 0.55) / 0.45), L = (6.8 + 2.6 * s[3]) * g.headScale * headGrow;
-  const fan = (9 + 50 * bloom + 40 * droop) * (Math.PI / 180);
-  const tilt = Math.atan2(dx, Math.max(h, 1)) + dir * droop * 2.2;
-  const leafGrow = clamp((look.grow - 0.3) / 0.35), leafLen = (5 + 3 * s[5]) * g.headScale * leafGrow;
+  const tx = dx + dir * droop * h * 0.12, ty = -h + droop * h * 0.06;
+  // Full and bowed heads are the same length, so the field's colour weighs what its count says.
+  const headGrow = clamp((look.grow - 0.55) / 0.45), L = (7.6 + 2.8 * s[3]) * g.headScale * headGrow;
+  // Upright along the stalk; a bowed head hangs over to one side.
+  const tilt = Math.atan2(dx, Math.max(h, 1)) + dir * droop * 2.35;
+  const leafGrow = clamp((look.grow - 0.3) / 0.35), leafLen = (8 + 4 * s[5]) * g.headScale * leafGrow * (1 - 0.22 * droop);
   const R = look.depth === null ? 0 : look.roots * look.depth * ((g.soil - 12) / garden.scaleM);
-  return { s, h, dx, tx, ty, droop, bloom, dir, L, fan, tilt, leafLen, R, head: { x: tx, y: ty, L } };
+  return { s, h, dx, tx, ty, droop, full, dir, L, tilt, leafLen, R, tall: h > 0.62 * g.stemMax, head: { x: tx, y: ty, L } };
 }
 
 /** The colour buckets heads are drawn in: one fill per bucket a frame. */
@@ -81,13 +85,16 @@ function toneOf(side: number, mag: number, lift: number) {
   let tone = toneCache.get(key);
   if (!tone) {
     const sv = (a / SIDE_STEPS) * 2 - 1, mv = b / (MAG_STEPS - 1);
-    tone = rgb(sv < 0 ? mix(BUD, BLOOM, -sv) : mix(BUD, mix(DROOP, WILT, mv), sv), (lift - 1) * 11);
+    tone = rgb(sv < 0 ? mix(UNRIPE, GRAIN, -sv) : mix(UNRIPE, mix(BOWED, PARCHED, mv), sv), (lift - 1) * 10);
     toneCache.set(key, tone);
   }
   return { key, tone };
 }
-const leafTones = Array.from({ length: 9 }, (_, j) => rgb(mix(LEAF, LEAF_DRY, j / 8)));
-const centreTones = Array.from({ length: 7 }, (_, j) => rgb(mix(SEED, GOLD, j / 6)));
+const leafTones = Array.from({ length: 9 }, (_, j) => rgb(mix(LEAF, STRAW, j / 8)));
+const STALK: RGB = [95, 158, 92], DRY_STALK: RGB = [176, 150, 96];
+const stalkTones = Array.from({ length: 5 }, (_, j) => rgb(mix(STALK, DRY_STALK, j / 4)));
+/** How dry a plant reads, 0 to 1: it goes to straw well before it bows all the way. */
+const dryness = (droop: number) => Math.min(1, droop * 1.7);
 
 let haloCanvas: HTMLCanvasElement | null = null;
 function haloSprite() {
@@ -95,7 +102,7 @@ function haloSprite() {
   haloCanvas = document.createElement("canvas");
   haloCanvas.width = haloCanvas.height = 64;
   const c = haloCanvas.getContext("2d")!, g = c.createRadialGradient(32, 32, 0, 32, 32, 32);
-  g.addColorStop(0, "rgba(143,224,255,.55)"); g.addColorStop(1, "rgba(143,224,255,0)");
+  g.addColorStop(0, "rgba(143,224,255,.5)"); g.addColorStop(1, "rgba(143,224,255,0)");
   c.fillStyle = g; c.fillRect(0, 0, 64, 64);
   return haloCanvas;
 }
@@ -103,78 +110,92 @@ function haloSprite() {
 const monoFont = () => getComputedStyle(document.documentElement).getPropertyValue("--font-mono").trim() || "monospace";
 
 type Batch = {
-  roots: Path2D; stems: Path2D; leaves: Path2D[]; centres: Path2D[];
-  heads: Map<number, { tone: string; path: Path2D }>; sheen: Path2D; halos: Array<[number, number, number, number]>;
+  roots: Path2D; stalks: Path2D[]; leaves: Path2D[]; ribs: Path2D;
+  heads: Map<number, { tone: string; path: Path2D }>; grain: Path2D; halos: Array<[number, number, number, number]>;
 };
-const batch = (): Batch => ({ roots: new Path2D(), stems: new Path2D(), leaves: leafTones.map(() => new Path2D()), centres: centreTones.map(() => new Path2D()), heads: new Map(), sheen: new Path2D(), halos: [] });
+const batch = (): Batch => ({ roots: new Path2D(), stalks: stalkTones.map(() => new Path2D()), leaves: leafTones.map(() => new Path2D()), ribs: new Path2D(), heads: new Map(), grain: new Path2D(), halos: [] });
 
 /** Adds one plant, standing at x on the ground line y0, to a frame's batches. */
 function trace(x: number, y0: number, g: ReturnType<typeof plantGeometry>, lk: PlantLook, b: Batch) {
-  const { s, h, dx, tx, ty, droop, bloom, dir, L, fan, tilt, leafLen, R } = g;
+  const { s, h, dx, tx, ty, droop, full, dir, L, tilt, leafLen, R, tall } = g;
+  // Roots: a fibrous fan near the surface and one deep root down to the water.
   if (R > 0.4) {
-    const wob = (s[1] - 0.5) * 3.2;
+    const wob = (s[1] - 0.5) * 3.2, fan = Math.min(R, 7);
     b.roots.moveTo(x, y0);
     b.roots.bezierCurveTo(x + wob, y0 + R * 0.33, x - wob, y0 + R * 0.66, x + wob * 0.4, y0 + R);
-    if (R > 9) for (const [f, side, len] of [[0.28, -1, 4], [0.52, 1, 5], [0.76, -1, 3.5]] as const) {
+    for (const side of [-1, 1]) { b.roots.moveTo(x, y0); b.roots.quadraticCurveTo(x + side * fan * 0.5, y0 + fan * 0.4, x + side * fan * 0.7, y0 + fan); }
+    if (R > 9) for (const [f, side, len] of [[0.3, -1, 4], [0.55, 1, 5], [0.78, -1, 3.5]] as const) {
       const ry = y0 + R * f, rx = x + wob * 0.3 * (f < 0.5 ? 1 : -1), l = len * (0.7 + 0.6 * s[f < 0.5 ? 3 : 4]);
       b.roots.moveTo(rx, ry); b.roots.lineTo(rx + side * l * 0.8, ry + l * 0.6);
     }
   }
   if (h < 0.3) return;
-  b.stems.moveTo(x, y0);
-  b.stems.bezierCurveTo(x + dx * 0.1, y0 - h * 0.45, x + dx * 0.7 + dir * droop * h * 0.13, y0 - h * 0.96, x + tx, y0 + ty);
+  // The stalk, bending over at the top as the head bows.
+  const stalk = b.stalks[Math.round(dryness(droop) * 4)];
+  stalk.moveTo(x, y0);
+  stalk.bezierCurveTo(x + dx * 0.1, y0 - h * 0.45, x + dx * 0.7 + dir * droop * h * 0.1, y0 - h * 0.97, x + tx, y0 + ty);
 
-  if (leafLen > 0.3) {
-    const side2 = s[6] > 0.5 ? 1 : -1, at = 0.24 + 0.3 * s[5], lx = x + dx * at * at, ly = y0 - h * at;
-    const la = 0.62 - droop * 0.9, tipX = lx + side2 * leafLen * Math.cos(la), tipY = ly - leafLen * Math.sin(la);
-    const nx = -(tipY - ly) / leafLen, ny = (tipX - lx) / leafLen, lw = leafLen * 0.3 * side2;
-    const path = b.leaves[Math.round(droop * 8)];
-    path.moveTo(lx, ly);
-    path.quadraticCurveTo((lx + tipX) / 2 + nx * lw, (ly + tipY) / 2 + ny * lw, tipX, tipY);
-    path.quadraticCurveTo((lx + tipX) / 2 - nx * lw, (ly + tipY) / 2 - ny * lw, lx, ly);
+  // Two or three alternate arching blades, as the film's; they curl and hang as the plant dries.
+  if (leafLen > 0.6) {
+    const count = tall ? 3 : 2;
+    for (let j = 0; j < count; j++) {
+      const f = 0.2 + j * 0.22 + 0.06 * s[5], side = (j + (s[6] > 0.5 ? 1 : 0)) % 2 ? 1 : -1;
+      const px = x + dx * f * f, py = y0 - h * f, len = leafLen * (1 - j * 0.12);
+      const hang = 0.12 + 0.18 * s[(j + 3) % 7] + 1.15 * droop;
+      const tipX = px + side * len * (1 - 0.25 * droop), tipY = py - len * 0.3 + len * hang * 1.2;
+      const path = b.leaves[Math.round(dryness(droop) * 8)];
+      path.moveTo(px, py);
+      path.bezierCurveTo(px + side * len * 0.3, py - len * 0.55, px + side * len * 0.78, py - len * 0.45 + len * hang * 0.5, tipX, tipY);
+      path.bezierCurveTo(px + side * len * 0.68, py - len * 0.22 + len * hang * 0.4, px + side * len * 0.3, py - len * 0.24, px, py + 1.4);
+      b.ribs.moveTo(px, py + 0.3);
+      b.ribs.bezierCurveTo(px + side * len * 0.3, py - len * 0.42, px + side * len * 0.74, py - len * 0.36 + len * hang * 0.45, tipX, tipY);
+    }
   }
   if (L < 0.3) return;
-  const hx = x + tx, hy = y0 + ty;
-  if (bloom > 0.08 && L > 1) b.halos.push([hx + Math.sin(tilt) * L * 0.5, hy - Math.cos(tilt) * L * 0.5, L * 1.15, bloom * 0.32]);
+  // The grain head: a tight panicle, widest in the middle, plump when full, thin when parched.
+  const hx = x + tx, hy = y0 + ty, cs = Math.cos(tilt), sn = Math.sin(tilt);
+  const px = (u: number, v: number) => hx + u * cs - v * sn, py = (u: number, v: number) => hy + u * sn + v * cs;
+  const W = L * (0.32 + 0.08 * Math.max(full, droop));
+  if (full > 0.08 && L > 1) b.halos.push([px(0, -L * 0.5), py(0, -L * 0.5), L * 0.95, full * 0.26]);
   const { key, tone } = toneOf(lk.side, lk.mag, Math.round(s[4] * (LIFT_STEPS - 1)));
   let bucket = b.heads.get(key);
   if (!bucket) { bucket = { tone, path: new Path2D() }; b.heads.set(key, bucket); }
-  const w = L * 0.42, iw = w * 0.42, il = L * 0.78;
-  for (const kk of [-1, -0.5, 0, 0.5, 1]) {
-    const a = kk * fan + tilt, cs = Math.cos(a), sn = Math.sin(a);
-    const px = (u: number, v: number) => hx + u * cs - v * sn, py = (u: number, v: number) => hy + u * sn + v * cs;
-    bucket.path.moveTo(hx, hy);
-    bucket.path.bezierCurveTo(px(-w, -L * 0.36), py(-w, -L * 0.36), px(-w * 0.86, -L * 0.92), py(-w * 0.86, -L * 0.92), px(0, -L), py(0, -L));
-    bucket.path.bezierCurveTo(px(w * 0.86, -L * 0.92), py(w * 0.86, -L * 0.92), px(w, -L * 0.36), py(w, -L * 0.36), hx, hy);
-    // A lighter, narrower petal inside each: the light catching it.
-    b.sheen.moveTo(px(0, -L * 0.12), py(0, -L * 0.12));
-    b.sheen.bezierCurveTo(px(-iw, -il * 0.4), py(-iw, -il * 0.4), px(-iw * 0.6, -il * 0.92), py(-iw * 0.6, -il * 0.92), px(0, -il), py(0, -il));
-    b.sheen.bezierCurveTo(px(iw * 0.6, -il * 0.92), py(iw * 0.6, -il * 0.92), px(iw, -il * 0.4), py(iw, -il * 0.4), px(0, -L * 0.12), py(0, -L * 0.12));
+  bucket.path.moveTo(px(0, 0.6), py(0, 0.6));
+  bucket.path.bezierCurveTo(px(-W, -L * 0.18), py(-W, -L * 0.18), px(-W * 0.9, -L * 0.78), py(-W * 0.9, -L * 0.78), px(0, -L), py(0, -L));
+  bucket.path.bezierCurveTo(px(W * 0.9, -L * 0.78), py(W * 0.9, -L * 0.78), px(W, -L * 0.18), py(W, -L * 0.18), px(0, 0.6), py(0, 0.6));
+  // The grains catching the light: a few plump beads along a head that is not bowed (a parched head shows none).
+  const r = W * 0.26;
+  if (droop < 0.3) for (const [u, side] of [[0.22, -1], [0.38, 1], [0.54, -1], [0.7, 1], [0.84, -0.4]] as const) {
+    const gx = px(side * W * 0.38, -L * u), gy = py(side * W * 0.38, -L * u);
+    b.grain.moveTo(gx + r, gy); b.grain.arc(gx, gy, r, 0, Math.PI * 2);
   }
-  const cr = L * 0.16 * (0.5 + bloom), cx = hx + Math.sin(tilt) * L * 0.3, cy = hy - Math.cos(tilt) * L * 0.3;
-  const centre = b.centres[Math.round(bloom * 6)];
-  centre.moveTo(cx + cr, cy);
-  centre.arc(cx, cy, cr, 0, Math.PI * 2);
 }
 
 function drawBatch(c: CanvasRenderingContext2D, b: Batch, alpha: number) {
   c.globalAlpha = alpha;
   c.lineCap = "round";
   c.strokeStyle = "rgba(222,198,160,.5)"; c.lineWidth = 0.55; c.stroke(b.roots);
-  c.strokeStyle = "#4f9a68"; c.lineWidth = 0.7; c.stroke(b.stems);
+  c.lineWidth = 0.85;
+  b.stalks.forEach((path, j) => { c.strokeStyle = stalkTones[j]; c.stroke(path); });
   b.leaves.forEach((path, j) => { c.fillStyle = leafTones[j]; c.fill(path); });
+  c.strokeStyle = "rgba(255,255,255,.22)"; c.lineWidth = 0.25; c.stroke(b.ribs);
   if (b.halos.length) {
     const sprite = haloSprite();
     for (const [x, y, size, a] of b.halos) { c.globalAlpha = alpha * a; c.drawImage(sprite, x - size, y - size, size * 2, size * 2); }
     c.globalAlpha = alpha;
   }
   b.heads.forEach(({ tone, path }) => { c.fillStyle = tone; c.fill(path); });
-  c.fillStyle = "rgba(255,255,255,.2)"; c.fill(b.sheen);
-  b.centres.forEach((path, j) => { c.fillStyle = centreTones[j]; c.fill(path); });
+  c.fillStyle = "rgba(255,244,214,.38)"; c.fill(b.grain);
 }
 
-/** Paints a moment onto a row: each plant and the water. */
-export type Painter = (look: (i: number) => PlantLook, waterIn: number) => void;
+/** A monsoon falling between two Octobers: how far through it is (0 to 1), and its rain against normal (1 is a normal season). */
+export type RainMoment = { p: number; amount: number };
+
+/** Paints a moment onto a row: each plant and the water, and the rain while a monsoon falls. */
+export type Painter = (look: (i: number) => PlantLook, waterIn: number, rain?: RainMoment | null) => void;
+
+/** Rain streaks per 1,000 units of row in a normal season; a season's count is in proportion to its rain. */
+const STREAKS_PER_K = 520;
 
 type RowProps = {
   garden: Garden;
@@ -202,7 +223,7 @@ export const GardenRow = memo(function GardenRow({ garden, row, rowIndex, geomet
   const from = (row.spans[0]?.from ?? PAD_LEFT) - 4, to = (row.spans[row.spans.length - 1]?.to ?? row.width) + 4;
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ground = useRef<{ size: string; layer: HTMLCanvasElement } | null>(null);
-  const latest = useRef<{ look: (i: number) => PlantLook; waterIn: number }>({ look, waterIn });
+  const latest = useRef<{ look: (i: number) => PlantLook; waterIn: number; rain?: RainMoment | null }>({ look, waterIn });
 
   /** The soil, the depth scale, the ground line and the grass: the same on every frame. */
   const groundLayer = useCallback((w: number, hgt: number, scale: number) => {
@@ -240,8 +261,8 @@ export const GardenRow = memo(function GardenRow({ garden, row, rowIndex, geomet
     return layer;
   }, [garden.scaleM, sky, height, k, from, to, geometry.soil, ticks, tickFont]);
 
-  const paint = useCallback<Painter>((lookAtMoment, water) => {
-    latest.current = { look: lookAtMoment, waterIn: water };
+  const paint = useCallback<Painter>((lookAtMoment, water, rain) => {
+    latest.current = { look: lookAtMoment, waterIn: water, rain };
     const canvas = canvasRef.current;
     if (!canvas || !canvas.offsetWidth) return;
     const ratio = pixelRatio ?? Math.min(2, window.devicePixelRatio || 1);
@@ -317,6 +338,31 @@ export const GardenRow = memo(function GardenRow({ garden, row, rowIndex, geomet
     }
     c.globalAlpha = 1;
 
+    // The monsoon: streaks across the sky, as many as the season's rain against normal,
+    // gathering and easing over the beat it falls in.
+    if (rain && rain.p > 0 && rain.p < 1) {
+      const span = to - from, count = Math.round((STREAKS_PER_K * span / 1000) * rain.amount);
+      const envelope = Math.sin(Math.PI * rain.p) ** 0.6;
+      // The cloud's veil over the sky: deeper in a wet season.
+      const veil = c.createLinearGradient(0, 0, 0, sky), depth = (0.2 * Math.min(1.5, rain.amount) * envelope).toFixed(3);
+      veil.addColorStop(0, "rgba(150,180,200,0)");
+      veil.addColorStop(0.22, `rgba(150,180,200,${depth})`);
+      veil.addColorStop(1, "rgba(150,180,200,0)");
+      c.fillStyle = veil; c.fillRect(0, 0, row.width, sky);
+      const near = new Path2D(), far = new Path2D();
+      for (let j = 0; j < count; j++) {
+        const len = 12 + 10 * seedOf(j, 24), fall = (sky + len) * (0.9 + 0.5 * seedOf(j, 22));
+        const y = ((rain.p * fall * 2.4 + seedOf(j, 23) * (sky + len)) % (sky + len)) - len;
+        const x = from + seedOf(j, 21) * span + y * 0.14, path = seedOf(j, 25) > 0.35 ? near : far;
+        path.moveTo(x, y); path.lineTo(x + len * 0.14, y + len);
+      }
+      c.lineCap = "round"; c.strokeStyle = "rgb(190,228,248)";
+      c.lineWidth = 0.55; c.globalAlpha = 0.45 * envelope; c.stroke(far);
+      c.lineWidth = 0.9; c.globalAlpha = 0.8 * envelope; c.stroke(near);
+      c.globalAlpha = 1;
+      signature += rain.p * 13 + rain.amount;
+    }
+
     const marks: Array<[string, string]> = [["data-deeper", String(deeper)], ["data-shallower", String(shallower)], ["data-steady", String(steady)], ["data-none", String(none)], ["data-moment", signature.toFixed(3)]];
     for (const [name, value] of marks) if (canvas.getAttribute(name) !== value) canvas.setAttribute(name, value);
   }, [garden, row, geometry, sky, height, k, spacing, pixelRatio, groundLayer]);
@@ -330,7 +376,7 @@ export const GardenRow = memo(function GardenRow({ garden, row, rowIndex, geomet
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const watcher = new ResizeObserver(() => paint(latest.current.look, latest.current.waterIn));
+    const watcher = new ResizeObserver(() => paint(latest.current.look, latest.current.waterIn, latest.current.rain));
     watcher.observe(canvas);
     return () => watcher.disconnect();
   }, [paint]);

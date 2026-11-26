@@ -102,7 +102,7 @@ export const BRIEFS = {
     use: "Open a district to read it on screen, or take its PDF to a review meeting or forward it.",
   },
   "/garden": {
-    what: "Every mandal as a plant: its roots reach the measured water table, it opens where the water stands above its usual level for the month and droops where it stands below.",
+    what: "Every mandal as a sorghum plant: its roots reach the measured water table, its grain head stands full where the water is above its usual level for the month and droops where it is below.",
     use: "Play the years to show which ones wilted; forward the film, in the shape that suits, with its source and date on it.",
   },
   "/field-check": {
