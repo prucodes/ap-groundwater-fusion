@@ -40,8 +40,9 @@ test("the menu lists the presenter and the district sheets for meetings", async 
   await expect(nav).toContainText("For meetings");
   const sheets = nav.getByRole("link", { name: "District sheets", exact: true });
   await expect(sheets).toBeVisible();
+  // One entry lights: District sheets, not Districts as well (whose group stays folded here).
+  await expect(nav.locator('[aria-current="page"]')).toHaveCount(1);
   await expect(sheets).toHaveAttribute("aria-current", "page");
-  await expect(nav.getByRole("link", { name: "Districts", exact: true })).not.toHaveAttribute("aria-current", "page");
   const presenter = nav.getByRole("link", { name: "Presenter", exact: true });
   await expect(presenter).toBeVisible();
   await presenter.click();
