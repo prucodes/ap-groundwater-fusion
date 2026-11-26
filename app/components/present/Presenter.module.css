@@ -110,7 +110,10 @@
 .dots button[aria-current="step"] { width: 54px; background: #8fe0ff; }
 .caveat { margin-left: auto; font-size: 12px; color: #7f95a6; text-align: right; }
 .caveat b { color: #a9bccb; font-weight: 600; }
-.hint { margin-left: 18px; font: 500 12px var(--font-mono); letter-spacing: .06em; color: #6f8799; }
+.hint { flex: none; margin-left: 18px; font: 500 12px var(--font-mono); letter-spacing: .06em; color: #6f8799; white-space: nowrap; }
+/* The key hint is a reminder for whoever presents; where it and the caveat can't both sit on
+   the bar without wrapping, the caveat stays and the hint goes. */
+@media (max-width: 1200px) { .hint { display: none; } }
 
 @media (max-width: 760px) {
   .deck { padding: 0 16px; }
@@ -136,6 +139,6 @@
 }
 
 /* In Telugu: no capitals or letter-spacing, and a little more room between lines for the vowel signs. */
-.deck[data-lang="te"] .eyebrow, .deck[data-lang="te"] .top { letter-spacing: 0; text-transform: none; font-family: var(--font-sans); }
+.deck[data-lang="te"] .eyebrow, .deck[data-lang="te"] .top, .deck[data-lang="te"] .hint { letter-spacing: 0; text-transform: none; font-family: var(--font-sans); }
 .deck[data-lang="te"] .title { line-height: 1.32; font-size: clamp(22px, min(2.4vw, 4.2vh), 42px); }
 .deck[data-lang="te"] .text { line-height: 1.7; }
