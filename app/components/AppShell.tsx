@@ -27,6 +27,7 @@ import {
   IconGrid,
   IconMap,
   IconMenu,
+  IconPlay,
   IconSatellite,
   IconSearch,
   IconSettings,
@@ -77,7 +78,14 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
       { href: "/constituencies", label: "Constituencies", Icon: IconTarget, desc: "Groundwater, the State's latest well readings, the drought manual and rain, by assembly and parliamentary constituency." },
       { href: "/mandals", label: "Mandal Insights", Icon: IconCompass, desc: "Per-mandal deep dive: readings, satellite context, trend and agreement." },
   ] },
+  // What to take into a meeting: the presenter for the screen, a sheet for each Collector. Both in Telugu too.
+  { label: "For meetings", items: [
+      { href: "/present", label: "Presenter", Icon: IconPlay, desc: "Eight steps to talk a meeting through, full screen, from the keyboard or a clicker; in English or Telugu." },
+      { href: "/districts/sheets", label: "District sheets", Icon: IconFile, desc: "One A4 page for each district's Collector, as a page and a PDF, in English and Telugu; rebuilt every Monday." },
+  ] },
 ];
+/** Groups always shown open; the rest fold until one of their pages is open. */
+const OPEN_GROUPS = new Set(["This week", "Farms", "For meetings"]);
 
 // Evidence and tools: how the figures are made and the specialist views. Folded unless one is open.
 const evidenceNav: NavItem[] = [
@@ -106,9 +114,15 @@ function formatDay(iso: string | null | undefined) {
 const REFRESH_OVERDUE_MS = 9 * 24 * 60 * 60 * 1000;
 const { periods } = datasetManifest;
 
+/** Every listed page, so an entry inside another (District sheets inside Districts) lights alone. */
+const allHrefs = [...navGroups.flatMap(group => group.items), ...evidenceNav].map(item => item.href);
+
+const isActive = (href: string, pathname: string) => href === "/" ? pathname === href
+  : pathname.startsWith(href) && !allHrefs.some(other => other.length > href.length && other.startsWith(href) && pathname.startsWith(other));
+
 function NavLink({ item, pathname }: { item: NavItem; pathname: string }) {
   const { href, label, Icon, desc } = item;
-  const active = href === "/" ? pathname === href : pathname.startsWith(href);
+  const active = isActive(href, pathname);
   return (
     <Link className={`navItem ${active ? "active" : ""}`} href={href} title={`${label}: ${desc}`} aria-current={active ? "page" : undefined}>
       <span className="navIcon" aria-hidden="true">
@@ -286,8 +300,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <nav className="sidebarNav" aria-label="Primary">
           {navGroups.map(group => {
             const links = group.items.map(item => <NavLink key={item.href} item={item} pathname={pathname} />);
-            return group.label === "This week" || group.label === "Farms" ? <div className="navGroup" key={group.label}><div className="navGroupLabel"><span>{group.label}</span></div>{links}</div> :
-              <details className="navGroup" key={`${group.label}-${pathname}`} open={collapsed || group.items.some(item => pathname.startsWith(item.href))}>
+            return OPEN_GROUPS.has(group.label) ? <div className="navGroup" key={group.label}><div className="navGroupLabel"><span>{group.label}</span></div>{links}</div> :
+              <details className="navGroup" key={`${group.label}-${pathname}`} open={collapsed || group.items.some(item => isActive(item.href, pathname))}>
                 <summary className="navGroupLabel navGroupToggle"><span>{group.label}</span><IconChevronRight /></summary>{links}
               </details>;
           })}

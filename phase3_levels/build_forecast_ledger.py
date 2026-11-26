@@ -109,6 +109,24 @@ def observed_by_mandal():
             for mid, s in series.items()}
 
 
+def moves_since(seen, origin, until):
+    """Each month's reading after the origin, up to and including `until`, as metres moved since the origin."""
+    start = seen.get(origin)
+    return {} if start is None else {p: v - start for p, v in seen.items() if origin < p <= until}
+
+
+def path(rows, origin, until):
+    """The median mandal's move since the origin, month by month up to `until`, among the forecasts
+    from that origin: the line a forecast's month is read along, from the same mandals as its score."""
+    mine, out, month = [r for r in rows if r["origin"] == origin], [], month_add(origin, 1)
+    while month <= until:
+        values = [r["moves"][month] for r in mine if month in r["moves"]]
+        if values:
+            out.append({"month": month, "changeM": median_or_none(values), "mandals": len(values)})
+        month = month_add(month, 1)
+    return out
+
+
 def frozen_weeks():
     weeks = []
     if os.path.isdir(LEDGER):
@@ -143,7 +161,8 @@ def summarise(weeks, observed):
                 "issued": f["issued"], "origin": f["origin"], "latest": latest,
                 "expected": None if start is None else f["value"] - start,
                 "soFar": None if start is None or latest is None else seen[latest] - start,
-                "yearAgoGap": None if year_ago is None or latest is None else year_ago - seen[latest]})
+                "yearAgoGap": None if year_ago is None or latest is None else year_ago - seen[latest],
+                "moves": moves_since(seen, f["origin"], month_add(target, -1))})
             continue
         scored.append({"target": target, "origin": f["origin"], "error": f["value"] - actual,
                        "noChange": None if start is None else start - actual,
@@ -153,9 +172,10 @@ def summarise(weeks, observed):
                        # expected from its origin, what came, and where the same month stood a year before.
                        "expected": None if start is None else f["value"] - start,
                        "measured": None if start is None else actual - start,
-                       "yearAgoGap": None if year_ago is None else year_ago - actual})
+                       "yearAgoGap": None if year_ago is None else year_ago - actual,
+                       "moves": moves_since(seen, f["origin"], target)})
 
-    def block(rows):
+    def block(rows, target=None):
         if not rows:
             return None
         paired = [r for r in rows if r["noChange"] is not None]
@@ -174,6 +194,8 @@ def summarise(weeks, observed):
                         "expectedChangeM": median_or_none(r["expected"] for r in paired),
                         "measuredChangeM": median_or_none(r["measured"] for r in paired),
                         "yearAgoMinusMeasuredM": median_or_none(r["yearAgoGap"] for r in rows)})
+            if target:
+                out["path"] = path(paired, out["origin"], target)
         return out
 
     def next_test():
@@ -188,11 +210,12 @@ def summarise(weeks, observed):
                 "latestMonth": common("latest"),
                 "expectedChangeM": median_or_none(r["expected"] for r in rows),
                 "soFarChangeM": median_or_none(r["soFar"] for r in rows),
-                "yearAgoMinusLatestM": median_or_none(r["yearAgoGap"] for r in rows)}
+                "yearAgoMinusLatestM": median_or_none(r["yearAgoGap"] for r in rows),
+                "path": path(rows, common("origin"), common("latest") or month_add(target, -1))}
 
-    by_target = {t: block([r for r in scored if r["target"] == t]) for t in sorted({r["target"] for r in scored})}
+    by_target = {t: block([r for r in scored if r["target"] == t], t) for t in sorted({r["target"] for r in scored})}
     return {
-        "contractVersion": "1.0.0",
+        "contractVersion": "1.1.0",
         "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(timespec="seconds"),
         "kind": "prospective_track_record",
         "rule": ("Each mandal's earliest-issued 3-month forecast for a target month, frozen the week it was "
