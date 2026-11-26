@@ -108,7 +108,9 @@
 .dots button { appearance: none; width: 34px; height: 5px; padding: 0; border: 0; border-radius: 3px; background: rgba(255, 255, 255, .14); cursor: pointer; transition: background .3s, width .4s var(--ease); }
 .dots button[data-done] { background: rgba(127, 203, 232, .5); }
 .dots button[aria-current="step"] { width: 54px; background: #8fe0ff; }
-.hint { margin-left: auto; font: 500 12px var(--font-mono); letter-spacing: .06em; color: #6f8799; }
+.caveat { margin-left: auto; font-size: 12px; color: #7f95a6; text-align: right; }
+.caveat b { color: #a9bccb; font-weight: 600; }
+.hint { margin-left: 18px; font: 500 12px var(--font-mono); letter-spacing: .06em; color: #6f8799; }
 
 @media (max-width: 760px) {
   .deck { padding: 0 16px; }
@@ -121,6 +123,8 @@
   .priority li { grid-template-columns: 1.6em minmax(0, 1fr) auto; gap: 10px; padding: 10px 12px; }
   .priority .signs { display: none; }
   .hint, .signKey, .top .tool { display: none; }
+  .bottom { flex-wrap: wrap; row-gap: 8px; }
+  .caveat { order: 9; flex: 1 0 100%; margin-left: 0; text-align: left; }
   .dots button { width: 18px; }
   .dots button[aria-current="step"] { width: 30px; }
 }

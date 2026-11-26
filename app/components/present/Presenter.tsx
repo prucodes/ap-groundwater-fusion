@@ -20,6 +20,8 @@ const SIGN_SHORT: Record<PrioritySign, string> = { storms: "Cyclones missed it",
 const SIGNS: PrioritySign[] = ["storms", "monsoon", "tanks", "quality"];
 
 export type PresentFacts = {
+  /** The site's prototype notice, on screen at every step. */
+  caveat: string;
   targetMay: string;
   outlook: { beyond: number; dry: number; mandals: number };
   first: { mandals: number; people: string; next: number };
@@ -274,6 +276,7 @@ export function Presenter({ facts }: { facts: PresentFacts }) {
           {steps.map((_, i) => <button key={i} type="button" aria-label={`Step ${i + 1}`} aria-current={i === at ? "step" : undefined} data-done={i < at ? "" : undefined} onClick={() => go(i)} />)}
         </nav>
         <button type="button" className={styles.tool} onClick={() => go(at + 1)} disabled={at === last} aria-label="Next step" data-testid="presenter-next">→</button>
+        <span className={styles.caveat} data-testid="presenter-caveat">{/^prototype/i.test(facts.caveat) ? facts.caveat : <><b>Prototype.</b> {facts.caveat}</>}</span>
         <span className={styles.hint}>← → or a clicker · F for full screen</span>
       </footer>
     </div>

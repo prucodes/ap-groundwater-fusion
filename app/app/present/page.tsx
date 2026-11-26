@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Presenter, type PresentFacts } from "../../components/present/Presenter";
+import { prototypeNotice } from "../../lib/data";
 import { fieldCheck, place } from "../../lib/fieldPilot";
 import { lakhs, summerOutlook } from "../../lib/summer";
 import { summerPriority } from "../../lib/summerPriority";
@@ -15,6 +16,7 @@ export default function PresentPage() {
   const p = summerPriority, o = summerOutlook.summary, f = fieldCheck;
   const wells = f.mandals.length * f.wellsPerMandal;
   const facts: PresentFacts = {
+    caveat: prototypeNotice,
     targetMay: p.targetMay,
     outlook: { beyond: o.beyond, dry: o.dry, mandals: o.mandals },
     first: { mandals: p.summary.first.mandals, people: lakhs(p.summary.first.people), next: p.summary.next.mandals },

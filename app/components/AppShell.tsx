@@ -45,6 +45,7 @@ import { ChartReveal } from "./ChartReveal";
 import { useWelcome } from "./welcome/WelcomeGate";
 import { CREATOR_NAME } from "../lib/creator";
 import { countEvent } from "../lib/visit-counter";
+import { arrived } from "../lib/viewTransition";
 
 type NavItem = { href: string; label: string; Icon: (props: React.SVGProps<SVGSVGElement>) => React.ReactNode; desc: string };
 
@@ -163,6 +164,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   // On phones the sidebar is an off-canvas drawer. Navigating should dismiss it,
   // or the new page loads hidden behind the still-open menu.
   useEffect(() => setNavOpen(false), [pathname]);
+  // A view transition into a new page waits for it to be in place (lib/viewTransition.ts).
+  useEffect(() => arrived(), [pathname]);
 
   // Delegation also covers server-rendered PDF links and generated CSV/JSON
   // download anchors. Record only the action, never a filename or chosen place.

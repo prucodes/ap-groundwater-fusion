@@ -6287,3 +6287,17 @@ button.statusLive:focus-visible { outline: 2px solid var(--cyan); outline-offset
   .validationMetric span,
   .verifyPill { font-size: 11px !important; }
 }
+
+/* View transitions (lib/viewTransition.ts): the field zooming into a district's borewells, and a
+   bore's name carrying over into its mandal's page title. */
+::view-transition-group(*) { animation-duration: .6s; animation-timing-function: cubic-bezier(.2, .7, .2, 1); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .32s; }
+::view-transition-group(district-zoom) { animation-duration: .8s; }
+::view-transition-old(district-zoom) { animation: vt-out .5s ease both; }
+::view-transition-new(district-zoom) { animation: vt-in .6s .18s ease both; }
+::view-transition-group(mandal-name) { animation-duration: .7s; }
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}

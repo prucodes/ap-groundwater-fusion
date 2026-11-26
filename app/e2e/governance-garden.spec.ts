@@ -107,7 +107,7 @@ test("the summer countdown ends in May on the Summer Outlook's own count, typica
   expect(past(2)).toBeGreaterThanOrEqual(past(1));
 });
 
-test("a plant answers to the pointer and opens its mandal", async ({ page }) => {
+test("a plant answers to the pointer, zooms to its district's borewells, and its bore opens the mandal", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/garden/");
   const row = page.locator('[data-testid="water-garden"] canvas').first();
@@ -118,8 +118,18 @@ test("a plant answers to the pointer and opens its mandal", async ({ page }) => 
   const tip = page.getByTestId("garden-tip");
   await expect(tip).toBeVisible();
   await expect(tip).toContainText(/m below ground|Not read/);
+  const district = (await tip.locator("small").first().innerText()).trim();
   await page.mouse.click(box.x + box.width * 0.5, box.y + box.height * 0.3);
+  const bores = page.getByTestId("district-bores");
+  await expect(bores).toHaveAttribute("data-district", district);
+  const picked = bores.locator("[data-selected] a");
+  await expect(picked).toHaveCount(1);
+  // Clicks wait until the zoom has finished: during a view transition the page is a picture.
+  await expect(page.getByTestId("water-garden")).not.toHaveAttribute("data-zooming", /.*/);
+  // The bore itself keeps moving (its water runs), so click its name, which stands still.
+  await picked.locator("text").click({ force: true });
   await expect(page).toHaveURL(/\/mandals\/ap-temp-mandal-/);
+  await expect(page.locator("h2", { hasText: "Mandal" }).first()).toBeVisible();
 });
 
 test("on a phone each region is its own row, inside the screen", async ({ page }) => {

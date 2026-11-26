@@ -36,3 +36,9 @@
 @media (prefers-reduced-motion: reduce) {
   .animated *, .animated { animation: none !important; transition: none !important; }
 }
+
+/* A bore that opens its mandal: it brightens under the pointer and shows the keyboard's focus. */
+.link { cursor: pointer; outline: none; }
+.link:hover .name, .link:focus-visible .name { fill: #fff; }
+.link:hover .head, .link:focus-visible .head { filter: brightness(1.25) drop-shadow(0 0 4px rgba(143, 224, 255, .55)); }
+.bore[data-selected] .head { filter: drop-shadow(0 0 6px rgba(255, 255, 255, .7)); }
