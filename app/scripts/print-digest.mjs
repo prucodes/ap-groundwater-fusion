@@ -7,6 +7,10 @@
  *
  *   node scripts/print-digest.mjs --directory out --base /ap-groundwater-fusion
  *   node scripts/print-digest.mjs --directory out --base /ap-groundwater-fusion --route summer/brief --file ap-summer-water-brief.pdf
+ *   node scripts/print-digest.mjs --directory out --base /ap-groundwater-fusion --manifest districts/sheets.json
+ *
+ * --manifest names a JSON file in the built site listing many sheets, [{ route, file }],
+ * printed in one browser: every district's sheet, say.
  *
  * --base is the PAGES_BASE_PATH the site was built with ("" for a local build).
  * It serves the build with scripts/serve-static.mjs on a loopback port, prints
@@ -27,8 +31,11 @@ const flag = (name, fallback) => {
 const directory = resolve(APP_DIR, flag("directory", "out"));
 const base = flag("base", process.env.PAGES_BASE_PATH ?? "").replace(/\/$/, "");
 const port = Number(flag("port", 3291));
-const route = flag("route", "digest").replace(/^\/|\/$/g, "");
-const output = join(directory, ...route.split("/"), flag("file", "ap-water-weekly-digest.pdf"));
+const manifest = flag("manifest", null);
+const jobs = (manifest
+  ? JSON.parse(readFileSync(join(directory, ...manifest.split("/")), "utf8"))
+  : [{ route: flag("route", "digest"), file: flag("file", "ap-water-weekly-digest.pdf") }])
+  .map(({ route, file }) => { const clean = route.replace(/^\/|\/$/g, ""); return { route: clean, output: join(directory, ...clean.split("/"), file) }; });
 
 const server = spawn(process.execPath, [join(APP_DIR, "scripts/serve-static.mjs"), "--port", String(port), "--bind", "127.0.0.1", "--directory", directory, "--base", base || "/"], { stdio: "inherit" });
 const stop = () => { if (!server.killed) server.kill(); };
@@ -45,24 +52,27 @@ async function ready(url, tries = 50) {
   throw new Error(`static server did not answer at ${url}`);
 }
 
-const url = `http://127.0.0.1:${port}${base}/${route}/`;
 let browser;
 try {
-  await ready(url);
+  await ready(`http://127.0.0.1:${port}${base}/${jobs[0].route}/`);
   browser = await chromium.launch();
   const page = await browser.newPage();
   // Report generation is a returning visit, not a screenshot of the welcome.
   await page.addInitScript(() => localStorage.setItem("ap-gw-welcome-v1", "entered"));
-  await page.goto(url, { waitUntil: "networkidle" });
-  await page.locator(".shell").waitFor();
-  await page.emulateMedia({ media: "print" });
-  await page.evaluate(() => document.fonts.ready);
-  await page.pdf({ path: output, format: "A4", printBackground: true, preferCSSPageSize: true });
-  const pages = (readFileSync(output, "latin1").match(/\/Type\s*\/Page[^s]/g) ?? []).length;
-  console.log(`Printed ${url} to ${output}: ${pages} page${pages === 1 ? "" : "s"}`);
-  if (pages !== 1) {
-    console.error(`/${route}/ no longer fits one A4 sheet; shorten it before the next deploy.`);
-    process.exitCode = 1;
+  for (const { route, output } of jobs) {
+    const url = `http://127.0.0.1:${port}${base}/${route}/`;
+    await page.emulateMedia({ media: "screen" });
+    await page.goto(url, { waitUntil: "networkidle" });
+    await page.locator(".shell").waitFor();
+    await page.emulateMedia({ media: "print" });
+    await page.evaluate(() => document.fonts.ready);
+    await page.pdf({ path: output, format: "A4", printBackground: true, preferCSSPageSize: true });
+    const pages = (readFileSync(output, "latin1").match(/\/Type\s*\/Page[^s]/g) ?? []).length;
+    console.log(`Printed ${url} to ${output}: ${pages} page${pages === 1 ? "" : "s"}`);
+    if (pages !== 1) {
+      console.error(`/${route}/ no longer fits one A4 sheet; shorten it before the next deploy.`);
+      process.exitCode = 1;
+    }
   }
 } finally {
   await browser?.close();

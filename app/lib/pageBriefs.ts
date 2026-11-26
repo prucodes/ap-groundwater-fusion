@@ -97,6 +97,10 @@ export const BRIEFS = {
     what: "Andhra Pradesh groundwater, one sentence at a time: each figure with its source, its date and the page that explains it.",
     use: "Quote a figure in a note or a meeting; copy it with its source, or send it on WhatsApp.",
   },
+  "/districts/sheets": {
+    what: "One A4 page for each district's Collector, from the figures the site already publishes, rebuilt every Monday.",
+    use: "Open a district to read it on screen, or take its PDF to a review meeting or forward it.",
+  },
   "/garden": {
     what: "Every mandal as a plant: its roots reach the measured water table, it opens where the water stands above its usual level for the month and droops where it stands below.",
     use: "Play the years to show which ones wilted; forward the film, in the shape that suits, with its source and date on it.",
