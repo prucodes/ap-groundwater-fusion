@@ -75,6 +75,18 @@ export function rainLine(rain: GardenRain | null) {
   return { title: `Monsoon ${rain.year}`, amount, enso, text: `Monsoon ${rain.year}: ${amount}${enso}` };
 }
 
+/** The same season in Telugu, for the presenter: "2020 వర్షాకాలం: సాధారణం కంటే 27% ఎక్కువ · లా నినా". */
+export function rainLineTe(rain: GardenRain | null) {
+  if (!rain) return null;
+  const pct = Math.round(Math.abs(rain.anomalyPct));
+  const amount = pct < 3 ? "దాదాపు సాధారణం" : `సాధారణం కంటే ${pct}% ${rain.anomalyPct < 0 ? "తక్కువ" : "ఎక్కువ"}`;
+  const enso = rain.enso === "el_nino" ? " · ఎల్ నినో" : rain.enso === "la_nina" ? " · లా నినా" : "";
+  return { title: `${rain.year} వర్షాకాలం`, amount, enso, text: `${rain.year} వర్షాకాలం: ${amount}${enso}` };
+}
+
+/** Region names in Telugu. */
+export const REGION_TE: Record<string, string> = { "North coast": "ఉత్తర కోస్తా", "Godavari to Nellore": "గోదావరి నుండి నెల్లూరు", Rayalaseema: "రాయలసీమ" };
+
 /** Deeper or shallower than the year before means by more than this. */
 export const MOVED_CM = 10;
 

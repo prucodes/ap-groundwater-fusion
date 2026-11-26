@@ -6,6 +6,7 @@ import { monthYear, sideOf, stepCounts, type Garden } from "../../lib/gardenShar
 import type { PrioritySign } from "../../lib/summerPriority";
 import { DistrictBores, type BoresStage } from "../garden/DistrictBores";
 import { WaterGarden, type GardenStage } from "../garden/WaterGarden";
+import { dayIn, monthIn, monthYearIn, peopleIn, type Lang } from "../../lib/telugu";
 import styles from "./Presenter.module.css";
 
 /* Full screen, eight steps, moved with the arrow keys, Page Up/Down (a clicker), the space bar
@@ -16,7 +17,16 @@ const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 const monthOf = (ym: string) => `${MONTHS[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}`;
 const day = (iso: string) => new Date(`${iso.slice(0, 10)}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "long", timeZone: "UTC" });
-const SIGN_SHORT: Record<PrioritySign, string> = { storms: "Cyclones missed it", monsoon: "Monsoon short", tanks: "Tanks low", quality: "Sources failing tests" };
+const SIGN_SHORT: Record<Lang, Record<PrioritySign, string>> = {
+  en: { storms: "Cyclones missed it", monsoon: "Monsoon short", tanks: "Tanks low", quality: "Sources failing tests" },
+  te: { storms: "తుఫాను వర్షం అందలేదు", monsoon: "వర్షాకాలం తక్కువ", tanks: "చెరువుల్లో నీరు తక్కువ", quality: "నీటి పరీక్షల్లో విఫలం" },
+};
+/** The field check's two districts and its error bars, in Telugu (the plan's own words are English). */
+const WHY_TE: Record<string, string> = {
+  "SRI SATHYA SAI": "పొడి దక్షిణాన గట్టి శిల ప్రాంతం: ఇక్కడ ఈశాన్య రుతుపవనాలు సుమారు 60% తక్కువగా ఉన్నాయి; బావి సొంత రీడింగులు అత్యధికంగా ఉపయోగపడేది గట్టి శిలలోనే.",
+  "EAST GODAVARI": "తడి ఉత్తరాన ఒండ్రు డెల్టా: పోలిక కోసం ఎంచుకున్నది; ఇక్కడ మండల సంఖ్య ఇప్పటికే గ్రామాలకు దగ్గరగా ఉంది.",
+};
+const BAR_TE: Record<string, string> = { dug: "తవ్విన బావి", hard_rock: "గట్టి శిల", alluvial: "ఒండ్రు డెల్టా" };
 const SIGNS: PrioritySign[] = ["storms", "monsoon", "tanks", "quality"];
 
 export type PresentFacts = {
@@ -24,12 +34,12 @@ export type PresentFacts = {
   caveat: string;
   targetMay: string;
   outlook: { beyond: number; dry: number; mandals: number };
-  first: { mandals: number; people: string; next: number };
-  priority: Array<{ mandal: string; district: string; people: string | null; pastM: number; signs: PrioritySign[] }>;
+  first: { mandals: number; people: number; next: number };
+  priority: Array<{ mandal: string; district: string; people: number | null; pastM: number; signs: PrioritySign[] }>;
   pilot: {
     wells: number; mandals: number; rounds: number; roundDays: number; first: string; status: string;
-    districts: Array<{ name: string; why: string }>; fingerprint: string; plannedAt: string;
-    bars: Array<{ label: string; alone: number; own: number }>;
+    districts: Array<{ key: string; name: string; why: string }>; fingerprint: string; plannedAt: string;
+    bars: Array<{ key: string; label: string; alone: number; own: number }>;
   };
 };
 
@@ -78,12 +88,26 @@ function readGarden(garden: Garden) {
 }
 
 const signed = (pct: number) => `${Math.round(Math.abs(pct))}% ${pct < 0 ? "below" : "above"} normal`;
+const signedTe = (pct: number) => `సాధారణం కంటే ${Math.round(Math.abs(pct))}% ${pct < 0 ? "తక్కువ" : "ఎక్కువ"}`;
+/** The site's notice in Telugu; the English one comes from the data. */
+const CAVEAT_TE = "నమూనా (Prototype): APWRIMS మండల భూగర్భ జల రీడింగులు (2014-2026), NASA ఉపగ్రహ సంకేతాలతో. అంచనాలు అధికారిక APWRIMS ఫలితాలు కావు.";
 
 export function Presenter({ facts }: { facts: PresentFacts }) {
   const [garden, setGarden] = useState<Garden | null>(null);
   const [at, setAt] = useState(0);
   const [boresMounted, setBoresMounted] = useState(false);
   const [full, setFull] = useState(false);
+  // English or Telugu: ?lang=te in the address, the button, or T on the keyboard.
+  const [lang, setLang] = useState<Lang>("en");
+  const te = lang === "te";
+  useEffect(() => { if (new URLSearchParams(location.search).get("lang") === "te") setLang("te"); }, []);
+  const switchLang = useCallback(() => setLang(was => {
+    const next: Lang = was === "te" ? "en" : "te";
+    const url = new URL(location.href);
+    if (next === "te") url.searchParams.set("lang", "te"); else url.searchParams.delete("lang");
+    history.replaceState(null, "", url);
+    return next;
+  }), []);
   const deck = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -94,7 +118,7 @@ export function Presenter({ facts }: { facts: PresentFacts }) {
   const g = useMemo(() => (garden ? readGarden(garden) : null), [garden]);
   const may = monthOf(facts.targetMay);
 
-  const steps: Step[] = useMemo(() => [
+  const stepsEn: Step[] = useMemo(() => [
     {
       layer: "garden", garden: "rest",
       eyebrow: <>Andhra Pradesh · {g?.when ?? "the latest October"} · every mandal a plant</>,
@@ -144,6 +168,58 @@ export function Presenter({ facts }: { facts: PresentFacts }) {
     },
   ], [g, facts, may]);
 
+  const mayTe = monthYearIn("te", facts.targetMay), monthTe = monthIn("te", g?.month ?? "October");
+  const stepsTe: Step[] = useMemo(() => [
+    {
+      layer: "garden", garden: "rest",
+      eyebrow: <>ఆంధ్రప్రదేశ్ · {g ? `${monthTe} ${g.when.split(" ")[1]}` : "తాజా అక్టోబర్"} · ప్రతి మండలం ఒక మొక్క</>,
+      title: g ? <><b>{g.compared}లో {g.deeper}</b> మండలాల్లో నీటి మట్టం సాధారణ {monthTe} కంటే లోతులో ఉంది{g.worstSince ? <>; {g.worstSince} తర్వాత ఇదే అత్యధికం</> : null}.</> : <>ఈ అక్టోబర్ నీటి మట్టం</>,
+      text: <>ప్రతి మొక్క వేర్లు ఆ మండలంలో కొలిచిన నీటి మట్టం వరకు, స్కేల్ ప్రకారం. బంగారు కంకులు సాధారణ {monthTe} కంటే పైన; వాలిపోయి గోధుమ రంగుకు మారినవి దిగువన.</>,
+    },
+    {
+      layer: "garden", garden: "play",
+      eyebrow: <>{g?.first ?? 2015} నుండి ప్రతి {monthTe}, దాని ముందు కురిసిన వర్షంతో</>,
+      title: <>ఒక్క వర్షాకాలం నీటి మట్టాన్ని నిర్ణయించదు: అది గత సంవత్సరాలను గుర్తుంచుకుంటుంది.</>,
+      text: g?.pair ? <>{g.pair.wet.year}లో వర్షం {signedTe(g.pair.wet.rain.anomalyPct)}, అయినా ఆ {monthTe}లో మధ్యస్థ మండలంలో నీరు {g.pair.wet.depth.toFixed(1)} మీ. లోతులో ఉంది; {g.pair.dry.year}లో వర్షం {signedTe(g.pair.dry.rain.anomalyPct)} అయినా {g.pair.dry.depth.toFixed(1)} మీ. వద్దే ఉంది.</> : null,
+    },
+    {
+      layer: "bores", bores: "years",
+      eyebrow: <>దగ్గరగా · అత్యంత లోతైన మే మట్టాన్ని దాటబోయే మండలాలు అత్యధికంగా ఉన్న జిల్లా</>,
+      title: g ? <>{g.district}: ప్రతి మండలం ఒక బోరుబావి; {g.size}లో {g.districtDeeper} సాధారణ {monthTe} కంటే దిగువన.</> : <>ఒక జిల్లా, దగ్గరగా</>,
+      text: <>ప్రతి బోరు ఆ మండలపు నీటి మట్టం వరకు, స్కేల్ ప్రకారం; పంపు సాధారణ {monthTe} కంటే 2 మీ. దిగువన. కాషాయం అంటే నీరు సన్నగా వస్తోంది; ఎరుపు అంటే నీరు పంపు కంటే దిగువకు పడిపోయింది.</>,
+    },
+    {
+      layer: "bores", bores: "summer",
+      eyebrow: <>వేసవి కౌంట్‌డౌన్ · {monthTe} నుండి {mayTe} · సాధారణ శీతాకాలం</>,
+      title: g ? <>సాధారణ శీతాకాలంలో, {mayTe} నాటికి దాని {g.projected} బోరుబావుల్లో <b>{g.passTypical}</b> రికార్డులోని అత్యంత లోతైన మే మట్టాన్ని దాటుతాయి.</> : <>మే వరకు కౌంట్‌డౌన్</>,
+      text: <>ఇప్పుడు పంపులు ప్రతి మండలపు రికార్డులోని అత్యంత లోతైన మే మట్టం వద్ద ఉన్నాయి. నెలలు వేసవి అంచనాను అనుసరిస్తాయి: ప్రతి మండలపు గత శీతాకాలాల మధ్యస్థం.</>,
+    },
+    {
+      layer: "bores", bores: "dry",
+      eyebrow: <>వేసవి కౌంట్‌డౌన్ · {mayTe} · పొడి శీతాకాలం</>,
+      title: g ? <>పొడి శీతాకాలంలో <b>{g.passDry}</b>. రాష్ట్రవ్యాప్తంగా, సాధారణ శీతాకాలంలో {facts.outlook.beyond} మండలాలు, పొడి శీతాకాలంలో {facts.outlook.beyond + facts.outlook.dry}.</> : <>పొడి శీతాకాలం</>,
+      text: <>ప్రతి మండలానికి రికార్డులోని అత్యంత పొడి శీతాకాలం, అవే రీడింగుల నుండి.{g?.errorM ? ` గత సంవత్సరాలపై పరీక్షిస్తే, మధ్యస్థ మండలంలో అంచనా మే మట్టం ${g.errorM.toFixed(1)} మీ. తేడాతో ఉంది.` : ""} ఇది అంచనా మాత్రమే, ఏ ఒక్క బావి గురించిన భవిష్యవాణి కాదు.</>,
+    },
+    {
+      layer: "priority",
+      eyebrow: <>వేసవి తాగునీరు · ముందుగా ఎక్కడ ప్రణాళిక</>,
+      title: <>ముందుగా ప్రణాళిక వేయాల్సిన <b>{facts.first.mandals}</b> మండలాలు, {peopleIn("te", facts.first.people)} మంది నివాసం: రికార్డును దాటుతున్నాయి, స్వతంత్ర సంకేతాలు ఏకీభవిస్తున్నాయి.</>,
+      text: <>ఈ సీజన్‌లోని నాలుగు సంకేతాల్లో ఎన్ని ఏకీభవిస్తున్నాయో ఆ ప్రకారం క్రమం: తుఫాను వర్షం అందలేదు, వర్షాకాల రీఛార్జ్ తక్కువ, గ్రామ చెరువుల్లో నీరు సాధారణం కంటే తక్కువ, తాగునీటి వనరులు రసాయన పరీక్షల్లో విఫలం. మరో {facts.first.next} మండలాలు తదుపరి ప్రణాళికకు.</>,
+    },
+    {
+      layer: "pilot",
+      eyebrow: <>భూగర్భ జల శాఖతో క్షేత్ర పరిశీలన · {facts.pilot.status === "proposed" ? "ప్రతిపాదన" : "రీడింగులు వస్తున్నాయి"}</>,
+      title: <>{dayIn("te", facts.pilot.first, false)} నుండి: {facts.pilot.wells} బావులు, {facts.pilot.roundDays === 14 ? "పక్షానికి ఒకసారి" : `ప్రతి ${facts.pilot.roundDays} రోజులకు`} రీడింగ్; అంచనాలు ముందుగానే నమోదు.</>,
+      text: <>{facts.pilot.districts.map(d => d.name).join(", ")} జిల్లాల్లో {facts.pilot.mandals} మండలాలు, {facts.pilot.rounds} రౌండ్లు. కింది తేడాలు ఒక బావి వద్ద మోడల్ ఆశించేవి; ప్రతి రౌండ్‌ను వీటితో బహిరంగంగా పోలుస్తాం.</>,
+    },
+    {
+      layer: "asks",
+      eyebrow: <>దీన్ని ముందుకు తీసుకెళ్లేది</>,
+      title: <>మూడు అభ్యర్థనలు, చిన్నది ముందు.</>,
+    },
+  ], [g, facts, mayTe, monthTe]);
+  const steps = lang === "te" ? stepsTe : stepsEn;
+
   const last = steps.length - 1;
   const step = steps[at];
   const go = useCallback((to: number) => setAt(Math.max(0, Math.min(last, to))), [last]);
@@ -156,7 +232,7 @@ export function Presenter({ facts }: { facts: PresentFacts }) {
     window.addEventListener("hashchange", read);
     return () => window.removeEventListener("hashchange", read);
   }, [steps.length]);
-  useEffect(() => { history.replaceState(null, "", `#${at + 1}`); }, [at]);
+  useEffect(() => { history.replaceState(null, "", `${location.search}#${at + 1}`); }, [at]);
 
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
@@ -167,6 +243,7 @@ export function Presenter({ facts }: { facts: PresentFacts }) {
       else if (e.key === "End") go(last);
       else if (/^[1-9]$/.test(e.key)) go(Number(e.key) - 1);
       else if (e.key === "f" || e.key === "F") toggleFull();
+      else if (e.key === "t" || e.key === "T") switchLang();
     };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
@@ -194,11 +271,12 @@ export function Presenter({ facts }: { facts: PresentFacts }) {
   const maxBar = Math.max(1, ...facts.pilot.bars.map(b => b.alone));
 
   return (
-    <div ref={deck} className={styles.deck} data-testid="presenter" data-step={at + 1} data-layer={step.layer}>
+    <div ref={deck} className={styles.deck} lang={lang} data-testid="presenter" data-lang={lang} data-step={at + 1} data-layer={step.layer}>
       <header className={styles.top}>
         <Link href="/garden/" className={styles.brand}>AP Water Intelligence</Link>
         <span className={styles.count} aria-live="polite">{at + 1} / {steps.length}</span>
-        <button type="button" className={styles.tool} onClick={toggleFull} aria-pressed={full}>{full ? "Leave full screen" : "Full screen"}</button>
+        <button type="button" className={styles.tool} onClick={switchLang} lang={te ? "en" : "te"} data-testid="presenter-lang">{te ? "English" : "తెలుగు"}</button>
+        <button type="button" className={`${styles.tool} ${styles.fullTool}`} onClick={toggleFull} aria-pressed={full}>{te ? (full ? "పూర్తి తెర నుండి బయటకు" : "పూర్తి తెర") : full ? "Leave full screen" : "Full screen"}</button>
       </header>
 
       <section key={at} className={styles.words} aria-live="polite"
@@ -216,12 +294,12 @@ export function Presenter({ facts }: { facts: PresentFacts }) {
 
       <div className={styles.stage}>
         <div className={styles.layer} data-place={place("garden")} data-kind="garden" aria-hidden={step.layer !== "garden"}>
-          <div className={styles.fit}>{garden ? <WaterGarden data={garden} stage={gardenStage} bare /> : null}</div>
+          <div className={styles.fit}>{garden ? <WaterGarden data={garden} stage={gardenStage} bare lang={lang} /> : null}</div>
         </div>
 
         <div className={styles.layer} data-place={place("bores")} data-kind="bores" aria-hidden={step.layer !== "bores"}>
           <div className={styles.fit}>
-            {garden && boresMounted ? <DistrictBores garden={garden} stepIndex={garden.steps.length - 1} initialDistrict={g?.district ?? null} stage={step.layer === "bores" ? step.bores : undefined} bare /> : null}
+            {garden && boresMounted ? <DistrictBores garden={garden} stepIndex={garden.steps.length - 1} initialDistrict={g?.district ?? null} stage={step.layer === "bores" ? step.bores : undefined} bare lang={lang} /> : null}
           </div>
         </div>
 
@@ -230,43 +308,53 @@ export function Presenter({ facts }: { facts: PresentFacts }) {
             {facts.priority.map((r, i) => (
               <li key={`${r.district}-${r.mandal}`} style={{ ["--i" as string]: i }}>
                 <span className={styles.rank}>{i + 1}</span>
-                <span className={styles.who}><b>{r.mandal}</b><small>{r.district}{r.people ? ` · ${r.people} people` : ""}</small></span>
-                <span className={styles.past}>{r.pastM.toFixed(1)} m<small>past its deepest May</small></span>
-                <span className={styles.signs} aria-label={`${r.signs.length} of 4 signs: ${r.signs.map(s => SIGN_SHORT[s]).join(", ")}`}>
-                  {SIGNS.map(s => <i key={s} data-on={r.signs.includes(s) ? "" : undefined} title={SIGN_SHORT[s]} />)}
+                <span className={styles.who}><b>{r.mandal}</b><small>{r.district}{r.people ? (te ? ` · ${peopleIn("te", r.people)} మంది` : ` · ${peopleIn("en", r.people)} people`) : ""}</small></span>
+                <span className={styles.past}>{r.pastM.toFixed(1)} {te ? "మీ." : "m"}<small>{te ? "అత్యంత లోతైన మే కంటే దిగువ" : "past its deepest May"}</small></span>
+                <span className={styles.signs} aria-label={te ? `4లో ${r.signs.length} సంకేతాలు: ${r.signs.map(s => SIGN_SHORT.te[s]).join(", ")}` : `${r.signs.length} of 4 signs: ${r.signs.map(s => SIGN_SHORT.en[s]).join(", ")}`}>
+                  {SIGNS.map(s => <i key={s} data-on={r.signs.includes(s) ? "" : undefined} title={SIGN_SHORT[lang][s]} />)}
                 </span>
               </li>
             ))}
           </ol>
-          <p className={styles.signKey}>{SIGNS.map((s, k) => <span key={s}><i data-n={k} />{SIGN_SHORT[s]}</span>)}</p>
+          <p className={styles.signKey}>{SIGNS.map((s, k) => <span key={s}><i data-n={k} />{SIGN_SHORT[lang][s]}</span>)}</p>
         </div>
 
         <div className={styles.layer} data-place={place("pilot")} data-kind="pilot" aria-hidden={step.layer !== "pilot"}>
           <div className={styles.pilot}>
             <div className={styles.bars} role="img" aria-label={`Expected error at a well: ${facts.pilot.bars.map(b => `${b.label} ${b.alone.toFixed(1)} m from the mandal figure alone, ${b.own.toFixed(1)} m with the well's own readings`).join("; ")}.`}>
-              <p className={styles.barsHead}><span><i data-kind="alone" />From the mandal figure alone</span><span><i data-kind="own" />With the well&rsquo;s own readings</span></p>
+              <p className={styles.barsHead}><span><i data-kind="alone" />{te ? "మండల సంఖ్య ఒక్కటే" : "From the mandal figure alone"}</span><span><i data-kind="own" />{te ? "బావి సొంత రీడింగులతో" : "With the well’s own readings"}</span></p>
               {facts.pilot.bars.map((b, i) => (
                 <div key={b.label} className={styles.bar} style={{ ["--i" as string]: i }}>
-                  <span className={styles.barLabel}>{b.label}</span>
-                  <span className={styles.track}><i data-kind="alone" style={{ ["--w" as string]: b.alone / maxBar }}><em>{b.alone.toFixed(1)} m</em></i></span>
-                  <span className={styles.track}><i data-kind="own" style={{ ["--w" as string]: b.own / maxBar }}><em>{b.own.toFixed(1)} m</em></i></span>
+                  <span className={styles.barLabel}>{te ? BAR_TE[b.key] ?? b.label : b.label}</span>
+                  <span className={styles.track}><i data-kind="alone" style={{ ["--w" as string]: b.alone / maxBar }}><em>{b.alone.toFixed(1)} {te ? "మీ." : "m"}</em></i></span>
+                  <span className={styles.track}><i data-kind="own" style={{ ["--w" as string]: b.own / maxBar }}><em>{b.own.toFixed(1)} {te ? "మీ." : "m"}</em></i></span>
                 </div>
               ))}
             </div>
             <ul className={styles.places}>
-              {facts.pilot.districts.map((d, i) => <li key={d.name} style={{ ["--i" as string]: i + 3 }}><b>{d.name}</b><span>{d.why}</span></li>)}
-              <li style={{ ["--i" as string]: 5 }}><b>Written down first</b><span>The plan and every prediction were fingerprinted on {day(facts.pilot.plannedAt)} ({facts.pilot.fingerprint}), before any reading, so the score cannot be tuned afterwards.</span></li>
+              {facts.pilot.districts.map((d, i) => <li key={d.name} style={{ ["--i" as string]: i + 3 }}><b>{d.name}</b><span>{te ? WHY_TE[d.key] ?? d.why : d.why}</span></li>)}
+              <li style={{ ["--i" as string]: 5 }}>{te
+                ? <><b>ముందుగానే నమోదు</b><span>ప్రణాళిక, ప్రతి అంచనాకు {dayIn("te", facts.pilot.plannedAt, false)}న డిజిటల్ వేలిముద్ర ({facts.pilot.fingerprint}) నమోదు చేశాం, ఏ రీడింగ్‌కన్నా ముందే; కాబట్టి తర్వాత ఫలితాన్ని సర్దుబాటు చేయలేం.</span></>
+                : <><b>Written down first</b><span>The plan and every prediction were fingerprinted on {day(facts.pilot.plannedAt)} ({facts.pilot.fingerprint}), before any reading, so the score cannot be tuned afterwards.</span></>}</li>
             </ul>
           </div>
         </div>
 
         <div className={styles.layer} data-place={place("asks")} data-kind="asks" aria-hidden={step.layer !== "asks"}>
           <ol className={styles.asks}>
-            <li style={{ ["--i" as string]: 0 }}><b>Station-level readings for the {facts.pilot.mandals} mandals&rsquo; observation wells</b><span>No field work: the wells are already read. The mandal figures are their average.</span></li>
-            <li style={{ ["--i" as string]: 1 }}><b>The Department&rsquo;s view on the mandals and wells chosen</b><span>Where the plan has picked a poor well or missed a better one.</span></li>
-            <li style={{ ["--i" as string]: 2 }}><b>Field rounds from {day(facts.pilot.first)}</b><span>Every fortnight as planned, or monthly if that suits better; any round can be the first.</span></li>
+            {te ? <>
+              <li style={{ ["--i" as string]: 0 }}><b>{facts.pilot.mandals} మండలాల పరిశీలన బావుల స్టేషన్ స్థాయి రీడింగులు</b><span>క్షేత్ర పని అవసరం లేదు: ఈ బావులను ఇప్పటికే చదువుతున్నారు. మండల సంఖ్యలు వీటి సగటే.</span></li>
+              <li style={{ ["--i" as string]: 1 }}><b>ఎంచుకున్న మండలాలు, బావులపై శాఖ అభిప్రాయం</b><span>ప్రణాళిక సరిగా లేని బావిని ఎంచుకున్నా, మంచి బావిని వదిలేసినా తెలియజేయండి.</span></li>
+              <li style={{ ["--i" as string]: 2 }}><b>{dayIn("te", facts.pilot.first, false)} నుండి క్షేత్ర రౌండ్లు</b><span>ప్రణాళిక ప్రకారం పక్షానికి ఒకసారి, లేదా వీలైతే నెలకు ఒకసారి; ఏ రౌండ్ అయినా మొదటిది కావచ్చు.</span></li>
+            </> : <>
+              <li style={{ ["--i" as string]: 0 }}><b>Station-level readings for the {facts.pilot.mandals} mandals&rsquo; observation wells</b><span>No field work: the wells are already read. The mandal figures are their average.</span></li>
+              <li style={{ ["--i" as string]: 1 }}><b>The Department&rsquo;s view on the mandals and wells chosen</b><span>Where the plan has picked a poor well or missed a better one.</span></li>
+              <li style={{ ["--i" as string]: 2 }}><b>Field rounds from {day(facts.pilot.first)}</b><span>Every fortnight as planned, or monthly if that suits better; any round can be the first.</span></li>
+            </>}
           </ol>
-          <p className={styles.close}>Every figure in these steps is on the site, with its source: <Link href="/garden/">the garden</Link>, <Link href="/summer/">the summer outlook</Link>, <Link href="/field-check/">the field check</Link>.</p>
+          <p className={styles.close}>{te
+            ? <>ఈ దశల్లోని ప్రతి సంఖ్య, దాని మూలంతో సహా, సైట్‌లో ఉంది: <Link href="/garden/">నీటి తోట</Link>, <Link href="/summer/">వేసవి అంచనా</Link>, <Link href="/field-check/">క్షేత్ర పరిశీలన</Link>.</>
+            : <>Every figure in these steps is on the site, with its source: <Link href="/garden/">the garden</Link>, <Link href="/summer/">the summer outlook</Link>, <Link href="/field-check/">the field check</Link>.</>}</p>
         </div>
       </div>
 
@@ -276,8 +364,8 @@ export function Presenter({ facts }: { facts: PresentFacts }) {
           {steps.map((_, i) => <button key={i} type="button" aria-label={`Step ${i + 1}`} aria-current={i === at ? "step" : undefined} data-done={i < at ? "" : undefined} onClick={() => go(i)} />)}
         </nav>
         <button type="button" className={styles.tool} onClick={() => go(at + 1)} disabled={at === last} aria-label="Next step" data-testid="presenter-next">→</button>
-        <span className={styles.caveat} data-testid="presenter-caveat">{/^prototype/i.test(facts.caveat) ? facts.caveat : <><b>Prototype.</b> {facts.caveat}</>}</span>
-        <span className={styles.hint}>← → or a clicker · F for full screen</span>
+        <span className={styles.caveat} data-testid="presenter-caveat">{te ? CAVEAT_TE : /^prototype/i.test(facts.caveat) ? facts.caveat : <><b>Prototype.</b> {facts.caveat}</>}</span>
+        <span className={styles.hint}>{te ? "← → లేదా క్లిక్కర్ · F పూర్తి తెర" : "← → or a clicker · F for full screen"}</span>
       </footer>
     </div>
   );

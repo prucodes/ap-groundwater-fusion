@@ -3,7 +3,8 @@
 .grid li { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--card); }
 .name { font: 600 15px var(--font-display); color: var(--ink); text-decoration: none; }
 .name:hover { color: var(--teal); text-decoration: underline; }
-.pdf { grid-row: 1; grid-column: 2; align-self: start; font: 600 12px var(--font-mono); color: var(--teal); text-decoration: none; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; }
+.pdfs { grid-row: 1; grid-column: 2; align-self: start; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px; }
+.pdf { font: 600 12px var(--font-mono); color: var(--teal); text-decoration: none; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; }
 .fig { grid-column: 1 / -1; font-size: 13px; color: var(--ink-soft); }
 .fig b { color: var(--ink); }
 .bar { grid-column: 1 / -1; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--line) 70%, transparent); overflow: hidden; }

@@ -32,3 +32,13 @@
 .boresKey { display: flex; flex-wrap: wrap; gap: .6mm 3.6mm; margin: .6mm 0 0; font-size: 6.6pt; color: #b9cadb; }
 .boresKey span { display: inline-flex; align-items: center; gap: 1.2mm; }
 .boresKey i { width: 2.2mm; height: 2.2mm; border-radius: 50%; }
+
+/* In Telugu: no letter-spacing or capitals (the script has neither), a little more room
+   between lines for its vowel signs, and the headline a size smaller so the page still fits. */
+.te [class*="__eyebrow"], .te [class*="__sec"], .te [class*="__tiles"] span { letter-spacing: 0; text-transform: none; }
+.te [class*="__eyebrow"] { font-family: var(--font-sans); font-size: 8.4pt; }
+.te [class*="__sec"] { font-family: var(--font-sans); font-size: 8pt; font-weight: 600; }
+.te [class*="__band"] h1 { font-size: 19pt; line-height: 1.28; }
+.te [class*="__sub"] { font-size: 9pt; line-height: 1.55; }
+.te [class*="__tiles"] em { font-size: 7.2pt; line-height: 1.45; }
+.te [class*="__foot"] { font-size: 6.6pt; line-height: 1.45; }
