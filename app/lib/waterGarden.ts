@@ -1,7 +1,8 @@
 import { mandalByMapKey, mandals, mapGeometry, monsoonWatch, observationSeries, titleCase } from "./data";
 import { districtHome, mandalHomes } from "./mapSpread";
+import { summerOutlook } from "./summer";
 import fieldSignalsJson from "../data/field_signals_mandals.json";
-import { MIN_YEARS, PADDY_IRRIGATED_PCT, sideOf, stepCounts, type Garden, type GardenAquifer, type GardenPlant, type GardenStep, type StepCounts } from "./gardenShared";
+import { MIN_YEARS, PADDY_IRRIGATED_PCT, sideOf, stepCounts, type Garden, type GardenAquifer, type GardenPlant, type GardenStep, type StepCounts, type SummerPath as GardenPlantSummer } from "./gardenShared";
 
 /* The water garden's data, built once at deploy from the State's monthly hand-read wells
    (mandal_observation_series_v2.json, the mandal median of the APWRIMS readings): every
@@ -66,6 +67,18 @@ export function waterGarden(): Garden {
     return i !== undefined ? homes[i] : districtHome(district) ?? [0, 0, 0];
   };
 
+  // The Summer Outlook's projection for each mandal projected from the State's own latest month.
+  const outlook = summerOutlook, anchor = outlook.anchor;
+  const addMonth = (ym: string, n: number) => { const t = Number(ym.slice(0, 4)) * 12 + Number(ym.slice(5, 7)) - 1 + n; return `${Math.floor(t / 12)}-${String((t % 12) + 1).padStart(2, "0")}`; };
+  const summerMonths: string[] = [];
+  for (let k = 1; addMonth(anchor, k) <= outlook.targetMay; k++) summerMonths.push(addMonth(anchor, k));
+  type Projected = { anchorMonth: string; deepestMay: number; path?: { typical: Array<number | null>; dry: Array<number | null> }; passes?: { typical: string | null; dry: string | null } };
+  const summerOf = (id: string) => {
+    const at = homeById.get(id), p = at !== undefined ? (outlook.mandals[at] as unknown as Projected | null) : null;
+    return p && p.anchorMonth === anchor && p.path ? [p.deepestMay, p.path.typical, p.path.dry, p.passes?.typical ?? null, p.passes?.dry ?? null] as GardenPlantSummer : null;
+  };
+  const summerPlants: Array<GardenPlantSummer | null> = [];
+
   const plants = mandals
     .map(m => {
       const home = placeOf(m.id, m.district_name), series = byPeriod.get(m.id)!;
@@ -74,10 +87,10 @@ export function waterGarden(): Garden {
       const usual = read.length >= MIN_YEARS ? Math.round((median(read) as number) * 100) / 100 : null;
       const irrigated = irrigatedOf.get(`${letters(m.district_name)}|${letters(m.mandal_name)}`) ?? null;
       const at = homeById.get(m.id), aquifer = at !== undefined ? aquiferAt.get(at) ?? null : null;
-      return { home, plant: [m.id, titleCase(m.mandal_name), titleCase(m.district_name), regionOf(m.district_name), depths, usual, irrigated !== null && irrigated >= PADDY_IRRIGATED_PCT ? 1 : 0, aquifer] as GardenPlant };
+      return { home, summer: summerOf(m.id), plant: [m.id, titleCase(m.mandal_name), titleCase(m.district_name), regionOf(m.district_name), depths, usual, irrigated !== null && irrigated >= PADDY_IRRIGATED_PCT ? 1 : 0, aquifer] as GardenPlant };
     })
     .sort((a, b) => a.plant[3] - b.plant[3] || a.home[1] - b.home[1] || a.home[0] - b.home[0])
-    .map(row => row.plant);
+    .map(row => { summerPlants.push(row.summer); return row.plant; });
 
   const deepest = Math.max(...plants.flatMap(p => p[4].filter((v): v is number => v !== null)));
   // The monsoon before each October: the Monsoon page's State rainfall, June to September.
@@ -88,6 +101,10 @@ export function waterGarden(): Garden {
   });
   const rainSource = `${monsoonWatch.rainfall?.product ?? "CHIRPS"}, June to September${seasons.length ? `, against the ${seasons[0].year}-${seasons[seasons.length - 1].year} mean` : ""}`;
   built = { month, monthName: MONTHS[month - 1], years, steps, missingYears, regions: GARDEN_REGIONS, scaleM: Math.ceil(deepest / 10) * 10, plants, rain, rainNormalMm: history?.meanMm ?? 0, rainSource,
+    summer: anchor === `${lastYear}-${mm}` ? {
+      anchor, months: summerMonths, target: outlook.targetMay,
+      errorM: outlook.backtest?.typicalErrorM ?? null, persistenceM: outlook.backtest?.persistenceErrorM ?? null, plants: summerPlants,
+    } : null,
     cropSource: `Paddy where ${PADDY_IRRIGATED_PCT}% or more of a mandal's farmland is irrigated, sorghum elsewhere: ${signals.irrigation?.source ?? "the satellite irrigation map"}` };
   return built;
 }

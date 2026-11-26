@@ -101,10 +101,18 @@ def month_add(ym, n):
     return f"{year + month // 12}-{month % 12 + 1:02d}"
 
 
-def passes(series, anchor, deepest, typical, dry, years):
+def passes(series, anchor, deepest, typical, dry, years, with_path=False, cap=None):
     """{"typical": month or None, "dry": month or None}: the first month each path goes
     deeper than the deepest May. The anchor month itself when it already has; May is the
-    published projection, so a mandal within its record never passes."""
+    published projection, so a mandal within its record never passes.
+
+    With `with_path`, also the two paths themselves, one depth for each month after the
+    anchor up to May (None where too few past winters cover that month): what the Water
+    Garden's summer countdown plays, so its pumps fail in the months this finds.
+
+    `cap` leaves out a past year's change to a month larger than that: a misread month (a
+    gauge read in feet, a dropped digit) would otherwise set the dry-winter path, which
+    takes the largest change, hundreds of metres down for that one month."""
     depth = series[anchor]
     target = f"{target_year(anchor)}-{TARGET_MONTH:02d}"
     steps, month = [], anchor
@@ -119,6 +127,8 @@ def passes(series, anchor, deepest, typical, dry, years):
             continue
         changes = [series[month_add(f"{y}-{anchor[5:]}", k)] - series[f"{y}-{anchor[5:]}"] for y in years
                    if f"{y}-{anchor[5:]}" in series and month_add(f"{y}-{anchor[5:]}", k) in series]
+        if cap is not None:
+            changes = [c for c in changes if abs(c) <= cap]
         if len(changes) >= MIN_WINTERS:
             path["typical"].append((month, depth + statistics.median(changes)))
             path["dry"].append((month, depth + max(changes)))
@@ -132,7 +142,11 @@ def passes(series, anchor, deepest, typical, dry, years):
             out[name] = next((m for m, d in path[name] if d > deepest), target)
     if out["typical"] and (out["dry"] is None or out["dry"] > out["typical"]):
         out["dry"] = out["typical"]  # the dry winter is never later than the typical one
-    return out
+    if not with_path:
+        return out
+    known = {name: dict(path[name]) for name in path}
+    paths = {name: [round(known[name][m], 2) if m in known[name] else None for m in steps] for name in path}
+    return out, paths
 
 
 def project(series, anchor, skip_year=None, before=None):
@@ -153,9 +167,12 @@ def project(series, anchor, skip_year=None, before=None):
     dry = round(depth + max(past.values()), 2)
     deepest = round(max(mays), 2)
     tier = "beyond" if typical > deepest else "dry" if dry > deepest else "within"
+    # No month of a winter falls more than twice the mandal's largest whole-winter fall (5 m at least): a larger change is a misreading.
+    cap = 2 * max(max(past.values()), 5.0)
+    crossing, path = passes(series, anchor, deepest, typical, dry, past.keys(), with_path=True, cap=cap)
     return {"anchor": round(depth, 2), "typical": typical, "dry": dry, "deepestMay": deepest,
             "winters": len(past), "medianDrawdown": round(statistics.median(past.values()), 2), "maxDrawdown": round(max(past.values()), 2),
-            "tier": tier, "passes": passes(series, anchor, deepest, typical, dry, past.keys())}
+            "tier": tier, "passes": crossing, "path": path}
 
 
 def at_depth(result):

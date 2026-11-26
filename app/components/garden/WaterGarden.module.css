@@ -95,3 +95,14 @@
   .boresHead h3 { font-size: 16px; }
   .boresKey { font-size: 12px; }
 }
+
+/* The close-up's tools: what it shows (the years or the summer countdown), the district, and the countdown's own controls. */
+.boresTools { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.modes { display: inline-flex; padding: 3px; border-radius: 999px; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .12); }
+.modes button { min-height: 30px; padding: 0 13px; border: 0; border-radius: 999px; background: transparent; color: #b9cadb; font: 600 12.5px var(--font-sans); cursor: pointer; transition: background .25s ease, color .25s ease; }
+.modes button[aria-pressed="true"] { background: #eaf3fb; color: #0d2138; }
+.countdown { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 4px 0 2px; }
+.countdown input[type="range"] { flex: 1 1 160px; min-width: 120px; accent-color: #f2b442; }
+.countPlay { display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 14px 0 11px; border-radius: 999px; border: 1px solid rgba(242, 180, 66, .5); background: rgba(242, 180, 66, .12); color: #ffe2a8; font: 600 13px var(--font-sans); cursor: pointer; }
+.countPlay svg { width: 14px; height: 14px; }
+@media (max-width: 640px) { .modes button { padding: 0 10px; font-size: 12px; } }

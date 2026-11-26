@@ -2,16 +2,32 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { monthYear, sideOf, type Garden, type GardenAquifer } from "../../lib/gardenShared";
-import { Borewells, pumpState, PUMP_BELOW_USUAL_M, type Bore } from "./Borewells";
+import { IconPause, IconPlay } from "../icons";
+import { Borewells, pumpState, PUMP_BELOW_USUAL_M, type Bore, type PumpState } from "./Borewells";
 import styles from "./WaterGarden.module.css";
 
-/* The close-up under the State's field: one district's mandals as borewells, in the year the
-   field shows. It opens on the district with the largest share below its usual, and follows
-   the field's playback: the water in every bore rises and falls with the years. */
+/* The close-up under the State's field: one district's mandals as borewells, in two modes.
+   The years: the bores in the October the field shows, following its playback.
+   The summer countdown: from the latest October to next May on the Summer Outlook's own
+   monthly paths (typical or dry winter). Each pump is reset to the mandal's deepest May on
+   record; a lamp goes amber when the water comes within 1 m of it, and red in the month
+   the outlook says the mandal passes it: so a Collector sees when, not only whether. */
 
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const monthName = (ym: string) => `${MONTHS[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}`;
 const plural = (n: number, one: string, many = `${one}s`) => `${n} ${n === 1 ? one : many}`;
+/** Water within this much of the deepest May on record turns a lamp amber in the countdown. */
+const NEAR_RECORD_M = 1;
+/** Seconds per month while the countdown plays: the move is the bores' own 0.6 s glide. */
+const MONTH_S = 1.2;
 
-export function DistrictBores({ garden, stepIndex }: { garden: Garden; stepIndex: number }) {
+export function DistrictBores({ garden, stepIndex, initialDistrict = null, autoCountdown = false }: {
+  garden: Garden; stepIndex: number;
+  /** Open on this district instead of the one with the largest share below its usual. */
+  initialDistrict?: string | null;
+  /** Start in the countdown and play it once seen (the presenter's step). */
+  autoCountdown?: boolean;
+}) {
   const latest = garden.steps[garden.steps.length - 1];
   const districts = useMemo(() => {
     const by = new Map<string, number[]>();
@@ -23,9 +39,24 @@ export function DistrictBores({ garden, stepIndex }: { garden: Garden; stepIndex
     }).sort((a, b) => a.name.localeCompare(b.name));
   }, [garden, latest.index]);
   const worst = useMemo(() => [...districts].sort((a, b) => b.share - a.share)[0]?.name ?? districts[0]?.name, [districts]);
-  const [chosen, setChosen] = useState<string | null>(null);
+  const [chosen, setChosen] = useState<string | null>(initialDistrict);
+  const district = districts.find(d => d.name === (chosen ?? worst)) ?? districts[0];
+  const summer = garden.summer;
+  const [mode, setMode] = useState<"years" | "summer">(autoCountdown && summer ? "summer" : "years");
+  const [winter, setWinter] = useState<"typical" | "dry">("typical");
+  /** The countdown's month: 0 is the latest October, then one a month to May. */
+  const [month, setMonth] = useState(0);
+  const [playing, setPlaying] = useState(false);
+
   // The bores drill in when the close-up comes into view, not while it is off screen.
   const [seen, setSeen] = useState(false), box = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const node = box.current;
+    if (!node || seen) return;
+    const watcher = new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting)) { setSeen(true); watcher.disconnect(); } }, { threshold: 0.25 });
+    watcher.observe(node);
+    return () => watcher.disconnect();
+  }, [seen]);
   // On a narrow screen each bore keeps a readable size and the strip scrolls sideways in its panel.
   const [narrow, setNarrow] = useState(false);
   useEffect(() => {
@@ -37,63 +68,131 @@ export function DistrictBores({ garden, stepIndex }: { garden: Garden; stepIndex
     watcher.observe(node);
     return () => watcher.disconnect();
   }, []);
-  useEffect(() => {
-    const node = box.current;
-    if (!node || seen) return;
-    const watcher = new IntersectionObserver(entries => { if (entries.some(e => e.isIntersecting)) { setSeen(true); watcher.disconnect(); } }, { threshold: 0.25 });
-    watcher.observe(node);
-    return () => watcher.disconnect();
-  }, [seen]);
-  const district = districts.find(d => d.name === (chosen ?? worst)) ?? districts[0];
-  const step = garden.steps[stepIndex];
 
-  const { bores, scaleM, aquifer } = useMemo(() => {
-    const plants = district.members.map(i => garden.plants[i]);
-    const deepest = Math.max(10, ...plants.flatMap(p => p[4].filter((v): v is number => v !== null)));
-    const kinds = plants.map(p => p[7]).filter((a): a is GardenAquifer => a !== null);
-    const common = ([0, 1, 2] as GardenAquifer[]).sort((a, b) => kinds.filter(k => k === b).length - kinds.filter(k => k === a).length)[0];
-    return {
-      scaleM: Math.ceil((deepest + 6) / 10) * 10,
-      aquifer: kinds.length ? common : 0 as GardenAquifer,
-      bores: (yearIndex: number): Bore[] => plants.map(p => {
-        const now = p[4][yearIndex], usual = p[5];
-        return { id: p[0], name: p[1], nowM: now, usualM: usual, side: sideOf(now, usual), deepestM: Math.max(...p[4].filter((v): v is number => v !== null)) };
-      }),
-    };
-  }, [district, garden]);
-  const shown = bores(step.index);
-  const states = shown.map(pumpState);
+  const months = summer ? [summer.anchor, ...summer.months] : [];
+  const last = months.length - 1;
+  // Playing the countdown: a month every MONTH_S seconds, the bores gliding between; stop on May.
+  useEffect(() => {
+    if (!playing) return;
+    const timer = window.setInterval(() => setMonth(m => {
+      if (m >= last) { setPlaying(false); return m; }
+      return m + 1;
+    }), MONTH_S * 1000);
+    return () => window.clearInterval(timer);
+  }, [playing, last]);
+  // The presenter's step: play once the bores have drilled in.
+  useEffect(() => {
+    if (!autoCountdown || !seen || !summer) return;
+    const start = window.setTimeout(() => { setMonth(0); setPlaying(true); }, 2600);
+    return () => window.clearTimeout(start);
+  }, [autoCountdown, seen, summer]);
+
+  const plants = useMemo(() => district.members.map(i => ({ plant: garden.plants[i], path: summer?.plants[i] ?? null })), [district, garden, summer]);
+  const scaleM = useMemo(() => {
+    const all = plants.flatMap(({ plant, path }) => [...plant[4], ...(path ? [path[0], ...path[1], ...path[2]] : [])].filter((v): v is number => v !== null));
+    return Math.ceil((Math.max(10, ...all) + 6) / 10) * 10;
+  }, [plants]);
+  const aquifer = useMemo(() => {
+    const kinds = plants.map(({ plant }) => plant[7]).filter((a): a is GardenAquifer => a !== null);
+    return kinds.length ? ([0, 1, 2] as GardenAquifer[]).sort((a, b) => kinds.filter(k => k === b).length - kinds.filter(k => k === a).length)[0] : 0 as GardenAquifer;
+  }, [plants]);
+
+  const step = garden.steps[stepIndex];
+  const deepestOf = (depths: Array<number | null>) => Math.max(...depths.filter((v): v is number => v !== null));
+  const bores: Bore[] = plants.map(({ plant, path }) => {
+    const usual = plant[5];
+    if (mode === "years" || !summer) {
+      const now = plant[4][step.index];
+      return { id: plant[0], name: plant[1], nowM: now, usualM: usual, side: sideOf(now, usual), deepestM: deepestOf(plant[4]) };
+    }
+    const anchorM = plant[4][latest.index];
+    if (!path || anchorM === null) return { id: plant[0], name: plant[1], nowM: anchorM, usualM: usual, side: null, deepestM: deepestOf(plant[4]), state: "none" as PumpState };
+    // The month's depth on the chosen path; a month too few winters cover takes its neighbours' mean.
+    const series = [anchorM, ...path[winter === "typical" ? 1 : 2]];
+    let now = series[month];
+    if (now === null) {
+      const before = series.slice(0, month).reverse().find((v): v is number => v !== null), after = series.slice(month + 1).find((v): v is number => v !== null);
+      now = before !== undefined && after !== undefined ? (before + after) / 2 : before ?? after ?? anchorM;
+    }
+    const passes = path[winter === "typical" ? 3 : 4], past = passes !== null && passes <= months[month];
+    const state: PumpState = past ? "dry" : now > path[0] - NEAR_RECORD_M ? "trickle" : "full";
+    return { id: plant[0], name: plant[1], nowM: now, usualM: usual, side: sideOf(now, usual), deepestM: Math.max(deepestOf(plant[4]), deepestOf(series), path[0]), pumpM: path[0], state };
+  });
+  const states = bores.map(b => b.state ?? pumpState(b));
   const count = (k: string) => states.filter(s => s === k).length;
   const below = count("trickle") + count("dry");
+  const projected = plants.filter(p => p.path).length;
+  const when = mode === "summer" && summer ? monthName(months[month]) : monthYear(garden, step.year);
+  const width = narrow ? Math.max(360, bores.length * 46 + 70) : 1000;
 
   return (
-    <section ref={box} className={styles.bores} aria-labelledby="bores-title" data-testid="district-bores" data-district={district.name} data-dry={count("dry")} data-trickle={count("trickle")} data-running={count("full") + count("steady")}>
+    <section ref={box} className={styles.bores} aria-labelledby="bores-title" data-testid="district-bores" data-district={district.name} data-mode={mode}
+      data-month={mode === "summer" ? months[month] : undefined} data-dry={count("dry")} data-trickle={count("trickle")} data-running={count("full") + count("steady")}>
       <header className={styles.boresHead}>
         <div>
-          <span className={styles.boresEyebrow}>A district, close up · {monthYear(garden, step.year)}</span>
-          <h3 id="bores-title">{district.name}: {below} of {shown.length} borewells below their usual {garden.monthName}</h3>
+          <span className={styles.boresEyebrow}>A district, close up · {when}{mode === "summer" && month > 0 ? " · projected" : ""}</span>
+          <h3 id="bores-title">{mode === "summer" && summer
+            ? <>{district.name}: {count("dry")} of {projected} borewells past their deepest May on record by {monthName(months[month])}</>
+            : <>{district.name}: {below} of {bores.length} borewells below their usual {garden.monthName}</>}</h3>
         </div>
-        <label className={styles.pick}>
-          <span>District</span>
-          <select value={district.name} onChange={e => setChosen(e.target.value)} data-testid="district-bores-pick">
-            {districts.map(d => <option key={d.name} value={d.name}>{d.name}</option>)}
-          </select>
-        </label>
+        <div className={styles.boresTools}>
+          {summer ? (
+            <div className={styles.modes} role="group" aria-label="What the borewells show">
+              <button type="button" aria-pressed={mode === "years"} onClick={() => { setPlaying(false); setMode("years"); }}>The years</button>
+              <button type="button" aria-pressed={mode === "summer"} onClick={() => { setMode("summer"); setMonth(0); }} data-testid="district-bores-countdown">Summer countdown</button>
+            </div>
+          ) : null}
+          <label className={styles.pick}>
+            <span>District</span>
+            <select value={district.name} onChange={e => setChosen(e.target.value)} data-testid="district-bores-pick">
+              {districts.map(d => <option key={d.name} value={d.name}>{d.name}</option>)}
+            </select>
+          </label>
+        </div>
       </header>
+
+      {mode === "summer" && summer ? (
+        <div className={styles.countdown}>
+          <button type="button" className={styles.countPlay} onClick={() => { if (!playing && month >= last) setMonth(0); setPlaying(p => !p); }} aria-pressed={playing} data-testid="district-bores-play">
+            {playing ? <IconPause /> : <IconPlay />}<span>{playing ? "Pause" : `Play to ${monthName(summer.target)}`}</span>
+          </button>
+          <input type="range" min={0} max={last} step={1} value={month} onChange={e => { setPlaying(false); setMonth(Number(e.target.value)); }}
+            aria-label="Month of the countdown" aria-valuetext={monthName(months[month])} data-testid="district-bores-month" />
+          <div className={styles.modes} role="group" aria-label="Which winter">
+            <button type="button" aria-pressed={winter === "typical"} onClick={() => setWinter("typical")}>Typical winter</button>
+            <button type="button" aria-pressed={winter === "dry"} onClick={() => setWinter("dry")} data-testid="district-bores-dry">Dry winter</button>
+          </div>
+        </div>
+      ) : null}
+
       <div className={styles.boresFigure} data-scroll={narrow ? "" : undefined}>
-        {narrow ? <span className={styles.swipe} aria-hidden="true">Swipe to see all {shown.length} →</span> : null}
-        <div style={narrow ? { width: Math.max(360, shown.length * 46 + 70) } : undefined}>
-        <Borewells key={district.name} uid="db" bores={shown} scaleM={scaleM} aquifer={aquifer} animated play={seen}
-          width={narrow ? Math.max(360, shown.length * 46 + 70) : 1000} soil={narrow ? 260 : 300} nameSize={narrow ? 11 : shown.length > 30 ? 10 : 11.5}
-          label={`${district.name}'s ${shown.length} mandals as borewells in ${monthYear(garden, step.year)}: ${plural(count("full") + count("steady"), "pump")} running, ${plural(count("trickle"), "trickle")}, ${count("dry")} dry.`} />
+        {narrow ? <span className={styles.swipe} aria-hidden="true">Swipe to see all {bores.length} →</span> : null}
+        <div style={narrow ? { width } : undefined}>
+          <Borewells key={district.name} uid="db" bores={bores} scaleM={scaleM} aquifer={aquifer} animated play={seen}
+            width={width} soil={narrow ? 260 : 300} nameSize={narrow ? 11 : bores.length > 30 ? 10 : 11.5}
+            label={mode === "summer"
+              ? `${district.name}'s ${bores.length} mandals as borewells in ${when}, projected on a ${winter} winter: ${count("dry")} past their deepest May on record, ${count("trickle")} within ${NEAR_RECORD_M} m of it.`
+              : `${district.name}'s ${bores.length} mandals as borewells in ${when}: ${plural(count("full") + count("steady"), "pump")} running, ${plural(count("trickle"), "trickle")}, ${count("dry")} dry.`} />
         </div>
       </div>
-      <p className={styles.boresKey}>
-        <span><i style={{ background: "#5be38a" }} />Running: water above its usual, or within 0.1 m ({count("full") + count("steady")})</span>
-        <span><i style={{ background: "#f2b442" }} />A trickle: below its usual, still over the pump ({count("trickle")})</span>
-        <span><i style={{ background: "#ff5a3c" }} />Dry: the water has fallen past the pump ({count("dry")})</span>
-        <span>Each bore reaches its mandal&rsquo;s measured water table, to scale; its pump is set {PUMP_BELOW_USUAL_M} m below the usual {garden.monthName} level, as for a normal year. A picture of the readings, not of any one well.</span>
-      </p>
+
+      {mode === "summer" && summer ? (
+        <p className={styles.boresKey}>
+          <span><i style={{ background: "#5be38a" }} />Running: more than {NEAR_RECORD_M} m above its deepest May ({count("full")})</span>
+          <span><i style={{ background: "#f2b442" }} />Nearing it: within {NEAR_RECORD_M} m ({count("trickle")})</span>
+          <span><i style={{ background: "#ff5a3c" }} />Dry: past its deepest May on record ({count("dry")})</span>
+          <span>
+            {`The Summer Outlook’s monthly paths from each mandal’s own past winters, ${winter === "dry" ? "the driest on record" : "the median"}; pumps here are set at the deepest May on record. Tested on past years, the outlook’s May is off by ${summer.errorM?.toFixed(1) ?? "–"} m at the median mandal${summer.persistenceM ? `, against ${summer.persistenceM.toFixed(1)} m for carrying the reading forward` : ""}. A projection, not a forecast of any one well.`}
+          </span>
+        </p>
+      ) : (
+        <p className={styles.boresKey}>
+          <span><i style={{ background: "#5be38a" }} />Running: water above its usual, or within 0.1 m ({count("full") + count("steady")})</span>
+          <span><i style={{ background: "#f2b442" }} />A trickle: below its usual, still over the pump ({count("trickle")})</span>
+          <span><i style={{ background: "#ff5a3c" }} />Dry: the water has fallen past the pump ({count("dry")})</span>
+          <span>Each bore reaches its mandal&rsquo;s measured water table, to scale; its pump is set {PUMP_BELOW_USUAL_M} m below the usual {garden.monthName} level, as for a normal year. A picture of the readings, not of any one well.</span>
+        </p>
+      )}
     </section>
   );
 }

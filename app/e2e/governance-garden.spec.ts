@@ -87,6 +87,26 @@ test("a district close up as borewells: one per mandal, the dry and trickling on
   await check(data.steps[8].index);
 });
 
+test("the summer countdown ends in May on the Summer Outlook's own count, typical and dry winter", async ({ page }) => {
+  await page.goto("/garden/");
+  await page.getByTestId("water-garden").scrollIntoViewIfNeeded();
+  await grown(page);
+  const data = await page.evaluate(async () => (await fetch(`${location.pathname.replace(/garden\/$/, "")}garden/data.json`)).json());
+  const bores = page.getByTestId("district-bores");
+  await page.getByTestId("district-bores-pick").selectOption("Sri Sathya Sai");
+  await page.getByTestId("district-bores-countdown").click();
+  await expect(bores).toHaveAttribute("data-mode", "summer");
+  await expect(bores).toHaveAttribute("data-month", data.summer.anchor);
+  await page.getByTestId("district-bores-month").fill(String(data.summer.months.length));
+  await expect(bores).toHaveAttribute("data-month", data.summer.target);
+  // Past the record in May: the outlook's "beyond" mandals on a typical winter, and with its "dry" ones on a dry winter.
+  const past = (w: number) => data.plants.filter((p: any[], i: number) => p[2] === "Sri Sathya Sai" && data.summer.plants[i] && data.summer.plants[i][w].at(-1) > data.summer.plants[i][0]).length;
+  await expect(bores).toHaveAttribute("data-dry", String(past(1)));
+  await page.getByTestId("district-bores-dry").click();
+  await expect(bores).toHaveAttribute("data-dry", String(past(2)));
+  expect(past(2)).toBeGreaterThanOrEqual(past(1));
+});
+
 test("a plant answers to the pointer and opens its mandal", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/garden/");

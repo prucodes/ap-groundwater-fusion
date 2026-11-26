@@ -17,7 +17,13 @@ import styles from "./Borewells.module.css";
    the water rises, the pumps start and the water runs; levels glide when the year changes.
    All of that is CSS (Borewells.module.css), and stops for a reader who asks for less motion. */
 
-export type Bore = { id?: string; name: string; nowM: number | null; usualM: number | null; side: -1 | 0 | 1 | null; deepestM: number | null };
+export type Bore = {
+  id?: string; name: string; nowM: number | null; usualM: number | null; side: -1 | 0 | 1 | null; deepestM: number | null;
+  /** Where the pump sits, if not 2 m below the usual (the summer countdown sets it at the deepest May on record). */
+  pumpM?: number | null;
+  /** The pump's state, if not the Water Garden's rule (the countdown's own). */
+  state?: PumpState;
+};
 export type PumpState = "full" | "steady" | "trickle" | "dry" | "none";
 
 /** The pump sits this far below the mandal's usual October level. */
@@ -134,9 +140,10 @@ export function Borewells({ bores, scaleM, aquifer, animated = false, play = tru
       </g>
 
       {bores.map((b, i) => {
-        const x = PAD_L + (i + 0.5) * sp, state = pumpState(b), reading = b.nowM !== null;
-        const deepest = Math.min(scaleM, Math.max(b.deepestM ?? b.nowM ?? 0, b.nowM ?? 0) + 6), boreY = y(deepest), casingY = y(Math.min(deepest, aquifer === 0 ? 14 : deepest));
-        const pumpM = b.usualM !== null ? Math.min(deepest - 1.5, b.usualM + PUMP_BELOW_USUAL_M) : null, pumpY = pumpM !== null ? y(pumpM) : null;
+        const x = PAD_L + (i + 0.5) * sp, state = b.state ?? pumpState(b), reading = b.nowM !== null;
+        const setAt = b.pumpM !== undefined ? b.pumpM : b.usualM !== null ? b.usualM + PUMP_BELOW_USUAL_M : null;
+        const deepest = Math.min(scaleM, Math.max(b.deepestM ?? b.nowM ?? 0, b.nowM ?? 0, setAt ?? 0) + 6), boreY = y(deepest), casingY = y(Math.min(deepest, aquifer === 0 ? 14 : deepest));
+        const pumpM = setAt !== null ? Math.min(deepest - 1.5, setAt) : null, pumpY = pumpM !== null ? y(pumpM) : null;
         const bw = Math.min(7.5, sp * 0.3), stream = STREAM[state];
         return (
           <g key={b.id ?? `${b.name}${i}`} className={styles.bore} data-state={state} data-selected={selected === i ? "" : undefined} style={{ "--i": i } as CSSProperties} opacity={reading ? 1 : 0.35}>
@@ -154,10 +161,16 @@ export function Borewells({ bores, scaleM, aquifer, animated = false, play = tru
                 </g>
               ) : null}
               {pumpY !== null ? <>
-                <line x1={r1(x - 0.8)} x2={r1(x - 0.8)} y1={SKY} y2={r1(pumpY - 6)} stroke="#c9d2da" strokeWidth={1.1} />
-                <line x1={r1(x + 1.4)} x2={r1(x + 1.4)} y1={SKY} y2={r1(pumpY - 2)} stroke="#1a1d20" strokeWidth={0.6} />
-                <rect x={r1(x - 2.6)} y={r1(pumpY - 7)} width={5.2} height={14} rx={2.2} fill={`url(#${uid}-pump)`} />
-                <path d={`M${r1(x - 2.6)} ${r1(pumpY - 2)}h5.2M${r1(x - 2.6)} ${r1(pumpY + 1)}h5.2M${r1(x - 2.6)} ${r1(pumpY + 4)}h5.2`} stroke="rgba(0,0,0,.35)" strokeWidth={0.5} />
+                {/* The rising main and cable stretch from the surface to the pump, and the pump moves to its
+                    depth: all three glide together when the pump is reset. */}
+                <g className={styles.level} style={{ transform: `translateY(${SKY}px) scaleY(${r1(Math.max(1, pumpY - SKY - 6))})` } as CSSProperties}>
+                  <line x1={r1(x - 0.8)} x2={r1(x - 0.8)} y1={0} y2={1} stroke="#c9d2da" strokeWidth={1.1} vectorEffect="non-scaling-stroke" />
+                  <line x1={r1(x + 1.4)} x2={r1(x + 1.4)} y1={0} y2={1} stroke="#1a1d20" strokeWidth={0.6} vectorEffect="non-scaling-stroke" />
+                </g>
+                <g className={styles.level} style={{ transform: `translateY(${r1(pumpY)}px)` } as CSSProperties}>
+                  <rect x={r1(x - 2.6)} y={-7} width={5.2} height={14} rx={2.2} fill={`url(#${uid}-pump)`} />
+                  <path d={`M${r1(x - 2.6)} -2h5.2M${r1(x - 2.6)} 1h5.2M${r1(x - 2.6)} 4h5.2`} stroke="rgba(0,0,0,.35)" strokeWidth={0.5} />
+                </g>
               </> : null}
             </g>
 
