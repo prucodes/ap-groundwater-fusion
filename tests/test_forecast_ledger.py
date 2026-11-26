@@ -84,9 +84,12 @@ def test_the_next_test_says_what_the_forecasts_expected_and_how_far_the_water_ha
     assert t["expectedChangeM"] == -1.0, "negative is nearer the surface: a 1 m rise expected"
     assert t["soFarChangeM"] == -0.2
     assert t["yearAgoMinusLatestM"] == -2.8, "last November stood nearer the surface than October now"
+    # The line the month is read along: the median mandal since August, for each month read (no September here).
+    assert t["path"] == [{"month": "2026-10", "changeM": -0.2, "mandals": 2}]
     # Once November is measured, the same figures move into the month's score.
     observed["a"]["2026-11"], observed["b"]["2026-11"] = 4.7, 8.7
     scored = b.summarise([week("2026-09-28", forecasts)], observed)
     assert scored["nextTest"] is None
     month = scored["byTarget"]["2026-11"]
     assert (month["origin"], month["expectedChangeM"], month["measuredChangeM"], month["yearAgoMinusMeasuredM"]) == ("2026-08", -1.0, -0.3, -2.7)
+    assert [(p["month"], p["changeM"]) for p in month["path"]] == [("2026-10", -0.2), ("2026-11", -0.3)], "the path ends on the measured month"

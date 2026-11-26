@@ -1,21 +1,8 @@
-/* Readings day: plain prose under each heading, and the largest moves as two short lists. */
+/* Readings day: plain prose under each heading, folded where a picture leads. */
 .prose { display: grid; gap: 10px; max-width: 78ch; }
 .prose p { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink); }
 .prose b { font-weight: 650; }
 .small { font-size: 13px !important; color: var(--ink-soft) !important; }
-.moverGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px 28px; }
-.movers h3 { margin: 0 0 8px; font: 600 14px var(--font-display); color: var(--ink); }
-.movers ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.movers li { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: baseline; gap: 12px; padding: 8px 12px; border-radius: 10px; background: var(--card); border: 1px solid var(--line); }
-.movers a { display: grid; gap: 1px; color: inherit; text-decoration: none; min-width: 0; }
-.movers a:hover b { text-decoration: underline; }
-.movers a b { font-weight: 600; font-size: 14px; }
-.movers a small { font-size: 12px; color: var(--ink-soft); }
-.movers span { font: 600 14px var(--font-mono); font-variant-numeric: tabular-nums; }
-.movers span[data-tone="deeper"] { color: var(--bad-ink, #a33b2c); }
-.movers span[data-tone="nearer"] { color: var(--cyan-ink, #1f7fae); }
-.movers em { font-style: normal; font-size: 12px; color: var(--ink-soft); white-space: nowrap; }
-.none { margin: 0; font-size: 13px; color: var(--ink-soft); }
 .doubt { margin: 14px 0 0; max-width: 90ch; font-size: 13px; line-height: 1.55; color: var(--ink-soft); }
 .doubt b { color: var(--ink); font-weight: 600; }
 .doubt a { color: inherit; }

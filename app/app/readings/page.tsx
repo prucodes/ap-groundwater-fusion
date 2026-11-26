@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HeaderHero } from "../../components/HeaderHero";
-import { IconActivity, IconCalendar, IconDroplet } from "../../components/icons";
+import { IconActivity, IconCalendar, IconDroplet, IconMap } from "../../components/icons";
+import { RankList } from "../../components/RankList";
+import { StateOutlineMap } from "../../components/StateOutlineMap";
+import { ForecastStrip } from "../../components/readings/ForecastStrip";
 import { brief } from "../../lib/pageBriefs";
-import { MIN_TO_JUDGE, readingsDay, type Mover } from "../../lib/readingsDay";
+import { mandalByMapKey, mapGeometry } from "../../lib/data";
+import { STATIC_MAP_VIEW } from "../../lib/staticMap";
+import { MIN_TO_JUDGE, MOVE_BINS, moveKey, nextMonth, readingsDay, type Mover } from "../../lib/readingsDay";
 
 import shared from "../rabi/Rabi.module.css";
 import styles from "./Readings.module.css";
@@ -24,23 +29,22 @@ const mv = (v: number) => `${Math.abs(v).toFixed(Math.abs(v) < 1 ? 2 : 1)} m`;
 const way = (change: number, deeper = "deeper", nearer = "nearer the surface") => (change > 0 ? deeper : nearer);
 const pct = (gain: number) => `${Math.abs(Math.round(gain))}% ${gain >= 0 ? "better" : "worse"}`;
 
-function Movers({ title, rows }: { title: string; rows: Mover[] }) {
-  return (
-    <div className={styles.movers}>
-      <h3>{title}</h3>
-      {rows.length ? (
-        <ol>
-          {rows.map(r => (
-            <li key={r.id}>
-              <Link href={`/mandals/${r.id}/`}><b>{r.name}</b><small>{r.district}</small></Link>
-              <span data-tone={r.changeM > 0 ? "deeper" : "nearer"}>{r.changeM > 0 ? "+" : "−"}{m(r.changeM)}</span>
-              <em>now {r.nowM.toFixed(1)} m</em>
-            </li>
-          ))}
-        </ol>
-      ) : <p className={styles.none}>None moved more than 0.1 m this way.</p>}
-    </div>
-  );
+/** Likely misread: grey, and ringed on the map. No reading in both months: the map's own held tone. */
+const MISREAD = "#9aa3ab";
+const NONE = "#eef1f4";
+
+/** Each outline's mandal, so the map can colour it by the mandal's move. */
+function moveMap(all: Mover[], previous: string, latest: string) {
+  const byId = new Map(all.map(c => [c.id, c]));
+  const keys: string[] = [], notes: string[] = [], marks: number[] = [];
+  mapGeometry.mandals.forEach((feature, index) => {
+    const c = byId.get(mandalByMapKey(feature.d, feature.m)?.id ?? "");
+    if (!c) { keys.push("n"); notes.push(`No reading in both ${name(previous)} and ${name(latest)}.`); return; }
+    if (c.doubted) { keys.push("x"); marks.push(index); notes.push(`Moved ${m(c.changeM)} ${way(c.changeM)}: likely a misread month, left out of every count.`); return; }
+    keys.push(moveKey(c.changeM));
+    notes.push(`${mv(c.changeM)} ${way(c.changeM)} than in ${name(previous)}; now ${c.nowM.toFixed(1)} m below ground.`);
+  });
+  return { keys, notes, marks };
 }
 
 /* Readings day: the newest month in, and the tests that were waiting for it (lib/readingsDay.ts).
@@ -48,6 +52,8 @@ function Movers({ title, rows }: { title: string; rows: Mover[] }) {
 export default function ReadingsPage() {
   const r = readingsDay(), c = r.change, f = r.forecast, s = r.sensors, b = f.block, nx = f.next;
   const test = s.test, sy = test?.sensorYear ?? null;
+  const map = moveMap(c.all, r.previous, r.month);
+  const scale = Math.max(0.1, ...[...c.deeper5, ...c.shallower5].map(row => Math.abs(row.changeM)));
   return (
     <div className={`pageWrap ${shared.page}`}>
       <HeaderHero title="Readings Day" brief={brief("/readings", <>{month(r.month)} readings, {r.read} of {r.total} mandals.</>)} showChips={false} variant="compact" />
@@ -59,7 +65,6 @@ export default function ReadingsPage() {
             {name(r.month)}&rsquo;s readings are in for {r.read} of {r.total} mandals.
             {c.medianChangeM !== null ? <> Since {name(r.previous)}, the median water table moved <b>{mv(c.medianChangeM)} {way(c.medianChangeM)}</b>{c.usualChangeM !== null ? <>, against a usual {mv(c.usualChangeM)} {way(c.usualChangeM)} between those months</> : null}.</> : null}
           </h2>
-          <p>{c.deeper} mandals stand more than 0.1 m deeper than in {name(r.previous)}, {c.shallower} nearer the surface and {c.steady} within 0.1 m, of {c.compared} read in both months.</p>
         </div>
         <ul className={shared.tiles}>
           {r.usual ? <li><span>Below their usual {name(r.month)}</span><b data-tone="bad">{r.usual.deeper}<small> of {r.usual.compared}</small></b><em>{r.usual.worstSince ? `the most since ${r.usual.worstSince}` : `the most of any ${name(r.month)} on record`}</em></li> : null}
@@ -75,37 +80,70 @@ export default function ReadingsPage() {
         </ul>
       </section>
 
+      <section className={shared.block} aria-labelledby="moved-title" data-testid="readings-moved">
+        <header className={shared.blockHead}>
+          <span className={shared.eyebrow}><IconMap /> What moved since {name(r.previous)}</span>
+          <h2 id="moved-title">Since {name(r.previous)} the water table rose in {c.shallower} mandals and fell in {c.deeper}</h2>
+          <p>{c.steady} more held within 0.1 m. Each mandal&rsquo;s {name(r.month)} reading against its {name(r.previous)} reading, the median of its wells in both months, for the {c.compared} read in both.{c.doubted.length ? <> Ringed: {c.doubted.length} {c.doubted.length === 1 ? "move" : "moves"} too large to trust, left out of every count.</> : null}</p>
+        </header>
+        <div className={shared.soilGrid}>
+          <StateOutlineMap testId="readings-map" aspect={STATIC_MAP_VIEW.width / STATIC_MAP_VIEW.height}
+            keys={map.keys} notes={map.notes} marks={map.marks}
+            colors={{ ...Object.fromEntries(MOVE_BINS.map(b => [b.key, b.color])), x: MISREAD, n: NONE }}
+            label={`Water table since ${name(r.previous)}, by mandal: rose more than 0.1 m in ${c.shallower}, fell more than 0.1 m in ${c.deeper}, held within 0.1 m in ${c.steady}.`}
+            legend={<>
+              {[...MOVE_BINS].reverse().map(b => <span key={b.key} data-key={b.key}><i style={{ background: b.color }} />{b.label} · {c.bins[b.key]}</span>)}
+              {c.doubted.length ? <span><i style={{ background: MISREAD, outline: "1.5px solid var(--ink)" }} />Likely misread · {c.doubted.length}</span> : null}
+            </>} />
+          <div className={shared.soilSide}>
+            <RankList title="Rose furthest" rows={c.shallower5.map(row => ({ name: row.name, href: `/mandals/${row.id}/`, note: row.district, value: mv(row.changeM), share: (100 * Math.abs(row.changeM)) / scale, color: MOVE_BINS[4].color }))} />
+            <RankList title="Fell furthest" rows={c.deeper5.map(row => ({ name: row.name, href: `/mandals/${row.id}/`, note: row.district, value: mv(row.changeM), share: (100 * Math.abs(row.changeM)) / scale, color: MOVE_BINS[0].color }))} />
+            {c.doubted.length ? (
+              <p className={styles.doubt} data-testid="readings-doubted">
+                <b>Ringed on the map, likely misreadings worth checking with the department:</b>{" "}
+                {c.doubted.map((d, i) => <span key={d.id}>{i ? ", " : ""}<Link href={`/mandals/${d.id}/`}>{d.name}</Link> ({d.changeM > 0 ? "+" : "−"}{m(d.changeM)})</span>)}.
+                {" "}Each moved more than twice its largest move between {name(r.previous)} and {name(r.month)} on record, or more than 20 m.
+              </p>
+            ) : null}
+          </div>
+        </div>
+      </section>
+
       <section className={shared.block} aria-labelledby="forecast-title" data-testid="readings-forecast" data-judged={f.judged ? "" : undefined}>
         <header className={shared.blockHead}>
           <span className={shared.eyebrow}><IconActivity /> Did the forecasts hold?</span>
           <h2 id="forecast-title">{f.judged && b
             ? <>The {b.forecasts} forecasts for {name(r.month)} missed by {m(b.maeM)}, {pct(b.gainPct)} than no change</>
-            : <>{month(r.month)} had {f.forecasts === 0 ? "no" : f.forecasts} frozen {f.forecasts === 1 ? "forecast" : "forecasts"} to score: too few to judge</>}</h2>
+            : nx ? <>The first verdict is {name(nx.target)}: the forecasts expect {mv(nx.expectedChangeM)} {way(nx.expectedChangeM)}, and by {name(nx.latestMonth)} the water had come {mv(nx.soFarChangeM)}</>
+              : <>{month(r.month)} had {f.forecasts === 0 ? "no" : f.forecasts} frozen {f.forecasts === 1 ? "forecast" : "forecasts"} to score: too few to judge</>}</h2>
+          {f.judged && b
+            ? <p>Each was frozen the week it was published, from {month(b.origin)} readings, and scored against {name(r.month)}&rsquo;s. On average a forecast missed by <b>{m(b.maeM)}</b>; carrying the {name(b.origin)} reading forward missed by <b>{m(b.noChangeMaeM)}</b>.</p>
+            : nx ? <p data-testid="readings-next-forecast">{nx.forecasts} forecasts frozen on {day(nx.issued)}, from {month(nx.origin)} readings. {name(r.month)} itself had {f.forecasts === 0 ? "none" : f.forecasts} to score, too few to judge: a verdict needs {MIN_TO_JUDGE}.</p> : null}
         </header>
-        {f.judged && b ? (
+        {f.judged && b && b.path?.length ? (
+          <ForecastStrip origin={b.origin} target={r.month} path={b.path} expectedM={b.expectedChangeM} landsBy={nextMonth(r.month)} forecasts={b.forecasts} />
+        ) : !f.judged && nx?.path?.length ? (
+          <ForecastStrip origin={nx.origin} target={nx.target} path={nx.path} expectedM={nx.expectedChangeM} landsBy={nextMonth(nx.target)} forecasts={nx.forecasts} />
+        ) : null}
+        <details className="foldMore">
+          <summary><span>How the test works</span><span>frozen before the readings existed</span></summary>
           <div className={styles.prose}>
-            <p>
-              Each was frozen the week it was published{f.issued ? `, from ${day(f.issued)}` : ""}, from {month(b.origin)} readings, and scored now against {name(r.month)}&rsquo;s.
-              On average a forecast missed by <b>{m(b.maeM)}</b>; carrying the {name(b.origin)} reading forward missed by <b>{m(b.noChangeMaeM)}</b>.
-              They expected the median mandal {m(b.expectedChangeM)} {way(b.expectedChangeM)} than in {name(b.origin)}; it moved {m(b.measuredChangeM)} {way(b.measuredChangeM)}.
-              {b.biasM < 0 ? ` On average they forecast ${m(b.biasM)} more water than came.` : ` On average they forecast ${m(b.biasM)} less water than came.`}
-              {` ${Math.round(b.bandCoveragePct)}% of readings fell inside the forecast's band.`}
-            </p>
-            <p className={styles.small}>Frozen forecasts are never changed after publication; the ledger with every week&rsquo;s fingerprint is on <Link href="/methodology/">the method page</Link>.</p>
-          </div>
-        ) : (
-          <div className={styles.prose}>
-            <p>A verdict needs {MIN_TO_JUDGE} or more forecasts for the month, and the ledger began on {day(f.began)}.</p>
-            {nx ? (
-              <p data-testid="readings-next-forecast">
-                The first verdict will be <b>{month(nx.target)}</b>: {nx.forecasts} forecasts frozen on {day(nx.issued)}, from {month(nx.origin)} readings.
-                They expect the median mandal <b>{m(nx.expectedChangeM)} {way(nx.expectedChangeM)}</b> than in {name(nx.origin)}; by {name(nx.latestMonth)} it had moved {m(nx.soFarChangeM)} {way(nx.soFarChangeM)}.
-                {Math.abs(nx.yearAgoMinusLatestM) >= 0.5 ? ` Part of each forecast leans on the same month a year earlier, and last year's ${name(nx.target)} water table stood ${m(nx.yearAgoMinusLatestM)} ${way(nx.yearAgoMinusLatestM)} than this ${name(nx.latestMonth)}'s: if this year stays drier, that lean will show as a miss.` : ""}
+            {f.judged && b ? (
+              <p>
+                They expected the median mandal {m(b.expectedChangeM)} {way(b.expectedChangeM)} than in {name(b.origin)}; it moved {m(b.measuredChangeM)} {way(b.measuredChangeM)}.
+                {b.biasM < 0 ? ` On average they forecast ${m(b.biasM)} more water than came.` : ` On average they forecast ${m(b.biasM)} less water than came.`}
+                {` ${Math.round(b.bandCoveragePct)}% of readings fell inside the forecast's band.`}
               </p>
-            ) : null}
-            <p className={styles.small}>Whatever the result, it is published as it comes: the forecasts were written down before the readings existed.</p>
+            ) : (
+              <p>
+                A verdict needs {MIN_TO_JUDGE} or more forecasts for the month, and the ledger began on {day(f.began)}.
+                {nx && Math.abs(nx.yearAgoMinusLatestM) >= 0.5 ? ` Part of each forecast leans on the same month a year earlier, and last year's ${name(nx.target)} water table stood ${m(nx.yearAgoMinusLatestM)} ${way(nx.yearAgoMinusLatestM)} than this ${name(nx.latestMonth)}'s: if this year stays drier, that lean will show as a miss.` : ""}
+              </p>
+            )}
+            <p>The line is the median mandal among the forecasts&rsquo; own mandals, month by month since the month they started from; the dashed line runs to where they said it would be.</p>
+            <p className={styles.small}>Frozen forecasts are never changed after publication, and the result is published as it comes; the ledger with every week&rsquo;s fingerprint is on <Link href="/methodology/">the method page</Link>.</p>
           </div>
-        )}
+        </details>
       </section>
 
       <section className={shared.block} aria-labelledby="sensors-title" data-testid="readings-sensors">
@@ -123,25 +161,6 @@ export default function ReadingsPage() {
           ) : <p>No sensor estimate was made for {name(r.month)}.</p>}
           <p className={styles.small}>{s.rule}</p>
         </div>
-      </section>
-
-      <section className={shared.block} aria-labelledby="moved-title" data-testid="readings-moved">
-        <header className={shared.blockHead}>
-          <span className={shared.eyebrow}><IconDroplet /> What moved since {name(r.previous)}</span>
-          <h2 id="moved-title">The largest moves, mandal by mandal</h2>
-          <p>Each mandal&rsquo;s {name(r.month)} reading against its {name(r.previous)} reading, the median of its wells in both months.</p>
-        </header>
-        <div className={styles.moverGrid}>
-          <Movers title={`Most deeper than in ${name(r.previous)}`} rows={c.deeper5} />
-          <Movers title="Most nearer the surface" rows={c.shallower5} />
-        </div>
-        {c.doubted.length ? (
-          <p className={styles.doubt} data-testid="readings-doubted">
-            <b>Left out as likely misreadings, worth checking with the department:</b>{" "}
-            {c.doubted.map((d, i) => <span key={d.id}>{i ? ", " : ""}<Link href={`/mandals/${d.id}/`}>{d.name}</Link> ({d.changeM > 0 ? "+" : "−"}{m(d.changeM)})</span>)}.
-            {" "}Each moved more than twice its largest move between {name(r.previous)} and {name(r.month)} on record, or more than 20 m.
-          </p>
-        ) : null}
       </section>
 
       <section className={shared.block} aria-labelledby="next-title" data-testid="readings-next">

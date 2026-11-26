@@ -1,0 +1,49 @@
+/* One forecast month on one line: measured solid in teal, forecast dashed in amber. */
+.strip { margin: 0; display: grid; gap: 10px; max-width: 860px; container: strip / inline-size; }
+.stage { position: relative; width: 100%; aspect-ratio: 720 / 240; }
+.stage svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.stage svg * { vector-effect: non-scaling-stroke; }
+
+.column { stroke: var(--hairline); stroke-width: 1; }
+.waiting { position: absolute; border-radius: 10px; background: color-mix(in srgb, var(--amber) 7%, transparent); border: 1px dashed color-mix(in srgb, var(--amber) 34%, transparent); }
+.zero { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 4; opacity: .7; }
+.forecast { stroke: var(--amber-ink); stroke-width: 2.5; stroke-dasharray: 7 6; stroke-linecap: round; fill: none; }
+.measured { stroke: var(--teal); stroke-width: 3.5; stroke-linejoin: round; stroke-linecap: round; fill: none; }
+.gap { stroke: var(--ink-soft); stroke-width: 1.5; stroke-dasharray: 2 3; }
+.dot, .ring { position: absolute; border-radius: 50%; transform: translate(-50%, -50%); }
+.dot { width: 11px; height: 11px; background: var(--teal); box-shadow: 0 0 0 2.5px var(--card); }
+.ring { width: 15px; height: 15px; background: var(--card); border: 3px solid var(--amber-ink); box-sizing: border-box; }
+
+/* Words over the lines. Each is placed at its point and nudged off it by its own transform. */
+.word { position: absolute; display: grid; gap: 1px; font-size: 13px; line-height: 1.3; color: var(--ink-soft); white-space: nowrap; pointer-events: none; }
+.word b { font: 600 12px var(--font-display); color: var(--ink); }
+.zeroWord { transform: translate(0, 7px); font-size: 12px; color: var(--muted); }
+/* Above and left of its ring, clear of the dashed line rising to it and of the waiting month. */
+.forecastWord { transform: translate(-100%, calc(-100% + 4px)); text-align: right; }
+.forecastWord b { color: var(--amber-ink); }
+/* Above and right of the latest dot, between the measured line and the forecast's. */
+.soFarWord { transform: translate(0, calc(-100% - 4px)); }
+.measuredWord { transform: translate(-100%, 12px); text-align: right; }
+.soFarWord b, .measuredWord b { color: var(--teal); }
+.month { transform: translateX(-50%); justify-items: center; text-align: center; font: 600 12px var(--font-display); color: var(--ink); }
+.month small { width: 8.5em; white-space: normal; font: 400 11px/1.3 var(--font-sans); color: var(--amber-ink); }
+.short { display: none; }
+
+/* Under the chart on a narrow frame, where the words would crowd the lines. */
+.readout { display: none; margin: 0; gap: 2px; font-size: 13px; line-height: 1.45; color: var(--ink); }
+.readSoFar { color: var(--teal); font-weight: 600; }
+.readForecast { color: var(--amber-ink); font-weight: 600; }
+.readDue { color: var(--ink-soft); font-size: 12px; }
+
+.key { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--ink-soft); }
+.key span { display: inline-flex; align-items: center; gap: 8px; }
+.key i { display: inline-block; width: 22px; height: 0; border-top: 3px solid var(--teal); }
+.key i.keyForecast { border-top: 2.5px dashed var(--amber-ink); }
+
+@container strip (max-width: 560px) {
+  .stage { aspect-ratio: 4 / 3; }
+  .zeroWord, .forecastWord, .soFarWord, .measuredWord, .month small { display: none; }
+  .long { display: none; }
+  .short { display: inline; }
+  .readout { display: grid; }
+}
