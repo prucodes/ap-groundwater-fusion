@@ -101,6 +101,10 @@ export const BRIEFS = {
     what: "One A4 page for each district's Collector, from the figures the site already publishes, rebuilt every Monday.",
     use: "Open a district to read it on screen, or take its PDF to a review meeting or forward it.",
   },
+  "/readings": {
+    what: "The newest month of the State's hand-read wells, the day it arrives: what moved since the month before, whether the forecasts frozen for it held, and whether the daily sensors could have stood in.",
+    use: "Open it the Monday after a month's readings land; the verdicts are published as they come, good or bad.",
+  },
   "/garden": {
     what: "Every mandal as a sorghum plant: its roots reach the measured water table, its grain head stands full where the water is above its usual level for the month and droops where it is below.",
     use: "Play the years to show which ones wilted; forward the film, in the shape that suits, with its source and date on it.",

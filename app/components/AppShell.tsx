@@ -56,6 +56,7 @@ const navGroups: Array<{ label: string; items: NavItem[] }> = [
   { label: "This week", items: [
       { href: "/", label: "Overview", Icon: IconLayers, desc: "Executive cockpit: status map, priority mandals, source readiness and selected-area evidence." },
       { href: "/changes", label: "This Week", Icon: IconCalendar, desc: "What moved since the previous weekly refresh: rain, soil, reservoirs, drought triggers, groundwater and the El Niño outlook, each with its own reading dates." },
+      { href: "/readings", label: "Readings Day", Icon: IconActivity, desc: "The newest month of hand-read wells: what moved since the month before, whether the frozen forecasts held, and whether the sensors could stand in for the wells." },
       { href: "/map", label: "Mandal Map", Icon: IconMap, desc: "Full mandal/district map with status, rainfall and water-balance layers." },
       { href: "/garden", label: "Water Garden", Icon: IconLeaf, desc: "Every mandal as a sorghum plant whose roots reach its water table: full where the water stands above its usual for the month, drooping where it stands below. Every year on record, and a film." },
   ] },
