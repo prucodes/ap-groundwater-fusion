@@ -2,11 +2,12 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { CREATOR_CREDIT, CREATOR_NAME, WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE } from "../../lib/creator";
+import { CREATOR_CREDIT, CREATOR_NAME, OPENING_STORAGE_KEY, OPENING_STORAGE_VALUE, WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE } from "../../lib/creator";
 import { countEvent } from "../../lib/visit-counter";
 import { Verse } from "../Verse";
 import { VERSES } from "../../lib/verses";
 import { WaterLandscape } from "./WaterLandscape";
+import { WaterIntro } from "./WaterIntro";
 import styles from "./Welcome.module.css";
 
 const WelcomeContext = createContext<() => void>(() => {});
@@ -69,19 +70,33 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
   const input = useRef<HTMLInputElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const focusAfterEntry = useRef(false);
+  // The opening: on a first visit the State fills with water in front of the welcome, then fades
+  // to reveal it. Once per device, and only where that can be remembered; never with reduced motion.
+  const [opening, setOpening] = useState<"none" | "playing" | "leaving">("none");
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // A preview of the other way to use it: the living water as the welcome's own picture (?welcome=blend).
+  const [blend, setBlend] = useState(false);
 
   useEffect(() => {
-    let remembered = false;
-    try { remembered = localStorage.getItem(WELCOME_STORAGE_KEY) === WELCOME_STORAGE_VALUE; } catch { /* In-memory entry still works if storage is blocked. */ }
+    let remembered = false, openingSeen = true;
+    try {
+      remembered = localStorage.getItem(WELCOME_STORAGE_KEY) === WELCOME_STORAGE_VALUE;
+      openingSeen = localStorage.getItem(OPENING_STORAGE_KEY) === OPENING_STORAGE_VALUE;
+    } catch { /* In-memory entry still works if storage is blocked; the opening, which could not be remembered, is left out. */ }
     setPhase(remembered ? "open" : "welcome");
     document.documentElement.dataset.apWelcome = remembered ? "open" : "welcome";
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const blended = new URLSearchParams(window.location.search).get("welcome") === "blend";
+    setBlend(blended);
+    if (!remembered && !openingSeen && !media.matches && !blended) setOpening("playing");
+    else delete document.documentElement.dataset.apOpening;
     const update = () => setReduced(media.matches);
     update();
     media.addEventListener("change", update);
     return () => {
       media.removeEventListener("change", update);
       if (timer.current) clearTimeout(timer.current);
+      if (leaveTimer.current) clearTimeout(leaveTimer.current);
     };
   }, []);
 
@@ -103,6 +118,21 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
       }
     }
   }, [phase, replay]);
+
+  /** The opening fades and the welcome is there behind it. Remembered from here, so it plays once. */
+  function leaveOpening() {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    try { localStorage.setItem(OPENING_STORAGE_KEY, OPENING_STORAGE_VALUE); } catch { /* Shown once where storage works. */ }
+    delete document.documentElement.dataset.apOpening;
+    setOpening("leaving");
+    leaveTimer.current = setTimeout(() => setOpening("none"), 900);
+  }
+
+  /** Once the State is full, it holds a moment (a shorter one on a shared link), then fades. */
+  function openingFilled() {
+    if (leaveTimer.current) clearTimeout(leaveTimer.current);
+    leaveTimer.current = setTimeout(leaveOpening, shared ? 350 : 1300);
+  }
 
   function openWorkspace() {
     document.documentElement.dataset.apWelcome = "open";
@@ -157,7 +187,7 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
     <WelcomeContext.Provider value={showWelcome}>
       {phase === "checking" || phase === "open" ? children : null}
       {phase === "open" ? null : (
-        <div className={styles.welcome} data-testid="welcome" data-phase={phase} data-motion={paused || reduced ? "paused" : "running"}>
+        <div className={styles.welcome} data-testid="welcome" data-phase={phase} data-motion={paused || reduced ? "paused" : "running"} data-blend={blend ? "" : undefined} inert={opening === "playing" ? true : undefined}>
           <div className={styles.grain} aria-hidden="true" />
           <header className={styles.header}>
             <div className={styles.brand}>
@@ -207,8 +237,10 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
 
             <figure className={styles.landscape}>
               <WelcomeQuote paused={paused} reduced={reduced} settled={phase !== "checking"} />
-              <WaterLandscape />
-              <figcaption><span className={styles.figureIndex}>FIG. 01</span> BENEATH THE MONSOON <span className={styles.figureNote}>Illustrative landscape · not measured data</span></figcaption>
+              {blend ? <WaterIntro mode="figure" paused={paused || reduced} /> : <WaterLandscape />}
+              {blend
+                ? <figcaption><span className={styles.figureIndex}>FIG. 01</span> THE STATE, FILLED <span className={styles.figureNote}>Illustration · not measured data</span></figcaption>
+                : <figcaption><span className={styles.figureIndex}>FIG. 01</span> BENEATH THE MONSOON <span className={styles.figureNote}>Illustrative landscape · not measured data</span></figcaption>}
             </figure>
           </div>
 
@@ -220,6 +252,11 @@ export function WelcomeGate({ children }: { children: React.ReactNode }) {
           <span className={styles.srOnly}>{CREATOR_CREDIT}</span>
         </div>
       )}
+      {phase !== "open" && opening !== "none" ? (
+        <div className={styles.opening} data-state={opening} data-testid="welcome-opening">
+          <WaterIntro mode="screen" copy={false} replayable={false} pace={shared ? 0.35 : 1} onDone={openingFilled} onSkip={leaveOpening} />
+        </div>
+      ) : null}
     </WelcomeContext.Provider>
   );
 }

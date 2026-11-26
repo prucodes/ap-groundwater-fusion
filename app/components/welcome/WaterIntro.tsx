@@ -80,13 +80,32 @@ function seeded(seed: number) {
   return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
 }
 
-export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?: React.ReactNode }) {
+/** "screen" covers the whole screen (the opening, and the preview page); "figure" sits inside a page,
+    on that page's own background (the welcome's picture). */
+export type WaterIntroMode = "screen" | "figure";
+
+export function WaterIntro({ onDone, onSkip, caption, mode = "screen", pace = 1, copy = true, replayable = true, paused = false }: {
+  onDone?: () => void;
+  /** Called the moment the visitor skips, before the water has finished. */
+  onSkip?: () => void;
+  caption?: React.ReactNode;
+  mode?: WaterIntroMode;
+  /** Under 1 plays faster: the drop, the rings and the fill all take this share of their time. */
+  pace?: number;
+  /** The title that rises in once the State is full. Off when a page with its own words follows. */
+  copy?: boolean;
+  replayable?: boolean;
+  /** Holds the water still where it is (the welcome's motion switch). */
+  paused?: boolean;
+}) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const frame = useRef<HTMLDivElement>(null);
   const count = useRef<HTMLElement>(null);
   const skipRequest = useRef(false);
   const done = useRef(onDone);
   done.current = onDone;
+  const hold = useRef(paused);
+  hold.current = paused;
   const [outlines, setOutlines] = useState<Outlines | null>(null);
   const [phase, setPhase] = useState<"drop" | "fill" | "full">("drop");
   const [run, setRun] = useState(0);
@@ -99,12 +118,17 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
     return () => { live = false; };
   }, []);
 
-  const skip = useCallback(() => { if (phase !== "full") skipRequest.current = true; }, [phase]);
+  const skip = useCallback(() => {
+    if (phase === "full" || mode !== "screen") return;
+    skipRequest.current = true;
+    onSkip?.();
+  }, [phase, mode, onSkip]);
   useEffect(() => {
+    if (mode !== "screen") return;
     const key = (e: KeyboardEvent) => { if (e.key === "Escape" || e.key === " " || e.key === "Enter") skip(); };
     window.addEventListener("keydown", key);
     return () => window.removeEventListener("keydown", key);
-  }, [skip]);
+  }, [skip, mode]);
 
   useEffect(() => {
     if (!outlines || !canvas.current || !frame.current) return;
@@ -125,6 +149,8 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
       index: byHeight[clamp(Math.floor(q * (total - 1) + (rand() - 0.5) * 40), 0, total - 1)], next: 0,
     }));
     const caustic = ctx.createPattern(causticTile(), "repeat");
+    const dropMs = DROP_MS * pace, revealMs = REVEAL_MS * pace, wellAt = WELL_AT * pace, fillMs = FILL_MS * pace;
+    const flashMs = 520 * pace, ringMs = 1900 * pace, ringGap = 230 * pace;
 
     // ---- Layout: where the State sits, its true rows, and the layers drawn once per size.
     let W = 1, H = 1, dpr = 1, scale = 1, ox = 0, oy = 0, top = 0, bottom = 0, left = 0, right = 0;
@@ -143,7 +169,8 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
       W = Math.max(1, box.clientWidth); H = Math.max(1, box.clientHeight); dpr = Math.min(2, window.devicePixelRatio || 1);
       el.width = Math.round(W * dpr); el.height = Math.round(H * dpr);
       const wide = W / H >= 1.15;
-      const area = wide ? { x: W * 0.36, y: H * 0.06, w: W * 0.6, h: H * 0.88 } : { x: W * 0.04, y: H * 0.07, w: W * 0.92, h: H * 0.58 };
+      const area = mode === "figure" ? { x: W * 0.04, y: H * 0.05, w: W * 0.92, h: H * 0.9 }
+        : wide ? { x: W * 0.36, y: H * 0.06, w: W * 0.6, h: H * 0.88 } : { x: W * 0.04, y: H * 0.07, w: W * 0.92, h: H * 0.58 };
       const ew = ext.x1 - ext.x0, eh = ext.y1 - ext.y0;
       scale = Math.min(area.w / ew, area.h / eh);
       ox = area.x + (area.w - ew * scale) / 2 - ext.x0 * scale;
@@ -236,13 +263,13 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
     const step = () => {
       t += STEP;
       // The water starts to well up in the southern tip.
-      if (started < 0 && t >= WELL_AT) { started = t; slosh = 6; }
+      if (started < 0 && t >= wellAt) { started = t; slosh = 6; }
       if (started >= 0) {
         const row = Math.floor(level() * ROW);
         breadth = clamp((row >= 0 && row < rowWidths.length ? rowWidths[row] : 0) / 420);
       }
       if (started >= 0 && full < 0) {
-        const p = clamp((t - started) / FILL_MS);
+        const p = clamp((t - started) / fillMs);
         const q = p + 0.025 * Math.sin(2 * Math.PI * 3.5 * p) * Math.sin(Math.PI * p); // pulses in the inflow
         fill = q * 1.25 - 0.25 * q ** 5; // a rise that eases off at the brim
         if (p >= 1) { fill = 1; full = t; nextRain = t + 900; }
@@ -309,8 +336,8 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
     };
 
     const skipNow = () => {
-      if (t < DROP_MS + REVEAL_MS + 600) t = DROP_MS + REVEAL_MS + 600;
-      if (started < 0) started = t - FILL_MS;
+      if (t < dropMs + revealMs + 600) t = dropMs + revealMs + 600;
+      if (started < 0) started = t - fillMs;
       fill = 1;
       if (full < 0) { full = t - 1000; nextRain = t + 600; }
       for (let i = 0; i < total; i++) if (reached[i] < 0) { reached[i] = t - GLINT_MS; n += 1; }
@@ -354,11 +381,11 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
       const cx = ox + centre.x * scale, cy = oy + centre.y * scale;
       const bg = ctx.createRadialGradient(cx, cy, 10, cx, cy, Math.max(W, H) * 0.9);
       bg.addColorStop(0, "#0b2a40"); bg.addColorStop(0.55, "#061827"); bg.addColorStop(1, "#030b13");
-      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+      if (mode === "figure") ctx.clearRect(0, 0, W, H); else { ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H); }
 
       // 1. The first drop.
-      if (t < DROP_MS) {
-        const p = easeIn(t / DROP_MS), y = -40 + (cy + 40) * p;
+      if (t < dropMs) {
+        const p = easeIn(t / dropMs), y = -40 + (cy + 40) * p;
         const trail = ctx.createLinearGradient(cx, y - 120 * p - 10, cx, y);
         trail.addColorStop(0, "rgba(140, 240, 255, 0)"); trail.addColorStop(1, "rgba(160, 245, 255, 0.55)");
         ctx.strokeStyle = trail; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(cx, y - 120 * p - 10); ctx.lineTo(cx, y); ctx.stroke();
@@ -370,22 +397,22 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
       }
 
       // 2. Its splash and rings, which find the State: its glow, its glass, its lines.
-      const since = t - DROP_MS;
+      const since = t - dropMs;
       if (since >= 0) {
         const R = reach(cx, cy);
-        if (since < 520) {
-          const p = since / 520, flash = ctx.createRadialGradient(cx, cy, 0, cx, cy, 10 + 60 * p);
+        if (since < flashMs) {
+          const p = since / flashMs, flash = ctx.createRadialGradient(cx, cy, 0, cx, cy, 10 + 60 * p);
           flash.addColorStop(0, `rgba(230, 253, 255, ${0.9 * (1 - p)})`); flash.addColorStop(1, "rgba(150, 245, 255, 0)");
           ctx.fillStyle = flash; ctx.beginPath(); ctx.arc(cx, cy, 10 + 60 * p, 0, Math.PI * 2); ctx.fill();
         }
         for (let k = 0; k < 3; k++) {
-          const rt = since - k * 230;
-          if (rt < 0 || rt > 1900) continue;
-          const p = rt / 1900, r = easeOut(p) * R;
+          const rt = since - k * ringGap;
+          if (rt < 0 || rt > ringMs) continue;
+          const p = rt / ringMs, r = easeOut(p) * R;
           ctx.strokeStyle = `rgba(160, 245, 255, ${0.55 * (1 - p) * (k === 0 ? 1 : 0.6)})`; ctx.lineWidth = k === 0 ? 1.8 : 1.1;
           ctx.beginPath(); ctx.ellipse(cx, cy, r, r * 0.92, 0, 0, Math.PI * 2); ctx.stroke();
         }
-        const shown = easeOut(clamp(since / REVEAL_MS)) * R;
+        const shown = easeOut(clamp(since / revealMs)) * R;
         ctx.save();
         if (shown < R) { ctx.beginPath(); ctx.ellipse(cx, cy, shown, shown * 0.92, 0, 0, Math.PI * 2); ctx.clip(); }
         raw();
@@ -523,8 +550,14 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
       if (now !== lastPhase) { lastPhase = now; setPhase(now); if (now === "full") done.current?.(); }
     };
 
+    // Inside a page the water waits until its picture is on screen, so a phone that scrolls down to it sees the drop fall.
+    let seen = mode !== "figure";
+    const watch = mode === "figure" ? new IntersectionObserver(entries => { if (entries.some(e => e.intersectionRatio >= 0.35)) seen = true; }, { threshold: [0, 0.35, 0.6] }) : null;
+    watch?.observe(box);
+
     let raf = 0, lastNow = 0, carry = 0;
     const tick = (now: number) => {
+      if (hold.current || !seen) { lastNow = 0; raf = requestAnimationFrame(tick); return; }
       if (skipRequest.current) { skipRequest.current = false; skipNow(); }
       if (!lastNow) lastNow = now;
       carry += Math.min(120, now - lastNow); lastNow = now;
@@ -541,25 +574,28 @@ export function WaterIntro({ onDone, caption }: { onDone?: () => void; caption?:
     resize.observe(box);
     if (still) { skipNow(); t += 2400; render(); }
     else raf = requestAnimationFrame(tick);
-    return () => { cancelAnimationFrame(raf); resize.disconnect(); document.removeEventListener("visibilitychange", visibility); };
-  }, [outlines, run, still]);
+    return () => { cancelAnimationFrame(raf); resize.disconnect(); watch?.disconnect(); document.removeEventListener("visibilitychange", visibility); };
+  }, [outlines, run, still, mode, pace]);
 
   const total = outlines?.mandals.length ?? 670;
   return (
-    <div ref={frame} className={styles.intro} data-testid="water-intro" data-phase={phase} data-still={still ? "" : undefined} onClick={skip}>
+    <div ref={frame} className={mode === "figure" ? styles.figure : styles.intro} data-testid="water-intro" data-mode={mode} data-phase={phase} data-still={still ? "" : undefined}
+      onClick={mode === "screen" ? skip : undefined}>
       <canvas ref={canvas} className={styles.canvas} aria-hidden="true" />
-      <div className={styles.copy}>
-        <p className={styles.eyebrow}><span />Andhra Pradesh · {total} mandals</p>
-        <h1 className={styles.title}>AP Water <em>Intelligence</em></h1>
-        <p className={styles.sub}>Every drop has a deeper story. From the monsoon above to the water beneath, mandal by mandal.</p>
-      </div>
-      <p className={styles.count} aria-live="off"><b ref={count}>0</b> of {total} mandals reached</p>
-      <div className={styles.tools}>
-        {phase === "full"
-          ? <button type="button" onClick={e => { e.stopPropagation(); setPhase("drop"); setRun(r => r + 1); }}>Play again</button>
-          : <button type="button" onClick={e => { e.stopPropagation(); skip(); }}>Skip</button>}
-        {caption ? <span className={styles.caption}>{caption}</span> : null}
-      </div>
+      {mode === "screen" ? <>
+        {copy ? <div className={styles.copy}>
+          <p className={styles.eyebrow}><span />Andhra Pradesh · {total} mandals</p>
+          <h1 className={styles.title}>AP Water <em>Intelligence</em></h1>
+          <p className={styles.sub}>Every drop has a deeper story. From the monsoon above to the water beneath, mandal by mandal.</p>
+        </div> : null}
+        <p className={styles.count} aria-live="off"><b ref={count}>0</b> of {total} mandals reached</p>
+        <div className={styles.tools}>
+          {phase === "full"
+            ? replayable ? <button type="button" onClick={e => { e.stopPropagation(); setPhase("drop"); setRun(r => r + 1); }}>Play again</button> : null
+            : <button type="button" onClick={e => { e.stopPropagation(); skip(); }}>Skip</button>}
+          {caption ? <span className={styles.caption}>{caption}</span> : null}
+        </div>
+      </> : null}
     </div>
   );
 }

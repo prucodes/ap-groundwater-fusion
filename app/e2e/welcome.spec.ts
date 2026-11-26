@@ -1,6 +1,13 @@
 import { test, expect, type Page } from "@playwright/test";
 import { readFile } from "node:fs/promises";
-import { WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE } from "../lib/creator";
+import { OPENING_STORAGE_KEY, OPENING_STORAGE_VALUE, WELCOME_STORAGE_KEY, WELCOME_STORAGE_VALUE } from "../lib/creator";
+
+// The water opening plays once, before the first welcome. These tests are about the welcome itself,
+// so each starts as a visitor who has seen the opening; "the water opening" tests start fresh.
+test.beforeEach(async ({ page }, testInfo) => {
+  if (testInfo.titlePath.includes("the water opening")) return;
+  await page.addInitScript(([key, value]) => { try { localStorage.setItem(key, value); } catch { /* storage blocked */ } }, [OPENING_STORAGE_KEY, OPENING_STORAGE_VALUE]);
+});
 
 async function enter(page: Page, value = "PRUTHVI") {
   await page.getByLabel("A small introduction. Your invitation in.").fill(value);
@@ -170,4 +177,43 @@ test("reduced motion keeps the quote available until manually hidden", async ({ 
   await expect(quote).toHaveAttribute("data-visible", "true");
   await page.getByRole("button", { name: "Hide the quote", exact: true }).click();
   await expect(quote).toHaveAttribute("data-visible", "false");
+});
+
+test.describe("the water opening", () => {
+  test("a first visit opens with the water filling the State, then hands over to the welcome", async ({ page }) => {
+    await page.goto("/");
+    const opening = page.getByTestId("welcome-opening");
+    await expect(opening).toBeVisible();
+    await expect(opening.getByTestId("water-intro")).toHaveAttribute("data-phase", "fill", { timeout: 8000 });
+    // The welcome waits behind it, out of reach until the opening has gone.
+    await expect(page.getByTestId("welcome")).toHaveAttribute("inert", "");
+    await page.getByRole("button", { name: "Skip", exact: true }).click();
+    await expect(opening).toHaveCount(0);
+    await expect(page.getByTestId("welcome")).not.toHaveAttribute("inert", "");
+    await expect(page.getByRole("heading", { name: "Every drop has a deeper story." })).toBeVisible();
+    await enter(page);
+    expect(await page.evaluate(key => localStorage.getItem(key), OPENING_STORAGE_KEY)).toBe(OPENING_STORAGE_VALUE);
+  });
+
+  test("left to play on a shared link, it fills, holds and fades by itself, and plays only once", async ({ page }) => {
+    await page.goto("/readiness/");
+    const opening = page.getByTestId("welcome-opening");
+    await expect(opening).toBeVisible();
+    await expect(opening).toHaveCount(0, { timeout: 8000 });
+    await expect(page.getByTestId("welcome")).toContainText("Data Readiness");
+    await continueIn(page);
+    // A visitor shown the welcome again (the welcome forgotten) does not see the opening again.
+    await page.evaluate(key => localStorage.removeItem(key), WELCOME_STORAGE_KEY);
+    await page.reload();
+    await expect(page.getByTestId("welcome")).toHaveAttribute("data-phase", "welcome");
+    await expect(opening).toHaveCount(0);
+  });
+
+  test("with reduced motion there is no opening", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await page.goto("/");
+    await expect(page.getByTestId("welcome")).toHaveAttribute("data-phase", "welcome");
+    await expect(page.getByTestId("welcome-opening")).toHaveCount(0);
+    await enter(page);
+  });
 });

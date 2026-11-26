@@ -193,3 +193,10 @@
 }
 .quote .verse { position: static; max-width: 520px; margin: 0 auto 16px; padding: 0 7%; animation: none; }
 .quote { position: relative; z-index: 2; }
+
+/* The opening: water fills the State in front of the welcome, then fades to reveal it. Until it
+   mounts, a first visit that will open with it keeps the welcome hidden behind the dark (the
+   bootstrap marks the page), so the welcome never flashes first. */
+.opening { position: fixed; inset: 0; z-index: 3000; transition: opacity .9s ease; }
+.opening[data-state="leaving"] { opacity: 0; pointer-events: none; }
+:global(html[data-ap-opening="pending"]) .welcome { visibility: hidden; }

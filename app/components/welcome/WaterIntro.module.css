@@ -6,6 +6,10 @@
 }
 .canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 
+/* Inside a page (the welcome's picture): the same water on the page's own background, the shape of the picture it replaces. */
+/* Never taller than the screen leaves below the welcome's quote, so the whole State, where the water starts, is in view. */
+.figure { position: relative; width: 100%; aspect-ratio: 820 / 700; max-height: calc(100svh - 340px); min-height: 280px; }
+
 /* The words: beside the State on a wide screen, under it on a tall one. */
 .copy {
   position: absolute; left: 6vw; top: 50%; max-width: min(30vw, 440px); transform: translateY(-50%);
