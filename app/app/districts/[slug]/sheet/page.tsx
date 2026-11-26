@@ -121,7 +121,7 @@ export default async function DistrictSheetPage({ params }: { params: Promise<{ 
             <div className={brief.sec}>Every mandal as a borewell, {s.month}</div>
             <div className={styles.bores} data-testid="district-sheet-bores">
               <Borewells uid={`sb-${s.slug}`} bores={s.mandals.map(m => ({ id: m.id, name: m.name, nowM: m.nowM, usualM: m.usualM, side: m.side, deepestM: m.deepestM }))}
-                scaleM={s.scaleM} aquifer={s.aquifer} soil={100} nameSize={s.mandals.length > 30 ? 11.5 : 12.5} nameMax={14}
+                scaleM={s.scaleM} aquifer={s.aquifer} soil={86} nameSize={s.mandals.length > 30 ? 11.5 : 12.5} nameMax={14}
                 label={`${s.name}'s ${s.mandals.length} mandals as borewells in ${s.month}`} />
               <p className={styles.boresKey}>{(() => {
                 const st = s.mandals.map(pumpState), n = (k: string) => st.filter(x => x === k).length;
