@@ -30,3 +30,22 @@ test("the menu is grouped by question and leaves out the retired screens", async
   // The mandal watchlist is retired too: This Week's field-team register does its job, and its address leads there.
   await expect(nav.getByRole("link", { name: "Mandal Watchlist", exact: true })).toHaveCount(0);
 });
+
+/* What to take into a meeting is in the menu, open, not behind a link in a paragraph: the
+   presenter and the district sheets. On the sheets page only its own entry lights, not Districts. */
+test("the menu lists the presenter and the district sheets for meetings", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/districts/sheets/");
+  const nav = page.getByRole("navigation", { name: "Primary" });
+  await expect(nav).toContainText("For meetings");
+  const sheets = nav.getByRole("link", { name: "District sheets", exact: true });
+  await expect(sheets).toBeVisible();
+  // One entry lights: District sheets, not Districts as well (whose group stays folded here).
+  await expect(nav.locator('[aria-current="page"]')).toHaveCount(1);
+  await expect(sheets).toHaveAttribute("aria-current", "page");
+  const presenter = nav.getByRole("link", { name: "Presenter", exact: true });
+  await expect(presenter).toBeVisible();
+  await presenter.click();
+  await expect(page).toHaveURL(/\/present\/?/);
+  await expect(page.getByTestId("presenter")).toBeVisible();
+});
