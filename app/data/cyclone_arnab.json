@@ -1,6 +1,6 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-26T13:03:07+00:00",
+ "generatedAt": "2026-11-27T13:00:12+00:00",
  "event": "Cyclone Arnab",
  "landfall": "2026-10-28",
  "rainWindow": {
@@ -273,7 +273,7 @@
  },
  "since": {
   "from": "2026-10-26",
-  "to": "2026-11-26",
+  "to": "2026-11-27",
   "days": [
    {
     "date": "2026-10-26",
@@ -490,33 +490,41 @@
     "soilMedian30": 86.6,
     "reservoirTmc": 608.9,
     "reservoirPct": 46.0
+   },
+   {
+    "date": "2026-11-27",
+    "rainTo": "2026-11-25",
+    "rainSinceTmc": 762.1,
+    "soilMedian30": 86.6,
+    "reservoirTmc": 606.6,
+    "reservoirPct": 45.8
    }
   ],
-  "gainTmc": 109.3,
+  "gainTmc": 107.0,
   "basins": [
    {
     "basin": "OTHERS",
     "beforePct": 18.5,
-    "nowPct": 80.3,
-    "gainTmc": 155.9
+    "nowPct": 80.2,
+    "gainTmc": 155.7
    },
    {
     "basin": "GODAVARI",
     "beforePct": 77.1,
-    "nowPct": 74.7,
+    "nowPct": 74.8,
     "gainTmc": -0.6
    },
    {
     "basin": "PENNAR",
     "beforePct": 37.0,
-    "nowPct": 34.4,
+    "nowPct": 34.3,
     "gainTmc": -7.8
    },
    {
     "basin": "KRISHNA",
     "beforePct": 43.1,
-    "nowPct": 38.0,
-    "gainTmc": -38.3
+    "nowPct": 37.7,
+    "gainTmc": -40.4
    }
   ],
   "reservoirs": [
@@ -537,10 +545,10 @@
     "district": "Anakapalli",
     "capacityTmc": 3.6,
     "beforeTmc": 0.96,
-    "nowTmc": 3.25,
+    "nowTmc": 3.26,
     "gainTmc": 2.3,
     "beforePct": 26.6,
-    "nowPct": 90.3
+    "nowPct": 90.6
    },
    {
     "name": "YERRAKALVA RESERVOIR",
@@ -552,6 +560,17 @@
     "gainTmc": 2.27,
     "beforePct": 33.7,
     "nowPct": 84.9
+   },
+   {
+    "name": "MYLAVARAM(PENNAR) RESERVOIR",
+    "basin": "PENNAR",
+    "district": "Y.S.R Kadapa",
+    "capacityTmc": 6.5,
+    "beforeTmc": 1.15,
+    "nowTmc": 2.87,
+    "gainTmc": 1.72,
+    "beforePct": 17.7,
+    "nowPct": 44.1
    },
    {
     "name": "THATIPUDI RESERVOIR",
@@ -574,17 +593,6 @@
     "gainTmc": 1.61,
     "beforePct": 55.4,
     "nowPct": 71.5
-   },
-   {
-    "name": "MYLAVARAM(PENNAR) RESERVOIR",
-    "basin": "PENNAR",
-    "district": "Y.S.R Kadapa",
-    "capacityTmc": 6.5,
-    "beforeTmc": 1.15,
-    "nowTmc": 2.76,
-    "gainTmc": 1.61,
-    "beforePct": 17.7,
-    "nowPct": 42.5
    },
    {
     "name": "TANDAVA RESERVOIR",
@@ -10961,7 +10969,7 @@
    ]
   ]
  },
- "updatedAt": "2026-11-26",
+ "updatedAt": "2026-11-27",
  "map": [
   [
    0,

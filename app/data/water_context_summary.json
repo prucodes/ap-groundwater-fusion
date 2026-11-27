@@ -1,161 +1,161 @@
 {
  "contractVersion": "1.0.0",
- "generatedAt": "2026-11-26T13:03:07+00:00",
+ "generatedAt": "2026-11-27T13:00:11+00:00",
  "authorizationStatus": "research_pending",
  "rain": {
   "start": "2026-06-01",
-  "end": "2026-11-24",
-  "deviationPct": -30.3,
+  "end": "2026-11-25",
+  "deviationPct": -29.7,
   "gauges": 3532,
   "mandals": 688,
   "categories": {
    "excess": 20,
-   "normal": 241,
-   "deficient": 346,
-   "scanty": 81,
+   "normal": 244,
+   "deficient": 347,
+   "scanty": 77,
    "noRain": 0
   },
   "url": "https://apwrims.ap.gov.in/mis/rainfall",
   "neMonsoon": {
    "status": "underway",
    "start": "2026-10-01",
-   "end": "2026-11-24",
+   "end": "2026-11-25",
    "basis": "season-to-date district figures less the same figures at 30 September",
-   "meanActualMm": 239.8,
-   "meanNormalMm": 260.7,
-   "deviationPct": -8.0,
+   "meanActualMm": 243.8,
+   "meanNormalMm": 261.2,
+   "deviationPct": -6.7,
    "districts": [
     {
      "district": "Kurnool",
-     "actualMm": 24.5,
-     "normalMm": 138.2,
-     "deviationPct": -82.3,
+     "actualMm": 25.0,
+     "normalMm": 138.6,
+     "deviationPct": -82.0,
      "category": "scanty"
     },
     {
      "district": "Markapuram",
-     "actualMm": 53.0,
-     "normalMm": 289.3,
-     "deviationPct": -81.7,
+     "actualMm": 62.5,
+     "normalMm": 289.6,
+     "deviationPct": -78.4,
      "category": "scanty"
     },
     {
      "district": "Nandyal",
-     "actualMm": 30.3,
-     "normalMm": 144.0,
-     "deviationPct": -79.0,
+     "actualMm": 31.5,
+     "normalMm": 144.1,
+     "deviationPct": -78.1,
      "category": "scanty"
     },
     {
      "district": "Ananthapuramu",
-     "actualMm": 36.2,
-     "normalMm": 128.2,
-     "deviationPct": -71.8,
+     "actualMm": 36.4,
+     "normalMm": 128.3,
+     "deviationPct": -71.6,
      "category": "scanty"
     },
     {
      "district": "Y.S.R Kadapa",
-     "actualMm": 67.5,
-     "normalMm": 207.1,
-     "deviationPct": -67.4,
+     "actualMm": 71.0,
+     "normalMm": 207.6,
+     "deviationPct": -65.8,
      "category": "scanty"
     },
     {
      "district": "Sri Sathya Sai",
-     "actualMm": 60.8,
-     "normalMm": 157.2,
-     "deviationPct": -61.3,
-     "category": "scanty"
+     "actualMm": 64.3,
+     "normalMm": 157.4,
+     "deviationPct": -59.1,
+     "category": "deficient"
     },
     {
      "district": "Sri Potti Sriramulu Nellore",
-     "actualMm": 227.8,
-     "normalMm": 532.1,
-     "deviationPct": -57.2,
+     "actualMm": 247.8,
+     "normalMm": 534.8,
+     "deviationPct": -53.7,
      "category": "deficient"
     },
     {
      "district": "Prakasam",
-     "actualMm": 184.2,
-     "normalMm": 403.4,
-     "deviationPct": -54.3,
+     "actualMm": 202.0,
+     "normalMm": 404.1,
+     "deviationPct": -50.0,
      "category": "deficient"
     },
     {
      "district": "Tirupati",
-     "actualMm": 309.8,
-     "normalMm": 446.9,
-     "deviationPct": -30.7,
+     "actualMm": 325.4,
+     "normalMm": 449.8,
+     "deviationPct": -27.7,
      "category": "deficient"
     },
     {
      "district": "Chittoor",
-     "actualMm": 206.2,
-     "normalMm": 292.2,
-     "deviationPct": -29.4,
-     "category": "deficient"
-    },
-    {
-     "district": "Annamayya",
-     "actualMm": 162.7,
-     "normalMm": 219.1,
-     "deviationPct": -25.7,
+     "actualMm": 213.5,
+     "normalMm": 293.0,
+     "deviationPct": -27.1,
      "category": "deficient"
     },
     {
      "district": "Palnadu",
-     "actualMm": 138.6,
-     "normalMm": 183.1,
-     "deviationPct": -24.3,
+     "actualMm": 140.6,
+     "normalMm": 183.4,
+     "deviationPct": -23.3,
+     "category": "deficient"
+    },
+    {
+     "district": "Annamayya",
+     "actualMm": 173.1,
+     "normalMm": 219.7,
+     "deviationPct": -21.2,
      "category": "deficient"
     },
     {
      "district": "Parvathipuram Manyam",
      "actualMm": 178.0,
-     "normalMm": 191.5,
-     "deviationPct": -7.0,
+     "normalMm": 192.1,
+     "deviationPct": -7.3,
      "category": "normal"
     },
     {
      "district": "Bapatla",
-     "actualMm": 292.0,
-     "normalMm": 294.2,
-     "deviationPct": -0.7,
+     "actualMm": 296.3,
+     "normalMm": 294.6,
+     "deviationPct": 0.6,
      "category": "normal"
     },
     {
      "district": "Krishna",
-     "actualMm": 281.5,
-     "normalMm": 282.3,
-     "deviationPct": -0.3,
+     "actualMm": 284.4,
+     "normalMm": 282.6,
+     "deviationPct": 0.6,
      "category": "normal"
     },
     {
      "district": "NTR",
-     "actualMm": 196.1,
+     "actualMm": 196.6,
      "normalMm": 189.2,
-     "deviationPct": 3.6,
+     "deviationPct": 3.9,
      "category": "normal"
     },
     {
      "district": "Visakhapatnam",
-     "actualMm": 394.1,
-     "normalMm": 352.6,
+     "actualMm": 394.3,
+     "normalMm": 352.7,
      "deviationPct": 11.8,
      "category": "normal"
     },
     {
      "district": "Alluri Sitharama Raju",
      "actualMm": 262.6,
-     "normalMm": 220.5,
-     "deviationPct": 19.1,
+     "normalMm": 220.9,
+     "deviationPct": 18.9,
      "category": "normal"
     },
     {
      "district": "Anakapalli",
-     "actualMm": 358.1,
-     "normalMm": 299.6,
-     "deviationPct": 19.5,
+     "actualMm": 358.2,
+     "normalMm": 300.1,
+     "deviationPct": 19.4,
      "category": "normal"
     },
     {
@@ -167,56 +167,56 @@
     },
     {
      "district": "Srikakulam",
-     "actualMm": 358.5,
-     "normalMm": 290.8,
-     "deviationPct": 23.3,
+     "actualMm": 359.3,
+     "normalMm": 291.6,
+     "deviationPct": 23.2,
      "category": "excess"
     },
     {
      "district": "Kakinada",
-     "actualMm": 389.6,
-     "normalMm": 293.2,
-     "deviationPct": 32.9,
+     "actualMm": 390.1,
+     "normalMm": 293.4,
+     "deviationPct": 33.0,
      "category": "excess"
     },
     {
      "district": "Vizianagaram",
-     "actualMm": 361.4,
-     "normalMm": 258.5,
-     "deviationPct": 39.8,
+     "actualMm": 361.5,
+     "normalMm": 259.1,
+     "deviationPct": 39.5,
      "category": "excess"
     },
     {
      "district": "Guntur",
-     "actualMm": 287.8,
-     "normalMm": 204.0,
-     "deviationPct": 41.1,
+     "actualMm": 292.3,
+     "normalMm": 204.1,
+     "deviationPct": 43.2,
      "category": "excess"
     },
     {
      "district": "West Godavari",
-     "actualMm": 421.0,
-     "normalMm": 292.1,
-     "deviationPct": 44.1,
+     "actualMm": 422.5,
+     "normalMm": 292.4,
+     "deviationPct": 44.5,
      "category": "excess"
     },
     {
      "district": "Polavaram",
-     "actualMm": 278.7,
-     "normalMm": 192.3,
+     "actualMm": 278.8,
+     "normalMm": 192.4,
      "deviationPct": 44.9,
      "category": "excess"
     },
     {
      "district": "Eluru",
-     "actualMm": 285.4,
-     "normalMm": 173.8,
-     "deviationPct": 64.2,
+     "actualMm": 291.0,
+     "normalMm": 174.0,
+     "deviationPct": 67.2,
      "category": "excess"
     },
     {
      "district": "East Godavari",
-     "actualMm": 394.6,
+     "actualMm": 394.7,
      "normalMm": 235.3,
      "deviationPct": 67.7,
      "category": "excess"
@@ -226,7 +226,7 @@
  },
  "soil": {
   "asOf": "2026-11-11",
-  "ageDays": 15,
+  "ageDays": 16,
   "weekAgo": "2026-11-04",
   "depthCm": 30,
   "firstYear": 2014,
@@ -239,37 +239,37 @@
   "driestOnRecord": 15
  },
  "reservoirs": {
-  "asOf": "2026-11-26T12:27+05:30",
+  "asOf": "2026-11-27T11:36+05:30",
   "staleCount": 2,
   "url": "https://apwrims.ap.gov.in/mis/reservoir",
   "count": 120,
   "capacityTmc": 1323.99,
-  "storageTmc": 608.898,
-  "storagePct": 46.0,
-  "lastYearPct": 73.0,
+  "storageTmc": 606.593,
+  "storagePct": 45.8,
+  "lastYearPct": 72.8,
   "byBasin": [
    {
     "basin": "KRISHNA",
     "capacityTmc": 749.345,
-    "storagePct": 38.0,
-    "lastYearPct": 82.9
+    "storagePct": 37.7,
+    "lastYearPct": 82.6
    },
    {
     "basin": "PENNAR",
     "capacityTmc": 295.463,
-    "storagePct": 34.4,
-    "lastYearPct": 87.1
+    "storagePct": 34.3,
+    "lastYearPct": 87.0
    },
    {
     "basin": "OTHERS",
     "capacityTmc": 252.443,
-    "storagePct": 80.3,
+    "storagePct": 80.2,
     "lastYearPct": 27.7
    },
    {
     "basin": "GODAVARI",
     "capacityTmc": 26.739,
-    "storagePct": 74.7,
+    "storagePct": 74.8,
     "lastYearPct": 66.6
    }
   ]
@@ -280,8 +280,8 @@
    "key": "ALLURISITHARAMARAJU",
    "rain": {
     "actualMm": 1001.8,
-    "normalMm": 1087.0,
-    "deviationPct": -7.8,
+    "normalMm": 1087.4,
+    "deviationPct": -7.9,
     "category": "normal"
    },
    "soil": {
@@ -294,8 +294,8 @@
    "reservoirs": {
     "count": 5,
     "capacityTmc": 187.574,
-    "storageTmc": 157.446,
-    "storagePct": 83.9,
+    "storageTmc": 157.231,
+    "storagePct": 83.8,
     "lastYearPct": 9.3
    }
   },
@@ -303,8 +303,8 @@
    "district": "Anakapalli",
    "key": "ANAKAPALLI",
    "rain": {
-    "actualMm": 905.4,
-    "normalMm": 981.5,
+    "actualMm": 905.5,
+    "normalMm": 982.0,
     "deviationPct": -7.8,
     "category": "normal"
    },
@@ -318,17 +318,17 @@
    "reservoirs": {
     "count": 5,
     "capacityTmc": 5.476,
-    "storageTmc": 4.86,
-    "storagePct": 88.8,
-    "lastYearPct": 78.0
+    "storageTmc": 4.87,
+    "storagePct": 88.9,
+    "lastYearPct": 77.8
    }
   },
   {
    "district": "Ananthapuramu",
    "key": "ANANTHAPURAMU",
    "rain": {
-    "actualMm": 249.6,
-    "normalMm": 449.7,
+    "actualMm": 249.8,
+    "normalMm": 449.8,
     "deviationPct": -44.5,
     "category": "deficient"
    },
@@ -342,8 +342,8 @@
    "reservoirs": {
     "count": 9,
     "capacityTmc": 16.631,
-    "storageTmc": 8.61,
-    "storagePct": 51.8,
+    "storageTmc": 8.579,
+    "storagePct": 51.6,
     "lastYearPct": 89.8
    }
   },
@@ -351,9 +351,9 @@
    "district": "Annamayya",
    "key": "ANNAMAYYA",
    "rain": {
-    "actualMm": 309.6,
-    "normalMm": 617.4,
-    "deviationPct": -49.9,
+    "actualMm": 320.0,
+    "normalMm": 618.0,
+    "deviationPct": -48.2,
     "category": "deficient"
    },
    "soil": {
@@ -368,16 +368,16 @@
     "capacityTmc": 8.759,
     "storageTmc": 3.517,
     "storagePct": 40.2,
-    "lastYearPct": 67.2
+    "lastYearPct": 67.5
    }
   },
   {
    "district": "Bapatla",
    "key": "BAPATLA",
    "rain": {
-    "actualMm": 619.9,
-    "normalMm": 820.8,
-    "deviationPct": -24.5,
+    "actualMm": 624.2,
+    "normalMm": 821.2,
+    "deviationPct": -24.0,
     "category": "deficient"
    },
    "soil": {
@@ -392,9 +392,9 @@
    "district": "Chittoor",
    "key": "CHITTOOR",
    "rain": {
-    "actualMm": 449.1,
-    "normalMm": 753.1,
-    "deviationPct": -40.4,
+    "actualMm": 456.4,
+    "normalMm": 753.9,
+    "deviationPct": -39.5,
     "category": "deficient"
    },
    "soil": {
@@ -409,14 +409,14 @@
     "capacityTmc": 0.31,
     "storageTmc": 0.028,
     "storagePct": 9.0,
-    "lastYearPct": 80.6
+    "lastYearPct": 83.9
    }
   },
   {
    "district": "East Godavari",
    "key": "EASTGODAVARI",
    "rain": {
-    "actualMm": 933.9,
+    "actualMm": 934.0,
     "normalMm": 1008.0,
     "deviationPct": -7.3,
     "category": "normal"
@@ -440,9 +440,9 @@
    "district": "Eluru",
    "key": "ELURU",
    "rain": {
-    "actualMm": 849.8,
-    "normalMm": 939.7,
-    "deviationPct": -9.6,
+    "actualMm": 855.4,
+    "normalMm": 939.9,
+    "deviationPct": -9.0,
     "category": "normal"
    },
    "soil": {
@@ -457,16 +457,16 @@
     "capacityTmc": 7.97,
     "storageTmc": 5.838,
     "storagePct": 73.2,
-    "lastYearPct": 67.2
+    "lastYearPct": 67.1
    }
   },
   {
    "district": "Guntur",
    "key": "GUNTUR",
    "rain": {
-    "actualMm": 774.0,
-    "normalMm": 775.9,
-    "deviationPct": -0.2,
+    "actualMm": 778.5,
+    "normalMm": 776.0,
+    "deviationPct": 0.3,
     "category": "normal"
    },
    "soil": {
@@ -481,8 +481,8 @@
    "district": "Kakinada",
    "key": "KAKINADA",
    "rain": {
-    "actualMm": 945.6,
-    "normalMm": 963.3,
+    "actualMm": 946.1,
+    "normalMm": 963.5,
     "deviationPct": -1.8,
     "category": "normal"
    },
@@ -496,9 +496,9 @@
    "reservoirs": {
     "count": 3,
     "capacityTmc": 24.768,
-    "storageTmc": 22.857,
+    "storageTmc": 22.854,
     "storagePct": 92.3,
-    "lastYearPct": 91.1
+    "lastYearPct": 91.2
    }
   },
   {
@@ -529,9 +529,9 @@
    "district": "Krishna",
    "key": "KRISHNA",
    "rain": {
-    "actualMm": 806.2,
-    "normalMm": 928.1,
-    "deviationPct": -13.1,
+    "actualMm": 809.1,
+    "normalMm": 928.4,
+    "deviationPct": -12.9,
     "category": "normal"
    },
    "soil": {
@@ -546,9 +546,9 @@
    "district": "Kurnool",
    "key": "KURNOOL",
    "rain": {
-    "actualMm": 256.5,
-    "normalMm": 540.8,
-    "deviationPct": -52.6,
+    "actualMm": 257.0,
+    "normalMm": 541.2,
+    "deviationPct": -52.5,
     "category": "deficient"
    },
    "soil": {
@@ -561,18 +561,18 @@
    "reservoirs": {
     "count": 4,
     "capacityTmc": 7.025,
-    "storageTmc": 4.142,
-    "storagePct": 59.0,
-    "lastYearPct": 82.6
+    "storageTmc": 4.137,
+    "storagePct": 58.9,
+    "lastYearPct": 82.7
    }
   },
   {
    "district": "Markapuram",
    "key": "MARKAPURAM",
    "rain": {
-    "actualMm": 238.5,
-    "normalMm": 632.6,
-    "deviationPct": -62.3,
+    "actualMm": 248.0,
+    "normalMm": 632.9,
+    "deviationPct": -60.8,
     "category": "scanty"
    },
    "soil": {
@@ -594,7 +594,7 @@
    "district": "NTR",
    "key": "NTR",
    "rain": {
-    "actualMm": 740.6,
+    "actualMm": 741.1,
     "normalMm": 921.4,
     "deviationPct": -19.6,
     "category": "normal"
@@ -609,8 +609,8 @@
    "reservoirs": {
     "count": 2,
     "capacityTmc": 3.201,
-    "storageTmc": 2.81,
-    "storagePct": 87.8,
+    "storageTmc": 2.839,
+    "storagePct": 88.7,
     "lastYearPct": 98.1
    }
   },
@@ -618,9 +618,9 @@
    "district": "Nandyal",
    "key": "NANDYAL",
    "rain": {
-    "actualMm": 323.7,
-    "normalMm": 651.2,
-    "deviationPct": -50.3,
+    "actualMm": 324.9,
+    "normalMm": 651.3,
+    "deviationPct": -50.1,
     "category": "deficient"
    },
    "soil": {
@@ -633,18 +633,18 @@
    "reservoirs": {
     "count": 7,
     "capacityTmc": 251.533,
-    "storageTmc": 60.649,
-    "storagePct": 24.1,
-    "lastYearPct": 92.3
+    "storageTmc": 60.19,
+    "storagePct": 23.9,
+    "lastYearPct": 91.9
    }
   },
   {
    "district": "Palnadu",
    "key": "PALNADU",
    "rain": {
-    "actualMm": 463.8,
-    "normalMm": 669.2,
-    "deviationPct": -30.7,
+    "actualMm": 465.8,
+    "normalMm": 669.5,
+    "deviationPct": -30.4,
     "category": "deficient"
    },
    "soil": {
@@ -657,9 +657,9 @@
    "reservoirs": {
     "count": 3,
     "capacityTmc": 361.28,
-    "storageTmc": 203.859,
-    "storagePct": 56.4,
-    "lastYearPct": 93.0
+    "storageTmc": 202.708,
+    "storagePct": 56.1,
+    "lastYearPct": 92.7
    }
   },
   {
@@ -667,7 +667,7 @@
    "key": "PARVATHIPURAMMANYAM",
    "rain": {
     "actualMm": 776.5,
-    "normalMm": 955.8,
+    "normalMm": 956.4,
     "deviationPct": -18.8,
     "category": "normal"
    },
@@ -681,8 +681,8 @@
    "reservoirs": {
     "count": 5,
     "capacityTmc": 6.394,
-    "storageTmc": 5.13,
-    "storagePct": 80.2,
+    "storageTmc": 5.123,
+    "storagePct": 80.1,
     "lastYearPct": 80.1
    }
   },
@@ -690,8 +690,8 @@
    "district": "Polavaram",
    "key": "POLAVARAM",
    "rain": {
-    "actualMm": 1012.2,
-    "normalMm": 1106.2,
+    "actualMm": 1012.3,
+    "normalMm": 1106.3,
     "deviationPct": -8.5,
     "category": "normal"
    },
@@ -705,18 +705,18 @@
    "reservoirs": {
     "count": 4,
     "capacityTmc": 3.009,
-    "storageTmc": 1.756,
-    "storagePct": 58.4,
-    "lastYearPct": 61.2
+    "storageTmc": 1.767,
+    "storagePct": 58.7,
+    "lastYearPct": 61.3
    }
   },
   {
    "district": "Prakasam",
    "key": "PRAKASAM",
    "rain": {
-    "actualMm": 348.1,
-    "normalMm": 797.6,
-    "deviationPct": -56.4,
+    "actualMm": 365.9,
+    "normalMm": 798.3,
+    "deviationPct": -54.2,
     "category": "deficient"
    },
    "soil": {
@@ -729,18 +729,18 @@
    "reservoirs": {
     "count": 4,
     "capacityTmc": 7.135,
-    "storageTmc": 2.489,
-    "storagePct": 34.9,
-    "lastYearPct": 87.4
+    "storageTmc": 2.486,
+    "storagePct": 34.8,
+    "lastYearPct": 86.6
    }
   },
   {
    "district": "Sri Potti Sriramulu Nellore",
    "key": "SRIPOTTISRIRAMULUNELLORE",
    "rain": {
-    "actualMm": 437.8,
-    "normalMm": 847.3,
-    "deviationPct": -48.3,
+    "actualMm": 457.8,
+    "normalMm": 850.0,
+    "deviationPct": -46.1,
     "category": "deficient"
    },
    "soil": {
@@ -753,18 +753,18 @@
    "reservoirs": {
     "count": 8,
     "capacityTmc": 154.767,
-    "storageTmc": 40.894,
-    "storagePct": 26.4,
-    "lastYearPct": 88.5
+    "storageTmc": 40.997,
+    "storagePct": 26.5,
+    "lastYearPct": 88.4
    }
   },
   {
    "district": "Sri Sathya Sai",
    "key": "SRISATHYASAI",
    "rain": {
-    "actualMm": 215.5,
-    "normalMm": 513.7,
-    "deviationPct": -58.0,
+    "actualMm": 219.0,
+    "normalMm": 513.9,
+    "deviationPct": -57.4,
     "category": "deficient"
    },
    "soil": {
@@ -777,17 +777,17 @@
    "reservoirs": {
     "count": 7,
     "capacityTmc": 6.884,
-    "storageTmc": 3.51,
-    "storagePct": 51.0,
-    "lastYearPct": 59.9
+    "storageTmc": 3.505,
+    "storagePct": 50.9,
+    "lastYearPct": 59.8
    }
   },
   {
    "district": "Srikakulam",
    "key": "SRIKAKULAM",
    "rain": {
-    "actualMm": 986.1,
-    "normalMm": 987.2,
+    "actualMm": 986.9,
+    "normalMm": 988.0,
     "deviationPct": -0.1,
     "category": "normal"
    },
@@ -810,9 +810,9 @@
    "district": "Tirupati",
    "key": "TIRUPATI",
    "rain": {
-    "actualMm": 567.5,
-    "normalMm": 858.7,
-    "deviationPct": -33.9,
+    "actualMm": 583.1,
+    "normalMm": 861.6,
+    "deviationPct": -32.3,
     "category": "deficient"
    },
    "soil": {
@@ -825,9 +825,9 @@
    "reservoirs": {
     "count": 7,
     "capacityTmc": 3.349,
-    "storageTmc": 0.736,
+    "storageTmc": 0.738,
     "storagePct": 22.0,
-    "lastYearPct": 76.3
+    "lastYearPct": 75.9
    }
   },
   {
@@ -836,17 +836,17 @@
    "reservoirs": {
     "count": 1,
     "capacityTmc": 105.79,
-    "storageTmc": 22.346,
-    "storagePct": 21.1,
-    "lastYearPct": 67.5
+    "storageTmc": 21.802,
+    "storagePct": 20.6,
+    "lastYearPct": 67.2
    }
   },
   {
    "district": "Visakhapatnam",
    "key": "VISAKHAPATNAM",
    "rain": {
-    "actualMm": 953.1,
-    "normalMm": 940.9,
+    "actualMm": 953.3,
+    "normalMm": 941.0,
     "deviationPct": 1.3,
     "category": "normal"
    },
@@ -869,9 +869,9 @@
    "district": "Vizianagaram",
    "key": "VIZIANAGARAM",
    "rain": {
-    "actualMm": 945.8,
-    "normalMm": 925.8,
-    "deviationPct": 2.2,
+    "actualMm": 945.9,
+    "normalMm": 926.4,
+    "deviationPct": 2.1,
     "category": "normal"
    },
    "soil": {
@@ -884,18 +884,18 @@
    "reservoirs": {
     "count": 3,
     "capacityTmc": 7.678,
-    "storageTmc": 7.097,
-    "storagePct": 92.4,
-    "lastYearPct": 90.0
+    "storageTmc": 7.115,
+    "storagePct": 92.7,
+    "lastYearPct": 90.2
    }
   },
   {
    "district": "West Godavari",
    "key": "WESTGODAVARI",
    "rain": {
-    "actualMm": 985.0,
-    "normalMm": 1084.0,
-    "deviationPct": -9.1,
+    "actualMm": 986.5,
+    "normalMm": 1084.3,
+    "deviationPct": -9.0,
     "category": "normal"
    },
    "soil": {
@@ -910,9 +910,9 @@
    "district": "Y.S.R Kadapa",
    "key": "YSRKADAPA",
    "rain": {
-    "actualMm": 284.9,
-    "normalMm": 609.8,
-    "deviationPct": -53.3,
+    "actualMm": 288.4,
+    "normalMm": 610.3,
+    "deviationPct": -52.7,
     "category": "deficient"
    },
    "soil": {
@@ -925,9 +925,9 @@
    "reservoirs": {
     "count": 16,
     "capacityTmc": 79.158,
-    "storageTmc": 30.978,
+    "storageTmc": 30.923,
     "storagePct": 39.1,
-    "lastYearPct": 90.1
+    "lastYearPct": 90.0
    }
   }
  ]
